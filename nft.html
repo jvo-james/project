@@ -3,26 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Font Awesome (for solid, brands, and regular icons) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-<!-- Google Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!-- Google Fonts (optional, for nice typography) -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 
 <title>DRALIEN — UNIQUE 111 NFTS</title>
 
 <style>
-/* =========================
-   DRALIEN — STYLESHEET
-   Paste this into <head>
-   ========================= */
 
-/* ---------- Theme variables ---------- */
 :root{
-  /* colors */
   --bg-900: #050407;
   --bg-800: #0a0a0d;
   --panel: rgba(255,255,255,0.03);
@@ -35,13 +26,11 @@
   --glass-2: rgba(255,255,255,0.02);
   --card-radius: 14px;
 
-  /* fluid sizing */
   --fs-xs: clamp(12px, 1.8vw, 14px);
   --fs-sm: clamp(13px, 2.0vw, 15px);
   --fs-md: clamp(15px, 2.3vw, 18px);
   --fs-lg: clamp(20px, 3vw, 28px);
 
-  /* layout */
   --gutter: clamp(12px, 3.2vw, 28px);
   --elev: 0 12px 40px rgba(2,6,23,0.6);
   --glass-border: 1px solid rgba(255,255,255,0.03);
@@ -49,7 +38,6 @@
   --focus: rgba(122,108,255,0.18);
 }
 
-/* ---------- Base ---------- */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:
   radial-gradient(800px 360px at 10% 8%, rgba(122,108,255,0.06), transparent 6%),
@@ -60,34 +48,28 @@ html,body{height:100%;margin:0;background:
   -webkit-text-size-adjust:100%;
 }
 
-/* anchor defaults */
 a{color:var(--accent1);text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* ---------- Layout helpers ---------- */
 .page{display:flex;gap:var(--gutter);min-height:100vh;align-items:stretch;padding:calc(var(--gutter) + 8px);}
 .sidebar{width:320px;flex-shrink:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:18px;padding:22px;box-shadow:var(--elev)}
 main{flex:1;display:flex;flex-direction:column;gap:18px}
 
-/* ---------- Top nav ---------- */
 .header-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .brand{display:flex;gap:14px;align-items:center}
 .brand h1{margin:0;font-size:18px;letter-spacing:0.2px}
 .brand p{margin:0;color:var(--muted);font-size:13px}
 
-/* search input */
 input[type="text"], input[type="search"]{
   background:transparent;border:var(--glass-border);padding:10px 12px;border-radius:999px;color:var(--text);
   min-width:220px;outline:none;
 }
 input::placeholder{color:rgba(154,164,178,0.6)}
 
-/* ---------- Sidebar pieces ---------- */
 .sidebar .logo{width:56px;height:56px;border-radius:12px;display:inline-grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent1));box-shadow:var(--shadow-accent)}
 .sidebar h2{margin:0;font-size:22px}
 .sidebar p{color:var(--muted);margin:8px 0}
 
-/* mint CTA */
 #mintSidebarBtn{
   display:block;width:100%;padding:14px;border-radius:999px;border:0;background:linear-gradient(90deg,#00000022,#00000000),linear-gradient(90deg,var(--accent1),var(--accent2));
   color:#021018;font-weight:800;box-shadow:0 14px 36px rgba(2,6,23,0.7);cursor:pointer;
@@ -303,7 +285,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-217.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <!-- If you prefer <img>, replace background with <img src=""> -->
-            <img data-src="images/dralien-217.png" alt="Dralien #217" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image1.gif" alt="Dralien #217" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -320,7 +302,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <!-- 2 -->
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-216.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <img data-src="images/dralien-216.png" alt="Dralien #216" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image2.jpeg" alt="Dralien #216" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -337,7 +319,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <!-- 3 -->
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-215.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <img data-src="images/dralien-215.png" alt="Dralien #215" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image3.jpeg" alt="Dralien #215" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -354,7 +336,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <!-- 4 -->
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-214.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <img data-src="images/dralien-214.png" alt="Dralien #214" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image4.jpeg" alt="Dralien #214" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -371,7 +353,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <!-- 5 -->
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-213.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <img data-src="images/dralien-213.png" alt="Dralien #213" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image5.jpeg" alt="Dralien #213" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -388,7 +370,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         <!-- 6 -->
         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-212.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <img data-src="images/dralien-212.png" alt="Dralien #212" style="max-width:100%;height:100%;object-fit:cover" />
+            <img data-src="image6.jpeg" alt="Dralien #212" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -402,7 +384,6 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- add more cards as needed - copy any <article> above and change data-img, title, owner -->
       </section>
 
       <!-- BIG FEATURES/TOOLS ROW (very stacked, many icons) -->
