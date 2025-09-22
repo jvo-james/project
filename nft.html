@@ -13,396 +13,644 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 
 <title>DRALIEN — UNIQUE 111 NFTS</title>
+
 <style>
-  :root{
-    --bg:#07060a;
-    --panel: rgba(255,255,255,0.03);
-    --muted: #9aa4b2;
-    --accent1: #7CFF6A;
-    --accent2: #7A6CFF;
-    --glass: rgba(255,255,255,0.035);
-    --glass-2: rgba(255,255,255,0.02);
-    --card-radius:16px;
-  }
-  *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial;color:#eaf1ff}
-  html,body{height:100%;margin:0;background:
-    radial-gradient(800px 400px at 10% 10%, rgba(122,108,255,0.06), transparent 6%),
-    radial-gradient(600px 300px at 90% 80%, rgba(124,255,106,0.02), transparent 8%),
-    linear-gradient(180deg,#050407 0%, var(--bg) 50%);}
+/* =========================
+   DRALIEN — STYLESHEET
+   Paste this into <head>
+   ========================= */
 
-/* header */
-.header{
-  display:flex;align-items:center;justify-content:space-between;padding:20px 36px;
+/* ---------- Theme variables ---------- */
+:root{
+  /* colors */
+  --bg-900: #050407;
+  --bg-800: #0a0a0d;
+  --panel: rgba(255,255,255,0.03);
+  --muted: #98a6b7;
+  --text: #eaf1ff;
+  --accent1: #7CFF6A;
+  --accent2: #7A6CFF;
+  --accent3: #FFD36E;
+  --glass: rgba(255,255,255,0.035);
+  --glass-2: rgba(255,255,255,0.02);
+  --card-radius: 14px;
+
+  /* fluid sizing */
+  --fs-xs: clamp(12px, 1.8vw, 14px);
+  --fs-sm: clamp(13px, 2.0vw, 15px);
+  --fs-md: clamp(15px, 2.3vw, 18px);
+  --fs-lg: clamp(20px, 3vw, 28px);
+
+  /* layout */
+  --gutter: clamp(12px, 3.2vw, 28px);
+  --elev: 0 12px 40px rgba(2,6,23,0.6);
+  --glass-border: 1px solid rgba(255,255,255,0.03);
+  --shadow-accent: 0 10px 40px rgba(122,108,255,0.10);
+  --focus: rgba(122,108,255,0.18);
 }
-.brand{display:flex;gap:16px;align-items:center}
-.logo{
-  width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent2),var(--accent1));
-  display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(124,108,255,0.12);
-  transform:translateY(0); animation:logoFloat 6s ease-in-out infinite;
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:
+  radial-gradient(800px 360px at 10% 8%, rgba(122,108,255,0.06), transparent 6%),
+  radial-gradient(500px 260px at 92% 78%, rgba(124,255,106,0.02), transparent 8%),
+  linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 55%);
+  color:var(--text);font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  -webkit-text-size-adjust:100%;
 }
-@keyframes logoFloat{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-.brand h1{margin:0;font-size:16px;letter-spacing:0.4px}
-.brand p{margin:0;color:var(--muted);font-size:12px}
 
-/* hero */
-.hero{
-  display:grid;grid-template-columns:1fr 420px;gap:28px;padding:28px 36px 12px;align-items:start;
+/* anchor defaults */
+a{color:var(--accent1);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- Layout helpers ---------- */
+.page{display:flex;gap:var(--gutter);min-height:100vh;align-items:stretch;padding:calc(var(--gutter) + 8px);}
+.sidebar{width:320px;flex-shrink:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:18px;padding:22px;box-shadow:var(--elev)}
+main{flex:1;display:flex;flex-direction:column;gap:18px}
+
+/* ---------- Top nav ---------- */
+.header-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;gap:14px;align-items:center}
+.brand h1{margin:0;font-size:18px;letter-spacing:0.2px}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+
+/* search input */
+input[type="text"], input[type="search"]{
+  background:transparent;border:var(--glass-border);padding:10px 12px;border-radius:999px;color:var(--text);
+  min-width:220px;outline:none;
 }
-.hero-panel{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  padding:28px;border-radius:var(--card-radius);box-shadow:0 12px 40px rgba(2,6,23,0.6);
+input::placeholder{color:rgba(154,164,178,0.6)}
+
+/* ---------- Sidebar pieces ---------- */
+.sidebar .logo{width:56px;height:56px;border-radius:12px;display:inline-grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent1));box-shadow:var(--shadow-accent)}
+.sidebar h2{margin:0;font-size:22px}
+.sidebar p{color:var(--muted);margin:8px 0}
+
+/* mint CTA */
+#mintSidebarBtn{
+  display:block;width:100%;padding:14px;border-radius:999px;border:0;background:linear-gradient(90deg,#00000022,#00000000),linear-gradient(90deg,var(--accent1),var(--accent2));
+  color:#021018;font-weight:800;box-shadow:0 14px 36px rgba(2,6,23,0.7);cursor:pointer;
 }
-.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:var(--glass);color:var(--accent1);font-weight:700;margin-bottom:18px}
-.hero-title{display:flex;gap:12px;align-items:center}
-.hdot{width:14px;height:14px;border-radius:6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 8px 40px rgba(122,108,255,0.12)}
-.title-text{font-size:28px;margin:0}
-.lead{color:var(--muted);margin-top:12px;line-height:1.5}
+.sidebar .kicker{color:var(--muted);font-size:13px;margin-top:12px}
 
-/* preview */
-.preview{
-  border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
-  display:flex;flex-direction:column;gap:12px;align-items:stretch;
+/* ---------- Gallery grid (right) ---------- */
+#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.nft-card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;transition:transform .2s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
+  cursor:pointer;border:1px solid rgba(255,255,255,0.02);
 }
-.preview-art{
-  height:240px;border-radius:12px;background:
-    conic-gradient(from 150deg at 60% 35%, rgba(122,108,255,0.12), rgba(124,255,106,0.08), rgba(122,108,255,0.06)),
-    linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
-  box-shadow:0 18px 48px rgba(2,6,23,0.6);
-  transform:translateZ(0);
+.nft-card:hover{transform:translateY(-8px);box-shadow:0 26px 60px rgba(2,6,23,0.6)}
+.nft-media{height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.nft-media img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* card body */
+.nft-card .meta{display:flex;justify-content:space-between;align-items:center}
+.nft-card .meta .title{font-weight:700}
+.nft-card .meta .owner{color:var(--muted);font-size:13px}
+
+/* icon controls */
+.nft-card .actions{display:flex;gap:8px}
+.nft-card button{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px}
+.nft-card button:focus{outline:3px solid var(--focus);outline-offset:4px}
+
+/* ---------- Tools / Grid of features ---------- */
+section.tools{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.tool{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;transition:transform .18s, box-shadow .18s;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+.tool:hover{transform:translateY(-6px);box-shadow:var(--shadow-accent)}
+.tool .icon{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent1));box-shadow:0 10px 30px rgba(122,108,255,0.08)}
+.tool strong{display:block}
+
+/* ---------- Lightbox & modal ---------- */
+#lightbox{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.8), rgba(2,6,23,0.9));z-index:70;padding:18px}
+#lightbox[aria-hidden="false"]{display:flex}
+#lightbox .modal{width:100%;max-width:980px;border-radius:12px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 30px 80px rgba(0,0,0,0.7)}
+
+/* ---------- Footer actions ---------- */
+.footer-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;color:var(--muted);font-size:13px}
+
+/* ---------- Buttons ---------- */
+button.mint, .mint-btn{
+  border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:10px 14px;border-radius:10px;font-weight:800;color:#021018;cursor:pointer;box-shadow:0 10px 30px rgba(122,108,255,0.12);
 }
-.pixel-alien{
-  width:220px;height:220px;background:
-    linear-gradient(#b2ffd0, #dcdcff) padding-box;
-  border-radius:12px;display:flex;align-items:center;justify-content:center;
-  filter:drop-shadow(0 14px 36px rgba(0,0,0,0.6));
-  transform:scale(1);animation:alienWobble 6s ease-in-out infinite;
-}
-@keyframes alienWobble{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+button.ghost{background:transparent;border:var(--glass-border);padding:10px;border-radius:10px;color:var(--text);cursor:pointer}
 
-/* mint row */
-.mint-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mint-btn{
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;padding:12px 18px;border-radius:12px;font-weight:900;color:#021018;cursor:pointer;box-shadow:0 10px 40px rgba(122,108,255,0.18)
-}
-.progress{color:var(--muted);font-size:14px}
+/* ---------- Accessibility & focus ---------- */
+:focus{outline:3px solid var(--focus);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
 
-/* stats */
-.stats{display:flex;gap:12px;margin-top:16px}
-.stat{background:var(--glass-2);padding:12px;border-radius:10px;min-width:110px;text-align:center}
-.stat h3{margin:0;font-size:18px}
-.stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
-
-/* features grid */
-.features{padding:28px 36px 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.feature{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;transition:transform .28s, box-shadow .28s;cursor:default;
-}
-.feature:hover{transform:translateY(-8px);box-shadow:0 22px 48px rgba(2,8,23,0.6)}
-.feature .icon{width:58px;height:58px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:flex;align-items:center;justify-content:center}
-.feature .body h4{margin:0;font-size:15px}
-.feature .body p{margin:6px 0 0;color:var(--muted);font-size:13px}
-
-/* details area */
-.two-column{display:grid;grid-template-columns:1fr 420px;gap:18px;padding:0 36px 80px}
-.card{background:var(--panel);padding:18px;border-radius:12px}
-.utils .util{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
-.utils svg{width:40px;height:40px;flex:0 0 40px}
-
-/* footer */
-.footer{padding:20px 36px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-
-/* modal */
-#modal{display:none;position:fixed;inset:0;background:linear-gradient(0deg,rgba(2,6,23,0.5),rgba(2,6,23,0.8));backdrop-filter:blur(4px);align-items:center;justify-content:center}
-.modal-card{width:640px;max-width:94%;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px}
-
-/* small */
+/* ---------- Tiny helpers ---------- */
 .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
+.small{font-size:13px;color:var(--muted)}
 
-/* responsive */
-@media (max-width:1100px){.hero{grid-template-columns:1fr}.two-column{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:640px){.features{grid-template-columns:1fr;padding:16px}.header{padding:14px}.brand h1{font-size:14px}}
+/* ---------- Animations ---------- */
+@keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.logo, .pixel-alien{animation:floaty 6s ease-in-out infinite}
+
+/* ---------- Responsive breakpoints ---------- */
+/* Large tablets / small desktop */
+@media (max-width:1000px){
+  #gallery{grid-template-columns:repeat(2,1fr)}
+  .sidebar{width:260px}
+  .page{padding:18px}
+}
+
+/* Phone landscape / iPhone 11 (CSS width around 414px) */
+@media (max-width:420px){
+  .page{flex-direction:column;padding:12px;gap:14px}
+  .sidebar{order:2;width:100%;padding:16px;border-radius:12px}
+  main{order:1}
+  #gallery{grid-template-columns:repeat(1,1fr);gap:12px}
+  .nft-media{height:160px}
+  .tools-grid{grid-template-columns:repeat(1,1fr)}
+  .brand h1{font-size:15px}
+  .kicker{font-size:12px}
+  .sidebar .logo{width:48px;height:48px}
+}
+
+/* Larger mobile devices */
+@media (max-width:640px){
+  #gallery{grid-template-columns:repeat(1,1fr)}
+  .nft-card{padding:10px}
+  .tool{padding:10px}
+  input[type="search"]{min-width:120px}
+}
+
+/* Very small screens */
+@media (max-width:360px){
+  .nft-media{height:140px}
+  .tool .icon{width:44px;height:44px}
+  .sidebar{padding:12px}
+}
+
+/* ---------- iPhone safe-area adjustments (notch) ---------- */
+body{padding-bottom:env(safe-area-inset-bottom)}
+.page{padding-bottom:calc(var(--gutter) + env(safe-area-inset-bottom))}
+
+/* ---------- Performance / touch tweaks ---------- */
+button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select: none; touch-action: manipulation;}
+@media (hover:none) and (pointer:coarse){
+  .nft-card:hover{transform:none;box-shadow:none}
+}
+
+/* ---------- End of stylesheet ---------- */
 </style>
-</head>
 <body>
+  <!-- PAGE WRAPPER -->
+  <div class="page" style="display:flex;gap:28px;min-height:100vh;align-items:stretch;">
 
-<!-- header -->
-<header class="header">
-  <div class="brand">
-    <div class="logo" aria-hidden="true">
-      <!-- cute alien icon (not emoji) -->
-      <svg width="46" height="46" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg0" x1="0" x2="1">
-            <stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/>
-          </linearGradient>
-        </defs>
-        <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lg0)"/>
-        <ellipse cx="22" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
-        <ellipse cx="42" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
-      </svg>
-    </div>
-    <div>
-      <h1>DRALIEN UNIQUE 111 NFT’S</h1>
-      <p style="color:var(--muted)">— build on Monad Testnet. Create utilities and airdrops worth a total of $10,000+ for Dralien Mainnet holders.</p>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:12px;align-items:center">
-    <button class="mint-btn" id="connectDemo">Connect Wallet (Demo)</button>
-    <div class="kicker">Mint Date: <strong style="margin-left:8px">Dec 30, 2025</strong></div>
-  </div>
-</header>
-
-<!-- hero -->
-<section class="hero">
-  <div class="hero-panel">
-    <div class="hero-badge">👽 DRALIEN — Web3 Studio</div>
-    <div class="hero-title">
-      <div class="hdot" aria-hidden="true"></div>
+    <!-- SIDEBAR (left) -->
+    <aside class="sidebar" style="width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:18px;margin:28px;box-shadow:0 12px 40px rgba(2,6,23,0.6);flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;">
       <div>
-        <div class="title-text">DRALIEN UNIQUE 111 NFT’S</div>
-        <div style="color:var(--muted);font-size:13px;margin-top:6px">Small supply. Big utilities. $10,000+ in curated value for Mainnet holders.</div>
+        <!-- logo -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+            <!-- alien SVG (icon) -->
+            <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs><linearGradient id="lgA" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
+              <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lgA)"/>
+              <ellipse cx="22" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
+              <ellipse cx="42" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
+            </svg>
+          </div>
+          <div>
+            <h2 style="margin:0;font-size:22px;letter-spacing:-0.4px;">Draliens</h2>
+            <div style="color:#9aa4b2;font-size:13px;margin-top:4px;">0xd783…e03A</div>
+          </div>
+        </div>
+
+        <!-- short description -->
+        <p style="color:#cbd8e6;line-height:1.4;margin:8px 0;">5000 Follower Drip.haus Collection<br><a href="#" style="color:#7CFF6A;text-decoration:none;">drip.haus/draliens</a></p>
+
+        <!-- quick links -->
+        <nav style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
+          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
+            <i class="fa-solid fa-layer-group"></i> <span>Collection</span>
+          </a>
+          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
+            <i class="fa-regular fa-clock"></i> <span>Activity</span>
+          </a>
+          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
+            <i class="fa-solid fa-shield-halved"></i> <span>Provenance</span>
+          </a>
+        </nav>
+
+        <!-- big mint CTA (bottom-left like screenshot) -->
+        <div style="margin-top:28px;">
+          <button id="mintSidebarBtn" style="width:100%;background:#021018;color:#eaf1ff;padding:14px;border-radius:999px;border:0;font-weight:800;box-shadow:0 12px 34px rgba(2,6,23,0.7);">Mint — 0.5MON</button>
+          <div style="display:flex;justify-content:center;margin-top:12px;gap:8px;align-items:center;">
+            <div style="font-size:13px;color:#9aa4b2;">226 / 500 minted</div>
+            <div title="progress" style="width:10px;height:10px;background:#8b5cf6;border-radius:999px;"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <p class="lead">A tiny, utility-first collection of 111 NFTs. Monthly airdrops, exclusive physical drops, private Discord, and play-to-earn experiences. Limited to 222 total people (WL + FCFS).</p>
+      <!-- small footer text in sidebar -->
+      <div style="margin-top:14px;color:#9aa4b2;font-size:13px;">
+        <strong>Mint Date:</strong> Dec 30, 2025<br>
+        <strong>Supply:</strong> 111 mainnet NFTs
+      </div>
+    </aside>
 
-    <div class="stats" role="list" aria-label="collection stats">
-      <div class="stat" role="listitem"><h3 id="stat-supply">111</h3><p>Total Supply</p></div>
-      <div class="stat" role="listitem"><h3 id="stat-wl">100</h3><p>Whitelist Slots</p></div>
-      <div class="stat" role="listitem"><h3 id="stat-fcfs">100</h3><p>FCFS Slots</p></div>
-    </div>
+    <!-- MAIN CONTENT (right) -->
+    <main style="flex:1;display:flex;flex-direction:column;gap:18px;margin:28px 28px 28px 0;">
 
-    <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
-      <button class="mint-btn" id="donate">Donate $500 for Slot</button>
-      <div class="kicker">Only <strong>222</strong> total spots ever</div>
-    </div>
+      <!-- TOP NAV / ACTIONS (matches screenshot top-right search & create) -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <!-- left: nav -->
+        <div style="display:flex;gap:18px;align-items:center;">
+          <a href="#" style="color:inherit;font-weight:700;text-decoration:none;">Collection</a>
+          <a href="#" style="color:#9aa4b2;text-decoration:none;">Activity</a>
+          <a href="#" style="color:#9aa4b2;text-decoration:none;">Provenance</a>
+        </div>
 
-    <div style="margin-top:14px;color:var(--muted)">
-      Monthly Rewards: <strong>$10 × 48 months</strong> · Physical Dralien on Mainnet launch · Exclusive Discord access (max 222).
+        <!-- right: search / count / create -->
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="position:relative;">
+            <input id="searchInput" placeholder="Search" style="padding:10px 34px 10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            <i class="material-icons" style="position:absolute;right:8px;top:8px;color:#9aa4b2">search</i>
+          </div>
+          <div style="background:#ff6b6b;color:#fff;padding:8px 10px;border-radius:8px;font-weight:700;">3</div>
+          <button id="createBtn" style="background:#021018;color:#fff;padding:10px 14px;border-radius:999px;border:0;display:flex;gap:8px;align-items:center;"><i class="fa-solid fa-plus" style="color:#7CFF6A"></i> Create</button>
+          <div style="width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A)"></div>
+        </div>
+      </div>
+
+      <!-- GALLERY HEADER (left total and small filters) -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div style="display:flex;align-items:center;gap:18px;">
+          <h3 style="margin:0;font-size:22px;">Dralien Collection</h3>
+          <div style="color:#9aa4b2">5000 follower drip.haus collection</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <select id="sortSelect" style="padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit;">
+            <option>Sort: Newest</option>
+            <option>Sort: Oldest</option>
+            <option>Sort: Price</option>
+          </select>
+          <button id="filterBtn" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;">
+            <i class="fa-solid fa-filter"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- GALLERY GRID (NFT tiles) -->
+      <section id="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <!-- Repeat this card for each NFT. Replace data-img and data-id with your images/ids -->
+        <!-- 1 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-217.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <!-- If you prefer <img>, replace background with <img src=""> -->
+            <img data-src="images/dralien-217.png" alt="Dralien #217" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #217</div>
+              <div style="color:#9aa4b2;font-size:13px;">0xB1F3…7090</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-216.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img data-src="images/dralien-216.png" alt="Dralien #216" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #216</div>
+              <div style="color:#9aa4b2;font-size:13px;">0x105D…2765</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-215.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img data-src="images/dralien-215.png" alt="Dralien #215" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #215</div>
+              <div style="color:#9aa4b2;font-size:13px;">0x105D…2765</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-214.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img data-src="images/dralien-214.png" alt="Dralien #214" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #214</div>
+              <div style="color:#9aa4b2;font-size:13px;">0x105D…2765</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-213.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img data-src="images/dralien-213.png" alt="Dralien #213" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #213</div>
+              <div style="color:#9aa4b2;font-size:13px;">0xa7a4…72Bc</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+          <div class="nft-media" data-img="images/dralien-212.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img data-src="images/dralien-212.png" alt="Dralien #212" style="max-width:100%;height:100%;object-fit:cover" />
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dralien #212</div>
+              <div style="color:#9aa4b2;font-size:13px;">0xD037…c36d</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="favBtn" title="Favorite" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-regular fa-heart"></i></button>
+              <button class="moreBtn" title="More" style="background:none;border:0;color:#9aa4b2;cursor:pointer;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- add more cards as needed - copy any <article> above and change data-img, title, owner -->
+      </section>
+
+      <!-- BIG FEATURES/TOOLS ROW (very stacked, many icons) -->
+      <section style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px;">
+        <h4 style="margin:0 0 12px 0;">Tools & Utilities</h4>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+          <!-- NFT Generator -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-sparkles" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>NFT Generator</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Trait packs, batch mint, IPFS integration.</div>
+            </div>
+          </div>
+
+          <!-- Non-Custodial Stake -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FF8B7A,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-lock" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Non-Custodial Stake</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Stake without giving custody of keys.</div>
+            </div>
+          </div>
+
+          <!-- Online Chess -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#7A6CFF);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-chess" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Online Chess</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Blockchain chess with NFT pieces and rewards.</div>
+            </div>
+          </div>
+
+          <!-- Token Airdrop -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7A6CFF);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-gift" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Token Airdrop</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Configure fair drops for holders.</div>
+            </div>
+          </div>
+
+          <!-- Pixel Draw -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-paint-roller" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Pixel Draw</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Built-in editor for pixel NFTs.</div>
+            </div>
+          </div>
+
+          <!-- Strategic Play -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FFD36E);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-flag-checkered" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Strategic Play</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Leaderboards & play-to-earn mechanics.</div>
+            </div>
+          </div>
+
+          <!-- PitBits -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-puzzle-piece" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>PitBits</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Micro collectibles & mini-games.</div>
+            </div>
+          </div>
+
+          <!-- Update Metadata -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-edit" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Update Metadata</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Evolve traits over time.</div>
+            </div>
+          </div>
+
+          <!-- MPC -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FF8B7A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-network-wired" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>MPC</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Secure shared signing (multi-party computation).</div>
+            </div>
+          </div>
+
+          <!-- Additional creative features -->
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-rocket" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Launchpad</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Small project launches & incubations.</div>
+            </div>
+          </div>
+
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FF8B7A,#7CFF6A);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-chart-line" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Analytics</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Holder stats, drop analytics & growth tracking.</div>
+            </div>
+          </div>
+
+          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#7A6CFF);display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-comments" style="color:#021018"></i>
+            </div>
+            <div>
+              <strong>Community</strong>
+              <div style="color:#9aa4b2;font-size:13px;">Discord integration & gated chat for holders.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER ACTIONS -->
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <div style="color:#9aa4b2;font-size:13px;">Built by NifftySwiggle • Monad Testnet</div>
+        <div style="display:flex;gap:10px;">
+          <button id="downloadCSV" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;"><i class="fa-solid fa-download"></i> Export CSV</button>
+          <button id="roadmap" style="padding:10px;border-radius:10px;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);border:0;color:#021018;font-weight:800;">Roadmap</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- LIGHTBOX / MODAL for NFT preview -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.8);align-items:center;justify-content:center;padding:20px;z-index:60;">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;max-width:980px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="flex:1;">
+          <img id="lightboxImg" src="" alt="NFT preview" style="width:100%;height:420px;object-fit:contain;border-radius:8px;background:#0b0b0b;" />
+        </div>
+        <div style="width:320px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <h3 id="lightTitle" style="margin:0">Dralien #000</h3>
+              <div style="color:#9aa4b2">0xABCD…1234</div>
+            </div>
+            <button id="lightClose" style="background:none;border:0;color:#9aa4b2;font-size:20px;cursor:pointer;">✕</button>
+          </div>
+          <p style="color:#cbd8e6;margin-top:10px;">This is a preview. Replace with mint & buy controls when integrating blockchain functions.</p>
+          <div style="margin-top:14px;display:flex;gap:8px;">
+            <button style="flex:1;padding:12px;border-radius:10px;border:0;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);font-weight:800;color:#021018;">Mint</button>
+            <button style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;">Share</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <aside class="preview">
-    <div class="preview-art" aria-hidden="true">
-      <!-- stylized pixel alien box -->
-      <div class="pixel-alien" role="img" aria-label="pixel dralien preview">
-        <!-- inside, show a pixel-like SVG for visual effect -->
-        <svg width="180" height="180" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient>
-          </defs>
-          <rect x="0" y="0" width="24" height="24" fill="#cfeed6"/>
-          <!-- pixelated alien using squares -->
-          <g fill="#021018">
-            <rect x="8" y="6" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/>
-            <rect x="7" y="8" width="10" height="8" fill="#e9fef3" />
-            <rect x="9" y="9" width="1" height="1" fill="#021018"/>
-            <rect x="14" y="9" width="1" height="1" fill="#021018"/>
-            <rect x="10" y="14" width="4" height="2" fill="#a7f0a9"/>
-          </g>
-        </svg>
-      </div>
-    </div>
+  <!-- DEMO SCRIPTS: lightbox + mint/donate mock -->
+  <script>
+    // open lightbox when clicking any nft-media
+    document.querySelectorAll('.nft-media').forEach(media => {
+      media.addEventListener('click', function(e){
+        const imgEl = this.querySelector('img');
+        const src = imgEl ? imgEl.getAttribute('data-src') || imgEl.src : this.getAttribute('data-img');
+        const parent = this.closest('.nft-card');
+        const title = parent ? parent.querySelector('div > div').innerText : 'NFT';
+        const owner = parent ? parent.querySelector('.nft-card div div:nth-child(2)').innerText : '';
 
-    <div class="mint-row">
-      <div>
-        <div style="font-weight:800">Mint — $10 (+7% royalties)</div>
-        <div class="progress" id="mintProgress">0 / 111 minted</div>
-      </div>
-      <div style="display:flex;gap:8px">
-        <button class="mint-btn" id="mintNow">Mint Now</button>
-        <button class="mint-btn" id="wlBtn" style="background:linear-gradient(90deg,#ffffff10,#ffffff05);color:var(--accent1)">Request WL</button>
-      </div>
-    </div>
-  </aside>
-</section>
+        document.getElementById('lightboxImg').src = src || '';
+        document.getElementById('lightTitle').innerText = title || 'NFT Preview';
+        document.getElementById('lightbox').style.display = 'flex';
+        document.getElementById('lightbox').setAttribute('aria-hidden','false');
+      });
+    });
 
-<!-- features -->
-<section class="features" aria-label="features">
-  <!-- We'll create 11 feature tiles -->
-  <article class="feature">
-    <div class="icon" aria-hidden="true">
-      <svg width="32" height="32" viewBox="0 0 24 24"><rect x="3" y="3" rx="3" width="18" height="18" fill="url(#g01)"/></svg>
-    </div>
-    <div class="body">
-      <h4>NFT Generator</h4>
-      <p>Create unique NFTs, mint with randomized traits and on-chain metadata.</p>
-    </div>
-  </article>
+    document.getElementById('lightClose').addEventListener('click', function(){
+      document.getElementById('lightbox').style.display = 'none';
+      document.getElementById('lightbox').setAttribute('aria-hidden','true');
+    });
 
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="url(#g02)"/></svg></div>
-    <div class="body"><h4>Non-Custodial Stake</h4><p>Stake your tokens without surrendering private keys — secure yield mechanics.</p></div>
-  </article>
+    // Mint sidebar demo
+    document.getElementById('mintSidebarBtn').addEventListener('click', function(){
+      alert('Demo: Mint flow requires wallet & smart contract integration. I can add a MetaMask demo next.');
+    });
 
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M4 6h16v12H4z" fill="url(#g03)"/></svg></div>
-    <div class="body"><h4>Online Chess</h4><p>Blockchain-power chess with NFT pieces, play-to-earn match rewards.</p></div>
-  </article>
+    // Create button demo
+    document.getElementById('createBtn').addEventListener('click', function(){
+      alert('Open create modal (demo) — add images & metadata to mint.');
+    });
 
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 4v8l6 4" fill="url(#g04)"/></svg></div>
-    <div class="body"><h4>Token Airdrop</h4><p>Fair, transparent airdrops distributed to qualifying holders.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><g fill="url(#g05)"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/></g></svg></div>
-    <div class="body"><h4>Game Hub</h4><p>One place for tournaments, leaderboards, and playable titles.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M4 20l8-16 8 16" fill="url(#g06)"/></svg></div>
-    <div class="body"><h4>Pixel Draw</h4><p>Draw pixel art and mint immediately as NFTs — simple editor built-in.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M5 12h14" stroke="url(#g07)" stroke-width="2" stroke-linecap="round"/></svg></div>
-    <div class="body"><h4>Strategic Play</h4><p>Play-to-earn strategies and competitive formats to reward skillful play.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3" fill="url(#g08)"/><rect x="6" y="13" width="12" height="6" rx="1.5" fill="url(#g08)"/></svg></div>
-    <div class="body"><h4>PitBits</h4><p>Micro-collectibles and mini-game pieces — quick interactions, real rewards.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M6 6h12v12H6z" fill="url(#g09)"/></svg></div>
-    <div class="body"><h4>Update Metadata</h4><p>Evolving metadata for NFTs — upgrade visuals, traits, and links post-mint.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M3 12h18" stroke="url(#g10)" stroke-width="2" stroke-linecap="round"/></svg></div>
-    <div class="body"><h4>MPC</h4><p>Multi-party computation support for secure shared custody and signing flows.</p></div>
-  </article>
-
-  <article class="feature">
-    <div class="icon"><svg width="32" height="32" viewBox="0 0 24 24"><path d="M4 8h16M4 12h16M4 16h16" stroke="url(#g11)" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-    <div class="body"><h4>Coming soon</h4><p>New features, partnerships, and surprise drops — stay tuned.</p></div>
-  </article>
-</section>
-
-<!-- utilities & about -->
-<section class="two-column">
-  <div class="card">
-    <h3>Utilities & Benefits</h3>
-    <div class="utils" style="margin-top:10px">
-      <div class="util"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="url(#g12)"/></svg>
-        <div><strong>Monthly Rewards</strong><div style="color:var(--muted)">$10 in curated airdrops / ICOs every month for 48 months (total $480).</div></div></div>
-
-      <div class="util"><svg viewBox="0 0 24 24"><rect x="3" y="3" rx="3" width="18" height="18" fill="url(#g13)"/></svg>
-        <div><strong>Physical Dralien</strong><div style="color:var(--muted)">Collectors will receive a physical Dralien when Mainnet launches.</div></div></div>
-
-      <div class="util"><svg viewBox="0 0 24 24"><path d="M4 20l8-12 8 12" fill="url(#g14)"/></svg>
-        <div><strong>Exclusive Discord</strong><div style="color:var(--muted)">Access limited to 222 members total — community-first support.</div></div></div>
-
-      <div style="margin-top:12px;border-top:1px solid rgba(255,255,255,0.03);padding-top:12px;color:var(--muted)">
-        <p><strong>How to get a slot</strong></p>
-        <p>Donate $500 worth of Droplets to get a WL slot (guaranteed mint). FCFS slots fill any WL dropouts.</p>
-      </div>
-    </div>
-
-    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:16px 0">
-
-    <h3>About the Creator</h3>
-    <p style="color:var(--muted)">I've been building NFTs since 2020. I focus on small, utility-driven collections — quality over quantity. With a 111 supply, our goal is to deliver real, lasting value to holders.</p>
-  </div>
-
-  <aside class="card">
-    <h3>Mint Info</h3>
-    <p><strong>Mint Date:</strong> Dec 30, 2025</p>
-    <p><strong>Mint Supply:</strong> 111 Mainnet NFTs</p>
-    <p><strong>Mint Price:</strong> $10 + 7% royalties</p>
-    <p style="margin-top:8px;color:var(--muted)">Whitelist (WL): 100 guaranteed slots. FCFS: 100 slots. Total only 222 people will ever be part of the project (WL + FCFS).</p>
-
-    <div style="margin-top:12px;display:flex;gap:10px">
-      <button class="mint-btn" id="slotBtn">Request WL Slot (Demo)</button>
-      <button class="mint-btn" id="roadmapBtn" style="background:linear-gradient(90deg,#ffffff10,#ffffff05);color:var(--accent2)">View Roadmap</button>
-    </div>
-  </aside>
-</section>
-
-<!-- footer -->
-<footer class="footer">
-  <div>Built by NifftySwiggle Studio • Monad Testnet — <span style="color:var(--muted)">111 supply • $10,000+ utilities</span></div>
-  <div style="display:flex;gap:10px;align-items:center">
-    <div class="kicker">Total: <strong style="margin-left:6px">111</strong></div>
-    <div class="kicker">WL:100 • FCFS:100</div>
-  </div>
-</footer>
-
-<!-- modal (demo donate) -->
-<div id="modal" aria-hidden="true">
-  <div class="modal-card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3 style="margin:0">Donate for Slot — $500 (Demo)</h3>
-      <button id="modalClose" style="background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer">✕</button>
-    </div>
-    <p style="color:var(--muted)">This is a front-end demo. No real money is collected. Enter a donation amount in "Droplets" (simulated).</p>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <input id="donation" type="number" min="1" value="500" style="flex:1;padding:10px;border-radius:10px;border:0;background:rgba(255,255,255,0.02);color:inherit" />
-      <button class="mint-btn" id="confirmDonate">Donate</button>
-    </div>
-    <div id="donateMsg" style="margin-top:10px;color:var(--muted)"></div>
-  </div>
-</div>
-
-<script>
-  // small helper to toggle modal
-  const modal = document.getElementById('modal');
-  document.getElementById('donate').onclick = ()=> { modal.style.display='flex'; modal.setAttribute('aria-hidden','false'); };
-  document.getElementById('modalClose').onclick = ()=> { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); };
-  document.getElementById('confirmDonate').onclick = ()=>{
-    const v = Number(document.getElementById('donation').value||0);
-    const msg = document.getElementById('donateMsg');
-    if(v >= 500){
-      msg.style.color = 'var(--accent1)';
-      msg.textContent = "Thanks — you've been queued for a donation slot (demo). We'll simulate granting a WL slot.";
-      // simulate increment in mint progress
-      setTimeout(()=>{
-        const prog = document.getElementById('mintProgress');
-        const before = parseInt(prog.textContent.split('/')[0]) || 0;
-        const next = Math.min(111, before + 1);
-        prog.textContent = next + ' / 111 minted';
-      },700);
-    } else {
-      msg.style.color = 'orange';
-      msg.textContent = 'Minimum $500 worth of Droplets required.';
+    // simple responsive: turn 3-col into 2 or 1 on smaller screens
+    function applyGrid(){
+      const w = window.innerWidth;
+      const grid = document.getElementById('gallery');
+      if(!grid) return;
+      if(w <= 640) grid.style.gridTemplateColumns = 'repeat(1,1fr)';
+      else if(w <= 1000) grid.style.gridTemplateColumns = 'repeat(2,1fr)';
+      else grid.style.gridTemplateColumns = 'repeat(3,1fr)';
     }
-  };
+    window.addEventListener('resize', applyGrid);
+    applyGrid();
 
-  // Demo button behaviors
-  document.getElementById('mintNow').onclick = ()=> alert('Demo only — minting needs wallet + smart contract.');
-  document.getElementById('wlBtn').onclick = ()=> alert('Demo: Request WL — this would open a form or wallet signing flow in production.');
-  document.getElementById('slotBtn').onclick = ()=> alert('Demo: WL request sent.');
-  document.getElementById('roadmapBtn').onclick = ()=> alert('Demo: Roadmap modal would open here.');
+    // lazy load images quickly
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      const src = img.getAttribute('data-src');
+      if(src){
+        img.src = src;
+        img.removeAttribute('data-src');
+      }
+    });
 
-  // small decorative gradients setup for SVGs (we want many icons to share accessible gradients)
-  (function injectGradients(){
-    const defs = `
-      <svg width="0" height="0" style="position:absolute">
-        <defs>
-          <linearGradient id="g01" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient>
-          <linearGradient id="g02" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#7CFF6A"/></linearGradient>
-          <linearGradient id="g03" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient>
-          <linearGradient id="g04" x1="0" x2="1"><stop offset="0" stop-color="#FFD36E"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient>
-          <linearGradient id="g05" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#FF88C2"/></linearGradient>
-          <linearGradient id="g06" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#7CFF6A"/></linearGradient>
-          <linearGradient id="g07" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#FFD36E"/></linearGradient>
-          <linearGradient id="g08" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#82CFFF"/></linearGradient>
-          <linearGradient id="g09" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#7CFF6A"/></linearGradient>
-          <linearGradient id="g10" x1="0" x2="1"><stop offset="0" stop-color="#FF8B7A"/><stop offset="1" stop-color="#7CFF6A"/></linearGradient>
-          <linearGradient id="g11" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient>
-          <linearGradient id="g12" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#FF8B7A"/></linearGradient>
-          <linearGradient id="g13" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#FFD36E"/></linearGradient>
-          <linearGradient id="g14" x1="0" x2="1"><stop offset="0" stop-color="#7A6CFF"/><stop offset="1" stop-color="#7CFF6A"/></linearGradient>
-        </defs>
-      </svg>
-    `;
-    document.body.insertAdjacentHTML('afterbegin', defs);
-  })();
-</script>
+    // small helpful keyboard: Esc closes lightbox
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') document.getElementById('lightClose').click();
+    });
+  </script>
 
+  <!-- quick responsive tweaks (for iPhone 11 & mobile) -->
+  <style>
+    @media (max-width:1000px){
+      .page{flex-direction:column;padding:0 12px}
+      .sidebar{width:auto;margin:20px;border-radius:12px}
+      main{margin:0}
+    }
+    @media (max-width:640px){
+      .sidebar{order:2}
+      main{order:1}
+    }
+  </style>
 </body>
+
+
+     
 </html>
