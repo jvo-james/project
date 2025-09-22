@@ -76,8 +76,7 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 }
 .sidebar .kicker{color:var(--muted);font-size:13px;margin-top:12px}
 
-/* ---------- Gallery grid (right) ---------- */
-#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+ #gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .nft-card{
   background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
   border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;transition:transform .2s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
@@ -87,60 +86,49 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 .nft-media{height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .nft-media img{width:100%;height:100%;object-fit:cover;display:block}
 
-/* card body */
-.nft-card .meta{display:flex;justify-content:space-between;align-items:center}
+ .nft-card .meta{display:flex;justify-content:space-between;align-items:center}
 .nft-card .meta .title{font-weight:700}
 .nft-card .meta .owner{color:var(--muted);font-size:13px}
 
-/* icon controls */
-.nft-card .actions{display:flex;gap:8px}
+ .nft-card .actions{display:flex;gap:8px}
 .nft-card button{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px}
 .nft-card button:focus{outline:3px solid var(--focus);outline-offset:4px}
 
-/* ---------- Tools / Grid of features ---------- */
-section.tools{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px}
+ section.tools{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px}
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
 .tool{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;transition:transform .18s, box-shadow .18s;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
 .tool:hover{transform:translateY(-6px);box-shadow:var(--shadow-accent)}
 .tool .icon{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent1));box-shadow:0 10px 30px rgba(122,108,255,0.08)}
 .tool strong{display:block}
 
-/* ---------- Lightbox & modal ---------- */
-#lightbox{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.8), rgba(2,6,23,0.9));z-index:70;padding:18px}
+ #lightbox{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.8), rgba(2,6,23,0.9));z-index:70;padding:18px}
 #lightbox[aria-hidden="false"]{display:flex}
 #lightbox .modal{width:100%;max-width:980px;border-radius:12px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 30px 80px rgba(0,0,0,0.7)}
 
-/* ---------- Footer actions ---------- */
-.footer-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;color:var(--muted);font-size:13px}
+ .footer-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;color:var(--muted);font-size:13px}
 
-/* ---------- Buttons ---------- */
-button.mint, .mint-btn{
+ button.mint, .mint-btn{
   border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:10px 14px;border-radius:10px;font-weight:800;color:#021018;cursor:pointer;box-shadow:0 10px 30px rgba(122,108,255,0.12);
 }
 button.ghost{background:transparent;border:var(--glass-border);padding:10px;border-radius:10px;color:var(--text);cursor:pointer}
 
-/* ---------- Accessibility & focus ---------- */
-:focus{outline:3px solid var(--focus);outline-offset:3px}
+ :focus{outline:3px solid var(--focus);outline-offset:3px}
 [tabindex="-1"]:focus{outline:none}
 
-/* ---------- Tiny helpers ---------- */
-.kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
+ .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
 .small{font-size:13px;color:var(--muted)}
 
-/* ---------- Animations ---------- */
-@keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+ @keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
 .logo, .pixel-alien{animation:floaty 6s ease-in-out infinite}
 
-/* ---------- Responsive breakpoints ---------- */
-/* Large tablets / small desktop */
+
 @media (max-width:1000px){
   #gallery{grid-template-columns:repeat(2,1fr)}
   .sidebar{width:260px}
   .page{padding:18px}
 }
 
-/* Phone landscape / iPhone 11 (CSS width around 414px) */
-@media (max-width:420px){
+ @media (max-width:420px){
   .page{flex-direction:column;padding:12px;gap:14px}
   .sidebar{order:2;width:100%;padding:16px;border-radius:12px}
   main{order:1}
@@ -152,45 +140,36 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
   .sidebar .logo{width:48px;height:48px}
 }
 
-/* Larger mobile devices */
-@media (max-width:640px){
+ @media (max-width:640px){
   #gallery{grid-template-columns:repeat(1,1fr)}
   .nft-card{padding:10px}
   .tool{padding:10px}
   input[type="search"]{min-width:120px}
 }
 
-/* Very small screens */
-@media (max-width:360px){
+ @media (max-width:360px){
   .nft-media{height:140px}
   .tool .icon{width:44px;height:44px}
   .sidebar{padding:12px}
 }
 
-/* ---------- iPhone safe-area adjustments (notch) ---------- */
-body{padding-bottom:env(safe-area-inset-bottom)}
+ body{padding-bottom:env(safe-area-inset-bottom)}
 .page{padding-bottom:calc(var(--gutter) + env(safe-area-inset-bottom))}
 
-/* ---------- Performance / touch tweaks ---------- */
-button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select: none; touch-action: manipulation;}
+ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select: none; touch-action: manipulation;}
 @media (hover:none) and (pointer:coarse){
   .nft-card:hover{transform:none;box-shadow:none}
 }
 
-/* ---------- End of stylesheet ---------- */
-</style>
+ </style>
 <body>
-  <!-- PAGE WRAPPER -->
-  <div class="page" style="display:flex;gap:28px;min-height:100vh;align-items:stretch;">
+   <div class="page" style="display:flex;gap:28px;min-height:100vh;align-items:stretch;">
 
-    <!-- SIDEBAR (left) -->
-    <aside class="sidebar" style="width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:18px;margin:28px;box-shadow:0 12px 40px rgba(2,6,23,0.6);flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;">
+     <aside class="sidebar" style="width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:18px;margin:28px;box-shadow:0 12px 40px rgba(2,6,23,0.6);flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between;">
       <div>
-        <!-- logo -->
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+         <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
           <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-            <!-- alien SVG (icon) -->
-            <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+             <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs><linearGradient id="lgA" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
               <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lgA)"/>
               <ellipse cx="22" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
@@ -203,11 +182,9 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </div>
 
-        <!-- short description -->
-        <p style="color:#cbd8e6;line-height:1.4;margin:8px 0;">5000 Follower Drip.haus Collection<br><a href="#" style="color:#7CFF6A;text-decoration:none;">drip.haus/draliens</a></p>
+         <p style="color:#cbd8e6;line-height:1.4;margin:8px 0;">5000 Follower Drip.haus Collection<br><a href="#" style="color:#7CFF6A;text-decoration:none;">drip.haus/draliens</a></p>
 
-        <!-- quick links -->
-        <nav style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
+         <nav style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
           <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
             <i class="fa-solid fa-layer-group"></i> <span>Collection</span>
           </a>
@@ -219,8 +196,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </a>
         </nav>
 
-        <!-- big mint CTA (bottom-left like screenshot) -->
-        <div style="margin-top:28px;">
+         <div style="margin-top:28px;">
           <button id="mintSidebarBtn" style="width:100%;background:#021018;color:#eaf1ff;padding:14px;border-radius:999px;border:0;font-weight:800;box-shadow:0 12px 34px rgba(2,6,23,0.7);">Mint — 0.5MON</button>
           <div style="display:flex;justify-content:center;margin-top:12px;gap:8px;align-items:center;">
             <div style="font-size:13px;color:#9aa4b2;">226 / 500 minted</div>
@@ -229,27 +205,22 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         </div>
       </div>
 
-      <!-- small footer text in sidebar -->
-      <div style="margin-top:14px;color:#9aa4b2;font-size:13px;">
+       <div style="margin-top:14px;color:#9aa4b2;font-size:13px;">
         <strong>Mint Date:</strong> Dec 30, 2025<br>
         <strong>Supply:</strong> 111 mainnet NFTs
       </div>
     </aside>
 
-    <!-- MAIN CONTENT (right) -->
-    <main style="flex:1;display:flex;flex-direction:column;gap:18px;margin:28px 28px 28px 0;">
+     <main style="flex:1;display:flex;flex-direction:column;gap:18px;margin:28px 28px 28px 0;">
 
-      <!-- TOP NAV / ACTIONS (matches screenshot top-right search & create) -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <!-- left: nav -->
-        <div style="display:flex;gap:18px;align-items:center;">
+       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+         <div style="display:flex;gap:18px;align-items:center;">
           <a href="#" style="color:inherit;font-weight:700;text-decoration:none;">Collection</a>
           <a href="#" style="color:#9aa4b2;text-decoration:none;">Activity</a>
           <a href="#" style="color:#9aa4b2;text-decoration:none;">Provenance</a>
         </div>
 
-        <!-- right: search / count / create -->
-        <div style="display:flex;align-items:center;gap:12px;">
+         <div style="display:flex;align-items:center;gap:12px;">
           <div style="position:relative;">
             <input id="searchInput" placeholder="Search" style="padding:10px 34px 10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
             <i class="material-icons" style="position:absolute;right:8px;top:8px;color:#9aa4b2">search</i>
@@ -260,8 +231,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         </div>
       </div>
 
-      <!-- GALLERY HEADER (left total and small filters) -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <div style="display:flex;align-items:center;gap:18px;">
           <h3 style="margin:0;font-size:22px;">Dralien Collection</h3>
           <div style="color:#9aa4b2">5000 follower drip.haus collection</div>
@@ -278,14 +248,10 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         </div>
       </div>
 
-      <!-- GALLERY GRID (NFT tiles) -->
-      <section id="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
-        <!-- Repeat this card for each NFT. Replace data-img and data-id with your images/ids -->
-        <!-- 1 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+       <section id="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-217.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-            <!-- If you prefer <img>, replace background with <img src=""> -->
-            <img data-src="image1.gif" alt="Dralien #217" style="max-width:100%;height:100%;object-fit:cover" />
+             <img data-src="image1.gif" alt="Dralien #217" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
@@ -299,8 +265,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- 2 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-216.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <img data-src="image2.jpeg" alt="Dralien #216" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
@@ -316,8 +281,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- 3 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-215.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <img data-src="image3.jpeg" alt="Dralien #215" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
@@ -333,8 +297,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- 4 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-214.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <img data-src="image4.jpeg" alt="Dralien #214" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
@@ -350,8 +313,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- 5 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-213.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <img data-src="image5.jpeg" alt="Dralien #213" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
@@ -367,8 +329,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
           </div>
         </article>
 
-        <!-- 6 -->
-        <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
+         <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-212.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
             <img data-src="image6.jpeg" alt="Dralien #212" style="max-width:100%;height:100%;object-fit:cover" />
           </div>
@@ -386,12 +347,10 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
 
       </section>
 
-      <!-- BIG FEATURES/TOOLS ROW (very stacked, many icons) -->
-      <section style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px;">
+       <section style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px;">
         <h4 style="margin:0 0 12px 0;">Tools & Utilities</h4>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
-          <!-- NFT Generator -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-sparkles" style="color:#021018"></i>
             </div>
@@ -401,8 +360,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Non-Custodial Stake -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FF8B7A,#7CFF6A);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-lock" style="color:#021018"></i>
             </div>
@@ -412,8 +370,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Online Chess -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#7A6CFF);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-chess" style="color:#021018"></i>
             </div>
@@ -423,8 +380,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Token Airdrop -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7A6CFF);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-gift" style="color:#021018"></i>
             </div>
@@ -434,8 +390,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Pixel Draw -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-paint-roller" style="color:#021018"></i>
             </div>
@@ -445,8 +400,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Strategic Play -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FFD36E);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-flag-checkered" style="color:#021018"></i>
             </div>
@@ -456,8 +410,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- PitBits -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-puzzle-piece" style="color:#021018"></i>
             </div>
@@ -467,8 +420,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Update Metadata -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7CFF6A);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-edit" style="color:#021018"></i>
             </div>
@@ -478,8 +430,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- MPC -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FF8B7A);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-network-wired" style="color:#021018"></i>
             </div>
@@ -489,8 +440,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
             </div>
           </div>
 
-          <!-- Additional creative features -->
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
+           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
             <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
               <i class="fa-solid fa-rocket" style="color:#021018"></i>
             </div>
@@ -522,8 +472,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
         </div>
       </section>
 
-      <!-- FOOTER ACTIONS -->
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
         <div style="color:#9aa4b2;font-size:13px;">Built by NifftySwiggle • Monad Testnet</div>
         <div style="display:flex;gap:10px;">
           <button id="downloadCSV" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;"><i class="fa-solid fa-download"></i> Export CSV</button>
@@ -533,8 +482,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
     </main>
   </div>
 
-  <!-- LIGHTBOX / MODAL for NFT preview -->
-  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.8);align-items:center;justify-content:center;padding:20px;z-index:60;">
+   <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.8);align-items:center;justify-content:center;padding:20px;z-index:60;">
     <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;max-width:980px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
       <div style="display:flex;gap:12px;align-items:flex-start;">
         <div style="flex:1;">
@@ -558,10 +506,8 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
     </div>
   </div>
 
-  <!-- DEMO SCRIPTS: lightbox + mint/donate mock -->
-  <script>
-    // open lightbox when clicking any nft-media
-    document.querySelectorAll('.nft-media').forEach(media => {
+   <script>
+     document.querySelectorAll('.nft-media').forEach(media => {
       media.addEventListener('click', function(e){
         const imgEl = this.querySelector('img');
         const src = imgEl ? imgEl.getAttribute('data-src') || imgEl.src : this.getAttribute('data-img');
@@ -581,18 +527,15 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
       document.getElementById('lightbox').setAttribute('aria-hidden','true');
     });
 
-    // Mint sidebar demo
-    document.getElementById('mintSidebarBtn').addEventListener('click', function(){
+     document.getElementById('mintSidebarBtn').addEventListener('click', function(){
       alert('Demo: Mint flow requires wallet & smart contract integration. I can add a MetaMask demo next.');
     });
 
-    // Create button demo
-    document.getElementById('createBtn').addEventListener('click', function(){
+     document.getElementById('createBtn').addEventListener('click', function(){
       alert('Open create modal (demo) — add images & metadata to mint.');
     });
 
-    // simple responsive: turn 3-col into 2 or 1 on smaller screens
-    function applyGrid(){
+     function applyGrid(){
       const w = window.innerWidth;
       const grid = document.getElementById('gallery');
       if(!grid) return;
@@ -603,8 +546,7 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
     window.addEventListener('resize', applyGrid);
     applyGrid();
 
-    // lazy load images quickly
-    document.querySelectorAll('img[data-src]').forEach(img => {
+     document.querySelectorAll('img[data-src]').forEach(img => {
       const src = img.getAttribute('data-src');
       if(src){
         img.src = src;
@@ -612,14 +554,12 @@ button, a, input{ -webkit-tap-highlight-color: transparent; -webkit-user-select:
       }
     });
 
-    // small helpful keyboard: Esc closes lightbox
-    document.addEventListener('keydown', (e) => {
+     document.addEventListener('keydown', (e) => {
       if(e.key === 'Escape') document.getElementById('lightClose').click();
     });
   </script>
 
-  <!-- quick responsive tweaks (for iPhone 11 & mobile) -->
-  <style>
+   <style>
     @media (max-width:1000px){
       .page{flex-direction:column;padding:0 12px}
       .sidebar{width:auto;margin:20px;border-radius:12px}
