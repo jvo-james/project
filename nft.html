@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>DRALIEN — UNIQUE 111 NFTS</title>
 
-<!-- Icons & fonts -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
@@ -33,13 +32,12 @@
   --ui-scale:1;
 }
 
-/* reset & base */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:
   radial-gradient(640px 280px at 8% 8%, rgba(122,108,255,0.06), transparent 8%),
   radial-gradient(520px 220px at 94% 80%, rgba(124,255,106,0.02), transparent 10%),
   linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 60%);
-  color:var(--text);font-family:"Rajdhani",Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);font-family:Arial,sans-serif;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.35;
   -webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;
   -webkit-font-feature-settings:"liga" 0;
@@ -49,13 +47,11 @@ html,body{height:100%;margin:0;background:
 img{display:block;max-width:100%;height:auto}
 button,input,select,textarea{font-family:inherit}
 
-/* layout container */
-.page{display:flex;gap:var(--gutter);min-height:100vh;align-items:flex-start;padding:calc(var(--gutter) + 10px) clamp(14px,4vw,36px);max-width:calc(var(--max-width) + 2*var(--gutter));margin:0 auto;transform:translateZ(0)}
+ .page{display:flex;gap:var(--gutter);min-height:100vh;align-items:flex-start;padding:calc(var(--gutter) + 10px) clamp(14px,4vw,36px);max-width:calc(var(--max-width) + 2*var(--gutter));margin:0 auto;transform:translateZ(0)}
 .sidebar{width:320px;flex-shrink:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:20px;box-shadow:var(--shadow-lg);border:var(--glass-border);display:flex;flex-direction:column;gap:14px;min-height:320px}
 main{flex:1;display:flex;flex-direction:column;gap:18px;min-width:0}
 
-/* header / topbar */
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 2px}
+ .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 2px}
 .topbar-left{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .crumb{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:transparent;color:var(--text);font-weight:800;letter-spacing:0.4px}
 .crumb.muted{opacity:0.64;color:var(--muted);font-weight:700}
@@ -304,12 +300,10 @@ button:disabled{opacity:0.6;cursor:not-allowed}
   .page{padding:12px}
 }
 
-/* utility classes for JS-driven states */
-.is-loading{opacity:0.6;pointer-events:none}
+ .is-loading{opacity:0.6;pointer-events:none}
 .show-inline{display:inline-block}
 
-/* stacked visual polish */
-.layer-glow{position:relative}
+ .layer-glow{position:relative}
 .layer-glow:before{content:"";position:absolute;inset:-6px;border-radius:inherit;background:linear-gradient(90deg, rgba(124,108,255,0.06), rgba(124,255,106,0.03));filter:blur(18px);opacity:0.6;z-index:-1}
 .highlight-ring{box-shadow:0 12px 36px rgba(124,108,255,0.12), inset 0 -6px 20px rgba(0,0,0,0.25)}
 
@@ -347,7 +341,7 @@ button:disabled{opacity:0.6;cursor:not-allowed}
       </nav>
 
       <div class="sidebar-mint">
-        <button id="mintSidebarBtn" class="mint-btn">Mint — 0.5MON</button>
+        <button id="mintSidebarBtn" class="mint-btn">Mint — $10 MON</button>
         <div class="mint-meta">
           <div class="mint-count">226 / 500 minted</div>
           <div class="mint-dot" title="progress" aria-hidden="true"></div>
@@ -611,8 +605,8 @@ button:disabled{opacity:0.6;cursor:not-allowed}
             <h5>Featured NFTs for Tools</h5>
             <p class="muted">Hand-picked examples that show how tools can affect item state.</p>
             <div class="mini-nft-grid" id="miniNftGrid">
-              <div class="mini-nft" data-img="images/dralien-217.png"><img src="images/dralien-217.png" alt="mini"></div>
-              <div class="mini-nft" data-img="images/dralien-216.png"><img src="images/dralien-216.png" alt="mini"></div>
+              <div class="mini-nft" data-img="images/dralien-217.png"><img src="images3.jpeg" alt="mini"></div>
+              <div class="mini-nft" data-img="images/dralien-216.png"><img src="images3.jpeg" alt="mini"></div>
             </div>
           </div>
 
@@ -676,7 +670,7 @@ button:disabled{opacity:0.6;cursor:not-allowed}
           </div>
 
           <div class="about-ctas">
-            <button class="btn-discord" id="joinDiscord"><i class="fa-brands fa-discord" aria-hidden="true"></i><span>Join Discord</span></button>
+            <a href="https://discord.gg/7cZTzWe6" class="btn-discord" id="joinDiscord"><i class="fa-brands fa-discord" aria-hidden="true"></i><span>Join Discord</span></a>
             <button class="btn-whitepaper" id="openWhitepaper"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>Read Whitepaper</span></button>
           </div>
 
