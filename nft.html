@@ -161,6 +161,307 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
   .nft-card:hover{transform:none;box-shadow:none}
 }
 
+ .hero-wrap{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  padding:28px;
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:24px;
+  align-items:center;
+  background:
+    radial-gradient(600px 240px at 10% 10%, rgba(124,108,255,0.06), transparent 8%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+ .hero-wrap .bg-layer{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(240px 120px at 85% 10%, rgba(124,108,255,0.06), transparent 20%),
+    radial-gradient(200px 100px at 5% 80%, rgba(124,255,106,0.03), transparent 20%);
+}
+
+ .hero-orb{
+  position:absolute; border-radius:999px; filter:blur(28px); opacity:0.14;
+  transform-origin:center;
+  animation:orbFloat 8s ease-in-out infinite;
+}
+.hero-orb.orb-1{width:420px;height:420px;right:-120px;top:-80px;background:linear-gradient(90deg,#7A6CFF,#7CFF6A)}
+.hero-orb.orb-2{width:260px;height:260px;left:-80px;bottom:-60px;background:linear-gradient(90deg,#FFD36E,#7A6CFF);animation-duration:10s;opacity:0.12}
+@keyframes orbFloat{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
+
+ .hero-left{position:relative;z-index:2;padding-right:8px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);
+  font-weight:700;color:var(--accent1);width:max-content;margin-bottom:14px;
+}
+.hero-h{
+  font-size: clamp(22px, 4.2vw, 36px);
+  margin:0 0 8px;
+  line-height:1.02;
+  letter-spacing:-0.8px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text; background-clip:text;color:transparent;
+  display:inline-block;
+}
+.hero-sub{color:var(--muted);margin:6px 0 18px;line-height:1.45}
+
+ .hero-stats{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+.stat-chip{background:rgba(255,255,255,0.02);padding:10px 14px;border-radius:12px;min-width:110px;text-align:center}
+.stat-chip h4{margin:0;font-size:18px}
+.stat-chip p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+ .hero-ctas{display:flex;gap:12px;margin-top:18px;align-items:center}
+.btn-primary{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021018;padding:12px 16px;border-radius:12px;border:0;font-weight:800;cursor:pointer;box-shadow:0 12px 36px rgba(122,108,255,0.12)
+}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:12px 14px;border-radius:12px;color:var(--text);cursor:pointer}
+
+ .hero-preview{
+  position:relative;z-index:2;border-radius:14px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:var(--elev);
+  display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:space-between;
+}
+.preview-canvas{
+  height:260px;border-radius:10px;background:linear-gradient(180deg,#dfffe8 0%, #dcdcff 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
+  box-shadow: inset 0 -18px 40px rgba(2,6,23,0.06);
+  transform:translateZ(0);
+}
+ .pixel-alien{
+  width:220px;height:220px;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 40px rgba(2,6,23,0.5);
+  animation:pixelBob 5.6s ease-in-out infinite;
+}
+@keyframes pixelBob{0%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}100%{transform:translateY(0) rotate(-1deg)}}
+
+ .mint-progress{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.progress-track{height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden;flex:1}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:999px;transition:width .9s cubic-bezier(.2,.9,.2,1)}
+
+ .hero-marquee{margin-top:14px;padding:10px;border-radius:10px;background:linear-gradient(90deg, rgba(124,108,255,0.03), rgba(124,255,106,0.02));overflow:hidden}
+.hero-marquee .marq{display:inline-block;white-space:nowrap;animation:marq 12s linear infinite}
+@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+ .hero-wrap[data-parallax="true"] .parallax-1{transform:translate3d(var(--px,0), var(--py,0), 0)}
+
+ @media (max-width:1000px){
+  .hero-wrap{grid-template-columns:1fr; padding:22px}
+  .hero-preview{order:2}
+}
+@media (max-width:420px){
+  .hero-wrap{padding:16px;border-radius:12px}
+  .hero-h{font-size:20px}
+  .pixel-alien{width:150px;height:150px}
+  .preview-canvas{height:180px}
+  .hero-wrap{gap:12px}
+  .hero-stats{flex-wrap:wrap}
+}
+
+ .about-section{
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border-radius:12px;padding:22px;margin-top:18px;border:1px solid rgba(255,255,255,0.02);
+  box-shadow:0 12px 40px rgba(2,6,23,0.5);
+  display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start;
+}
+.about-left{position:relative;z-index:2}
+.about-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--accent1);font-weight:700;margin-bottom:12px}
+.about-title{font-size:clamp(18px,3.2vw,26px);margin:0 0 12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.about-desc{color:var(--muted);line-height:1.5;margin-bottom:16px}
+
+ .utils-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.util-pill{background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:12px;display:flex;gap:10px;align-items:center;min-width:160px}
+.util-pill i{font-size:18px;color:var(--accent2)}
+
+ .timeline{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.timeline-item{display:flex;gap:12px;align-items:flex-start}
+.timeline-dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));margin-top:6px;flex:0 0 12px}
+.timeline-content{background:rgba(255,255,255,0.01);padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);min-width:0}
+.timeline-content h5{margin:0;font-size:14px}
+.timeline-content p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+ .about-right{display:flex;flex-direction:column;gap:12px;position:relative}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+.creator{display:flex;gap:12px;align-items:center}
+.creator .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:grid;place-items:center;font-weight:800}
+.creator p{margin:0;color:var(--muted);font-size:14px}
+
+ .about-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.stat{background:rgba(255,255,255,0.01);padding:12px;border-radius:10px;min-width:100px;text-align:center}
+.stat .num{font-weight:800;font-size:20px}
+.stat .label{color:var(--muted);font-size:13px}
+
+ .faq{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.faq-item{background:rgba(255,255,255,0.01);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+.faq-question{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.faq-answer{margin-top:8px;color:var(--muted);font-size:14px;display:none}
+
+ .about-ctas{display:flex;gap:10px;margin-top:12px}
+.btn-discord{background:linear-gradient(90deg,#5865f2,#7CFF6A);color:#021018;padding:10px 12px;border-radius:10px;border:0;font-weight:800}
+.btn-whitepaper{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;color:var(--text)}
+
+ .reveal{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease}
+.reveal.show{opacity:1;transform:none}
+
+ @media (max-width:1000px){
+  .about-section{grid-template-columns:1fr;gap:16px}
+  .about-right{order:2}
+}
+@media (max-width:420px){
+  .about-desc{font-size:14px}
+  .creator .avatar{width:56px;height:56px}
+  .about-right{gap:8px}
+}
+
+ .site-footer{color:var(--text);padding:28px;border-radius:14px;margin-top:20px;}
+
+ .site-footer .footer-top{display:flex;gap:18px;align-items:flex-start;justify-content:space-between;border-radius:12px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+.footer-brand{display:flex;gap:14px;align-items:flex-start;max-width:420px}
+.logo-square{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent1));box-shadow:0 12px 40px rgba(122,108,255,0.12)}
+.footer-brand h3{margin:0;font-size:18px}
+.footer-brand .muted{color:var(--muted);font-size:13px;margin-top:6px}
+
+ .social-row{display:flex;gap:8px;margin-top:10px}
+.social{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:var(--text);cursor:pointer;display:inline-grid;place-items:center;transition:transform .18s, box-shadow .18s}
+.social i{font-size:16px}
+.social:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(122,108,255,0.08)}
+
+ .footer-links{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-left:8px;flex:1}
+.footer-links h4{margin:0 0 8px 0}
+.footer-links ul{list-style:none;padding:0;margin:0}
+.footer-links li{margin:8px 0}
+.footer-links a{color:var(--muted);font-size:14px}
+
+ .subscribe-col .newsletter{display:flex;gap:8px;margin-top:8px}
+.subscribe-col input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+.btn-sub{padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;color:#021018;font-weight:800;cursor:pointer}
+
+ .contract-row{margin-top:12px}
+.contract-copy{display:flex;gap:8px;align-items:center;margin-top:6px}
+contractAddr, #contractAddr{font-family:monospace;background:rgba(0,0,0,0.12);padding:6px 8px;border-radius:8px}
+.contract-copy code{font-family:monospace;background:rgba(0,0,0,0.06);padding:6px 8px;border-radius:8px;color:var(--text)}
+#copyContract{background:transparent;border:0;padding:8px;border-radius:8px;color:var(--muted);cursor:pointer}
+
+ .footer-middle{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-top:1px solid rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.02);gap:12px;flex-wrap:wrap}
+.mini-stats{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,0.01);padding:10px 14px;border-radius:10px;min-width:110px;text-align:center}
+.stat .num{font-weight:800;font-size:18px}
+.stat .label{color:var(--muted);font-size:13px}
+.payment-badges{display:flex;gap:8px;align-items:center}
+.badge{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:10px;color:var(--muted);font-size:13px}
+
+ .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:12px;gap:12px}
+.site-footer .small{font-size:13px;color:var(--muted)}
+.foot-actions{display:flex;gap:10px;align-items:center}
+#backTop{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;color:var(--muted);cursor:pointer}
+
+ .footer-links a:hover, .social:hover{color:var(--accent2)}
+
+ @media (max-width:1000px){
+  .footer-top{flex-direction:column;gap:18px}
+  .footer-links{grid-template-columns:repeat(2,1fr)}
+  .footer-brand{max-width:none}
+}
+@media (max-width:420px){
+  .footer-links{grid-template-columns:1fr}
+  .logo-square{width:56px;height:56px}
+  .site-footer{padding:16px}
+  .footer-middle{flex-direction:column;align-items:flex-start;gap:10px}
+  .mini-stats .stat{min-width:86px}
+}
+
+ .tools-section{border-radius:12px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);box-shadow:var(--elev)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.tool-card{display:flex;justify-content:space-between;align-items:center;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.02);transition:transform .18s,box-shadow .18s}
+.tool-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-accent)}
+.tool-card-left{display:flex;gap:12px;align-items:center}
+.tool-icon{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:grid;place-items:center;font-size:22px;color:#021018;box-shadow:0 8px 30px rgba(122,108,255,0.08)}
+.tool-info h5{margin:0;font-size:16px}
+.tool-info p{margin:6px 0 8px;color:var(--muted);font-size:13px}
+.tool-tags .tag{display:inline-block;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:999px;font-size:12px;color:var(--muted);margin-right:6px}
+
+ .tool-card-actions{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.tool-card .btn-primary{padding:10px 12px;border-radius:10px}
+.tool-card .btn-ghost{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)}
+
+ .mini-nft-grid{display:flex;gap:8px;flex-wrap:wrap}
+.mini-nft{width:72px;height:72px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.mini-nft img{width:100%;height:100%;object-fit:cover}
+
+ .tool-modal{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.8), rgba(2,6,23,0.92));z-index:120;padding:18px}
+.tool-modal[aria-hidden="false"]{display:flex}
+.tool-modal-card{width:100%;max-width:980px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;box-shadow:0 30px 90px rgba(0,0,0,0.7)}
+.modal-close{position:absolute;right:18px;top:18px;background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer}
+.tool-modal-hero{display:flex;gap:12px;align-items:center}
+.tool-modal-icon{width:76px;height:76px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:grid;place-items:center;font-size:24px;color:#021018}
+.tool-modal-body p.muted{color:var(--muted)}
+.tool-modal-content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.tool-modal .card{background:transparent;border:1px solid rgba(255,255,255,0.02);padding:10px;border-radius:10px}
+
+ @media (max-width:1000px){
+  .tools-grid{grid-template-columns:repeat(1,1fr)}
+  .tool-card-actions{flex-direction:row;align-items:center}
+}
+
+ #nftModal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.85), rgba(2,6,23,0.95));padding:18px}
+#nftModal[aria-hidden="false"]{display:flex}
+.nft-modal-card{width:100%;max-width:1100px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.015),transparent);padding:18px;box-shadow:0 40px 120px rgba(0,0,0,0.75);display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+.nft-close{position:absolute;right:20px;top:18px;background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer}
+
+.nft-media-wrap{border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#0b0b0b,#101215);display:flex;align-items:center;justify-content:center;height:520px;min-height:320px;max-height:80vh;position:relative}
+.nft-media-wrap img, .nft-media-wrap video{max-width:100%;max-height:100%;object-fit:contain;display:block}
+
+.nft-info{
+  display:flex;flex-direction:column;gap:12px;
+  position:relative;height:100%;
+}
+.nft-head{display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.nft-title{font-size:20px;font-weight:800;margin:0}
+.nft-sub{color:var(--muted);font-size:13px;margin-top:4px}
+
+ .nft-meta-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.meta-pill{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:10px;display:flex;gap:8px;align-items:center;font-size:13px}
+.meta-pill code{font-family:monospace;font-size:13px;color:var(--text)}
+
+ .nft-actions{display:flex;gap:10px}
+.nft-actions .btn{padding:10px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
+.btn-buy{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021018}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+
+ .nft-tabs{display:flex;gap:8px;border-radius:10px;padding:6px;background:rgba(255,255,255,0.01)}
+.nft-tab{padding:8px 12px;border-radius:8px;cursor:pointer;color:var(--muted);font-weight:700}
+.nft-tab.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021018}
+
+ .details-body{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.traits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.trait{background:rgba(255,255,255,0.01);padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+.trait .name{font-size:12px;color:var(--muted)}
+.trait .value{font-weight:800}
+
+ .rarity-row{display:flex;align-items:center;gap:8px}
+.rarity-track{flex:1;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+.rarity-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent1));width:40%;transition:width .6s ease}
+
+ .provenance, .activity{max-height:280px;overflow:auto;padding-right:6px}
+.prov-item, .act-item{padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);margin-bottom:8px;border:1px solid rgba(255,255,255,0.02)}
+.prov-item .time, .act-item .time{color:var(--muted);font-size:12px;margin-top:6px}
+
+ .share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.share-btn{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;cursor:pointer}
+
+ @media (max-width:1000px){
+  .nft-modal-card{grid-template-columns:1fr;max-width:920px;height:auto;overflow:auto}
+  .nft-media-wrap{height:320px}
+  .details-body{grid-template-columns:1fr}
+  .traits-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:420px){
+  .nft-media-wrap{height:260px}
+  .nft-modal-card{padding:12px;gap:12px}
+  .nft-title{font-size:18px}
+  .nft-media-wrap img{max-height:60vh}
+}
+
  </style>
 <body>
    <div class="page" style="display:flex;gap:28px;min-height:100vh;align-items:stretch;">
@@ -248,6 +549,73 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
         </div>
       </div>
 
+ <section class="hero-wrap" data-parallax="true" aria-label="Dralien hero">
+  <div class="bg-layer" aria-hidden="true"></div>
+  <div class="hero-orb orb-1" aria-hidden="true"></div>
+  <div class="hero-orb orb-2" aria-hidden="true"></div>
+
+   <div class="hero-left">
+    <div class="hero-eyebrow"><i class="fa-solid fa-user-astronaut"></i>&nbsp;&nbsp;DRALIEN STUDIO</div>
+
+    <h2 class="hero-h">DRALIEN UNIQUE <span style="color:rgba(255,255,255,0.15)">111</span> NFT’S</h2>
+    <p class="hero-sub">Build on Monad Testnet. Create utilities and airdrops worth a total of <strong>$10,000+</strong> for Dralien Mainnet holders. Tiny supply, layered utility — crafted for holders.</p>
+
+    <div class="hero-stats" role="list">
+      <div class="stat-chip" role="listitem"><h4 id="statSupply">111</h4><p>Total supply</p></div>
+      <div class="stat-chip" role="listitem"><h4 id="statWL">100</h4><p>Whitelist</p></div>
+      <div class="stat-chip" role="listitem"><h4 id="statFCFS">100</h4><p>FCFS</p></div>
+    </div>
+
+    <div class="hero-ctas">
+      <button class="btn-primary" id="heroDonate">Donate $500 (Get WL)</button>
+      <button class="btn-ghost" id="heroMint">Mint Now</button>
+    </div>
+
+    <div class="hero-marquee" aria-hidden="false">
+      <div class="marq">Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties) &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;</div>
+    </div>
+  </div>
+
+   <aside class="hero-preview" aria-hidden="false">
+    <div class="preview-canvas parallax-1">
+       <div class="pixel-alien" role="img" aria-label="pixel dralien preview">
+         <svg width="160" height="160" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" fill="#ccffd9"/>
+          <g fill="#021018">
+            <rect x="8" y="6" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/>
+            <rect x="7" y="8" width="10" height="8" fill="#e9fef3" />
+            <rect x="10" y="14" width="4" height="2" fill="#a7f0a9"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="mint-progress">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="font-weight:800">Mint — $10 (+7%)</div>
+          <div style="color:var(--muted)">Dec 30, 2025</div>
+        </div>
+        <div style="min-width:220px;display:flex;gap:10px;align-items:center;">
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="heroProgress" style="width:28%"></div>
+          </div>
+          <div style="min-width:54px;text-align:right;font-weight:700" id="heroProgressText">31 / 111</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+        <button class="btn-primary" id="previewMint">Mint Preview</button>
+        <button class="btn-ghost" id="previewWL">Request WL</button>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;margin-top:4px;color:var(--muted);font-size:13px">
+        <i class="fa-solid fa-shield-halved"></i> Verified • <i class="fa-solid fa-key" style="margin-left:8px"></i> Non-custodial options
+      </div>
+    </div>
+  </aside>
+</section>
+        
        <section id="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
          <article class="nft-card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:transform .18s;">
           <div class="nft-media" data-img="images/dralien-217.png" style="height:180px;border-radius:8px;background:#c7ff7f center/cover no-repeat;display:flex;align-items:center;justify-content:center;overflow:hidden;">
@@ -347,132 +715,249 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
 
       </section>
 
-       <section style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px;">
-        <h4 style="margin:0 0 12px 0;">Tools & Utilities</h4>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-sparkles" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>NFT Generator</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Trait packs, batch mint, IPFS integration.</div>
-            </div>
-          </div>
+<section id="tools" class="tools-section" style="margin-top:18px;">
+  <div class="tools-header" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+    <div>
+      <h4 style="margin:0 0 6px 0">Tools & Utilities — Explore</h4>
+      <div style="color:var(--muted);font-size:13px">Click <strong>Open Tool</strong> to open a standalone tool page, or <strong>Details</strong> to preview within the site.</div>
+    </div>
 
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FF8B7A,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Non-Custodial Stake</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Stake without giving custody of keys.</div>
-            </div>
-          </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input id="toolSearch" placeholder="Search tools..." style="padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+      <select id="toolFilter" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+        <option value="all">All</option>
+        <option value="creator">Creator</option>
+        <option value="game">Game</option>
+        <option value="infra">Infrastructure</option>
+      </select>
+    </div>
+  </div>
 
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#7A6CFF);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-chess" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Online Chess</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Blockchain chess with NFT pieces and rewards.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7A6CFF);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-gift" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Token Airdrop</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Configure fair drops for holders.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-paint-roller" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Pixel Draw</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Built-in editor for pixel NFTs.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FFD36E);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-flag-checkered" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Strategic Play</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Leaderboards & play-to-earn mechanics.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-puzzle-piece" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>PitBits</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Micro collectibles & mini-games.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FFD36E,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-edit" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Update Metadata</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Evolve traits over time.</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#FF8B7A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-network-wired" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>MPC</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Secure shared signing (multi-party computation).</div>
-            </div>
-          </div>
-
-           <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7A6CFF,#82CFFF);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-rocket" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Launchpad</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Small project launches & incubations.</div>
-            </div>
-          </div>
-
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#FF8B7A,#7CFF6A);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-chart-line" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Analytics</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Holder stats, drop analytics & growth tracking.</div>
-            </div>
-          </div>
-
-          <div class="tool" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;">
-            <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7CFF6A,#7A6CFF);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-comments" style="color:#021018"></i>
-            </div>
-            <div>
-              <strong>Community</strong>
-              <div style="color:#9aa4b2;font-size:13px;">Discord integration & gated chat for holders.</div>
-            </div>
-          </div>
+  <div class="tools-grid" id="toolsGrid">
+    <article class="tool-card" data-tags="creator">
+      <div class="tool-card-left">
+        <div class="tool-icon"><i class="fa-solid fa-sparkles"></i></div>
+        <div class="tool-info">
+          <h5>NFT Generator</h5>
+          <p class="muted">Trait packs, batch mint, IPFS + metadata builder.</p>
+          <div class="tool-tags"><span class="tag">minting</span><span class="tag">generator</span></div>
         </div>
-      </section>
+      </div>
+      <div class="tool-card-actions">
+        <button class="btn-ghost details-btn" data-tool="NFT Generator">Details</button>
+        <button class="btn-primary open-btn" data-tool="NFT Generator">Open Tool</button>
+      </div>
+    </article>
 
-       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+    <article class="tool-card" data-tags="infra">
+      <div class="tool-card-left">
+        <div class="tool-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div class="tool-info">
+          <h5>Non-Custodial Stake</h5>
+          <p class="muted">Secure staking without custody — rewards distribution engine.</p>
+          <div class="tool-tags"><span class="tag">stake</span><span class="tag">rewards</span></div>
+        </div>
+      </div>
+      <div class="tool-card-actions">
+        <button class="btn-ghost details-btn" data-tool="Non-Custodial Stake">Details</button>
+        <button class="btn-primary open-btn" data-tool="Non-Custodial Stake">Open Tool</button>
+      </div>
+    </article>
+
+    <article class="tool-card" data-tags="game">
+      <div class="tool-card-left">
+        <div class="tool-icon"><i class="fa-solid fa-chess"></i></div>
+        <div class="tool-info">
+          <h5>Blockchain Chess</h5>
+          <p class="muted">Play with NFT pieces, win token rewards and metadata upgrades.</p>
+          <div class="tool-tags"><span class="tag">game</span><span class="tag">p2e</span></div>
+        </div>
+      </div>
+      <div class="tool-card-actions">
+        <button class="btn-ghost details-btn" data-tool="Blockchain Chess">Details</button>
+        <button class="btn-primary open-btn" data-tool="Blockchain Chess">Open Tool</button>
+      </div>
+    </article>
+
+    <article class="tool-card" data-tags="infra">
+      <div class="tool-card-left">
+        <div class="tool-icon"><i class="fa-solid fa-plane-departure"></i></div>
+        <div class="tool-info">
+          <h5>Token Airdrop Engine</h5>
+          <p class="muted">Airdrops with merkle proofs, snapshot import and batching.</p>
+          <div class="tool-tags"><span class="tag">airdrop</span><span class="tag">merkle</span></div>
+        </div>
+      </div>
+      <div class="tool-card-actions">
+        <button class="btn-ghost details-btn" data-tool="Token Airdrop Engine">Details</button>
+        <button class="btn-primary open-btn" data-tool="Token Airdrop Engine">Open Tool</button>
+      </div>
+    </article>
+
+    <article class="tool-card" data-tags="creator">
+      <div class="tool-card-left">
+        <div class="tool-icon"><i class="fa-solid fa-paint-roller"></i></div>
+        <div class="tool-info">
+          <h5>Pixel Draw</h5>
+          <p class="muted">Author artwork, downscale to on-chain-friendly pixel-mints.</p>
+          <div class="tool-tags"><span class="tag">editor</span><span class="tag">pixel</span></div>
+        </div>
+      </div>
+      <div class="tool-card-actions">
+        <button class="btn-ghost details-btn" data-tool="Pixel Draw">Details</button>
+        <button class="btn-primary open-btn" data-tool="Pixel Draw">Open Tool</button>
+      </div>
+    </article>
+
+  </div>
+
+   <div class="tools-showcase" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div style="flex:1;min-width:280px">
+      <h5 style="margin:0 0 8px 0">Featured NFTs for Tools</h5>
+      <p class="muted" style="margin:0 0 8px 0">Hand-picked examples that show how tools can affect item state (metadata updates, airdropped upgrades, playable items).</p>
+      <div class="mini-nft-grid" id="miniNftGrid" style="display:flex;gap:10px;flex-wrap:wrap;">
+         <div class="mini-nft" data-img="images/dralien-217.png"><img src="images/dralien-217.png" alt="mini"/></div>
+        <div class="mini-nft" data-img="images/dralien-216.png"><img src="images/dralien-216.png" alt="mini"/></div>
+        <div class="mini-nft" data-img="images/dralien-215.png"><img src="images/dralien-215.png" alt="mini"/></div>
+        <div class="mini-nft" data-img="images/dralien-214.png"><img src="images/dralien-214.png" alt="mini"/></div>
+      </div>
+    </div>
+
+    <div style="min-width:260px;display:flex;flex-direction:column;gap:8px;">
+      <div class="card small" style="padding:12px;display:flex;gap:12px;align-items:center;">
+        <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:grid;place-items:center;"><i class="fa-solid fa-rocket"></i></div>
+        <div>
+          <div style="font-weight:800">Launchpad Previews</div>
+          <div class="muted" style="font-size:13px">Stage and test small launches — quick deploy to testnet.</div>
+        </div>
+      </div>
+
+      <div class="card small" style="padding:12px;display:flex;gap:12px;align-items:center;">
+        <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent3));display:grid;place-items:center;"><i class="fa-solid fa-chart-simple"></i></div>
+        <div>
+          <div style="font-weight:800">Simulated Analytics</div>
+          <div class="muted" style="font-size:13px">Preview holder distribution, rarity charts and projected airdrop impact.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <div id="toolModal" class="tool-modal" aria-hidden="true">
+  <div class="tool-modal-card">
+    <button id="toolModalClose" class="modal-close">✕</button>
+    <div class="tool-modal-body">
+      <div class="tool-modal-hero">
+        <div class="tool-modal-icon"><i class="fa-solid fa-sparkles"></i></div>
+        <div>
+          <h3 id="toolModalTitle">Tool Title</h3>
+          <p id="toolModalDesc" class="muted">Tool short description</p>
+          <div id="toolModalTags" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:14px 0" />
+
+      <div id="toolModalContent">
+       </div>
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+        <button class="btn-ghost" id="toolModalCloseBtn">Close</button>
+        <button class="btn-primary" id="toolModalOpenPage">Open full tool page</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
+     
+
+ <section class="about-section" id="about">
+  <div class="about-left reveal">
+    <div class="about-eyebrow"><i class="fa-solid fa-user-astronaut"></i>&nbsp;ABOUT THE CREATOR</div>
+
+    <h3 class="about-title">ABOUT THE CREATOR</h3>
+
+     <p class="about-desc">
+      I have been developing NFTs since 2020, and the problem is often that the supply is too high and the developers just want to make a lot of money with a mint and then let the project die.
+      With a 10,000 NFT collection, one costs at least $10 = $100,000 mint reward. My NFT collection consists of 111 NFTs, and I am trying to create utilities and airdrops worth a total of $10,000+ for Dralien Mainnet holders.
+      10,000/111 = ~$100 per NFT. This ensures that WL holders have a secure, good investment.
+    </p>
+
+     <p style="color:var(--muted);margin-top:8px;line-height:1.45;">
+      The goal: a compact, utility-first drop that rewards holders over time rather than a one-off mint pump. Monthly airdrops, physical rewards, and community-first access are core to that mission.
+    </p>
+
+    <div class="utils-row" style="margin-top:12px">
+      <div class="util-pill"><i class="fa-solid fa-award"></i><div><strong>Focused supply</strong><div style="font-size:12px;color:var(--muted)">111 mainnet NFTs</div></div></div>
+      <div class="util-pill"><i class="fa-solid fa-hand-holding-dollar"></i><div><strong>Planned utilities</strong><div style="font-size:12px;color:var(--muted)">$10k+ value for holders</div></div></div>
+      <div class="util-pill"><i class="fa-solid fa-users-gear"></i><div><strong>Community</strong><div style="font-size:12px;color:var(--muted)">Exclusive gated Discord</div></div></div>
+    </div>
+
+    <h4 style="margin-top:14px;margin-bottom:8px">Project Milestones</h4>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content"><h5>2020 — Getting started</h5><p>Creator begins building small, utility-driven NFT projects and learns the pitfalls of oversupply.</p></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content"><h5>2024 — Tools & prototypes</h5><p>Built an NFT generator, staking tools, airdrop platform and early game concepts (Blockchain Chess, Pixel Draw).</p></div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content"><h5>Dec 30, 2025 — Mainnet mint</h5><p>Launch 111 mainnet Dralien NFTs; structured utilities & airdrops to sustain holder value.</p></div>
+      </div>
+    </div>
+
+    <div class="about-ctas" style="margin-top:14px;">
+      <button class="btn-discord" onclick="window.open('https://discord.gg','_blank')"><i class="fa-brands fa-discord"></i>&nbsp;Join Discord</button>
+      <button class="btn-whitepaper" onclick="window.open('#','_blank')"><i class="fa-solid fa-file-lines"></i>&nbsp;Read Whitepaper</button>
+    </div>
+
+    <div class="faq" style="margin-top:14px;">
+      <div class="faq-item">
+        <div class="faq-question"><strong>How do WL & FCFS work?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down"></i></span></div>
+        <div class="faq-answer">Whitelist (WL) = guaranteed slot for early donors. FCFS fills gaps if people do not mint in time. Donation $500 gives access to a WL slot (demo flow).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><strong>What utilities are included?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down"></i></span></div>
+        <div class="faq-answer">Monthly airdrops, exclusive physical Dralien, gated Discord, play-to-earn drops, early access to launches and more as described in utilities section.</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="about-right reveal">
+    <div class="card creator">
+      <div class="avatar">JS</div>
+      <div>
+        <div style="font-weight:800">NifftySwiggle — Creator</div>
+        <p>Developing NFTs since 2020. Focused on craft, holders-first utility, and small supply economics.</p>
+        <div class="about-stats" style="margin-top:8px;">
+          <div class="stat"><div class="num">111</div><div class="label">Mainnet NFTs</div></div>
+          <div class="stat"><div class="num">100</div><div class="label">Whitelist slots</div></div>
+          <div class="stat"><div class="num">48</div><div class="label">Months rewards</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>Quick utilities</strong>
+      <ul style="margin:8px 0 0 14px;color:var(--muted);line-height:1.6;">
+        <li>Monthly $10 curated airdrops</li>
+        <li>Physical collectible for holders</li>
+        <li>Play-to-earn events & airdrop rewards</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <strong>Proof & security</strong>
+      <p style="margin:8px 0 0;color:var(--muted)">Smart contract addresses will be published at launch. WL allocations will use signature verification; provenance will be maintained publicly.</p>
+    </div>
+  </aside>
+</section>
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
         <div style="color:#9aa4b2;font-size:13px;">Built by NifftySwiggle • Monad Testnet</div>
         <div style="display:flex;gap:10px;">
           <button id="downloadCSV" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;"><i class="fa-solid fa-download"></i> Export CSV</button>
@@ -481,32 +966,253 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
       </div>
     </main>
   </div>
+ <div id="nftModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="NFT details modal">
+  <div class="nft-modal-card" role="document">
+    <button class="nft-close" id="nftClose" aria-label="Close modal">✕</button>
 
-   <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.8);align-items:center;justify-content:center;padding:20px;z-index:60;">
-    <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;max-width:980px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
-      <div style="display:flex;gap:12px;align-items:flex-start;">
-        <div style="flex:1;">
-          <img id="lightboxImg" src="" alt="NFT preview" style="width:100%;height:420px;object-fit:contain;border-radius:8px;background:#0b0b0b;" />
+     <div class="nft-media-wrap" id="nftMediaWrap">
+       <img id="nftMedia" src="" alt="NFT preview" />
+    </div>
+
+     <div class="nft-info">
+      <div class="nft-head">
+        <div>
+          <h2 class="nft-title" id="nftTitle">Dralien #000</h2>
+          <div class="nft-sub" id="nftSubtitle">DRALIEN — Unique 111</div>
         </div>
-        <div style="width:320px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <div>
-              <h3 id="lightTitle" style="margin:0">Dralien #000</h3>
-              <div style="color:#9aa4b2">0xABCD…1234</div>
-            </div>
-            <button id="lightClose" style="background:none;border:0;color:#9aa4b2;font-size:20px;cursor:pointer;">✕</button>
+
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+          <div class="nft-actions">
+            <button class="btn btn-buy" id="nftBuy">Buy</button>
+            <button class="btn btn-ghost" id="nftMint">Mint</button>
           </div>
-          <p style="color:#cbd8e6;margin-top:10px;">This is a preview. Replace with mint & buy controls when integrating blockchain functions.</p>
-          <div style="margin-top:14px;display:flex;gap:8px;">
-            <button style="flex:1;padding:12px;border-radius:10px;border:0;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);font-weight:800;color:#021018;">Mint</button>
-            <button style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit;">Share</button>
+          <div class="meta-pill" style="margin-top:6px">
+            <i class="fa-solid fa-clock"></i>
+            <div style="font-size:12px;color:var(--muted);margin-left:6px">Mint Date: <strong style="margin-left:6px">Dec 30, 2025</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nft-meta-row">
+        <div class="meta-pill">Token: <code id="nftToken">#217</code><button class="btn-ghost" id="copyToken" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
+        <div class="meta-pill">Owner: <code id="nftOwner">0xB1F3…7090</code><button class="btn-ghost" id="copyOwner" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
+        <div class="meta-pill">Contract: <code id="nftContract">0xDraLiEn...aB12</code><button class="btn-ghost" id="copyContract2" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
+      </div>
+
+      <div class="nft-tabs" role="tablist" aria-label="NFT tabs">
+        <div class="nft-tab active" data-tab="details">Details</div>
+        <div class="nft-tab" data-tab="provenance">Provenance</div>
+        <div class="nft-tab" data-tab="activity">Activity</div>
+      </div>
+
+       <div class="details-section" data-panel="details">
+        <div class="details-body">
+          <div>
+            <div style="font-weight:800">About this NFT</div>
+            <p class="muted" id="nftLongDesc" style="margin-top:8px">This Dralien is part of a tight 111-supply collection built for holders with monthly airdrops and physical rewards.</p>
+
+            <div style="margin-top:12px" class="rarity-row">
+              <div style="width:90px;font-size:12px;color:var(--muted)">Rarity</div>
+              <div class="rarity-track"><div class="rarity-fill" id="rarityFill" style="width:40%"></div></div>
+              <div style="min-width:54px;text-align:right;font-weight:800" id="rarityPct">40%</div>
+            </div>
+
+            <div style="margin-top:12px" class="share-row">
+              <button class="share-btn" id="shareTwitter"><i class="fa-brands fa-x-twitter"></i>&nbsp;Tweet</button>
+              <button class="share-btn" id="shareDiscord"><i class="fa-brands fa-discord"></i>&nbsp;Share</button>
+              <button class="share-btn" id="viewOnOS"><i class="fa-brands fa-opensea"></i>&nbsp;View on OpenSea</button>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-weight:800;margin-bottom:8px">Traits</div>
+            <div class="traits-grid" id="traitsGrid">
+               <div class="trait"><div class="name">Color</div><div class="value">Neon Green</div></div>
+              <div class="trait"><div class="name">Eyes</div><div class="value">3</div></div>
+              <div class="trait"><div class="name">Accessory</div><div class="value">Helmet</div></div>
+              <div class="trait"><div class="name">Rarity</div><div class="value">Rare</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <div class="provenance-section" data-panel="provenance" style="display:none;margin-top:12px">
+        <div class="provenance" id="provList">
+           <div class="prov-item"><div style="font-weight:800">Minted</div><div class="time">Dec 30, 2025 — tx: 0xabc...123</div></div>
+          <div class="prov-item"><div style="font-weight:800">Transferred</div><div class="time">Jan 12, 2026 — tx: 0xdef...456</div></div>
+        </div>
+      </div>
+
+       <div class="activity-section" data-panel="activity" style="display:none;margin-top:12px">
+        <div class="activity" id="actList">
+          <div class="act-item"><div style="font-weight:800">Listed for sale</div><div class="time">Feb 2, 2026 — Price: 0.5 MON</div></div>
+          <div class="act-item"><div style="font-weight:800">Bid placed</div><div class="time">Feb 4, 2026 — Bid: 0.45 MON</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+ 
+
+ <footer class="site-footer" aria-labelledby="footerHeading">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-square" aria-hidden="true">
+         <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="fLg" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
+          <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#fLg)"/>
+          <circle cx="22" cy="26" r="3.6" fill="#021018"/><circle cx="42" cy="26" r="3.6" fill="#021018"/>
+        </svg>
+      </div>
+      <div>
+        <h3 id="footerHeading">NifftySwiggle — Dralien</h3>
+        <p class="muted">Small-supply NFT studio — 111 Mainnet NFTs, utilities & curated airdrops for holders.</p>
+        <div class="social-row" aria-label="Social links">
+          <button class="social" data-href="https://twitter.com/" title="Twitter"><i class="fa-brands fa-x-twitter"></i></button>
+          <button class="social" data-href="https://discord.gg/" title="Discord"><i class="fa-brands fa-discord"></i></button>
+          <button class="social" data-href="https://instagram.com/" title="Instagram"><i class="fa-brands fa-instagram"></i></button>
+          <button class="social" data-href="https://t.me/" title="Telegram"><i class="fa-brands fa-telegram"></i></button>
+          <button class="social" data-href="https://medium.com/" title="Medium"><i class="fa-brands fa-medium"></i></button>
+          <button class="social" data-href="https://github.com/" title="GitHub"><i class="fa-brands fa-github"></i></button>
+          <button class="social" data-href="https://opensea.io/" title="OpenSea"><i class="fa-brands fa-opensea"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <div class="col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Collection</a></li>
+          <li><a href="#">Activity</a></li>
+          <li><a href="#">Roadmap</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Tools & Utilities</h4>
+        <ul>
+          <li><a href="#">NFT Generator</a></li>
+          <li><a href="#">Airdrop Engine</a></li>
+          <li><a href="#">Staking (Non-Custodial)</a></li>
+          <li><a href="#">Pixel Draw</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Legal & Contact</h4>
+        <ul>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Report</a></li>
+        </ul>
+      </div>
+
+      <div class="col subscribe-col">
+        <h4>Join the Drop</h4>
+        <p class="muted">Subscribe for WL announcements & airdrop notices (demo).</p>
+        <form id="newsletterForm" class="newsletter" onsubmit="return false" aria-label="Subscribe to newsletter">
+          <input id="newsletterEmail" type="email" placeholder="you@walletmail.com" aria-label="email" required>
+          <button type="submit" id="newsletterBtn" class="btn-sub">Subscribe</button>
+        </form>
+
+        <div class="contract-row">
+          <div class="muted small">Contract (Mainnet)</div>
+          <div class="contract-copy">
+            <code id="contractAddr">0xDraLiEn...aB12</code>
+            <button id="copyContract" title="Copy contract address"><i class="fa-regular fa-copy"></i></button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="footer-middle">
+    <div class="mini-stats">
+      <div class="stat"><div class="num">111</div><div class="label">Mainnet NFTs</div></div>
+      <div class="stat"><div class="num">100</div><div class="label">Whitelist</div></div>
+      <div class="stat"><div class="num">48</div><div class="label">Months rewards</div></div>
+      <div class="stat"><div class="num">222</div><div class="label">Max community</div></div>
+    </div>
+
+    <div class="payment-badges" aria-hidden="true">
+      <div class="badge">Monad Testnet</div>
+      <div class="badge">IPFS</div>
+      <div class="badge">ERC-721</div>
+      <div class="badge">KYC Friendly</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copyright">© <span id="year"></span> NifftySwiggle Studio — Built for Dralien. All rights reserved.</div>
+    <div class="foot-actions">
+      <a href="#" class="small muted">Sitemap</a>
+      <a href="#" class="small muted">Careers</a>
+      <button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up-long"></i></button>
+    </div>
+  </div>
+</footer>
+ 
    <script>
+ (function(){
+   const hero = document.querySelector('.hero-wrap');
+  const par = document.querySelector('.parallax-1');
+  if(hero && par){
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+       par.style.transform = `translate3d(${px * 12}px, ${py * 8}px, 0)`;
+       document.querySelectorAll('.hero-orb').forEach((o,i) => {
+        const mult = (i === 0) ? 18 : -12;
+        o.style.transform = `translate3d(${px * mult}px, ${py * mult}px, 0)`;
+      });
+    });
+     hero.addEventListener('mouseleave', ()=> {
+      par.style.transform = '';
+      document.querySelectorAll('.hero-orb').forEach(o=> o.style.transform = '');
+    });
+  }
+
+   const heroDonate = document.getElementById('heroDonate');
+  const heroMint = document.getElementById('heroMint');
+  const previewMint = document.getElementById('previewMint');
+  const previewWL = document.getElementById('previewWL');
+  const heroProgress = document.getElementById('heroProgress');
+  const heroProgressText = document.getElementById('heroProgressText');
+
+  heroDonate && heroDonate.addEventListener('click', ()=> {
+    alert('Demo: Donate flow (simulate wallet & payment). I can add a MetaMask/Monad demo if you want.');
+  });
+  heroMint && heroMint.addEventListener('click', ()=> {
+    alert('Demo: Mint flow requires wallet + contract integration. I can scaffold it next.');
+  });
+  previewMint && previewMint.addEventListener('click', ()=> {
+     let cur = parseInt(heroProgressText.innerText.split('/')[0]) || 0;
+    if(cur < 111){
+      cur = Math.min(111, cur + Math.floor(Math.random()*3)+1);
+      const pct = Math.round((cur/111)*100);
+      heroProgress.style.width = pct + '%';
+      heroProgressText.innerText = cur + ' / 111';
+    } else {
+      alert('All minted (demo).');
+    }
+  });
+  previewWL && previewWL.addEventListener('click', ()=> {
+    alert('Demo: WL request sent. Add server or wallet verification to make it real.');
+  });
+
+   requestAnimationFrame(()=> {
+    const left = document.querySelector('.hero-left');
+    const right = document.querySelector('.hero-preview');
+    if(left) left.style.transform = 'translateY(0)';
+    if(right) right.style.transform = 'translateY(0)';
+  });
+})();
+
      document.querySelectorAll('.nft-media').forEach(media => {
       media.addEventListener('click', function(e){
         const imgEl = this.querySelector('img');
@@ -572,6 +1278,509 @@ button.ghost{background:transparent;border:var(--glass-border);padding:10px;bord
   </style>
 </body>
 
+<script>
 
-     
+ (function(){
+   const revealEls = document.querySelectorAll('.reveal');
+  function revealOnScroll(){
+    const y = window.innerHeight;
+    revealEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if(r.top < y - 80) el.classList.add('show');
+    });
+  }
+  revealOnScroll();
+  window.addEventListener('scroll', revealOnScroll);
+
+   document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-question');
+    const ans = item.querySelector('.faq-answer');
+    q.addEventListener('click', ()=> {
+      const isOpen = ans.style.display === 'block';
+       document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+      if(!isOpen) ans.style.display = 'block';
+    });
+  });
+
+   function animateCounters(){
+    document.querySelectorAll('.stat .num').forEach(el => {
+      if(el.dataset.animated) return;
+      const target = parseInt(el.textContent.replace(/\D/g,'')) || 0;
+      let cur = 0;
+      const step = Math.max(1, Math.floor(target / 40));
+      const id = setInterval(()=> {
+        cur += step;
+        if(cur >= target){ cur = target; clearInterval(id); }
+        el.textContent = cur;
+      }, 18);
+      el.dataset.animated = '1';
+    });
+  }
+   window.addEventListener('scroll', function onScrollCounter(){
+    const el = document.querySelector('.about-stats');
+    if(!el) return;
+    const r = el.getBoundingClientRect();
+    if(r.top < window.innerHeight - 80){
+      animateCounters();
+      window.removeEventListener('scroll', onScrollCounter);
+    }
+  });
+
+   const wp = document.querySelector('.btn-whitepaper');
+  if(wp) wp.addEventListener('click', (e)=>{
+    e.preventDefault();
+    alert('Whitepaper (demo) — attach PDF link or open modal with content.');
+  });
+})();
+
+</script>
+     <script> 
+ (function(){
+   document.getElementById('year').innerText = new Date().getFullYear();
+
+   document.querySelectorAll('.social').forEach(btn => {
+    btn.addEventListener('click', ()=> {
+      const href = btn.dataset.href;
+      if(!href) return;
+      window.open(href, '_blank', 'noopener');
+    });
+  });
+
+   const nf = document.getElementById('newsletterForm');
+  if(nf){
+    nf.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('newsletterEmail').value;
+      if(!email || !email.includes('@')) {
+        alert('Please enter a valid email or ENS/wallet contact (demo).');
+        return;
+      }
+      document.getElementById('newsletterBtn').innerText = 'Thanks!';
+      document.getElementById('newsletterBtn').disabled = true;
+       setTimeout(()=> {
+        document.getElementById('newsletterBtn').innerText = 'Subscribed';
+      }, 900);
+    });
+  }
+
+   const copyBtn = document.getElementById('copyContract');
+  if(copyBtn){
+    copyBtn.addEventListener('click', async () => {
+      const addr = document.getElementById('contractAddr').innerText;
+      try{
+        await navigator.clipboard.writeText(addr);
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        setTimeout(()=> copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>', 1400);
+      }catch(e){
+        alert('Copy not supported in this browser (try manual select).');
+      }
+    });
+  }
+
+   const back = document.getElementById('backTop');
+  back && back.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+
+   document.querySelectorAll('.social, #backTop, #copyContract').forEach(el => {
+    el.addEventListener('keydown', (e) => { if(e.key === 'Enter') el.click(); });
+  });
+})();
+</script>
+  <script>
+
+(function(){
+  const TOOL_DATA = {
+    "NFT Generator":{
+      slug: "nft-generator",
+      desc: "Create randomized NFT collections, batch mint, and export IPFS-ready metadata. Supports trait rarity configuration, preview, and bulk-minting tools.",
+      tags: ["minting","generator","ipfs"],
+      featured: ["images/dralien-217.png","images/dralien-216.png","images/dralien-215.png"]
+    },
+    "Non-Custodial Stake":{
+      slug: "non-custodial-stake",
+      desc: "Stake tokens securely without serum custody; built-in rewards scheduler and unlock periods.",
+      tags: ["stake","rewards"],
+      featured: ["images/dralien-214.png","images/dralien-213.png"]
+    },
+    "Blockchain Chess":{
+      slug: "blockchain-chess",
+      desc: "Turn-based chess with NFT pieces, move history on-chain, and match reward distribution.",
+      tags: ["game","p2e"],
+      featured: ["images/dralien-212.png","images/dralien-215.png"]
+    },
+    "Token Airdrop Engine":{
+      slug: "airdrop-engine",
+      desc: "Configure merkle airdrops, snapshot schedules, and claim portals with gas-optimized batching.",
+      tags: ["airdrop","merkle"],
+      featured: ["images/dralien-213.png"]
+    },
+    "Pixel Draw":{
+      slug: "pixel-draw",
+      desc: "Paint pixel art in-browser and mint directly — small canvas, export to base64 or IPFS.",
+      tags: ["editor","pixel"],
+      featured: ["images/dralien-217.png","images/dralien-216.png"]
+    }
+  };
+
+  const searchInput = document.getElementById('toolSearch');
+  const filterSelect = document.getElementById('toolFilter');
+  const grid = document.getElementById('toolsGrid');
+
+  function filterTools(){
+    const q = (searchInput.value||'').trim().toLowerCase();
+    const tag = filterSelect.value;
+    Array.from(grid.querySelectorAll('.tool-card')).forEach(card => {
+      const title = card.querySelector('.tool-info h5').innerText.toLowerCase();
+      const desc = card.querySelector('.tool-info p').innerText.toLowerCase();
+      const tags = card.dataset.tags || '';
+      const matchesQ = q === '' || title.includes(q) || desc.includes(q);
+      const matchesTag = tag === 'all' || tags.includes(tag);
+      card.style.display = (matchesQ && matchesTag) ? '' : 'none';
+    });
+  }
+  searchInput && searchInput.addEventListener('input', filterTools);
+  filterSelect && filterSelect.addEventListener('change', filterTools);
+
+  const modal = document.getElementById('toolModal');
+  const modalTitle = document.getElementById('toolModalTitle');
+  const modalDesc = document.getElementById('toolModalDesc');
+  const modalTags = document.getElementById('toolModalTags');
+  const modalContent = document.getElementById('toolModalContent');
+  const modalOpenPage = document.getElementById('toolModalOpenPage');
+
+  function openModalFor(toolName){
+    const data = TOOL_DATA[toolName] || {desc:'No data', tags:[], featured:[]};
+    modalTitle.innerText = toolName;
+    modalDesc.innerText = data.desc || '';
+    modalTags.innerHTML = '';
+    (data.tags || []).forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'tag';
+      s.style.marginRight='6px';
+      s.textContent = t;
+      modalTags.appendChild(s);
+    });
+
+    modalContent.innerHTML = '';
+    const featuresHtml = document.createElement('div');
+    featuresHtml.innerHTML = `<h4 style="margin:0 0 8px 0">Capabilities</h4>
+      <ul style="color:var(--muted);margin-left:18px">
+        <li>Web UI for configuring and previewing</li>
+        <li>Export to IPFS / CID</li>
+        <li>Batch minting with whitelist integration</li>
+      </ul>`;
+    modalContent.appendChild(featuresHtml);
+
+    const nf = document.createElement('div');
+    nf.innerHTML = '<h4 style="margin-top:12px;margin-bottom:8px">Sample NFTs</h4>';
+    const gridN = document.createElement('div');
+    gridN.style.display='flex'; gridN.style.gap='8px'; gridN.style.flexWrap='wrap';
+    (data.featured || []).forEach(src => {
+      const d = document.createElement('div');
+      d.className = 'mini-nft';
+      d.style.width='86px'; d.style.height='86px';
+      d.style.borderRadius='8px'; d.style.overflow='hidden';
+      d.style.border='1px solid rgba(255,255,255,0.03)';
+      const img = document.createElement('img');
+      img.src = src; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
+      d.appendChild(img);
+      gridN.appendChild(d);
+    });
+    nf.appendChild(gridN);
+    modalContent.appendChild(nf);
+
+    modalOpenPage.dataset.tool = data.slug || toolName.toLowerCase().replace(/\s+/g,'-');
+
+    modal.setAttribute('aria-hidden','false');
+    modal.style.display = 'flex';
+  }
+
+  document.querySelectorAll('.details-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const tool = btn.dataset.tool;
+      openModalFor(tool);
+    });
+  });
+
+  document.getElementById('toolModalClose').addEventListener('click', ()=> { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); });
+  document.getElementById('toolModalCloseBtn').addEventListener('click', ()=> { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); });
+
+  function openGeneratedToolPage(slug, title, desc, featured){
+    const html = `
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title} — DRALIEN TOOL</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+  body{font-family:Inter,system-ui,Arial;background:#050407;color:#eaf1ff;margin:0;padding:24px}
+  .hero{display:flex;gap:18px;align-items:center;margin-bottom:16px}
+  .icon{width:76px;height:76px;border-radius:12px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:grid;place-items:center;font-size:30px;color:#021018}
+  h1{margin:0;font-size:22px}
+  p{color:#98a6b7}
+  .features{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .f{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px}
+  .nft-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .nft-grid img{width:120px;height:120px;object-fit:cover;border-radius:10px}
+  a.btn{display:inline-block;margin-top:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);color:#021018;font-weight:800;text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="icon"><i class="fa-solid fa-sparkles"></i></div>
+    <div>
+      <h1>${title}</h1>
+      <p>${desc}</p>
+      <a class="btn" href="#" onclick="alert('Demo: Connect wallet + open tool UI')">Open in Demo</a>
+    </div>
+  </div>
+  <h3>Tool Capabilities</h3>
+  <div class="features">
+    <div class="f">Preview traits & rarity</div><div class="f">Export IPFS metadata</div><div class="f">Batch mint</div>
+  </div>
+
+  <h3>Sample NFTs</h3>
+  <div class="nft-grid">
+    ${(featured || []).map(s => `<img src="${s}" alt="nft">`).join('')}
+  </div>
+  <script>/* small script for demo */</script>
+</body>
+</html>
+    `;
+    const url = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+    window.open(url, '_blank');
+  }
+
+  // wire open buttons
+  document.querySelectorAll('.open-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const toolName = btn.dataset.tool;
+      const data = TOOL_DATA[toolName] || {slug:toolName.toLowerCase().replace(/\s+/g,'-'), desc:'No description', featured:[]};
+      openGeneratedToolPage(data.slug, toolName, data.desc, data.featured);
+    });
+  });
+
+  // modal open full page button
+  modalOpenPage.addEventListener('click', ()=> {
+    const slug = modalOpenPage.dataset.tool;
+    // find tool by matching slug
+    const entry = Object.entries(TOOL_DATA).find(([k,v]) => (v.slug === slug));
+    const name = entry ? entry[0] : slug;
+    const data = entry ? entry[1] : {desc:'',featured:[]};
+    openGeneratedToolPage(slug, name, data.desc, data.featured);
+  });
+
+  // wire mini NFT click to open lightbox (existing lightbox on page)
+  document.querySelectorAll('.mini-nft').forEach(el => {
+    el.addEventListener('click', function(){
+      const img = this.querySelector('img') || {src:this.dataset.img};
+      const preview = document.getElementById('lightboxImg');
+      if(preview) preview.src = img.src || this.dataset.img;
+      const title = document.getElementById('lightTitle');
+      title && (title.innerText = 'Tool sample NFT');
+      const lb = document.getElementById('lightbox');
+      lb && (lb.style.display = 'flex');
+    });
+  });
+
+})();
+
+  </script>
+
+<script>
+ (function(){
+  const modal = document.getElementById('nftModal');
+  const nftMedia = document.getElementById('nftMedia');
+  const nftTitle = document.getElementById('nftTitle');
+  const nftSubtitle = document.getElementById('nftSubtitle');
+  const nftToken = document.getElementById('nftToken');
+  const nftOwner = document.getElementById('nftOwner');
+  const nftContract = document.getElementById('nftContract');
+  const nftLongDesc = document.getElementById('nftLongDesc');
+  const traitsGrid = document.getElementById('traitsGrid');
+  const rarityFill = document.getElementById('rarityFill');
+  const rarityPct = document.getElementById('rarityPct');
+  const provList = document.getElementById('provList');
+  const actList = document.getElementById('actList');
+
+   const setText = (el, txt)=> el && (el.innerText = txt);
+
+   async function copyText(text, btn){
+    try{
+      await navigator.clipboard.writeText(text);
+      btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+      setTimeout(()=> btn.innerHTML = '<i class="fa-regular fa-copy"></i>', 1400);
+    }catch(e){
+      alert('Copy not supported. Select and copy manually.');
+    }
+  }
+
+   document.getElementById('nftClose').addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
+
+  function closeModal(){
+    if(!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden','true');
+     if(nftMedia.tagName.toLowerCase() === 'video'){ nftMedia.pause && nftMedia.pause(); }
+    nftMedia.src = '';
+  }
+
+   document.querySelectorAll('.nft-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nft-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = tab.dataset.tab;
+      document.querySelectorAll('[data-panel]').forEach(p => {
+        p.style.display = (p.dataset.panel === panel) ? '' : 'none';
+      });
+    });
+  });
+
+   document.getElementById('copyToken').addEventListener('click', ()=> copyText(nftToken.innerText, document.getElementById('copyToken')));
+  document.getElementById('copyOwner').addEventListener('click', ()=> copyText(nftOwner.innerText, document.getElementById('copyOwner')));
+  document.getElementById('copyContract2').addEventListener('click', ()=> copyText(nftContract.innerText, document.getElementById('copyContract2')));
+
+   document.getElementById('shareTwitter').addEventListener('click', ()=> {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(nftTitle.innerText + ' — Dralien NFT');
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+  });
+  document.getElementById('shareDiscord').addEventListener('click', ()=> {
+    alert('Share to Discord (demo) — copy URL and paste in Discord.');
+  });
+  document.getElementById('viewOnOS').addEventListener('click', ()=> {
+    window.open('https://opensea.io/','_blank');
+  });
+
+   document.getElementById('nftBuy').addEventListener('click', ()=> alert('Demo: Buy flow. Integrate marketplace or wallet to perform purchase.'));
+  document.getElementById('nftMint').addEventListener('click', ()=> alert('Demo: Mint flow. Connect wallet + smart contract required.'));
+
+   function populateFromCard(card){
+     const titleEl = card.querySelector('div > div') || card.querySelector('.title') || card.querySelector('h4');
+    const title = titleEl ? titleEl.innerText : (card.dataset.title || 'Dralien');
+    setText(nftTitle, title);
+
+     const tokenMatch = title.match(/#?(\d{1,6})/);
+    const tokenText = tokenMatch ? ('#' + tokenMatch[1]) : (card.dataset.token || card.getAttribute('data-token') || '#000');
+    setText(nftToken, tokenText);
+
+     const ownerLine = card.querySelector('div div:nth-child(2)') || card.querySelector('.owner');
+    const owner = (card.dataset.owner || (ownerLine ? ownerLine.innerText : '0xUNKNOWN')).trim();
+    setText(nftOwner, owner);
+
+     setText(nftContract, card.dataset.contract || '0xDraLiEn...aB12');
+
+     setText(nftSubtitle, 'DRALIEN — UNIQUE 111 NFTS');
+    setText(nftLongDesc, card.dataset.long || 'Part of a 111-supply Dralien collection — focused on utilities and curated value for holders.');
+
+     const rarity = parseInt(card.dataset.rarity) || Math.floor(Math.random() * 70) + 10;
+    rarityFill.style.width = Math.max(6, Math.min(100, rarity)) + '%';
+    setText(rarityPct, Math.round(rarity) + '%');
+
+     traitsGrid.innerHTML = '';
+    const traitsJson = card.getAttribute('data-traits');
+    let traits = null;
+    try{ traits = traitsJson ? JSON.parse(traitsJson) : null; }catch(e){ traits = null; }
+    if(!traits){
+       traits = [
+        {trait_type:'Color', value:'Neon Green'},
+        {trait_type:'Eyes', value:'3'},
+        {trait_type:'Accessory', value:'Helmet'},
+        {trait_type:'Rarity', value: (rarity > 60 ? 'Legendary' : rarity > 40 ? 'Rare' : 'Common')}
+      ];
+    }
+    traits.forEach(t => {
+      const div = document.createElement('div');
+      div.className = 'trait';
+      div.innerHTML = `<div class="name">${t.trait_type || t.name}</div><div class="value">${t.value}</div>`;
+      traitsGrid.appendChild(div);
+    });
+
+     provList.innerHTML = '';
+    actList.innerHTML = '';
+    const prov = card.dataset.provenance ? JSON.parse(card.dataset.provenance) : [
+      {title:'Minted', time:'Dec 30, 2025', tx:'0xabc...123'},
+      {title:'Transferred', time:'Jan 12, 2026', tx:'0xdef...456'}
+    ];
+    const acts = card.dataset.activity ? JSON.parse(card.dataset.activity) : [
+      {title:'Listed', time:'Feb 2, 2026 — 0.5 MON'},
+      {title:'Bid', time:'Feb 4, 2026 — 0.45 MON'}
+    ];
+    prov.forEach(p => {
+      const el = document.createElement('div'); el.className = 'prov-item';
+      el.innerHTML = `<div style="font-weight:800">${p.title}</div><div class="time">${p.time}${p.tx ? ' — tx: ' + p.tx : ''}</div>`;
+      provList.appendChild(el);
+    });
+    acts.forEach(a => {
+      const el = document.createElement('div'); el.className = 'act-item';
+      el.innerHTML = `<div style="font-weight:800">${a.title}</div><div class="time">${a.time}</div>`;
+      actList.appendChild(el);
+    });
+
+     const imgEl = card.querySelector('img') || card.querySelector('video');
+    const src = card.dataset.img || (imgEl ? (imgEl.getAttribute('data-src') || imgEl.src) : '');
+    if(!src){
+      nftMedia.src = '';
+      nftMedia.alt = 'No preview available';
+    }else{
+       if(/\.(mp4|webm|ogg)$/i.test(src)){
+         const v = document.createElement('video');
+        v.src = src; v.controls = true; v.autoplay = true; v.loop = true; v.id = 'nftMedia';
+        v.style.maxWidth = '100%'; v.style.maxHeight = '100%'; v.style.objectFit = 'contain';
+        const wrap = document.getElementById('nftMediaWrap');
+        wrap.innerHTML = ''; wrap.appendChild(v);
+      } else {
+         const wrap = document.getElementById('nftMediaWrap');
+        wrap.innerHTML = '';
+        const i = document.createElement('img');
+        i.id = 'nftMedia'; i.src = src; i.alt = title;
+        i.style.maxWidth='100%'; i.style.maxHeight='100%'; i.style.objectFit='contain';
+        wrap.appendChild(i);
+      }
+    }
+
+     modal.style.display = 'flex'; modal.setAttribute('aria-hidden','false');
+     document.querySelectorAll('.nft-tab').forEach(t=> t.classList.remove('active'));
+    document.querySelector('.nft-tab[data-tab="details"]').classList.add('active');
+    document.querySelectorAll('[data-panel]').forEach(p=> p.style.display = (p.dataset.panel === 'details') ? '' : 'none');
+  }
+
+   document.querySelectorAll('.nft-media').forEach(media => {
+    media.addEventListener('click', function(e){
+      const card = this.closest('.nft-card');
+      if(!card) return;
+      populateFromCard(card);
+    });
+  });
+
+   document.querySelectorAll('.mini-nft').forEach(el => {
+    el.addEventListener('click', function(){
+       const fake = document.createElement('div');
+      fake.className = 'nft-card';
+      fake.dataset.img = (this.dataset.img || (this.querySelector('img') && this.querySelector('img').src));
+      fake.dataset.token = '#000';
+      fake.dataset.owner = '0xDemo…000';
+      fake.dataset.traits = JSON.stringify([
+        {trait_type:'Sample','value':'Demo'},
+        {trait_type:'Tool', 'value':'Preview'}
+      ]);
+      fake.innerHTML = '<div><div>Tool sample NFT</div></div>';
+      populateFromCard(fake);
+    });
+  });
+
+   modal.addEventListener('click', function(e){
+    if(e.target === modal) closeModal();
+  });
+
+   const observer = new MutationObserver(() => {
+    if(modal.style.display === 'flex'){
+      const firstBtn = modal.querySelector('button, a, [tabindex]'); if(firstBtn) firstBtn.focus();
+    }
+  });
+  observer.observe(modal, {attributes:true, attributeFilter:['style']});
+})();
+
+</script>
 </html>
