@@ -9,205 +9,307 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+<meta property="og:title" content="Make Heaven Crowded — Wear Your Faith" />
+    <meta property="og:description" content="Wear scripture. Share stories. Fund outreach. Shop faith-driven apparel & resources." />
+    <meta property="og:image" content="https://yourcdn.example.com/og-image.jpg" />
+    <meta property="og:url" content="https://makeheavencrowded.org/" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Make Heaven Crowded — Wear Your Faith" />
+    <meta name="twitter:description" content="Wear scripture. Share stories. Fund outreach. Shop faith-driven apparel & resources." />
+    <meta name="twitter:image" content="https://yourcdn.example.com/twitter-image.jpg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <style>
-/* ==========================
-   Make Heaven Crowded — Styles
-   Polished, responsive, high-contrast, mobile-first.
-   Background: white with warm gold accents and soft decorative shapes.
-   ========================== */
+/* =========================
+   Make Heaven Crowded — COMPLETE STYLES
+   Mobile-first, polished, accessible, exquisite.
+   Paste inside <head> in a single <style> tag.
+   ========================= */
 
 /* ---------- Variables ---------- */
 :root{
   --bg: #ffffff;
   --surface: #ffffff;
-  --muted: #6b7280;           /* cool gray */
-  --text: #0b1220;            /* main text */
-  --accent: #cf9b43;          /* warm gold */
-  --accent-2: #c23a2b;        /* warm deep red */
-  --glass: rgba(16,24,32,0.03);
-  --glass-2: rgba(16,24,32,0.04);
-  --card-shadow: 0 8px 28px rgba(14,20,24,0.06);
-  --radius: 12px;
+  --muted: #6b7280;
+  --muted-2: #8b8f98;
+  --text: #091421;
+  --accent: #cf9b43;        /* warm gold */
+  --accent-2: #c23a2b;      /* deep warm red */
+  --glass: rgba(11,14,18,0.03);
+  --glass-2: rgba(11,14,18,0.04);
+  --card-shadow: 0 12px 30px rgba(12,14,18,0.06);
+  --soft-shadow: 0 6px 18px rgba(11,18,32,0.06);
+  --radius: 14px;
+  --radius-sm: 8px;
   --max-width: 1200px;
   --gap: 18px;
   --fw-strong: 700;
-  --transition: 180ms cubic-bezier(.2,.9,.3,1);
-  --focus-ring: 3px solid rgba(207,155,67,0.18);
+  --transition-fast: 180ms cubic-bezier(.2,.9,.3,1);
+  --transition-slow: 320ms cubic-bezier(.2,.8,.2,1);
+  --focus-ring: 3px solid rgba(207,155,67,0.14);
   --glass-decor: linear-gradient(135deg, rgba(207,155,67,0.06), rgba(194,43,43,0.03));
+  --text-shadow-subtle: 0 1px 0 rgba(255,255,255,0.2);
+  --max-hero-height: 680px;
+  --nav-height: 72px;
+  --mobile-break: 900px;
+  --phone-break: 420px;
 }
 
 /* ---------- Base / Reset ---------- */
 *{box-sizing:border-box}
 html,body{height:100%}
+html{font-size:16px;-webkit-text-size-adjust:100%}
 body{
   margin:0;
-  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.45;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
 }
 
-/* container */
+/* utility */
 .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+.hidden{display:none!important}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;border:0!important}
 
-/* ---------- Header / Nav ---------- */
+/* ---------- Header (fixed + glass) ---------- */
 .site-header{
-  position:sticky;
+  position:fixed;
   top:0;
-  z-index:80;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.96));
+  left:0;
+  right:0;
+  height:var(--nav-height);
+  z-index:1200;
+  display:flex;
+  align-items:center;
+  backdrop-filter: blur(8px) saturate(1.05);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.92));
   border-bottom: 1px solid rgba(11,18,32,0.04);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(11,18,32,0.04);
 }
-.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:10px}
 
 /* brand */
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.logo{width:48px;height:48px;display:grid;place-items:center;border-radius:10px;background:var(--glass-decor);box-shadow:0 8px 24px rgba(12,14,18,0.06)}
-.logo svg{width:28px;height:28px}
-.brand-text .site-title{font-size:16px;margin:0;font-weight:800;letter-spacing:0.2px}
+.logo{width:48px;height:48px;display:grid;place-items:center;border-radius:12px;background:var(--glass-decor);box-shadow:0 10px 30px rgba(12,14,18,0.06);flex-shrink:0}
+.brand-text .site-title{font-size:15px;margin:0;font-weight:800;letter-spacing:0.2px}
 .brand-text .site-tag{margin:0;font-size:12px;color:var(--muted);font-weight:600}
 
 /* nav */
 .main-nav{display:flex;align-items:center;gap:12px}
-.mobile-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:8px}
-.menu{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-.menu a{color:var(--muted);font-weight:600;text-decoration:none;padding:8px 10px;border-radius:8px}
+.mobile-toggle{display:none;background:transparent;border:0;padding:8px;border-radius:10px}
+.menu{display:flex;gap:14px;align-items:center;margin:0;padding:0;list-style:none}
+.menu a{color:var(--muted);font-weight:600;text-decoration:none;padding:8px 10px;border-radius:10px;display:inline-block}
+.menu a:hover{color:var(--text);transform:translateY(-1px)}
 .menu a:focus{outline:var(--focus-ring);outline-offset:2px}
-.nav-actions{display:flex;gap:10px;align-items:center}
 
-/* buttons */
-.btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:10px 14px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:all var(--transition);background:transparent}
+/* header actions */
+.nav-actions{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:10px 14px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:all var(--transition-fast);background:transparent}
 .btn:active{transform:translateY(1px)}
-.icon-btn{width:44px;height:44px;justify-content:center;background:transparent;border-radius:10px;border:1px solid rgba(11,18,32,0.04);color:var(--text)}
-.icon-btn svg{opacity:0.9}
-.primary-btn{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#0b0b0b;border:none;box-shadow:0 8px 30px rgba(207,155,67,0.12)}
-.ghost-btn{background:transparent;border:1px solid rgba(11,18,32,0.04);color:var(--text)}
-.btn:focus{outline:var(--focus-ring);outline-offset:2px}
+.icon-btn{width:44px;height:44px;justify-content:center;background:transparent;border-radius:10px;border:1px solid rgba(11,18,32,0.04);color:var(--text);display:inline-grid;place-items:center}
+.primary-btn{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#061019;border:none;box-shadow:0 12px 40px rgba(207,155,67,0.12)}
+.ghost-btn{background:transparent;border:1px solid rgba(11,18,32,0.06);color:var(--text)}
+.btn:focus{outline:var(--focus-ring);outline-offset:3px}
+.cart-count{display:inline-block;background:var(--accent-2);color:#fff;font-weight:900;padding:4px 8px;border-radius:999px;font-size:12px;margin-left:6px;min-width:26px;text-align:center;box-shadow:0 6px 16px rgba(194,43,43,0.08)}
 
-/* cart count */
-.cart-count{display:inline-block;background:var(--accent-2);color:#fff;font-weight:900;padding:2px 8px;border-radius:999px;font-size:12px;margin-left:6px}
+/* ---------- Header separator image ---------- */
+.header-separator{width:100%;height:68px;overflow:hidden;margin-top:var(--nav-height);display:block}
+.header-separator .sep-image{width:100%;height:100%;object-fit:cover;display:block;opacity:0.98;filter:saturate(0.98) contrast(1.02)}
 
 /* ---------- Hero ---------- */
-.hero{padding:40px 0}
-.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
-.hero-copy{padding-right:8px}
-.badge.new-drop{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(207,155,67,0.10);color:var(--accent);font-weight:800;font-size:13px;margin-bottom:16px}
-.hero-title{font-size:38px;margin:6px 0 14px;line-height:1.02;font-weight:900}
-.hero-title .accent{color:var(--accent-2);display:block;font-weight:800;font-size:20px;margin-top:6px}
-.hero-lead{color:var(--muted);margin-bottom:18px}
+.hero{padding:26px 0 42px}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:26px;align-items:start;max-width:var(--max-width);margin:0 auto;padding:0 20px}
+.badge.new-drop{display:inline-block;padding:8px 14px;border-radius:999px;background:linear-gradient(90deg, rgba(207,155,67,0.10), rgba(194,43,43,0.04));color:var(--accent);font-weight:800;font-size:13px;margin-bottom:14px;letter-spacing:0.6px;box-shadow:0 6px 18px rgba(207,155,67,0.06)}
+/* subtle badge animation class */
+.badge-animate{
+  animation: badge-pulse 2200ms ease-in-out infinite;
+  transform-origin:center;
+}
+@keyframes badge-pulse{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  50%{transform:translateY(-4px) scale(1.02);opacity:0.98}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .badge-animate{animation:none}
+  *{transition:none!important}
+}
+
+/* hero typography */
+.hero-title{font-size:34px;margin:6px 0 12px;line-height:1.02;font-weight:900}
+.hero-title .accent{color:var(--accent-2);display:block;font-weight:800;font-size:18px;margin-top:6px}
+.hero-lead{color:var(--muted);margin-bottom:18px;font-size:15px}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.features{display:flex;gap:12px;margin-top:22px;padding:0;list-style:none}
+
+/* features */
+.features{display:flex;gap:12px;margin-top:18px;padding:0;list-style:none;flex-wrap:wrap}
 .feature-item{display:flex;gap:12px;align-items:center}
-.feature-icon{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(207,155,67,0.06), rgba(194,43,43,0.03));padding:6px;box-shadow:0 8px 20px rgba(12,14,18,0.04)}
+.feature-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(207,155,67,0.06), rgba(194,43,43,0.03));padding:6px;box-shadow:0 8px 20px rgba(12,14,18,0.04)}
 
 /* hero media */
 .hero-media{display:flex;flex-direction:column;gap:12px;align-items:stretch}
 .mockup{background:var(--glass);padding:12px;border-radius:16px;border:1px solid rgba(11,18,32,0.04);box-shadow:var(--card-shadow)}
 .hero-image{width:100%;height:360px;object-fit:cover;border-radius:10px;display:block}
 .mini-cards{display:flex;gap:12px;margin-top:6px}
-.card{background:linear-gradient(180deg, rgba(250,250,250,0.7), rgba(255,255,255,0.7));padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);box-shadow:0 6px 18px rgba(11,18,32,0.03)}
+.card{background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);box-shadow:var(--soft-shadow)}
 .card .card-title{font-weight:800;margin:0 0 6px}
 .verse-text{color:var(--muted);font-size:15px}
+.mini-thumb{width:100px;height:70px;object-fit:cover;border-radius:8px;box-shadow:0 6px 18px rgba(11,18,32,0.04)}
 
-/* ---------- Sections ---------- */
-.section{padding:36px 0}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px}
+/* ---------- Sections & cards ---------- */
+.section{padding:28px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap}
 .section-head h2{margin:0;font-size:20px}
 .section-head .muted{color:var(--muted)}
 
-/* featured products */
+/* products grid */
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:16px}
-.product.card{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));border:1px solid rgba(11,18,32,0.04);box-shadow:var(--card-shadow)}
-.thumb{height:220px;border-radius:10px;overflow:hidden;background:var(--glass);display:grid;place-items:center}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.product.card{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, #fff, #fbfbfb);border:1px solid rgba(11,18,32,0.04);box-shadow:var(--card-shadow)}
+.thumb{height:220px;border-radius:12px;overflow:hidden;background:var(--glass);display:grid;place-items:center}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease, filter .3s ease}
+.thumb img:hover{transform:translateY(-6px) scale(1.02);filter:drop-shadow(0 8px 20px rgba(12,14,18,0.06))}
+
+/* product details */
 .product .price{font-weight:900;color:var(--accent);font-size:18px}
-.btn-row{display:flex;gap:8px;align-items:center;}
+.btn-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
 /* testimonials */
 .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
-.testimonial{background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:16px;border-radius:12px;border:1px solid rgba(11,18,32,0.04)}
+.testimonial{background:linear-gradient(180deg,#fff,#fbfbfb);padding:16px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);box-shadow:var(--soft-shadow)}
+.testimonial .avatar img{width:56px;height:56px;border-radius:999px;object-fit:cover}
 
-/* shop */
+/* shop list */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(11,18,32,0.04);background:transparent;font-weight:700;cursor:pointer}
-.chip.active, .chip.selected{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#0b0b0b;border-color:transparent}
+.chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(11,18,32,0.04);background:transparent;font-weight:700;cursor:pointer;transition:all var(--transition-fast)}
+.chip:hover{transform:translateY(-2px)}
+.chip.active, .chip.selected{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#061019;border-color:transparent}
 .product-list{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+.product.card img{width:100%;height:220px;object-fit:cover;border-radius:12px;display:block}
 
 /* gospel hub */
 .gospel-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cards .card img{width:100%;height:140px;object-fit:cover;border-radius:10px}
 
 /* design generator area */
-.design-generator{background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04)}
+.design-generator{background:linear-gradient(180deg,#fff,#fbfbfb);padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);box-shadow:var(--soft-shadow)}
 .form-label{display:block;margin-top:10px;font-size:13px;color:var(--muted)}
-.form-control{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(11,18,32,0.06);background:transparent}
+.form-control{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(11,18,32,0.06);background:transparent;font-size:15px}
 .design-actions{display:flex;gap:8px;margin-top:10px}
 .preview-canvas-wrap{margin-top:12px;text-align:center;border-radius:8px;padding:10px;background:linear-gradient(180deg, rgba(11,18,32,0.02), rgba(11,18,32,0.01))}
 
-/* featured sermon video */
-.video-wrap iframe{width:100%;height:220px;border-radius:10px;border:0;display:block}
+/* canvas preview */
+#shirtPreview{display:block;margin:0 auto;border-radius:12px;box-shadow:0 14px 40px rgba(11,18,32,0.06);background:#0b0f13}
+.canvas-placeholder img{width:160px;height:auto;border-radius:10px;display:block;margin:0 auto}
 
-/* donate */
-.donate-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
-.donation-tiers{display:flex;gap:12px;flex-wrap:wrap}
-.tier{padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04);min-width:140px;text-align:center;background:var(--surface)}
-.tier .muted{font-size:13px;color:var(--muted)}
+/* featured sermon video thumbnail */
+.video-wrap .video-thumbnail{display:block;position:relative;border-radius:12px;overflow:hidden}
+.video-wrap img{width:100%;height:auto;display:block}
+.play-icon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-grid;place-items:center;background:rgba(0,0,0,0.45);padding:12px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+
+/* gallery mosaic */
+.image-mosaic{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}
+.image-mosaic img{width:100%;height:120px;object-fit:cover;border-radius:8px;display:block;box-shadow:0 8px 24px rgba(11,18,32,0.04)}
+@media (max-width:1000px){ .image-mosaic{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:600px){ .image-mosaic{grid-template-columns:repeat(2,1fr)} .image-mosaic img{height:100px} }
+
+/* donate / tiers */
+.donation-tiers{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.tier{padding:14px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);min-width:140px;text-align:center;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:var(--soft-shadow)}
 .custom-tier .form-control{margin-top:8px}
-.donate-info{min-width:280px}
 
-/* donate payment actions */
-.payment-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-
-/* about / involvement */
+/* about/get-involved */
 .about-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
 .values{display:flex;gap:12px;margin-top:12px}
-.value{flex:1;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04)}
+.value{flex:1;background:linear-gradient(180deg,#fff,#fbfbfb);padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04)}
 
-/* get-involved card */
-.get-involved .social-links{display:flex;gap:8px;margin-top:8px}
-.social svg{display:block}
-
-/* prayer / newsletter */
+/* prayer/newsletter */
 .prayer-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
 .prayer-form{flex:1;min-width:260px}
 .newsletter-signup{width:320px;min-width:260px}
 
-/* footer */
-.site-footer{padding:28px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:30px;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6))}
-.footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-.footer-brand h4{margin:0}
-.footer-links ul, .footer-support ul{list-style:none;margin:8px 0 0;padding:0}
-.footer-links a, .footer-support a{color:var(--muted);text-decoration:none;font-size:14px}
-
 /* ---------- Modal ---------- */
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(11,18,32,0.45);z-index:120;padding:20px}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(11,18,32,0.45);z-index:1600;padding:20px;backdrop-filter: blur(3px)}
 .modal.open{display:flex}
-.modal .panel{background:linear-gradient(180deg,#ffffff,#fbfbfb);padding:18px;border-radius:12px;width:100%;max-width:920px;border:1px solid rgba(11,18,32,0.06);box-shadow:0 30px 80px rgba(9,14,18,0.35)}
+.modal .panel{background:linear-gradient(180deg,#ffffff,#fbfbfb);padding:18px;border-radius:14px;width:100%;max-width:920px;border:1px solid rgba(11,18,32,0.06);box-shadow:0 30px 90px rgba(9,14,18,0.45)}
 .modal .modal-inner{display:block}
 .modal .modal-header h3{margin:0;margin-bottom:8px}
 .toast{padding:12px;text-align:center}
+
+/* cart items layout */
 .cart-items .cart-item{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(11,18,32,0.04)}
-.cart-item img{border-radius:8px}
+.cart-item img{width:72px;height:72px;object-fit:cover;border-radius:8px}
 .cart-actions{margin-left:auto;text-align:right}
 .cart-summary{display:flex;flex-direction:column;gap:6px;text-align:right}
 
-/* ---------- Utilities & helpers ---------- */
-.small{font-size:13px}
-.muted{color:var(--muted)}
+/* ---------- Footer: stacked + rich ---------- */
+.site-footer{padding:36px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:30px;background:linear-gradient(180deg,#fff,#fbfbfb)}
+.footer-top{display:flex;flex-direction:column;gap:20px;max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+/* CTA + newsletter */
+.footer-cta{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.footer-cta .brand-block h4{margin:0}
+.footer-newsletter{display:flex;gap:8px;align-items:center}
+.footer-newsletter .form-control{min-width:220px;padding:10px;border-radius:10px}
+
+/* columns */
+.footer-columns{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:12px}
+.footer-col strong{display:block;margin-bottom:8px}
+.footer-col ul{list-style:none;padding:0;margin:0}
+.footer-col li{margin:8px 0}
+
+/* trust and partners */
+.footer-trust{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;flex-wrap:wrap}
+.trust-badges svg{width:48px;height:48px;margin-right:8px;opacity:0.9}
+.partner-logos img{width:100px;height:auto;border-radius:6px;margin-right:8px}
+
+/* bottom grid */
+.footer-bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:18px;margin-top:18px;align-items:start}
+.payments img{width:80px;height:40px;object-fit:contain;margin-right:8px}
+.access-tools ul{list-style:none;padding:0;margin:0}
+
+/* final row */
+.footer-end{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;border-top:1px solid rgba(11,18,32,0.03)}
+.mission-popover{border-radius:8px;padding:8px}
+.mission-summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.mission-body{padding:12px;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:8px;margin-top:8px;box-shadow:var(--soft-shadow)}
+
+/* back to top */
+.back-to-top a{color:var(--muted);text-decoration:none;font-size:14px}
+
+/* ---------- Utilities ---------- */
 .row{display:flex;gap:12px;align-items:center}
 .center{display:grid;place-items:center}
+.small{font-size:13px}
+.muted{color:var(--muted)}
 .badge{padding:6px 8px;border-radius:8px;background:rgba(11,18,32,0.03);font-weight:700}
+.centered{display:flex;align-items:center;justify-content:center}
 
-/* ---------- Responsive ---------- */
-/* mobile-first: make everything fit nicely on phones */
+/* focus visible improvements */
+:focus{outline:none}
+:focus-visible{outline:var(--focus-ring);outline-offset:3px;border-radius:8px}
+
+/* toast */
+.site-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:28px;background:#061019;color:#fff;padding:12px 18px;border-radius:999px;box-shadow:0 20px 60px rgba(6,16,25,0.6);opacity:0;transition:all .28s ease;z-index:2000}
+.site-toast.visible{opacity:1;transform:translateX(-50%) translateY(-6px)}
+
+/* small helpers */
+.kicker{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+/* ---------- Responsive: mobile-first ---------- */
 @media (max-width:1000px){
-  .hero-inner{grid-template-columns:1fr;gap:16px}
-  .hero-image{height:300px}
+  .hero-inner{grid-template-columns:1fr;gap:18px;padding:0 16px}
+  .hero-image{height:320px}
   .products-grid{grid-template-columns:repeat(2,1fr)}
   .testimonials{grid-template-columns:1fr}
   .gospel-grid{grid-template-columns:1fr}
@@ -215,22 +317,23 @@ body{
   .cards{grid-template-columns:repeat(2,1fr)}
   .gospel-grid .design-generator{order:2}
   .mini-cards{flex-direction:row}
-  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-columns{grid-template-columns:repeat(2,1fr)}
   .mobile-toggle{display:inline-flex}
   .menu{display:none}
+  .menu.open{display:block;position:fixed;top:var(--nav-height);left:12px;right:12px;background:var(--surface);padding:12px;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.12)}
 }
 
 /* phones */
 @media (max-width:600px){
   .hero-title{font-size:26px}
-  .hero-title .accent{font-size:16px}
+  .hero-title .accent{font-size:15px}
   .hero-image{height:220px}
   .products-grid{grid-template-columns:1fr}
   .product-list{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
   .gospel-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .nav-inner{padding:10px 0}
+  .footer-columns{grid-template-columns:1fr}
+  .nav-inner{padding:8px 6px}
   .nav-actions .primary-btn{padding:8px 10px;font-size:14px}
   .cart-count{font-size:11px;padding:2px 6px}
   .mini-cards{flex-direction:column}
@@ -238,47 +341,57 @@ body{
   .about-inner{flex-direction:column}
   .prayer-inner{flex-direction:column}
   .newsletter-signup{width:100%}
+  .image-mosaic img{height:90px}
 }
 
-/* ---------- Tiny polished details ---------- */
-/* smooth appearing for images */
-img{transition:transform .4s ease,opacity .3s ease}
-img:hover{transform:translateY(-2px)}
-a{color:inherit}
-input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
-.product .thumb{transition:transform .25s ease}
-.product .thumb:hover{transform:translateY(-6px)}
-
-/* focus-visible handling */
-:focus{outline:none}
-:focus-visible{outline:var(--focus-ring);outline-offset:2px}
-
-/* ensure the canvas preview looks great */
-#shirtPreview{display:block;margin:0 auto;border-radius:8px;box-shadow:0 10px 30px rgba(11,18,32,0.06)}
-
-/* provide fine-grained spacing for smaller screens */
+/* very small screens (iphone 11 friendly adjustments) */
 @media (max-width:420px){
   .brand-text .site-title{font-size:15px}
   .brand-text .site-tag{font-size:11px}
   .hero-lead{font-size:14px}
   .btn{padding:8px 10px}
   .feature-icon{width:30px;height:30px}
+  .nav-inner{padding:8px}
+  #shirtPreview{width:200px;height:250px}
+  .footer-cta{flex-direction:column;align-items:flex-start;gap:12px}
+  .footer-bottom-grid{grid-template-columns:1fr}
+  .footer-trust{flex-direction:column;align-items:flex-start}
 }
 
-/* END */
+/* ---------- Accessibility forced classes ---------- */
+body.high-contrast{
+  background:#071426;color:#fff;
+}
+body.large-text{font-size:115%}
+body.reduced-motion-forced{scroll-behavior:auto}
+body.nav-open{overflow:hidden}
+
+/* ---------- Small visual polish tweaks ---------- */
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+input, textarea, select, button{font-family:inherit}
+.product .thumb, .card, .mockup{transition:transform var(--transition-slow), box-shadow var(--transition-fast)}
+.product .thumb:hover{transform:translateY(-6px)}
+.card:hover{transform:translateY(-4px)}
+
+/* ensure buttons and links have good hit area */
+button, a.btn{touch-action:manipulation}
+
+/* end */
 </style>
 
 </head>
-<body>
-  <!-- SITE HEADER / NAV -->
-  <header class="site-header" role="banner">
+  <body>
+ 
+  <header class="site-header" role="banner" aria-label="Main header">
     <div class="container nav-inner">
-      <a href="#home" class="brand" aria-label="Make Heaven Crowded home">
-        <!-- Logo: cross mark in rounded square -->
+      <!-- brand -->
+      <a class="brand" href="#home" aria-label="Make Heaven Crowded home">
         <div class="logo" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-            <rect width="24" height="24" rx="6" fill="currentColor" opacity="0.95" />
-            <path d="M11 3h2v6h6v2h-6v6h-2v-6H5V9h6V3z" fill="#fff"/>
+          <!-- cross in rounded square -->
+          <svg width="36" height="36" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <rect width="24" height="24" rx="6" fill="currentColor" opacity="0.95"></rect>
+            <path d="M11 3h2v6h6v2h-6v6h-2v-6H5V9h6V3z" fill="#fff"></path>
           </svg>
         </div>
         <div class="brand-text">
@@ -287,13 +400,14 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
         </div>
       </a>
 
-      <nav class="main-nav" role="navigation" aria-label="Main navigation">
-        <button class="mobile-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="Open menu">
-          <!-- hamburger icon -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <!-- primary nav (icons + links) -->
+      <nav class="main-nav" role="navigation" aria-label="Primary navigation">
+        <button class="mobile-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
+          <!-- hamburger -->
+          <svg width="20" height="20" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
 
-        <ul id="primary-menu" class="menu" role="menubar">
+        <ul id="primary-menu" class="menu" role="menubar" aria-label="Primary">
           <li role="none"><a role="menuitem" href="#home">Home</a></li>
           <li role="none"><a role="menuitem" href="#shop">Shop</a></li>
           <li role="none"><a role="menuitem" href="#gospel">Gospel Hub</a></li>
@@ -302,15 +416,14 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
         </ul>
       </nav>
 
+      <!-- header actions -->
       <div class="nav-actions" role="group" aria-label="Header actions">
-        <button class="btn icon-btn" id="open-search" title="Search" aria-label="Search site">
-          <!-- search icon -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button id="open-search" class="btn icon-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" focusable="false"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
 
-        <button class="btn icon-btn" id="open-cart" aria-label="Open cart" title="Cart">
-          <!-- cart icon -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M6 6h15l-1.5 9h-12L4 3H2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1" fill="currentColor"/><circle cx="18" cy="20" r="1" fill="currentColor"/></svg>
+        <button id="open-cart" class="btn icon-btn" aria-label="Cart" title="Open cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" focusable="false"><path d="M6 6h15l-1.5 9h-12L4 3H2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1" fill="currentColor"/><circle cx="18" cy="20" r="1" fill="currentColor"/></svg>
           <span id="cart-count" class="cart-count" aria-live="polite">0</span>
         </button>
 
@@ -319,62 +432,91 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
     </div>
   </header>
 
-  <main id="main" class="site-main">
+  <!-- decorative separator image (placed between header and NEW DROP badge as requested) -->
+  <div class="header-separator" aria-hidden="true">
+    <!-- Decorative collage — replace src with real asset(s) -->
+    <picture>
+      <source srcset="https://images.unsplash.com/photo-1524475901195-5e3a6c8f5f71?q=80&w=1600&auto=format&fit=crop" media="(min-width:900px)">
+      <img src="https://images.unsplash.com/photo-1535905553941-6f9d1b59a4cd?q=80&w=1200&auto=format&fit=crop" alt="" class="sep-image" />
+    </picture>
+  </div>
+
+  <!-- MAIN -->
+  <main id="main" class="site-main" role="main">
     <!-- HERO -->
     <section id="home" class="hero" aria-labelledby="hero-heading">
-      <div class="hero-inner container">
+      <div class="container hero-inner">
         <div class="hero-copy">
-          <span class="badge new-drop" aria-hidden="true">NEW DROP • Faith Collection</span>
-          <h2 id="hero-heading" class="hero-title">Make Heaven Crowded <span class="accent">Wear your faith — spark conversations</span></h2>
-          <p class="hero-lead">Scripture-inscribed apparel, devotional content, and tangible ways to support gospel work globally. Shop our newest designs or give to fund outreach.</p>
+          <!-- badge with tiny animation class (CSS will handle prefers-reduced-motion) -->
+          <span class="badge new-drop badge-animate" id="newDropBadge" role="status" aria-live="polite">NEW DROP • Faith Collection</span>
+
+          <h2 id="hero-heading" class="hero-title">
+            Make Heaven Crowded
+            <span class="accent">Wear your faith — spark conversations</span>
+          </h2>
+
+          <p class="hero-lead">Scripture-inscribed apparel, devotionals, and tangible ways to support gospel work globally. Shop new designs or give to fund outreach.</p>
 
           <div class="hero-ctas">
             <a class="btn primary-btn" href="#shop">Shop</a>
             <a class="btn ghost-btn" href="#donate">Donate</a>
-            <a class="btn ghost-btn" href="#gospel">Learn More</a>
+            <a class="btn ghost-btn" href="#gospel">Learn</a>
           </div>
 
+          <!-- small feature list with many icon SVGs -->
           <ul class="features" role="list">
-            <li class="feature-item">
-              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" focusable="false"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              <div>
-                <strong>Purpose-led</strong>
-                <div class="muted">Portion of profits funds outreach</div>
-              </div>
+            <li class="feature-item" aria-hidden="false">
+              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" focusable="false"><path d="M12 2v20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <div><strong>Purpose-led</strong><div class="muted">Profits fund outreach</div></div>
             </li>
-            <li class="feature-item">
-              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" focusable="false"><path d="M12 2l3 6 6 .5-4.5 3.8L19 20l-7-4-7 4 1.5-7.7L3 8.5 9 8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-              <div>
-                <strong>Gospel-first</strong>
-                <div class="muted">Devotionals, testimonies & resources</div>
-              </div>
+
+            <li class="feature-item" aria-hidden="false">
+              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" focusable="false"><path d="M12 3l3 6 6 .5-4.5 3.8L19 20l-7-4-7 4 1.5-7.7L3 8.5 9 8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+              <div><strong>Gospel-first</strong><div class="muted">Devotionals, testimonies & resources</div></div>
+            </li>
+
+            <li class="feature-item" aria-hidden="false">
+              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" focusable="false"><path d="M12 2C9 6 4 9 4 14c0 3.3 2.7 6 6 6s6-2.7 6-6c0-5-5-8-6-12z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              <div><strong>Local & Global</strong><div class="muted">Partners across communities</div></div>
             </li>
           </ul>
         </div>
 
+        <!-- hero media column with many images -->
         <aside class="hero-media" aria-hidden="false">
           <div class="mockup">
-            <!-- hero image placeholder -->
-            <img src="mhc.webp" alt="Make Heaven Crowded — hero" class="hero-image" />
+            <img src="https://images.unsplash.com/photo-1520975911760-77d0d8d52983?q=80&w=900&auto=format&fit=crop" alt="Make Heaven Crowded hero — people wearing tees" class="hero-image" />
+
+            <!-- small gallery -->
+            <div class="mini-cards" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1542736667-069246bdbc74?q=80&w=400&auto=format&fit=crop" alt="" class="mini-thumb" />
+              <img src="https://images.unsplash.com/photo-1545083762-1f4b9f47a0e6?q=80&w=400&auto=format&fit=crop" alt="" class="mini-thumb" />
+              <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=400&auto=format&fit=crop" alt="" class="mini-thumb" />
+            </div>
           </div>
 
-          <div class="mini-cards">
+          <!-- Verse + CTA cards -->
+          <div class="mini-cards below-hero">
             <div class="card verse-card" role="region" aria-label="Verse of the day">
               <h3 class="card-title">Verse of the Day</h3>
-              <p id="verseOfDay" class="verse-text">Loading...</p>
+              <p id="verseOfDay" class="verse-text">John 3:16 — For God so loved the world...</p>
             </div>
 
             <div class="card newsletter-card" role="region" aria-label="Join newsletter">
               <h3 class="card-title">Join Us</h3>
-              <p class="muted">Sign up to receive devotionals</p>
-              <button class="btn primary-btn" id="join-newsletter">Join</button>
+              <p class="muted">Sign up for weekly devotionals</p>
+              <form class="newsletter-inline" action="#" method="post" aria-label="Subscribe to devotionals">
+                <label for="heroEmail" class="sr-only">Email</label>
+                <input id="heroEmail" name="email" type="email" class="form-control" placeholder="Email address" />
+                <button class="btn primary-btn" type="submit">Join</button>
+              </form>
             </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- FEATURED DROPS -->
+    <!-- FEATURED DROPS (grid heavy on images + icons) -->
     <section id="featured" class="section featured" aria-labelledby="featured-heading">
       <div class="container">
         <div class="section-head">
@@ -382,14 +524,63 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
           <p class="muted">Latest & bestselling — Free shipping over $80</p>
         </div>
 
-        <div class="products-grid" data-products-featured>
-          <!-- featured product cards injected by JS -->
+        <div class="products-grid" role="list" aria-live="polite">
+          <!-- product 1 -->
+          <article class="product card" role="listitem" aria-label="Saved Tee">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=800&auto=format&fit=crop" alt="Saved Tee — front view" />
+            </div>
+            <div class="card-body">
+              <h3 class="product-title">Saved Tee</h3>
+              <div class="muted small product-verse">Romans 10:9</div>
+              <div class="price">$22.00</div>
+              <div class="btn-row">
+                <button class="btn ghost-btn" aria-label="View Saved Tee">
+                  <svg width="16" height="16" viewBox="0 0 24 24" focusable="false"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+                  View
+                </button>
+                <button class="btn primary-btn" aria-label="Add Saved Tee to cart">Add</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- product 2 -->
+          <article class="product card" role="listitem" aria-label="Grace Over Grind">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop" alt="Grace Over Grind Tee" />
+            </div>
+            <div class="card-body">
+              <h3 class="product-title">Grace Over Grind</h3>
+              <div class="muted small product-verse">Ephesians 2:8</div>
+              <div class="price">$24.00</div>
+              <div class="btn-row">
+                <button class="btn ghost-btn" aria-label="View Grace Over Grind">View</button>
+                <button class="btn primary-btn" aria-label="Add Grace Over Grind to cart">Add</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- product 3 -->
+          <article class="product card" role="listitem" aria-label="Crowd Hoodie">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=800&auto=format&fit=crop" alt="Crowd Hoodie" />
+            </div>
+            <div class="card-body">
+              <h3 class="product-title">Crowd Hoodie</h3>
+              <div class="muted small product-verse">Matthew 28:19</div>
+              <div class="price">$48.00</div>
+              <div class="btn-row">
+                <button class="btn ghost-btn" aria-label="View Crowd Hoodie">View</button>
+                <button class="btn primary-btn" aria-label="Add Crowd Hoodie to cart">Add</button>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- STORIES & IMPACT -->
-    <section class="section stories" aria-labelledby="stories-heading">
+    <!-- STORIES & IMPACT (images + icons) -->
+    <section id="stories" class="section stories" aria-labelledby="stories-heading">
       <div class="container">
         <div class="section-head">
           <h2 id="stories-heading">Stories & Impact</h2>
@@ -397,18 +588,17 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
         </div>
 
         <div class="testimonials" role="list">
-          <article class="testimonial" role="article">
-            <div class="rating" aria-hidden="true">
-              <!-- stars icon set -->
-              <svg width="84" height="16" viewBox="0 0 84 16" fill="none" focusable="false"><path d="M6 0l1.9 4.3L12 5l-3 2.7L10 12 6 9.5 2 12l1-4.3L0 5l4.1-.7L6 0z" fill="currentColor"/></svg>
+          <article class="testimonial" role="listitem">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Ama — testimonial" />
             </div>
             <p class="quote">"I wore my 'Saved' tee to campus — a stranger asked why and we ended up praying together."</p>
             <p class="attribution muted">— Ama, Kumasi</p>
           </article>
 
-          <article class="testimonial" role="article">
-            <div class="rating" aria-hidden="true">
-              <svg width="84" height="16" viewBox="0 0 84 16" fill="none" focusable="false"><path d="M6 0l1.9 4.3L12 5l-3 2.7L10 12 6 9.5 2 12l1-4.3L0 5l4.1-.7L6 0z" fill="currentColor"/></svg>
+          <article class="testimonial" role="listitem">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1545996124-1b9d3b76b1d2?q=80&w=200&auto=format&fit=crop" alt="Kofi — testimonial" />
             </div>
             <p class="quote">"Donating monthly helped our local outreach feed 120 children last month."</p>
             <p class="attribution muted">— Kofi, Accra</p>
@@ -417,7 +607,69 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
       </div>
     </section>
 
-    <!-- SHOP -->
+    <!-- GOSPEL HUB (image-rich cards + video thumbnail) -->
+    <section id="gospel" class="section gospel" aria-labelledby="gospel-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="gospel-heading">Gospel Hub</h2>
+          <p class="muted">Devotionals • Testimonies • Media</p>
+        </div>
+
+        <div class="gospel-grid">
+          <!-- devotional cards (image + excerpt) -->
+          <div class="cards" id="gospelCards" role="list">
+            <article class="card" role="listitem">
+              <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=800&auto=format&fit=crop" alt="Devotional — Courage" />
+              <h3 class="card-title">3-minute Devotional: Courage</h3>
+              <p class="muted small">Short reflection on courage from Joshua 1</p>
+            </article>
+
+            <article class="card" role="listitem">
+              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop" alt="Testimony — Doubt to faith" />
+              <h3 class="card-title">Testimony: From Doubt to Faith</h3>
+              <p class="muted small">A campus encounter that changed a life</p>
+            </article>
+
+            <article class="card" role="listitem">
+              <img src="https://images.unsplash.com/photo-1495121605193-b116b5b09a6b?q=80&w=800&auto=format&fit=crop" alt="How to share your faith" />
+              <h3 class="card-title">How to Share Your Faith Naturally</h3>
+              <p class="muted small">Practical tips for conversations</p>
+            </article>
+          </div>
+
+          <!-- design generator aside (image + canvas placeholder) -->
+          <aside class="design-generator" aria-labelledby="design-generator-heading">
+            <h3 id="design-generator-heading">Design Generator</h3>
+            <p class="muted">Customize a verse + preview it on a shirt</p>
+            <label class="form-label" for="genText">Verse or Text</label>
+            <input id="genText" class="form-control" type="text" placeholder="John 3:16 — For God so loved..." />
+            <div class="preview-canvas-wrap" aria-hidden="true">
+              <!-- Canvas will be added later by JS -->
+              <div class="canvas-placeholder" role="img" aria-label="Shirt preview placeholder">
+                <img src="https://images.unsplash.com/photo-1520975911760-77d0d8d52983?q=80&w=600&auto=format&fit=crop" alt="shirt preview placeholder" />
+              </div>
+            </div>
+            <div class="design-actions">
+              <button class="btn primary-btn" id="previewDesign">Preview</button>
+              <button class="btn ghost-btn" id="addDesignToCart">Add to Cart</button>
+            </div>
+          </aside>
+        </div>
+
+        <!-- featured sermon (video thumbnail as image for heavier image content) -->
+        <div class="featured-sermon">
+          <h4>Featured Sermon</h4>
+          <a href="#sermon" class="video-thumbnail" aria-label="Watch the featured sermon">
+            <img src="https://images.unsplash.com/photo-1511076701959-1f86b2b6f41a?q=80&w=1200&auto=format&fit=crop" alt="Featured sermon thumbnail" />
+            <span class="play-icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP — image-heavy grid + filters -->
     <section id="shop" class="section shop" aria-labelledby="shop-heading">
       <div class="container">
         <div class="section-head">
@@ -435,54 +687,60 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
         </div>
 
         <div class="product-list" id="shopList" aria-live="polite">
-          <!-- shop items injected by JS -->
+          <!-- many image-rich items (examples) -->
+          <div class="product card" role="article" data-product-id="mhc-ts-01">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600&auto=format&fit=crop" alt="Saved Tee product image" />
+            <h3>Saved Tee</h3>
+            <div class="price">$22.00</div>
+            <div class="meta-icons">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2v20" stroke="currentColor" stroke-width="1.2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 12s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7z" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+            <div class="btn-row">
+              <button class="btn ghost-btn">Details</button>
+              <button class="btn primary-btn">Add</button>
+            </div>
+          </div>
+
+          <!-- duplicate more to create a rich, image-filled list -->
+          <div class="product card" role="article" data-product-id="mhc-ts-02">
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop" alt="Grace Over Grind product image" />
+            <h3>Grace Over Grind</h3>
+            <div class="price">$24.00</div>
+            <div class="btn-row">
+              <button class="btn ghost-btn">Details</button>
+              <button class="btn primary-btn">Add</button>
+            </div>
+          </div>
+
+          <div class="product card" role="article" data-product-id="mhc-hd-01">
+            <img src="https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=600&auto=format&fit=crop" alt="Crowd Hoodie product image" />
+            <h3>Crowd Hoodie</h3>
+            <div class="price">$48.00</div>
+            <div class="btn-row">
+              <button class="btn ghost-btn">Details</button>
+              <button class="btn primary-btn">Add</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- GOSPEL HUB -->
-    <section id="gospel" class="section gospel" aria-labelledby="gospel-heading">
+    <!-- INSTAGRAM / GALLERY mosaic (lots of images) -->
+    <section id="gallery" class="section gallery" aria-labelledby="gallery-heading">
       <div class="container">
         <div class="section-head">
-          <h2 id="gospel-heading">Gospel Hub</h2>
-          <p class="muted">Devotionals • Testimonies • Media</p>
+          <h2 id="gallery-heading">Community Gallery</h2>
+          <p class="muted">Real people. Real conversations.</p>
         </div>
 
-        <div class="gospel-grid">
-          <div class="cards" id="gospelCards">
-            <!-- cards injected by JS -->
-          </div>
-
-          <aside class="design-generator" aria-labelledby="design-generator-heading">
-            <h3 id="design-generator-heading">Design Generator</h3>
-            <p class="muted">Customize a verse + preview it on a shirt</p>
-
-            <label for="genText" class="form-label">Verse or Text</label>
-            <input id="genText" class="form-control" type="text" placeholder="John 3:16 — For God so loved..." />
-
-            <label for="genSize" class="form-label">Size</label>
-            <select id="genSize" class="form-control">
-              <option>Small</option>
-              <option>Medium</option>
-              <option selected>Large</option>
-            </select>
-
-            <div class="design-actions">
-              <button class="btn primary-btn" id="previewDesign">Preview</button>
-              <button class="btn ghost-btn" id="addDesignToCart">Add to Cart</button>
-            </div>
-
-            <div class="preview-canvas-wrap">
-              <canvas id="shirtPreview" width="240" height="300" aria-label="Shirt preview"></canvas>
-            </div>
-          </aside>
-        </div>
-
-        <div class="featured-sermon">
-          <h4>Featured Sermon</h4>
-          <div class="video-wrap">
-            <iframe id="featuredSermon" width="560" height="315" src="https://www.youtube.com/embed/Vruq4I4RDCU" title="Featured Sermon" frameborder="0" allowfullscreen></iframe>
-          </div>
+        <div class="image-mosaic" role="list" aria-label="Community photos">
+          <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=800&auto=format&fit=crop" alt="Community photo 1" />
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop" alt="Community photo 2" />
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop" alt="Community photo 3" />
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop" alt="Community photo 4" />
+          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=800&auto=format&fit=crop" alt="Community photo 5" />
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop" alt="Community photo 6" />
         </div>
       </div>
     </section>
@@ -492,9 +750,9 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
       <div class="container donate-inner">
         <div class="donate-copy">
           <h2 id="donate-heading">Donate</h2>
-          <p class="muted">Fuel outreach, fund free shirts for evangelism teams, and support local feeding programs.</p>
+          <p class="muted">Fuel outreach, fund free shirts, and support local feeding programs.</p>
 
-          <div class="donation-tiers" role="list">
+          <div class="donation-tiers" role="list" aria-label="Donation tiers">
             <div class="tier" data-amount="10">
               <strong>$10</strong>
               <div class="muted">Covers transport for 1 outreach</div>
@@ -513,7 +771,7 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
               <button class="btn primary-btn" data-give="50">Give $50</button>
             </div>
 
-            <div class="tier custom-tier">
+            <div class="tier custom-tier" aria-hidden="false">
               <label for="donCustom" class="form-label">Custom Amount</label>
               <input id="donCustom" class="form-control" type="number" placeholder="Enter amount e.g. 100" min="1" />
               <button class="btn primary-btn" id="donateCustom">Give</button>
@@ -522,18 +780,23 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
           </div>
         </div>
 
-        <aside class="donate-info">
+        <aside class="donate-info" aria-label="Donation info">
           <div class="card">
             <h4>Secure Payments</h4>
-            <p class="muted">We support PayPal and Stripe. For Ghana, Mobile Money integration via partner gateways.</p>
+            <p class="muted">We support PayPal and Stripe. For Ghana, Mobile Money via partner gateways.</p>
+            <!-- payment icons (SVG placeholders) -->
+            <div class="payment-icons" aria-hidden="true">
+              <svg width="36" height="24" viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"></rect></svg>
+              <svg width="36" height="24" viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#111"></rect></svg>
+              <svg width="36" height="24" viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#f7941e"></rect></svg>
+            </div>
 
-            <div class="payment-actions">
+            <div id="payFeedback" class="muted" aria-live="polite"></div>
+            <div style="margin-top:8px">
               <button class="btn ghost-btn" data-pay="paypal">PayPal</button>
               <button class="btn ghost-btn" data-pay="stripe">Stripe</button>
               <button class="btn ghost-btn" data-pay="momo">Mobile Money</button>
             </div>
-
-            <div id="payFeedback" class="muted" aria-live="polite"></div>
           </div>
 
           <div class="card recurring">
@@ -545,18 +808,19 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
       </div>
     </section>
 
-    <!-- ABOUT -->
+    <!-- ABOUT / TEAM (images + icons) -->
     <section id="about" class="section about" aria-labelledby="about-heading">
       <div class="container about-inner">
         <div class="about-copy">
           <h2 id="about-heading">About Make Heaven Crowded</h2>
           <p class="muted">Our mission: to spread the gospel through fashion and digital ministry.</p>
+
           <p>Founded by a team of believers, Make Heaven Crowded began as a campus movement. Clothing as a tool for evangelism — a gentle prompt for gospel conversations.</p>
 
           <div class="values">
             <div class="value">
               <strong>Vision</strong>
-              <div class="muted">Make heaven crowded by equipping believers to witness naturally.</div>
+              <div class="muted">Equip believers to witness naturally.</div>
             </div>
             <div class="value">
               <strong>Values</strong>
@@ -577,15 +841,15 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
           <div class="card contact-card">
             <strong>Contact</strong>
             <div class="muted">hello@makeheavencrowded.org</div>
-            <div class="social-links">
-              <a href="#" class="social" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            <div class="social-links" aria-label="Social links">
+              <a class="social" href="#" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
               </a>
-              <a href="#" class="social" aria-label="YouTube">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M10 9l6 3-6 3V9z" fill="currentColor"/></svg>
+              <a class="social" href="#" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M10 9l6 3-6 3V9z" fill="currentColor"/></svg>
               </a>
-              <a href="#" class="social" aria-label="TikTok">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 9v6a3 3 0 1 0 3-3V6h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a class="social" href="#" aria-label="TikTok">
+                <svg width="18" height="18" viewBox="0 0 24 24" focusable="false"><path d="M9 9v6a3 3 0 1 0 3-3V6h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </div>
           </div>
@@ -623,69 +887,193 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <h4>Make Heaven Crowded</h4>
-        <p class="muted">Wear your faith. Share the Word. Build the Kingdom.</p>
+  <!-- FOOTER: stacked, feature-rich -->
+  <footer class="site-footer" role="contentinfo" aria-label="Footer">
+    <div class="container footer-top">
+      <!-- CTA + newsletter -->
+      <div class="footer-cta">
+        <div class="brand-block">
+          <h4>Make Heaven Crowded</h4>
+          <p class="muted">Wear your faith. Share the Word. Build the Kingdom.</p>
+        </div>
+
+        <form class="footer-newsletter" action="#" method="post" aria-label="Subscribe to weekly devotionals">
+          <label for="footerEmail" class="sr-only">Email</label>
+          <input id="footerEmail" name="email" type="email" placeholder="Enter your email" class="form-control" />
+          <button class="btn primary-btn" type="submit">Subscribe</button>
+        </form>
       </div>
 
-      <div class="footer-links">
-        <strong>Quick Links</strong>
-        <ul>
-          <li><a href="#shop">Shop</a></li>
-          <li><a href="#donate">Donate</a></li>
-          <li><a href="#gospel">Gospel Hub</a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
+      <!-- multi-column links and features -->
+      <div class="footer-columns">
+        <div class="footer-col site-links">
+          <strong>Quick Links</strong>
+          <ul>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#gospel">Gospel Hub</a></li>
+            <li><a href="#donate">Donate</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#stories">Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col shop-cats">
+          <strong>Shop Categories</strong>
+          <ul>
+            <li><a href="#tshirts">T-Shirts</a></li>
+            <li><a href="#hoodies">Hoodies</a></li>
+            <li><a href="#sweatshirts">Sweatshirts</a></li>
+            <li><a href="#accessories">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col resources">
+          <strong>Resources</strong>
+          <ul>
+            <li><a href="#">Devotionals</a></li>
+            <li><a href="#">Partner Stories</a></li>
+            <li><a href="#">Volunteer</a></li>
+            <li><a href="#">Ambassador Program</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col support">
+          <strong>Support</strong>
+          <ul>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy & Terms</a></li>
+          </ul>
+        </div>
       </div>
 
-      <div class="footer-support">
-        <strong>Support</strong>
-        <ul>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Shipping</a></li>
-        </ul>
+      <!-- stacked trust & partners row -->
+      <div class="footer-trust">
+        <div class="trust-badges" aria-hidden="true">
+          <!-- certificate, shipping, verified -->
+          <svg width="48" height="48" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .5-4.5 3.8L19 20l-7-4-7 4 1.5-7.7L3 8.5 9 8z" fill="currentColor"/></svg>
+          <svg width="48" height="48" viewBox="0 0 24 24"><path d="M3 7h18v13H3z" stroke="currentColor" fill="none"/></svg>
+          <svg width="48" height="48" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" fill="none"/></svg>
+        </div>
+
+        <div class="partners" aria-hidden="true">
+          <strong>Partners</strong>
+          <div class="partner-logos">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=200&auto=format&fit=crop" alt="Partner logo 1" />
+            <img src="https://images.unsplash.com/photo-1508898578281-774ac4893a8f?q=80&w=200&auto=format&fit=crop" alt="Partner logo 2" />
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=200&auto=format&fit=crop" alt="Partner logo 3" />
+          </div>
+        </div>
+      </div>
+
+      <!-- stacked bottom area: contact, payments, language, accessibility -->
+      <div class="footer-bottom-grid">
+        <div class="contact-block">
+          <strong>Contact</strong>
+          <p class="muted">hello@makeheavencrowded.org</p>
+          <p class="muted">+233 20 000 000</p>
+          <address class="muted">Accra, Ghana</address>
+        </div>
+
+        <div class="payments-block">
+          <strong>Payments</strong>
+          <div class="payments" aria-hidden="true">
+            <img src="https://via.placeholder.com/80x40?text=Visa" alt="Visa" />
+            <img src="https://via.placeholder.com/80x40?text=MasterCard" alt="Mastercard" />
+            <img src="https://via.placeholder.com/80x40?text=PayPal" alt="PayPal" />
+            <img src="https://via.placeholder.com/80x40?text=MoMo" alt="Mobile Money" />
+          </div>
+        </div>
+
+        <div class="access-tools">
+          <strong>Accessibility</strong>
+          <ul>
+            <li><a href="#" id="access-contrast">High contrast</a></li>
+            <li><a href="#" id="access-sizes">Larger text</a></li>
+            <li><a href="#" id="access-reduced-motion">Reduce motion</a></li>
+          </ul>
+        </div>
+
+        <div class="language-site">
+          <label for="siteLang" class="sr-only">Select language</label>
+          <select id="siteLang" class="form-control" aria-label="Language selector">
+            <option value="en-US">English</option>
+            <option value="ak-GH">Twi</option>
+            <option value="fr-FR">Français</option>
+          </select>
+
+          <div class="site-tools">
+            <a href="#sitemap" class="small-link">Sitemap</a>
+            <a href="#careers" class="small-link">Careers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- final copyright row + mission popover + back to top -->
+    <div class="container footer-end">
+      <div class="copyright">
+        <small>© <span id="currentYear">2025</span> Make Heaven Crowded. All rights reserved.</small>
+      </div>
+
+      <!-- mission popover implemented with details/summary for no-JS accessibility -->
+      <details class="mission-popover" role="group" aria-label="Mission popover">
+        <summary class="mission-summary">
+          <span class="made-with">Made with</span>
+          <!-- inline heart SVG (not emoji) -->
+          <svg class="heart" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-6.5-8-11.5S6 2 12 8s8-2.5 8 1.5S12 21 12 21z" fill="currentColor"/></svg>
+          <span class="mission-label">Mission & Giving</span>
+        </summary>
+
+        <div class="mission-body">
+          <p><strong>How we give:</strong> We commit <strong>30%</strong> of net profits to outreach — clothing for teams, feeding programs, and community partnerships.</p>
+          <p class="muted small">Reports & receipts available on request. We publish quarterly impact summaries.</p>
+          <a href="#impact" class="btn ghost-btn">Read Impact Reports</a>
+        </div>
+      </details>
+
+      <div class="back-to-top">
+        <a href="#top" class="small-link">Back to top</a>
       </div>
     </div>
   </footer>
 
-  <!-- MODAL / PANELS (empty — to be filled by JS) -->
+  <!-- empty modal container — JS will wire content later -->
   <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"></div>
-
 </body>
 <script>
-  (function () {
+
+
+(function () {
   'use strict';
 
-  
-  /* ---------------------------
-     Config / Storage Keys
-     --------------------------- */
-  const LS_KEYS = {
-    CART: 'mhc_cart_v1',
-    NEWS: 'mhc_news_v1',
-    VERSE_IDX: 'mhc_verse_idx_v1'
+  /* =========================
+     Config & Storage keys
+     ========================= */
+  const LS = {
+    CART: 'mhc_cart_v2',
+    NEWS: 'mhc_news_v2',
+    VERSE_IDX: 'mhc_verse_idx_v2',
+    WISHLIST: 'mhc_wishlist_v1',
+    RECENT: 'mhc_recent_v1',
+    MISSION_COUNT: 'mhc_mission_opened_v1'
   };
 
-  /* ---------------------------
-     Data (polished / sample)
-     --------------------------- */
+  /* =========================
+     Demo data (replace with API in prod)
+     ========================= */
   const PRODUCTS = [
-    { id: 'mhc-ts-01', title: 'Saved Tee', type: 'tshirt', price: 22, colors: ['Black', 'White'], sizes: ['S', 'M', 'L', 'XL'], verse: 'Romans 10:9', img: 'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
-    { id: 'mhc-ts-02', title: 'Grace Over Grind', type: 'tshirt', price: 24, colors: ['Navy', 'White'], sizes: ['S', 'M', 'L', 'XL'], verse: 'Ephesians 2:8', img: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
-    { id: 'mhc-hd-01', title: 'Crowd Hoodie', type: 'hoodie', price: 48, colors: ['Charcoal', 'Maroon'], sizes: ['M', 'L', 'XL'], verse: 'Matthew 28:19', img: 'https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
-    { id: 'mhc-tk-01', title: 'Witness Tank', type: 'tank', price: 20, colors: ['White', 'Olive'], sizes: ['S', 'M', 'L'], verse: 'Acts 1:8', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
-    { id: 'mhc-sw-01', title: 'Faith Sweatshirt', type: 'sweat', price: 40, colors: ['Cream', 'Black'], sizes: ['M', 'L', 'XL'], verse: 'Philippians 4:13', img: 'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
-    { id: 'mhc-sh-01', title: 'Kingdom Shorts', type: 'shorts', price: 30, colors: ['Black'], sizes: ['M', 'L', 'XL'], verse: 'Colossians 3:23', img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' }
+    { id: 'mhc-ts-01', title: 'Saved Tee', type: 'tshirt', price: 22, colors: ['Black', 'White'], sizes: ['S','M','L','XL'], verse: 'Romans 10:9', img: 'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop' },
+    { id: 'mhc-ts-02', title: 'Grace Over Grind', type: 'tshirt', price: 24, colors: ['Navy','White'], sizes: ['S','M','L','XL'], verse: 'Ephesians 2:8', img: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop' },
+    { id: 'mhc-hd-01', title: 'Crowd Hoodie', type: 'hoodie', price: 48, colors: ['Charcoal','Maroon'], sizes: ['M','L','XL'], verse: 'Matthew 28:19', img: 'https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=1200&auto=format&fit=crop' },
+    { id: 'mhc-tk-01', title: 'Witness Tank', type: 'tank', price: 20, colors: ['White','Olive'], sizes: ['S','M','L'], verse: 'Acts 1:8', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop' }
   ];
 
   const GOSPEL_POSTS = [
-    { title: '3-minute Devotional: Courage', excerpt: 'Short reflection on courage from Joshua 1', author: 'Team', date: '2025-07-08' },
-    { title: 'Testimony: From Doubt to Faith', excerpt: 'A campus encounter that changed a life', author: 'Ama', date: '2025-06-12' },
-    { title: 'How to Share Your Faith Naturally', excerpt: 'Practical tips for conversations', author: 'Kofi', date: '2025-05-01' }
+    { id: 'g1', title: '3-minute Devotional: Courage', excerpt: 'Short reflection on courage from Joshua 1', author: 'Team', date: '2025-07-08', img:'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=900&auto=format&fit=crop' },
+    { id: 'g2', title: 'Testimony: From Doubt to Faith', excerpt: 'A campus encounter that changed a life', author: 'Ama', date: '2025-06-12', img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop' },
+    { id: 'g3', title: 'How to Share Your Faith Naturally', excerpt: 'Practical tips for conversations', author: 'Kofi', date: '2025-05-01', img:'https://images.unsplash.com/photo-1495121605193-b116b5b09a6b?q=80&w=900&auto=format&fit=crop' }
   ];
 
   const VERSES = [
@@ -696,227 +1084,244 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
     'Matthew 5:14 — You are the light of the world...'
   ];
 
-  /* ---------------------------
+  /* =========================
      Utilities
-     --------------------------- */
+     ========================= */
   const q = (sel, ctx = document) => ctx.querySelector(sel);
   const qAll = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const money = n => '$' + Number(n).toFixed(2);
+  const money = n => '$' + Number(n || 0).toFixed(2);
 
-  // Escape for safe text content
-  function escapeHtml(str = '') {
-    return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
-  }
-
-  // Simple debounce
-  function debounce(fn, wait = 250) {
-    let t;
-    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
-  }
-
-  // Local storage helpers
   function readJSON(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (e) { return fallback; }
   }
-  function writeJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+  function writeJSON(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 
-  /* ---------------------------
-     Cart model & helpers
-     --------------------------- */
-  function getCart() {
-    return readJSON(LS_KEYS.CART, []);
+  function escapeText(s='') { const t = String(s); return t.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+  function debounce(fn, wait=250) { let t; return (...a) => { clearTimeout(t); t = setTimeout(()=>fn(...a), wait); }; }
+
+  function createEl(tag='div', attrs={}, text=null) {
+    const el = document.createElement(tag);
+    for (const k in attrs) {
+      if (k === 'class') el.className = attrs[k];
+      else if (k === 'dataset') Object.assign(el.dataset, attrs[k]);
+      else if (k === 'attr') for (const [a,v] of Object.entries(attrs[k])) el.setAttribute(a,v);
+      else el.setAttribute(k, attrs[k]);
+    }
+    if (text !== null) el.textContent = text;
+    return el;
   }
 
-  function saveCart(cart) {
-    writeJSON(LS_KEYS.CART, cart);
-    renderCartCount();
+  /* =========================
+     Modal (no innerHTML with untrusted content)
+     ========================= */
+  const modalRoot = q('#modal');
+
+  let lastFocused = null;
+
+  function openModal({ title = '', content = null, onClose = null, autoClose = 0 } = {}) {
+    if (!modalRoot) return;
+
+    lastFocused = document.activeElement;
+
+    // Create panel
+    modalRoot.innerHTML = ''; // small, safe reset for our known container
+    modalRoot.classList.add('open');
+    modalRoot.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+
+    const panel = createEl('div',{class:'panel', role:'document', tabindex: -1});
+    // header
+    if (title) {
+      const header = createEl('div',{class:'modal-header'});
+      const h = createEl('h3',{}, title);
+      header.appendChild(h);
+      panel.appendChild(header);
+    }
+
+    const inner = createEl('div',{class:'modal-inner'});
+    if (content instanceof Node) inner.appendChild(content);
+    else if (typeof content === 'string') inner.innerHTML = content; // content created by code; avoid untrusted strings
+    panel.appendChild(inner);
+
+    // footer with close
+    const footer = createEl('div',{class:'modal-footer'});
+    const closeBtn = createEl('button',{class:'btn ghost-btn', type:'button'}, 'Close');
+    closeBtn.addEventListener('click', () => { closeModal(); if (typeof onClose === 'function') onClose(); });
+    footer.appendChild(closeBtn);
+    panel.appendChild(footer);
+
+    modalRoot.appendChild(panel);
+
+    // focus management: focus first focusable
+    setTimeout(()=> {
+      const focusable = panel.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length) focusable[0].focus();
+      else panel.focus();
+    }, 40);
+
+    // small auto close
+    if (autoClose && Number(autoClose) > 0) setTimeout(closeModal, Number(autoClose));
   }
 
-  function addToCart(product, opts = { qty: 1 }) {
+  function closeModal() {
+    if (!modalRoot) return;
+    modalRoot.classList.remove('open');
+    modalRoot.setAttribute('aria-hidden','true');
+    modalRoot.innerHTML = '';
+    document.body.style.overflow = '';
+    try { if (lastFocused) lastFocused.focus(); } catch(e){/*ignore*/}
+  }
+
+  // close on backdrop and escape
+  document.addEventListener('click', (e) => {
+    if (!modalRoot.classList.contains('open')) return;
+    if (e.target === modalRoot) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalRoot.classList.contains('open')) closeModal();
+    if (e.key === 'Tab' && modalRoot.classList.contains('open')) {
+      // simple trap
+      const focusable = modalRoot.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const list = Array.from(focusable);
+      if (!list.length) { e.preventDefault(); return; }
+      const first = list[0], last = list[list.length -1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* =========================
+     Cart model
+     ========================= */
+  function getCart() { return readJSON(LS.CART, []); }
+  function saveCart(cart) { writeJSON(LS.CART, cart); renderCartCount(); }
+
+  function cartTotals() {
     const cart = getCart();
-    // check if same product with same options exists -> increase qty
-    const existing = cart.find(it => it.id === product.id && JSON.stringify(it.options || {}) === JSON.stringify(product.options || {}));
+    const subtotal = cart.reduce((s,it) => s + (Number(it.price||0) * (it.qty||1)), 0);
+    const shipping = subtotal === 0 ? 0 : (subtotal > 80 ? 0 : 8);
+    const total = subtotal + shipping;
+    return { subtotal, shipping, total };
+  }
+
+  function renderCartCount() {
+    const el = q('#cart-count');
+    if (!el) return;
+    const count = getCart().reduce((s,it) => s + (it.qty||1), 0);
+    el.textContent = String(count);
+    el.setAttribute('aria-label', `${count} items in cart`);
+  }
+
+  function addToCart(product, opts = {qty:1}) {
+    const cart = getCart();
+    // canonical key: id + options JSON
+    const key = product.id + '|' + JSON.stringify(product.options||{});
+    let existing = cart.find(it => (it._key === key));
     if (existing) {
       existing.qty = (existing.qty || 1) + (opts.qty || 1);
     } else {
-      cart.push(Object.assign({}, product, { qty: opts.qty || 1, options: product.options || {} }));
+      const p = Object.assign({}, product);
+      p.qty = opts.qty || 1;
+      p._key = key;
+      cart.push(p);
+      trackRecent(product.id);
     }
     saveCart(cart);
-    openModal(`<div class="toast"><strong>Added to cart</strong><div class="muted small">${escapeHtml(product.title)}</div></div>`, { autoClose: 900 });
+    openToast(`Added to cart — ${product.title}`);
   }
 
-  function removeFromCart(index) {
+  function removeFromCartByIndex(i) {
     const cart = getCart();
-    if (index >= 0 && index < cart.length) {
-      cart.splice(index, 1);
+    if (i >=0 && i < cart.length) {
+      cart.splice(i,1);
       saveCart(cart);
-      openCart(); // re-render cart modal
+      openCart(); // re-open to reflect
     }
   }
 
   function changeCartQty(index, qty) {
     const cart = getCart();
     if (!cart[index]) return;
-    cart[index].qty = Math.max(1, Math.floor(qty));
+    cart[index].qty = Math.max(1, Math.floor(Number(qty) || 1));
     saveCart(cart);
     openCart();
   }
 
-  function cartTotals() {
-    const cart = getCart();
-    const subtotal = cart.reduce((s, it) => s + (Number(it.price || 0) * (it.qty || 1)), 0);
-    const shipping = subtotal > 80 || subtotal === 0 ? 0 : 8; // simple rule
-    const total = subtotal + shipping;
-    return { subtotal, shipping, total };
+  /* =========================
+     Toast helper
+     ========================= */
+  let toastTimer = null;
+  function openToast(message, ms = 1500) {
+    // small transient modal-like toast inside modalRoot
+    const t = createEl('div',{class:'site-toast', role:'status', 'aria-live':'polite'}, message);
+    document.body.appendChild(t);
+    setTimeout(()=> t.classList.add('visible'), 40);
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> { t.classList.remove('visible'); setTimeout(()=> t.remove(), 300); }, ms);
   }
 
-  /* ---------------------------
-     Modal / Focus trap / Notifications
-     --------------------------- */
-  const modal = q('#modal');
-
-  // Focus trap helpers
-  let lastFocusedElement = null;
-
-  function openModal(html = '', opts = { autoClose: 0 }) {
-    if (!modal) return;
-    lastFocusedElement = document.activeElement;
-    modal.innerHTML = ''; // clear
-    const panel = document.createElement('div');
-    panel.className = 'panel';
-    panel.setAttribute('role', 'document');
-    panel.innerHTML = html;
-    modal.appendChild(panel);
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    // focus first focusable inside
-    setTimeout(() => {
-      const focusable = panel.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
-      if (focusable.length) focusable[0].focus();
-    }, 50);
-
-    if (opts.autoClose && Number(opts.autoClose) > 0) {
-      setTimeout(closeModal, Number(opts.autoClose));
-    }
-  }
-
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-    modal.innerHTML = '';
-    document.body.style.overflow = '';
-    if (lastFocusedElement) lastFocusedElement.focus();
-  }
-
-  // small helper to open modal with markup but escaping user-provided text where needed
-  function openModalWithTemplate(title, bodyHtml) {
-    openModal(`<div class="modal-inner" role="dialog" aria-modal="true">
-      <div class="modal-header"><h3>${escapeHtml(title)}</h3></div>
-      <div class="modal-body">${bodyHtml}</div>
-      <div class="modal-footer"><button class="btn ghost-btn" id="modalClose">Close</button></div>
-    </div>`);
-    // bind close
-    q('#modalClose')?.addEventListener('click', closeModal);
-  }
-
-  // Global modal click / keyboard
-  document.addEventListener('click', (e) => {
-    if (!modal.classList.contains('open')) return;
-    // close when clicking background (modal has only panel as child)
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    if (e.key === 'Tab' && modal.classList.contains('open')) {
-      // very small focus trap
-      const focusables = modal.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
-      const list = Array.from(focusables);
-      if (list.length === 0) { e.preventDefault(); return; }
-      const first = list[0], last = list[list.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
-  /* ---------------------------
+  /* =========================
      Renderers
-     --------------------------- */
+     ========================= */
 
   function renderFeatured() {
     const wrap = q('[data-products-featured]');
     if (!wrap) return;
-    wrap.innerHTML = '';
-    const featured = PRODUCTS.slice(0, 3);
+    wrap.innerHTML = ''; // safe because we control the container
+    const featured = PRODUCTS.slice(0,3);
     featured.forEach(p => {
-      const card = document.createElement('article');
-      card.className = 'product card';
-      card.innerHTML = `
-        <div class="thumb"><img alt="${escapeHtml(p.title)}" loading="lazy" /></div>
-        <div class="card-body">
-          <h3 class="product-title"></h3>
-          <div class="muted small product-verse"></div>
-          <div class="product-bottom"><div class="price"></div><div class="btn-row"></div></div>
-        </div>
-      `;
-      const imgEl = card.querySelector('img');
-      imgEl.src = p.img;
-      imgEl.setAttribute('alt', p.title);
+      const article = createEl('article', {class:'product card', role:'listitem', dataset:{productId:p.id}});
+      const thumb = createEl('div',{class:'thumb'});
+      const img = createEl('img',{alt:p.title});
+      img.loading = 'lazy';
+      img.src = p.img;
+      thumb.appendChild(img);
 
-      card.querySelector('.product-title').textContent = p.title;
-      card.querySelector('.product-verse').textContent = p.verse;
-      card.querySelector('.price').textContent = money(p.price);
+      const body = createEl('div',{class:'card-body'});
+      body.appendChild(createEl('h3', {class:'product-title'}, p.title));
+      body.appendChild(createEl('div',{class:'muted small product-verse'}, p.verse));
+      body.appendChild(createEl('div',{class:'price'}, money(p.price)));
 
-      const btnRow = card.querySelector('.btn-row');
-      const viewBtn = document.createElement('button');
-      viewBtn.className = 'btn ghost-btn';
-      viewBtn.textContent = 'View';
-      viewBtn.addEventListener('click', () => openProductModal(p.id));
-      const addBtn = document.createElement('button');
-      addBtn.className = 'btn primary-btn';
-      addBtn.textContent = 'Add to Cart';
-      addBtn.addEventListener('click', () => addToCart(Object.assign({}, p)));
-      btnRow.appendChild(viewBtn);
-      btnRow.appendChild(addBtn);
+      const btnRow = createEl('div',{class:'btn-row'});
+      const viewBtn = createEl('button',{class:'btn ghost-btn', type:'button'}, 'View');
+      viewBtn.addEventListener('click', ()=> openProductModal(p.id));
+      const addBtn = createEl('button',{class:'btn primary-btn', type:'button'}, 'Add to cart');
+      addBtn.addEventListener('click', ()=> addToCart(Object.assign({}, p)));
+      btnRow.appendChild(viewBtn); btnRow.appendChild(addBtn);
 
-      wrap.appendChild(card);
+      body.appendChild(btnRow);
+      article.appendChild(thumb);
+      article.appendChild(body);
+      wrap.appendChild(article);
     });
   }
 
-  function renderShop(allProducts = PRODUCTS) {
+  function renderShop(filterList = PRODUCTS) {
     const wrap = q('#shopList');
     if (!wrap) return;
     wrap.innerHTML = '';
-    allProducts.forEach(p => {
-      const item = document.createElement('div');
-      item.className = 'product card';
-      const img = document.createElement('img');
-      img.src = p.img;
-      img.alt = p.title;
+    filterList.forEach(p => {
+      const item = createEl('div',{class:'product card', role:'article', dataset:{productId:p.id}});
+      const img = createEl('img',{alt:p.title});
       img.loading = 'lazy';
-      const thumb = document.createElement('div');
-      thumb.className = 'thumb';
-      thumb.appendChild(img);
+      img.src = p.img;
 
-      const body = document.createElement('div');
-      body.className = 'card-body';
-      const title = document.createElement('h3'); title.className = 'product-title'; title.textContent = p.title;
-      const verse = document.createElement('div'); verse.className = 'muted small product-verse'; verse.textContent = p.verse;
-      const bottom = document.createElement('div'); bottom.className = 'product-bottom';
-      const price = document.createElement('div'); price.className = 'price'; price.textContent = money(p.price);
-      const btnRow = document.createElement('div'); btnRow.className = 'btn-row';
-      const detailsBtn = document.createElement('button'); detailsBtn.className = 'btn ghost-btn'; detailsBtn.textContent = 'Details';
-      detailsBtn.addEventListener('click', () => openProductModal(p.id));
-      const addBtn = document.createElement('button'); addBtn.className = 'btn primary-btn'; addBtn.textContent = 'Add';
-      addBtn.addEventListener('click', () => addToCart(Object.assign({}, p)));
+      const title = createEl('h3',{}, p.title);
+      const price = createEl('div',{class:'price'}, money(p.price));
+      const btnRow = createEl('div',{class:'btn-row'});
+      const details = createEl('button',{class:'btn ghost-btn', type:'button'}, 'Details');
+      details.addEventListener('click', ()=> openProductModal(p.id));
+      const add = createEl('button',{class:'btn primary-btn', type:'button'}, 'Add');
+      add.addEventListener('click', ()=> addToCart(Object.assign({}, p)));
 
-      btnRow.appendChild(detailsBtn); btnRow.appendChild(addBtn);
-      bottom.appendChild(price); bottom.appendChild(btnRow);
-      body.appendChild(title); body.appendChild(verse); body.appendChild(bottom);
+      btnRow.appendChild(details); btnRow.appendChild(add);
 
-      item.appendChild(thumb); item.appendChild(body);
+      item.appendChild(img);
+      item.appendChild(title);
+      item.appendChild(price);
+      item.appendChild(btnRow);
       wrap.appendChild(item);
     });
   }
@@ -926,9 +1331,12 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
     if (!wrap) return;
     wrap.innerHTML = '';
     GOSPEL_POSTS.forEach(p => {
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.innerHTML = `<div class="card-title">${escapeHtml(p.title)}</div><div class="muted small">${escapeHtml(p.excerpt)}</div><div class="muted small" style="margin-top:8px">— ${escapeHtml(p.author)} • ${escapeHtml(p.date)}</div>`;
+      const card = createEl('article',{class:'card'});
+      const img = createEl('img',{alt:p.title});
+      img.loading = 'lazy'; img.src = p.img;
+      card.appendChild(img);
+      card.appendChild(createEl('h3',{class:'card-title'}, p.title));
+      card.appendChild(createEl('div',{class:'muted small'}, p.excerpt));
       wrap.appendChild(card);
     });
   }
@@ -936,7 +1344,6 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
   function renderVerse() {
     const el = q('#verseOfDay');
     if (!el) return;
-    // deterministic daily based on date
     try {
       const today = new Date();
       const idx = (today.getFullYear() + today.getMonth() + today.getDate()) % VERSES.length;
@@ -946,439 +1353,623 @@ input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
     }
   }
 
-  function renderCartCount() {
-    const countEl = q('#cart-count');
-    if (!countEl) return;
-    const count = getCart().reduce((s, it) => s + (it.qty || 1), 0);
-    countEl.textContent = String(count);
-  }
-
-  /* ---------------------------
-     Product modal (build DOM safely)
-     --------------------------- */
+  /* =========================
+     Product modal builder
+     ========================= */
   function openProductModal(productId) {
     const p = PRODUCTS.find(x => x.id === productId);
-    if (!p) { openModalWithTemplate('Not found', `<p class="muted">Product not found.</p>`); return; }
+    if (!p) {
+      openModal({ title: 'Product not found', content: createEl('p', {class:'muted'}, 'Product not found.') });
+      return;
+    }
 
-    // build modal DOM (safely)
-    const sizesHtml = p.sizes.map(s => `<button class="chip option-size" data-size="${escapeHtml(s)}" type="button">${escapeHtml(s)}</button>`).join('');
-    const colorsHtml = p.colors.map(c => `<button class="chip option-color" data-color="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
-    const bodyHtml = `
-      <div class="product-modal">
-        <div class="modal-left"><img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.title)}" style="width:100%;height:auto;max-height:360px;object-fit:cover" loading="lazy" /></div>
-        <div class="modal-right">
-          <h3>${escapeHtml(p.title)}</h3>
-          <div class="muted small">${escapeHtml(p.verse)}</div>
-          <div class="price" style="margin-top:10px">${money(p.price)}</div>
-          <div style="margin-top:12px">Size<br>${sizesHtml}</div>
-          <div style="margin-top:12px">Color<br>${colorsHtml}</div>
-          <div style="margin-top:14px"><button class="btn primary-btn" id="modalAddToCart">Add to Cart</button> <button class="btn ghost-btn" id="modalCloseBtn">Close</button></div>
-        </div>
-      </div>
-    `;
+    const container = createEl('div',{class:'product-modal-grid'});
 
-    openModalWithTemplate(p.title, bodyHtml);
+    // left: image
+    const left = createEl('div',{class:'modal-left'});
+    const img = createEl('img',{alt:p.title});
+    img.src = p.img; img.loading = 'lazy';
+    left.appendChild(img);
 
-    // event binding inside modal
-    const panel = modal.querySelector('.panel') || modal.querySelector('.modal-inner');
-    // size/color option behavior
-    panel.querySelectorAll('.option-size').forEach(btn => btn.addEventListener('click', (e) => {
-      panel.querySelectorAll('.option-size').forEach(b => b.classList.remove('selected'));
-      e.currentTarget.classList.add('selected');
-    }));
-    panel.querySelectorAll('.option-color').forEach(btn => btn.addEventListener('click', (e) => {
-      panel.querySelectorAll('.option-color').forEach(b => b.classList.remove('selected'));
-      e.currentTarget.classList.add('selected');
-    }));
+    // right: details & options
+    const right = createEl('div',{class:'modal-right'});
+    right.appendChild(createEl('h3',{}, p.title));
+    right.appendChild(createEl('div',{class:'muted small'}, p.verse));
+    right.appendChild(createEl('div',{class:'price'}, money(p.price)));
 
-    panel.querySelector('#modalAddToCart')?.addEventListener('click', () => {
-      const selectedSize = panel.querySelector('.option-size.selected')?.dataset?.size || p.sizes[0];
-      const selectedColor = panel.querySelector('.option-color.selected')?.dataset?.color || p.colors[0];
+    // size options
+    if (p.sizes && p.sizes.length) {
+      right.appendChild(createEl('div',{}, 'Size'));
+      const sizesWrap = createEl('div',{class:'options sizes'});
+      p.sizes.forEach(sz => {
+        const btn = createEl('button',{class:'chip option-size', type:'button', dataset:{size:sz}}, sz);
+        sizesWrap.appendChild(btn);
+        btn.addEventListener('click', (e) => {
+          sizesWrap.querySelectorAll('.option-size').forEach(b => b.classList.remove('selected'));
+          e.currentTarget.classList.add('selected');
+        });
+      });
+      right.appendChild(sizesWrap);
+    }
+
+    // color options
+    if (p.colors && p.colors.length) {
+      right.appendChild(createEl('div',{}, 'Color'));
+      const colorsWrap = createEl('div',{class:'options colors'});
+      p.colors.forEach(c => {
+        const btn = createEl('button',{class:'chip option-color', type:'button', dataset:{color:c}}, c);
+        colorsWrap.appendChild(btn);
+        btn.addEventListener('click', (e) => {
+          colorsWrap.querySelectorAll('.option-color').forEach(b => b.classList.remove('selected'));
+          e.currentTarget.classList.add('selected');
+        });
+      });
+      right.appendChild(colorsWrap);
+    }
+
+    // actions
+    const actions = createEl('div',{class:'modal-actions'});
+    const addBtn = createEl('button',{class:'btn primary-btn', type:'button'}, 'Add to Cart');
+    addBtn.addEventListener('click', () => {
+      const selectedSize = container.querySelector('.option-size.selected')?.dataset?.size || (p.sizes && p.sizes[0]) || '';
+      const selectedColor = container.querySelector('.option-color.selected')?.dataset?.color || (p.colors && p.colors[0]) || '';
       const productToAdd = Object.assign({}, p, { options: { size: selectedSize, color: selectedColor } });
       addToCart(productToAdd);
       closeModal();
     });
+    const wishlistBtn = createEl('button',{class:'btn ghost-btn', type:'button'}, 'Save');
+    wishlistBtn.addEventListener('click', ()=> {
+      toggleWishlist(p.id);
+      wishlistBtn.textContent = isWishlisted(p.id) ? 'Saved' : 'Save';
+      openToast(isWishlisted(p.id) ? 'Added to wishlist' : 'Removed from wishlist');
+    });
 
-    panel.querySelector('#modalCloseBtn')?.addEventListener('click', closeModal);
+    actions.appendChild(addBtn); actions.appendChild(wishlistBtn);
+    right.appendChild(actions);
+
+    container.appendChild(left);
+    container.appendChild(right);
+
+    openModal({ title: p.title, content: container });
   }
 
-  /* ---------------------------
-     Cart modal rendering
-     --------------------------- */
+  /* =========================
+     Cart modal
+     ========================= */
   function openCart() {
     const cart = getCart();
-    if (!cart || cart.length === 0) {
-      openModalWithTemplate('Your cart is empty', `<p class="muted small">Add items from the shop to begin.</p>`);
+    if (!cart.length) {
+      openModal({ title: 'Your cart is empty', content: createEl('p',{class:'muted'}, 'Add items to your cart to see them here.') });
       return;
     }
 
-    // build cart HTML safely
-    let itemsHtml = '';
+    const content = createEl('div',{class:'cart-modal'});
+
     cart.forEach((it, i) => {
-      itemsHtml += `
-        <div class="cart-item" data-index="${i}">
-          <img src="${escapeHtml(it.img || '')}" alt="${escapeHtml(it.title)}" style="width:72px;height:72px;object-fit:cover;border-radius:6px" loading="lazy" />
-          <div class="cart-item-body">
-            <div class="muted small">${escapeHtml(it.verse || '')}</div>
-            <div class="cart-title">${escapeHtml(it.title)}</div>
-            <div class="muted small">Options: ${escapeHtml((it.options?.size || '') + (it.options?.color ? (' • ' + it.options.color) : ''))}</div>
-          </div>
-          <div class="cart-actions">
-            <div>${money(it.price)}</div>
-            <div style="margin-top:8px">
-              <label class="small" for="qty-${i}">Qty</label>
-              <input id="qty-${i}" class="cart-qty" type="number" min="1" value="${escapeHtml(it.qty || 1)}" data-index="${i}" style="width:64px" />
-            </div>
-            <div style="margin-top:8px"><button class="btn ghost-btn remove-item" data-index="${i}">Remove</button></div>
-          </div>
-        </div>
-      `;
+      const item = createEl('div',{class:'cart-item', dataset:{index:i}});
+      const img = createEl('img',{alt:it.title}); img.src = it.img || '';
+      img.loading = 'lazy';
+      const body = createEl('div',{class:'cart-item-body'});
+      body.appendChild(createEl('div',{class:'cart-title'}, it.title));
+      body.appendChild(createEl('div',{class:'muted small'}, it.verse || ''));
+      body.appendChild(createEl('div',{class:'muted small'}, `Options: ${[it.options?.size, it.options?.color].filter(Boolean).join(' • ')}`));
+
+      const actions = createEl('div',{class:'cart-actions'});
+      const price = createEl('div',{}, money(it.price));
+      const qtyLabel = createEl('label',{class:'small', for:`qty-${i}`}, 'Qty');
+      const qtyInput = createEl('input',{class:'cart-qty', id:`qty-${i}`, type:'number', min:1, value:it.qty});
+      qtyInput.addEventListener('change', (e) => changeCartQty(i, e.currentTarget.value));
+
+      const removeBtn = createEl('button',{class:'btn ghost-btn', type:'button'}, 'Remove');
+      removeBtn.addEventListener('click', ()=> removeFromCartByIndex(i));
+
+      actions.appendChild(price);
+      actions.appendChild(qtyLabel);
+      actions.appendChild(qtyInput);
+      actions.appendChild(removeBtn);
+
+      item.appendChild(img);
+      item.appendChild(body);
+      item.appendChild(actions);
+      content.appendChild(item);
     });
 
     const totals = cartTotals();
-    const footerHtml = `
-      <div class="cart-footer">
-        <div class="cart-summary">
-          <div>Subtotal: ${money(totals.subtotal)}</div>
-          <div>Shipping: ${money(totals.shipping)}</div>
-          <div style="font-weight:800">Total: ${money(totals.total)}</div>
-        </div>
-        <div class="cart-checkout">
-          <button class="btn primary-btn" id="cartCheckout">Checkout</button>
-        </div>
-      </div>
-    `;
-
-    openModalWithTemplate('Your Cart', `<div class="cart-items">${itemsHtml}</div>${footerHtml}`);
-
-    // bind remove and qty handlers
-    modal.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', (e) => {
-      const i = Number(e.currentTarget.dataset.index);
-      removeFromCart(i);
-    }));
-    modal.querySelectorAll('.cart-qty').forEach(input => {
-      input.addEventListener('change', (e) => {
-        const idx = Number(e.currentTarget.dataset.index);
-        const val = Number(e.currentTarget.value || 1);
-        changeCartQty(idx, val);
-      });
-    });
-
-    modal.querySelector('#cartCheckout')?.addEventListener('click', () => {
+    const footer = createEl('div',{class:'cart-footer'});
+    footer.appendChild(createEl('div',{class:'cart-summary'}, `Subtotal: ${money(totals.subtotal)} — Shipping: ${money(totals.shipping)} — Total: ${money(totals.total)}`));
+    const checkout = createEl('div',{class:'cart-checkout'});
+    const checkoutBtn = createEl('button',{class:'btn primary-btn', type:'button'}, 'Checkout');
+    checkoutBtn.addEventListener('click', ()=> {
       closeModal();
-      // Placeholder - in prod you'll open Stripe/PayPal hosted checkout
-      openModalWithTemplate('Checkout', `<p class="muted">Checkout placeholder — integrate a hosted checkout (Stripe/PayPal) server-side to capture payments.</p><div style="margin-top:12px"><button class="btn primary-btn" id="fakePayNow">Simulate Payment</button></div>`);
-      q('#fakePayNow')?.addEventListener('click', () => {
-        closeModal();
-        writeJSON(LS_KEYS.CART, []); // empty cart on "payment"
-        renderCartCount();
-        openModal(`<div class="toast"><strong>Payment simulated</strong><div class="muted small">No real charge was made (demo).</div></div>`, { autoClose: 1500 });
-      });
+      simulateCheckout();
     });
+    checkout.appendChild(checkoutBtn);
+    footer.appendChild(checkout);
+
+    content.appendChild(footer);
+    openModal({ title: 'Your Cart', content });
   }
 
-  /* ---------------------------
-     Search (modal) and debounce
-     --------------------------- */
+  function simulateCheckout() {
+    // In prod: redirect to server-side hosted checkout
+    openModal({ title: 'Checkout', content: createEl('p',{class:'muted'}, 'Redirecting to payment gateway (demo).') });
+    // emulate payment success
+    setTimeout(()=> {
+      writeJSON(LS.CART, []);
+      renderCartCount();
+      closeModal();
+      openToast('Payment simulated — cart cleared', 1800);
+    }, 1400);
+  }
+
+  /* =========================
+     Search modal
+     ========================= */
   function openSearch() {
-    openModalWithTemplate('Search', `
-      <div>
-        <input id="searchQuery" class="form-control" type="search" placeholder="Search products or devotionals" />
-        <div style="margin-top:8px"><button class="btn primary-btn" id="doSearch">Search</button></div>
-        <div id="searchResults" style="margin-top:12px"></div>
-      </div>
-    `);
-    const input = q('#searchQuery');
-    const resultsWrap = q('#searchResults');
+    const wrap = createEl('div',{class:'search-modal'});
+    const input = createEl('input',{class:'form-control', type:'search', placeholder:'Search products or devotionals', id:'searchInput'});
+    const results = createEl('div',{id:'searchResults', class:'search-results'});
+    wrap.appendChild(input);
+    wrap.appendChild(results);
 
-    const doSearchFn = () => {
+    function doSearch() {
       const qv = (input.value || '').trim().toLowerCase();
-      if (!qv) { resultsWrap.innerHTML = `<p class="muted small">Type to search.</p>`; return; }
-      const results = PRODUCTS.filter(p => p.title.toLowerCase().includes(qv) || p.verse.toLowerCase().includes(qv));
-      if (results.length === 0) { resultsWrap.innerHTML = `<p class="muted small">No results</p>`; return; }
-      resultsWrap.innerHTML = results.map(r => `<div class="search-result" style="display:flex;gap:12px;align-items:center"><img src="${escapeHtml(r.img)}" alt="${escapeHtml(r.title)}" style="width:64px;height:64px;object-fit:cover;border-radius:8px" loading="lazy" /><div style="flex:1"><div style="font-weight:800">${escapeHtml(r.title)}</div><div class="muted small">${escapeHtml(r.verse)}</div></div><div>${money(r.price)}</div></div>`).join('');
-    };
+      if (!qv) { results.textContent = 'Type to search.'; return; }
+      const prodMatches = PRODUCTS.filter(p => p.title.toLowerCase().includes(qv) || p.verse.toLowerCase().includes(qv));
+      const gospelMatches = GOSPEL_POSTS.filter(g => g.title.toLowerCase().includes(qv) || g.excerpt.toLowerCase().includes(qv));
+      results.innerHTML = ''; // small controlled area
+      if (prodMatches.length) {
+        prodMatches.forEach(p => {
+          const r = createEl('div',{class:'search-item'});
+          r.appendChild(createEl('strong',{}, p.title));
+          r.appendChild(createEl('div',{class:'muted small'}, `${p.verse} — ${money(p.price)}`));
+          const view = createEl('button',{class:'btn ghost-btn', type:'button'}, 'View');
+          view.addEventListener('click', ()=> { closeModal(); openProductModal(p.id); });
+          r.appendChild(view);
+          results.appendChild(r);
+        });
+      }
+      if (gospelMatches.length) {
+        gospelMatches.forEach(g => {
+          const r = createEl('div',{class:'search-item'});
+          r.appendChild(createEl('strong',{}, g.title));
+          r.appendChild(createEl('div',{class:'muted small'}, g.excerpt));
+          const read = createEl('button',{class:'btn ghost-btn', type:'button'}, 'Read');
+          read.addEventListener('click', ()=> { closeModal(); /* open gospel post modal if desired */ });
+          r.appendChild(read);
+          results.appendChild(r);
+        });
+      }
+      if (!prodMatches.length && !gospelMatches.length) results.textContent = 'No results';
+    }
 
-    const debounced = debounce(doSearchFn, 250);
-    input.addEventListener('input', debounced);
-    q('#doSearch')?.addEventListener('click', doSearchFn);
-    input.focus();
+    const deb = debounce(doSearch, 220);
+    input.addEventListener('input', deb);
+
+    openModal({ title: 'Search', content: wrap });
   }
 
-  /* ---------------------------
-     Design generator (canvas preview + add to cart)
-     --------------------------- */
+  /* =========================
+     Design preview canvas
+     ========================= */
   function previewDesignOnCanvas(text) {
     const canvas = q('#shirtPreview');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    // simple shirt mock
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // background
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // background shirt panel
     ctx.fillStyle = '#0b0f13';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // tee base
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // simplistic tee silhouette
     ctx.fillStyle = '#111';
     ctx.beginPath();
-    ctx.moveTo(40, 40);
-    ctx.quadraticCurveTo(30, 20, 70, 30);
-    ctx.lineTo(170, 30);
-    ctx.quadraticCurveTo(210, 20, 200, 40);
-    ctx.lineTo(200, 160);
-    ctx.quadraticCurveTo(160, 190, 120, 190);
-    ctx.quadraticCurveTo(80, 190, 40, 160);
+    ctx.moveTo(40,40);
+    ctx.quadraticCurveTo(30,20,70,30);
+    ctx.lineTo(170,30);
+    ctx.quadraticCurveTo(210,20,200,40);
+    ctx.lineTo(200,160);
+    ctx.quadraticCurveTo(160,190,120,190);
+    ctx.quadraticCurveTo(80,190,40,160);
     ctx.closePath();
     ctx.fill();
 
     // text
     ctx.fillStyle = '#fff';
-    const fontSize = 12;
-    ctx.font = `bold ${fontSize}px Roboto Slab, serif`;
-    wrapText(ctx, text, 60, 80, 120, 16);
+    const fontSize = Math.max(10, Math.min(20, Math.floor(canvas.width / 14)));
+    ctx.font = `bold ${fontSize}px "Roboto Slab", serif`;
+    wrapText(ctx, text, 60, 80, 120, fontSize + 4);
   }
 
   function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-    const words = text.split(' ');
+    const words = String(text || '').split(' ');
     let line = '';
-    for (let n = 0; n < words.length; n++) {
+    for (let n=0;n<words.length;n++) {
       const testLine = line + words[n] + ' ';
       const metrics = ctx.measureText(testLine);
-      const testWidth = metrics.width;
-      if (testWidth > maxWidth && n > 0) {
-        ctx.fillText(line, x, y);
+      if (metrics.width > maxWidth && n > 0) {
+        ctx.fillText(line.trim(), x, y);
         line = words[n] + ' ';
         y += lineHeight;
       } else {
         line = testLine;
       }
     }
-    ctx.fillText(line, x, y);
+    ctx.fillText(line.trim(), x, y);
   }
 
   function addDesignToCart() {
     const text = (q('#genText')?.value || '').trim() || 'Custom Verse';
     const canvas = q('#shirtPreview');
-    let dataUrl = '';
-    if (canvas) dataUrl = canvas.toDataURL('image/png');
+    const imgData = canvas ? canvas.toDataURL('image/png') : '';
     const product = {
       id: 'custom-' + Date.now(),
-      title: `Custom Tee — ${text.slice(0, 40)}`,
+      title: `Custom Tee — ${text.slice(0,40)}`,
       type: 'tshirt',
       price: 28,
-      sizes: ['S', 'M', 'L'],
+      sizes: ['S','M','L'],
       colors: ['Black'],
       verse: text,
-      img: dataUrl || '',
+      img: imgData,
       options: {}
     };
     addToCart(product);
   }
 
-  /* ---------------------------
-     Donations & payments (simulated)
-     --------------------------- */
+  /* =========================
+     Donate & payments (simulated)
+     ========================= */
   function donate(amount) {
     const fb = q('#payFeedback');
     if (fb) fb.textContent = `Initiating donation of $${amount}...`;
-    setTimeout(() => {
+    setTimeout(()=> {
       if (fb) fb.textContent = 'Redirecting to payment gateway (demo)...';
-    }, 800);
+      setTimeout(()=> {
+        if (fb) fb.textContent = 'Donation simulated — thank you!';
+        openToast('Donation simulated — thank you!', 1600);
+      }, 800);
+    }, 700);
   }
 
-  function donateCustom() {
-    const v = Number(q('#donCustom')?.value || 0);
-    if (!v || v <= 0) { openModalWithTemplate('Invalid amount', `<p class="muted small">Enter a valid amount</p>`); return; }
-    donate(v);
-  }
-
-  function fakePay(mode) {
-    const fb = q('#payFeedback');
-    if (fb) fb.textContent = `Simulating ${mode} checkout...`;
-    setTimeout(() => { if (fb) fb.textContent = 'Payment simulated (no real charge). Implement real integration server-side.'; }, 1200);
-  }
-
-  /* ---------------------------
+  /* =========================
      Forms: newsletter, prayer, testimony, ambassador
-     --------------------------- */
+     ========================= */
   function subscribeNewsletter(email) {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      openModalWithTemplate('Invalid email', `<p class="muted small">Please enter a valid email address.</p>`);
+      openModal({ title: 'Invalid email', content: createEl('p',{class:'muted'}, 'Please enter a valid email address.') });
       return;
     }
-    writeJSON(LS_KEYS.NEWS, { email, date: new Date().toISOString() });
-    openModalWithTemplate('Subscribed', `<p class="muted">Thanks — check your inbox for a welcome devotional (demo).</p>`);
+    writeJSON(LS.NEWS, { email, date: new Date().toISOString() });
+    openModal({ title: 'Subscribed', content: createEl('p',{class:'muted'}, 'Thanks — check your inbox for a welcome devotional (demo).') });
   }
 
   function submitPrayer(name, email, text) {
-    if (!text || !text.trim()) { openModalWithTemplate('Missing request', `<p class="muted">Please write your request.</p>`); return; }
-    // in a real app send to server; here we simulate
-    openModalWithTemplate('Prayer received', `<p class="muted">Thanks — your request has been received. We'll pray for you.</p>`);
+    if (!text || !text.trim()) {
+      openModal({ title:'Missing request', content: createEl('p',{class:'muted'}, 'Please write your request.')});
+      return;
+    }
+    // In prod: send to the server
+    openModal({ title: 'Prayer received', content: createEl('p',{class:'muted'}, 'Thanks — your request has been received. We will pray with you.')});
   }
 
   function submitTestimony(name, text) {
-    if (!text || !text.trim()) { openModalWithTemplate('Missing testimony', `<p class="muted">Please write something to share.</p>`); return; }
-    GOSPEL_POSTS.unshift({ title: `Testimony by ${name || 'Anonymous'}`, excerpt: text.slice(0, 200), author: name || 'Anonymous', date: new Date().toISOString().slice(0, 10) });
+    if (!text || !text.trim()) {
+      openModal({ title:'Missing testimony', content: createEl('p',{class:'muted'}, 'Please provide a testimony.')});
+      return;
+    }
+    GOSPEL_POSTS.unshift({ id:'t' + Date.now(), title:`Testimony by ${name || 'Anonymous'}`, excerpt:text.slice(0,200), author:name||'Anonymous', date: new Date().toISOString().slice(0,10), img:''});
     renderGospel();
-    openModalWithTemplate('Thanks', `<p class="muted">Thanks — testimony queued for review.</p>`);
+    openModal({ title:'Thanks', content: createEl('p',{class:'muted'}, 'Thanks — testimony queued for review (demo).')});
   }
 
   function applyAmbassador(name, email) {
-    if (!name || !email) { openModalWithTemplate('Missing info', `<p class="muted small">Please provide name and email.</p>`); return; }
-    openModalWithTemplate('Application Received', `<p class="muted">Thanks — we will review your ambassador application and contact you at ${escapeHtml(email)}.</p>`);
+    if (!name || !email) {
+      openModal({ title:'Missing info', content: createEl('p',{class:'muted'}, 'Please provide name and email.')});
+      return;
+    }
+    openModal({ title:'Application Received', content: createEl('p',{class:'muted'}, `Thanks — we will review your application and contact you at ${escapeText(email)}.`) });
   }
 
-  /* ---------------------------
-     Mobile menu toggling
-     --------------------------- */
+  /* =========================
+     Mobile menu & accessibility toggles
+     ========================= */
   function setupMobileMenu() {
     const toggle = q('.mobile-toggle');
     const nav = q('#primary-menu');
     if (!toggle || !nav) return;
+    nav.classList.remove('open');
+    nav.setAttribute('aria-hidden','true');
+    toggle.setAttribute('aria-expanded','false');
+
     toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      nav.style.display = expanded ? '' : 'block';
+      const isOpen = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      nav.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen) {
+        nav.querySelector('a')?.focus();
+        document.body.classList.add('nav-open');
+      } else {
+        document.body.classList.remove('nav-open');
+      }
+    });
+
+    // close nav when focus leaves and user presses Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+        nav.setAttribute('aria-hidden','true');
+        document.body.classList.remove('nav-open');
+        toggle.focus();
+      }
     });
   }
 
-  /* ---------------------------
-     Filters & delegation
-     --------------------------- */
-  function setupCategoryFilters() {
-    const filters = q('#categoryFilters');
-    if (!filters) return;
-    filters.addEventListener('click', (e) => {
-      const chip = e.target.closest('.chip');
-      if (!chip) return;
-      const cat = chip.dataset.cat;
-      if (!cat) return;
-      // mark selected
-      qAll('.chip', filters).forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      if (cat === 'all') renderShop(PRODUCTS);
-      else renderShop(PRODUCTS.filter(p => p.type === cat));
+  function wireAccessibilityToggles() {
+    // high contrast
+    q('#access-contrast')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.classList.toggle('high-contrast');
+    });
+    // larger text
+    q('#access-sizes')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.classList.toggle('large-text');
+    });
+    // reduced motion: toggling a class (CSS should honor)
+    q('#access-reduced-motion')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.classList.toggle('reduced-motion-forced');
     });
   }
 
-  /* ---------------------------
-     Wire UI events
-     --------------------------- */
+  /* =========================
+     Wishlist & recent tracking
+     ========================= */
+  function toggleWishlist(productId) {
+    const list = readJSON(LS.WISHLIST, []);
+    const idx = list.indexOf(productId);
+    if (idx === -1) {
+      list.push(productId);
+    } else {
+      list.splice(idx,1);
+    }
+    writeJSON(LS.WISHLIST, list);
+  }
+  function isWishlisted(productId) { return readJSON(LS.WISHLIST, []).includes(productId); }
+
+  function trackRecent(productId) {
+    const recent = readJSON(LS.RECENT, []);
+    if (recent[0] === productId) return;
+    const idx = recent.indexOf(productId);
+    if (idx !== -1) recent.splice(idx,1);
+    recent.unshift(productId);
+    if (recent.length > 10) recent.pop();
+    writeJSON(LS.RECENT, recent);
+  }
+
+  /* =========================
+     Mission popover tracking
+     ========================= */
+  function wireMissionPopover() {
+    const details = q('.mission-popover');
+    if (!details) return;
+    details.addEventListener('toggle', () => {
+      if (details.open) {
+        const n = Number(localStorage.getItem(LS.MISSION_COUNT) || 0) + 1;
+        localStorage.setItem(LS.MISSION_COUNT, String(n));
+      }
+    });
+  }
+
+  /* =========================
+     Event wiring & delegates
+     ========================= */
   function wireUI() {
     // header buttons
     q('#open-search')?.addEventListener('click', openSearch);
     q('#open-cart')?.addEventListener('click', openCart);
-    q('#join-newsletter')?.addEventListener('click', () => openModalWithTemplate('Join the Movement', `<div><input id="newsModalEmail" class="form-control" placeholder="Email address" /><div style="margin-top:8px"><button class="btn primary-btn" id="joinFromModalBtn">Join</button></div></div>`), false);
-
-    // modal join from modal button
-    document.addEventListener('click', (e) => {
-      if (e.target && e.target.id === 'joinFromModalBtn') {
-        const em = q('#newsModalEmail')?.value;
-        subscribeNewsletter(em);
-        closeModal();
-      }
-      if (e.target && e.target.id === 'modalClose') closeModal();
+    q('#join-newsletter')?.addEventListener('click', () => {
+      openModal({ title: 'Join the Movement', content: (()=>{
+        const wrap = createEl('div');
+        const input = createEl('input',{class:'form-control', id:'newsModalEmail', placeholder:'Email address', type:'email'});
+        const btn = createEl('button',{class:'btn primary-btn', type:'button'}, 'Join');
+        btn.addEventListener('click', ()=> { subscribeNewsletter(q('#newsModalEmail')?.value); closeModal(); });
+        wrap.appendChild(input); wrap.appendChild(createEl('div',{}, ' ')); wrap.appendChild(btn);
+        return wrap;
+      })() });
     });
 
-    // footer newsletter subscribe
-    q('#subscribe')?.addEventListener('click', () => {
-      subscribeNewsletter(q('#newsEmail')?.value);
-    });
+    // one-off footer subscribe
+    q('#subscribe')?.addEventListener('click', ()=> subscribeNewsletter(q('#newsEmail')?.value));
 
     // donate quick tiers
-    qAll('[data-give]').forEach(btn => {
-      btn.addEventListener('click', (e) => donate(Number(e.currentTarget.dataset.give)));
+    qAll('[data-give]').forEach(b => b.addEventListener('click', (e) => donate(Number(e.currentTarget.dataset.give))));
+    q('#donateCustom')?.addEventListener('click', () => {
+      const v = Number(q('#donCustom')?.value || 0);
+      if (!v || v <= 0) openModal({ title:'Invalid amount', content: createEl('p',{class:'muted'}, 'Enter a valid amount')});
+      else donate(v);
     });
-    q('#donateCustom')?.addEventListener('click', donateCustom);
-    qAll('[data-pay]').forEach(btn => btn.addEventListener('click', (e) => fakePay(e.currentTarget.dataset.pay)));
+
+    qAll('[data-pay]').forEach(b => b.addEventListener('click', (e) => {
+      const mode = e.currentTarget.dataset.pay;
+      const fb = q('#payFeedback');
+      if (fb) fb.textContent = `Simulating ${mode} checkout...`;
+      setTimeout(()=> {
+        if (fb) fb.textContent = 'Payment simulated (no real charge).';
+        openToast('Payment simulated');
+      }, 900);
+    }));
 
     // design preview + add
-    q('#previewDesign')?.addEventListener('click', () => previewDesignOnCanvas(q('#genText')?.value || 'John 3:16 — For God so loved...'));
+    q('#previewDesign')?.addEventListener('click', ()=> previewDesignOnCanvas(q('#genText')?.value || 'John 3:16 — For God so loved...'));
     q('#addDesignToCart')?.addEventListener('click', addDesignToCart);
 
-    // prayer/testimony/ambassador forms (use delegation to account for modal forms)
-    document.addEventListener('click', (e) => {
-      if (e.target && e.target.id === 'submitPrayer') {
-        submitPrayer(q('#prayerName')?.value, q('#prayerEmail')?.value, q('#prayerText')?.value);
-      }
-      if (e.target && e.target.id === 'submitTestimony') {
-        submitTestimony(q('#testName')?.value, q('#testText')?.value);
-      }
-      if (e.target && e.target.id === 'applyAmbassador') {
-        applyAmbassador(q('#ambName')?.value, q('#ambEmail')?.value);
-      }
+    // forms
+    q('#subscribe')?.addEventListener('click', ()=> subscribeNewsletter(q('#newsEmail')?.value));
+    q('#submitPrayer')?.addEventListener('click', ()=> submitPrayer(q('#prayerName')?.value, q('#prayerEmail')?.value, q('#prayerText')?.value));
+    q('#applyAmbassador')?.addEventListener('click', ()=> applyAmbassador(q('#ambName')?.value, q('#ambEmail')?.value));
+
+    // set monthly
+    q('#setMonthly')?.addEventListener('click', ()=> {
+      openModal({ title: 'Set Monthly Gift', content: (() => {
+        const wrap = createEl('div');
+        const email = createEl('input',{class:'form-control', id:'monthlyEmail', placeholder:'Email'});
+        const select = createEl('select',{class:'form-control', id:'monthlyAmt'});
+        ['5','10','25','50'].forEach(v => select.appendChild(createEl('option',{value:v}, '$' + v)));
+        const btn = createEl('button',{class:'btn primary-btn', type:'button'}, 'Set Gift');
+        btn.addEventListener('click', ()=> {
+          const e = email.value;
+          const amt = select.value;
+          if (!e) openModal({ title:'Missing email', content: createEl('p',{class:'muted'}, 'Enter email')});
+          else openModal({ title:'Monthly gift set', content: createEl('p',{class:'muted'}, `Monthly gift of $${escapeText(amt)} set. We'll contact ${escapeText(e)} (demo).`)});
+        });
+        wrap.appendChild(email); wrap.appendChild(select); wrap.appendChild(btn);
+        return wrap;
+      })() });
     });
 
-    // wire mobile menu
-    setupMobileMenu();
-
-    // wire filters
-    setupCategoryFilters();
-
-    // open cart from keyboard enter on cart icon (accessibility)
-    q('#open-cart')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') openCart(); });
-
-    // product list click delegation (e.g., cards created dynamically could be handled here if needed)
+    // delegation for product list buttons (details/add)
     q('#shopList')?.addEventListener('click', (e) => {
+      const pEl = e.target.closest('[data-product-id]');
+      if (!pEl) return;
+      const pid = pEl.dataset.productId;
       const btn = e.target.closest('button');
       if (!btn) return;
-      // handled by individual bindings (we assigned add listeners on creation)
+      if (btn.textContent.toLowerCase().includes('details') || btn.textContent.toLowerCase().includes('view')) openProductModal(pid);
+      if (btn.textContent.toLowerCase().includes('add')) {
+        const p = PRODUCTS.find(x => x.id === pid);
+        if (p) addToCart(Object.assign({}, p));
+      }
     });
 
-    // open newsletter modal via header button
-    q('#join-newsletter')?.addEventListener('click', () => {
-      openModalWithTemplate('Join the Movement', `<div><input id="newsModalEmail" class="form-control" placeholder="Email address" /><div style="margin-top:8px"><button class="btn primary-btn" id="joinFromModalBtn">Join</button></div></div>`);
-    });
+    // back to top small enhancement
+    qAll('.back-to-top a, .small-link[href="#top"]').forEach(a => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }));
 
-    // wire click for 'Set Monthly Gift' (modal)
-    q('#setMonthly')?.addEventListener('click', () => {
-      openModalWithTemplate('Set Monthly Gift', `<p class="muted small">Enter your email and we'll contact you to complete setup.</p><input id="monthlyEmail" class="form-control" placeholder="Email" /><select id="monthlyAmt" class="form-control"><option value="5">$5</option><option value="10">$10</option><option value="25">$25</option></select><div style="margin-top:8px"><button class="btn primary-btn" id="setupMonthlyBtn">Set Gift</button></div>`);
-      // delegate handler
-      setTimeout(() => {
-        q('#setupMonthlyBtn')?.addEventListener('click', () => {
-          const e = q('#monthlyEmail')?.value;
-          const amt = q('#monthlyAmt')?.value;
-          if (!e) { openModalWithTemplate('Missing email', `<p class="muted small">Enter email</p>`); return; }
-          openModalWithTemplate('Monthly gift set', `<p class="muted">Monthly gift of $${escapeHtml(amt)} set (demo). We'll contact you at ${escapeHtml(e)}.</p>`);
-        });
-      }, 50);
-    });
+    // mission popover
+    wireMissionPopover();
 
-    // click-to-open product modal from dynamic sections (delegation)
-    document.addEventListener('click', (e) => {
-      const productId = e.target.closest('[data-product-id]')?.dataset?.productId;
-      if (productId) openProductModal(productId);
-    });
+    // accessibility toggles
+    wireAccessibilityToggles();
+
+    // keyboard open cart
+    q('#open-cart')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') openCart(); });
+
+    // clicking global 'open-cart' icon triggers openCart
+    q('#open-cart')?.addEventListener('click', openCart);
+
+    // clicking modal close overlay handled in modal implementation above
+
+    // lazyload images (modern browsers have loading=lazy; but we can support IntersectionObserver for images without)
+    setupLazyObserver();
   }
 
-  /* ---------------------------
-     Init
-     --------------------------- */
+  /* =========================
+     Lazy image observer for images without loading attribute
+     ========================= */
+  function setupLazyObserver() {
+    if (!('IntersectionObserver' in window)) return;
+    const imgs = Array.from(document.querySelectorAll('img[data-src], img[data-lazy]'));
+    if (!imgs.length) return;
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          const img = en.target;
+          if (img.dataset.src) img.src = img.dataset.src;
+          if (img.dataset.lazy) img.src = img.dataset.lazy;
+          img.removeAttribute('data-src');
+          img.removeAttribute('data-lazy');
+          obs.unobserve(img);
+        }
+      });
+    }, { rootMargin: '200px' });
+    imgs.forEach(i => io.observe(i));
+  }
+
+  /* =========================
+     Wishlist helper (UI small widget)
+     ========================= */
+  function renderWishlistWidget() {
+    // optional: shows count in header if desired
+    const list = readJSON(LS.WISHLIST, []);
+    // you could update an element here if you have one
+  }
+
+  /* =========================
+     Recent & year update
+     ========================= */
+  function updateYear() {
+    const el = q('#currentYear');
+    if (el) el.textContent = String(new Date().getFullYear());
+  }
+
+  /* =========================
+     Backwards-compat / polish on badge animation respect reduced motion
+     ========================= */
+  function setupBadgeAnimation() {
+    const badge = q('#newDropBadge');
+    if (!badge) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      badge.classList.remove('badge-animate');
+    } else {
+      // subtle pulsing class should be implemented in CSS
+      badge.classList.add('badge-animate');
+    }
+  }
+
+  /* =========================
+     Track analytics for clicks (demo no network)
+     ========================= */
+  function trackEvent(name, payload={}) {
+    // In production call analytics endpoint. Here we keep a console trace for debugging.
+    try { console.debug('[mhc.track]', name, payload); } catch(e){}
+  }
+
+  /* =========================
+     Initialize app
+     ========================= */
   function init() {
     renderFeatured();
     renderShop();
     renderGospel();
     renderVerse();
     renderCartCount();
-    // initial design preview
-    previewDesignOnCanvas(q('#genText')?.value || 'John 3:16 — For God so loved the world');
+    updateYear();
+    setupMobileMenu();
     wireUI();
+    setupBadgeAnimation();
+    renderWishlistWidget();
 
-    // handle modal close by Escape naturally (handler above)
-    // graceful fallback: if modal is missing create a minimal modal.
-    if (!modal) {
-      console.warn('Modal element (#modal) not found — some interactions will fail.');
-    }
+    // preview canvas default (if canvas exists)
+    const defaultText = q('#genText')?.value || 'John 3:16 — For God so loved the world';
+    previewDesignOnCanvas(defaultText);
+
+    // small delegation: open product if clicking product elements elsewhere
+    document.addEventListener('click', (e) => {
+      const pid = e.target.closest('[data-product-id]')?.dataset?.productId;
+      if (pid) openProductModal(pid);
+    });
+
+    // inform dev console of readiness
+    console.info('Make Heaven Crowded UI initialized');
   }
 
-  // run on DOM ready
+  // boot
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  } else init();
+
+  // Expose a small API for debugging (window.mhc)
+  window.mhc = {
+    getCart, addToCart, removeFromCartByIndex, openCart, openProductModal, PRODUCTS, GOSPEL_POSTS
+  };
 
 })();
-
 </script>
 
 </html>
