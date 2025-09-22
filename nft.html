@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
+  <style>
 /* ===== THEME & BASE ===== */
 :root{
   --bg-900: #050407;
@@ -238,103 +238,86 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 }
 </style>
 </head>
-<body>
+  <body>
   <div class="page">
-    <!-- SIDEBAR -->
     <aside class="sidebar" aria-label="Sidebar">
-      <div>
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
-          <div class="logo" aria-hidden="true">
-            <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs><linearGradient id="lgA" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
-              <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lgA)"/>
-              <ellipse cx="22" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
-              <ellipse cx="42" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
-            </svg>
-          </div>
-          <div>
-            <h2 style="margin:0;font-size:22px;letter-spacing:-0.4px;">Draliens</h2>
-            <div style="color:#9aa4b2;font-size:13px;margin-top:4px;">0xd783…e03A</div>
-          </div>
+      <div class="sidebar-header">
+        <div class="logo" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><linearGradient id="lgA" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
+            <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lgA)"/>
+            <ellipse cx="22" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
+            <ellipse cx="42" cy="28" rx="3.6" ry="4.6" fill="#021018"/>
+          </svg>
         </div>
-
-        <p style="color:#cbd8e6;line-height:1.4;margin:8px 0;">5000 Follower Drip.haus Collection<br><a href="#" style="color:#7CFF6A;text-decoration:none;">drip.haus/draliens</a></p>
-
-        <nav style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
-          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
-            <i class="fa-solid fa-layer-group"></i>&nbsp;Collection
-          </a>
-          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
-            <i class="fa-regular fa-clock"></i>&nbsp;Activity
-          </a>
-          <a class="nav-link" href="#" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:inherit;text-decoration:none;">
-            <i class="fa-solid fa-shield-halved"></i>&nbsp;Provenance
-          </a>
-        </nav>
-
-        <div style="margin-top:28px;">
-          <button id="mintSidebarBtn">Donate / Mint</button>
-          <div style="display:flex;justify-content:center;margin-top:12px;gap:8px;align-items:center;">
-            <div style="font-size:13px;color:#9aa4b2;">226 / 500 minted</div>
-            <div title="progress" style="width:10px;height:10px;background:#8b5cf6;border-radius:999px;"></div>
-          </div>
+        <div class="sidebar-title">
+          <h2>Draliens</h2>
+          <div class="address">0xd783…e03A</div>
         </div>
       </div>
 
-      <div style="margin-top:14px;color:#9aa4b2;font-size:13px;">
-        <strong>Mint Date:</strong> Dec 30, 2025<br>
-        <strong>Supply:</strong> 111 mainnet NFTs
+      <p class="sidebar-desc">5000 Follower Drip.haus Collection<br><a href="#" class="link">drip.haus/draliens</a></p>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a class="nav-link" href="#"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Collection</span></a>
+        <a class="nav-link" href="#"><i class="fa-regular fa-clock" aria-hidden="true"></i><span>Activity</span></a>
+        <a class="nav-link" href="#"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Provenance</span></a>
+      </nav>
+
+      <div class="sidebar-mint">
+        <button id="mintSidebarBtn" class="mint-btn">Mint — 0.5MON</button>
+        <div class="mint-meta">
+          <div class="mint-count">226 / 500 minted</div>
+          <div class="mint-dot" title="progress" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="muted"><strong>Mint Date:</strong> Dec 30, 2025</div>
+        <div class="muted"><strong>Supply:</strong> 111 mainnet NFTs</div>
       </div>
     </aside>
 
-    <!-- MAIN -->
     <main>
-      <!-- top controls -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div style="display:flex;gap:18px;align-items:center;">
-          <a href="#" style="color:inherit;font-weight:700;text-decoration:none;">Collection</a>
-          <a href="#" style="color:#9aa4b2;text-decoration:none;">Activity</a>
-          <a href="#" style="color:#9aa4b2;text-decoration:none;">Provenance</a>
+      <header class="topbar">
+        <div class="topbar-left">
+          <a class="crumb" href="#">Collection</a>
+          <a class="crumb muted" href="#">Activity</a>
+          <a class="crumb muted" href="#">Provenance</a>
         </div>
 
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="position:relative;">
-            <input id="searchInput" placeholder="Search" aria-label="Search">
-            <i class="material-icons" style="position:absolute;right:8px;top:8px;color:#9aa4b2">search</i>
+        <div class="topbar-right">
+          <div class="search-wrap">
+            <input id="searchInput" type="search" placeholder="Search" aria-label="Search">
+            <i class="material-icons" aria-hidden="true">search</i>
           </div>
-          <div style="background:#ff6b6b;color:#fff;padding:8px 10px;border-radius:8px;font-weight:700;">3</div>
-          <button id="createBtn" class="btn-ghost" style="display:flex;gap:8px;align-items:center;"><i class="fa-solid fa-plus" style="color:#7CFF6A"></i>&nbsp;Create</button>
-          <div style="width:36px;height:36px;border-radius:999px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A)"></div>
+          <div class="notifications">3</div>
+          <button id="createBtn" class="btn-ghost"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Create</span></button>
+          <div class="avatar-badge" aria-hidden="true"></div>
         </div>
-      </div>
+      </header>
 
-      <!-- collection header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div style="display:flex;align-items:center;gap:18px;">
-          <h3 style="margin:0;font-size:22px;">Dralien Collection</h3>
-          <div style="color:#9aa4b2">5000 follower drip.haus collection</div>
+      <section class="collection-header">
+        <div class="collection-info">
+          <h3>Dralien Collection</h3>
+          <div class="muted">5000 follower drip.haus collection</div>
         </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <select id="sortSelect" style="padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit;">
+
+        <div class="collection-controls">
+          <select id="sortSelect" aria-label="Sort collection">
             <option>Sort: Newest</option>
             <option>Sort: Oldest</option>
             <option>Sort: Price</option>
           </select>
-          <button id="filterBtn" class="btn-ghost"><i class="fa-solid fa-filter"></i></button>
+          <button id="filterBtn" class="btn-ghost" aria-label="Filter"><i class="fa-solid fa-filter" aria-hidden="true"></i></button>
         </div>
-      </div>
+      </section>
 
-      <!-- HERO -->
       <section class="hero-wrap" data-parallax="true" aria-label="Dralien hero">
-        <div class="bg-layer" aria-hidden="true"></div>
-        <div class="hero-orb orb-1" aria-hidden="true"></div>
-        <div class="hero-orb orb-2" aria-hidden="true"></div>
-
         <div class="hero-left">
-          <div class="hero-eyebrow"><i class="fa-solid fa-user-astronaut"></i>&nbsp;&nbsp;DRALIEN STUDIO</div>
-
-          <h2 class="hero-h">DRALIEN UNIQUE <span style="color:rgba(255,255,255,0.15)">111</span> NFT’S</h2>
-          <p class="hero-sub">Build on Monad Testnet. Create utilities and airdrops worth a total of <strong>$10,000+</strong> for Dralien Mainnet holders. Tiny supply, layered utility — crafted for holders.</p>
+          <div class="hero-eyebrow"><i class="fa-solid fa-user-astronaut" aria-hidden="true"></i><span>DRALIEN STUDIO</span></div>
+          <h2 class="hero-h">DRALIEN UNIQUE <span class="hero-highlight">111</span> NFT'S</h2>
+          <p class="hero-sub">Build on Monad Testnet. Create utilities and airdrops worth a total of <strong>$10,000+</strong> for Dralien Mainnet holders.</p>
 
           <div class="hero-stats" role="list">
             <div class="stat-chip" role="listitem"><h4 id="statSupply">111</h4><p>Total supply</p></div>
@@ -348,110 +331,105 @@ input::placeholder{color:rgba(154,164,178,0.6)}
           </div>
 
           <div class="hero-marquee" aria-hidden="false">
-            <div class="marq">Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties) &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;</div>
+            <div class="marq">Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties)</div>
           </div>
         </div>
 
         <aside class="hero-preview" aria-hidden="false">
           <div class="preview-canvas parallax-1">
             <div class="pixel-alien" role="img" aria-label="pixel dralien preview">
-              <!-- pixel svg -->
-              <svg width="160" height="160" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg width="160" height="160" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect width="24" height="24" fill="#ccffd9"/>
                 <g fill="#021018">
                   <rect x="8" y="6" width="2" height="2"/><rect x="13" y="6" width="2" height="2"/>
-                  <rect x="7" y="8" width="10" height="8" fill="#e9fef3" />
+                  <rect x="7" y="8" width="10" height="8" fill="#e9fef3"/>
                   <rect x="10" y="14" width="4" height="2" fill="#a7f0a9"/>
                 </g>
               </svg>
             </div>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="preview-meta">
             <div class="mint-progress">
-              <div style="display:flex;gap:12px;align-items:center">
-                <div style="font-weight:800">Mint — $10 (+7%)</div>
-                <div style="color:var(--muted)">Dec 30, 2025</div>
+              <div class="mint-info">
+                <div class="mint-price">Mint — $10 (+7%)</div>
+                <div class="muted">Dec 30, 2025</div>
               </div>
-              <div style="min-width:220px;display:flex;gap:10px;align-items:center;">
+              <div class="mint-progress-bar">
                 <div class="progress-track" aria-hidden="true">
-                  <div class="progress-fill" id="heroProgress" style="width:28%"></div>
+                  <div class="progress-fill" id="heroProgress" style="width:0%"></div>
                 </div>
-                <div style="min-width:54px;text-align:right;font-weight:700" id="heroProgressText">31 / 111</div>
+                <div id="heroProgressText">0 / 111</div>
               </div>
             </div>
 
-            <div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+            <div class="preview-actions">
               <button class="btn-primary" id="previewMint">Mint Preview</button>
               <button class="btn-ghost" id="previewWL">Request WL</button>
             </div>
 
-            <div style="display:flex;gap:8px;align-items:center;margin-top:4px;color:var(--muted);font-size:13px">
-              <i class="fa-solid fa-shield-halved"></i> Verified • <i class="fa-solid fa-key" style="margin-left:8px"></i> Non-custodial options
+            <div class="preview-meta-muted">
+              <i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Verified</span>
+              <i class="fa-solid fa-key" aria-hidden="true"></i><span>Non-custodial options</span>
             </div>
           </div>
         </aside>
       </section>
 
-      <!-- GALLERY -->
-      <section id="gallery" aria-label="Gallery">
-        <!-- nft-card examples; add / replace data-img with your images -->
+      <section id="gallery" class="gallery" aria-label="Gallery">
         <article class="nft-card" data-img="images/dralien-217.png" data-token="#217" data-owner="0xB1F3…7090">
-          <div class="nft-media"><img data-src="images/dralien-217.png" alt="Dralien #217" /></div>
+          <div class="nft-media"><img data-src="images/dralien-217.png" alt="Dralien #217"></div>
           <div class="meta">
             <div>
               <div class="title">Dralien #217</div>
               <div class="owner">0xB1F3…7090</div>
             </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart"></i></button>
-              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            <div class="meta-actions">
+              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
+              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i></button>
             </div>
           </div>
         </article>
 
         <article class="nft-card" data-img="images/dralien-216.png" data-token="#216" data-owner="0x105D…2765">
-          <div class="nft-media"><img data-src="images/dralien-216.png" alt="Dralien #216" /></div>
+          <div class="nft-media"><img data-src="images/dralien-216.png" alt="Dralien #216"></div>
           <div class="meta">
             <div>
               <div class="title">Dralien #216</div>
               <div class="owner">0x105D…2765</div>
             </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart"></i></button>
-              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            <div class="meta-actions">
+              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
+              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i></button>
             </div>
           </div>
         </article>
 
         <article class="nft-card" data-img="images/dralien-215.png" data-token="#215" data-owner="0x105D…2765">
-          <div class="nft-media"><img data-src="images/dralien-215.png" alt="Dralien #215" /></div>
+          <div class="nft-media"><img data-src="images/dralien-215.png" alt="Dralien #215"></div>
           <div class="meta">
             <div>
               <div class="title">Dralien #215</div>
               <div class="owner">0x105D…2765</div>
             </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart"></i></button>
-              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            <div class="meta-actions">
+              <button class="favBtn" title="Favorite" aria-label="Favorite"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
+              <button class="moreBtn" title="More" aria-label="More"><i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i></button>
             </div>
           </div>
         </article>
-
-        <!-- add more nft-cards as needed -->
       </section>
 
-      <!-- TOOLS -->
-      <section id="tools" class="tools-section" aria-label="Tools & utilities">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+      <section id="tools" class="tools-section" aria-label="Tools & Utilities">
+        <div class="tools-header">
           <div>
-            <h4 style="margin:0 0 6px 0">Tools & Utilities — Explore</h4>
-            <div style="color:var(--muted);font-size:13px">Click <strong>Open Tool</strong> to open a standalone tool page, or <strong>Details</strong> to preview within the site.</div>
+            <h4>Tools & Utilities — Explore</h4>
+            <div class="muted">Click Open Tool to open a standalone tool page, or Details to preview within the site.</div>
           </div>
 
-          <div style="display:flex;gap:8px;align-items:center;">
+          <div class="tools-controls">
             <input id="toolSearch" placeholder="Search tools..." aria-label="Search tools">
-            <select id="toolFilter" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit">
+            <select id="toolFilter" aria-label="Filter tools">
               <option value="all">All</option>
               <option value="creator">Creator</option>
               <option value="game">Game</option>
@@ -463,7 +441,7 @@ input::placeholder{color:rgba(154,164,178,0.6)}
         <div class="tools-grid" id="toolsGrid" aria-live="polite">
           <article class="tool-card" data-tags="creator">
             <div class="tool-card-left">
-              <div class="tool-icon"><i class="fa-solid fa-sparkles"></i></div>
+              <div class="tool-icon" aria-hidden="true"><i class="fa-solid fa-sparkles" aria-hidden="true"></i></div>
               <div class="tool-info">
                 <h5>NFT Generator</h5>
                 <p class="muted">Trait packs, batch mint, IPFS + metadata builder.</p>
@@ -478,7 +456,7 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 
           <article class="tool-card" data-tags="infra">
             <div class="tool-card-left">
-              <div class="tool-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+              <div class="tool-icon" aria-hidden="true"><i class="fa-solid fa-sack-dollar" aria-hidden="true"></i></div>
               <div class="tool-info">
                 <h5>Non-Custodial Stake</h5>
                 <p class="muted">Secure staking without custody — rewards distribution engine.</p>
@@ -493,7 +471,7 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 
           <article class="tool-card" data-tags="game">
             <div class="tool-card-left">
-              <div class="tool-icon"><i class="fa-solid fa-chess"></i></div>
+              <div class="tool-icon" aria-hidden="true"><i class="fa-solid fa-chess" aria-hidden="true"></i></div>
               <div class="tool-info">
                 <h5>Blockchain Chess</h5>
                 <p class="muted">Play with NFT pieces, win token rewards and metadata upgrades.</p>
@@ -507,58 +485,58 @@ input::placeholder{color:rgba(154,164,178,0.6)}
           </article>
         </div>
 
-        <div class="tools-showcase" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-          <div style="flex:1;min-width:280px">
-            <h5 style="margin:0 0 8px 0">Featured NFTs for Tools</h5>
-            <p class="muted" style="margin:0 0 8px 0">Hand-picked examples that show how tools can affect item state (metadata updates, airdropped upgrades, playable items).</p>
-            <div class="mini-nft-grid" id="miniNftGrid" style="display:flex;gap:10px;flex-wrap:wrap;">
-              <div class="mini-nft" data-img="images/dralien-217.png"><img src="images/dralien-217.png" alt="mini"/></div>
-              <div class="mini-nft" data-img="images/dralien-216.png"><img src="images/dralien-216.png" alt="mini"/></div>
+        <div class="tools-showcase">
+          <div class="tools-featured">
+            <h5>Featured NFTs for Tools</h5>
+            <p class="muted">Hand-picked examples that show how tools can affect item state.</p>
+            <div class="mini-nft-grid" id="miniNftGrid">
+              <div class="mini-nft" data-img="images/dralien-217.png"><img src="images/dralien-217.png" alt="mini"></div>
+              <div class="mini-nft" data-img="images/dralien-216.png"><img src="images/dralien-216.png" alt="mini"></div>
             </div>
           </div>
 
-          <div style="min-width:260px;display:flex;flex-direction:column;gap:8px;">
-            <div class="card small" style="padding:12px;display:flex;gap:12px;align-items:center;">
-              <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:grid;place-items:center;"><i class="fa-solid fa-rocket"></i></div>
-              <div>
-                <div style="font-weight:800">Launchpad Previews</div>
-                <div class="muted" style="font-size:13px">Stage and test small launches — quick deploy to testnet.</div>
+          <div class="tools-cards">
+            <div class="card">
+              <div class="card-icon" aria-hidden="true"><i class="fa-solid fa-rocket" aria-hidden="true"></i></div>
+              <div class="card-body">
+                <div class="card-title">Launchpad Previews</div>
+                <div class="muted">Stage and test small launches — quick deploy to testnet.</div>
               </div>
             </div>
 
-            <div class="card small" style="padding:12px;display:flex;gap:12px;align-items:center;">
-              <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent3));display:grid;place-items:center;"><i class="fa-solid fa-chart-simple"></i></div>
-              <div>
-                <div style="font-weight:800">Simulated Analytics</div>
-                <div class="muted" style="font-size:13px">Preview holder distribution, rarity charts and projected airdrop impact.</div>
+            <div class="card">
+              <div class="card-icon" aria-hidden="true"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i></div>
+              <div class="card-body">
+                <div class="card-title">Simulated Analytics</div>
+                <div class="muted">Preview holder distribution, rarity charts and projected airdrop impact.</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ABOUT -->
-      <section class="about-section" id="about">
+      <section class="about-section" id="about" aria-label="About the creator">
         <div class="about-left reveal">
-          <div class="about-eyebrow"><i class="fa-solid fa-user-astronaut"></i>&nbsp;ABOUT THE CREATOR</div>
+          <div class="about-eyebrow"><i class="fa-solid fa-user-astronaut" aria-hidden="true"></i><span>ABOUT THE CREATOR</span></div>
           <h3 class="about-title">ABOUT THE CREATOR</h3>
+
           <p class="about-desc">
             I have been developing NFTs since 2020, and the problem is often that the supply is too high and the developers just want to make a lot of money with a mint and then let the project die.
             With a 10,000 NFT collection, one costs at least $10 = $100,000 mint reward. My NFT collection consists of 111 NFTs, and I am trying to create utilities and airdrops worth a total of $10,000+ for Dralien Mainnet holders.
             10,000/111 = ~$100 per NFT. This ensures that WL holders have a secure, good investment.
           </p>
 
-          <p style="color:var(--muted);margin-top:8px;line-height:1.45;">
+          <p class="muted">
             The goal: a compact, utility-first drop that rewards holders over time rather than a one-off mint pump. Monthly airdrops, physical rewards, and community-first access are core to that mission.
           </p>
 
-          <div class="utils-row" style="margin-top:12px">
-            <div class="util-pill"><i class="fa-solid fa-award"></i><div style="margin-left:8px"><strong>Focused supply</strong><div style="font-size:12px;color:var(--muted)">111 mainnet NFTs</div></div></div>
-            <div class="util-pill"><i class="fa-solid fa-hand-holding-dollar"></i><div style="margin-left:8px"><strong>Planned utilities</strong><div style="font-size:12px;color:var(--muted)">$10k+ value for holders</div></div></div>
-            <div class="util-pill"><i class="fa-solid fa-users-gear"></i><div style="margin-left:8px"><strong>Community</strong><div style="font-size:12px;color:var(--muted)">Exclusive gated Discord</div></div></div>
+          <div class="utils-row">
+            <div class="util-pill"><i class="fa-solid fa-award" aria-hidden="true"></i><div><strong>Focused supply</strong><div class="muted">111 mainnet NFTs</div></div></div>
+            <div class="util-pill"><i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i><div><strong>Planned utilities</strong><div class="muted">$10k+ value for holders</div></div></div>
+            <div class="util-pill"><i class="fa-solid fa-users-gear" aria-hidden="true"></i><div><strong>Community</strong><div class="muted">Exclusive gated Discord</div></div></div>
           </div>
 
-          <h4 style="margin-top:14px;margin-bottom:8px">Project Milestones</h4>
+          <h4>Project Milestones</h4>
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-dot"></div>
@@ -567,7 +545,7 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 
             <div class="timeline-item">
               <div class="timeline-dot"></div>
-              <div class="timeline-content"><h5>2024 — Tools & prototypes</h5><p>Built an NFT generator, staking tools, airdrop platform and early game concepts (Blockchain Chess, Pixel Draw).</p></div>
+              <div class="timeline-content"><h5>2024 — Tools & prototypes</h5><p>Built an NFT generator, staking tools, airdrop platform and early game concepts.</p></div>
             </div>
 
             <div class="timeline-item">
@@ -576,19 +554,19 @@ input::placeholder{color:rgba(154,164,178,0.6)}
             </div>
           </div>
 
-          <div class="about-ctas" style="margin-top:14px;">
-            <button class="btn-discord" onclick="window.open('https://discord.gg','_blank')"><i class="fa-brands fa-discord"></i>&nbsp;Join Discord</button>
-            <button class="btn-whitepaper" onclick="alert('Whitepaper (demo) — attach PDF link or open modal with content.');"><i class="fa-solid fa-file-lines"></i>&nbsp;Read Whitepaper</button>
+          <div class="about-ctas">
+            <button class="btn-discord" id="joinDiscord"><i class="fa-brands fa-discord" aria-hidden="true"></i><span>Join Discord</span></button>
+            <button class="btn-whitepaper" id="openWhitepaper"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>Read Whitepaper</span></button>
           </div>
 
-          <div class="faq" style="margin-top:14px;">
+          <div class="faq">
             <div class="faq-item">
-              <div class="faq-question"><strong>How do WL & FCFS work?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down"></i></span></div>
-              <div class="faq-answer">Whitelist (WL) = guaranteed slot for early donors. FCFS fills gaps if people do not mint in time. Donation $500 gives access to a WL slot (demo flow).</div>
+              <div class="faq-question"><strong>How do WL & FCFS work?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span></div>
+              <div class="faq-answer">Whitelist (WL) = guaranteed slot for early donors. FCFS fills gaps if people do not mint in time.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-question"><strong>What utilities are included?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down"></i></span></div>
-              <div class="faq-answer">Monthly airdrops, exclusive physical Dralien, gated Discord, play-to-earn drops, early access to launches and more as described in utilities section.</div>
+              <div class="faq-question"><strong>What utilities are included?</strong><span class="faq-toggle"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span></div>
+              <div class="faq-answer">Monthly airdrops, exclusive physical Dralien, gated Discord, play-to-earn drops, early access to launches.</div>
             </div>
           </div>
         </div>
@@ -596,10 +574,10 @@ input::placeholder{color:rgba(154,164,178,0.6)}
         <aside class="about-right reveal">
           <div class="card creator">
             <div class="avatar">JS</div>
-            <div>
-              <div style="font-weight:800">NifftySwiggle — Creator</div>
-              <p style="margin:6px 0 0;color:var(--muted)">Developing NFTs since 2020. Focused on craft, holders-first utility, and small supply economics.</p>
-              <div class="about-stats" style="margin-top:8px;">
+            <div class="creator-info">
+              <div class="creator-name">NifftySwiggle — Creator</div>
+              <p class="muted">Developing NFTs since 2020. Focused on craft, holders-first utility, and small supply economics.</p>
+              <div class="about-stats">
                 <div class="stat"><div class="num">111</div><div class="label">Mainnet NFTs</div></div>
                 <div class="stat"><div class="num">100</div><div class="label">Whitelist slots</div></div>
                 <div class="stat"><div class="num">48</div><div class="label">Months rewards</div></div>
@@ -607,40 +585,38 @@ input::placeholder{color:rgba(154,164,178,0.6)}
             </div>
           </div>
 
-          <div class="card" style="margin-top:12px;">
+          <div class="card quick-utilities">
             <strong>Quick utilities</strong>
-            <ul style="margin:8px 0 0 14px;color:var(--muted);line-height:1.6;">
+            <ul>
               <li>Monthly $10 curated airdrops</li>
               <li>Physical collectible for holders</li>
               <li>Play-to-earn events & airdrop rewards</li>
             </ul>
           </div>
 
-          <div class="card" style="margin-top:12px;">
+          <div class="card proof-security">
             <strong>Proof & security</strong>
-            <p style="margin:8px 0 0;color:var(--muted)">Smart contract addresses will be published at launch. WL allocations will use signature verification; provenance will be maintained publicly.</p>
+            <p class="muted">Smart contract addresses will be published at launch. WL allocations will use signature verification; provenance will be maintained publicly.</p>
           </div>
         </aside>
       </section>
 
-      <!-- small footer actions row -->
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-        <div style="color:#9aa4b2;font-size:13px;">Built by NifftySwiggle • Monad Testnet</div>
-        <div style="display:flex;gap:10px;">
-          <button id="downloadCSV" class="btn-ghost"><i class="fa-solid fa-download"></i>&nbsp;Export CSV</button>
+      <div class="page-actions">
+        <div class="muted">Built by NifftySwiggle • Monad Testnet</div>
+        <div class="action-buttons">
+          <button id="downloadCSV" class="btn-ghost"><i class="fa-solid fa-download" aria-hidden="true"></i><span>Export CSV</span></button>
           <button id="roadmap" class="btn-primary">Roadmap</button>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- NFT Modal -->
   <div id="nftModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="NFT details modal">
     <div class="nft-modal-card" role="document">
       <button class="nft-close" id="nftClose" aria-label="Close modal">✕</button>
 
       <div class="nft-media-wrap" id="nftMediaWrap">
-        <img id="nftMedia" src="" alt="NFT preview" />
+        <img id="nftMedia" src="" alt="NFT preview">
       </div>
 
       <div class="nft-info" role="region" aria-label="NFT information">
@@ -650,22 +626,22 @@ input::placeholder{color:rgba(154,164,178,0.6)}
             <div class="nft-sub" id="nftSubtitle">DRALIEN — UNIQUE 111 NFTS</div>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
-            <div class="nft-actions">
+          <div class="nft-actions">
+            <div class="action-row">
               <button class="btn btn-buy" id="nftBuy">Buy</button>
               <button class="btn btn-ghost" id="nftMint">Mint</button>
             </div>
-            <div class="meta-pill" style="margin-top:6px">
-              <i class="fa-solid fa-clock"></i>
-              <div style="font-size:12px;color:var(--muted);margin-left:6px">Mint Date: <strong style="margin-left:6px">Dec 30, 2025</strong></div>
+            <div class="meta-pill">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              <div class="muted">Mint Date: <strong>Dec 30, 2025</strong></div>
             </div>
           </div>
         </div>
 
         <div class="nft-meta-row">
-          <div class="meta-pill">Token: <code id="nftToken">#217</code><button class="btn-ghost" id="copyToken" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
-          <div class="meta-pill">Owner: <code id="nftOwner">0xB1F3…7090</code><button class="btn-ghost" id="copyOwner" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
-          <div class="meta-pill">Contract: <code id="nftContract">0xDraLiEn...aB12</code><button class="btn-ghost" id="copyContract2" style="margin-left:8px"><i class="fa-regular fa-copy"></i></button></div>
+          <div class="meta-pill">Token: <code id="nftToken">#217</code><button class="btn-ghost" id="copyToken" aria-label="Copy token"><i class="fa-regular fa-copy" aria-hidden="true"></i></button></div>
+          <div class="meta-pill">Owner: <code id="nftOwner">0xB1F3…7090</code><button class="btn-ghost" id="copyOwner" aria-label="Copy owner"><i class="fa-regular fa-copy" aria-hidden="true"></i></button></div>
+          <div class="meta-pill">Contract: <code id="nftContract">0xDraLiEn...aB12</code><button class="btn-ghost" id="copyContract2" aria-label="Copy contract"><i class="fa-regular fa-copy" aria-hidden="true"></i></button></div>
         </div>
 
         <div class="nft-tabs" role="tablist" aria-label="NFT tabs">
@@ -676,25 +652,24 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 
         <div class="details-section" data-panel="details">
           <div class="details-body">
-            <div>
-              <div style="font-weight:800">About this NFT</div>
-              <p class="muted" id="nftLongDesc" style="margin-top:8px">This Dralien is part of a tight 111-supply collection built for holders with monthly airdrops and physical rewards.</p>
+            <div class="details-left">
+              <div class="about-this">About this NFT</div>
+              <p id="nftLongDesc" class="muted">This Dralien is part of a tight 111-supply collection built for holders with monthly airdrops and physical rewards.</p>
 
-              <div style="margin-top:12px" class="rarity-row">
-                <div style="width:90px;font-size:12px;color:var(--muted)">Rarity</div>
-                <div class="rarity-track"><div class="rarity-fill" id="rarityFill" style="width:40%"></div></div>
-                <div style="min-width:54px;text-align:right;font-weight:800" id="rarityPct">40%</div>
+              <div class="rarity-row">
+                <div class="muted">Rarity</div>
+                <div class="rarity-track"><div class="rarity-fill" id="rarityFill"></div></div>
+                <div id="rarityPct">40%</div>
               </div>
 
-              <div style="margin-top:12px" class="share-row">
-                <button class="share-btn" id="shareTwitter"><i class="fa-brands fa-x-twitter"></i>&nbsp;Tweet</button>
-                <button class="share-btn" id="shareDiscord"><i class="fa-brands fa-discord"></i>&nbsp;Share</button>
-                <button class="share-btn" id="viewOnOS"><i class="fa-brands fa-opensea"></i>&nbsp;View on OpenSea</button>
+              <div class="share-row">
+                <button class="share-btn" id="shareTwitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i><span>Tweet</span></button>
+                <button class="share-btn" id="shareDiscord"><i class="fa-brands fa-discord" aria-hidden="true"></i><span>Share</span></button>
+                <button class="share-btn" id="viewOnOS"><i class="fa-brands fa-opensea" aria-hidden="true"></i><span>View on OpenSea</span></button>
               </div>
             </div>
 
-            <div>
-              <div style="font-weight:800;margin-bottom:8px">Traits</div>
+            <div class="details-right">
               <div class="traits-grid" id="traitsGrid">
                 <div class="trait"><div class="name">Color</div><div class="value">Neon Green</div></div>
                 <div class="trait"><div class="name">Eyes</div><div class="value">3</div></div>
@@ -705,50 +680,40 @@ input::placeholder{color:rgba(154,164,178,0.6)}
           </div>
         </div>
 
-        <div class="provenance-section" data-panel="provenance" style="display:none;margin-top:12px">
-          <div class="provenance" id="provList">
-            <div class="prov-item"><div style="font-weight:800">Minted</div><div class="time">Dec 30, 2025 — tx: 0xabc...123</div></div>
-            <div class="prov-item"><div style="font-weight:800">Transferred</div><div class="time">Jan 12, 2026 — tx: 0xdef...456</div></div>
-          </div>
+        <div class="provenance-section" data-panel="provenance" style="display:none">
+          <div class="provenance" id="provList"></div>
         </div>
 
-        <div class="activity-section" data-panel="activity" style="display:none;margin-top:12px">
-          <div class="activity" id="actList">
-            <div class="act-item"><div style="font-weight:800">Listed for sale</div><div class="time">Feb 2, 2026 — Price: 0.5 MON</div></div>
-            <div class="act-item"><div style="font-weight:800">Bid placed</div><div class="time">Feb 4, 2026 — Bid: 0.45 MON</div></div>
-          </div>
+        <div class="activity-section" data-panel="activity" style="display:none">
+          <div class="activity" id="actList"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TOOL MODAL -->
   <div id="toolModal" class="tool-modal" aria-hidden="true">
     <div class="tool-modal-card">
-      <button id="toolModalClose" class="modal-close">✕</button>
+      <button id="toolModalClose" class="modal-close" aria-label="Close tool modal">✕</button>
       <div class="tool-modal-body">
         <div class="tool-modal-hero">
-          <div class="tool-modal-icon"><i class="fa-solid fa-sparkles"></i></div>
+          <div class="tool-modal-icon" aria-hidden="true"><i class="fa-solid fa-sparkles" aria-hidden="true"></i></div>
           <div>
             <h3 id="toolModalTitle">Tool Title</h3>
             <p id="toolModalDesc" class="muted">Tool short description</p>
-            <div id="toolModalTags" style="margin-top:8px"></div>
+            <div id="toolModalTags"></div>
           </div>
         </div>
 
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:14px 0" />
-
         <div id="toolModalContent"></div>
 
-        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+        <div class="tool-modal-actions">
           <button class="btn-ghost" id="toolModalCloseBtn">Close</button>
-          <button class="btn-primary" id="toolModalOpenPage">Open full tool page</button>
+          <button class="btn-primary" id="toolModalOpenPage" data-tool="">Open full tool page</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="site-footer" aria-labelledby="footerHeading">
     <div class="footer-top">
       <div class="footer-brand">
@@ -763,18 +728,18 @@ input::placeholder{color:rgba(154,164,178,0.6)}
           <h3 id="footerHeading">NifftySwiggle — Dralien</h3>
           <p class="muted">Small-supply NFT studio — 111 Mainnet NFTs, utilities & curated airdrops for holders.</p>
           <div class="social-row" aria-label="Social links">
-            <button class="social" data-href="https://twitter.com/" title="Twitter"><i class="fa-brands fa-x-twitter"></i></button>
-            <button class="social" data-href="https://discord.gg/" title="Discord"><i class="fa-brands fa-discord"></i></button>
-            <button class="social" data-href="https://instagram.com/" title="Instagram"><i class="fa-brands fa-instagram"></i></button>
-            <button class="social" data-href="https://t.me/" title="Telegram"><i class="fa-brands fa-telegram"></i></button>
-            <button class="social" data-href="https://medium.com/" title="Medium"><i class="fa-brands fa-medium"></i></button>
-            <button class="social" data-href="https://github.com/" title="GitHub"><i class="fa-brands fa-github"></i></button>
-            <button class="social" data-href="https://opensea.io/" title="OpenSea"><i class="fa-brands fa-opensea"></i></button>
+            <button class="social" data-href="https://twitter.com/" title="Twitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://discord.gg/" title="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://instagram.com/" title="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://t.me/" title="Telegram"><i class="fa-brands fa-telegram" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://medium.com/" title="Medium"><i class="fa-brands fa-medium" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://github.com/" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></button>
+            <button class="social" data-href="https://opensea.io/" title="OpenSea"><i class="fa-brands fa-opensea" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
 
-      <div class="footer-links" aria-hidden="false">
+      <div class="footer-links">
         <div class="col">
           <h4>Explore</h4>
           <ul>
@@ -815,9 +780,9 @@ input::placeholder{color:rgba(154,164,178,0.6)}
 
           <div class="contract-row">
             <div class="muted small">Contract (Mainnet)</div>
-            <div class="contract-copy" style="margin-top:6px;display:flex;gap:8px;align-items:center;">
+            <div class="contract-copy">
               <code id="contractAddr">0xDraLiEn...aB12</code>
-              <button id="copyContract" title="Copy contract address" class="btn-ghost" style="margin-left:6px"><i class="fa-regular fa-copy"></i></button>
+              <button id="copyContract" title="Copy contract address" aria-label="Copy contract"><i class="fa-regular fa-copy" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -845,407 +810,376 @@ input::placeholder{color:rgba(154,164,178,0.6)}
       <div class="foot-actions">
         <a href="#" class="small muted">Sitemap</a>
         <a href="#" class="small muted">Careers</a>
-        <button id="backTop" title="Back to top" aria-label="Back to top" class="btn-ghost"><i class="fa-solid fa-arrow-up-long"></i></button>
+        <button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up-long" aria-hidden="true"></i></button>
       </div>
     </div>
   </footer>
-
+</body>
 <script>
-/* ===========================
-   Consolidated page JS
-   - hero parallax
-   - gallery grid
-   - lazy load images
-   - nft modal
-   - tool modal + tool pages
-   - FAQ, counters, newsletter, copy buttons
-   =========================== */
-
-(() => {
-  /* helper safe query */
-  const $ = (s, ctx = document) => ctx.querySelector(s);
-  const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
-
-  /* ---- hero parallax ---- */
+(function(){
   const hero = document.querySelector('.hero-wrap');
   const par = document.querySelector('.parallax-1');
-  if (hero && par) {
-    hero.addEventListener('mousemove', (e) => {
+  const heroOrbs = document.querySelectorAll('.hero-orb');
+  if(hero && par){
+    hero.addEventListener('mousemove', (e)=>{
       const rect = hero.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
       par.style.transform = `translate3d(${px * 12}px, ${py * 8}px, 0)`;
-      document.querySelectorAll('.hero-orb').forEach((o, i) => {
-        const mult = (i === 0) ? 18 : -12;
+      heroOrbs.forEach((o,i)=>{
+        const mult = i === 0 ? 18 : -12;
         o.style.transform = `translate3d(${px * mult}px, ${py * mult}px, 0)`;
       });
     });
-    hero.addEventListener('mouseleave', ()=> {
+    hero.addEventListener('mouseleave', ()=>{
       par.style.transform = '';
-      document.querySelectorAll('.hero-orb').forEach(o=> o.style.transform = '');
+      heroOrbs.forEach(o=>o.style.transform = '');
     });
   }
 
-  /* ---- hero buttons ---- */
-  $('#heroDonate')?.addEventListener('click', ()=> alert('Demo: Donate flow (simulate wallet & payment).'));
-  $('#heroMint')?.addEventListener('click', ()=> alert('Demo: Mint flow requires wallet + contract integration.'));
-  $('#previewMint')?.addEventListener('click', () => {
-    const heroProgressText = $('#heroProgressText');
-    const heroProgress = $('.progress-fill#heroProgress') || $('#heroProgress');
-    let cur = parseInt(heroProgressText?.innerText?.split('/')[0]) || 0;
-    if (cur < 111) {
-      cur = Math.min(111, cur + Math.floor(Math.random()*3)+1);
-      const pct = Math.round((cur/111)*100);
-      $('.progress-fill') && (document.querySelector('.progress-fill').style.width = pct + '%');
-      heroProgressText && (heroProgressText.innerText = cur + ' / 111');
-    } else alert('All minted (demo).');
-  });
-  $('#previewWL')?.addEventListener('click', ()=> alert('Demo: WL request sent.'));
+  const heroDonate = document.getElementById('heroDonate');
+  const heroMint = document.getElementById('heroMint');
+  const previewMint = document.getElementById('previewMint');
+  const previewWL = document.getElementById('previewWL');
+  const heroProgress = document.getElementById('heroProgress');
+  const heroProgressText = document.getElementById('heroProgressText');
 
-  /* ---- gallery grid responsive ---- */
-  function applyGrid(){
-    const w = window.innerWidth;
+  if(heroDonate) heroDonate.addEventListener('click', ()=>{ alert('Demo: Donate flow (simulate wallet & payment).'); });
+  if(heroMint) heroMint.addEventListener('click', ()=>{ alert('Demo: Mint flow requires wallet & contract integration.'); });
+  if(previewWL) previewWL.addEventListener('click', ()=>{ alert('Demo: WL request sent.'); });
+
+  function setHeroProgress(count){
+    const max = 111;
+    const pct = Math.round((count/max)*100);
+    if(heroProgress) heroProgress.style.width = pct + '%';
+    if(heroProgressText) heroProgressText.innerText = count + ' / ' + max;
+    return pct;
+  }
+
+  let simulatedCount = 31;
+  setHeroProgress(simulatedCount);
+  if(previewMint) previewMint.addEventListener('click', ()=>{
+    if(simulatedCount >= 111) { alert('All minted (demo).'); return; }
+    simulatedCount = Math.min(111, simulatedCount + Math.floor(Math.random()*3)+1);
+    setHeroProgress(simulatedCount);
+  });
+
+  function applyGalleryGrid(){
     const grid = document.getElementById('gallery');
     if(!grid) return;
+    const w = window.innerWidth;
     if(w <= 640) grid.style.gridTemplateColumns = 'repeat(1,1fr)';
     else if(w <= 1000) grid.style.gridTemplateColumns = 'repeat(2,1fr)';
     else grid.style.gridTemplateColumns = 'repeat(3,1fr)';
   }
-  window.addEventListener('resize', applyGrid);
-  applyGrid();
+  applyGalleryGrid();
+  window.addEventListener('resize', applyGalleryGrid);
 
-  /* ---- lazy load images (simple) ---- */
-  $$('img[data-src]').forEach(img => {
-    const src = img.getAttribute('data-src');
-    if (src) img.src = src;
-    img.removeAttribute('data-src');
-  });
-
-  /* ---- NFT Modal logic ---- */
-  const nftModal = $('#nftModal');
-  const nftMediaWrap = $('#nftMediaWrap');
-  const nftMedia = $('#nftMedia');
-  const nftTitle = $('#nftTitle');
-  const nftToken = $('#nftToken');
-  const nftOwner = $('#nftOwner');
-  const nftContract = $('#nftContract');
-  const nftLongDesc = $('#nftLongDesc');
-  const traitsGrid = $('#traitsGrid');
-  const rarityFill = $('#rarityFill');
-  const rarityPct = $('#rarityPct');
-  const provList = $('#provList');
-  const actList = $('#actList');
-
-  function closeNftModal(){
-    if(!nftModal) return;
-    nftModal.style.display = 'none';
-    nftModal.setAttribute('aria-hidden','true');
-    // stop video if any
-    const v = nftMediaWrap.querySelector('video');
-    if(v){ v.pause && v.pause(); }
-    nftMediaWrap.innerHTML = '<img id="nftMedia" src="" alt="NFT preview" />';
+  const lazyImgs = Array.from(document.querySelectorAll('img[data-src]'));
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const img = e.target;
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          io.unobserve(img);
+        }
+      });
+    }, {rootMargin: '200px'});
+    lazyImgs.forEach(i=>io.observe(i));
+  } else {
+    lazyImgs.forEach(img => { img.src = img.dataset.src; img.removeAttribute('data-src'); });
   }
 
-  $('#nftClose')?.addEventListener('click', closeNftModal);
-  document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeNftModal(); });
+  const nftModal = document.getElementById('nftModal');
+  const nftMediaWrap = document.getElementById('nftMediaWrap');
+  const nftTitle = document.getElementById('nftTitle');
+  const nftSubtitle = document.getElementById('nftSubtitle');
+  const nftToken = document.getElementById('nftToken');
+  const nftOwner = document.getElementById('nftOwner');
+  const nftContract = document.getElementById('nftContract');
+  const nftLongDesc = document.getElementById('nftLongDesc');
+  const traitsGrid = document.getElementById('traitsGrid');
+  const rarityFill = document.getElementById('rarityFill');
+  const rarityPct = document.getElementById('rarityPct');
+  const provList = document.getElementById('provList');
+  const actList = document.getElementById('actList');
 
-  function populateFromCard(card){
-    if(!card) return;
-    const titleEl = card.querySelector('.title') || card.querySelector('h4') || card.querySelector('div > div');
-    const title = titleEl ? titleEl.innerText.trim() : (card.dataset.title || 'Dralien');
+  function safeText(str){ return String(str == null ? '' : str); }
+
+  function openNftModalFromCard(card){
+    const titleEl = card.querySelector('.title') || card.querySelector('h4') || card.querySelector('div');
+    const title = titleEl ? safeText(titleEl.innerText) : 'Dralien';
     nftTitle && (nftTitle.innerText = title);
-
-    const tokenMatch = title.match(/#?(\d{1,6})/);
-    const tokenText = tokenMatch ? ('#' + tokenMatch[1]) : (card.dataset.token || '#000');
-    nftToken && (nftToken.innerText = tokenText);
-
-    const owner = card.dataset.owner || (card.querySelector('.owner')?.innerText || '0xUNKNOWN');
+    const token = card.dataset.token || (title.match(/#?(\d{1,6})/) ? '#' + title.match(/#?(\d{1,6})/)[1] : '#000');
+    nftToken && (nftToken.innerText = token);
+    const owner = card.dataset.owner || card.getAttribute('data-owner') || (card.querySelector('.owner') ? card.querySelector('.owner').innerText : '0xUNKNOWN');
     nftOwner && (nftOwner.innerText = owner);
-
     nftContract && (nftContract.innerText = card.dataset.contract || '0xDraLiEn...aB12');
+    nftSubtitle && (nftSubtitle.innerText = 'DRALIEN — UNIQUE 111 NFTS');
     nftLongDesc && (nftLongDesc.innerText = card.dataset.long || 'Part of a 111-supply Dralien collection — focused on utilities and curated value for holders.');
-
-    // rarity
-    const rarity = Number(card.dataset.rarity) || Math.floor(Math.random() * 70) + 10;
-    rarityFill && (rarityFill.style.width = Math.max(6, Math.min(100, rarity)) + '%');
-    rarityPct && (rarityPct.innerText = Math.round(rarity) + '%');
-
-    // traits
+    const rarity = Math.max(6, Math.min(95, parseInt(card.dataset.rarity) || Math.floor(Math.random()*70)+10));
+    if(rarityFill) rarityFill.style.width = rarity + '%';
+    if(rarityPct) rarityPct.innerText = rarity + '%';
     traitsGrid && (traitsGrid.innerHTML = '');
     let traits = null;
-    try { traits = card.dataset.traits ? JSON.parse(card.dataset.traits) : null; } catch(e){ traits = null; }
-    if(!traits) traits = [
-      {trait_type:'Color', value:'Neon Green'},
-      {trait_type:'Eyes', value:'3'},
-      {trait_type:'Accessory', value:'Helmet'},
-      {trait_type:'Rarity', value: (rarity > 60 ? 'Legendary' : rarity > 40 ? 'Rare' : 'Common')}
-    ];
-    traits.forEach(t => {
-      const div = document.createElement('div');
-      div.className = 'trait';
-      div.innerHTML = `<div class="name">${t.trait_type || t.name}</div><div class="value">${t.value}</div>`;
-      traitsGrid.appendChild(div);
+    try{ traits = card.dataset.traits ? JSON.parse(card.dataset.traits) : null; } catch(e){ traits = null; }
+    if(!traits) traits = [{trait_type:'Color',value:'Neon Green'},{trait_type:'Eyes',value:'3'},{trait_type:'Accessory',value:'Helmet'},{trait_type:'Rarity',value: rarity>60?'Legendary':rarity>40?'Rare':'Common'}];
+    traits.forEach(t=>{
+      const d = document.createElement('div');
+      d.className = 'trait';
+      d.innerHTML = `<div class="name">${t.trait_type||t.name}</div><div class="value">${t.value}</div>`;
+      traitsGrid.appendChild(d);
     });
-
-    // provenance & activity
-    if(provList) provList.innerHTML = '';
-    if(actList) actList.innerHTML = '';
-    const prov = card.dataset.provenance ? JSON.parse(card.dataset.provenance) : [
-      {title:'Minted', time:'Dec 30, 2025', tx:'0xabc...123'},
-      {title:'Transferred', time:'Jan 12, 2026', tx:'0xdef...456'}
-    ];
-    const acts = card.dataset.activity ? JSON.parse(card.dataset.activity) : [
-      {title:'Listed', time:'Feb 2, 2026 — 0.5 MON'},
-      {title:'Bid', time:'Feb 4, 2026 — 0.45 MON'}
-    ];
-    prov.forEach(p => {
-      if(provList){
-        const el = document.createElement('div'); el.className = 'prov-item';
-        el.innerHTML = `<div style="font-weight:800">${p.title}</div><div class="time">${p.time}${p.tx ? ' — tx: ' + p.tx : ''}</div>`;
-        provList.appendChild(el);
-      }
+    provList && (provList.innerHTML = '');
+    actList && (actList.innerHTML = '');
+    const prov = card.dataset.provenance ? JSON.parse(card.dataset.provenance) : [{title:'Minted',time:'Dec 30, 2025',tx:'0xabc...123'},{title:'Transferred',time:'Jan 12, 2026',tx:'0xdef...456'}];
+    const acts = card.dataset.activity ? JSON.parse(card.dataset.activity) : [{title:'Listed',time:'Feb 2, 2026 — 0.5 MON'},{title:'Bid',time:'Feb 4, 2026 — 0.45 MON'}];
+    prov.forEach(p=>{
+      const el = document.createElement('div');
+      el.className = 'prov-item';
+      el.innerHTML = `<div style="font-weight:800">${p.title}</div><div class="time">${p.time}${p.tx ? ' — tx: ' + p.tx : ''}</div>`;
+      provList.appendChild(el);
     });
-    acts.forEach(a => {
-      if(actList){
-        const el = document.createElement('div'); el.className = 'act-item';
-        el.innerHTML = `<div style="font-weight:800">${a.title}</div><div class="time">${a.time}</div>`;
-        actList.appendChild(el);
-      }
+    acts.forEach(a=>{
+      const el = document.createElement('div');
+      el.className = 'act-item';
+      el.innerHTML = `<div style="font-weight:800">${a.title}</div><div class="time">${a.time}</div>`;
+      actList.appendChild(el);
     });
-
-    // media
     const imgEl = card.querySelector('img') || card.querySelector('video');
-    const src = card.dataset.img || (imgEl ? (imgEl.getAttribute('src') || imgEl.getAttribute('data-src') || imgEl.src) : '');
-    nftMediaWrap.innerHTML = '';
-    if (/\.(mp4|webm|ogg)$/i.test(src)){
-      const v = document.createElement('video');
-      v.src = src; v.controls = true; v.autoplay = true; v.loop = true;
-      v.style.maxWidth = '100%'; v.style.maxHeight = '100%'; v.style.objectFit = 'contain';
-      nftMediaWrap.appendChild(v);
+    const src = card.dataset.img || (imgEl ? (imgEl.getAttribute('data-src') || imgEl.src) : '');
+    if(!src){
+      nftMediaWrap.innerHTML = '<div class="no-preview muted">No preview available</div>';
     } else {
-      const i = document.createElement('img');
-      i.src = src || '';
-      i.alt = title;
-      i.style.maxWidth = '100%'; i.style.maxHeight = '100%'; i.style.objectFit = 'contain';
-      nftMediaWrap.appendChild(i);
+      if(/\.(mp4|webm|ogg)(\?.*)?$/i.test(src)){
+        const v = document.createElement('video');
+        v.src = src;
+        v.controls = true;
+        v.autoplay = true;
+        v.loop = true;
+        v.style.maxWidth = '100%';
+        v.style.maxHeight = '100%';
+        v.setAttribute('id','nftMedia');
+        nftMediaWrap.innerHTML = '';
+        nftMediaWrap.appendChild(v);
+      } else {
+        const i = document.createElement('img');
+        i.src = src;
+        i.alt = title;
+        i.style.maxWidth = '100%';
+        i.style.maxHeight = '100%';
+        i.setAttribute('id','nftMedia');
+        nftMediaWrap.innerHTML = '';
+        nftMediaWrap.appendChild(i);
+      }
     }
-
-    nftModal.style.display = 'flex';
-    nftModal.setAttribute('aria-hidden','false');
-
-    // set details tab active
-    $$('.nft-tab').forEach(t=> t.classList.remove('active'));
-    $('.nft-tab[data-tab="details"]')?.classList.add('active');
-    $$('[data-panel]').forEach(p => p.style.display = p.dataset.panel === 'details' ? '' : 'none');
+    openModal(nftModal);
   }
 
-  // attach to all nft-media elements
-  $$('.nft-media').forEach(media => {
-    media.addEventListener('click', function(){
-      const card = this.closest('.nft-card');
-      populateFromCard(card);
-    });
-  });
-
-  // Copy helpers
-  async function copyText(text, btn) {
-    try {
-      await navigator.clipboard.writeText(text);
-      btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-      setTimeout(()=> btn.innerHTML = '<i class="fa-regular fa-copy"></i>', 1300);
-    } catch (e) {
-      alert('Copy not supported. Select and copy manually.');
-    }
-  }
-  $('#copyToken')?.addEventListener('click', ()=> copyText($('#nftToken')?.innerText || '', $('#copyToken')));
-  $('#copyOwner')?.addEventListener('click', ()=> copyText($('#nftOwner')?.innerText || '', $('#copyOwner')));
-  $('#copyContract2')?.addEventListener('click', ()=> copyText($('#nftContract')?.innerText || '', $('#copyContract2')));
-
-  // share & actions
-  $('#shareTwitter')?.addEventListener('click', ()=> {
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent($('#nftTitle')?.innerText + ' — Dralien NFT');
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-  });
-  $('#shareDiscord')?.addEventListener('click', ()=> alert('Share to Discord (demo) — copy URL and paste in Discord.'));
-  $('#viewOnOS')?.addEventListener('click', ()=> window.open('https://opensea.io/','_blank'));
-  $('#nftBuy')?.addEventListener('click', ()=> alert('Demo: Buy flow.'));
-  $('#nftMint')?.addEventListener('click', ()=> alert('Demo: Mint flow.'));
-
-  /* ---- TOOL modal / open tool page generation ---- */
-  const TOOL_DATA = {
-    "NFT Generator":{slug:"nft-generator", desc:"Create randomized NFT collections, batch mint, and export IPFS-ready metadata.", tags:["minting","generator"], featured:["images/dralien-217.png"]},
-    "Non-Custodial Stake":{slug:"non-custodial-stake", desc:"Stake tokens securely without custody; built-in rewards scheduler.", tags:["stake","rewards"], featured:["images/dralien-214.png"]},
-    "Blockchain Chess":{slug:"blockchain-chess", desc:"Turn-based chess with NFT pieces, move history on-chain, and match reward distribution.", tags:["game","p2e"], featured:["images/dralien-212.png"]},
-    "Token Airdrop Engine":{slug:"airdrop-engine", desc:"Configure merkle airdrops, snapshot schedules, and claim portals.", tags:["airdrop","merkle"], featured:["images/dralien-213.png"]},
-    "Pixel Draw":{slug:"pixel-draw", desc:"Paint pixel art in-browser and mint directly — small canvas, export to base64 or IPFS.", tags:["editor","pixel"], featured:["images/dralien-216.png"]}
-  };
-
-  function openToolModal(dataKey){
-    const modal = $('#toolModal');
+  function openModal(modal){
     if(!modal) return;
-    const title = dataKey;
-    const data = TOOL_DATA[dataKey] || {desc:'No data', tags:[], featured:[]};
-    $('#toolModalTitle').innerText = title;
-    $('#toolModalDesc').innerText = data.desc;
-    $('#toolModalTags').innerHTML = '';
-    (data.tags || []).forEach(t => {
-      const s = document.createElement('span'); s.className='tag'; s.style.marginRight='6px'; s.textContent = t; $('#toolModalTags').appendChild(s);
-    });
-    $('#toolModalContent').innerHTML = '';
-    const cap = document.createElement('div');
-    cap.innerHTML = `<h4 style="margin:0 0 8px 0">Capabilities</h4>
-      <ul style="color:var(--muted);margin-left:18px">
-        <li>Web UI for configuring and previewing</li>
-        <li>Export to IPFS / CID</li>
-        <li>Batch minting with whitelist integration</li>
-      </ul>`;
-    $('#toolModalContent').appendChild(cap);
-
-    const nf = document.createElement('div');
-    nf.innerHTML = '<h4 style="margin-top:12px;margin-bottom:8px">Sample NFTs</h4>';
-    const gridN = document.createElement('div');
-    gridN.style.display='flex'; gridN.style.gap='8px'; gridN.style.flexWrap='wrap';
-    (data.featured || []).forEach(src => {
-      const d = document.createElement('div'); d.className='mini-nft'; d.style.width='86px'; d.style.height='86px'; d.style.borderRadius='8px'; d.style.overflow='hidden'; d.style.border='1px solid rgba(255,255,255,0.03)';
-      const img = document.createElement('img'); img.src = src; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
-      d.appendChild(img); gridN.appendChild(d);
-    });
-    nf.appendChild(gridN);
-    $('#toolModalContent').appendChild(nf);
-
-    $('#toolModalOpenPage').dataset.tool = data.slug || title.toLowerCase().replace(/\s+/g,'-');
-
     modal.style.display = 'flex';
     modal.setAttribute('aria-hidden','false');
+    const focusable = modal.querySelectorAll('button,a,input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    if(first) first.focus();
+    document.body.style.overflow = 'hidden';
   }
 
-  $$('.details-btn').forEach(btn => btn.addEventListener('click', (e) => openToolModal(btn.dataset.tool)));
-  $('#toolModalClose')?.addEventListener('click', ()=> { $('#toolModal').style.display = 'none'; $('#toolModal').setAttribute('aria-hidden','true'); });
-  $('#toolModalCloseBtn')?.addEventListener('click', ()=> { $('#toolModal').style.display = 'none'; $('#toolModal').setAttribute('aria-hidden','true'); });
+  function closeModal(modal){
+    if(!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
 
-  function openGeneratedToolPage(slug, title, desc, featured){
-    const html = `
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} — DRALIEN TOOL</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>body{font-family:Inter,system-ui,Arial;background:#050407;color:#eaf1ff;margin:0;padding:24px} .icon{width:76px;height:76px;border-radius:12px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:grid;place-items:center;font-size:30px;color:#021018} a.btn{display:inline-block;margin-top:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);color:#021018;font-weight:800;text-decoration:none}</style>
-</head><body><div style="display:flex;gap:18px;align-items:center;margin-bottom:16px"><div class="icon"><i class="fa-solid fa-sparkles"></i></div><div><h1 style="margin:0">${title}</h1><p style="color:#98a6b7">${desc}</p><a class="btn" href="#" onclick="alert('Demo: Connect wallet + open tool UI')">Open in Demo</a></div></div><h3>Sample NFTs</h3><div style="display:flex;gap:8px;flex-wrap:wrap">${(featured||[]).map(s=>`<img src="${s}" style="width:120px;height:120px;object-fit:cover;border-radius:8px;margin-right:8px">`).join('')}</div></body></html>`;
+  document.querySelectorAll('.nft-card').forEach(card=>{
+    card.addEventListener('click', function(e){
+      if(e.target.closest('.favBtn') || e.target.closest('.moreBtn')) return;
+      openNftModalFromCard(card);
+    });
+  });
+
+  const nftClose = document.getElementById('nftClose');
+  if(nftClose) nftClose.addEventListener('click', ()=> closeModal(nftModal));
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      if(nftModal && nftModal.style.display === 'flex') closeModal(nftModal);
+      const tm = document.getElementById('toolModal');
+      if(tm && tm.style.display === 'flex') closeModal(tm);
+    }
+  });
+
+  function copyText(text, btn){
+    if(!navigator.clipboard) { alert('Copy not supported'); return; }
+    navigator.clipboard.writeText(text).then(()=>{
+      if(btn) btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+      setTimeout(()=>{ if(btn) btn.innerHTML = '<i class="fa-regular fa-copy"></i>'; }, 1400);
+    }).catch(()=> alert('Copy failed'));
+  }
+
+  const copyTokenBtn = document.getElementById('copyToken');
+  const copyOwnerBtn = document.getElementById('copyOwner');
+  const copyContract2Btn = document.getElementById('copyContract2');
+  if(copyTokenBtn) copyTokenBtn.addEventListener('click', ()=> copyText(nftToken.innerText, copyTokenBtn));
+  if(copyOwnerBtn) copyOwnerBtn.addEventListener('click', ()=> copyText(nftOwner.innerText, copyOwnerBtn));
+  if(copyContract2Btn) copyContract2Btn.addEventListener('click', ()=> copyText(nftContract.innerText, copyContract2Btn));
+
+  document.querySelectorAll('.nft-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.nft-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = tab.dataset.tab;
+      document.querySelectorAll('[data-panel]').forEach(p=> p.style.display = (p.dataset.panel === panel) ? '' : 'none');
+    });
+  });
+
+  const TOOL_DATA = {
+    "NFT Generator":{slug:"nft-generator",desc:"Create randomized NFT collections, batch mint, and export IPFS-ready metadata.",tags:["minting","generator","ipfs"],featured:["images/dralien-217.png","images/dralien-216.png"]},
+    "Non-Custodial Stake":{slug:"non-custodial-stake",desc:"Stake tokens securely without custody; built-in rewards scheduler.",tags:["stake","rewards"],featured:["images/dralien-214.png","images/dralien-213.png"]},
+    "Blockchain Chess":{slug:"blockchain-chess",desc:"Turn-based chess with NFT pieces and match reward distribution.",tags:["game","p2e"],featured:["images/dralien-212.png","images/dralien-215.png"]},
+    "Token Airdrop Engine":{slug:"airdrop-engine",desc:"Configure merkle airdrops, snapshot schedules, and claim portals.",tags:["airdrop","merkle"],featured:["images/dralien-213.png"]},
+    "Pixel Draw":{slug:"pixel-draw",desc:"Paint pixel art in-browser and mint directly.",tags:["editor","pixel"],featured:["images/dralien-217.png","images/dralien-216.png"]}
+  };
+
+  const toolModal = document.getElementById('toolModal');
+  const toolModalTitle = document.getElementById('toolModalTitle');
+  const toolModalDesc = document.getElementById('toolModalDesc');
+  const toolModalTags = document.getElementById('toolModalTags');
+  const toolModalContent = document.getElementById('toolModalContent');
+  const toolModalOpenPage = document.getElementById('toolModalOpenPage');
+
+  function openToolModalFor(name){
+    const data = TOOL_DATA[name] || {desc:'No data',tags:[],featured:[]};
+    toolModalTitle && (toolModalTitle.innerText = name);
+    toolModalDesc && (toolModalDesc.innerText = data.desc || '');
+    if(toolModalTags) toolModalTags.innerHTML = '';
+    (data.tags || []).forEach(t=>{
+      const s = document.createElement('span');
+      s.className = 'tag';
+      s.textContent = t;
+      toolModalTags.appendChild(s);
+    });
+    if(toolModalContent) toolModalContent.innerHTML = `<h4>Capabilities</h4><ul class="muted"><li>Web UI for configuring and previewing</li><li>Export to IPFS / CID</li><li>Batch minting with whitelist integration</li></ul>`;
+    toolModalOpenPage && (toolModalOpenPage.dataset.tool = data.slug || name.toLowerCase().replace(/\s+/g,'-'));
+    openModal(toolModal);
+  }
+
+  document.querySelectorAll('.details-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> openToolModalFor(btn.dataset.tool));
+  });
+
+  const toolModalClose = document.getElementById('toolModalClose');
+  const toolModalCloseBtn = document.getElementById('toolModalCloseBtn');
+  if(toolModalClose) toolModalClose.addEventListener('click', ()=> closeModal(toolModal));
+  if(toolModalCloseBtn) toolModalCloseBtn.addEventListener('click', ()=> closeModal(toolModal));
+
+  function openGeneratedToolPage(slug,title,desc,featured){
+    const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} — DRALIEN TOOL</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>body{font-family:Inter,system-ui,Arial;background:#050407;color:#eaf1ff;margin:0;padding:24px} .icon{width:76px;height:76px;border-radius:12px;background:linear-gradient(135deg,#7A6CFF,#7CFF6A);display:grid;place-items:center;font-size:30px;color:#021018} a.btn{display:inline-block;margin-top:12px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,#7CFF6A,#7A6CFF);color:#021018;font-weight:800;text-decoration:none}</style></head><body><div style="display:flex;gap:18px;align-items:center"><div class="icon"><i class="fa-solid fa-sparkles"></i></div><div><h1 style="margin:0">${title}</h1><p style="color:#98a6b7">${desc}</p><a class="btn" href="#" onclick="alert('Demo: Connect wallet + open tool UI')">Open in Demo</a></div></div><h3>Sample NFTs</h3><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${(featured||[]).map(s=>`<img src="${s}" style="width:120px;height:120px;object-fit:cover;border-radius:10px">`).join('')}</div></body></html>`;
     const url = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
     window.open(url, '_blank');
   }
 
-  $$('.open-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+  document.querySelectorAll('.open-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
       const toolName = btn.dataset.tool;
-      const data = TOOL_DATA[toolName] || {slug:toolName.toLowerCase().replace(/\s+/g,'-'), desc:'No description', featured:[]};
+      const data = TOOL_DATA[toolName] || {slug:toolName.toLowerCase().replace(/\s+/g,'-'),desc:'',featured:[]};
       openGeneratedToolPage(data.slug, toolName, data.desc, data.featured);
     });
   });
-  $('#toolModalOpenPage')?.addEventListener('click', ()=> {
-    const slug = $('#toolModalOpenPage').dataset.tool;
-    const entry = Object.entries(TOOL_DATA).find(([k,v]) => (v.slug === slug));
-    const name = entry ? entry[0] : slug;
-    const data = entry ? entry[1] : {desc:'',featured:[]};
-    openGeneratedToolPage(slug, name, data.desc, data.featured);
-  });
 
-  /* mini-nft clicks open nft modal */
-  $$('.mini-nft').forEach(el => el.addEventListener('click', function(){
-    const fake = document.createElement('div'); fake.className='nft-card';
-    fake.dataset.img = this.dataset.img || (this.querySelector('img') && this.querySelector('img').src) || '';
-    fake.dataset.token = '#000'; fake.dataset.owner = '0xDemo…000';
-    fake.dataset.traits = JSON.stringify([{trait_type:'Sample', value:'Demo'}]);
-    fake.innerHTML = '<div><div>Tool sample NFT</div></div>';
-    populateFromCard(fake);
-  }));
-
-  /* ---- tabs in nft modal ---- */
-  $$('.nft-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      $$('.nft-tab').forEach(t=>t.classList.remove('active'));
-      tab.classList.add('active');
-      const panel = tab.dataset.tab;
-      $$('[data-panel]').forEach(p => { p.style.display = (p.dataset.panel === panel) ? '' : 'none'; });
+  document.querySelectorAll('.mini-nft').forEach(el=>{
+    el.addEventListener('click', function(){
+      const fake = document.createElement('div');
+      fake.className = 'nft-card';
+      fake.dataset.img = this.dataset.img || (this.querySelector('img') && this.querySelector('img').src) || '';
+      fake.dataset.token = '#000';
+      fake.dataset.owner = '0xDemo…000';
+      fake.dataset.traits = JSON.stringify([{trait_type:'Sample',value:'Demo'},{trait_type:'Tool',value:'Preview'}]);
+      openNftModalFromCard(fake);
     });
   });
 
-  /* ---- FAQ toggles ---- */
-  $$('.faq-item').forEach(item => {
-    const q = item.querySelector('.faq-question'); const a = item.querySelector('.faq-answer');
-    q?.addEventListener('click', ()=> {
-      const isOpen = (a.style.display === 'block');
-      $$('.faq-answer').forEach(x => x.style.display = 'none');
-      if(!isOpen) a.style.display = 'block';
-    });
-  });
-
-  /* ---- counters animation ---- */
-  function animateCounters(){
-    $$('.stat .num').forEach(el => {
-      if(el.dataset.animated) return;
-      const target = parseInt(el.textContent.replace(/\D/g,'')) || 0;
-      let cur = 0;
-      const step = Math.max(1, Math.floor(target / 40));
-      const id = setInterval(()=> {
-        cur += step;
-        if(cur >= target){ cur = target; clearInterval(id); }
-        el.textContent = cur;
-      }, 18);
-      el.dataset.animated = '1';
+  const toolSearch = document.getElementById('toolSearch');
+  const toolFilter = document.getElementById('toolFilter');
+  const toolsGrid = document.getElementById('toolsGrid');
+  function filterTools(){
+    const q = (toolSearch && toolSearch.value || '').trim().toLowerCase();
+    const tag = toolFilter && toolFilter.value || 'all';
+    Array.from(toolsGrid.querySelectorAll('.tool-card')).forEach(card=>{
+      const title = card.querySelector('.tool-info h5').innerText.toLowerCase();
+      const desc = card.querySelector('.tool-info p').innerText.toLowerCase();
+      const tags = card.dataset.tags || '';
+      const matchesQ = q === '' || title.includes(q) || desc.includes(q);
+      const matchesTag = tag === 'all' || tags.includes(tag);
+      card.style.display = (matchesQ && matchesTag) ? '' : 'none';
     });
   }
+  if(toolSearch) toolSearch.addEventListener('input', filterTools);
+  if(toolFilter) toolFilter.addEventListener('change', filterTools);
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  if(newsletterForm){
+    newsletterForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('newsletterEmail').value.trim();
+      if(!email || !email.includes('@')) { alert('Please enter a valid email or ENS/wallet contact (demo).'); return; }
+      const btn = document.getElementById('newsletterBtn');
+      btn.innerText = 'Thanks!';
+      btn.disabled = true;
+      setTimeout(()=> btn.innerText = 'Subscribed', 900);
+    });
+  }
+
+  document.querySelectorAll('.social').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ const href = btn.dataset.href; if(href) window.open(href, '_blank', 'noopener'); });
+  });
+
+  const copyContractBtn = document.getElementById('copyContract');
+  if(copyContractBtn) copyContractBtn.addEventListener('click', ()=> copyText(document.getElementById('contractAddr').innerText, copyContractBtn));
+
+  const backTop = document.getElementById('backTop');
+  if(backTop) backTop.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+
+  const revealEls = Array.from(document.querySelectorAll('.reveal'));
   function revealOnScroll(){
-    const y = window.innerHeight;
-    $$('.reveal').forEach(el => { const r = el.getBoundingClientRect(); if(r.top < y - 80) el.classList.add('show'); });
+    const vh = window.innerHeight;
+    revealEls.forEach(el=>{
+      const r = el.getBoundingClientRect();
+      if(r.top < vh - 80) el.classList.add('show');
+    });
   }
   revealOnScroll();
-  window.addEventListener('scroll', () => {
-    revealOnScroll();
-    const el = $('.about-stats'); if(!el) return;
-    const r = el.getBoundingClientRect();
-    if(r.top < window.innerHeight - 80) { animateCounters(); }
+  window.addEventListener('scroll', revealOnScroll);
+
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q = item.querySelector('.faq-question');
+    const a = item.querySelector('.faq-answer');
+    q && q.addEventListener('click', ()=>{
+      const isOpen = a && a.style.display === 'block';
+      document.querySelectorAll('.faq-answer').forEach(x=> x.style.display = 'none');
+      if(!isOpen && a) a.style.display = 'block';
+    });
   });
 
-  /* ---- newsletter subscribe (demo) ---- */
-  const nf = $('#newsletterForm');
-  nf?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = $('#newsletterEmail')?.value || '';
-    if(!email || !email.includes('@')) { alert('Please enter a valid email or ENS/wallet contact (demo).'); return; }
-    $('#newsletterBtn').innerText = 'Thanks!';
-    $('#newsletterBtn').disabled = true;
-    setTimeout(()=> { $('#newsletterBtn').innerText = 'Subscribed'; }, 900);
+  const modalMap = [nftModal, toolModal];
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Tab'){
+      modalMap.forEach(modal=>{
+        if(!modal || modal.style.display !== 'flex') return;
+        const focusable = Array.from(modal.querySelectorAll('a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(el=>!el.hasAttribute('disabled'));
+        if(focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length-1];
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      });
+    }
   });
-
-  /* ---- copy contract button ---- */
-  $('#copyContract')?.addEventListener('click', async () => {
-    const addr = $('#contractAddr')?.innerText || '';
-    try { await navigator.clipboard.writeText(addr); $('#copyContract').innerHTML = '<i class="fa-solid fa-check"></i>'; setTimeout(()=> $('#copyContract').innerHTML = '<i class="fa-regular fa-copy"></i>', 1400); }
-    catch(e){ alert('Copy not supported in this browser (try manual select).'); }
-  });
-
-  /* ---- social buttons ---- */
-  $$('.social').forEach(btn => btn.addEventListener('click', () => {
-    const href = btn.dataset.href; if(!href) return; window.open(href, '_blank', 'noopener');
-  }));
-
-  /* ---- accessible keyboard handlers ---- */
-  $$('.social, #backTop, #copyContract').forEach(el => el.addEventListener('keydown', (e) => { if(e.key === 'Enter') el.click(); }));
-
-  /* ---- back to top ---- */
-  $('#backTop')?.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
-
-  /* ---- footer year ---- */
-  $('#year') && ($('#year').innerText = new Date().getFullYear());
-
-  /* ---- ensure focus trap minimal when modals open (simple) ---- */
-  const obs = new MutationObserver(() => {
-    if(nftModal && nftModal.style.display === 'flex'){ const first = nftModal.querySelector('button, a, [tabindex]'); first && first.focus(); }
-    const tmodal = $('#toolModal'); if(tmodal && tmodal.style.display === 'flex'){ const first = tmodal.querySelector('button, a, [tabindex]'); first && first.focus(); }
-  });
-  obs.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['style'] });
 
 })();
 </script>
-</body>
+
 </html>
