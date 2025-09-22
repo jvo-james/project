@@ -8,695 +8,1374 @@
   <meta name="description" content="Make Heaven Crowded — a faith-driven online shop and gospel hub. Shop Christian apparel, donate, read devotionals, and join the movement." />
 <meta charset="utf-8" />  family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600scale=1" />
   <style>
-    /* ----------------------
-       GLOBAL / BASE
-       ----------------------*/
- :root{
---bg:#ffffff; /* light background */
---card:#ffffff; /* cards on white */
---text:#0b0b0c; /* main text color (black) */
---muted:#5b636b; /* muted text */
---accent:#cf9b43; /* gold-ish */
---accent-2:#c12b2b; /* deep red for calls */
---glass: rgba(0,0,0,0.03);
---glass-2: rgba(0,0,0,0.02);
---max-width:1200px;
+/* ==========================
+   Make Heaven Crowded — Styles
+   Polished, responsive, high-contrast, mobile-first.
+   Background: white with warm gold accents and soft decorative shapes.
+   ========================== */
+
+/* ---------- Variables ---------- */
+:root{
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --muted: #6b7280;           /* cool gray */
+  --text: #0b1220;            /* main text */
+  --accent: #cf9b43;          /* warm gold */
+  --accent-2: #c23a2b;        /* warm deep red */
+  --glass: rgba(16,24,32,0.03);
+  --glass-2: rgba(16,24,32,0.04);
+  --card-shadow: 0 8px 28px rgba(14,20,24,0.06);
+  --radius: 12px;
+  --max-width: 1200px;
+  --gap: 18px;
+  --fw-strong: 700;
+  --transition: 180ms cubic-bezier(.2,.9,.3,1);
+  --focus-ring: 3px solid rgba(207,155,67,0.18);
+  --glass-decor: linear-gradient(135deg, rgba(207,155,67,0.06), rgba(194,43,43,0.03));
 }
+
+/* ---------- Base / Reset ---------- */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-      margin:0;
-      font-family:'Montserrat',system-ui,-apple-system,Segoe UI, Roboto, 'Helvetica Neue', Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(207,155,67,0.03), transparent),
-                  linear-gradient(180deg, rgba(0,0,0,0.6), rgba(4,6,8,0.9)),
-                  var(--bg);
-      color:#eaf0f6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+  margin:0;
+  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    /* ----------------------
-       HEADER / NAV
-       ----------------------*/
-    header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:10px;box-shadow:0 6px 16px rgba(12,12,12,0.6)}
-    .logo svg{width:28px;height:28px}
-    .brand h1{font-size:18px;margin:0;font-weight:800;letter-spacing:0.6px}
-    .brand p{margin:0;font-size:11px;color:var(--muted);font-weight:600}
+/* container */
+.container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
 
-    nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-    nav button, .cta{background:transparent;border:1px solid transparent;padding:8px 14px;border-radius:8px;font-weight:700}
-    nav a{color:var(--muted);font-weight:600}
-    .primary{background:linear-gradient(90deg,var(--accent),#f0b26b);color:#111;border:none}
-    .ghost{border:1px solid rgba(255,255,255,0.04);background:transparent}
+/* ---------- Header / Nav ---------- */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:80;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.96));
+  border-bottom: 1px solid rgba(11,18,32,0.04);
+  backdrop-filter: blur(6px);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px}
 
-    /* responsive nav */
-    .mobile-toggle{display:none}
+/* brand */
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo{width:48px;height:48px;display:grid;place-items:center;border-radius:10px;background:var(--glass-decor);box-shadow:0 8px 24px rgba(12,14,18,0.06)}
+.logo svg{width:28px;height:28px}
+.brand-text .site-title{font-size:16px;margin:0;font-weight:800;letter-spacing:0.2px}
+.brand-text .site-tag{margin:0;font-size:12px;color:var(--muted);font-weight:600}
 
-    /* ----------------------
-       HERO
-       ----------------------*/
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;padding:48px 0}
-    .hero-left{padding-right:8px}
-    .super{display:inline-block;padding:8px 12px;background:rgba(207,155,67,0.12);color:var(--accent);border-radius:999px;font-weight:700;font-size:13px;margin-bottom:18px}
-    .hero h2{font-size:44px;margin:0 0 14px;line-height:1.02;font-weight:800}
-    .tag{color:var(--muted);margin-bottom:24px}
-    .hero-ctas{display:flex;gap:12px}
+/* nav */
+.main-nav{display:flex;align-items:center;gap:12px}
+.mobile-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:8px}
+.menu{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+.menu a{color:var(--muted);font-weight:600;text-decoration:none;padding:8px 10px;border-radius:8px}
+.menu a:focus{outline:var(--focus-ring);outline-offset:2px}
+.nav-actions{display:flex;gap:10px;align-items:center}
 
-    .hero-right{position:relative}
-    .mockup{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 24px 60px rgba(3,6,9,0.6)}
-    .mockup img{border-radius:10px}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:10px 14px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:all var(--transition);background:transparent}
+.btn:active{transform:translateY(1px)}
+.icon-btn{width:44px;height:44px;justify-content:center;background:transparent;border-radius:10px;border:1px solid rgba(11,18,32,0.04);color:var(--text)}
+.icon-btn svg{opacity:0.9}
+.primary-btn{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#0b0b0b;border:none;box-shadow:0 8px 30px rgba(207,155,67,0.12)}
+.ghost-btn{background:transparent;border:1px solid rgba(11,18,32,0.04);color:var(--text)}
+.btn:focus{outline:var(--focus-ring);outline-offset:2px}
 
-    /* ----------------------
-       FEATURED PRODUCTS
-       ----------------------*/
-    .section{padding:48px 0}
-    .grid{display:grid;gap:18px}
-    .products{grid-template-columns:repeat(3,1fr)}
-    .product{background:linear-gradient(180deg,var(--glass),transparent);padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px}
-    .product .thumb{height:220px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));overflow:hidden}
-    .product h3{margin:0;font-size:16px}
-    .price{font-weight:800;color:var(--accent);font-size:18px}
-    .btn-row{display:flex;gap:8px}
+/* cart count */
+.cart-count{display:inline-block;background:var(--accent-2);color:#fff;font-weight:900;padding:2px 8px;border-radius:999px;font-size:12px;margin-left:6px}
 
-    /* ----------------------
-       TESTIMONIALS
-       ----------------------*/
-    .testi{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
-    .testi-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,0.03)}
-    .stars{color:var(--accent);margin-bottom:6px}
+/* ---------- Hero ---------- */
+.hero{padding:40px 0}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+.hero-copy{padding-right:8px}
+.badge.new-drop{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(207,155,67,0.10);color:var(--accent);font-weight:800;font-size:13px;margin-bottom:16px}
+.hero-title{font-size:38px;margin:6px 0 14px;line-height:1.02;font-weight:900}
+.hero-title .accent{color:var(--accent-2);display:block;font-weight:800;font-size:20px;margin-top:6px}
+.hero-lead{color:var(--muted);margin-bottom:18px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.features{display:flex;gap:12px;margin-top:22px;padding:0;list-style:none}
+.feature-item{display:flex;gap:12px;align-items:center}
+.feature-icon{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(207,155,67,0.06), rgba(194,43,43,0.03));padding:6px;box-shadow:0 8px 20px rgba(12,14,18,0.04)}
 
-    /* ----------------------
-       SHOP + FILTERS
-       ----------------------*/
-    .filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-    .chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:transparent;font-weight:700}
+/* hero media */
+.hero-media{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.mockup{background:var(--glass);padding:12px;border-radius:16px;border:1px solid rgba(11,18,32,0.04);box-shadow:var(--card-shadow)}
+.hero-image{width:100%;height:360px;object-fit:cover;border-radius:10px;display:block}
+.mini-cards{display:flex;gap:12px;margin-top:6px}
+.card{background:linear-gradient(180deg, rgba(250,250,250,0.7), rgba(255,255,255,0.7));padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04);box-shadow:0 6px 18px rgba(11,18,32,0.03)}
+.card .card-title{font-weight:800;margin:0 0 6px}
+.verse-text{color:var(--muted);font-size:15px}
 
-    .product-list{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+/* ---------- Sections ---------- */
+.section{padding:36px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px}
+.section-head h2{margin:0;font-size:20px}
+.section-head .muted{color:var(--muted)}
 
-    /* ----------------------
-       GOSPEL HUB
-       ----------------------*/
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:linear-gradient(180deg,var(--glass-2),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+/* featured products */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:16px}
+.product.card{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));border:1px solid rgba(11,18,32,0.04);box-shadow:var(--card-shadow)}
+.thumb{height:220px;border-radius:10px;overflow:hidden;background:var(--glass);display:grid;place-items:center}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.product .price{font-weight:900;color:var(--accent);font-size:18px}
+.btn-row{display:flex;gap:8px;align-items:center;}
 
-    /* ----------------------
-       DONATION + FORMS
-       ----------------------*/
-    .donation{display:flex;gap:16px;align-items:center}
-    .tier{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);min-width:120px;text-align:center}
-    input[type='text'], input[type='email'], textarea, select{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 12px;border-radius:8px;color:var(--muted);outline:none}
-    .small{font-size:13px;color:var(--muted)}
+/* testimonials */
+.testimonials{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+.testimonial{background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:16px;border-radius:12px;border:1px solid rgba(11,18,32,0.04)}
 
-    /* ----------------------
-       FOOTER
-       ----------------------*/
-    footer{padding:36px 0;border-top:1px solid rgba(255,255,255,0.03);margin-top:30px}
-    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+/* shop */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(11,18,32,0.04);background:transparent;font-weight:700;cursor:pointer}
+.chip.active, .chip.selected{background:linear-gradient(90deg,var(--accent), #f0b26b);color:#0b0b0b;border-color:transparent}
+.product-list{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
 
-    /* ----------------------
-       MODALS / CART UI
-       ----------------------*/
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(90deg, rgba(2,6,8,0.7), rgba(2,6,8,0.6));z-index:120}
-    .modal.open{display:flex}
-    .panel{background:linear-gradient(180deg,#071018, #0f1720);padding:22px;border-radius:12px;width:92%;max-width:920px;border:1px solid rgba(255,255,255,0.04)}
+/* gospel hub */
+.gospel-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
-    /* small screens */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr;gap:20px}
-      .products{grid-template-columns:repeat(2,1fr)}
-      .product-list{grid-template-columns:repeat(2,1fr)}
-      .cards{grid-template-columns:repeat(2,1fr)}
-      .grid{gap:12px}
-      nav ul{display:none}
-      .mobile-toggle{display:inline-block}
-    }
-    @media (max-width:600px){
-      .products{grid-template-columns:1fr}
-      .product-list{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr}
-      .hero h2{font-size:28px}
-    }
+/* design generator area */
+.design-generator{background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:12px;border-radius:12px;border:1px solid rgba(11,18,32,0.04)}
+.form-label{display:block;margin-top:10px;font-size:13px;color:var(--muted)}
+.form-control{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(11,18,32,0.06);background:transparent}
+.design-actions{display:flex;gap:8px;margin-top:10px}
+.preview-canvas-wrap{margin-top:12px;text-align:center;border-radius:8px;padding:10px;background:linear-gradient(180deg, rgba(11,18,32,0.02), rgba(11,18,32,0.01))}
 
-    /* small helper classes */
-    .muted{color:var(--muted)}
-    .center{display:grid;place-items:center}
-    .row{display:flex;gap:12px;align-items:center}
-    .badge{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);font-weight:700}
+/* featured sermon video */
+.video-wrap iframe{width:100%;height:220px;border-radius:10px;border:0;display:block}
 
-  </style>
+/* donate */
+.donate-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.donation-tiers{display:flex;gap:12px;flex-wrap:wrap}
+.tier{padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04);min-width:140px;text-align:center;background:var(--surface)}
+.tier .muted{font-size:13px;color:var(--muted)}
+.custom-tier .form-control{margin-top:8px}
+.donate-info{min-width:280px}
+
+/* donate payment actions */
+.payment-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+/* about / involvement */
+.about-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.values{display:flex;gap:12px;margin-top:12px}
+.value{flex:1;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6));padding:12px;border-radius:10px;border:1px solid rgba(11,18,32,0.04)}
+
+/* get-involved card */
+.get-involved .social-links{display:flex;gap:8px;margin-top:8px}
+.social svg{display:block}
+
+/* prayer / newsletter */
+.prayer-inner{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.prayer-form{flex:1;min-width:260px}
+.newsletter-signup{width:320px;min-width:260px}
+
+/* footer */
+.site-footer{padding:28px 0;border-top:1px solid rgba(11,18,32,0.04);margin-top:30px;background:linear-gradient(180deg, rgba(250,250,250,0.6), rgba(255,255,255,0.6))}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.footer-brand h4{margin:0}
+.footer-links ul, .footer-support ul{list-style:none;margin:8px 0 0;padding:0}
+.footer-links a, .footer-support a{color:var(--muted);text-decoration:none;font-size:14px}
+
+/* ---------- Modal ---------- */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(11,18,32,0.45);z-index:120;padding:20px}
+.modal.open{display:flex}
+.modal .panel{background:linear-gradient(180deg,#ffffff,#fbfbfb);padding:18px;border-radius:12px;width:100%;max-width:920px;border:1px solid rgba(11,18,32,0.06);box-shadow:0 30px 80px rgba(9,14,18,0.35)}
+.modal .modal-inner{display:block}
+.modal .modal-header h3{margin:0;margin-bottom:8px}
+.toast{padding:12px;text-align:center}
+.cart-items .cart-item{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(11,18,32,0.04)}
+.cart-item img{border-radius:8px}
+.cart-actions{margin-left:auto;text-align:right}
+.cart-summary{display:flex;flex-direction:column;gap:6px;text-align:right}
+
+/* ---------- Utilities & helpers ---------- */
+.small{font-size:13px}
+.muted{color:var(--muted)}
+.row{display:flex;gap:12px;align-items:center}
+.center{display:grid;place-items:center}
+.badge{padding:6px 8px;border-radius:8px;background:rgba(11,18,32,0.03);font-weight:700}
+
+/* ---------- Responsive ---------- */
+/* mobile-first: make everything fit nicely on phones */
+@media (max-width:1000px){
+  .hero-inner{grid-template-columns:1fr;gap:16px}
+  .hero-image{height:300px}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .testimonials{grid-template-columns:1fr}
+  .gospel-grid{grid-template-columns:1fr}
+  .product-list{grid-template-columns:repeat(2,1fr)}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .gospel-grid .design-generator{order:2}
+  .mini-cards{flex-direction:row}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .mobile-toggle{display:inline-flex}
+  .menu{display:none}
+}
+
+/* phones */
+@media (max-width:600px){
+  .hero-title{font-size:26px}
+  .hero-title .accent{font-size:16px}
+  .hero-image{height:220px}
+  .products-grid{grid-template-columns:1fr}
+  .product-list{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .gospel-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .nav-inner{padding:10px 0}
+  .nav-actions .primary-btn{padding:8px 10px;font-size:14px}
+  .cart-count{font-size:11px;padding:2px 6px}
+  .mini-cards{flex-direction:column}
+  .donate-inner{flex-direction:column}
+  .about-inner{flex-direction:column}
+  .prayer-inner{flex-direction:column}
+  .newsletter-signup{width:100%}
+}
+
+/* ---------- Tiny polished details ---------- */
+/* smooth appearing for images */
+img{transition:transform .4s ease,opacity .3s ease}
+img:hover{transform:translateY(-2px)}
+a{color:inherit}
+input, textarea, select{font-family:inherit;font-size:15px;color:var(--text)}
+.product .thumb{transition:transform .25s ease}
+.product .thumb:hover{transform:translateY(-6px)}
+
+/* focus-visible handling */
+:focus{outline:none}
+:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+
+/* ensure the canvas preview looks great */
+#shirtPreview{display:block;margin:0 auto;border-radius:8px;box-shadow:0 10px 30px rgba(11,18,32,0.06)}
+
+/* provide fine-grained spacing for smaller screens */
+@media (max-width:420px){
+  .brand-text .site-title{font-size:15px}
+  .brand-text .site-tag{font-size:11px}
+  .hero-lead{font-size:14px}
+  .btn{padding:8px 10px}
+  .feature-icon{width:30px;height:30px}
+}
+
+/* END */
+</style>
+
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden>
-          <!-- simple cross + crowd silhouette logo -->
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 3h2v6h6v2h-6v6h-2v-6H5V9h6V3z" fill="#fff" opacity="0.95"/>
+  <!-- SITE HEADER / NAV -->
+  <header class="site-header" role="banner">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="Make Heaven Crowded home">
+        <!-- Logo: cross mark in rounded square -->
+        <div class="logo" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+            <rect width="24" height="24" rx="6" fill="currentColor" opacity="0.95" />
+            <path d="M11 3h2v6h6v2h-6v6h-2v-6H5V9h6V3z" fill="#fff"/>
           </svg>
         </div>
-        <div>
-          <h1>Make Heaven Crowded</h1>
-          <p>Wear your faith · Share the Word</p>
+        <div class="brand-text">
+          <h1 class="site-title">Make Heaven Crowded</h1>
+          <p class="site-tag">Wear your faith · Share the Word</p>
         </div>
-      </div>
+      </a>
 
-      <nav>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#shop">Shop</a></li>
-          <li><a href="#gospel">Gospel Hub</a></li>
-          <li><a href="#donate">Donate</a></li>
-          <li><a href="#about">About</a></li>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <button class="mobile-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="Open menu">
+          <!-- hamburger icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+
+        <ul id="primary-menu" class="menu" role="menubar">
+          <li role="none"><a role="menuitem" href="#home">Home</a></li>
+          <li role="none"><a role="menuitem" href="#shop">Shop</a></li>
+          <li role="none"><a role="menuitem" href="#gospel">Gospel Hub</a></li>
+          <li role="none"><a role="menuitem" href="#donate">Donate</a></li>
+          <li role="none"><a role="menuitem" href="#about">About</a></li>
         </ul>
       </nav>
 
-      <div class="row">
-        <button class="ghost" id="open-search" title="Search">🔎</button>
-        <button class="ghost" id="open-cart" title="Cart">🛒 <span id="cart-count" style="margin-left:6px;font-weight:800">0</span></button>
-        <button class="primary" id="mobile-menu" style="display:none">Menu</button>
+      <div class="nav-actions" role="group" aria-label="Header actions">
+        <button class="btn icon-btn" id="open-search" title="Search" aria-label="Search site">
+          <!-- search icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <button class="btn icon-btn" id="open-cart" aria-label="Open cart" title="Cart">
+          <!-- cart icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M6 6h15l-1.5 9h-12L4 3H2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1" fill="currentColor"/><circle cx="18" cy="20" r="1" fill="currentColor"/></svg>
+          <span id="cart-count" class="cart-count" aria-live="polite">0</span>
+        </button>
+
+        <a class="btn primary-btn" href="#shop">Shop Now</a>
       </div>
     </div>
   </header>
 
-  <main class="container">
+  <main id="main" class="site-main">
     <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="hero-left">
-        <span class="super">NEW DROP • Faith Collection</span>
-        <h2>Make Heaven Crowded<br><span style="color:var(--accent-2)">Wear your faith — spark conversations</span></h2>
-        <p class="tag">Designs that start conversations. Scripture-inscribed apparel, devotional content, and tangible ways to support gospel work globally. Shop our newest designs or give to fund outreach.</p>
+    <section id="home" class="hero" aria-labelledby="hero-heading">
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <span class="badge new-drop" aria-hidden="true">NEW DROP • Faith Collection</span>
+          <h2 id="hero-heading" class="hero-title">Make Heaven Crowded <span class="accent">Wear your faith — spark conversations</span></h2>
+          <p class="hero-lead">Scripture-inscribed apparel, devotional content, and tangible ways to support gospel work globally. Shop our newest designs or give to fund outreach.</p>
 
-        <div class="hero-ctas">
-          <a href="#shop" class="cta primary" onclick="scrollToSection('#shop')">Shop Now</a>
-          <a href="#donate" class="cta ghost" onclick="scrollToSection('#donate')">Donate</a>
-          <a href="#gospel" class="cta ghost" onclick="scrollToSection('#gospel')">Learn More</a>
+          <div class="hero-ctas">
+            <a class="btn primary-btn" href="#shop">Shop</a>
+            <a class="btn ghost-btn" href="#donate">Donate</a>
+            <a class="btn ghost-btn" href="#gospel">Learn More</a>
+          </div>
+
+          <ul class="features" role="list">
+            <li class="feature-item">
+              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" focusable="false"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Purpose-led</strong>
+                <div class="muted">Portion of profits funds outreach</div>
+              </div>
+            </li>
+            <li class="feature-item">
+              <svg class="feature-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" focusable="false"><path d="M12 2l3 6 6 .5-4.5 3.8L19 20l-7-4-7 4 1.5-7.7L3 8.5 9 8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+              <div>
+                <strong>Gospel-first</strong>
+                <div class="muted">Devotionals, testimonies & resources</div>
+              </div>
+            </li>
+          </ul>
         </div>
 
-        <div style="margin-top:26px;display:flex;gap:12px;align-items:center">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(180deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:900">❤</div>
-            <div>
-              <div style="font-weight:800">Purpose-led</div>
-              <div class="muted small">A portion of all profits funds outreach</div>
-            </div>
+        <aside class="hero-media" aria-hidden="false">
+          <div class="mockup">
+            <!-- hero image placeholder -->
+            <img src="mhc.webp" alt="Make Heaven Crowded — hero" class="hero-image" />
           </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:56px;height:56px;border-radius:12px;background:rgba(255,255,255,0.03);display:grid;place-items:center;font-weight:900">✝</div>
-            <div>
-              <div style="font-weight:800">Gospel-first</div>
-              <div class="muted small">Devotionals, testimonies & resources</div>
-            </div>
-          </div>
-        </div>
 
+          <div class="mini-cards">
+            <div class="card verse-card" role="region" aria-label="Verse of the day">
+              <h3 class="card-title">Verse of the Day</h3>
+              <p id="verseOfDay" class="verse-text">Loading...</p>
+            </div>
+
+            <div class="card newsletter-card" role="region" aria-label="Join newsletter">
+              <h3 class="card-title">Join Us</h3>
+              <p class="muted">Sign up to receive devotionals</p>
+              <button class="btn primary-btn" id="join-newsletter">Join</button>
+            </div>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <div class="hero-right">
-        <div class="mockup">
-          <img src="mhc.webp" alt="hero" style="width:100%;height:360px;object-fit:cover;">
+    <!-- FEATURED DROPS -->
+    <section id="featured" class="section featured" aria-labelledby="featured-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="featured-heading">Featured Drops</h2>
+          <p class="muted">Latest & bestselling — Free shipping over $80</p>
         </div>
 
-        <div style="display:flex;gap:12px;margin-top:14px">
-          <div style="flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
-            <div style="font-weight:800">Verse of the Day</div>
-            <div id="verseOfDay" class="muted" style="margin-top:8px;font-size:15px">Loading...</div>
-          </div>
-
-          <div style="width:120px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);text-align:center">
-            <div style="font-weight:800">Join Us</div>
-            <div class="muted small">Sign up to receive devotionals</div>
-            <div style="margin-top:8px"><button class="primary" onclick="openNewsletter()">Join</button></div>
-          </div>
+        <div class="products-grid" data-products-featured>
+          <!-- featured product cards injected by JS -->
         </div>
       </div>
     </section>
 
-    <!-- FEATURED -->
-    <section class="section">
-      <div style="display:flex;justify-content:space-between;align-items:end">
-        <div>
-          <h3 style="margin:0">Featured Drops</h3>
-          <div class="muted small">Latest & bestselling</div>
+    <!-- STORIES & IMPACT -->
+    <section class="section stories" aria-labelledby="stories-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="stories-heading">Stories & Impact</h2>
+          <p class="muted">How the merch started conversations</p>
         </div>
-        <div class="muted">Free shipping over $80 • Support missions</div>
-      </div>
 
-      <div class="grid products" style="margin-top:18px">
-        <!-- Product cards injected by JS -->
-      </div>
-    </section>
+        <div class="testimonials" role="list">
+          <article class="testimonial" role="article">
+            <div class="rating" aria-hidden="true">
+              <!-- stars icon set -->
+              <svg width="84" height="16" viewBox="0 0 84 16" fill="none" focusable="false"><path d="M6 0l1.9 4.3L12 5l-3 2.7L10 12 6 9.5 2 12l1-4.3L0 5l4.1-.7L6 0z" fill="currentColor"/></svg>
+            </div>
+            <p class="quote">"I wore my 'Saved' tee to campus — a stranger asked why and we ended up praying together."</p>
+            <p class="attribution muted">— Ama, Kumasi</p>
+          </article>
 
-    <!-- TESTIMONIALS -->
-    <section class="section">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <h3 style="margin:0">Stories & Impact</h3>
-          <div class="muted small">How the merch started conversations</div>
-        </div>
-        <div class="muted small">Share your story → <button class="ghost" onclick="openModal('testimony')">Add Testimony</button></div>
-      </div>
-
-      <div class="testi" style="margin-top:18px">
-        <div class="testi-card">
-          <div class="stars">★★★★★</div>
-          <div style="font-weight:800">"I wore my 'Saved' tee to campus — a stranger asked why and we ended up praying together."</div>
-          <div class="muted small" style="margin-top:8px">— Ama, Kumasi</div>
-        </div>
-        <div class="testi-card">
-          <div class="stars">★★★★★</div>
-          <div style="font-weight:800">"Donating monthly helped our local outreach feed 120 children last month."</div>
-          <div class="muted small" style="margin-top:8px">— Kofi, Accra</div>
+          <article class="testimonial" role="article">
+            <div class="rating" aria-hidden="true">
+              <svg width="84" height="16" viewBox="0 0 84 16" fill="none" focusable="false"><path d="M6 0l1.9 4.3L12 5l-3 2.7L10 12 6 9.5 2 12l1-4.3L0 5l4.1-.7L6 0z" fill="currentColor"/></svg>
+            </div>
+            <p class="quote">"Donating monthly helped our local outreach feed 120 children last month."</p>
+            <p class="attribution muted">— Kofi, Accra</p>
+          </article>
         </div>
       </div>
-
     </section>
 
     <!-- SHOP -->
-    <section class="section" id="shop">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <h3 style="margin:0">Shop</h3>
-          <div class="muted small">Categories built for witness & comfort</div>
+    <section id="shop" class="section shop" aria-labelledby="shop-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="shop-heading">Shop</h2>
+          <p class="muted">Categories built for witness & comfort</p>
         </div>
-        <div>
-          <div class="filters" id="categoryFilters">
-            <button class="chip" data-cat="all">All</button>
-            <button class="chip" data-cat="tshirt">T-Shirts</button>
-            <button class="chip" data-cat="hoodie">Hoodies</button>
-            <button class="chip" data-cat="tank">Tank Tops</button>
-            <button class="chip" data-cat="sweat">Sweatshirts</button>
-            <button class="chip" data-cat="shorts">Shorts</button>
-          </div>
-        </div>
-      </div>
 
-      <div style="margin-top:20px">
-        <div class="product-list" id="shopList">
+        <div class="filters" id="categoryFilters" role="toolbar" aria-label="Product categories">
+          <button class="chip" data-cat="all" type="button">All</button>
+          <button class="chip" data-cat="tshirt" type="button">T-Shirts</button>
+          <button class="chip" data-cat="hoodie" type="button">Hoodies</button>
+          <button class="chip" data-cat="tank" type="button">Tank Tops</button>
+          <button class="chip" data-cat="sweat" type="button">Sweatshirts</button>
+          <button class="chip" data-cat="shorts" type="button">Shorts</button>
+        </div>
+
+        <div class="product-list" id="shopList" aria-live="polite">
           <!-- shop items injected by JS -->
         </div>
       </div>
     </section>
 
     <!-- GOSPEL HUB -->
-    <section class="section" id="gospel">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <h3 style="margin:0">Gospel Hub</h3>
-          <div class="muted small">Devotionals • Testimonies • Media</div>
+    <section id="gospel" class="section gospel" aria-labelledby="gospel-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="gospel-heading">Gospel Hub</h2>
+          <p class="muted">Devotionals • Testimonies • Media</p>
         </div>
-        <div class="muted small">Want to be featured? Submit your testimony.</div>
-      </div>
 
-      <div style="margin-top:18px" class="cards" id="gospelCards">
-        <!-- content injected by JS -->
-      </div>
-
-      <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
-        <div style="flex:1">
-          <h4 style="margin:0">Featured Sermon</h4>
-          <div class="muted small">Short, powerful message to share</div>
-          <div style="margin-top:12px">
-            <iframe width="100%" height="220" src="https://youtu.be/Vruq4I4RDCU?si=EPAqdWJAGYgkWaEF" title="Sermon" frameborder="0" allowfullscreen style="border-radius:10px"></iframe>
+        <div class="gospel-grid">
+          <div class="cards" id="gospelCards">
+            <!-- cards injected by JS -->
           </div>
+
+          <aside class="design-generator" aria-labelledby="design-generator-heading">
+            <h3 id="design-generator-heading">Design Generator</h3>
+            <p class="muted">Customize a verse + preview it on a shirt</p>
+
+            <label for="genText" class="form-label">Verse or Text</label>
+            <input id="genText" class="form-control" type="text" placeholder="John 3:16 — For God so loved..." />
+
+            <label for="genSize" class="form-label">Size</label>
+            <select id="genSize" class="form-control">
+              <option>Small</option>
+              <option>Medium</option>
+              <option selected>Large</option>
+            </select>
+
+            <div class="design-actions">
+              <button class="btn primary-btn" id="previewDesign">Preview</button>
+              <button class="btn ghost-btn" id="addDesignToCart">Add to Cart</button>
+            </div>
+
+            <div class="preview-canvas-wrap">
+              <canvas id="shirtPreview" width="240" height="300" aria-label="Shirt preview"></canvas>
+            </div>
+          </aside>
         </div>
-        <div style="width:320px">
-          <h4 style="margin:0">Design Generator</h4>
-          <div class="muted small">Customize a verse + preview it on a shirt</div>
-          <div style="margin-top:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)">
-            <label class="small">Verse or Text</label>
-            <input id="genText" type="text" placeholder="John 3:16 — For God so loved..." />
-            <label class="small" style="margin-top:10px">Size</label>
-            <select id="genSize"><option>Small</option><option>Medium</option><option selected>Large</option></select>
-            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-              <button class="primary" onclick="previewDesign()">Preview</button>
-              <button class="ghost" onclick="addDesignToCart()">Add to Cart</button>
-            </div>
-            <div style="margin-top:12px;text-align:center">
-              <canvas id="shirtPreview" width="240" height="300" style="border-radius:6px;background:#0b0f13"></canvas>
-            </div>
+
+        <div class="featured-sermon">
+          <h4>Featured Sermon</h4>
+          <div class="video-wrap">
+            <iframe id="featuredSermon" width="560" height="315" src="https://www.youtube.com/embed/Vruq4I4RDCU" title="Featured Sermon" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </section>
 
     <!-- DONATE -->
-    <section class="section" id="donate">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px">
-        <div style="flex:1">
-          <h3 style="margin:0">Donate</h3>
-          <div class="muted small">Fuel outreach, fund free shirts for evangelism teams, and support local feeding programs.</div>
+    <section id="donate" class="section donate" aria-labelledby="donate-heading">
+      <div class="container donate-inner">
+        <div class="donate-copy">
+          <h2 id="donate-heading">Donate</h2>
+          <p class="muted">Fuel outreach, fund free shirts for evangelism teams, and support local feeding programs.</p>
 
-          <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-            <div class="tier">
-              <div style="font-weight:800">$10</div>
-              <div class="muted small">Covers transport for 1 outreach</div>
-              <div style="margin-top:8px"><button class="primary" onclick="donate(10)">Give $10</button></div>
+          <div class="donation-tiers" role="list">
+            <div class="tier" data-amount="10">
+              <strong>$10</strong>
+              <div class="muted">Covers transport for 1 outreach</div>
+              <button class="btn primary-btn" data-give="10">Give $10</button>
             </div>
-            <div class="tier">
-              <div style="font-weight:800">$25</div>
-              <div class="muted small">Funds 5 devotionals</div>
-              <div style="margin-top:8px"><button class="primary" onclick="donate(25)">Give $25</button></div>
-            </div>
-            <div class="tier">
-              <div style="font-weight:800">$50</div>
-              <div class="muted small">Provides 3 shirts for outreach</div>
-              <div style="margin-top:8px"><button class="primary" onclick="donate(50)">Give $50</button></div>
-            </div>
-            <div style="min-width:220px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);">
-              <label class="small">Custom Amount</label>
-              <input id="donCustom" type="text" placeholder="Enter amount e.g. 100" />
-              <div style="margin-top:8px"><button class="primary" onclick="donateCustom()">Give</button></div>
-              <div class="muted small" style="margin-top:8px">Pay with PayPal, Stripe, or Mobile Money (Ghana)</div>
-            </div>
-          </div>
 
-          <div style="margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)">
-            <div style="font-weight:800">How donations are used</div>
-            <ul class="muted small">
-              <li>50% Outreach & Evangelism</li>
-              <li>30% Production of free evangelism apparel</li>
-              <li>20% Local community projects</li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div style="width:380px">
-          <div style="background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
-            <h4 style="margin:0">Secure Payments</h4>
-            <div class="muted small" style="margin-top:8px">We support PayPal and Stripe. For Ghana, Mobile Money integration is available via partner gateways (MTN Mobile Money, Vodafone Cash).</div>
-            <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
-              <button class="ghost" onclick="fakePay('paypal')">PayPal</button>
-              <button class="ghost" onclick="fakePay('stripe')">Stripe</button>
-              <button class="ghost" onclick="fakePay('momo')">Mobile Money</button>
+            <div class="tier" data-amount="25">
+              <strong>$25</strong>
+              <div class="muted">Funds 5 devotionals</div>
+              <button class="btn primary-btn" data-give="25">Give $25</button>
             </div>
-            <div id="payFeedback" class="muted small" style="margin-top:12px"></div>
-          </div>
 
-          <div style="margin-top:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
-            <h4 style="margin:0">Recurring Giving</h4>
-            <div class="muted small" style="margin-top:8px">Set up a monthly gift to sustain the work.</div>
-            <div style="margin-top:8px"><button class="primary" onclick="openModal('recurring')">Set Monthly Gift</button></div>
+            <div class="tier" data-amount="50">
+              <strong>$50</strong>
+              <div class="muted">Provides 3 shirts for outreach</div>
+              <button class="btn primary-btn" data-give="50">Give $50</button>
+            </div>
+
+            <div class="tier custom-tier">
+              <label for="donCustom" class="form-label">Custom Amount</label>
+              <input id="donCustom" class="form-control" type="number" placeholder="Enter amount e.g. 100" min="1" />
+              <button class="btn primary-btn" id="donateCustom">Give</button>
+              <div class="muted">Pay with PayPal, Stripe, or Mobile Money</div>
+            </div>
           </div>
         </div>
+
+        <aside class="donate-info">
+          <div class="card">
+            <h4>Secure Payments</h4>
+            <p class="muted">We support PayPal and Stripe. For Ghana, Mobile Money integration via partner gateways.</p>
+
+            <div class="payment-actions">
+              <button class="btn ghost-btn" data-pay="paypal">PayPal</button>
+              <button class="btn ghost-btn" data-pay="stripe">Stripe</button>
+              <button class="btn ghost-btn" data-pay="momo">Mobile Money</button>
+            </div>
+
+            <div id="payFeedback" class="muted" aria-live="polite"></div>
+          </div>
+
+          <div class="card recurring">
+            <h4>Recurring Giving</h4>
+            <p class="muted">Set up a monthly gift to sustain the work.</p>
+            <button class="btn primary-btn" id="setMonthly">Set Monthly Gift</button>
+          </div>
+        </aside>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section class="section" id="about">
-      <div style="display:flex;gap:18px;align-items:flex-start">
-        <div style="flex:1">
-          <h3 style="margin:0">About Make Heaven Crowded</h3>
-          <div class="muted small">Our mission: to spread the gospel through fashion and digital ministry.</div>
+    <section id="about" class="section about" aria-labelledby="about-heading">
+      <div class="container about-inner">
+        <div class="about-copy">
+          <h2 id="about-heading">About Make Heaven Crowded</h2>
+          <p class="muted">Our mission: to spread the gospel through fashion and digital ministry.</p>
+          <p>Founded by a team of believers, Make Heaven Crowded began as a campus movement. Clothing as a tool for evangelism — a gentle prompt for gospel conversations.</p>
 
-          <p style="margin-top:12px">Founded by a team of believers, Make Heaven Crowded started as a campus movement. Our founder's testimony: someone noticed a shirt, asked a question, and heard the gospel. We believe clothing can be a tool for evangelism — a gentle prompt for gospel conversations.</p>
-
-          <div style="display:flex;gap:12px;margin-top:12px">
-            <div style="flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)">
-              <div style="font-weight:800">Vision</div>
-              <div class="muted small">Make heaven crowded by equipping believers to witness naturally.</div>
+          <div class="values">
+            <div class="value">
+              <strong>Vision</strong>
+              <div class="muted">Make heaven crowded by equipping believers to witness naturally.</div>
             </div>
-            <div style="flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)">
-              <div style="font-weight:800">Values</div>
-              <div class="muted small">Integrity • Scripture • Compassion • Community</div>
-            </div>
-          </div>
-
-        </div>
-
-        <div style="width:320px">
-          <h4 style="margin:0">Get Involved</h4>
-          <div class="muted small">Volunteer, become an ambassador, or partner with us.</div>
-          <div style="margin-top:12px">
-            <input id="ambName" type="text" placeholder="Your name" />
-            <input id="ambEmail" style="margin-top:8px" type="email" placeholder="Email address" />
-            <div style="margin-top:8px"><button class="primary" onclick="applyAmbassador()">Apply</button></div>
-          </div>
-
-          <div style="margin-top:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)">
-            <div style="font-weight:800">Contact</div>
-            <div class="muted small">hello@makeheavencrowded.org</div>
-            <div style="margin-top:8px;display:flex;gap:8px">
-              <a class="ghost" href="#">Instagram</a>
-              <a class="ghost" href="#">YouTube</a>
-              <a class="ghost" href="#">TikTok</a>
+            <div class="value">
+              <strong>Values</strong>
+              <div class="muted">Integrity • Scripture • Compassion • Community</div>
             </div>
           </div>
         </div>
+
+        <aside class="get-involved">
+          <h3>Get Involved</h3>
+          <p class="muted">Volunteer, become an ambassador, or partner with us.</p>
+          <label for="ambName" class="form-label">Your name</label>
+          <input id="ambName" class="form-control" type="text" placeholder="Your name" />
+          <label for="ambEmail" class="form-label">Email address</label>
+          <input id="ambEmail" class="form-control" type="email" placeholder="Email address" />
+          <button class="btn primary-btn" id="applyAmbassador">Apply</button>
+
+          <div class="card contact-card">
+            <strong>Contact</strong>
+            <div class="muted">hello@makeheavencrowded.org</div>
+            <div class="social-links">
+              <a href="#" class="social" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+              </a>
+              <a href="#" class="social" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M10 9l6 3-6 3V9z" fill="currentColor"/></svg>
+              </a>
+              <a href="#" class="social" aria-label="TikTok">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 9v6a3 3 0 1 0 3-3V6h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <!-- CONTACT / PRAYER -->
-    <section class="section">
-      <div style="display:flex;gap:18px">
-        <div style="flex:1">
-          <h3 style="margin:0">Prayer Requests</h3>
-          <div class="muted small">Share prayer needs and we'll pray with you.</div>
+    <!-- PRAYER / CONTACT -->
+    <section class="section prayer" aria-labelledby="prayer-heading">
+      <div class="container prayer-inner">
+        <div class="prayer-form">
+          <h3 id="prayer-heading">Prayer Requests</h3>
+          <p class="muted">Share prayer needs and we'll pray with you.</p>
 
-          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
-            <input id="prayerName" type="text" placeholder="Your name" />
-            <input id="prayerEmail" type="email" placeholder="Email (optional)" />
-            <textarea id="prayerText" rows="4" placeholder="Write your request..."></textarea>
-            <div><button class="primary" onclick="submitPrayer()">Send Prayer Request</button></div>
-          </div>
+          <label for="prayerName" class="form-label">Your name</label>
+          <input id="prayerName" class="form-control" type="text" placeholder="Your name" />
+
+          <label for="prayerEmail" class="form-label">Email (optional)</label>
+          <input id="prayerEmail" class="form-control" type="email" placeholder="Email (optional)" />
+
+          <label for="prayerText" class="form-label">Prayer request</label>
+          <textarea id="prayerText" class="form-control" rows="4" placeholder="Write your request..."></textarea>
+
+          <button class="btn primary-btn" id="submitPrayer">Send Prayer Request</button>
         </div>
 
-        <div style="width:360px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
-          <h4 style="margin:0">Newsletter</h4>
-          <div class="muted small">Weekly devotionals & updates</div>
-          <input id="newsEmail" type="email" placeholder="Email address" style="margin-top:8px" />
-          <div style="margin-top:8px"><button class="primary" onclick="subscribe()">Subscribe</button></div>
-        </div>
+        <aside class="newsletter-signup">
+          <h4>Newsletter</h4>
+          <p class="muted">Weekly devotionals & updates</p>
+          <label for="newsEmail" class="form-label">Email address</label>
+          <input id="newsEmail" class="form-control" type="email" placeholder="Email address" />
+          <button class="btn primary-btn" id="subscribe">Subscribe</button>
+        </aside>
       </div>
     </section>
-
   </main>
 
-  <footer>
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
     <div class="container footer-grid">
-      <div>
+      <div class="footer-brand">
         <h4>Make Heaven Crowded</h4>
-        <div class="muted small">Wear your faith. Share the Word. Build the Kingdom.</div>
+        <p class="muted">Wear your faith. Share the Word. Build the Kingdom.</p>
       </div>
-      <div>
-        <div style="font-weight:800">Quick Links</div>
-        <div class="muted small" style="margin-top:8px">Shop • Donate • Gospel Hub • About • Contact</div>
+
+      <div class="footer-links">
+        <strong>Quick Links</strong>
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#donate">Donate</a></li>
+          <li><a href="#gospel">Gospel Hub</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
       </div>
-      <div>
-        <div style="font-weight:800">Support</div>
-        <div class="muted small" style="margin-top:8px">Privacy • Terms • Shipping</div>
+
+      <div class="footer-support">
+        <strong>Support</strong>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Shipping</a></li>
+        </ul>
       </div>
     </div>
   </footer>
 
-  <!-- MODALS -->
-  <div id="modal" class="modal" aria-hidden>
-    <div class="panel" id="modalContent">
-      <!-- dynamic content -->
-    </div>
-  </div>
+  <!-- MODAL / PANELS (empty — to be filled by JS) -->
+  <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"></div>
 
-  <script>
-    /***** DATA: products, gospel posts, verses *****/
-    const PRODUCTS = [
-      {id:'mhc-ts-01', title:'Saved Tee', type:'tshirt', price:22, colors:['Black','White'], sizes:['S','M','L','XL'], verse:'Romans 10:9', img:'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      {id:'mhc-ts-02', title:'Grace Over Grind', type:'tshirt', price:24, colors:['Navy','White'], sizes:['S','M','L','XL'], verse:'Ephesians 2:8', img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      {id:'mhc-hd-01', title:'Crowd Hoodie', type:'hoodie', price:48, colors:['Charcoal','Maroon'], sizes:['M','L','XL'], verse:'Matthew 28:19', img:'https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      {id:'mhc-tk-01', title:'Witness Tank', type:'tank', price:20, colors:['White','Olive'], sizes:['S','M','L'], verse:'Acts 1:8', img:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      {id:'mhc-sw-01', title:'Faith Sweatshirt', type:'sweat', price:40, colors:['Cream','Black'], sizes:['M','L','XL'], verse:'Philippians 4:13', img:'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      {id:'mhc-sh-01', title:'Kingdom Shorts', type:'shorts', price:30, colors:['Black'], sizes:['M','L','XL'], verse:'Colossians 3:23', img:'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
-      // repeated to show grid
-    ];
+</body>
+<script>
+  (function () {
+  'use strict';
 
-    const GOSPEL_POSTS = [
-      {title:'3-minute Devotional: Courage', excerpt:'Short reflection on courage from Joshua 1', author:'Team', date:'2025-07-08'},
-      {title:'Testimony: From Doubt to Faith', excerpt:'A campus encounter that changed a life', author:'Ama', date:'2025-06-12'},
-      {title:'How to Share Your Faith Naturally', excerpt:'Practical tips for conversations', author:'Kofi', date:'2025-05-01'},
-    ];
+  
+  /* ---------------------------
+     Config / Storage Keys
+     --------------------------- */
+  const LS_KEYS = {
+    CART: 'mhc_cart_v1',
+    NEWS: 'mhc_news_v1',
+    VERSE_IDX: 'mhc_verse_idx_v1'
+  };
 
-    const VERSES = [
-      'John 3:16 — For God so loved the world...',
-      'Romans 8:28 — And we know that in all things God works...',
-      'Philippians 4:13 — I can do all things through Christ...',
-      'Proverbs 3:5-6 — Trust in the LORD with all your heart...',
-      'Matthew 5:14 — You are the light of the world...'
-    ];
+  /* ---------------------------
+     Data (polished / sample)
+     --------------------------- */
+  const PRODUCTS = [
+    { id: 'mhc-ts-01', title: 'Saved Tee', type: 'tshirt', price: 22, colors: ['Black', 'White'], sizes: ['S', 'M', 'L', 'XL'], verse: 'Romans 10:9', img: 'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
+    { id: 'mhc-ts-02', title: 'Grace Over Grind', type: 'tshirt', price: 24, colors: ['Navy', 'White'], sizes: ['S', 'M', 'L', 'XL'], verse: 'Ephesians 2:8', img: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
+    { id: 'mhc-hd-01', title: 'Crowd Hoodie', type: 'hoodie', price: 48, colors: ['Charcoal', 'Maroon'], sizes: ['M', 'L', 'XL'], verse: 'Matthew 28:19', img: 'https://images.unsplash.com/photo-1618005198919-36a3a5e56483?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
+    { id: 'mhc-tk-01', title: 'Witness Tank', type: 'tank', price: 20, colors: ['White', 'Olive'], sizes: ['S', 'M', 'L'], verse: 'Acts 1:8', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
+    { id: 'mhc-sw-01', title: 'Faith Sweatshirt', type: 'sweat', price: 40, colors: ['Cream', 'Black'], sizes: ['M', 'L', 'XL'], verse: 'Philippians 4:13', img: 'https://images.unsplash.com/photo-1600180758890-8a0d16e7d5d1?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' },
+    { id: 'mhc-sh-01', title: 'Kingdom Shorts', type: 'shorts', price: 30, colors: ['Black'], sizes: ['M', 'L', 'XL'], verse: 'Colossians 3:23', img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder' }
+  ];
 
-    /***** UTILITIES *****/
-    function el(q, ctx=document){return ctx.querySelector(q)}
-    function els(q, ctx=document){return Array.from(ctx.querySelectorAll(q))}
-    function money(n){return '$' + Number(n).toFixed(2)}
+  const GOSPEL_POSTS = [
+    { title: '3-minute Devotional: Courage', excerpt: 'Short reflection on courage from Joshua 1', author: 'Team', date: '2025-07-08' },
+    { title: 'Testimony: From Doubt to Faith', excerpt: 'A campus encounter that changed a life', author: 'Ama', date: '2025-06-12' },
+    { title: 'How to Share Your Faith Naturally', excerpt: 'Practical tips for conversations', author: 'Kofi', date: '2025-05-01' }
+  ];
 
-    /***** RENDER: featured products and shop *****/
-    function renderFeatured(){
-      const wrap = document.querySelector('.products');
-      wrap.innerHTML = '';
-      const featured = PRODUCTS.slice(0,3);
-      featured.forEach(p => {
-        const div = document.createElement('div'); div.className='product';
-        div.innerHTML = `
-          <div class="thumb"><img src="${p.img}" alt="${p.title}" style="height:100%;width:100%;object-fit:cover"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center"><h3>${p.title}</h3><div class="price">${money(p.price)}</div></div>
-          <div class="muted small">${p.verse}</div>
-          <div class="btn-row">
-            <button class="ghost" onclick="openProduct('${p.id}')">View</button>
-            <button class="primary" onclick="addToCart('${p.id}')">Add to Cart</button>
-          </div>
-        `;
-        wrap.appendChild(div);
-      })
+  const VERSES = [
+    'John 3:16 — For God so loved the world...',
+    'Romans 8:28 — And we know that in all things God works...',
+    'Philippians 4:13 — I can do all things through Christ...',
+    'Proverbs 3:5-6 — Trust in the LORD with all your heart...',
+    'Matthew 5:14 — You are the light of the world...'
+  ];
+
+  /* ---------------------------
+     Utilities
+     --------------------------- */
+  const q = (sel, ctx = document) => ctx.querySelector(sel);
+  const qAll = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const money = n => '$' + Number(n).toFixed(2);
+
+  // Escape for safe text content
+  function escapeHtml(str = '') {
+    return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  }
+
+  // Simple debounce
+  function debounce(fn, wait = 250) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+  }
+
+  // Local storage helpers
+  function readJSON(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (e) { return fallback; }
+  }
+  function writeJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+
+  /* ---------------------------
+     Cart model & helpers
+     --------------------------- */
+  function getCart() {
+    return readJSON(LS_KEYS.CART, []);
+  }
+
+  function saveCart(cart) {
+    writeJSON(LS_KEYS.CART, cart);
+    renderCartCount();
+  }
+
+  function addToCart(product, opts = { qty: 1 }) {
+    const cart = getCart();
+    // check if same product with same options exists -> increase qty
+    const existing = cart.find(it => it.id === product.id && JSON.stringify(it.options || {}) === JSON.stringify(product.options || {}));
+    if (existing) {
+      existing.qty = (existing.qty || 1) + (opts.qty || 1);
+    } else {
+      cart.push(Object.assign({}, product, { qty: opts.qty || 1, options: product.options || {} }));
+    }
+    saveCart(cart);
+    openModal(`<div class="toast"><strong>Added to cart</strong><div class="muted small">${escapeHtml(product.title)}</div></div>`, { autoClose: 900 });
+  }
+
+  function removeFromCart(index) {
+    const cart = getCart();
+    if (index >= 0 && index < cart.length) {
+      cart.splice(index, 1);
+      saveCart(cart);
+      openCart(); // re-render cart modal
+    }
+  }
+
+  function changeCartQty(index, qty) {
+    const cart = getCart();
+    if (!cart[index]) return;
+    cart[index].qty = Math.max(1, Math.floor(qty));
+    saveCart(cart);
+    openCart();
+  }
+
+  function cartTotals() {
+    const cart = getCart();
+    const subtotal = cart.reduce((s, it) => s + (Number(it.price || 0) * (it.qty || 1)), 0);
+    const shipping = subtotal > 80 || subtotal === 0 ? 0 : 8; // simple rule
+    const total = subtotal + shipping;
+    return { subtotal, shipping, total };
+  }
+
+  /* ---------------------------
+     Modal / Focus trap / Notifications
+     --------------------------- */
+  const modal = q('#modal');
+
+  // Focus trap helpers
+  let lastFocusedElement = null;
+
+  function openModal(html = '', opts = { autoClose: 0 }) {
+    if (!modal) return;
+    lastFocusedElement = document.activeElement;
+    modal.innerHTML = ''; // clear
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.setAttribute('role', 'document');
+    panel.innerHTML = html;
+    modal.appendChild(panel);
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // focus first focusable inside
+    setTimeout(() => {
+      const focusable = panel.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length) focusable[0].focus();
+    }, 50);
+
+    if (opts.autoClose && Number(opts.autoClose) > 0) {
+      setTimeout(closeModal, Number(opts.autoClose));
+    }
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = '';
+    document.body.style.overflow = '';
+    if (lastFocusedElement) lastFocusedElement.focus();
+  }
+
+  // small helper to open modal with markup but escaping user-provided text where needed
+  function openModalWithTemplate(title, bodyHtml) {
+    openModal(`<div class="modal-inner" role="dialog" aria-modal="true">
+      <div class="modal-header"><h3>${escapeHtml(title)}</h3></div>
+      <div class="modal-body">${bodyHtml}</div>
+      <div class="modal-footer"><button class="btn ghost-btn" id="modalClose">Close</button></div>
+    </div>`);
+    // bind close
+    q('#modalClose')?.addEventListener('click', closeModal);
+  }
+
+  // Global modal click / keyboard
+  document.addEventListener('click', (e) => {
+    if (!modal.classList.contains('open')) return;
+    // close when clicking background (modal has only panel as child)
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    if (e.key === 'Tab' && modal.classList.contains('open')) {
+      // very small focus trap
+      const focusables = modal.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const list = Array.from(focusables);
+      if (list.length === 0) { e.preventDefault(); return; }
+      const first = list[0], last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ---------------------------
+     Renderers
+     --------------------------- */
+
+  function renderFeatured() {
+    const wrap = q('[data-products-featured]');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    const featured = PRODUCTS.slice(0, 3);
+    featured.forEach(p => {
+      const card = document.createElement('article');
+      card.className = 'product card';
+      card.innerHTML = `
+        <div class="thumb"><img alt="${escapeHtml(p.title)}" loading="lazy" /></div>
+        <div class="card-body">
+          <h3 class="product-title"></h3>
+          <div class="muted small product-verse"></div>
+          <div class="product-bottom"><div class="price"></div><div class="btn-row"></div></div>
+        </div>
+      `;
+      const imgEl = card.querySelector('img');
+      imgEl.src = p.img;
+      imgEl.setAttribute('alt', p.title);
+
+      card.querySelector('.product-title').textContent = p.title;
+      card.querySelector('.product-verse').textContent = p.verse;
+      card.querySelector('.price').textContent = money(p.price);
+
+      const btnRow = card.querySelector('.btn-row');
+      const viewBtn = document.createElement('button');
+      viewBtn.className = 'btn ghost-btn';
+      viewBtn.textContent = 'View';
+      viewBtn.addEventListener('click', () => openProductModal(p.id));
+      const addBtn = document.createElement('button');
+      addBtn.className = 'btn primary-btn';
+      addBtn.textContent = 'Add to Cart';
+      addBtn.addEventListener('click', () => addToCart(Object.assign({}, p)));
+      btnRow.appendChild(viewBtn);
+      btnRow.appendChild(addBtn);
+
+      wrap.appendChild(card);
+    });
+  }
+
+  function renderShop(allProducts = PRODUCTS) {
+    const wrap = q('#shopList');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    allProducts.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'product card';
+      const img = document.createElement('img');
+      img.src = p.img;
+      img.alt = p.title;
+      img.loading = 'lazy';
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb';
+      thumb.appendChild(img);
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+      const title = document.createElement('h3'); title.className = 'product-title'; title.textContent = p.title;
+      const verse = document.createElement('div'); verse.className = 'muted small product-verse'; verse.textContent = p.verse;
+      const bottom = document.createElement('div'); bottom.className = 'product-bottom';
+      const price = document.createElement('div'); price.className = 'price'; price.textContent = money(p.price);
+      const btnRow = document.createElement('div'); btnRow.className = 'btn-row';
+      const detailsBtn = document.createElement('button'); detailsBtn.className = 'btn ghost-btn'; detailsBtn.textContent = 'Details';
+      detailsBtn.addEventListener('click', () => openProductModal(p.id));
+      const addBtn = document.createElement('button'); addBtn.className = 'btn primary-btn'; addBtn.textContent = 'Add';
+      addBtn.addEventListener('click', () => addToCart(Object.assign({}, p)));
+
+      btnRow.appendChild(detailsBtn); btnRow.appendChild(addBtn);
+      bottom.appendChild(price); bottom.appendChild(btnRow);
+      body.appendChild(title); body.appendChild(verse); body.appendChild(bottom);
+
+      item.appendChild(thumb); item.appendChild(body);
+      wrap.appendChild(item);
+    });
+  }
+
+  function renderGospel() {
+    const wrap = q('#gospelCards');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    GOSPEL_POSTS.forEach(p => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `<div class="card-title">${escapeHtml(p.title)}</div><div class="muted small">${escapeHtml(p.excerpt)}</div><div class="muted small" style="margin-top:8px">— ${escapeHtml(p.author)} • ${escapeHtml(p.date)}</div>`;
+      wrap.appendChild(card);
+    });
+  }
+
+  function renderVerse() {
+    const el = q('#verseOfDay');
+    if (!el) return;
+    // deterministic daily based on date
+    try {
+      const today = new Date();
+      const idx = (today.getFullYear() + today.getMonth() + today.getDate()) % VERSES.length;
+      el.textContent = VERSES[idx];
+    } catch (e) {
+      el.textContent = VERSES[0];
+    }
+  }
+
+  function renderCartCount() {
+    const countEl = q('#cart-count');
+    if (!countEl) return;
+    const count = getCart().reduce((s, it) => s + (it.qty || 1), 0);
+    countEl.textContent = String(count);
+  }
+
+  /* ---------------------------
+     Product modal (build DOM safely)
+     --------------------------- */
+  function openProductModal(productId) {
+    const p = PRODUCTS.find(x => x.id === productId);
+    if (!p) { openModalWithTemplate('Not found', `<p class="muted">Product not found.</p>`); return; }
+
+    // build modal DOM (safely)
+    const sizesHtml = p.sizes.map(s => `<button class="chip option-size" data-size="${escapeHtml(s)}" type="button">${escapeHtml(s)}</button>`).join('');
+    const colorsHtml = p.colors.map(c => `<button class="chip option-color" data-color="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+    const bodyHtml = `
+      <div class="product-modal">
+        <div class="modal-left"><img src="${escapeHtml(p.img)}" alt="${escapeHtml(p.title)}" style="width:100%;height:auto;max-height:360px;object-fit:cover" loading="lazy" /></div>
+        <div class="modal-right">
+          <h3>${escapeHtml(p.title)}</h3>
+          <div class="muted small">${escapeHtml(p.verse)}</div>
+          <div class="price" style="margin-top:10px">${money(p.price)}</div>
+          <div style="margin-top:12px">Size<br>${sizesHtml}</div>
+          <div style="margin-top:12px">Color<br>${colorsHtml}</div>
+          <div style="margin-top:14px"><button class="btn primary-btn" id="modalAddToCart">Add to Cart</button> <button class="btn ghost-btn" id="modalCloseBtn">Close</button></div>
+        </div>
+      </div>
+    `;
+
+    openModalWithTemplate(p.title, bodyHtml);
+
+    // event binding inside modal
+    const panel = modal.querySelector('.panel') || modal.querySelector('.modal-inner');
+    // size/color option behavior
+    panel.querySelectorAll('.option-size').forEach(btn => btn.addEventListener('click', (e) => {
+      panel.querySelectorAll('.option-size').forEach(b => b.classList.remove('selected'));
+      e.currentTarget.classList.add('selected');
+    }));
+    panel.querySelectorAll('.option-color').forEach(btn => btn.addEventListener('click', (e) => {
+      panel.querySelectorAll('.option-color').forEach(b => b.classList.remove('selected'));
+      e.currentTarget.classList.add('selected');
+    }));
+
+    panel.querySelector('#modalAddToCart')?.addEventListener('click', () => {
+      const selectedSize = panel.querySelector('.option-size.selected')?.dataset?.size || p.sizes[0];
+      const selectedColor = panel.querySelector('.option-color.selected')?.dataset?.color || p.colors[0];
+      const productToAdd = Object.assign({}, p, { options: { size: selectedSize, color: selectedColor } });
+      addToCart(productToAdd);
+      closeModal();
+    });
+
+    panel.querySelector('#modalCloseBtn')?.addEventListener('click', closeModal);
+  }
+
+  /* ---------------------------
+     Cart modal rendering
+     --------------------------- */
+  function openCart() {
+    const cart = getCart();
+    if (!cart || cart.length === 0) {
+      openModalWithTemplate('Your cart is empty', `<p class="muted small">Add items from the shop to begin.</p>`);
+      return;
     }
 
-    function renderShop(){
-      const wrap = el('#shopList'); wrap.innerHTML='';
-      PRODUCTS.forEach(p=>{
-        const c = document.createElement('div'); c.className='product';
-        c.innerHTML = `
-          <div class="thumb"><img src="${p.img}" alt="${p.title}"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center"><h3>${p.title}</h3><div class="price">${money(p.price)}</div></div>
-          <div class="muted small">${p.verse}</div>
-          <div class="btn-row">
-            <button class="ghost" onclick="openProduct('${p.id}')">Details</button>
-            <button class="primary" onclick="addToCart('${p.id}')">Add</button>
+    // build cart HTML safely
+    let itemsHtml = '';
+    cart.forEach((it, i) => {
+      itemsHtml += `
+        <div class="cart-item" data-index="${i}">
+          <img src="${escapeHtml(it.img || '')}" alt="${escapeHtml(it.title)}" style="width:72px;height:72px;object-fit:cover;border-radius:6px" loading="lazy" />
+          <div class="cart-item-body">
+            <div class="muted small">${escapeHtml(it.verse || '')}</div>
+            <div class="cart-title">${escapeHtml(it.title)}</div>
+            <div class="muted small">Options: ${escapeHtml((it.options?.size || '') + (it.options?.color ? (' • ' + it.options.color) : ''))}</div>
           </div>
-        `;
-        wrap.appendChild(c);
-      })
-    }
-
-    /***** PRODUCT MODAL *****/
-    function openProduct(id){
-      const p = PRODUCTS.find(x=>x.id===id);
-      const html = `
-        <div style=\"display:flex;gap:18px;align-items:flex-start\">
-          <div style=\"flex:1\"><img src=\"${p.img}\" alt=\"${p.title}\" style=\"border-radius:10px;max-height:360px;object-fit:cover;width:100%\"></div>
-          <div style=\"width:360px\">
-            <h2 style=\"margin:0\">${p.title}</h2>
-            <div class=\"muted small\" style=\"margin-top:6px\">${p.verse}</div>
-            <div style=\"font-weight:800;font-size:20px;margin-top:10px\">${money(p.price)}</div>
-            <div style=\"margin-top:12px\">Size<br>${p.sizes.map(s=>`<button class=\"chip\" style=\"margin-right:6px\" onclick=\"selectSize(this)\">${s}</button>`).join('')}</div>
-            <div style=\"margin-top:12px\">Color<br>${p.colors.map(c=>`<button class=\"chip\" style=\"margin-right:6px\">${c}</button>`).join('')}</div>
-            <div style=\"margin-top:14px;display:flex;gap:8px\"><button class=\"primary\" onclick=\"addToCart('${p.id}')\">Add to Cart</button><button class=\"ghost\" onclick=\"closeModal()\">Close</button></div>
+          <div class="cart-actions">
+            <div>${money(it.price)}</div>
+            <div style="margin-top:8px">
+              <label class="small" for="qty-${i}">Qty</label>
+              <input id="qty-${i}" class="cart-qty" type="number" min="1" value="${escapeHtml(it.qty || 1)}" data-index="${i}" style="width:64px" />
+            </div>
+            <div style="margin-top:8px"><button class="btn ghost-btn remove-item" data-index="${i}">Remove</button></div>
           </div>
         </div>
       `;
-      openModalHtml(html);
+    });
+
+    const totals = cartTotals();
+    const footerHtml = `
+      <div class="cart-footer">
+        <div class="cart-summary">
+          <div>Subtotal: ${money(totals.subtotal)}</div>
+          <div>Shipping: ${money(totals.shipping)}</div>
+          <div style="font-weight:800">Total: ${money(totals.total)}</div>
+        </div>
+        <div class="cart-checkout">
+          <button class="btn primary-btn" id="cartCheckout">Checkout</button>
+        </div>
+      </div>
+    `;
+
+    openModalWithTemplate('Your Cart', `<div class="cart-items">${itemsHtml}</div>${footerHtml}`);
+
+    // bind remove and qty handlers
+    modal.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', (e) => {
+      const i = Number(e.currentTarget.dataset.index);
+      removeFromCart(i);
+    }));
+    modal.querySelectorAll('.cart-qty').forEach(input => {
+      input.addEventListener('change', (e) => {
+        const idx = Number(e.currentTarget.dataset.index);
+        const val = Number(e.currentTarget.value || 1);
+        changeCartQty(idx, val);
+      });
+    });
+
+    modal.querySelector('#cartCheckout')?.addEventListener('click', () => {
+      closeModal();
+      // Placeholder - in prod you'll open Stripe/PayPal hosted checkout
+      openModalWithTemplate('Checkout', `<p class="muted">Checkout placeholder — integrate a hosted checkout (Stripe/PayPal) server-side to capture payments.</p><div style="margin-top:12px"><button class="btn primary-btn" id="fakePayNow">Simulate Payment</button></div>`);
+      q('#fakePayNow')?.addEventListener('click', () => {
+        closeModal();
+        writeJSON(LS_KEYS.CART, []); // empty cart on "payment"
+        renderCartCount();
+        openModal(`<div class="toast"><strong>Payment simulated</strong><div class="muted small">No real charge was made (demo).</div></div>`, { autoClose: 1500 });
+      });
+    });
+  }
+
+  /* ---------------------------
+     Search (modal) and debounce
+     --------------------------- */
+  function openSearch() {
+    openModalWithTemplate('Search', `
+      <div>
+        <input id="searchQuery" class="form-control" type="search" placeholder="Search products or devotionals" />
+        <div style="margin-top:8px"><button class="btn primary-btn" id="doSearch">Search</button></div>
+        <div id="searchResults" style="margin-top:12px"></div>
+      </div>
+    `);
+    const input = q('#searchQuery');
+    const resultsWrap = q('#searchResults');
+
+    const doSearchFn = () => {
+      const qv = (input.value || '').trim().toLowerCase();
+      if (!qv) { resultsWrap.innerHTML = `<p class="muted small">Type to search.</p>`; return; }
+      const results = PRODUCTS.filter(p => p.title.toLowerCase().includes(qv) || p.verse.toLowerCase().includes(qv));
+      if (results.length === 0) { resultsWrap.innerHTML = `<p class="muted small">No results</p>`; return; }
+      resultsWrap.innerHTML = results.map(r => `<div class="search-result" style="display:flex;gap:12px;align-items:center"><img src="${escapeHtml(r.img)}" alt="${escapeHtml(r.title)}" style="width:64px;height:64px;object-fit:cover;border-radius:8px" loading="lazy" /><div style="flex:1"><div style="font-weight:800">${escapeHtml(r.title)}</div><div class="muted small">${escapeHtml(r.verse)}</div></div><div>${money(r.price)}</div></div>`).join('');
+    };
+
+    const debounced = debounce(doSearchFn, 250);
+    input.addEventListener('input', debounced);
+    q('#doSearch')?.addEventListener('click', doSearchFn);
+    input.focus();
+  }
+
+  /* ---------------------------
+     Design generator (canvas preview + add to cart)
+     --------------------------- */
+  function previewDesignOnCanvas(text) {
+    const canvas = q('#shirtPreview');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    // simple shirt mock
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // background
+    ctx.fillStyle = '#0b0f13';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // tee base
+    ctx.fillStyle = '#111';
+    ctx.beginPath();
+    ctx.moveTo(40, 40);
+    ctx.quadraticCurveTo(30, 20, 70, 30);
+    ctx.lineTo(170, 30);
+    ctx.quadraticCurveTo(210, 20, 200, 40);
+    ctx.lineTo(200, 160);
+    ctx.quadraticCurveTo(160, 190, 120, 190);
+    ctx.quadraticCurveTo(80, 190, 40, 160);
+    ctx.closePath();
+    ctx.fill();
+
+    // text
+    ctx.fillStyle = '#fff';
+    const fontSize = 12;
+    ctx.font = `bold ${fontSize}px Roboto Slab, serif`;
+    wrapText(ctx, text, 60, 80, 120, 16);
+  }
+
+  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        ctx.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
     }
+    ctx.fillText(line, x, y);
+  }
 
-    function selectSize(btn){
-      els('.chip').forEach(x=>x.classList.remove('selected'));
-      btn.classList.add('selected');
+  function addDesignToCart() {
+    const text = (q('#genText')?.value || '').trim() || 'Custom Verse';
+    const canvas = q('#shirtPreview');
+    let dataUrl = '';
+    if (canvas) dataUrl = canvas.toDataURL('image/png');
+    const product = {
+      id: 'custom-' + Date.now(),
+      title: `Custom Tee — ${text.slice(0, 40)}`,
+      type: 'tshirt',
+      price: 28,
+      sizes: ['S', 'M', 'L'],
+      colors: ['Black'],
+      verse: text,
+      img: dataUrl || '',
+      options: {}
+    };
+    addToCart(product);
+  }
+
+  /* ---------------------------
+     Donations & payments (simulated)
+     --------------------------- */
+  function donate(amount) {
+    const fb = q('#payFeedback');
+    if (fb) fb.textContent = `Initiating donation of $${amount}...`;
+    setTimeout(() => {
+      if (fb) fb.textContent = 'Redirecting to payment gateway (demo)...';
+    }, 800);
+  }
+
+  function donateCustom() {
+    const v = Number(q('#donCustom')?.value || 0);
+    if (!v || v <= 0) { openModalWithTemplate('Invalid amount', `<p class="muted small">Enter a valid amount</p>`); return; }
+    donate(v);
+  }
+
+  function fakePay(mode) {
+    const fb = q('#payFeedback');
+    if (fb) fb.textContent = `Simulating ${mode} checkout...`;
+    setTimeout(() => { if (fb) fb.textContent = 'Payment simulated (no real charge). Implement real integration server-side.'; }, 1200);
+  }
+
+  /* ---------------------------
+     Forms: newsletter, prayer, testimony, ambassador
+     --------------------------- */
+  function subscribeNewsletter(email) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      openModalWithTemplate('Invalid email', `<p class="muted small">Please enter a valid email address.</p>`);
+      return;
     }
+    writeJSON(LS_KEYS.NEWS, { email, date: new Date().toISOString() });
+    openModalWithTemplate('Subscribed', `<p class="muted">Thanks — check your inbox for a welcome devotional (demo).</p>`);
+  }
 
-    /***** MODAL HELPERS *****/
-    function openModalHtml(html){
-      const modal = el('#modal'); modal.classList.add('open');
-      el('#modalContent').innerHTML = html + '<div style="margin-top:12px;text-align:right"><button class="ghost" onclick="closeModal()">Close</button></div>';
-      modal.setAttribute('aria-hidden','false');
+  function submitPrayer(name, email, text) {
+    if (!text || !text.trim()) { openModalWithTemplate('Missing request', `<p class="muted">Please write your request.</p>`); return; }
+    // in a real app send to server; here we simulate
+    openModalWithTemplate('Prayer received', `<p class="muted">Thanks — your request has been received. We'll pray for you.</p>`);
+  }
+
+  function submitTestimony(name, text) {
+    if (!text || !text.trim()) { openModalWithTemplate('Missing testimony', `<p class="muted">Please write something to share.</p>`); return; }
+    GOSPEL_POSTS.unshift({ title: `Testimony by ${name || 'Anonymous'}`, excerpt: text.slice(0, 200), author: name || 'Anonymous', date: new Date().toISOString().slice(0, 10) });
+    renderGospel();
+    openModalWithTemplate('Thanks', `<p class="muted">Thanks — testimony queued for review.</p>`);
+  }
+
+  function applyAmbassador(name, email) {
+    if (!name || !email) { openModalWithTemplate('Missing info', `<p class="muted small">Please provide name and email.</p>`); return; }
+    openModalWithTemplate('Application Received', `<p class="muted">Thanks — we will review your ambassador application and contact you at ${escapeHtml(email)}.</p>`);
+  }
+
+  /* ---------------------------
+     Mobile menu toggling
+     --------------------------- */
+  function setupMobileMenu() {
+    const toggle = q('.mobile-toggle');
+    const nav = q('#primary-menu');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.style.display = expanded ? '' : 'block';
+    });
+  }
+
+  /* ---------------------------
+     Filters & delegation
+     --------------------------- */
+  function setupCategoryFilters() {
+    const filters = q('#categoryFilters');
+    if (!filters) return;
+    filters.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      const cat = chip.dataset.cat;
+      if (!cat) return;
+      // mark selected
+      qAll('.chip', filters).forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      if (cat === 'all') renderShop(PRODUCTS);
+      else renderShop(PRODUCTS.filter(p => p.type === cat));
+    });
+  }
+
+  /* ---------------------------
+     Wire UI events
+     --------------------------- */
+  function wireUI() {
+    // header buttons
+    q('#open-search')?.addEventListener('click', openSearch);
+    q('#open-cart')?.addEventListener('click', openCart);
+    q('#join-newsletter')?.addEventListener('click', () => openModalWithTemplate('Join the Movement', `<div><input id="newsModalEmail" class="form-control" placeholder="Email address" /><div style="margin-top:8px"><button class="btn primary-btn" id="joinFromModalBtn">Join</button></div></div>`), false);
+
+    // modal join from modal button
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'joinFromModalBtn') {
+        const em = q('#newsModalEmail')?.value;
+        subscribeNewsletter(em);
+        closeModal();
+      }
+      if (e.target && e.target.id === 'modalClose') closeModal();
+    });
+
+    // footer newsletter subscribe
+    q('#subscribe')?.addEventListener('click', () => {
+      subscribeNewsletter(q('#newsEmail')?.value);
+    });
+
+    // donate quick tiers
+    qAll('[data-give]').forEach(btn => {
+      btn.addEventListener('click', (e) => donate(Number(e.currentTarget.dataset.give)));
+    });
+    q('#donateCustom')?.addEventListener('click', donateCustom);
+    qAll('[data-pay]').forEach(btn => btn.addEventListener('click', (e) => fakePay(e.currentTarget.dataset.pay)));
+
+    // design preview + add
+    q('#previewDesign')?.addEventListener('click', () => previewDesignOnCanvas(q('#genText')?.value || 'John 3:16 — For God so loved...'));
+    q('#addDesignToCart')?.addEventListener('click', addDesignToCart);
+
+    // prayer/testimony/ambassador forms (use delegation to account for modal forms)
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'submitPrayer') {
+        submitPrayer(q('#prayerName')?.value, q('#prayerEmail')?.value, q('#prayerText')?.value);
+      }
+      if (e.target && e.target.id === 'submitTestimony') {
+        submitTestimony(q('#testName')?.value, q('#testText')?.value);
+      }
+      if (e.target && e.target.id === 'applyAmbassador') {
+        applyAmbassador(q('#ambName')?.value, q('#ambEmail')?.value);
+      }
+    });
+
+    // wire mobile menu
+    setupMobileMenu();
+
+    // wire filters
+    setupCategoryFilters();
+
+    // open cart from keyboard enter on cart icon (accessibility)
+    q('#open-cart')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') openCart(); });
+
+    // product list click delegation (e.g., cards created dynamically could be handled here if needed)
+    q('#shopList')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      // handled by individual bindings (we assigned add listeners on creation)
+    });
+
+    // open newsletter modal via header button
+    q('#join-newsletter')?.addEventListener('click', () => {
+      openModalWithTemplate('Join the Movement', `<div><input id="newsModalEmail" class="form-control" placeholder="Email address" /><div style="margin-top:8px"><button class="btn primary-btn" id="joinFromModalBtn">Join</button></div></div>`);
+    });
+
+    // wire click for 'Set Monthly Gift' (modal)
+    q('#setMonthly')?.addEventListener('click', () => {
+      openModalWithTemplate('Set Monthly Gift', `<p class="muted small">Enter your email and we'll contact you to complete setup.</p><input id="monthlyEmail" class="form-control" placeholder="Email" /><select id="monthlyAmt" class="form-control"><option value="5">$5</option><option value="10">$10</option><option value="25">$25</option></select><div style="margin-top:8px"><button class="btn primary-btn" id="setupMonthlyBtn">Set Gift</button></div>`);
+      // delegate handler
+      setTimeout(() => {
+        q('#setupMonthlyBtn')?.addEventListener('click', () => {
+          const e = q('#monthlyEmail')?.value;
+          const amt = q('#monthlyAmt')?.value;
+          if (!e) { openModalWithTemplate('Missing email', `<p class="muted small">Enter email</p>`); return; }
+          openModalWithTemplate('Monthly gift set', `<p class="muted">Monthly gift of $${escapeHtml(amt)} set (demo). We'll contact you at ${escapeHtml(e)}.</p>`);
+        });
+      }, 50);
+    });
+
+    // click-to-open product modal from dynamic sections (delegation)
+    document.addEventListener('click', (e) => {
+      const productId = e.target.closest('[data-product-id]')?.dataset?.productId;
+      if (productId) openProductModal(productId);
+    });
+  }
+
+  /* ---------------------------
+     Init
+     --------------------------- */
+  function init() {
+    renderFeatured();
+    renderShop();
+    renderGospel();
+    renderVerse();
+    renderCartCount();
+    // initial design preview
+    previewDesignOnCanvas(q('#genText')?.value || 'John 3:16 — For God so loved the world');
+    wireUI();
+
+    // handle modal close by Escape naturally (handler above)
+    // graceful fallback: if modal is missing create a minimal modal.
+    if (!modal) {
+      console.warn('Modal element (#modal) not found — some interactions will fail.');
     }
-    function openModal(name){
-      if(name==='testimony') openModalHtml('<h3>Share your testimony</h3><p class="muted small">We will review and publish.</p><input id="testName" type="text" placeholder="Name" /><textarea id="testText" rows="4" placeholder="Your testimony"></textarea><div style="margin-top:8px"><button class="primary" onclick="submitTestimony()">Submit</button></div>');
-      if(name==='recurring') openModalHtml('<h3>Set Monthly Gift</h3><p class="muted small">We will contact you to complete setup.</p><input id="monthlyEmail" type="email" placeholder="Email" /><select id="monthlyAmt"><option value="5">$5</option><option value="10">$10</option><option value="25">$25</option></select><div style="margin-top:8px"><button class="primary" onclick="setupMonthly()">Set Gift</button></div>');
-    }
-    function closeModal(){ const modal = el('#modal'); modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+  }
 
-    /***** CART (localStorage) *****/
-    const CART_KEY='mhc_cart_v1';
-    function getCart(){return JSON.parse(localStorage.getItem(CART_KEY) || '[]')}
-    function saveCart(c){localStorage.setItem(CART_KEY, JSON.stringify(c)); updateCartCount();}
-    function addToCart(id){
-      const p = PRODUCTS.find(x=>x.id===id);
-      const cart = getCart();
-      const item = {...p, qty:1};
-      cart.push(item); saveCart(cart);
-      showToast('Added to cart');
-    }
-    function updateCartCount(){ const c = getCart(); el('#cart-count').innerText = c.length; }
-    function openCart(){
-      const cart = getCart();
-      if(cart.length===0){ openModalHtml('<h3>Your cart is empty</h3><p class="muted small">Add items from the shop to begin.</p>'); return }
-      const itemsHtml = cart.map((it, i)=>`<div style="display:flex;gap:12px;margin-bottom:10px"><img src="${it.img}" style="width:72px;height:72px;object-fit:cover;border-radius:8px" /><div style="flex:1"><div style="font-weight:800">${it.title}</div><div class="muted small">${it.verse}</div></div><div style="text-align:right">${money(it.price)}<div style="margin-top:6px"><button class=\"ghost\" onclick=\"removeFromCart(${i})\">Remove</button></div></div></div>`).join('');
-      openModalHtml(`<h3>Your Cart</h3>${itemsHtml}<div style="text-align:right; margin-top:12px"><button class=\"primary\" onclick=\"checkout()\">Checkout</button></div>`);
-    }
-    function removeFromCart(i){ const cart=getCart(); cart.splice(i,1); saveCart(cart); openCart(); }
-    function checkout(){ closeModal(); alert('Checkout placeholder — integrate Stripe/PayPal server-side to capture payments.'); }
+  // run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
-    function showToast(msg){ openModalHtml(`<div style=\"padding:24px;text-align:center\"><div style=\"font-weight:800\">${msg}</div></div>`); setTimeout(closeModal,900); }
+})();
 
-    /***** DONATION FAKE FLOW *****/
-    function donate(amount){ el('#payFeedback').innerText = `Initiating donation of $${amount}...`; setTimeout(()=>el('#payFeedback').innerText='Redirecting to payment gateway (demo)...',800); }
-    function donateCustom(){ const v=parseFloat(el('#donCustom').value||0); if(!v || v<=0){ alert('Enter a valid amount'); return } donate(v); }
-    function fakePay(mode){ el('#payFeedback').innerText = `Simulating ${mode} checkout...`; setTimeout(()=>el('#payFeedback').innerText='Payment simulated (no real charge). Implement real integration server-side.',1200); }
+</script>
 
-    /***** SUBSCRIPTIONS, PRAYER, TESTIMONY, AMBASSADOR *****/
-    function subscribe(){ const em=el('#newsEmail').value.trim(); if(!em){ alert('Enter email'); return } localStorage.setItem('mhc_news', em); alert('Thanks — check your inbox for a welcome devotional (demo).'); }
-    function submitPrayer(){ const name=el('#prayerName').value; const txt=el('#prayerText').value; if(!txt){ alert('Please write your request'); return } alert('Prayer request submitted — we will pray for you.'); el('#prayerName').value=''; el('#prayerText').value=''; }
-    function submitTestimony(){ const name=el('#testName').value||'Anonymous'; const t=el('#testText').value; if(!t){ alert('Please write your testimony'); return } alert('Thanks — testimony received for review.'); closeModal(); }
-    function applyAmbassador(){ const n=el('#ambName').value; const e=el('#ambEmail').value; if(!n||!e){ alert('Provide name & email'); return } alert('Thanks — we will review your ambassador application.'); }
-
-    /***** GOSPEL HUB RENDER *****/
-    function renderGospel(){ const wrap = el('#gospelCards'); wrap.innerHTML=''; GOSPEL_POSTS.forEach(p=>{ const c=document.createElement('div'); c.className='card'; c.innerHTML=`<div style="font-weight:800">${p.title}</div><div class="muted small">${p.excerpt}</div><div style="margin-top:8px" class="muted small">— ${p.author} • ${p.date}</div>`; wrap.appendChild(c) }) }
-
-    /***** VERSE OF THE DAY (deterministic daily) *****/
-    function getVerseOfDay(){ const today = new Date(); const idx = (today.getFullYear()+today.getMonth()+today.getDate()) % VERSES.length; return VERSES[idx]; }
-    function renderVerse(){ el('#verseOfDay').innerText = getVerseOfDay(); }
-
-    /***** DESIGN GENERATOR (canvas preview) *****/
-    function previewDesign(){ const text = el('#genText').value || 'John 3:16 — For God so loved the world'; const canvas = el('#shirtPreview'); const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height);
-      // shirt base
-      ctx.fillStyle = '#0b0f13'; ctx.fillRect(0,0,canvas.width,canvas.height);
-      // draw a simple tee shape
-      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.moveTo(40,40); ctx.quadraticCurveTo(30,20,70,30); ctx.lineTo(170,30); ctx.quadraticCurveTo(210,20,200,40); ctx.lineTo(200,160); ctx.quadraticCurveTo(160,190,120,190); ctx.quadraticCurveTo(80,190,40,160); ctx.closePath(); ctx.fill();
-      // text
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Roboto Slab, serif'; wrapText(ctx, text, 60, 80, 120, 16);
-    }
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight){ const words = text.split(' '); let line = ''; for(let n=0;n<words.length;n++){ const testLine = line + words[n] + ' '; const metrics = ctx.measureText(testLine); const testWidth = metrics.width; if(testWidth > maxWidth && n>0){ ctx.fillText(line, x, y); line = words[n] + ' '; y += lineHeight; } else { line = testLine; } } ctx.fillText(line, x, y); }
-    function addDesignToCart(){ // create a design product on the fly
-      const text=el('#genText').value||'Custom Verse'; const product = {id:'custom-'+Date.now(), title:'Custom Tee — '+text.slice(0,20), price:28, img:'', verse:text}; const cart=getCart(); cart.push(product); saveCart(cart); showToast('Custom design added to cart'); }
-
-    /***** PAGE BEHAVIOR *****/
-    function scrollToSection(sel){ document.querySelector(sel).scrollIntoView({behavior:'smooth',block:'start'}); }
-
-    // filter categories
-    document.addEventListener('click', (e)=>{
-      const chip = e.target.closest('.chip'); if(!chip) return;
-      const cat = chip.getAttribute('data-cat'); if(!cat) return;
-      if(cat==='all') renderShop(); else { const filtered = PRODUCTS.filter(p=>p.type===cat); const wrap=el('#shopList'); wrap.innerHTML=''; filtered.forEach(p=>{ const c=document.createElement('div'); c.className='product'; c.innerHTML=`<div class="thumb"><img src="${p.img}" alt="${p.title}"></div><div style="display:flex;justify-content:space-between;align-items:center"><h3>${p.title}</h3><div class="price">${money(p.price)}</div></div><div class="muted small">${p.verse}</div><div class="btn-row"><button class="ghost" onclick="openProduct('${p.id}')">Details</button><button class="primary" onclick="addToCart('${p.id}')">Add</button></div>`; wrap.appendChild(c); }) }
-    })
-
-    // hooks
-    el('#open-cart').addEventListener('click', openCart);
-    el('#open-search').addEventListener('click', ()=>{ openModalHtml('<h3>Search (demo)</h3><input id="q" type="text" placeholder="Search products or devotionals" /><div style="margin-top:8px"><button class="primary" onclick="doSearch()">Search</button></div>') });
-
-    function doSearch(){ const q = el('#q').value.toLowerCase(); const results = PRODUCTS.filter(p=>p.title.toLowerCase().includes(q) || p.verse.toLowerCase().includes(q)); if(results.length===0) { openModalHtml('<h3>No results</h3><p class="muted small">Try another term</p>'); return } const html = results.map(r=>`<div style="display:flex;gap:12px;margin-bottom:8px"><img src="${r.img}" style="width:64px;height:64px;object-fit:cover;border-radius:8px" /><div><div style="font-weight:800">${r.title}</div><div class="muted small">${r.verse}</div></div><div style="margin-left:auto">${money(r.price)}</div></div>`).join(''); openModalHtml('<h3>Search Results</h3>'+html);
-    }
-
-    // modal close on background click
-    el('#modal').addEventListener('click', (e)=>{ if(e.target.id==='modal') closeModal(); })
-
-    // initial render
-    renderFeatured(); renderShop(); renderGospel(); renderVerse(); updateCartCount(); previewDesign();
-
-    // expose for templates
-    window.openProduct=openProduct; window.addToCart=addToCart; window.openCart=openCart; window.openModal=openModal; window.doSearch=doSearch; window.openNewsletter=openNewsletter;
-
-    /***** Newsletter modal helper *****/
-    function openNewsletter(){ openModalHtml('<h3>Join the Movement</h3><p class="muted small">Receive weekly devotionals and updates.</p><input id="newsModalEmail" type="email" placeholder="Email address" /><div style="margin-top:8px"><button class="primary" onclick="joinFromModal()">Join</button></div>') }
-    function joinFromModal(){ const e = el('#newsModalEmail').value; if(!e){ alert('Enter email'); return } localStorage.setItem('mhc_news', e); closeModal(); alert('Welcome — devotional coming soon (demo).'); }
-
-    /***** Other helpers (testimony, recurring, monthly) *****/
-    function submitTestimony(){ const n=el('#testName')?.value||'Anonymous'; const t=el('#testText')?.value||''; if(!t){ alert('Write something'); return } GOSPEL_POSTS.unshift({title:'Testimony by '+n, excerpt: t.slice(0,120), author:n, date: new Date().toISOString().slice(0,10)}); renderGospel(); closeModal(); alert('Thanks — testimony queued for review.'); }
-    function setupMonthly(){ const e = el('#monthlyEmail').value; const amt = el('#monthlyAmt').value; if(!e){ alert('Enter email'); return } alert(`Monthly gift of $${amt} set (demo). We'll contact you at ${e}.`); closeModal(); }
-
-  </script>
-</body>
 </html>
