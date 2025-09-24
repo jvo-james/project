@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>gDralien Mint Layout</title>
   <style>
-    /* ---------- Typography & reset ---------- */
     :root{
-      --main-red: #d23a37;   /* left-red & right-red */
-      --main-blue: #1f3bd6;  /* left-blue & right-blue */
+      --main-red: #d23a37;   
+      --main-blue: #1f3bd6; 
       --main-yellow: #f2cf48;
       --main-green: #17b24b;
       --bg: #ffffff;
@@ -25,7 +24,6 @@
       padding:28px;
     }
 
-    /* ---------- Header ---------- */
     .header {
       text-align:center;
       margin-bottom:16px;
@@ -47,7 +45,6 @@
       margin-top:6px;
     }
 
-    /* ---------- Main area with pies and center art ---------- */
     .main {
       width:100%;
       max-width:1200px;
@@ -57,7 +54,6 @@
       justify-content:space-between;
     }
 
-    /* Pie column */
     .pie-column {
       width:35%;
       min-width:240px;
@@ -86,7 +82,6 @@
       width:14px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.06) inset;
     }
 
-    /* canvas container */
     .pie-wrap{
       width:100%;
       display:flex;
@@ -101,7 +96,6 @@
       background:transparent;
     }
 
-    /* center pixel-art card */
     .center-card{
       width:28%;
       min-width:200px;
@@ -129,7 +123,6 @@
       transform: translateY(4px);
     }
 
-    /* ---------- Footer caption ---------- */
     .footer {
       width:100%;
       max-width:1200px;
@@ -147,7 +140,6 @@
       letter-spacing:1px;
     }
 
-    /* Small screens */
     @media (max-width:980px){
       .main{flex-direction:column;align-items:center}
       .pie-column, .center-card{width:100%}
@@ -169,7 +161,6 @@
     </header>
 
     <main class="main" role="main" aria-label="Mint breakdown and visuals">
-      <!-- Left pie -->
       <div class="pie-column" id="leftColumn">
         <div style="height:24px"></div>
         <div class="pie-wrap">
@@ -183,15 +174,13 @@
         </div>
       </div>
 
-      <!-- center pixel art -->
       <div class="center-card" id="centerCard">
         <div class="pixel-frame" aria-hidden="true">
-          <img alt="gDralien pixel art" src="2B1FEE4E-0931-41D0-9312-1A6E2891E6E0.jpeg">
+          <img alt="gDralien pixel art" src="image1.gif">
         </div>
         <div style="height:24px"></div>
       </div>
 
-      <!-- Right pie -->
       <div class="pie-column" id="rightColumn">
         <div style="height:24px"></div>
         <div class="pie-wrap">
@@ -211,13 +200,11 @@
   </div>
 
   <script>
-    /* ---------- Pie drawing utility ---------- */
     function drawPie(canvas, data, colors, options = {}) {
       const ctx = canvas.getContext('2d');
       const DPR = window.devicePixelRatio || 1;
       const w = canvas.width;
       const h = canvas.height;
-      // Keep sharp on high DPI
       canvas.style.width = canvas.getAttribute('width')/2 + 'px';
       canvas.style.height = canvas.getAttribute('height')/2 + 'px';
       canvas.width = w * DPR;
@@ -228,13 +215,11 @@
       const centerY = canvas.height / (2 * DPR);
       const radius = Math.min(centerX, centerY) - 8;
 
-      // background clear
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const total = data.reduce((s,d)=> s + d, 0);
-      let startAngle = -Math.PI / 2; // start top
+      let startAngle = -Math.PI / 2;
 
-      // draw slices
       for (let i = 0; i < data.length; i++) {
         const val = data[i];
         const sliceAngle = (val / total) * Math.PI * 2;
@@ -246,18 +231,16 @@
         ctx.fillStyle = colors[i];
         ctx.fill();
 
-        // slice label (percentage)
         const midAngle = (startAngle + endAngle) / 2;
         const labelRadius = radius * 0.58;
         const lx = centerX + Math.cos(midAngle) * labelRadius;
         const ly = centerY + Math.sin(midAngle) * labelRadius;
 
-        const pct = Math.round((val/total)*1000)/10; // one decimal
+        const pct = Math.round((val/total)*1000)/10; 
         ctx.font = "700 20px 'Segoe UI', Roboto, Arial";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        // choose contrast color
         function luminance(hex) {
           hex = hex.replace('#','');
           const r = parseInt(hex.substring(0,2),16)/255;
@@ -272,7 +255,6 @@
           textColor = (luminance(col) > 0.55) ? '#222' : '#fff';
         } catch(e){ textColor = '#fff' }
 
-        // smaller font for small slices
         ctx.fillStyle = textColor;
         ctx.font = (pct < 6 ? "600 16px 'Segoe UI', Roboto, Arial" : "700 20px 'Segoe UI', Roboto, Arial");
         ctx.fillText(pct + "%", lx, ly);
@@ -280,7 +262,6 @@
         startAngle = endAngle;
       }
 
-      // outer ring
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius + 2, 0, Math.PI*2);
       ctx.lineWidth = 3;
@@ -294,15 +275,12 @@
       const leftCanvas = document.getElementById('leftPie');
       drawPie(leftCanvas, leftData, leftColors);
 
-      // right pie values: 50% / 50% two halves
       const rightData = [50, 50];
       const rightColors = ['#1f3bd6', '#d23a37'];
       const rightCanvas = document.getElementById('rightPie');
       drawPie(rightCanvas, rightData, rightColors);
 
-      // make canvases responsive to size changes:
       function resizeAll() {
-        // set canvas pixel dims matching client size * 2 for crispness
         [leftCanvas, rightCanvas].forEach(c => {
           const rect = c.getBoundingClientRect();
           c.setAttribute('width', Math.round(rect.width*2));
@@ -312,14 +290,12 @@
         drawPie(rightCanvas, rightData, rightColors);
       }
 
-      // observe size changes
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(resizeAll, 120);
       });
 
-      // initial resize after DOM paints
       setTimeout(resizeAll, 60);
     })();
   </script>
