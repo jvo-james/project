@@ -498,6 +498,165 @@ body.light-mode .site-footer .muted {
 
 </style>
 
+ <style>
+ html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+ :root {
+  --sidebar-width: 300px;     
+  --header-height: 68px;      
+  --gutter: 20px;
+}
+
+ .sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100vh !important;
+  width: var(--sidebar-width) !important;
+  z-index: 1400 !important;          
+  border-radius: 0 18px 18px 0 !important;
+  overflow: auto !important;            
+  -webkit-overflow-scrolling: touch !important;
+  box-shadow: 0 12px 48px rgba(2,6,23,0.45) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important;
+  border-right: 1px solid rgba(255,255,255,0.03) !important;
+}
+
+ 
+body::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  z-index: 1200;  
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  pointer-events: none;
+  border-radius: 0 18px 18px 0;
+}
+
+ 
+ .topbar {
+  position: fixed !important;
+  left: calc(var(--sidebar-width)) !important;
+  right: 0 !important;
+  top: 0 !important;
+  height: var(--header-height) !important;
+  z-index: 1500 !important;
+  backdrop-filter: blur(6px) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+ 
+.page,
+main,
+.site-footer,
+.page-actions,
+.footer-top,
+.footer-middle,
+.footer-bottom {
+   margin-left: calc(var(--sidebar-width) + var(--gutter)) !important;
+  width: calc(100% - var(--sidebar-width) - var(--gutter)) !important;
+  box-sizing: border-box !important;
+}
+
+ 
+ main { padding-right: 0 !important; margin-right: 0 !important; }
+
+ .modal-overlay,
+#nftModal,
+#toolModal {
+  background: rgba(2,6,23,0.78) !important;  
+  backdrop-filter: blur(4px) brightness(0.9) !important;
+  z-index: 2000 !important;
+}
+
+ .nft-modal-card,
+.tool-modal-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006)) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.75) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+}
+
+ body.light-mode .nft-modal-card,
+body.light-mode .tool-modal-card {
+  background: linear-gradient(180deg, #ffffff, #fbfbff) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(3,10,20,0.06) !important;
+}
+
+ @media (max-width: 900px) {
+  .sidebar { position: relative !important; width: 100% !important; height: auto !important; border-radius: 12px !important; }
+  body::before { display: none !important; }  
+  .topbar { left: 0 !important; }
+  .page, main, .site-footer, .page-actions { margin-left: 0 !important; width: 100% !important; padding-left: var(--gutter) !important; }
+}
+</style>
+
+   <style>
+ .new-site-footer {
+  margin-left: calc(var(--sidebar-width) + var(--gutter)) !important;
+  width: calc(100% - var(--sidebar-width) - var(--gutter)) !important;
+  box-sizing: border-box;
+  padding: 36px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 40px rgba(2,6,23,0.12);
+}
+
+ .new-footer-inner { display:flex; flex-direction:column; gap:22px; max-width: var(--max-content-width); margin:0 auto; }
+.footer-brand { display:flex; gap:18px; align-items:flex-start; }
+
+ .brand-copy h3 { margin:0; font-size:18px; font-weight:800; }
+.brand-copy .muted { margin-top:6px; color:var(--muted); }
+
+ .social-row { margin-top:10px; display:flex; gap:8px; }
+.social { display:inline-grid; place-items:center; width:36px; height:36px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:var(--text); text-decoration:none; }
+.social:hover { transform:translateY(-4px); box-shadow:0 10px 26px rgba(2,6,23,0.12); }
+
+ .footer-links-grid { display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:22px; align-items:start; }
+.footer-links-grid .col h4 { margin:0 0 8px; font-weight:800; }
+.footer-links-grid .col ul { list-style:none; margin:0; padding:0; }
+.footer-links-grid .col li { margin:6px 0; }
+.footer-links-grid .col a { color:var(--muted); text-decoration:none; }
+
+ .subscribe-col .newsletter { margin-top:8px; gap:8px; display:flex; align-items:center; }
+.subscribe-col input { min-width:180px; padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); color:var(--text); background:transparent; }
+.subscribe-col .btn-sub { padding:10px 14px; border-radius:999px; }
+
+ .contract-row { margin-top:12px; display:flex; gap:12px; align-items:center; }
+.contract-copy { display:flex; gap:8px; align-items:center; }
+.contract-copy code { background: rgba(0,0,0,0.06); padding:6px 8px; border-radius:6px; font-family:monospace; color:var(--text); }
+
+ .footer-bottom-row { display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.02); padding-top:18px; margin-top:6px; }
+.mini-stats { display:flex; gap:14px; align-items:center; }
+.stat { display:flex; flex-direction:column; align-items:flex-start; }
+.num { font-weight:900; font-size:18px; }
+.label { font-size:13px; color:var(--muted); }
+.badges { display:flex; gap:8px; align-items:center; }
+.badge { background: rgba(255,255,255,0.02); padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); font-size:13px; color:var(--muted); }
+
+ .foot-actions { display:flex; align-items:center; gap:18px; }
+.misc-links a { color:var(--muted); text-decoration:none; margin-right:12px; }
+
+ #newBackTop { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); background:transparent; cursor:pointer; }
+#newBackTop:hover { transform:translateY(-4px); box-shadow:0 10px 24px rgba(2,6,23,0.12); }
+
+ @media (max-width:900px) {
+  .new-site-footer { margin-left: 0 !important; width:100% !important; border-radius:12px; padding:20px; }
+  .footer-links-grid { grid-template-columns: 1fr; }
+  .footer-brand { align-items:center; }
+  .footer-bottom-row { flex-direction:column; align-items:flex-start; gap:12px; }
+}
+</style>
 
 </head>
  <body>
@@ -913,89 +1072,93 @@ body.light-mode .site-footer .muted {
     </div>
   </div>
 
-   <footer class="site-footer" aria-labelledby="footerHeading">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="logo-square" aria-hidden="true">
-          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs><linearGradient id="fLg" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
-            <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#fLg)"/>
-            <circle cx="22" cy="26" r="3.6" fill="#021018"/><circle cx="42" cy="26" r="3.6" fill="#021018"/>
-          </svg>
-        </div>
-        <div>
-          <h3 id="footerHeading">NifftySwiggle — Dralien</h3>
-          <p class="muted">Small-supply NFT studio — 111 Mainnet NFTs, utilities & curated airdrops for holders.</p>
-          <div class="social-row" aria-label="Social links">
-            <button class="social" data-href="https://twitter.com/" title="Twitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></button>
-            <button class="social" data-href="https://discord.gg/" title="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></button>
-            <button class="social" data-href="https://instagram.com/" title="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></button>
-          </div>
-        </div>
+ <footer class="site-footer new-site-footer" aria-labelledby="footerHeading" role="contentinfo">
+  <div class="new-footer-inner">
+    <div class="footer-brand">
+      <div class="logo-square" aria-hidden="true">
+         <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="lgF" x1="0" x2="1"><stop offset="0" stop-color="#7CFF6A"/><stop offset="1" stop-color="#7A6CFF"/></linearGradient></defs>
+          <path d="M32 6c10 0 18 7 18 16 0 13-18 28-18 28S14 35 14 22C14 13 22 6 32 6z" fill="url(#lgF)"/>
+        </svg>
       </div>
 
-      <div class="footer-links">
-        <div class="col">
-          <h4>Explore</h4>
-          <ul>
-            <li><a href="#">Collection</a></li>
-            <li><a href="#">Activity</a></li>
-            <li><a href="#">Roadmap</a></li>
-            <li><a href="#">FAQ</a></li>
-          </ul>
+      <div class="brand-copy">
+        <h3 id="footerHeading">NifftySwiggle — Dralien</h3>
+        <p class="muted">Small-supply NFT studio — premium utilities & curated airdrops for holders.</p>
+
+        <div class="social-row" aria-label="Social links">
+          <a class="social" href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+          <a class="social" href="https://discord.gg/" target="_blank" rel="noopener" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+          <a class="social" href="https://instagram.com/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
         </div>
+      </div>
+    </div>
 
-        <div class="col">
-          <h4>Tools & Utilities</h4>
-          <ul>
-            <li><a href="#">NFT Generator</a></li>
-            <li><a href="#">Airdrop Engine</a></li>
-            <li><a href="#">Staking (Non-Custodial)</a></li>
-            <li><a href="#">Pixel Draw</a></li>
-          </ul>
-        </div>
+    <div class="footer-links-grid" role="navigation" aria-label="Footer navigation">
+      <div class="col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Collection</a></li>
+          <li><a href="#">Activity</a></li>
+          <li><a href="#">Roadmap</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
 
-        <div class="col subscribe-col">
-          <h4>Join the Drop</h4>
-          <p class="muted">Subscribe for WL announcements & airdrop notices (demo).</p>
-          <form id="newsletterForm" class="newsletter" onsubmit="return false" aria-label="Subscribe to newsletter">
-            <input id="newsletterEmail" type="email" placeholder="you@walletmail.com" aria-label="email" required>
-            <button type="submit" id="newsletterBtn" class="btn-sub">Subscribe</button>
-          </form>
+      <div class="col">
+        <h4>Tools & Utilities</h4>
+        <ul>
+          <li><a href="#">NFT Generator</a></li>
+          <li><a href="#">Airdrop Engine</a></li>
+          <li><a href="#">Staking (Non-Custodial)</a></li>
+          <li><a href="#">Pixel Draw</a></li>
+        </ul>
+      </div>
 
-          <div class="contract-row">
-            <div class="muted small">Contract (Mainnet)</div>
-            <div class="contract-copy">
-              <code id="contractAddr">0xDraLiEn...aB12</code>
-              <button id="copyContract" title="Copy contract address" aria-label="Copy contract"><i class="fa-regular fa-copy" aria-hidden="true"></i></button>
-            </div>
+      <div class="col subscribe-col">
+        <h4>Join the Drop</h4>
+        <p class="muted">Subscribe for WL announcements & airdrop notices (demo).</p>
+
+        <form id="newNewsletterForm" class="newsletter" onsubmit="return false" aria-label="Subscribe to newsletter">
+          <input id="newNewsletterEmail" type="email" placeholder="you@walletmail.com" aria-label="email" required>
+          <button type="submit" id="newNewsletterBtn" class="btn-sub">Subscribe</button>
+        </form>
+
+        <div class="contract-row">
+          <div class="muted small">Contract (Mainnet)</div>
+          <div class="contract-copy">
+            <code id="newContractAddr">0xDraLiEn...aB12</code>
+            <button id="newCopyContract" title="Copy contract address" aria-label="Copy contract"><i class="fa-regular fa-copy" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="footer-middle">
+    <div class="footer-bottom-row">
       <div class="mini-stats">
-        <div class="stat"><div class="num">111</div><div class="label">Mainnet NFTs</div></div>
-        <div class="stat"><div class="num">100</div><div class="label">Whitelist</div></div>
-        <div class="stat"><div class="num">48</div><div class="label">Months rewards</div></div>
+        <div class="stat"><div class="num">111</div><div class="label muted">Mainnet NFTs</div></div>
+        <div class="stat"><div class="num">100</div><div class="label muted">Whitelist</div></div>
+        <div class="stat"><div class="num">48</div><div class="label muted">Months rewards</div></div>
       </div>
 
-      <div class="payment-badges" aria-hidden="true">
-        <div class="badge">Monad Testnet</div>
-        <div class="badge">IPFS</div>
-        <div class="badge">ERC-721</div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="copyright">© <span id="year"></span> NifftySwiggle Studio — Built for Dralien. All rights reserved.</div>
       <div class="foot-actions">
-        <a href="#" class="small muted">Sitemap</a>
-        <button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up-long" aria-hidden="true"></i></button>
+        <div class="badges">
+          <span class="badge">Monad Testnet</span>
+          <span class="badge">IPFS</span>
+          <span class="badge">ERC-721</span>
+        </div>
+
+        <div class="copyright">© <span id="newYear"></span> NifftySwiggle Studio — All rights reserved.</div>
+
+        <div class="misc-links">
+          <a href="#" class="small muted">Sitemap</a>
+          <button id="newBackTop" title="Back to top" aria-label="Back to top" class="btn-ghost"><i class="fa-solid fa-arrow-up-long" aria-hidden="true"></i></button>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
+
 
 </body>
 
@@ -1568,5 +1731,31 @@ body.light-mode .site-footer .muted {
 })();
 </script>
 
+<script>
+   document.getElementById('newYear')?.replaceWith(document.createElement('span'));
+  const yEl = document.getElementById('newYear');
+  if (yEl) yEl.innerText = new Date().getFullYear();
+
+   document.getElementById('newNewsletterForm')?.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('newNewsletterEmail')?.value || '';
+    if(!email.includes('@')) { alert('Enter a valid email (demo)'); return; }
+    const btn = document.getElementById('newNewsletterBtn');
+    btn.innerText = 'Thanks!';
+    btn.disabled = true;
+    setTimeout(()=> btn.innerText = 'Subscribed', 900);
+  });
+
+   document.getElementById('newCopyContract')?.addEventListener('click', function(){
+    const text = document.getElementById('newContractAddr')?.innerText || '';
+    if(!navigator.clipboard){ alert(text); return; }
+    navigator.clipboard.writeText(text).then(()=> {
+      this.innerHTML = '<i class="fa-solid fa-check"></i>';
+      setTimeout(()=> this.innerHTML = '<i class="fa-regular fa-copy"></i>', 1400);
+    }).catch(()=> alert('Copy failed'));
+  });
+
+   document.getElementById('newBackTop')?.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+</script>
 
 </html>
