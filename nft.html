@@ -23,7 +23,7 @@
   --surface: linear-gradient(180deg, rgba(6,18,38,0.32), rgba(6,18,38,0.12));
   --card-bg: rgba(255,255,255,0.02);
   --muted: #9fb7c9;
-  --text: #FFFFFF;            /* primary text (white in dark) */
+  --text: #FFFFFF;            
   --text-dim: rgba(255,255,255,0.86);
   --accent-1: #3fe1c3;
   --accent-2: #7c6cff;
@@ -37,17 +37,14 @@
   --modal-glass: rgba(255,255,255,0.03);
 }
 
-/* -------------------------
-   Light mode overrides
-   Add class .light-mode to <body> to switch
-   ------------------------- */
+  
 body.light-mode{
   --bg-900: #f6fbff;
   --bg-800: #eef6fb;
   --surface: linear-gradient(180deg,#ffffff,#fbfbff);
   --card-bg: #ffffff;
   --muted: #617085;
-  --text: #061426;            /* primary text (dark in light) */
+  --text: #061426;           
   --text-dim: rgba(6,20,38,0.78);
   --accent-1: #0bb389;
   --accent-2: #5b4bff;
@@ -56,13 +53,11 @@ body.light-mode{
   --border-weak: rgba(3,10,20,0.06);
   --focus: rgba(124,108,255,0.12);
   --shadow-lg: 0 18px 48px rgba(6,20,40,0.06);
-  --footer-bg-dark: linear-gradient(180deg,#f5f7fb,#ffffff); /* footer light bg */
+  --footer-bg-dark: linear-gradient(180deg,#f5f7fb,#ffffff);  
   --modal-glass: rgba(2,6,23,0.02);
 }
 
-/* -------------------------
-   Base reset & layout
-   ------------------------- */
+ 
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:var(--text);background:
   radial-gradient(600px 240px at 8% 8%, rgba(124,108,255,0.03), transparent 10%),
@@ -78,9 +73,7 @@ button,input,select,textarea{font-family:inherit}
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 
-/* -------------------------
-   Fixed Sidebar
-   ------------------------- */
+ 
 .sidebar{
   position:fixed;
   left:0;
@@ -101,18 +94,14 @@ button,input,select,textarea{font-family:inherit}
   color:var(--text);
 }
 
-/* force contrast for any items inside sidebar */
-.sidebar *{ color: var(--text) !important; }
+ .sidebar *{ color: var(--text) !important; }
 
-/* Sidebar stacking on small devices */
-@media (max-width:900px){
+ @media (max-width:900px){
   :root{ --sidebar-width: 100%; }
   .sidebar{ position:relative; width:100%; height:auto; border-radius:12px; box-shadow:0 8px 26px rgba(2,6,23,0.12) }
 }
 
-/* -------------------------
-   Fixed Topbar
-   ------------------------- */
+ 
 .topbar{
   position:fixed;
   left:var(--sidebar-width);
@@ -132,14 +121,11 @@ button,input,select,textarea{font-family:inherit}
   color:var(--text);
 }
 
-/* topbar full-width on small screens */
-@media (max-width:900px){
+ @media (max-width:900px){
   .topbar{ left:0; border-radius:12px; margin-bottom:8px; }
 }
 
-/* -------------------------
-   Main area (flowing)
-   ------------------------- */
+ 
 main{
   margin-left: var(--sidebar-width);
   padding-top: calc(var(--header-height) + 20px);
@@ -151,19 +137,13 @@ main{
   color:var(--text);
 }
 
-/* wrapper for centered content when desired */
-.main-inner{ max-width: var(--max-content-width); margin: 0 auto; }
+ .main-inner{ max-width: var(--max-content-width); margin: 0 auto; }
 
-/* stacked layout on small screens */
-@media (max-width:900px){
+ @media (max-width:900px){
   main{ margin-left:0; width:100%; padding-top: calc(var(--header-height) + 12px) }
 }
 
-/* -------------------------
-   Footer (distinct style)
-   - footer uses its own background variable (--footer-bg-dark)
-   - in light-mode it becomes an off-white card to contrast with page
-   ------------------------- */
+ 
 .site-footer, .new-site-footer{
   margin-left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
@@ -176,40 +156,28 @@ main{
   box-shadow: 0 30px 80px rgba(2,6,23,0.25);
 }
 
-/* footer content contrasts and typography */
-.site-footer h4, .site-footer h3, .site-footer .label { color: var(--text) !important; }
+ .site-footer h4, .site-footer h3, .site-footer .label { color: var(--text) !important; }
 .site-footer a { color: var(--text-dim); text-decoration:none; }
 
-/* footer on small screens */
-@media (max-width:900px){
+ @media (max-width:900px){
   .site-footer, .new-site-footer{ margin-left:0; width:100%; border-radius:12px; padding:18px }
 }
 
-/* -------------------------
-   Force readable colors everywhere
-   (fixes black text issues: overrides common dark hard-coded colors)
-   ------------------------- */
-/* elements that historically used #021018 or dark text */
+ 
 .logo svg, .tool-icon, .tool-icon * , .avatar-badge, .brand-copy, .logo-square, .pixel-alien, .preview-canvas * {
   color: var(--text) !important;
   fill: currentColor !important;
   stroke: currentColor !important;
 }
 
-/* specific overrides for any places that had dark text */
-.tool-info, .creator-info, .muted, .label, code { color: var(--text-dim) !important; }
+ .tool-info, .creator-info, .muted, .label, code { color: var(--text-dim) !important; }
 
-/* ensure icons in colored badges remain visible on both themes */
-/* if icon needs dark text for contrast in light mode, adjust via CSS below */
-.avatar-badge, .tool-icon { color: #021018; } /* icon text inside gradient (keeps contrast on light backgrounds) */
-body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /* keep icon foreground dark in light-mode */
+ 
+.avatar-badge, .tool-icon { color: #021018; }  
+body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } 
+ * { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-/* but enforce readable text for everything else */
-* { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-
-/* -------------------------
-   Sidebar contents
-   ------------------------- */
+ 
 .sidebar-header{ display:flex; gap:12px; align-items:center; }
 .logo{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; background: linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 10px 30px rgba(0,0,0,0.25); }
 .sidebar-title h2{ margin:0; font-size:18px; font-weight:700; font-family:'Space Grotesk', Inter, sans-serif }
@@ -225,12 +193,9 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
 .nav-link span{ font-weight:700; font-size:14px; }
 .nav-link:hover{ transform:translateY(-4px); background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border-color: var(--border-weak); box-shadow: 0 8px 22px rgba(0,0,0,0.12) }
 
-/* mint CTA */
-#mintSidebarBtn{ width:100%; padding:12px; border-radius:999px; border:0; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; font-weight:800; letter-spacing:0.6px; box-shadow:0 14px 40px rgba(6,12,20,0.6); cursor:pointer }
+ #mintSidebarBtn{ width:100%; padding:12px; border-radius:999px; border:0; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; font-weight:800; letter-spacing:0.6px; box-shadow:0 14px 40px rgba(6,12,20,0.6); cursor:pointer }
 
-/* -------------------------
-   Topbar utilities
-   ------------------------- */
+ 
 .topbar-left{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 .topbar-right{ display:flex; gap:12px; align-items:center; }
 
@@ -250,15 +215,12 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
 .btn-ghost:hover{ transform:translateY(-5px); box-shadow:0 12px 36px rgba(0,0,0,0.12) }
 .btn-primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; padding:10px 14px; border-radius:12px; font-weight:800; box-shadow:0 12px 34px rgba(0,0,0,0.25) }
 
-/* avatar badge */
-.avatar-badge{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; font-weight:900; color:#021018; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 8px 22px rgba(0,0,0,0.12) }
+ .avatar-badge{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; font-weight:900; color:#021018; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 8px 22px rgba(0,0,0,0.12) }
 
-/* -------------------------
-   Hero / Preview (fix preview-meta overflow)
-   ------------------------- */
+  
 .hero-wrap{
   display:grid;
-  grid-template-columns: 1fr minmax(280px, 420px); /* allows preview column to shrink */
+  grid-template-columns: 1fr minmax(280px, 420px);  
   gap:22px;
   align-items:start;
   border-radius:16px;
@@ -269,23 +231,20 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
   box-shadow: 0 20px 60px rgba(0,0,0,0.12);
 }
 
-/* on narrow screens the hero stacks */
-@media (max-width:1100px){
+ @media (max-width:1100px){
   .hero-wrap{ grid-template-columns:1fr; padding:20px; }
 }
 
-/* hero-left text */
-.hero-eyebrow{ display:inline-flex; gap:10px; padding:8px 12px; border-radius:999px; background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); font-weight:800; color:var(--accent-1); }
+ .hero-eyebrow{ display:inline-flex; gap:10px; padding:8px 12px; border-radius:999px; background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); font-weight:800; color:var(--accent-1); }
 .hero-h{ font-size:clamp(22px,3.6vw,36px); margin:0 0 8px; line-height:1.02; letter-spacing:-0.6px; font-family:'Space Grotesk', Inter, sans-serif; font-weight:700; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent }
 .hero-sub{ color:var(--muted); margin:6px 0 18px; line-height:1.45 }
 
-/* hero preview column */
-.hero-preview{
+ .hero-preview{
   display:flex;
   flex-direction:column;
   gap:14px;
   align-items:stretch;
-  min-width:0; /* important so it can shrink */
+  min-width:0;  
   border-radius:12px;
   padding:14px;
   background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
@@ -293,8 +252,7 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
   box-shadow: 0 12px 34px rgba(0,0,0,0.08);
 }
 
-/* preview canvas (visual) */
-.preview-canvas{
+ .preview-canvas{
   height:240px;
   border-radius:12px;
   background: linear-gradient(180deg,#eafef0 0%, #e7e4ff 100%);
@@ -307,18 +265,16 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
   transform:translateZ(0);
 }
 
-/* preview-meta container: will wrap and never overflow the page */
-.preview-meta{
+ .preview-meta{
   display:flex;
   flex-direction:column;
   gap:12px;
   width:100%;
-  min-width:0; /* allow flex to shrink */
+  min-width:0; 
   color:var(--text);
 }
 
-/* mint progress: full width and responsive */
-.mint-progress{ display:flex; flex-direction:column; gap:8px; width:100%; }
+ .mint-progress{ display:flex; flex-direction:column; gap:8px; width:100%; }
 .mint-info{ display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--text-dim) }
 .mint-price{ font-weight:800; color:var(--text) }
 .mint-progress-bar{ display:flex; align-items:center; gap:12px; width:100%; }
@@ -330,18 +286,13 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
 
 #heroProgressText{ font-weight:700; white-space:nowrap; color:var(--text) }
 
-/* preview actions */
-.preview-actions{ display:flex; gap:10px; justify-content:flex-start; align-items:center }
+ .preview-actions{ display:flex; gap:10px; justify-content:flex-start; align-items:center }
 
-/* preview-meta-muted icons and text */
-.preview-meta-muted{ display:flex; gap:12px; align-items:center; color:var(--muted); font-size:14px }
+ .preview-meta-muted{ display:flex; gap:12px; align-items:center; color:var(--muted); font-size:14px }
 
-/* ensure no horizontal overflow from hero */
-.hero-wrap, .hero-wrap * { box-sizing:border-box; }
+ .hero-wrap, .hero-wrap * { box-sizing:border-box; }
 
-/* -------------------------
-   Gallery / Cards
-   ------------------------- */
+ 
 #gallery{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-top:6px }
 @media (max-width:1100px){ #gallery{ grid-template-columns: repeat(2,1fr) } }
 @media (max-width:700px){ #gallery{ grid-template-columns: repeat(1,1fr) } }
@@ -352,14 +303,11 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
 .nft-media img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .36s cubic-bezier(.2,.9,.2,1) }
 .nft-card:hover .nft-media img{ transform:scale(1.04) }
 
-/* metadata */
-.meta{ display:flex; justify-content:space-between; align-items:center; gap:12px }
+ .meta{ display:flex; justify-content:space-between; align-items:center; gap:12px }
 .meta .title{ font-weight:800; color:var(--text) }
 .meta .owner{ color:var(--muted); font-size:13px }
 
-/* -------------------------
-   Tools / About / Utilities
-   ------------------------- */
+ 
 .tools-section, .about-section{ border-radius:12px; padding:18px; background:var(--card-bg); border:1px solid var(--border-weak); box-shadow:0 12px 40px rgba(0,0,0,0.08) }
 .tools-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:12px }
 .tool-card{ display:flex; justify-content:space-between; align-items:center; padding:14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.006), transparent); border:1px solid var(--border-weak); transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s }
@@ -367,30 +315,23 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /*
 .tool-icon{ width:64px; height:64px; border-radius:12px; display:grid; place-items:center; font-size:22px; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); color:#021018; box-shadow:0 8px 22px rgba(0,0,0,0.08) }
 .tool-info h5{ margin:0; font-size:15px; font-weight:800; color:var(--text) }
 
-/* about */
-.about-section{ display:grid; grid-template-columns:1fr 380px; gap:18px; align-items:start; }
+ .about-section{ display:grid; grid-template-columns:1fr 380px; gap:18px; align-items:start; }
 @media (max-width:1100px){ .about-section{ grid-template-columns:1fr; gap:16px } }
 
-/* -------------------------
-   Forms & Inputs
-   ------------------------- */
+ 
 input, select, textarea{ background:transparent; border:1px solid var(--border-weak); padding:10px 12px; border-radius:10px; color:var(--text); outline:none; transition: box-shadow .14s cubic-bezier(.2,.9,.2,1), transform .12s }
 input:focus, select:focus, textarea:focus{ box-shadow:0 8px 30px var(--focus); border-color:var(--focus); transform:translateY(-2px) }
 
-/* newsletter buttons */
-.newsletter input{ min-width:220px; border-radius:999px }
+ .newsletter input{ min-width:220px; border-radius:999px }
 
-/* -------------------------
-   Modal — upgraded styling
-   ------------------------- */
+ 
 .modal-overlay, #nftModal, #toolModal{
   display:none; position:fixed; inset:0; z-index:2400; align-items:center; justify-content:center;
   background: linear-gradient(180deg, rgba(2,6,23,0.7), rgba(2,6,23,0.9)); padding:20px;
   backdrop-filter: blur(6px) saturate(120%);
 }
 
-/* reveal modals when aria-hidden=false (JS toggles attribute) */
-#nftModal[aria-hidden="false"], #toolModal[aria-hidden="false"]{ display:flex }
+ #nftModal[aria-hidden="false"], #toolModal[aria-hidden="false"]{ display:flex }
 
 .nft-modal-card, .tool-modal-card{
   width:100%; max-width:1100px; border-radius:20px; overflow:hidden;
@@ -400,46 +341,36 @@ input:focus, select:focus, textarea:focus{ box-shadow:0 8px 30px var(--focus); b
   transform: translateY(14px) scale(0.995); opacity:0; animation: modalIn .28s cubic-bezier(.2,.9,.2,1) forwards;
 }
 
-/* modal entrance */
-@keyframes modalIn{
+ @keyframes modalIn{
   to{ transform:none; opacity:1; }
 }
 
-/* left column is media (bigger visuals) */
-.nft-media-wrap{
+ .nft-media-wrap{
   background: linear-gradient(180deg, rgba(2,6,23,0.2), rgba(2,6,23,0.04));
   display:flex; align-items:center; justify-content:center; min-height:320px; max-height:80vh; overflow:hidden; padding:18px;
 }
 .nft-media-wrap img, .nft-media-wrap video{ width:100%; height:100%; object-fit:contain; display:block; border-radius:10px }
 
-/* right column content */
-.nft-info{ padding:22px; display:flex; flex-direction:column; gap:14px; color:var(--text); background: linear-gradient(180deg, rgba(255,255,255,0.006), transparent) }
+ .nft-info{ padding:22px; display:flex; flex-direction:column; gap:14px; color:var(--text); background: linear-gradient(180deg, rgba(255,255,255,0.006), transparent) }
 
-/* modal close button (stylish) */
-.nft-close, .modal-close{
+ .nft-close, .modal-close{
   position:absolute; right:18px; top:18px; z-index:260; background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:0; color:var(--text); width:44px; height:44px; border-radius:12px; display:grid; place-items:center; cursor:pointer; box-shadow:0 10px 26px rgba(0,0,0,0.12);
   transition: transform .12s;
 }
 .nft-close:hover, .modal-close:hover{ transform:translateY(-4px); box-shadow:0 18px 48px rgba(0,0,0,0.18) }
 
-/* modal inner headings and info */
-.nft-title{ margin:0; font-size:20px; font-weight:900; color:var(--text) }
+ .nft-title{ margin:0; font-size:20px; font-weight:900; color:var(--text) }
 .nft-sub, .muted{ color:var(--muted) }
 
-/* modal pills and copy buttons */
-.meta-pill, .share-btn, .btn-ghost { color:var(--text); border:1px solid var(--border-weak) }
+ .meta-pill, .share-btn, .btn-ghost { color:var(--text); border:1px solid var(--border-weak) }
 .share-btn{ padding:8px 10px; border-radius:10px; background:transparent; display:inline-flex; gap:8px; align-items:center }
 
-/* responsive modal */
-@media (max-width:1100px){
+ @media (max-width:1100px){
   .nft-modal-card, .tool-modal-card{ grid-template-columns:1fr; max-width:940px }
   .nft-media-wrap{ min-height:260px }
 }
 
-/* -------------------------
-   Footer details (distinct appearance)
-   - we style footer content explicitly so it stands out
-   ------------------------- */
+ 
 .new-site-footer{ padding:28px; border-radius:14px; display:block; }
 .new-footer-inner{ max-width:var(--max-content-width); margin:0 auto; display:flex; flex-direction:column; gap:20px; color:var(--text) }
 
@@ -457,16 +388,13 @@ input:focus, select:focus, textarea:focus{ box-shadow:0 8px 30px var(--focus); b
 
 .subscribe-col input{ min-width:180px; padding:10px 14px; border-radius:999px; border:1px solid var(--border-weak); color:var(--text); background:transparent; }
 
-/* footer bottom row */
-.footer-bottom-row{ display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.03); padding-top:18px; margin-top:6px; color:var(--text) }
+ .footer-bottom-row{ display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.03); padding-top:18px; margin-top:6px; color:var(--text) }
 .mini-stats{ display:flex; gap:14px; align-items:center }
 .stat .num{ font-weight:900; font-size:18px; color:var(--text) }
 .stat .label{ font-size:13px; color:var(--muted) }
 .badge{ background: rgba(255,255,255,0.02); padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); font-size:13px; color:var(--muted); }
 
-/* -------------------------
-   Small helpers & accessibility
-   ------------------------- */
+ 
 .hidden{ display:none !important }
 .center{ display:grid; place-items:center }
 .kicker{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted); font-size:13px }
@@ -483,6 +411,124 @@ body.modal-open{ overflow:hidden }
   .sidebar-title h2{ font-size:16px }
   .search-wrap input{ min-width:120px }
   .preview-canvas{ height:200px }
+}
+.collection-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+ .collection-info { display:flex; flex-direction:column; gap:4px; }
+
+ .collection-controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+ .collection-meta{ font-size:13px; color:var(--muted); white-space:nowrap; }
+ .collection-controls select{ min-width:140px; }
+
+ .hero-stats{
+  display:flex;
+  gap:12px;
+  margin-top:14px;
+  flex-wrap:nowrap;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.stat-chip{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:120px;
+  min-width:100px;
+  height:72px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+  border:1px solid var(--border-weak);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+  color:var(--text);
+  padding:10px;
+  text-align:center;
+}
+
+ .stat-chip h4{
+  margin:0;
+  font-size:20px;
+  font-weight:900;
+  line-height:1;
+  color:var(--text);
+}
+
+ .stat-chip p{
+  margin:6px 0 0 0;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1;
+}
+
+  .hero-marquee{
+  margin-top:18px;
+  border-radius:999px;
+  padding:10px 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  overflow:hidden;
+  border:1px solid var(--border-weak);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  position:relative;
+}
+
+ .hero-marquee .marq{
+  display:inline-block;
+  white-space:nowrap;
+  will-change:transform;
+  animation: marquee 16s linear infinite;
+  font-weight:700;
+  color: var(--text);
+  padding-right: 6rem;  
+}
+
+
+@keyframes marquee{
+  from{ transform: translateX(0%); }
+  to  { transform: translateX(-50%); }
+}
+
+ .hero-marquee:hover .marq{ animation-play-state:paused; }
+ .preview-canvas{
+  background:transparent; 
+  height:240px;
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow: inset 0 -8px 24px rgba(0,0,0,0.08);
+}
+
+.preview-canvas .preview-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius:12px;
+}
+
+.pixel-alien{
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  width:120px;
+  height:120px;
+  z-index:2;
+  pointer-events:none; 
+  background:transparent;
 }
 
 
@@ -535,7 +581,7 @@ body.modal-open{ overflow:hidden }
         <div class="topbar-left">
           <a class="crumb" href="#">Collection</a>
           <a class="crumb muted" href="#">Activity</a>
-          <a class="crumb muted" href="#">Provenance</a>
+          <a class="crumb muted" href="tokenomics.html">Tokenomics</a>
         </div>
 
         <div class="topbar-right">
@@ -557,21 +603,22 @@ body.modal-open{ overflow:hidden }
         </div>
       </header>
 
-       <section class="collection-header" aria-label="Collection header">
-        <div class="collection-info">
-          <h3>Dralien Collection</h3>
-          <div class="muted">5000 follower drip.haus collection</div>
-        </div>
+      <section class="collection-header" aria-label="Collection header">
+  <div class="collection-info">
+    <h3>Dralien Collection</h3>
+  </div>
 
-        <div class="collection-controls">
-          <select id="sortSelect" aria-label="Sort collection">
-            <option>Sort: Newest</option>
-            <option>Sort: Oldest</option>
-            <option>Sort: Price</option>
-          </select>
-          <button id="filterBtn" class="btn-ghost" aria-label="Filter"><i class="fa-solid fa-filter" aria-hidden="true"></i></button>
-        </div>
-      </section>
+  <div class="collection-controls">
+    <div class="collection-meta muted">5000 follower drip.haus collection</div>
+    <select id="sortSelect" aria-label="Sort collection">
+      <option>Sort: Newest</option>
+      <option>Sort: Oldest</option>
+      <option>Sort: Price</option>
+    </select>
+    <button id="filterBtn" class="btn-ghost" aria-label="Filter"><i class="fa-solid fa-filter"></i></button>
+  </div>
+</section>
+
 
        <section class="hero-wrap" data-parallax="true" aria-label="Dralien hero">
         <div class="hero-left">
@@ -591,24 +638,20 @@ body.modal-open{ overflow:hidden }
           </div>
 
           <div class="hero-marquee" aria-hidden="false">
-            <div class="marq">Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties)</div>
-          </div>
+  <div class="marq">
+    Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties)
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Monthly Rewards • Physical Dralien • Exclusive Discord • Limited to 222 members — Dec 30, 2025 — Mint price $10 (+7% royalties)
+  </div>
+</div>
+
         </div>
 
         <aside class="hero-preview" aria-hidden="false">
-          <div class="preview-canvas parallax-1">
-            <div class="pixel-alien" role="img" aria-label="pixel dralien preview">
-               <svg width="160" height="160" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="24" height="24" fill="#ccffd9"/>
-                <g fill="#021018">
-                  <rect x="8" y="6" width="2" height="2"/>
-                  <rect x="13" y="6" width="2" height="2"/>
-                  <rect x="7" y="8" width="10" height="8" fill="#e9fef3"/>
-                  <rect x="10" y="14" width="4" height="2" fill="#a7f0a9"/>
-                </g>
-              </svg>
-            </div>
-          </div>
+         <div class="preview-canvas parallax-1">
+  <img class="preview-img" src="image1.gif" alt="preview image">
+</div>
+
 
           <div class="preview-meta">
             <div class="mint-progress">
