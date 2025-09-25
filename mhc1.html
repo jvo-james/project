@@ -390,6 +390,45 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 .marquee-track::-webkit-scrollbar{height:8px}
 .marquee-track::-webkit-scrollbar-thumb{background:rgba(11,11,12,0.06);border-radius:999px}
 
+  /* Article / card media inserted between body and CTA */
+.card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* container for an inline media block */
+.card .article-media {
+  width: 100%;
+  height: 160px;          /* desktop height */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(11,12,14,0.06);
+  border: 1px solid rgba(11,11,12,0.04);
+  background: linear-gradient(180deg, rgba(250,250,250,1), rgba(244,244,244,1));
+}
+
+/* the image itself */
+.card .article-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center;
+  transition: transform .5s cubic-bezier(.2,.9,.2,1);
+}
+
+/* gentle zoom on hover */
+.card:hover .article-media img{ transform: scale(1.04); }
+
+/* responsive adjustments */
+@media (max-width:900px){
+  .card .article-media{ height: 140px; }
+}
+@media (max-width:520px){
+  .card .article-media{ height: 120px; border-radius:8px; }
+}
+
 </style>
   
 </head>
@@ -655,34 +694,59 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 
         <div class="gospel-grid" aria-hidden="false">
           <article class="card devotional">
-            <div class="card-head">
-              <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2l2 5h5l-4 3 2 5-4-3-4 3 2-5L5 7h5z" fill="currentColor" />
-              </svg>
-              <h4>Devotional: Courage (3 min)</h4>
-            </div>
-            <p class="muted small">A short reflection on Joshua 1 — how God equips the timid.</p>
-            <a class="small" href="#">Read devotional »</a>
-          </article>
+  <div class="card-head">
+    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2l2 5h5l-4 3 2 5-4-3-4 3 2-5L5 7h5z" fill="currentColor" />
+    </svg>
+    <h4>Devotional: Courage (3 min)</h4>
+  </div>
 
-          <article class="card testimony">
-            <div class="card-head">
-              <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1 4.5 2.09C12.09 5 13.76 4 15.5 4 18 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
-              </svg>
-              <h4>Testimony: A Conversation that Led to Christ</h4>
-            </div>
-            <p class="muted small">How a simple question over a tee turned into a life changed on campus.</p>
-            <a class="small" href="#">Read testimony »</a>
-          </article>
+  <div class="card-body">
+    <p class="muted small">A short reflection on Joshua 1 — how God equips the timid.</p>
 
-          <article class="card scripture">
-            <div class="card-head">
-              <h4>Scripture Highlight</h4>
-            </div>
-            <blockquote class="muted small">"You are the light of the world." — Matthew 5:14</blockquote>
-            <a class="small" href="#">Verse archive »</a>
-          </article>
+    <div class="article-media">
+      <img src="devotional-1.jpg" alt="Person reading devotional outdoors" loading="lazy" />
+    </div>
+
+    <a class="small" href="#">Read devotional »</a>
+  </div>
+</article>
+
+<article class="card testimony">
+  <div class="card-head">
+    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1 4.5 2.09C12.09 5 13.76 4 15.5 4 18 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
+    </svg>
+    <h4>Testimony: A Conversation that Led to Christ</h4>
+  </div>
+
+  <div class="card-body">
+    <p class="muted small">How a simple question over a tee turned into a life changed on campus.</p>
+
+    <div class="article-media">
+      <img src="testimony-1.jpg" alt="Two people talking during outreach" loading="lazy" />
+    </div>
+
+    <a class="small" href="#">Read testimony »</a>
+  </div>
+</article>
+
+<article class="card scripture">
+  <div class="card-head">
+    <h4>Scripture Highlight</h4>
+  </div>
+
+  <div class="card-body">
+    <blockquote class="muted small">"You are the light of the world." — Matthew 5:14</blockquote>
+
+    <div class="article-media">
+      <img src="scripture-1.jpg" alt="Bible open with sunlight" loading="lazy" />
+    </div>
+
+    <a class="small" href="#">Verse archive »</a>
+  </div>
+</article>
+
         </div>
 
         <!-- Gospel row: Featured Sermon (left) + Design Generator (right) -->
@@ -794,23 +858,45 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
         </header>
 
         <div class="articles-grid" style="margin-top:18px">
-          <article class="article-card">
-            <h4>How to Share Your Faith Naturally</h4>
-            <p class="muted small">Practical tips for gospel conversations without pressure.</p>
-            <a class="small" href="#">Read »</a>
-          </article>
+         <article class="article-card">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h4>How to Share Your Faith Naturally</h4>
+    <p class="muted small">Practical tips for gospel conversations without pressure.</p>
 
-          <article class="article-card">
-            <h4>Short Series: Identity in Christ</h4>
-            <p class="muted small">A 7-day devotional exploring who we are in Jesus.</p>
-            <a class="small" href="#">Read »</a>
-          </article>
+    <div class="article-media" style="margin-top:6px">
+      <img src="article-share-faith.jpg" alt="Two students talking on campus" loading="lazy" />
+    </div>
 
-          <article class="article-card">
-            <h4>Testimony: From Doubt to Faith</h4>
-            <p class="muted small">A campus encounter that changed a life.</p>
-            <a class="small" href="#">Read »</a>
-          </article>
+    <a class="small" href="#">Read »</a>
+  </div>
+</article>
+
+<article class="article-card">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h4>Short Series: Identity in Christ</h4>
+    <p class="muted small">A 7-day devotional exploring who we are in Jesus.</p>
+
+    <div class="article-media" style="margin-top:6px">
+      <img src="article-identity.jpg" alt="Hands holding a Bible" loading="lazy" />
+    </div>
+
+    <a class="small" href="#">Read »</a>
+  </div>
+</article>
+
+<article class="article-card">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h4>Testimony: From Doubt to Faith</h4>
+    <p class="muted small">A campus encounter that changed a life.</p>
+
+    <div class="article-media" style="margin-top:6px">
+      <img src="article-testimony.jpg" alt="Person sharing testimony with friends" loading="lazy" />
+    </div>
+
+    <a class="small" href="#">Read »</a>
+  </div>
+</article>
+
         </div>
       </div>
     </section>
@@ -2035,6 +2121,13 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
   }
 
 })();
+</script>
+<script>
+document.querySelectorAll('.article-media img').forEach(img=>{
+  img.addEventListener('error', ()=> {
+    img.src = 'placeholder-article.jpg'; // supply this fallback image
+  });
+});
 </script>
 
 </html>
