@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Make Heaven Crowded — Wear the Mission</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/6b1f3d9f7f.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root{
+      --bg:#0f1121;
+      --card:#0f1724;
+      --muted:#98a0b3;
+      --accent:#e2a95a; /* gold accent */
+      --accent-2:#c33b3b; /* crimson */
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --radius:18px;
+      --glass-border: rgba(255,255,255,0.05);
+      --gold-grad: linear-gradient(135deg,#ffd89b 0%,#ffb38a 50%,#e2a95a 100%);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(226,169,90,0.06), transparent),
+                  linear-gradient(180deg,#071026 0%, #07121a 100%),
+                  var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      line-height:1.45;
+    }
+
+    /* NAV */
+    .nav{
+      position:fixed;top:18px;left:50%;transform:translateX(-50%);
+      width:92%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border:1px solid var(--glass-border);backdrop-filter: blur(8px);
+      padding:14px 20px;border-radius:14px;z-index:40;box-shadow:0 6px 30px rgba(2,6,23,0.6);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-wrap{width:56px;height:56px;border-radius:12px;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(226,169,90,0.12)}
+    .logo-wrap svg{width:34px;height:34px}
+    .brand h1{font-family:'Bebas Neue';font-size:20px;margin:0;color:#081022}
+    .brand p{margin:0;font-size:12px;color:var(--muted);font-weight:600}
+
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
+    .nav-actions{display:flex;gap:12px;align-items:center}
+    .btn{padding:10px 16px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.05);color:var(--muted)}
+    .btn-primary{background:var(--accent);color:#071022;box-shadow:0 6px 20px rgba(226,169,90,0.12)}
+    .icon-btn{background:transparent;border:0;color:var(--muted);font-size:18px;padding:8px;border-radius:10px}
+
+    /* HERO */
+    .hero{height:88vh;display:grid;grid-template-columns:1fr 480px;gap:40px;align-items:center;padding:96px 20px 36px;max-width:1200px;margin:0 auto}
+
+    .hero-left{padding:36px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:22px;border:1px solid var(--glass-border);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
+    .hero h2{font-family:'Bebas Neue';font-size:48px;margin:0 0 12px;letter-spacing:1px;color:#fff}
+    .hero p.lead{color:var(--muted);font-size:16px;margin:0 0 20px}
+
+    .hero-ctas{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    .hero-ctas .btn-primary{padding:12px 20px;border-radius:12px}
+
+    .stats{display:flex;gap:12px;margin-top:18px}
+    .stat{background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);padding:12px 14px;border-radius:12px;min-width:120px}
+    .stat b{display:block;font-size:18px}
+    .stat small{display:block;color:var(--muted);font-size:12px}
+
+    .hero-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+    .feature{display:flex;gap:10px;align-items:flex-start}
+    .feature .ic{width:48px;height:48px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center}
+    .feature h4{margin:0;font-size:14px}
+    .feature p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+    /* Hero right - product hero collage */
+    .hero-right{position:relative;height:520px;border-radius:22px;overflow:visible}
+    .collage{position:relative;width:100%;height:100%;border-radius:22px;background-image:linear-gradient(135deg, rgba(195,59,59,0.08), rgba(226,169,90,0.04));padding:18px;border:1px solid var(--glass-border)}
+    .card-large{position:absolute;right:18px;top:18px;width:68%;height:68%;border-radius:18px;overflow:hidden;box-shadow:0 30px 60px rgba(2,6,23,0.6);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .card-large img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
+    .small-card{position:absolute;left:12px;bottom:12px;width:44%;height:34%;border-radius:14px;overflow:hidden;box-shadow:0 20px 40px rgba(2,6,23,0.6);}
+    .small-card img{width:100%;height:100%;object-fit:cover}
+
+    /* SHOP */
+    .section{max-width:1200px;margin:44px auto;padding:20px}
+    .section h3{font-family:'Bebas Neue';font-size:26px;margin:0 0 10px}
+    .products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .product{background:var(--card);padding:14px;border-radius:14px;border:1px solid var(--glass-border);overflow:hidden}
+    .product img{width:100%;height:260px;object-fit:cover;border-radius:10px}
+    .p-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .price{font-weight:800}
+    .p-actions{display:flex;gap:8px}
+
+    /* JESUS FACTOR */
+    .jesus-factor{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    .verse-card{background:linear-gradient(180deg, rgba(195,59,59,0.06), rgba(226,169,90,0.02));padding:18px;border-radius:14px;border:1px solid var(--glass-border)}
+    .verse-card h4{margin:0 0 8px;font-size:14px}
+    .verse{font-size:18px;font-weight:600}
+    .devotional{margin-top:12px;color:var(--muted)}
+
+    .testimonials{background:var(--glass);padding:16px;border-radius:14px;border:1px solid var(--glass-border)}
+    .testimonial{padding:10px}
+
+    /* Read & Grow */
+    .blogs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .blog{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:14px;border-radius:12px;border:1px solid var(--glass-border)}
+
+    /* Donate */
+    .donate-cta{display:flex;gap:12px;align-items:center}
+
+    /* Footer */
+    footer{margin-top:44px;padding:36px 20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-top:1px solid var(--glass-border)}
+    .footer-grid{max-width:1200px;margin:0 auto;display:flex;gap:20px;align-items:center;justify-content:space-between}
+    .verse-ticker{display:flex;align-items:center;gap:12px;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr;gap:18px;height:auto}
+      .hero-right{order:-1;height:420px}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .jesus-factor{grid-template-columns:1fr}
+      .blogs{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      .nav{left:12px;right:12px;transform:none;width:auto}
+      .brand h1{font-size:16px}
+      .hero{padding:20px 12px}
+      .product img{height:180px}
+      .products{grid-template-columns:1fr}
+      .blogs{grid-template-columns:1fr}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);font-weight:700}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,4,10,0.6);z-index:80;opacity:0;pointer-events:none;transition:all .25s}
+    .modal.show{opacity:1;pointer-events:auto}
+    .modal .panel{background:linear-gradient(180deg,#071022, #081126);padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.04);width:92%;max-width:720px}
+
+    /* subtle animations */
+    .fade-in{animation:fadeIn .9s both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav fade-in" aria-label="Main Navigation">
+    <div class="brand">
+      <div class="logo-wrap" aria-hidden>
+        <!-- Cross + Shield Icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="3" fill="#081022"/><path d="M12 6v6" stroke="#071022" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.25 9h5.5" stroke="#071022" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Make Heaven Crowded</h1>
+        <p>Wear the Mission • Share the Gospel</p>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#jesus">Jesus Factor</a>
+      <a href="#read">Read & Grow</a>
+      <a href="#donate">Donate</a>
+      <a href="#about">About</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="pill" id="crowdCountSmall">0 joined</button>
+      <button class="icon-btn" id="openSearch" title="Search"><i class="fas fa-search"></i></button>
+      <button class="btn btn-primary" id="shopNow">Shop Now</button>
+      <button class="icon-btn" id="openCart" title="Cart"><i class="fas fa-shopping-bag"></i></button>
+    </div>
+  </nav>
+
+  <header class="hero" role="banner">
+    <div class="hero-left fade-in">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <p class="pill">New Drop • Gospel Pack</p>
+          <h2>Wear the Mission. Share the Gospel.</h2>
+          <p class="lead">Make Heaven Crowded is a movement — clothing that points people to Jesus. Shop faith-forward apparel and join a growing family of believers making an impact wherever they go.</p>
+
+          <div class="hero-ctas">
+            <button class="btn btn-primary" id="ctaShop">Shop Now</button>
+            <button class="btn btn-ghost" id="ctaLearn">Learn More</button>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><b id="crowdMeter">0</b><small>People joined</small></div>
+            <div class="stat"><b>12</b><small>Collections</small></div>
+            <div class="stat"><b>100%</b><small>Gospel-focused</small></div>
+          </div>
+
+        </div>
+
+        <div style="text-align:right">
+          <div class="muted" style="font-size:12px">Free delivery over <strong>$75</strong></div>
+          <div style="height:12px"></div>
+          <div class="pill">Limited Edition • Gospel Pack</div>
+        </div>
+      </div>
+
+      <div class="hero-features" aria-hidden>
+        <div class="feature">
+          <div class="ic"><i class="fas fa-hand-holding-heart" style="font-size:18px"></i></div>
+          <div>
+            <h4>Purposeful Clothing</h4>
+            <p>Designs built to spark spiritual conversations.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="ic"><i class="fas fa-bible" style="font-size:18px"></i></div>
+          <div>
+            <h4>Scripture-Driven</h4>
+            <p>Every collection features scripture & meaning.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="ic"><i class="fas fa-hands-helping" style="font-size:18px"></i></div>
+          <div>
+            <h4>Support the Mission</h4>
+            <p>Donations fund free resources & outreach.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-right fade-in">
+      <div class="collage" aria-hidden>
+        <div class="card-large">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=2a7b2d9a4da996b1e7e28a5d5b9d9f04" alt="people wearing shirts">
+        </div>
+        <div class="small-card">
+          <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=8b3c2c4f9a2f2d5f7e6b8b6d2f6c8f1b" alt="hoodie closeup">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SHOP -->
+  <section id="shop" class="section fade-in">
+    <h3>Featured Collections</h3>
+    <p class="muted">Faith-forward apparel made to open doors for conversation.</p>
+
+    <div class="products" id="products">
+      <!-- product cards added by JS -->
+    </div>
+  </section>
+
+  <!-- JESUS FACTOR -->
+  <section id="jesus" class="section fade-in">
+    <h3>Jesus Factor</h3>
+    <div class="jesus-factor">
+      <div>
+        <div class="verse-card">
+          <h4>Scripture of the Day</h4>
+          <div class="verse" id="verseOfTheDay">"For God so loved the world..." — John 3:16</div>
+          <p class="devotional" id="devotional">Short devotional will appear here — a few sentences that tie the verse to daily life and invitation.</p>
+
+          <div style="display:flex;gap:10px;margin-top:14px;align-items:center">
+            <button class="btn btn-primary" id="readMoreJesus">Read Today</button>
+            <button class="btn btn-ghost" id="submitTestimony">Share Testimony</button>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="testimonials">
+          <h4 style="margin:0 0 8px">Testimonies</h4>
+          <div id="testimonialWrap">
+            <!-- testimonials by JS -->
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div style="background:linear-gradient(180deg,#081022, #071022);padding:14px;border-radius:14px;border:1px solid var(--glass-border)">
+          <h4 style="margin-top:0">Quick Acts</h4>
+          <ul style="padding-left:16px;color:var(--muted);margin:8px 0">
+            <li>Daily scripture shared to your inbox</li>
+            <li>Volunteer to host a local meet</li>
+            <li>Give to sponsor free materials</li>
+          </ul>
+          <div style="margin-top:12px">
+            <button class="btn btn-primary" id="volunteer">Get Involved</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- READ & GROW -->
+  <section id="read" class="section fade-in">
+    <h3>Read & Grow</h3>
+    <p class="muted">Devotionals, reflections, and short teachings to grow your faith.</p>
+    <div class="blogs" id="blogs">
+      <!-- blogs by JS -->
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section id="donate" class="section fade-in">
+    <h3>Partner & Donate</h3>
+    <p class="muted">Your giving helps fund free devotionals, community outreach, and gospel packs.</p>
+    <div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+      <div style="flex:1;display:flex;gap:10px;align-items:center">
+        <input id="donationAmt" type="number" min="5" placeholder="$25" style="padding:12px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:inherit;max-width:140px">
+        <button class="btn btn-primary" id="donateBtn">Give Now</button>
+      </div>
+      <div class="muted">Or use PayPal / Stripe at checkout.</div>
+    </div>
+  </section>
+
+  <!-- ABOUT & CONTACT -->
+  <section id="about" class="section fade-in">
+    <h3>About Us</h3>
+    <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <p style="margin-top:0;color:var(--muted)">Make Heaven Crowded began with a simple conviction: clothes can be gospel tools. Founded by believers who wanted to spark conversations around faith, every purchase supports free resources, outreach materials, and ministry partnerships.</p>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn btn-primary">Our Story</button>
+          <button class="btn btn-ghost">Meet The Team</button>
+        </div>
+      </div>
+
+      <div style="min-width:260px;flex-basis:360px">
+        <h4 style="margin:0">Contact</h4>
+        <p class="muted">Prayer requests, collaboration, or wholesale?</p>
+        <form id="contactForm" style="margin-top:8px;display:grid;gap:8px">
+          <input placeholder="Name" required style="padding:12px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:inherit">
+          <input placeholder="Email" type="email" required style="padding:12px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:inherit">
+          <textarea placeholder="How can we pray for you?" rows="3" style="padding:12px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:inherit"></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary" type="submit">Send Prayer</button>
+            <button class="btn btn-ghost" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <strong>Make Heaven Crowded</strong>
+        <div style="color:var(--muted);font-size:13px;margin-top:6px">Clothing with a purpose. Made to start conversations & point to Christ.</div>
+      </div>
+      <div class="verse-ticker">
+        <i class="fas fa-scroll" style="font-size:18px"></i>
+        <div id="ticker">Blessed are the meek... — Matthew 5:5</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Donate / Quick Cart -->
+  <div class="modal" id="modal">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="modalTitle">Cart</h3>
+        <button class="icon-btn" id="closeModal"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="modalContent" style="margin-top:12px">
+        <!-- dynamic -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Data (seed) ----------
+    const products = [
+      {id:1,name:'Faith Hoodie — Bold Witness',price:49, img:'https://images.unsplash.com/photo-1545996124-9b0b3b24c9d0?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=f9b1c2b2f4d6b0d3c7f8a1d2'},
+      {id:2,name:'Armor of Faith Tee',price:24, img:'https://images.unsplash.com/photo-1534126511673-b6899657816a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5d4b2fcddd4b5b369d3f7e9a'},
+      {id:3,name:'Grace Tee — Subtle Cross',price:26, img:'https://images.unsplash.com/photo-1520975922543-0aab8c6f9f43?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1b5a2b3c4d5e6f7a8b9c'},
+      {id:4,name:'Gospel Pack (Bundle)',price:69, img:'https://images.unsplash.com/photo-1602810311791-9f4b9b6b1b2f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7c8d9e0f1a2b3c4d5e6f'},
+      {id:5,name:'Make Heaven Crowded Cap',price:19, img:'https://images.unsplash.com/photo-1503342452485-86b7a6b0f3d8?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=0a1b2c3d4e5f6a7b8c9d'},
+      {id:6,name:'Hope Shorts — Walk in Light',price:34, img:'https://images.unsplash.com/photo-1551022371-9f8d4b6d5a2b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=2b3c4d5e6f7a8b9c0d1e'}
+    ];
+
+    const verses = [
+      {v:'"For God so loved the world, that he gave his only Son..." — John 3:16',d:'God’s love compels us to love others. Wear the message.'},
+      {v:'"I can do all things through him who strengthens me." — Philippians 4:13',d:'Confidence that comes from Christ — not yourself.'},
+      {v:'"But seek first the kingdom of God..." — Matthew 6:33',d:'Prioritize the Kingdom in small choices today.'},
+      {v:'"For where two or three are gathered..." — Matthew 18:20',d:'Every conversation can be a church moment.'}
+    ];
+
+    const testimonials = [
+      {t:'I wore my shirt to a coffee shop and God used it to start a conversation that led to prayer.',a:'Maya'},
+      {t:'The Gospel Pack helped our small group hand out simple devotionals to neighbors.',a:'Titus'},
+      {t:'I donated and got a bundle to give to a new believer — they were moved to tears.',a:'Sade'}
+    ];
+
+    const blogsData = [
+      {title:'How to Turn a T-Shirt into a Gospel Conversation',excerpt:'Practical tips for starting faith conversations with confidence.'},
+      {title:'Devotional: Courage to Speak',excerpt:'Short daily reading to remind you of the boldness Christ gives.'},
+      {title:'Volunteer Guide: Host a Gospel Pack Night',excerpt:'Step-by-step for hosting a local outreach through apparel.'}
+    ];
+
+    // ---------- Render Products ----------
+    const productsEl = document.getElementById('products');
+    function renderProducts(){
+      productsEl.innerHTML = '';
+      products.forEach(p=>{
+        const div = document.createElement('div');div.className='product fade-in';
+        div.innerHTML = `
+          <img src="${p.img}" alt="${p.name}">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
+            <div>
+              <div style="font-weight:800">${p.name}</div>
+              <div style="color:var(--muted);font-size:13px;margin-top:6px">Scripture: <em>John 3:16</em></div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">$${p.price}</div>
+              <div class="p-actions" style="margin-top:8px">
+                <button class="btn btn-ghost" onclick="quickView(${p.id})">View</button>
+                <button class="btn btn-primary" onclick="addToCart(${p.id})">Add</button>
+              </div>
+            </div>
+          </div>
+        `;
+        productsEl.appendChild(div);
+      })
+    }
+
+    // ---------- Render Blogs ----------
+    const blogsEl = document.getElementById('blogs');
+    function renderBlogs(){
+      blogsEl.innerHTML='';
+      blogsData.forEach(b=>{
+        const el = document.createElement('div');el.className='blog fade-in';
+        el.innerHTML = `<h4 style="margin:0 0 6px">${b.title}</h4><div class="muted">${b.excerpt}</div><div style="margin-top:10px"><button class='btn btn-primary'>Read</button></div>`;
+        blogsEl.appendChild(el);
+      })
+    }
+
+    // ---------- Testimonials ----------
+    const testWrap = document.getElementById('testimonialWrap');
+    function renderTests(){
+      testWrap.innerHTML='';
+      testimonials.forEach(t=>{
+        const d = document.createElement('div');d.className='testimonial';
+        d.innerHTML = `<blockquote style="margin:0 0 6px">“${t.t}”</blockquote><div class="muted">— ${t.a}</div>`;
+        testWrap.appendChild(d);
+      })
+    }
+
+    // ---------- Verse Rotation / Ticker ----------
+    let verseIndex = 0;
+    const verseOfTheDayEl = document.getElementById('verseOfTheDay');
+    const devotionalEl = document.getElementById('devotional');
+    const tickerEl = document.getElementById('ticker');
+    function flipVerse(){
+      const v = verses[verseIndex % verses.length];
+      verseOfTheDayEl.textContent = v.v;
+      devotionalEl.textContent = v.d;
+      tickerEl.textContent = v.v;
+      verseIndex++;
+    }
+
+    // ---------- Crowd Meter ----------
+    let crowd = 1245; // seeded number of people joined
+    function animateCrowd(to){
+      const el = document.getElementById('crowdMeter');
+      const small = document.getElementById('crowdCountSmall');
+      const start = crowd;const end = to;const dur = 900;const startTime = performance.now();
+      function frame(t){
+        const p = Math.min(1,(t-startTime)/dur);
+        const cur = Math.floor(start + (end-start)*p);
+        el.textContent = cur.toLocaleString();
+        small.textContent = cur.toLocaleString() + ' joined';
+        if(p<1)requestAnimationFrame(frame); else crowd = end;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // ---------- Cart / Modal ----------
+    let cart = [];
+    function addToCart(id){
+      const p = products.find(x=>x.id===id);
+      cart.push({...p,qty:1});
+      openModal('Cart', cartView());
+      animateCrowd(crowd+1);
+    }
+    function quickView(id){
+      const p = products.find(x=>x.id===id);
+      openModal(p.name, `<div style=\"display:flex;gap:12px;align-items:center\"><img src=\"${p.img}\" style=\"width:140px;height:140px;object-fit:cover;border-radius:10px\"><div><h4 style=\"margin:0\">${p.name}</h4><div class=\"muted\">$${p.price}</div><p class=\"muted\">A design that opens doors to conversation — scripture inside packaging.</p><div style=\"margin-top:10px\"><button class=\"btn btn-primary\" onclick=\"addToCart(${p.id})\">Add to Cart</button></div></div></div>`);
+    }
+    function cartView(){
+      if(cart.length===0) return '<div class="muted">Your cart is empty.</div>';
+      let html = '<div style="display:grid;gap:12px">';
+      let tot = 0;
+      cart.forEach((c,i)=>{ tot+=c.price*c.qty; html += `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${c.name}</strong><div class=\"muted\">$${c.price} • qty ${c.qty}</div></div><div><button class=\"btn btn-ghost\" onclick=\"removeItem(${i})\">Remove</button></div></div>`});
+      html += `<div style=\"display:flex;justify-content:space-between;align-items:center;margin-top:14px\"><strong>Total</strong><strong>$${tot}</strong></div><div style=\"margin-top:12px\"><button class=\"btn btn-primary\" onclick=\"checkout()\">Checkout</button></div></div>`;
+      return html;
+    }
+    function removeItem(i){ cart.splice(i,1); openModal('Cart', cartView()); }
+    function checkout(){ openModal('Checkout', '<div class="muted">Checkout is simulated in this demo. Integrate Stripe or PayPal for real payments.</div><div style="margin-top:12px"><button class="btn btn-primary" onclick="confirmGive()">Confirm & Give</button></div>'); }
+    function confirmGive(){ cart=[]; openModal('Thanks', '<h4 style="margin:0">Thank you!</h4><div class="muted">Your purchase supports gospel outreach.</div>'); }
+
+    // ---------- Modal helpers ----------
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    function openModal(title,content){ modalTitle.textContent = title; modalContent.innerHTML = content; modal.classList.add('show'); }
+    document.getElementById('closeModal').addEventListener('click',()=>modal.classList.remove('show'));
+    document.getElementById('openCart').addEventListener('click',()=>openModal('Cart', cartView()));
+
+    // donate
+    document.getElementById('donateBtn').addEventListener('click',()=>{
+      const amt = document.getElementById('donationAmt').value || '25';
+      openModal('Donate', `<h4>Give $${amt}</h4><p class=\"muted\">Thank you for supporting gospel work. This demo simulates donation flow.</p><div style=\"margin-top:12px\"><button class=\"btn btn-primary\" onclick=\"confirmGive()\">Give $${amt}</button></div>`);
+    })
+
+    // contact form
+    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();openModal('Prayer Sent','<div class="muted">Thanks — your prayer request has been received. We will pray for you.</div>')})
+
+    // small interactions
+    document.getElementById('ctaShop').addEventListener('click',()=>location.href='#shop');
+    document.getElementById('shopNow').addEventListener('click',()=>location.href='#shop');
+    document.getElementById('ctaLearn').addEventListener('click',()=>location.href='#jesus');
+
+    // volunteer & testimony
+    document.getElementById('volunteer').addEventListener('click',()=>openModal('Get Involved','<div class="muted">Email us at hello@makeheavencrowded.org to volunteer. This is a demo page.</div>'));
+    document.getElementById('submitTestimony').addEventListener('click',()=>openModal('Share Testimony','<form onsubmit="event.preventDefault();addTestimony();"><input placeholder="Name" required style="padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);width:100%;margin-bottom:8px"><textarea placeholder="Your story" required style="padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);width:100%"></textarea><div style="margin-top:8px"><button class="btn btn-primary">Share</button></div></form>'));
+    function addTestimony(){ testimonials.push({t:'A new testimony added from the modal.',a:'Friend'}); renderTests(); modal.classList.remove('show'); }
+
+    // search (simple prompt)
+    document.getElementById('openSearch').addEventListener('click',()=>{ const q = prompt('Search Make Heaven Crowded (demo):'); if(q) alert('Search simulated — you searched for: '+q)});
+
+    // ticker rotate every 6s
+    setInterval(flipVerse,6000);
+
+    // initial render
+    renderProducts(); renderBlogs(); renderTests(); flipVerse(); animateCrowd(crowd);
+
+    // small accessibility: close modal on Escape
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ modal.classList.remove('show'); } });
+
+  </script>
+</body>
+</html>
