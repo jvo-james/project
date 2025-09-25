@@ -569,6 +569,174 @@ body.modal-open{ overflow:hidden }
   background:transparent;
 }
 
+ .sidebar{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between; 
+  height:100vh;
+  padding:18px;
+}
+
+ .sidebar-mint, .sidebar-footer{
+  margin-top:0;
+}
+
+ @media (max-width:900px){
+  .sidebar{ position:relative; height:auto; justify-content:flex-start; }
+}
+
+ .about-left { padding:0; }
+.creator-card{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.006));
+  border:1px solid var(--border-weak);
+  border-radius:14px;
+  padding:18px;
+  box-shadow: 0 18px 46px rgba(0,0,0,0.08);
+}
+
+ .creator-avatar{
+  flex: 0 0 120px;
+  width:120px;
+  height:120px;
+  border-radius:16px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(135deg,var(--accent-2),var(--accent-1));
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+.creator-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+ .creator-info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.creator-info h3{ margin:0; font-size:20px; font-weight:900; color:var(--text); }
+.creator-info p.lead{ margin:0; color:var(--text-dim); line-height:1.4; }
+
+ .about-stats{
+  display:flex;
+  gap:12px;
+  margin-top:6px;
+  flex-wrap:wrap;
+}
+.about-stat{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  border:1px solid var(--border-weak);
+  padding:10px 14px;
+  border-radius:10px;
+  min-width:120px;
+  text-align:center;
+}
+.about-stat h4{ margin:0; font-size:18px; color:var(--text); font-weight:900; }
+.about-stat p{ margin:4px 0 0; color:var(--muted); font-size:13px; }
+
+ .skills{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.skill-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border-weak);
+  background: rgba(255,255,255,0.01);
+  color:var(--text-dim);
+  font-weight:700;
+  font-size:13px;
+}
+
+ .creator-timeline{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.timeline-item{
+  display:flex;
+  gap:12px;
+  position:relative;
+  padding-left:6px;
+}
+.timeline-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--accent-1);flex:0 0 10px;margin-top:6px;
+}
+.timeline-content h5{ margin:0; font-size:14px; font-weight:800; color:var(--text); }
+.timeline-content p{ margin:4px 0 0; color:var(--muted); font-size:13px; }
+
+ .creator-actions{ display:flex; gap:10px; margin-top:6px; }
+.creator-actions .btn-primary{ padding:10px 14px; }
+.creator-actions .btn-ghost{ padding:10px 12px; border-radius:10px; }
+
+ @media (max-width:1100px){
+  .creator-card{ flex-direction:column; align-items:center; text-align:center; }
+  .creator-avatar{ width:110px; height:110px; }
+  .creator-info{ align-items:center; }
+  .about-stats{ justify-content:center; }
+}
+
+ body.light-mode{
+  background:
+    radial-gradient(600px 240px at 8% 8%, rgba(124,108,255,0.02), transparent 10%),
+    radial-gradient(480px 200px at 94% 82%, rgba(63,225,195,0.02), transparent 12%),
+    linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 60%);
+}
+
+ body.light-mode .tools-section,
+body.light-mode .about-section,
+body.light-mode .collection-header,
+body.light-mode #gallery,
+body.light-mode .collection-header,
+body.light-mode .new-site-footer {
+  background: var(--card-bg);
+  border: 1px solid var(--border-weak);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+}
+
+  main > * + * { margin-top: 20px; }
+
+ .collection-header{ margin-bottom:6px; }
+
+ .page-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:18px;
+  padding-top:8px;
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+ .page-actions .btn-primary{ white-space:nowrap; }
+
+ .modal-overlay, .nft-modal-card, .tool-modal-card, .nft-info {
+  color: var(--text) !important;
+}
+body.light-mode .modal-overlay{
+  background: linear-gradient(180deg, rgba(2,6,23,0.05), rgba(2,6,23,0.02));
+  backdrop-filter: blur(6px);
+}
+body.light-mode .nft-modal-card, body.light-mode .tool-modal-card{
+  background: var(--card-bg);
+  color: var(--text);
+  border-color: var(--border-weak);
+}
+body.light-mode .nft-info, body.light-mode .nft-title, body.light-mode .nft-sub, body.light-mode .muted{
+  color: var(--text-dim) !important;
+}
+.modal-overlay .nft-close, .modal-overlay .modal-close{ color:var(--text) !important; }
+
+ .small-gap { margin-top:10px; }
+
+.page-actions{ position:relative; z-index:1; }
+  .nft-modal-card .muted, .tool-modal-card .muted { color: var(--text-dim) !important; }
+.nft-modal-card .nft-title, .tool-modal-card h3 { color: var(--text) !important; }
 
 </style>
 
@@ -827,56 +995,75 @@ body.modal-open{ overflow:hidden }
 
        <section class="about-section" id="about" aria-label="About the creator">
         <div class="about-left reveal">
-          <div class="about-eyebrow"><i class="fa-solid fa-user-astronaut" aria-hidden="true"></i><span>ABOUT THE CREATOR</span></div>
-          <h3 class="about-title">ABOUT THE CREATOR</h3>
+  <div class="creator-card" role="region" aria-label="About the creator card">
+    <div class="creator-avatar" aria-hidden="true">
+       <img src="image1.gif" alt="NifftySwiggle — creator portrait" onerror="this.style.display='none'">
+       <div class="avatar-fallback" aria-hidden="true" style="font-weight:900;color:#021018;font-size:28px;">NS</div>
+    </div>
 
-          <p class="about-desc">
-            I have been developing NFTs since 2020. This compact 111-supply collection focuses on utilities, monthly airdrops, and community-first value.
-          </p>
+    <div class="creator-info">
+      <h3>NifftySwiggle — Creator & Builder</h3>
+      <p class="lead">Builder of small-supply, utility-first NFT projects since 2020. Focused on sustainable holder value — monthly airdrops, exclusive physical drops, and game integrations.</p>
 
-          <div class="utils-row">
-            <div class="util-pill"><i class="fa-solid fa-award" aria-hidden="true"></i><div><strong>Focused supply</strong><div class="muted">111 mainnet NFTs</div></div></div>
-            <div class="util-pill"><i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i><div><strong>Planned utilities</strong><div class="muted">$10k+ value for holders</div></div></div>
-            <div class="util-pill"><i class="fa-solid fa-users-gear" aria-hidden="true"></i><div><strong>Community</strong><div class="muted">Exclusive gated Discord</div></div></div>
-          </div>
+      <div class="about-stats" aria-hidden="false">
+        <div class="about-stat"><h4>111</h4><p>Mainnet NFTs</p></div>
+        <div class="about-stat"><h4>100+</h4><p>WL & Early Access</p></div>
+        <div class="about-stat"><h4>48</h4><p>Months rewards</p></div>
+      </div>
 
-          <h4>Project Milestones</h4>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content"><h5>2020 — Getting started</h5><p>Creator begins building small, utility-driven NFT projects.</p></div>
-            </div>
+      <div class="skills" aria-hidden="false">
+        <span class="skill-pill">NFT Design</span>
+        <span class="skill-pill">Smart Contracts</span>
+        <span class="skill-pill">Airdrops</span>
+        <span class="skill-pill">GameFi</span>
+      </div>
 
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content"><h5>2024 — Tools & prototypes</h5><p>Built an NFT generator, staking tools, airdrop platform and early game concepts.</p></div>
-            </div>
+      <div class="creator-actions">
+        <a class="btn-primary" href="#" role="button">Follow</a>
+        <a class="btn-ghost" href="#" role="button">View Portfolio</a>
+      </div>
 
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content"><h5>Dec 30, 2025 — Mainnet mint</h5><p>Launch 111 mainnet Dralien NFTs; utilities & airdrops planned.</p></div>
-            </div>
-          </div>
+      <div class="creator-timeline" aria-hidden="false">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content"><h5>2020 — Getting started</h5><p>Early experiments with collector-first utility drops.</p></div>
         </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content"><h5>2024 — Tools & prototypes</h5><p>NFT generator, airdrop scheduler and staking tools launched.</p></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content"><h5>Dec 30, 2025 — Mainnet mint</h5><p>111 mainnet Dralien NFTs — community-first utilities and monthly value.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <aside class="about-right reveal">
-          <div class="card creator">
-            <div class="avatar">JS</div>
-            <div class="creator-info">
-              <div class="creator-name">NifftySwiggle — Creator</div>
-              <p class="muted">Developing NFTs since 2020. Craft & holders-first utility.</p>
-            </div>
-          </div>
+<aside class="about-right reveal">
+  <div class="card creator" style="padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid var(--border-weak)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:52px;height:52px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));font-weight:900;color:#021018">JS</div>
+      <div>
+        <div style="font-weight:900">NifftySwiggle</div>
+        <div class="muted">Creator • Builder • Collector</div>
+      </div>
+    </div>
 
-          <div class="card quick-utilities">
-            <strong>Quick utilities</strong>
-            <ul>
-              <li>Monthly $10 curated airdrops</li>
-              <li>Physical collectible for holders</li>
-              <li>Play-to-earn events & airdrop rewards</li>
-            </ul>
-          </div>
-        </aside>
+    <div style="margin-top:12px;color:var(--muted);font-size:14px">Short bio: focused on high-quality small-supply collections that give real value to holders: physical drops, recurring airdrops, and in-platform tools.</div>
+
+    <div style="margin-top:12px">
+      <strong>Quick utilities</strong>
+      <ul style="margin:8px 0 0 16px;color:var(--muted)">
+        <li>Monthly curated airdrops</li>
+        <li>Physical collectible for holders</li>
+        <li>Play-to-earn events & airdrop rewards</li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
       </section>
 
       <div class="page-actions">
