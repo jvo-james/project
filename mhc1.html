@@ -117,51 +117,6 @@ h2 mark.accent{background:linear-gradient(90deg,rgba(212,171,78,0.12),rgba(212,1
 .mockup-wrap{width:100%;max-width:420px;position:relative}
 .hero-image{width:100%;height:auto;border-radius:14px;object-fit:cover;display:block;box-shadow:var(--shadow-deep);border:1px solid rgba(11,11,12,0.03)}
 
-  /* === Hero slider styles === */
-.hero-slider{position:relative;width:100%;max-width:420px;border-radius:16px;overflow:hidden;border:1px solid rgba(11,11,12,0.04);box-shadow:var(--shadow-deep);background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.02));}
-
-/* slides stack */
-.slides{position:relative;height:420px}
-.slide{position:absolute;inset:0;opacity:0;transform:translateZ(0);transition:opacity .6s var(--ease);display:block}
-.slide img{width:100%;height:420px;object-fit:cover;display:block;border-radius:14px;transform:scale(1.12);transition:transform 9s linear,filter .6s ease}
-.slide.active{opacity:1;z-index:2}
-.slide.active img{transform:scale(1);filter:brightness(0.98) saturate(1.05)}
-
-/* caption overlay */
-.slide-caption{position:absolute;left:14px;bottom:16px;right:14px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));backdrop-filter: blur(6px);padding:12px;border-radius:12px;box-shadow:0 12px 30px rgba(11,12,14,0.06);border:1px solid rgba(11,11,12,0.03)}
-.slide-caption .kicker{display:inline-block;font-weight:800;color:var(--gold-600);background:linear-gradient(90deg,var(--gold-50),#fff);padding:6px 10px;border-radius:999px;font-size:12px}
-
-/* controls */
-.slider-control{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.92);border:1px solid rgba(11,11,12,0.06);width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-size:22px;cursor:pointer;box-shadow:var(--shadow-soft);z-index:5}
-.slider-control.prev{left:10px}
-.slider-control.next{right:10px}
-.slider-control:hover{transform:translateY(-50%) scale(1.03)}
-
-/* dots */
-.slider-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;display:flex;gap:8px;z-index:6}
-.slider-dots button{width:10px;height:10px;border-radius:999px;border:0;background:rgba(11,11,12,0.18);cursor:pointer}
-.slider-dots button.active{background:var(--gold-500);transform:scale(1.18)}
-
-/* highlight card (kept similar but elevated) */
-.highlight-card{position:absolute;right:12px;bottom:18px;display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 18px 40px rgba(11,12,14,0.12);border:1px solid rgba(11,11,12,0.04);cursor:pointer;z-index:8;transition:transform .18s var(--ease)}
-.highlight-card:hover{transform:translateY(-6px)}
-.highlight-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover}
-.highlight-copy .price{color:var(--gold-600);font-weight:900}
-
-/* responsive adjustments */
-@media (max-width:900px){
-  .slides{height:320px}
-  .slide img{height:320px}
-  .hero-grid{gap:16px}
-  .highlight-card{position:static;margin-top:10px;right:auto;bottom:auto}
-}
-@media (max-width:520px){
-  .slides{height:240px}
-  .slide img{height:240px}
-  .slide-caption{padding:10px;font-size:14px}
-  .slider-control{display:none}
-}
-
 /* Featured floating highlight card */
 .highlight-card{position:absolute;right:12px;bottom:18px;display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 10px 30px rgba(11,12,14,0.12);border:1px solid rgba(11,11,12,0.04);cursor:pointer}
 .highlight-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover}
@@ -320,6 +275,34 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 
 /* End of stylesheet */
 
+  /* ===== Shop: grid layout and toolbar polish ===== */
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start}
+.shop-grid .product-card{min-height:360px;display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;border:1px solid rgba(11,11,12,0.04);background:var(--card);box-shadow:var(--shadow-soft);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.shop-grid .product-media img{width:100%;height:220px;object-fit:cover;border-radius:10px}
+.product-meta{display:flex;flex-direction:column;gap:8px}
+.product-title{font-size:15px;margin:0}
+.product-rating{font-size:13px;color:var(--muted-700);display:flex;gap:6px;align-items:center}
+.price{font-weight:900;font-size:16px;color:var(--muted-900)}
+
+/* action row: price + add */
+.product-actions{display:flex;gap:8px;align-items:center;margin-top:auto}
+.product-actions .btn.ghost{padding:8px 10px}
+.product-badge{display:inline-block;padding:6px 8px;border-radius:8px;font-weight:800;background:linear-gradient(90deg,var(--gold-50),#fff);border:1px solid rgba(208,170,98,0.06);color:var(--gold-600);font-size:13px}
+
+/* toolbar + chips adjustments */
+.shop-toolbar select, .price-group input[type="range"]{cursor:pointer}
+#shopPrice{width:160px}
+
+/* pagination */
+.shop-pager .btn.ghost{padding:8px 12px}
+#pagerNumbers button{min-width:36px;height:36px;border-radius:8px;border:1px solid rgba(11,11,12,0.06);background:transparent;cursor:pointer}
+#pagerNumbers button.active{background:var(--gold-500);color:#fff;border-color:transparent}
+
+/* responsive */
+@media (max-width:1100px){ .shop-grid{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:900px){ .shop-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:520px){ .shop-grid{grid-template-columns:1fr} .shop-toolbar{flex-direction:column;align-items:stretch} }
+
 </style>
   
 </head>
@@ -425,73 +408,63 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
           </div>
         </div>
 
-       <!-- ===== Enhanced Hero: slideshow + dynamic highlight ===== -->
-<aside class="hero-media" aria-hidden="false">
-  <div id="heroSlider" class="hero-slider" aria-roledescription="carousel" aria-label="Hero slideshow">
-    <div class="slides">
-      <div class="slide" data-product="mhc-hd-01" data-bg="hero-people.jpg" aria-roledescription="slide" aria-label="Crowd Hoodie">
-        <img src="hero-people.jpg" alt="People wearing Make Heaven Crowded apparel" />
-        <div class="slide-caption">
-          <div class="kicker">NEW DROP</div>
-          <h3>Make Heaven Crowded — <mark class="accent">Faith Collection</mark></h3>
-          <p class="small muted">Conversation-starting tees & cozy hoodies — ethically produced.</p>
-          <div style="margin-top:10px">
-            <a class="btn primary" href="#shop">Shop the Drop</a>
-            <a class="btn ghost" href="#gospel">Read Devotionals</a>
+        <!-- RIGHT: hero visual / mockup + verse card -->
+        <aside class="hero-media" aria-hidden="false">
+          <div class="mockup-wrap">
+            <img src="hero-people.jpg" alt="People wearing Make Heaven Crowded apparel" class="hero-image" />
+
+            <!-- floating product highlight -->
+            <button class="highlight-card" data-product-id="mhc-hd-01" aria-label="Featured product: Crowd Hoodie">
+              <img src="crowd-hoodie.jpg" alt="Crowd Hoodie" class="highlight-thumb" />
+              <div class="highlight-copy">
+                <div class="small muted">Featured</div>
+                <strong>Crowd Hoodie</strong>
+                <div class="price">$48</div>
+                <span class="btn small" role="link">Buy</span>
+              </div>
+            </button>
           </div>
-        </div>
-      </div>
 
-      <div class="slide" data-product="mhc-ts-02" data-bg="hero-people-2.jpg" aria-roledescription="slide" aria-label="Grace Tee">
-        <img src="hero-people-2.jpg" alt="People wearing Make Heaven Crowded Grace Tee" />
-        <div class="slide-caption">
-          <div class="kicker">FEATURED</div>
-          <h3>Grace Over Grind — <mark class="accent">Soft Tees</mark></h3>
-          <p class="small muted">Simple designs, bold message. Perfect for campus conversations.</p>
-          <div style="margin-top:10px">
-            <a class="btn primary" href="#shop">Shop Tees</a>
+          <!-- HERO ENHANCEMENTS: decorative shapes + product vignette + trust strip -->
+          <div class="hero-decor" aria-hidden="true">
+            <svg class="hero-ribbon" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="gRibbon" x1="0" x2="1">
+                  <stop offset="0" stop-color="#f6d7a1" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#cf9b43" stop-opacity="0.95"/>
+                </linearGradient>
+                <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.12)"/>
+                </pattern>
+              </defs>
+              <rect x="0" y="0" width="100" height="20" fill="url(#gRibbon)"/>
+              <rect x="0" y="0" width="100" height="20" fill="url(#dots)" opacity="0.18"/>
+            </svg>
+
+            <div class="hero-vignette" role="list" aria-label="Featured products">
+              <div class="v-item" role="listitem"><img src="saved-tee.jpg" alt="Saved Tee" /></div>
+              <div class="v-item" role="listitem"><img src="crowd-hoodie.jpg" alt="Crowd Hoodie" /></div>
+              <div class="v-item" role="listitem"><img src="grace-tee.jpg" alt="Grace Tee" /></div>
+              <div class="v-meta">
+                <div class="small muted">Shop & Support Missions</div>
+                <a class="btn small ghost" href="#shop">Browse Shop</a>
+              </div>
+            </div>
+
+            <div class="hero-trust" aria-hidden="true">
+              <span class="badge">Ethical Production</span>
+              <span class="badge">Donations Supported</span>
+              <span class="badge">Free Shipping $80+</span>
+            </div>
           </div>
-        </div>
-      </div>
+          <!-- /hero-decor -->
 
-      <div class="slide" data-product="mhc-ts-01" data-bg="hero-people-3.jpg" aria-roledescription="slide" aria-label="Saved Tee">
-        <img src="hero-people-3.jpg" alt="Saved Tee in the wild" />
-        <div class="slide-caption">
-          <div class="kicker">BEST SELLER</div>
-          <h3>Saved Tee — <mark class="accent">Wear Your Story</mark></h3>
-          <p class="small muted">Lightweight, breathable, and printed with scripture.</p>
-          <div style="margin-top:10px">
-            <a class="btn primary" href="#shop">View Best Seller</a>
+          <div class="verse-card" role="region" aria-label="Verse of the day" style="margin-top:14px">
+            <div class="verse-label">Verse of the Day</div>
+            <blockquote id="verseOfDay">— John 3:16 — For God so loved the world...</blockquote>
+            <a class="muted small" href="#read">Read more »</a>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <button class="slider-control prev" aria-label="Previous slide">‹</button>
-    <button class="slider-control next" aria-label="Next slide">›</button>
-
-    <div class="slider-dots" role="tablist" aria-label="Slide dots"></div>
-  </div>
-
-  <!-- floating product highlight (will be updated by JS per slide) -->
-  <button class="highlight-card" id="heroHighlight" data-product-id="mhc-hd-01" aria-label="Featured product">
-    <img src="crowd-hoodie.jpg" alt="Featured product" class="highlight-thumb" />
-    <div class="highlight-copy">
-      <div class="small muted">Featured</div>
-      <strong id="highlightTitle">Crowd Hoodie</strong>
-      <div class="price" id="highlightPrice">$48</div>
-      <span class="btn small" role="link" id="highlightBuy">Buy</span>
-    </div>
-  </button>
-
-  <!-- Verse card kept below the slider -->
-  <div class="verse-card" role="region" aria-label="Verse of the day" style="margin-top:14px">
-    <div class="verse-label">Verse of the Day</div>
-    <blockquote id="verseOfDay">— John 3:16 — For God so loved the world...</blockquote>
-    <a class="muted small" href="#read">Read more »</a>
-  </div>
-</aside>
-
+        </aside>
 
       </div>
     </section>
@@ -517,63 +490,66 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
       </div>
     </section>
 
-    <!-- FULL SHOP with filters -->
-    <section id="shop" class="section" aria-labelledby="shop-heading">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h3 id="shop-heading">Shop</h3>
-            <p class="muted small">T-Shirts • Hoodies • Tank Tops • Sweatshirts • Shorts</p>
+<!-- ====== FULL SHOP (REPLACEMENT) ====== -->
+<section id="shop" class="section" aria-labelledby="shop-heading">
+  <div class="container">
+    <header class="section-head" style="align-items:flex-start;gap:12px">
+      <div style="flex:1">
+        <h3 id="shop-heading">Shop</h3>
+        <p class="muted small" id="shop-subtitle" style="margin-top:6px">T-Shirts • Hoodies • Tank Tops • Sweatshirts • Shorts</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+        <!-- Search (re-uses your existing #siteSearch input if present) -->
+        <div class="search-wrap" style="width:320px;">
+          <label for="siteSearch" class="visually-hidden">Search products</label>
+          <input id="siteSearch" type="search" placeholder="Search products, verses or tags" />
+        </div>
+
+        <!-- Toolbar with sort / price / donate -->
+        <div class="shop-toolbar" style="display:flex;gap:8px;align-items:center">
+          <label class="visually-hidden" for="shopSort">Sort</label>
+          <select id="shopSort" aria-label="Sort products" style="min-width:170px;padding:9px;border-radius:10px;border:1px solid rgba(11,11,12,0.06);background:transparent">
+            <option value="featured">Featured</option>
+            <option value="new">Newest</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+          </select>
+
+          <div class="price-group" style="display:flex;gap:8px;align-items:center">
+            <label for="shopPrice" class="visually-hidden">Maximum price</label>
+            <input id="shopPrice" type="range" min="0" max="200" value="200" />
+            <div class="small muted" id="shopPriceVal" aria-live="polite">$200</div>
           </div>
 
-          <div class="shop-tools">
-            <div class="search-wrap" role="search">
-              <label for="siteSearch" class="visually-hidden">Search products</label>
-              <input id="siteSearch" type="search" placeholder="Search products or verses" />
-            </div>
-
-            <div class="filters" role="toolbar" aria-label="Product categories">
-              <button class="chip active" data-cat="all">All</button>
-              <button class="chip" data-cat="tshirt">T-Shirts</button>
-              <button class="chip" data-cat="hoodie">Hoodies</button>
-              <button class="chip" data-cat="tank">Tank Tops</button>
-              <button class="chip" data-cat="sweat">Sweatshirts</button>
-              <button class="chip" data-cat="shorts">Shorts</button>
-            </div>
-          </div>
-
-          <!-- single container: grid-shop (no nested .container) -->
-          <div class="grid-shop" style="margin-top:18px">
-            <aside class="shop-aside" aria-label="Shop filters">
-              <div class="aside-card">
-                <h4>Sort</h4>
-                <select aria-label="Sort products" id="sortProducts">
-                  <option value="featured">Featured</option>
-                  <option value="new">New</option>
-                  <option value="price-asc">Price: Low → High</option>
-                  <option value="price-desc">Price: High → Low</option>
-                </select>
-              </div>
-
-              <div class="aside-card">
-                <h4>Price</h4>
-                <input type="range" min="0" max="200" value="100" aria-label="Maximum price" />
-              </div>
-
-              <div class="aside-card">
-                <h4>Sponsor</h4>
-                <p class="muted small">Donate to provide evangelism shirts for outreach teams.</p>
-                <button class="btn small primary" data-action="sponsor">Sponsor $30</button>
-              </div>
-            </aside>
-
-            <section class="shop-list" id="shopList" aria-live="polite">
-              <!-- full product grid injected by JS -->
-            </section>
-          </div>
+          <button id="shopSponsor" class="btn primary" title="Sponsor outreach shirts">Donate</button>
         </div>
       </div>
-    </section>
+    </header>
+
+    <!-- Category chips (subtle, below heading) -->
+    <div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="chip active" data-cat="all">All</button>
+      <button class="chip" data-cat="tshirt">T-Shirts</button>
+      <button class="chip" data-cat="hoodie">Hoodies</button>
+      <button class="chip" data-cat="tank">Tank Tops</button>
+      <button class="chip" data-cat="sweat">Sweatshirts</button>
+      <button class="chip" data-cat="shorts">Shorts</button>
+      <div style="margin-left:auto" class="muted small">Showing <span id="shopCount">0</span> products</div>
+    </div>
+
+    <!-- Grid + pagination -->
+    <div style="margin-top:18px">
+      <div id="shopGrid" class="shop-grid" aria-live="polite"></div>
+
+      <div class="shop-pager" aria-label="Pagination" style="display:flex;justify-content:center;gap:12px;margin-top:18px">
+        <button id="pagerPrev" class="btn ghost">Prev</button>
+        <div id="pagerNumbers" style="display:flex;gap:8px;align-items:center"></div>
+        <button id="pagerNext" class="btn ghost">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- ==========================
          GOSPEL HUB / JESUS FACTOR (40% content)
@@ -1692,104 +1668,189 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 </script>
 
   <script>
-/* Hero slider behaviour (autoplay, pause on hover, keyboard, highlight update) */
+/* Enhanced shop rendering: 4x2 pagination, sort, price, chips integration.
+   This script intentionally uses the existing global PRODUCTS and window.MHC.addToCart
+*/
 (function(){
-  const slider = document.getElementById('heroSlider');
-  if (!slider) return;
-  const slides = Array.from(slider.querySelectorAll('.slide'));
-  const dotsContainer = slider.querySelector('.slider-dots');
-  const prevBtn = slider.querySelector('.slider-control.prev');
-  const nextBtn = slider.querySelector('.slider-control.next');
-  const highlight = document.getElementById('heroHighlight');
-  const highlightTitle = document.getElementById('highlightTitle');
-  const highlightPrice = document.getElementById('highlightPrice');
-  const highlightBuy = document.getElementById('highlightBuy');
+  const PRODUCTS_SOURCE = window.PRODUCTS || (window.MHC && window.MHC.PRODUCTS) || [];
+  const grid = document.getElementById('shopGrid');
+  const chips = Array.from(document.querySelectorAll('#shop .chip'));
+  const search = document.getElementById('siteSearch');
+  const sortSel = document.getElementById('shopSort');
+  const priceRange = document.getElementById('shopPrice');
+  const priceVal = document.getElementById('shopPriceVal');
+  const sponsorBtn = document.getElementById('shopSponsor');
+  const shopCount = document.getElementById('shopCount');
+  const pagerPrev = document.getElementById('pagerPrev');
+  const pagerNext = document.getElementById('pagerNext');
+  const pagerNumbers = document.getElementById('pagerNumbers');
 
-  // build dots
-  slides.forEach((s, i) => {
-    const btn = document.createElement('button');
-    btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-    btn.dataset.index = i;
-    btn.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(btn);
-  });
+  const PER_PAGE = 8; // 4 x 2
+  let currentPage = 1;
+  let activeCat = 'all';
+  let maxPrice = Number(priceRange ? priceRange.value : 9999);
+  let searchQ = '';
 
-  let current = 0;
-  let timer = null;
-  let playing = true;
-  const INTERVAL = 5000;
+  // small helper: create card from template if available, else manual DOM
+  function makeCard(p) {
+    const tpl = document.getElementById('product-template');
+    if (tpl && tpl.content) {
+      const node = tpl.content.cloneNode(true);
+      const article = node.querySelector('article') || node.querySelector('.product-card');
+      if (!article) return null;
+      // ensure top-level card class
+      article.classList.add('product-card');
+      article.dataset.productId = p.id;
+      const img = article.querySelector('img');
+      if (img){ img.src = p.img; img.alt = p.title; img.style.height = '220px'; }
+      const title = article.querySelector('.product-title') || article.querySelector('h4');
+      if (title) title.textContent = p.title;
+      const verse = article.querySelector('.product-verse');
+      if (verse) verse.textContent = p.verse;
+      const priceEl = article.querySelector('.price');
+      if (priceEl) priceEl.textContent = '$' + Number(p.price).toFixed(2);
+      // wire actions: add-to-cart & quick view
+      const addBtn = article.querySelector('[data-action="add-to-cart"]') || article.querySelector('.btn.primary');
+      if (addBtn) addBtn.addEventListener('click', (e) => { e.preventDefault(); window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); });
+      const quickBtn = article.querySelector('[data-action="quickview"]') || article.querySelector('.btn.ghost');
+      if (quickBtn) quickBtn.addEventListener('click', (e) => { e.preventDefault(); window.MHC && window.MHC.openQuickview && window.MHC.openQuickview(p.id); });
+      return article;
+    }
 
-  function activate(i) {
-    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
-    Array.from(dotsContainer.children).forEach((d, idx) => d.classList.toggle('active', idx === i));
-    // update highlight from slide data-product
-    const prodId = slides[i].dataset.product;
-    if (prodId && window.MHC && Array.isArray(window.MHC.PRODUCTS)) {
-      const p = window.MHC.PRODUCTS.find(x => x.id === prodId) || {};
-      highlight.dataset.productId = prodId;
-      highlight.querySelector('.highlight-thumb').src = p.img || highlight.querySelector('.highlight-thumb').src;
-      highlightTitle.textContent = p.title || highlightTitle.textContent;
-      highlightPrice.textContent = (typeof p.price !== 'undefined') ? ('$' + Number(p.price).toFixed(2)) : highlightPrice.textContent;
-      // Buy button: attach event
-      highlight.onclick = () => { if (p && p.id) window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); };
-      highlightBuy.onclick = (ev) => { ev.stopPropagation(); if (p && p.id) window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); };
+    // fallback: manual card
+    const card = document.createElement('article');
+    card.className = 'product-card';
+    card.dataset.productId = p.id;
+    card.innerHTML = `
+      <a class="product-media" href="#"><img src="${p.img}" alt="${p.title}"></a>
+      <div class="product-meta">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <h4 class="product-title">${p.title}</h4>
+          <div class="product-badge"> ${p.type && p.type.toUpperCase()} </div>
+        </div>
+        <div class="product-rating">⭐︎ 4.8 • <span class="muted small">${p.verse}</span></div>
+        <div class="price">${'$' + Number(p.price).toFixed(2)}</div>
+      </div>
+      <div class="product-actions">
+        <button class="btn ghost" data-action="quickview">View</button>
+        <button class="btn primary" data-action="add-to-cart">Add</button>
+      </div>
+    `;
+    // attach events
+    card.querySelector('[data-action="add-to-cart"]').addEventListener('click', (e) => { e.preventDefault(); window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); });
+    card.querySelector('[data-action="quickview"]').addEventListener('click', (e) => { e.preventDefault(); window.MHC && window.MHC.openQuickview && window.MHC.openQuickview(p.id); });
+    return card;
+  }
+
+  // apply filters, sort and pagination, then render
+  function getFilteredSortedItems() {
+    const q = (searchQ || '').trim().toLowerCase();
+    let items = PRODUCTS_SOURCE.slice();
+
+    // category filter
+    if (activeCat && activeCat !== 'all') items = items.filter(it => (it.type || '').toLowerCase() === activeCat.toLowerCase());
+
+    // price filter
+    items = items.filter(it => Number(it.price || 0) <= Number(maxPrice || 99999));
+
+    // search filter
+    if (q) items = items.filter(it => ((it.title + ' ' + (it.verse||'') + ' ' + (it.type||'')).toLowerCase().includes(q)));
+
+    // sort
+    if (sortSel) {
+      const val = sortSel.value;
+      if (val === 'price-asc') items = items.sort((a,b) => a.price - b.price);
+      else if (val === 'price-desc') items = items.sort((a,b) => b.price - a.price);
+      else if (val === 'new') items = items.sort((a,b) => (a.createdAt||0) - (b.createdAt||0));
+      else items = items; // featured keep array order
+    }
+
+    return items;
+  }
+
+  function renderPage(page = 1) {
+    const items = getFilteredSortedItems();
+    const total = items.length;
+    shopCount && (shopCount.textContent = total);
+
+    const pages = Math.max(1, Math.ceil(total / PER_PAGE));
+    currentPage = Math.min(Math.max(1, page), pages);
+
+    // slice to page
+    const start = (currentPage - 1) * PER_PAGE;
+    const pageItems = items.slice(start, start + PER_PAGE);
+
+    // clear grid & append
+    grid.innerHTML = '';
+    if (!pageItems.length) {
+      grid.innerHTML = '<div class="muted small" style="grid-column:1/-1;padding:28px;text-align:center">No products match those filters.</div>';
     } else {
-      // fallback: update dataset only
-      highlight.dataset.productId = prodId || '';
+      pageItems.forEach(p => {
+        const c = makeCard(p);
+        if (c) grid.appendChild(c);
+      });
     }
+
+    // Pager numbers
+    pagerNumbers.innerHTML = '';
+    for (let i = 1; i <= pages; i++) {
+      const b = document.createElement('button');
+      b.textContent = i;
+      b.className = (i === currentPage) ? 'active' : '';
+      b.addEventListener('click', () => renderPage(i));
+      pagerNumbers.appendChild(b);
+    }
+    pagerPrev.disabled = currentPage === 1;
+    pagerNext.disabled = currentPage === pages;
   }
 
-  function goTo(i) {
-    current = (i + slides.length) % slides.length;
-    activate(current);
+  // wire chip click (delegation)
+  chips.forEach(ch => ch.addEventListener('click', (ev) => {
+    chips.forEach(c => c.classList.remove('active'));
+    ch.classList.add('active');
+    activeCat = ch.dataset.cat || 'all';
+    renderPage(1);
+  }));
+
+  // search wiring (debounced)
+  let searchTimer = null;
+  if (search){
+    search.addEventListener('input', ()=> {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(()=> {
+        searchQ = search.value || '';
+        renderPage(1);
+      }, 240);
+    });
   }
 
-  function next() { goTo(current + 1); }
-  function prev() { goTo(current - 1); }
+  // sort wiring
+  if (sortSel) sortSel.addEventListener('change', ()=> renderPage(1));
 
-  // autoplay
-  function start() {
-    if (timer) clearInterval(timer);
-    timer = setInterval(next, INTERVAL);
-    playing = true;
-  }
-  function stop() {
-    if (timer) clearInterval(timer);
-    timer = null;
-    playing = false;
+  // price wiring
+  if (priceRange){
+    priceRange.addEventListener('input', ()=> {
+      maxPrice = priceRange.value;
+      if (priceVal) priceVal.textContent = '$' + Number(maxPrice).toFixed(0);
+      renderPage(1);
+    });
   }
 
-  // wire controls
-  if (nextBtn) nextBtn.addEventListener('click', () => { next(); stop(); setTimeout(start, INTERVAL); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); stop(); setTimeout(start, INTERVAL); });
-
-  // pause on hover/focus
-  slider.addEventListener('mouseenter', stop);
-  slider.addEventListener('mouseleave', () => { if (!playing) start(); });
-  slider.addEventListener('focusin', stop);
-  slider.addEventListener('focusout', () => { if (!playing) start(); });
-
-  // keyboard accessibility: left/right
-  slider.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') { prev(); stop(); setTimeout(start, INTERVAL); }
-    if (e.key === 'ArrowRight') { next(); stop(); setTimeout(start, INTERVAL); }
+  // sponsor / donate
+  if (sponsorBtn) sponsorBtn.addEventListener('click', ()=> {
+    if (window.MHC && window.MHC.showToast) window.MHC.showToast('Sponsor flow (demo): thank you!'); 
+    else alert('Sponsor flow started (demo). Integrate payment gateway to complete.');
   });
 
-  // lazy-set background images if data-bg present (helps when you want different src)
-  slides.forEach(s => {
-    const bg = s.dataset.bg;
-    const img = s.querySelector('img');
-    if (bg && img && (!img.src || img.src.indexOf(bg) === -1)) {
-      img.src = bg;
-    }
-  });
+  // pager buttons
+  pagerPrev.addEventListener('click', ()=> renderPage(currentPage - 1));
+  pagerNext.addEventListener('click', ()=> renderPage(currentPage + 1));
 
-  // init
-  goTo(0);
-  start();
+  // initial render
+  renderPage(1);
 
-  // expose small API (optional)
-  slider.heroGoTo = goTo;
+  // expose a small method to update when PRODUCTS changes externally
+  window._shopRefresh = function(){ renderPage(1); };
 })();
 </script>
 
