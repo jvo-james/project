@@ -11,60 +11,76 @@
 
 
 <style>
-/* ==========================
-   GLOBAL VARIABLES & RESET
-   ========================== */
+
 :root{
   --sidebar-width: 300px;
   --header-height: 68px;
   --gutter: clamp(12px, 2.6vw, 28px);
   --max-content-width: 1200px;
 
-  /* Colors (tweak if you want) */
-  --bg-900:#061226;
-  --bg-800:#07162a;
-  --surface:#0e2636;
-  --muted:#9fb7c9;
-  --text:#e9f6ff;
-  --accent-1:#3fe1c3;
-  --accent-2:#7c6cff;
-  --accent-3:#ffb86b;
-  --danger:#ff6b6b;
-  --border-weak: rgba(255,255,255,0.03);
+  --bg-900: #061226;
+  --bg-800: #07162a;
+  --surface: linear-gradient(180deg, rgba(6,18,38,0.32), rgba(6,18,38,0.12));
+  --card-bg: rgba(255,255,255,0.02);
+  --muted: #9fb7c9;
+  --text: #FFFFFF;            /* primary text (white in dark) */
+  --text-dim: rgba(255,255,255,0.86);
+  --accent-1: #3fe1c3;
+  --accent-2: #7c6cff;
+  --accent-3: #ffb86b;
+  --danger: #ff6b6b;
+  --border-weak: rgba(255,255,255,0.06);
+  --focus: rgba(124,108,255,0.14);
+  --shadow-lg: 0 24px 64px rgba(2,6,23,0.55);
+  --ui-radius: 12px;
+  --footer-bg-dark: linear-gradient(180deg, rgba(2,8,20,0.6), rgba(4,12,28,0.4));
+  --modal-glass: rgba(255,255,255,0.03);
+}
+
+/* -------------------------
+   Light mode overrides
+   Add class .light-mode to <body> to switch
+   ------------------------- */
+body.light-mode{
+  --bg-900: #f6fbff;
+  --bg-800: #eef6fb;
+  --surface: linear-gradient(180deg,#ffffff,#fbfbff);
+  --card-bg: #ffffff;
+  --muted: #617085;
+  --text: #061426;            /* primary text (dark in light) */
+  --text-dim: rgba(6,20,38,0.78);
+  --accent-1: #0bb389;
+  --accent-2: #5b4bff;
+  --accent-3: #ff8f3b;
+  --danger: #d9534f;
+  --border-weak: rgba(3,10,20,0.06);
   --focus: rgba(124,108,255,0.12);
-
-  --card-radius: 14px;
-  --ease-quick: cubic-bezier(.2,.9,.2,1);
+  --shadow-lg: 0 18px 48px rgba(6,20,40,0.06);
+  --footer-bg-dark: linear-gradient(180deg,#f5f7fb,#ffffff); /* footer light bg */
+  --modal-glass: rgba(2,6,23,0.02);
 }
 
-/* base reset */
+/* -------------------------
+   Base reset & layout
+   ------------------------- */
 *{box-sizing:border-box}
-html,body{height:100%;width:100%;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:var(--text);
-  background:
-    radial-gradient(600px 240px at 8% 8%, rgba(124,108,255,0.03), transparent 10%),
-    radial-gradient(480px 200px at 94% 82%, rgba(63,225,195,0.02), transparent 12%),
-    linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 60%);
-  line-height:1.38;
-}
+html,body{height:100%;width:100%;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:var(--text);background:
+  radial-gradient(600px 240px at 8% 8%, rgba(124,108,255,0.03), transparent 10%),
+  radial-gradient(480px 200px at 94% 82%, rgba(63,225,195,0.02), transparent 12%),
+  linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 60%);
+line-height:1.38;scroll-behavior:smooth}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font-family:inherit}
 :focus{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
 [hidden]{display:none !important}
+*{transition: background-color,color,border-color,box-shadow,transform 160ms cubic-bezier(.2,.9,.2,1)}
 
-/* reduce animations for prefer-reduced-motion */
-@media (prefers-reduced-motion: reduce){
-  *{transition:none!important;animation:none!important}
-}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 
-/* default simple transition */
-*{transition: background-color,color,border-color,box-shadow,transform 160ms var(--ease-quick)}
-
-/* ==========================
-   FIXED LAYOUT: SIDEBAR + TOPBAR
-   ========================== */
-
-/* Fixed left sidebar */
+/* -------------------------
+   Fixed Sidebar
+   ------------------------- */
 .sidebar{
   position:fixed;
   left:0;
@@ -76,15 +92,27 @@ button,input,select,textarea{font-family:inherit}
   flex-direction:column;
   gap:12px;
   padding:18px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  background: var(--card-bg);
   border-radius: 0 18px 18px 0;
   border-right:1px solid var(--border-weak);
-  box-shadow: 0 24px 64px rgba(2,6,23,0.45);
+  box-shadow: var(--shadow-lg);
   overflow:auto;
   -webkit-overflow-scrolling:touch;
+  color:var(--text);
 }
 
-/* fixed topbar/header */
+/* force contrast for any items inside sidebar */
+.sidebar *{ color: var(--text) !important; }
+
+/* Sidebar stacking on small devices */
+@media (max-width:900px){
+  :root{ --sidebar-width: 100%; }
+  .sidebar{ position:relative; width:100%; height:auto; border-radius:12px; box-shadow:0 8px 26px rgba(2,6,23,0.12) }
+}
+
+/* -------------------------
+   Fixed Topbar
+   ------------------------- */
 .topbar{
   position:fixed;
   left:var(--sidebar-width);
@@ -99,24 +127,19 @@ button,input,select,textarea{font-family:inherit}
   padding:8px clamp(12px,1.6vw,28px);
   background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
   border-bottom:1px solid var(--border-weak);
-  box-shadow: 0 8px 30px rgba(2,6,23,0.18);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.12);
   backdrop-filter: blur(6px) saturate(120%);
+  color:var(--text);
 }
 
-/* make header full-width on small screens where sidebar stacks */
+/* topbar full-width on small screens */
 @media (max-width:900px){
   .topbar{ left:0; border-radius:12px; margin-bottom:8px; }
 }
 
-/* ==========================
-   MAIN CONTENT AREA
-   ========================== */
-
-/*
-  Main is NOT fixed. The page scrolls as normal.
-  main's left edge sits at the right edge of the fixed sidebar,
-  and its content starts below the fixed header.
-*/
+/* -------------------------
+   Main area (flowing)
+   ------------------------- */
 main{
   margin-left: var(--sidebar-width);
   padding-top: calc(var(--header-height) + 20px);
@@ -128,38 +151,67 @@ main{
   color:var(--text);
 }
 
-/* optional inner width constraint for centered content */
+/* wrapper for centered content when desired */
 .main-inner{ max-width: var(--max-content-width); margin: 0 auto; }
 
-/* responsive: when sidebar stacks, main takes full width */
+/* stacked layout on small screens */
 @media (max-width:900px){
   main{ margin-left:0; width:100%; padding-top: calc(var(--header-height) + 12px) }
 }
 
-/* ==========================
-   FOOTER aligns with main (left edge touches right side of sidebar)
-   ========================== */
+/* -------------------------
+   Footer (distinct style)
+   - footer uses its own background variable (--footer-bg-dark)
+   - in light-mode it becomes an off-white card to contrast with page
+   ------------------------- */
 .site-footer, .new-site-footer{
   margin-left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
   box-sizing: border-box;
-  padding: 24px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  border: 1px solid var(--border-weak);
+  padding: 28px;
+  border-radius: 14px;
+  background: var(--footer-bg-dark);
   color:var(--text);
+  border: 1px solid var(--border-weak);
+  box-shadow: 0 30px 80px rgba(2,6,23,0.25);
 }
 
-/* footer responsive */
+/* footer content contrasts and typography */
+.site-footer h4, .site-footer h3, .site-footer .label { color: var(--text) !important; }
+.site-footer a { color: var(--text-dim); text-decoration:none; }
+
+/* footer on small screens */
 @media (max-width:900px){
   .site-footer, .new-site-footer{ margin-left:0; width:100%; border-radius:12px; padding:18px }
 }
 
-/* ==========================
-   SIDEBAR CONTENT UTILS
-   ========================== */
+/* -------------------------
+   Force readable colors everywhere
+   (fixes black text issues: overrides common dark hard-coded colors)
+   ------------------------- */
+/* elements that historically used #021018 or dark text */
+.logo svg, .tool-icon, .tool-icon * , .avatar-badge, .brand-copy, .logo-square, .pixel-alien, .preview-canvas * {
+  color: var(--text) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* specific overrides for any places that had dark text */
+.tool-info, .creator-info, .muted, .label, code { color: var(--text-dim) !important; }
+
+/* ensure icons in colored badges remain visible on both themes */
+/* if icon needs dark text for contrast in light mode, adjust via CSS below */
+.avatar-badge, .tool-icon { color: #021018; } /* icon text inside gradient (keeps contrast on light backgrounds) */
+body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; } /* keep icon foreground dark in light-mode */
+
+/* but enforce readable text for everything else */
+* { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+/* -------------------------
+   Sidebar contents
+   ------------------------- */
 .sidebar-header{ display:flex; gap:12px; align-items:center; }
-.logo{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; background: linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 10px 30px rgba(0,0,0,0.35); }
+.logo{ width:56px; height:56px; border-radius:12px; display:grid; place-items:center; background: linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 10px 30px rgba(0,0,0,0.25); }
 .sidebar-title h2{ margin:0; font-size:18px; font-weight:700; font-family:'Space Grotesk', Inter, sans-serif }
 .sidebar .address{ font-size:13px; color:var(--muted) }
 .sidebar-desc{ color:var(--muted); margin:6px 0; font-size:13px; line-height:1.35 }
@@ -167,197 +219,275 @@ main{
 .sidebar-nav{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
 .nav-link{
   display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px; color:var(--text);
-  background:transparent; border:1px solid transparent; transition: transform .14s var(--ease-quick), box-shadow .14s, background .14s;
+  background:transparent; border:1px solid transparent; transition: transform .14s cubic-bezier(.2,.9,.2,1), box-shadow .14s, background .14s;
 }
 .nav-link i{ width:22px; text-align:center; opacity:0.95; }
 .nav-link span{ font-weight:700; font-size:14px; }
-.nav-link:hover{ transform:translateY(-4px); background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border-color: var(--border-weak); box-shadow: 0 8px 22px rgba(0,0,0,0.14) }
+.nav-link:hover{ transform:translateY(-4px); background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); border-color: var(--border-weak); box-shadow: 0 8px 22px rgba(0,0,0,0.12) }
 
-.sidebar-mint{ margin-top:auto; display:flex; flex-direction:column; gap:10px; }
+/* mint CTA */
 #mintSidebarBtn{ width:100%; padding:12px; border-radius:999px; border:0; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; font-weight:800; letter-spacing:0.6px; box-shadow:0 14px 40px rgba(6,12,20,0.6); cursor:pointer }
-.mint-meta{ display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px }
-.sidebar-footer{ display:flex; flex-direction:column; gap:6px; color:var(--muted); font-size:13px }
 
-/* ==========================
-   TOPBAR / HEADER UTILITIES
-   ========================== */
+/* -------------------------
+   Topbar utilities
+   ------------------------- */
 .topbar-left{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 .topbar-right{ display:flex; gap:12px; align-items:center; }
 
 .crumb{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; font-weight:700; letter-spacing:0.2px; background:transparent; border:1px solid transparent; }
-.crumb.muted{ opacity:0.66; color:var(--muted); font-weight:600 }
+.crumb.muted{ opacity:0.8; color:var(--muted); font-weight:600 }
 
 .search-wrap{ position:relative; display:flex; align-items:center; gap:8px; }
-.search-wrap input{
-  background:transparent; border:1px solid var(--border-weak); padding:10px 14px; border-radius:999px; color:var(--text);
-  min-width:220px; outline:none; transition: box-shadow .16s var(--ease-quick), transform .14s;
-}
+.search-wrap input{ background:transparent; border:1px solid var(--border-weak); padding:10px 14px; border-radius:999px; color:var(--text); min-width:220px; outline:none; transition: box-shadow .16s cubic-bezier(.2,.9,.2,1), transform .14s; }
 .search-wrap input::placeholder{ color: color-mix(in srgb, var(--muted) 60%, transparent) }
 .search-wrap input:focus{ box-shadow: 0 10px 30px var(--focus); border-color:var(--focus); transform:translateY(-2px) }
 .search-wrap .material-icons{ position:absolute; right:12px; pointer-events:none; opacity:0.7; font-size:18px }
 
-.notifications{ min-width:36px; min-height:36px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); display:grid; place-items:center; font-weight:900; color:var(--accent-3); border:1px solid var(--border-weak); box-shadow:0 6px 18px rgba(3,10,20,0.35) }
+.notifications{ min-width:36px; min-height:36px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); display:grid; place-items:center; font-weight:900; color:var(--accent-3); border:1px solid var(--border-weak); box-shadow:0 6px 18px rgba(3,10,20,0.18) }
 
 .btn{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; border:0; cursor:pointer; font-weight:700; color:var(--text) }
-.btn-ghost{ background:transparent; border:1px solid var(--border-weak); padding:9px 12px; border-radius:10px; transition:transform .14s var(--ease-quick), box-shadow .14s }
-.btn-ghost:hover{ transform:translateY(-5px); box-shadow:0 12px 36px rgba(0,0,0,0.18) }
-.btn-primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; padding:10px 14px; border-radius:12px; font-weight:800; box-shadow:0 12px 34px rgba(0,0,0,0.55) }
+.btn-ghost{ background:transparent; border:1px solid var(--border-weak); padding:9px 12px; border-radius:10px; transition:transform .14s cubic-bezier(.2,.9,.2,1), box-shadow .14s }
+.btn-ghost:hover{ transform:translateY(-5px); box-shadow:0 12px 36px rgba(0,0,0,0.12) }
+.btn-primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; padding:10px 14px; border-radius:12px; font-weight:800; box-shadow:0 12px 34px rgba(0,0,0,0.25) }
 
-.avatar-badge{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; font-weight:900; color:#021018; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 8px 22px rgba(0,0,0,0.18) }
+/* avatar badge */
+.avatar-badge{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; font-weight:900; color:#021018; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 8px 22px rgba(0,0,0,0.12) }
 
-/* ==========================
-   CONTENT CARDS / HERO / GALLERY
-   ========================== */
-.collection-header, .hero-wrap, .tools-section, .about-section, .nft-card, .site-footer{
-  border-radius:12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  border:1px solid var(--border-weak);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-  padding: 16px;
-  color:var(--text);
-}
-
-/* HERO (two-column with preview) */
+/* -------------------------
+   Hero / Preview (fix preview-meta overflow)
+   ------------------------- */
 .hero-wrap{
   display:grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1fr minmax(280px, 420px); /* allows preview column to shrink */
   gap:22px;
-  align-items:center;
+  align-items:start;
   border-radius:16px;
   padding:26px;
-  overflow:hidden;
+  overflow:visible;
+  background: var(--card-bg);
+  border:1px solid var(--border-weak);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
 }
+
+/* on narrow screens the hero stacks */
+@media (max-width:1100px){
+  .hero-wrap{ grid-template-columns:1fr; padding:20px; }
+}
+
+/* hero-left text */
 .hero-eyebrow{ display:inline-flex; gap:10px; padding:8px 12px; border-radius:999px; background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01)); font-weight:800; color:var(--accent-1); }
 .hero-h{ font-size:clamp(22px,3.6vw,36px); margin:0 0 8px; line-height:1.02; letter-spacing:-0.6px; font-family:'Space Grotesk', Inter, sans-serif; font-weight:700; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent }
 .hero-sub{ color:var(--muted); margin:6px 0 18px; line-height:1.45 }
 
-.hero-stats{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap }
-.stat-chip{ background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent); padding:10px 12px; border-radius:12px; min-width:110px; text-align:center; border:1px solid var(--border-weak); box-shadow:0 8px 22px rgba(0,0,0,0.16) }
-.stat-chip h4{ margin:0; font-size:16px; font-weight:800 }
-
-.hero-ctas{ display:flex; gap:12px; margin-top:18px; align-items:center }
-
-.hero-preview{ border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.012), transparent); box-shadow: 0 12px 34px rgba(0,0,0,0.12); border:1px solid var(--border-weak) }
-.preview-canvas{ height:240px; border-radius:12px; background: linear-gradient(180deg,#eafef0 0%, #e7e4ff 100%); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; box-shadow:inset 0 -12px 30px rgba(0,0,0,0.06); transform:translateZ(0) }
-.pixel-alien{ width:200px; height:200px; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 36px rgba(0,0,0,0.4); animation: pixelBob 6s ease-in-out infinite }
-@keyframes pixelBob{0%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}100%{transform:translateY(0) rotate(-1deg)}}
-.hero-marquee{ margin-top:14px; padding:10px; border-radius:10px; background: linear-gradient(90deg, rgba(124,108,255,0.03), rgba(63,225,195,0.02)); overflow:hidden; border:1px solid var(--border-weak) }
-.hero-marquee .marq{ display:inline-block; white-space:nowrap; animation: marq 14s linear infinite }
-@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* responsive hero */
-@media (max-width:1100px){
-  .hero-wrap{ grid-template-columns:1fr; padding:20px; }
-  .hero-preview{ order:2; }
+/* hero preview column */
+.hero-preview{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:stretch;
+  min-width:0; /* important so it can shrink */
+  border-radius:12px;
+  padding:14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
+  border:1px solid var(--border-weak);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.08);
 }
 
-/* GALLERY */
+/* preview canvas (visual) */
+.preview-canvas{
+  height:240px;
+  border-radius:12px;
+  background: linear-gradient(180deg,#eafef0 0%, #e7e4ff 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+  box-shadow:inset 0 -12px 30px rgba(0,0,0,0.06);
+  transform:translateZ(0);
+}
+
+/* preview-meta container: will wrap and never overflow the page */
+.preview-meta{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:100%;
+  min-width:0; /* allow flex to shrink */
+  color:var(--text);
+}
+
+/* mint progress: full width and responsive */
+.mint-progress{ display:flex; flex-direction:column; gap:8px; width:100%; }
+.mint-info{ display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--text-dim) }
+.mint-price{ font-weight:800; color:var(--text) }
+.mint-progress-bar{ display:flex; align-items:center; gap:12px; width:100%; }
+
+.progress-track{
+  flex:1; height:10px; background: rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; border:1px solid var(--border-weak);
+}
+.progress-fill{ height:100%; width:0%; background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); border-radius:999px; transition: width .6s cubic-bezier(.2,.9,.2,1) }
+
+#heroProgressText{ font-weight:700; white-space:nowrap; color:var(--text) }
+
+/* preview actions */
+.preview-actions{ display:flex; gap:10px; justify-content:flex-start; align-items:center }
+
+/* preview-meta-muted icons and text */
+.preview-meta-muted{ display:flex; gap:12px; align-items:center; color:var(--muted); font-size:14px }
+
+/* ensure no horizontal overflow from hero */
+.hero-wrap, .hero-wrap * { box-sizing:border-box; }
+
+/* -------------------------
+   Gallery / Cards
+   ------------------------- */
 #gallery{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; margin-top:6px }
 @media (max-width:1100px){ #gallery{ grid-template-columns: repeat(2,1fr) } }
 @media (max-width:700px){ #gallery{ grid-template-columns: repeat(1,1fr) } }
 
-.nft-card{ padding:12px; display:flex; flex-direction:column; gap:10px; transition: transform .28s var(--ease-quick), box-shadow .22s; border-radius:12px; cursor:pointer; background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid var(--border-weak) }
-.nft-card:hover{ transform:translateY(-10px); box-shadow:0 30px 60px rgba(2,6,23,0.5) }
+.nft-card{ padding:12px; display:flex; flex-direction:column; gap:10px; transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .22s; border-radius:12px; cursor:pointer; background: var(--card-bg); border:1px solid var(--border-weak) }
+.nft-card:hover{ transform:translateY(-10px); box-shadow:0 30px 60px rgba(2,6,23,0.18) }
 .nft-media{ height:160px; border-radius:10px; background:linear-gradient(135deg,#dfffe8,#dcdcff); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; border:1px solid var(--border-weak) }
-.nft-media img{ width:100%; height:100%; object-fit:cover; transition: transform .36s var(--ease-quick) }
+.nft-media img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .36s cubic-bezier(.2,.9,.2,1) }
 .nft-card:hover .nft-media img{ transform:scale(1.04) }
 
+/* metadata */
 .meta{ display:flex; justify-content:space-between; align-items:center; gap:12px }
-.meta .title{ font-weight:800 }
+.meta .title{ font-weight:800; color:var(--text) }
 .meta .owner{ color:var(--muted); font-size:13px }
-.meta-actions{ display:flex; gap:6px }
-.favBtn,.moreBtn{ background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px; border-radius:10px; cursor:pointer; transition: transform .14s }
-.favBtn:hover,.moreBtn:hover{ transform:translateY(-6px) }
 
-/* ==========================
-   TOOLS / ABOUT / CARDS
-   ========================== */
-.tools-section, .about-section{ border-radius:12px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid var(--border-weak); box-shadow:0 12px 40px rgba(0,0,0,0.12) }
-.tools-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:12px }
-.tool-card{ display:flex; justify-content:space-between; align-items:center; padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01),transparent); border:1px solid var(--border-weak); transition:transform .18s var(--ease-quick), box-shadow .18s }
-.tool-card:hover{ transform:translateY(-8px); box-shadow:0 22px 60px rgba(124,108,255,0.06) }
-.tool-icon{ width:64px; height:64px; border-radius:12px; display:grid; place-items:center; font-size:22px; color:#021018; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)) }
-.tool-info h5{ margin:0; font-size:15px; font-weight:800 }
+/* -------------------------
+   Tools / About / Utilities
+   ------------------------- */
+.tools-section, .about-section{ border-radius:12px; padding:18px; background:var(--card-bg); border:1px solid var(--border-weak); box-shadow:0 12px 40px rgba(0,0,0,0.08) }
+.tools-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:12px }
+.tool-card{ display:flex; justify-content:space-between; align-items:center; padding:14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.006), transparent); border:1px solid var(--border-weak); transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s }
+.tool-card:hover{ transform:translateY(-6px); box-shadow:0 18px 44px rgba(0,0,0,0.08) }
+.tool-icon{ width:64px; height:64px; border-radius:12px; display:grid; place-items:center; font-size:22px; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); color:#021018; box-shadow:0 8px 22px rgba(0,0,0,0.08) }
+.tool-info h5{ margin:0; font-size:15px; font-weight:800; color:var(--text) }
 
 /* about */
 .about-section{ display:grid; grid-template-columns:1fr 380px; gap:18px; align-items:start; }
 @media (max-width:1100px){ .about-section{ grid-template-columns:1fr; gap:16px } }
 
-/* ==========================
-   FORMS, INPUTS, FOCUS
-   ========================== */
-input, select, textarea{ background:transparent; border:1px solid var(--border-weak); padding:10px 12px; border-radius:10px; color:var(--text); outline:none; transition: box-shadow .14s var(--ease-quick), transform .12s }
+/* -------------------------
+   Forms & Inputs
+   ------------------------- */
+input, select, textarea{ background:transparent; border:1px solid var(--border-weak); padding:10px 12px; border-radius:10px; color:var(--text); outline:none; transition: box-shadow .14s cubic-bezier(.2,.9,.2,1), transform .12s }
 input:focus, select:focus, textarea:focus{ box-shadow:0 8px 30px var(--focus); border-color:var(--focus); transform:translateY(-2px) }
-.newsletter{ display:flex; gap:8px; align-items:center }
+
+/* newsletter buttons */
 .newsletter input{ min-width:220px; border-radius:999px }
 
-/* ==========================
-   MODALS (above fixed header & sidebar)
-   ========================== */
+/* -------------------------
+   Modal — upgraded styling
+   ------------------------- */
 .modal-overlay, #nftModal, #toolModal{
-  display:none; position:fixed; inset:0; z-index:2200; align-items:center; justify-content:center;
-  background: linear-gradient(180deg, rgba(2,6,23,0.85), rgba(2,6,23,0.98)); padding:24px;
+  display:none; position:fixed; inset:0; z-index:2400; align-items:center; justify-content:center;
+  background: linear-gradient(180deg, rgba(2,6,23,0.7), rgba(2,6,23,0.9)); padding:20px;
+  backdrop-filter: blur(6px) saturate(120%);
 }
+
+/* reveal modals when aria-hidden=false (JS toggles attribute) */
 #nftModal[aria-hidden="false"], #toolModal[aria-hidden="false"]{ display:flex }
 
 .nft-modal-card, .tool-modal-card{
-  width:100%; max-width:1100px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
-  padding:18px; box-shadow: 0 40px 120px rgba(2,6,23,0.75); display:grid; grid-template-columns:1fr 420px; gap:18px; align-items:start; border:1px solid var(--border-weak);
-  max-height: calc(100vh - 120px); overflow:auto;
+  width:100%; max-width:1100px; border-radius:20px; overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));
+  padding:0; box-shadow: 0 40px 140px rgba(2,6,23,0.75);
+  display:grid; grid-template-columns: 1fr 420px; gap:0; align-items:stretch; border:1px solid rgba(255,255,255,0.04);
+  transform: translateY(14px) scale(0.995); opacity:0; animation: modalIn .28s cubic-bezier(.2,.9,.2,1) forwards;
 }
-@media (max-width:1100px){ .nft-modal-card, .tool-modal-card{ grid-template-columns:1fr; max-width:940px } }
 
-/* modal close */
+/* modal entrance */
+@keyframes modalIn{
+  to{ transform:none; opacity:1; }
+}
+
+/* left column is media (bigger visuals) */
+.nft-media-wrap{
+  background: linear-gradient(180deg, rgba(2,6,23,0.2), rgba(2,6,23,0.04));
+  display:flex; align-items:center; justify-content:center; min-height:320px; max-height:80vh; overflow:hidden; padding:18px;
+}
+.nft-media-wrap img, .nft-media-wrap video{ width:100%; height:100%; object-fit:contain; display:block; border-radius:10px }
+
+/* right column content */
+.nft-info{ padding:22px; display:flex; flex-direction:column; gap:14px; color:var(--text); background: linear-gradient(180deg, rgba(255,255,255,0.006), transparent) }
+
+/* modal close button (stylish) */
 .nft-close, .modal-close{
-  position:absolute; right:22px; top:22px; z-index:260; background:transparent; border:1px solid var(--border-weak); color:var(--text); width:40px; height:40px; border-radius:10px; display:grid; place-items:center; cursor:pointer; backdrop-filter: blur(4px);
+  position:absolute; right:18px; top:18px; z-index:260; background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:0; color:var(--text); width:44px; height:44px; border-radius:12px; display:grid; place-items:center; cursor:pointer; box-shadow:0 10px 26px rgba(0,0,0,0.12);
+  transition: transform .12s;
 }
-.nft-close:hover, .modal-close:hover{ transform:translateY(-3px); box-shadow:0 12px 36px rgba(0,0,0,0.12) }
+.nft-close:hover, .modal-close:hover{ transform:translateY(-4px); box-shadow:0 18px 48px rgba(0,0,0,0.18) }
 
-/* ==========================
-   FOOTER DETAILS
-   ========================== */
-.new-site-footer{ padding:24px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border:1px solid var(--border-weak); box-shadow:0 12px 40px rgba(0,0,0,0.12) }
+/* modal inner headings and info */
+.nft-title{ margin:0; font-size:20px; font-weight:900; color:var(--text) }
+.nft-sub, .muted{ color:var(--muted) }
+
+/* modal pills and copy buttons */
+.meta-pill, .share-btn, .btn-ghost { color:var(--text); border:1px solid var(--border-weak) }
+.share-btn{ padding:8px 10px; border-radius:10px; background:transparent; display:inline-flex; gap:8px; align-items:center }
+
+/* responsive modal */
+@media (max-width:1100px){
+  .nft-modal-card, .tool-modal-card{ grid-template-columns:1fr; max-width:940px }
+  .nft-media-wrap{ min-height:260px }
+}
+
+/* -------------------------
+   Footer details (distinct appearance)
+   - we style footer content explicitly so it stands out
+   ------------------------- */
+.new-site-footer{ padding:28px; border-radius:14px; display:block; }
+.new-footer-inner{ max-width:var(--max-content-width); margin:0 auto; display:flex; flex-direction:column; gap:20px; color:var(--text) }
+
 .footer-brand{ display:flex; gap:18px; align-items:flex-start }
-.logo-square{ width:68px; height:68px; border-radius:12px; display:grid; place-items:center; background:linear-gradient(135deg,var(--accent-2),var(--accent-1)); box-shadow:0 10px 36px rgba(124,108,255,0.08) }
+.brand-copy h3{ margin:0; font-size:18px; font-weight:800; color:var(--text) }
+.brand-copy .muted{ margin-top:6px; color:var(--muted) }
+
+.social-row{ margin-top:10px; display:flex; gap:8px; }
+.social{ display:inline-grid; place-items:center; width:36px; height:36px; border-radius:8px; border:1px solid var(--border-weak); background:transparent; color:var(--text); text-decoration:none; }
+.social:hover{ transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.08) }
+
 .footer-links-grid{ display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:22px; align-items:start; }
-.subscribe-col input{ min-width:180px; padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.03); color:var(--text); background:transparent; }
+.footer-links-grid h4{ margin:0 0 8px; font-weight:800; color:var(--text) }
+.footer-links-grid a{ color:var(--muted); text-decoration:none }
 
-/* footer responsive */
-@media (max-width:900px){
-  .footer-links-grid{ grid-template-columns: 1fr; }
-  .footer-brand{ align-items:center; }
-}
+.subscribe-col input{ min-width:180px; padding:10px 14px; border-radius:999px; border:1px solid var(--border-weak); color:var(--text); background:transparent; }
 
-/* ==========================
-   HELPERS & UTILITIES
-   ========================== */
+/* footer bottom row */
+.footer-bottom-row{ display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.03); padding-top:18px; margin-top:6px; color:var(--text) }
+.mini-stats{ display:flex; gap:14px; align-items:center }
+.stat .num{ font-weight:900; font-size:18px; color:var(--text) }
+.stat .label{ font-size:13px; color:var(--muted) }
+.badge{ background: rgba(255,255,255,0.02); padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); font-size:13px; color:var(--muted); }
+
+/* -------------------------
+   Small helpers & accessibility
+   ------------------------- */
 .hidden{ display:none !important }
 .center{ display:grid; place-items:center }
 .kicker{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted); font-size:13px }
 .badge{ background: rgba(255,255,255,0.02); padding:6px 10px; border-radius:8px; border:1px solid var(--border-weak); font-size:13px; color:var(--muted) }
-.toast{ position:fixed; right:22px; bottom:22px; z-index:9999; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; padding:10px 14px; border-radius:10px; box-shadow:0 12px 40px rgba(0,0,0,0.3) }
+.toast{ position:fixed; right:22px; bottom:22px; z-index:9999; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; padding:10px 14px; border-radius:10px; box-shadow:0 12px 40px rgba(0,0,0,0.2) }
 
-/* focus visible outline stronger */
 :focus-visible{ outline:4px solid var(--focus); outline-offset:2px }
-
-/* body modal state guard */
 body.modal-open{ overflow:hidden }
-
-/* accessible visually-hidden helper */
 .visually-hidden{ position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
 
-/* small screen tweaks */
 @media (max-width:700px){
   :root{ --gutter: 12px }
   .logo{ width:48px;height:48px }
   .sidebar-title h2{ font-size:16px }
   .search-wrap input{ min-width:120px }
+  .preview-canvas{ height:200px }
 }
 
-/* ==========================
-   END OF STYLESHEET
-   ========================== */
+
 </style>
+
 
 </head>
  <body>
