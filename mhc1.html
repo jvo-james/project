@@ -117,6 +117,51 @@ h2 mark.accent{background:linear-gradient(90deg,rgba(212,171,78,0.12),rgba(212,1
 .mockup-wrap{width:100%;max-width:420px;position:relative}
 .hero-image{width:100%;height:auto;border-radius:14px;object-fit:cover;display:block;box-shadow:var(--shadow-deep);border:1px solid rgba(11,11,12,0.03)}
 
+  /* === Hero slider styles === */
+.hero-slider{position:relative;width:100%;max-width:420px;border-radius:16px;overflow:hidden;border:1px solid rgba(11,11,12,0.04);box-shadow:var(--shadow-deep);background:linear-gradient(180deg,rgba(0,0,0,0.02),rgba(255,255,255,0.02));}
+
+/* slides stack */
+.slides{position:relative;height:420px}
+.slide{position:absolute;inset:0;opacity:0;transform:translateZ(0);transition:opacity .6s var(--ease);display:block}
+.slide img{width:100%;height:420px;object-fit:cover;display:block;border-radius:14px;transform:scale(1.12);transition:transform 9s linear,filter .6s ease}
+.slide.active{opacity:1;z-index:2}
+.slide.active img{transform:scale(1);filter:brightness(0.98) saturate(1.05)}
+
+/* caption overlay */
+.slide-caption{position:absolute;left:14px;bottom:16px;right:14px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));backdrop-filter: blur(6px);padding:12px;border-radius:12px;box-shadow:0 12px 30px rgba(11,12,14,0.06);border:1px solid rgba(11,11,12,0.03)}
+.slide-caption .kicker{display:inline-block;font-weight:800;color:var(--gold-600);background:linear-gradient(90deg,var(--gold-50),#fff);padding:6px 10px;border-radius:999px;font-size:12px}
+
+/* controls */
+.slider-control{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.92);border:1px solid rgba(11,11,12,0.06);width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-size:22px;cursor:pointer;box-shadow:var(--shadow-soft);z-index:5}
+.slider-control.prev{left:10px}
+.slider-control.next{right:10px}
+.slider-control:hover{transform:translateY(-50%) scale(1.03)}
+
+/* dots */
+.slider-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:10px;display:flex;gap:8px;z-index:6}
+.slider-dots button{width:10px;height:10px;border-radius:999px;border:0;background:rgba(11,11,12,0.18);cursor:pointer}
+.slider-dots button.active{background:var(--gold-500);transform:scale(1.18)}
+
+/* highlight card (kept similar but elevated) */
+.highlight-card{position:absolute;right:12px;bottom:18px;display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 18px 40px rgba(11,12,14,0.12);border:1px solid rgba(11,11,12,0.04);cursor:pointer;z-index:8;transition:transform .18s var(--ease)}
+.highlight-card:hover{transform:translateY(-6px)}
+.highlight-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover}
+.highlight-copy .price{color:var(--gold-600);font-weight:900}
+
+/* responsive adjustments */
+@media (max-width:900px){
+  .slides{height:320px}
+  .slide img{height:320px}
+  .hero-grid{gap:16px}
+  .highlight-card{position:static;margin-top:10px;right:auto;bottom:auto}
+}
+@media (max-width:520px){
+  .slides{height:240px}
+  .slide img{height:240px}
+  .slide-caption{padding:10px;font-size:14px}
+  .slider-control{display:none}
+}
+
 /* Featured floating highlight card */
 .highlight-card{position:absolute;right:12px;bottom:18px;display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 10px 30px rgba(11,12,14,0.12);border:1px solid rgba(11,11,12,0.04);cursor:pointer}
 .highlight-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover}
@@ -380,63 +425,73 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
           </div>
         </div>
 
-        <!-- RIGHT: hero visual / mockup + verse card -->
-        <aside class="hero-media" aria-hidden="false">
-          <div class="mockup-wrap">
-            <img src="hero-people.jpg" alt="People wearing Make Heaven Crowded apparel" class="hero-image" />
-
-            <!-- floating product highlight -->
-            <button class="highlight-card" data-product-id="mhc-hd-01" aria-label="Featured product: Crowd Hoodie">
-              <img src="crowd-hoodie.jpg" alt="Crowd Hoodie" class="highlight-thumb" />
-              <div class="highlight-copy">
-                <div class="small muted">Featured</div>
-                <strong>Crowd Hoodie</strong>
-                <div class="price">$48</div>
-                <span class="btn small" role="link">Buy</span>
-              </div>
-            </button>
+       <!-- ===== Enhanced Hero: slideshow + dynamic highlight ===== -->
+<aside class="hero-media" aria-hidden="false">
+  <div id="heroSlider" class="hero-slider" aria-roledescription="carousel" aria-label="Hero slideshow">
+    <div class="slides">
+      <div class="slide" data-product="mhc-hd-01" data-bg="hero-people.jpg" aria-roledescription="slide" aria-label="Crowd Hoodie">
+        <img src="hero-people.jpg" alt="People wearing Make Heaven Crowded apparel" />
+        <div class="slide-caption">
+          <div class="kicker">NEW DROP</div>
+          <h3>Make Heaven Crowded — <mark class="accent">Faith Collection</mark></h3>
+          <p class="small muted">Conversation-starting tees & cozy hoodies — ethically produced.</p>
+          <div style="margin-top:10px">
+            <a class="btn primary" href="#shop">Shop the Drop</a>
+            <a class="btn ghost" href="#gospel">Read Devotionals</a>
           </div>
+        </div>
+      </div>
 
-          <!-- HERO ENHANCEMENTS: decorative shapes + product vignette + trust strip -->
-          <div class="hero-decor" aria-hidden="true">
-            <svg class="hero-ribbon" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="gRibbon" x1="0" x2="1">
-                  <stop offset="0" stop-color="#f6d7a1" stop-opacity="0.95"/>
-                  <stop offset="1" stop-color="#cf9b43" stop-opacity="0.95"/>
-                </linearGradient>
-                <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
-                  <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.12)"/>
-                </pattern>
-              </defs>
-              <rect x="0" y="0" width="100" height="20" fill="url(#gRibbon)"/>
-              <rect x="0" y="0" width="100" height="20" fill="url(#dots)" opacity="0.18"/>
-            </svg>
-
-            <div class="hero-vignette" role="list" aria-label="Featured products">
-              <div class="v-item" role="listitem"><img src="saved-tee.jpg" alt="Saved Tee" /></div>
-              <div class="v-item" role="listitem"><img src="crowd-hoodie.jpg" alt="Crowd Hoodie" /></div>
-              <div class="v-item" role="listitem"><img src="grace-tee.jpg" alt="Grace Tee" /></div>
-              <div class="v-meta">
-                <div class="small muted">Shop & Support Missions</div>
-                <a class="btn small ghost" href="#shop">Browse Shop</a>
-              </div>
-            </div>
-
-            <div class="hero-trust" aria-hidden="true">
-              <span class="badge">Ethical Production</span>
-              <span class="badge">Donations Supported</span>
-              <span class="badge">Free Shipping $80+</span>
-            </div>
+      <div class="slide" data-product="mhc-ts-02" data-bg="hero-people-2.jpg" aria-roledescription="slide" aria-label="Grace Tee">
+        <img src="hero-people-2.jpg" alt="People wearing Make Heaven Crowded Grace Tee" />
+        <div class="slide-caption">
+          <div class="kicker">FEATURED</div>
+          <h3>Grace Over Grind — <mark class="accent">Soft Tees</mark></h3>
+          <p class="small muted">Simple designs, bold message. Perfect for campus conversations.</p>
+          <div style="margin-top:10px">
+            <a class="btn primary" href="#shop">Shop Tees</a>
           </div>
-          <!-- /hero-decor -->
+        </div>
+      </div>
 
-          <div class="verse-card" role="region" aria-label="Verse of the day" style="margin-top:14px">
-            <div class="verse-label">Verse of the Day</div>
-            <blockquote id="verseOfDay">— John 3:16 — For God so loved the world...</blockquote>
-            <a class="muted small" href="#read">Read more »</a>
+      <div class="slide" data-product="mhc-ts-01" data-bg="hero-people-3.jpg" aria-roledescription="slide" aria-label="Saved Tee">
+        <img src="hero-people-3.jpg" alt="Saved Tee in the wild" />
+        <div class="slide-caption">
+          <div class="kicker">BEST SELLER</div>
+          <h3>Saved Tee — <mark class="accent">Wear Your Story</mark></h3>
+          <p class="small muted">Lightweight, breathable, and printed with scripture.</p>
+          <div style="margin-top:10px">
+            <a class="btn primary" href="#shop">View Best Seller</a>
           </div>
-        </aside>
+        </div>
+      </div>
+    </div>
+
+    <button class="slider-control prev" aria-label="Previous slide">‹</button>
+    <button class="slider-control next" aria-label="Next slide">›</button>
+
+    <div class="slider-dots" role="tablist" aria-label="Slide dots"></div>
+  </div>
+
+  <!-- floating product highlight (will be updated by JS per slide) -->
+  <button class="highlight-card" id="heroHighlight" data-product-id="mhc-hd-01" aria-label="Featured product">
+    <img src="crowd-hoodie.jpg" alt="Featured product" class="highlight-thumb" />
+    <div class="highlight-copy">
+      <div class="small muted">Featured</div>
+      <strong id="highlightTitle">Crowd Hoodie</strong>
+      <div class="price" id="highlightPrice">$48</div>
+      <span class="btn small" role="link" id="highlightBuy">Buy</span>
+    </div>
+  </button>
+
+  <!-- Verse card kept below the slider -->
+  <div class="verse-card" role="region" aria-label="Verse of the day" style="margin-top:14px">
+    <div class="verse-label">Verse of the Day</div>
+    <blockquote id="verseOfDay">— John 3:16 — For God so loved the world...</blockquote>
+    <a class="muted small" href="#read">Read more »</a>
+  </div>
+</aside>
+
 
       </div>
     </section>
@@ -1635,4 +1690,107 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 })();
 
 </script>
+
+  <script>
+/* Hero slider behaviour (autoplay, pause on hover, keyboard, highlight update) */
+(function(){
+  const slider = document.getElementById('heroSlider');
+  if (!slider) return;
+  const slides = Array.from(slider.querySelectorAll('.slide'));
+  const dotsContainer = slider.querySelector('.slider-dots');
+  const prevBtn = slider.querySelector('.slider-control.prev');
+  const nextBtn = slider.querySelector('.slider-control.next');
+  const highlight = document.getElementById('heroHighlight');
+  const highlightTitle = document.getElementById('highlightTitle');
+  const highlightPrice = document.getElementById('highlightPrice');
+  const highlightBuy = document.getElementById('highlightBuy');
+
+  // build dots
+  slides.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    btn.dataset.index = i;
+    btn.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(btn);
+  });
+
+  let current = 0;
+  let timer = null;
+  let playing = true;
+  const INTERVAL = 5000;
+
+  function activate(i) {
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    Array.from(dotsContainer.children).forEach((d, idx) => d.classList.toggle('active', idx === i));
+    // update highlight from slide data-product
+    const prodId = slides[i].dataset.product;
+    if (prodId && window.MHC && Array.isArray(window.MHC.PRODUCTS)) {
+      const p = window.MHC.PRODUCTS.find(x => x.id === prodId) || {};
+      highlight.dataset.productId = prodId;
+      highlight.querySelector('.highlight-thumb').src = p.img || highlight.querySelector('.highlight-thumb').src;
+      highlightTitle.textContent = p.title || highlightTitle.textContent;
+      highlightPrice.textContent = (typeof p.price !== 'undefined') ? ('$' + Number(p.price).toFixed(2)) : highlightPrice.textContent;
+      // Buy button: attach event
+      highlight.onclick = () => { if (p && p.id) window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); };
+      highlightBuy.onclick = (ev) => { ev.stopPropagation(); if (p && p.id) window.MHC && window.MHC.addToCart && window.MHC.addToCart(p); };
+    } else {
+      // fallback: update dataset only
+      highlight.dataset.productId = prodId || '';
+    }
+  }
+
+  function goTo(i) {
+    current = (i + slides.length) % slides.length;
+    activate(current);
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  // autoplay
+  function start() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(next, INTERVAL);
+    playing = true;
+  }
+  function stop() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    playing = false;
+  }
+
+  // wire controls
+  if (nextBtn) nextBtn.addEventListener('click', () => { next(); stop(); setTimeout(start, INTERVAL); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); stop(); setTimeout(start, INTERVAL); });
+
+  // pause on hover/focus
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', () => { if (!playing) start(); });
+  slider.addEventListener('focusin', stop);
+  slider.addEventListener('focusout', () => { if (!playing) start(); });
+
+  // keyboard accessibility: left/right
+  slider.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { prev(); stop(); setTimeout(start, INTERVAL); }
+    if (e.key === 'ArrowRight') { next(); stop(); setTimeout(start, INTERVAL); }
+  });
+
+  // lazy-set background images if data-bg present (helps when you want different src)
+  slides.forEach(s => {
+    const bg = s.dataset.bg;
+    const img = s.querySelector('img');
+    if (bg && img && (!img.src || img.src.indexOf(bg) === -1)) {
+      img.src = bg;
+    }
+  });
+
+  // init
+  goTo(0);
+  start();
+
+  // expose small API (optional)
+  slider.heroGoTo = goTo;
+})();
+</script>
+
 </html>
