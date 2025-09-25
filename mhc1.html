@@ -494,6 +494,151 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
   object-fit: cover;
 }
 
+  /* ---------- HERO: visual polish & animations ---------- */
+
+/* 1) Entrance / reveal for hero text */
+.hero-content { 
+  transform-origin: left center;
+  opacity: 0;
+  transform: translateY(10px) scale(.995);
+  transition: opacity .6s cubic-bezier(.2,.9,.2,1), transform .8s cubic-bezier(.2,.9,.2,1);
+}
+.hero-content.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* headline split reveal */
+#hero-heading {
+  display: inline-block;
+  line-height:1.02;
+  transform: translateY(6px);
+  opacity: 0;
+  transition: transform .65s var(--ease) .08s, opacity .65s var(--ease) .08s;
+}
+.hero-content.is-visible #hero-heading { transform: translateY(0); opacity:1; }
+
+/* kicker micro-animation */
+.kicker {
+  transform-origin:center;
+  animation: kicker-breathe 4s ease-in-out infinite;
+  box-shadow: 0 6px 20px rgba(212,171,78,0.06);
+}
+@keyframes kicker-breathe {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* CTA polish: gentle hover lift, icon pop */
+.hero-ctas .btn {
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), opacity .18s var(--ease);
+  will-change: transform;
+}
+.hero-ctas .btn.primary:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(212,171,78,0.14); }
+.hero-ctas .btn.ghost:hover { transform: translateY(-4px); }
+
+/* CTA subtle entrance stagger */
+.hero-ctas .btn { opacity: 0; transform: translateY(6px) scale(.995); }
+.hero-content.is-visible .hero-ctas .btn {
+  opacity: 1; transform: translateY(0) scale(1);
+  transition-delay: .22s;
+}
+.hero-content.is-visible .hero-ctas .btn:nth-child(2){ transition-delay:.30s; }
+.hero-content.is-visible .hero-ctas .btn:nth-child(3){ transition-delay:.36s; }
+
+/* feature list micro fade-in */
+.feature-list li { transform: translateY(6px); opacity:0; transition: transform .55s var(--ease), opacity .55s var(--ease); }
+.hero-content.is-visible .feature-list li { transform: translateY(0); opacity:1; }
+.feature-list li:nth-child(1){ transition-delay: .26s } 
+.feature-list li:nth-child(2){ transition-delay: .32s }
+
+/* 2) Hero visual: parallax, soft vignette & breathe */
+.mockup-wrap {
+  position: relative;
+  transform-origin: center;
+  transition: transform .9s cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+  overflow: visible;
+}
+
+/* parallax image: slight scale/translate for depth */
+.hero-image {
+  transform-origin: center;
+  transition: transform 0.9s cubic-bezier(.2,.9,.2,1), filter .8s ease;
+  will-change: transform, filter;
+  filter: drop-shadow(0 20px 40px rgba(11,12,14,0.08));
+}
+
+/* small perspective tilt for lively gallery feel */
+.hero-media.is-active .hero-image { transform: translateY(-6px) scale(1.02) rotate(-0.4deg); }
+
+/* highlight-card: entrance + float */
+.highlight-card {
+  transform: translateY(12px) scale(.98) rotate(-2deg);
+  opacity: 0;
+  transition: transform .9s cubic-bezier(.2,.9,.2,1), opacity .9s cubic-bezier(.2,.9,.2,1);
+}
+.hero-media.is-active .highlight-card {
+  transform: translateY(0) scale(1) rotate(0);
+  opacity: 1;
+  transition-delay: .28s;
+}
+
+/* highlight-card hover micro */
+.highlight-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 30px 60px rgba(11,12,14,0.14); }
+
+/* 3) Hero vignette & badges subtle motion (tiny floating) */
+.hero-decor .v-item img,
+.hero-trust .badge {
+  transition: transform 1.6s ease-in-out;
+  will-change: transform;
+}
+.hero-media.is-active .v-item img:nth-child(1){ transform: translateY(-8px) rotate(-1deg); }
+.hero-media.is-active .v-item img:nth-child(2){ transform: translateY(6px) rotate(2deg); }
+.hero-media.is-active .v-item img:nth-child(3){ transform: translateY(-4px) rotate(-0.6deg); }
+.hero-media.is-active .hero-trust .badge { transform: translateY(4px); }
+
+/* 4) Typographic polish */
+#hero-heading { font-size: clamp(34px, 5.6vw, 64px); letter-spacing: -0.6px; font-weight:800; color:var(--muted-900); }
+.lead { font-size: clamp(15px, 1.2vw, 18px); color:var(--muted-700); margin-top:12px; }
+
+/* 5) Decorative radial vignette behind the hero mockup */
+.mockup-wrap::before {
+  content: "";
+  position: absolute;
+  left: -8%;
+  top: -10%;
+  width: 140%;
+  height: 140%;
+  z-index: -1;
+  border-radius: 20%;
+  background: radial-gradient(600px 300px at 20% 20%, rgba(212,171,78,0.06), transparent 25%),
+              radial-gradient(400px 200px at 80% 80%, rgba(11,12,14,0.02), transparent 35%);
+  pointer-events:none;
+  opacity: 0;
+  transform: scale(.98);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.hero-media.is-active .mockup-wrap::before { opacity: 1; transform: scale(1); }
+
+/* 6) focus / reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .kicker, .hero-content, .hero-image, .highlight-card, .feature-list li, .hero-ctas .btn {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .mockup-wrap::before { display: none; }
+}
+
+/* 7) small responsive tweaks */
+@media (max-width:900px) {
+  .hero-grid { gap:18px; grid-template-columns: 1fr; }
+  .hero-media { align-items:center; justify-content:center; }
+  .mockup-wrap { max-width: 340px; margin: 0 auto; }
+  .hero-content { text-align:center; }
+  .hero-content.is-visible .hero-ctas .btn { transition-delay: 0; }
+}
+
 </style>
   
 </head>
@@ -2190,5 +2335,96 @@ document.querySelectorAll('.article-media img').forEach(img=>{
   });
 });
 </script>
+<script> 
 
+/* ---------- HERO: init animations & lightweight parallax ---------- */
+(function(){
+  const heroContent = document.querySelector('.hero-content');
+  const heroMedia = document.querySelector('.hero-media');
+  const mockupWrap = document.querySelector('.mockup-wrap');
+  const heroImage = document.querySelector('.hero-image');
+  const highlight = document.querySelector('.highlight-card');
+
+  // small helper: add visible class when hero intersects viewport
+  function revealHero() {
+    if (!heroContent) return;
+    // use IntersectionObserver for a11y-friendly reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          heroContent.classList.add('is-visible');
+          if (heroMedia) heroMedia.classList.add('is-active');
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.28 });
+    io.observe(heroContent);
+  }
+
+  // mousemove parallax: subtle translate/rotate/scale of image — low amplitude
+  function wireParallax() {
+    if (!mockupWrap || !heroImage || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const maxTilt = 8; // px vertical shift
+    const maxX = 6; // px horizontal shift
+    const maxRotate = 0.6; // deg
+
+    function onMove(e){
+      const rect = mockupWrap.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      const mx = (e.clientX || (e.touches && e.touches[0].clientX)) || cx;
+      const my = (e.clientY || (e.touches && e.touches[0].clientY)) || cy;
+      const dx = (mx - cx) / rect.width;
+      const dy = (my - cy) / rect.height;
+      // subtle transforms
+      const tx = (-dx * maxX).toFixed(2);
+      const ty = (-dy * maxTilt).toFixed(2);
+      const rot = (dx * maxRotate).toFixed(2);
+      heroImage.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg) scale(1.02)`;
+      // soft move for vignette items if present
+      if (heroMedia) {
+        heroMedia.querySelectorAll('.v-item img').forEach((el, i) => {
+          const r = (i - 1) * 3; // slight stagger
+          el.style.transform = `translate3d(${tx/ (2 + i)}px, ${ty/ (3 + i) + r}px, 0) rotate(${rot/ (3 + i)}deg)`;
+        });
+      }
+    }
+
+    function reset() {
+      heroImage.style.transform = '';
+      if (heroMedia) heroMedia.querySelectorAll('.v-item img').forEach(el => el.style.transform = '');
+    }
+
+    mockupWrap.addEventListener('pointermove', onMove, { passive: true });
+    mockupWrap.addEventListener('pointerleave', reset);
+    // also support touch
+    mockupWrap.addEventListener('touchmove', onMove, { passive: true });
+    mockupWrap.addEventListener('touchend', reset);
+  }
+
+  // small entrance for highlight-card if present
+  function animateHighlight() {
+    if (!highlight) return;
+    // give it a tiny wobble after visible
+    setTimeout(()=> {
+      highlight.animate([
+        { transform: 'translateY(0) rotate(0)' },
+        { transform: 'translateY(-6px) rotate(1.5deg)' },
+        { transform: 'translateY(0) rotate(0)' }
+      ], { duration: 1200, easing: 'cubic-bezier(.2,.9,.2,1)' });
+    }, 900);
+  }
+
+  // init when DOM ready
+  document.addEventListener('DOMContentLoaded', function(){
+    try {
+      revealHero();
+      wireParallax();
+      animateHighlight();
+    } catch (e) { /* fail safely */ }
+  });
+})();
+
+</script>
 </html>
