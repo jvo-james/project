@@ -8,18 +8,7 @@
   <meta name="description" content="Make Heaven Crowded — a faith-driven online shop and gospel hub. Shop Christian apparel, donate, read devotionals, and join the movement." />
 <meta charset="utf-8" />  
   <style>
-/* ==========================================================================
-   Make Heaven Crowded — Stylesheet
-   - Light + gentle dark accents, warm gold accent color
-   - Uses: Montserrat (headlines), Roboto Slab (display/text accents)
-   - Covers header, hero, product grid, shop, gospel hub, donate, forms,
-     modals, cart drawer, design generator, responsiveness, and animations.
-   - Author: generated for the HTML & JS provided
-   ========================================================================== */
 
-/* -------------------------
-   GLOBAL VARIABLES
-   ------------------------- */
 :root{
   /* palette */
   --bg: #f7f7f6;                /* page background - warm off-white */
@@ -346,9 +335,99 @@ blockquote#verseOfDay{margin-top:8px;font-family:'Roboto Slab', serif;font-size:
   *{animation-duration:0s!important;transition-duration:0s!important;scroll-behavior:auto!important}
 }
 
-/* -------------------------
-   End of stylesheet
-   ------------------------- */
+
+:root{
+  --max-width:1040px;   /* reduce overall page width for tighter layout */
+  --header-h:64px;      /* slightly shorter header */
+  --radius-base:10px;
+}
+
+/* tighten container horizontal padding */
+.container{max-width:var(--max-width);padding:0 16px}
+
+/* reduce default section padding for denser layout */
+.section{padding:28px 0}
+
+/* slightly smaller hero spacing */
+.hero-section{padding:36px 0 18px}
+.hero-grid{gap:24px}
+h2#hero-heading{font-size:36px}
+
+/* product grid spacing smaller */
+.product-grid{gap:14px}
+
+/* shop list and aside adjustments */
+.grid-shop{gap:16px}
+.shop-aside{min-width:220px}
+
+/* --- alternating section backgrounds (subtle) --- */
+/* Use gentle, warm alternation like react.dev but subtle */
+main > section:nth-of-type(odd) {
+  background: linear-gradient(180deg, rgba(250,247,241,0.0), rgba(250,247,241,0.0));
+}
+main > section:nth-of-type(even) {
+  background: linear-gradient(180deg, rgba(245,242,238,0.55), rgba(245,242,238,0.55));
+}
+/* make the hero special and lighter */
+.hero-section { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,250,240,0.95)); }
+
+/* --- hero decorative styles --- */
+.hero-decor{position:relative;margin-top:14px;pointer-events:none}
+.hero-ribbon{position:absolute;right:0;top:6px;width:46%;height:46px;transform:skewX(-14deg);opacity:0.95}
+.hero-vignette{position:absolute;right:18px;top:56px;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,rgba(255,255,255,0.95),#fff);padding:10px;border-radius:12px;box-shadow:0 18px 40px rgba(11,11,12,0.06);pointer-events:auto}
+.hero-vignette .v-item{width:58px;height:58px;border-radius:8px;overflow:hidden;border:1px solid rgba(11,11,12,0.04);flex:0 0 58px}
+.hero-vignette .v-item img{width:100%;height:100%;object-fit:cover}
+.hero-vignette .v-meta{display:flex;flex-direction:column;gap:6px}
+.hero-trust{position:absolute;left:18px;bottom:18px;display:flex;gap:8px;pointer-events:auto}
+.hero-trust .badge{background:linear-gradient(90deg,rgba(207,155,67,0.08),transparent);padding:6px 10px;border-radius:999px;color:var(--accent-gold);font-weight:800;font-size:13px}
+
+/* small mobile adjustments for hero extras */
+@media (max-width:880px){
+  .hero-vignette{position:static;margin-top:10px;transform:none;justify-content:flex-start}
+  .hero-trust{position:static;display:flex;margin-top:8px}
+  .hero-ribbon{display:none}
+}
+
+/* subtle hover shimmer on hero vignette */
+.hero-vignette:hover{transform:translateY(-6px);transition:transform 320ms cubic-bezier(.2,.9,.25,1)}
+
+/* --- featured sermon card styles --- */
+.sermon-card{background:linear-gradient(180deg,#fff,#fff);border-radius:12px;padding:12px;border:1px solid rgba(11,11,12,0.04);box-shadow:0 12px 36px rgba(11,11,12,0.06);margin-bottom:12px}
+.sermon-card h4{font-size:16px;margin-top:6px}
+.sermon-card .sermon-label{font-weight:800;color:var(--muted)}
+.sermon-card .sermon-actions{display:flex;gap:8px;margin-top:8px}
+
+/* --- micro-polish: make hero image feel more commerc-y --- */
+.mockup-wrap::before{
+  content:"";
+  position:absolute;left:0;top:0;right:0;height:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.0),rgba(255,250,240,0.20));
+  pointer-events:none;
+}
+/* add a faint diagonal grid behind hero images */
+.hero-media{position:relative}
+.hero-media::after{
+  content:"";
+  position:absolute;inset:0;background-image:linear-gradient(45deg, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(-45deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size:120px 120px;opacity:0.08;pointer-events:none;border-radius:12px;mix-blend-mode:overlay;
+}
+
+/* reduce some global font sizes for denser look */
+.brand-text .site-title{font-size:16px}
+.product-body h4{font-size:16px}
+.product-body .muted{font-size:13px}
+
+/* tiny landing animation for ribbon and vignette */
+@keyframes heroFloat {
+  0%{transform:translateY(0) rotate(0.001deg)}
+  50%{transform:translateY(-6px) rotate(0.001deg)}
+  100%{transform:translateY(0) rotate(0.001deg)}
+}
+.hero-ribbon, .hero-vignette {animation: heroFloat 6s ease-in-out infinite}
+
+/* reduce footer gaps */
+.site-footer{padding:20px 0}
+
 </style>
 </head>
   <body>
@@ -468,6 +547,42 @@ blockquote#verseOfDay{margin-top:8px;font-family:'Roboto Slab', serif;font-size:
               </div>
             </div>
           </div>
+
+          <!-- ===== HERO ENHANCEMENTS: decorative shapes + product vignette + trust strip ===== -->
+<div class="hero-decor" aria-hidden="true">
+  <!-- diagonal gold ribbon with subtle pattern -->
+  <svg class="hero-ribbon" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="gRibbon" x1="0" x2="1">
+        <stop offset="0" stop-color="#f6d7a1" stop-opacity="0.95"/>
+        <stop offset="1" stop-color="#cf9b43" stop-opacity="0.95"/>
+      </linearGradient>
+      <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.12)"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="0" width="100" height="20" fill="url(#gRibbon)"/>
+    <rect x="0" y="0" width="100" height="20" fill="url(#dots)" opacity="0.18"/>
+  </svg>
+
+  <!-- product vignette (small stack of product thumbnails) -->
+  <div class="hero-vignette" role="list" aria-label="Featured products">
+    <div class="v-item" role="listitem"><img src="/assets/saved-tee.jpg" alt="Saved Tee" /></div>
+    <div class="v-item" role="listitem"><img src="/assets/crowd-hoodie.jpg" alt="Crowd Hoodie" /></div>
+    <div class="v-item" role="listitem"><img src="/assets/grace-tee.jpg" alt="Grace Tee" /></div>
+    <div class="v-meta">
+      <div class="small muted">Shop & Support Missions</div>
+      <a class="btn small ghost" href="#shop">Browse Shop</a>
+    </div>
+  </div>
+
+  <!-- trust strip -->
+  <div class="hero-trust">
+    <span class="badge">Ethical Production</span>
+    <span class="badge">Donations Supported</span>
+    <span class="badge">Free Shipping $80+</span>
+  </div>
+</div>
 
           <div class="verse-card" role="region" aria-label="Verse of the day">
             <div class="verse-label">Verse of the Day</div>
@@ -622,6 +737,23 @@ blockquote#verseOfDay{margin-top:8px;font-family:'Roboto Slab', serif;font-size:
             <a class="small" href="#">Verse archive »</a>
           </article>
         </div>
+
+<div class="sermon-card">
+  <div class="sermon-body">
+    <div class="sermon-label small muted">Featured Sermon</div>
+    <h4>Short Message: Bold Witness</h4>
+    <p class="muted small">A short, practical message you can share after a conversation. Watch & share with your community.</p>
+    <div class="sermon-media">
+      <!-- use your YouTube embed or replace src -->
+      <iframe width="100%" height="180" src="https://www.youtube.com/embed/Vruq4I4RDCU" title="Featured Sermon" frameborder="0" allowfullscreen style="border-radius:8px"></iframe>
+    </div>
+    <div class="sermon-actions" style="margin-top:10px">
+      <a class="btn small primary" href="#read">Read Sermon Notes</a>
+      <a class="btn small ghost" href="#gospel">More Teachings</a>
+    </div>
+  </div>
+</div>
+<!-- ===== end featured sermon ===== -->
 
         <!-- Design generator (small interactive UI placeholder) -->
         <div class="design-generator">
