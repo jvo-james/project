@@ -303,32 +303,49 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 @media (max-width:900px){ .shop-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:520px){ .shop-grid{grid-template-columns:1fr} .shop-toolbar{flex-direction:column;align-items:stretch} }
 
-  /* ===== Community showcase styling (React docs-like angled cards) ===== */
-.community-section.large-showcase{
-  padding:56px 0;
-  background: linear-gradient(180deg, rgba(250,247,242,1), rgba(255,255,255,1));
-}
+  /* COMMUNITY MARQUEE: continuous moving showcase */
+.community-section.community-marquee{padding:56px 0;background:linear-gradient(180deg,rgba(250,247,242,1),rgba(255,255,255,1));}
 
-.community-showcase{position:relative;margin-top:22px}
+/* wrap hides overflow */
+.marquee-wrap{position:relative;overflow:hidden;padding:12px 0}
 
-/* track that contains the cards */
-.community-showcase .cards{
+/* track is flex and will be duplicated by JS for seamless loop */
+.marquee-track{
   display:flex;
   gap:28px;
   align-items:flex-end;
-  justify-content:center;
-  padding:24px 10px;
-  /* create subtle perspective */
-  perspective:1200px;
-  /* allow horizontal scroll on small screens */
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
+  /* allow keyboard focus */
+  outline:none;
+  /* animation controls via CSS variable */
+  --marquee-duration: 18s;
+  animation: marquee var(--marquee-duration) linear infinite;
+  will-change:transform;
+  /* small touch smoothing */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
 }
 
-/* a single card */
-.community-showcase .card{
-  flex: 0 0 36%;                 /* default desktop size */
+/* pause when user hovers or track is focused (accessible) */
+.marquee-track:hover,
+.marquee-track:focus{
+  animation-play-state: paused;
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .marquee-track{animation: none; overflow-x:auto; scroll-snap-type:x mandatory}
+}
+
+/* marquee keyframes: translate by half width because we'll duplicate children in JS */
+@keyframes marquee{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* cards: visual style similar to React docs sample */
+.marquee-track .card{
+  flex: 0 0 36%;
   max-width:480px;
   min-width:300px;
   height:220px;
@@ -337,62 +354,41 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
   background:#fff;
   box-shadow: 0 18px 40px rgba(11,12,14,0.08);
   transform-origin:center;
-  scroll-snap-align:center;
-  transition: transform .45s cubic-bezier(.2,.9,.2,1), box-shadow .35s ease, filter .35s ease;
-  position:relative;
   display:block;
 }
 
-/* image inside card */
-.community-showcase .card img{
+/* image fit */
+.marquee-track .card img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
-  transform-origin:center;
-  will-change:transform;
+  transition: transform .6s ease;
 }
 
-/* center card larger and more pronounced */
-.community-showcase .card.center{
-  transform: translateY(-12px) scale(1.06) rotate(-1deg);
-  z-index:4;
-  box-shadow: 0 30px 80px rgba(11,12,14,0.12);
-}
+/* staggered rotation for lively layout (applies repeatedly after duplication) */
+.marquee-track .card:nth-child(5n+1){ transform: translateY(12px) rotate(-6deg) scale(.98); }
+.marquee-track .card:nth-child(5n+2){ transform: translateY(6px) rotate(3deg) scale(.995); }
+.marquee-track .card:nth-child(5n+3){ transform: translateY(-12px) rotate(-1deg) scale(1.06); box-shadow:0 30px 80px rgba(11,12,14,0.12) }
+.marquee-track .card:nth-child(5n+4){ transform: translateY(8px) rotate(-2.5deg) scale(.99); }
+.marquee-track .card:nth-child(5n+5){ transform: translateY(14px) rotate(5deg) scale(.98); }
 
-/* subtle staggered rotation and vertical offset for siblings */
-.community-showcase .card:nth-child(1){ transform: translateY(10px) rotate(-6deg) scale(.98); z-index:2; }
-.community-showcase .card:nth-child(2){ transform: translateY(4px) rotate(3deg) scale(.99); z-index:3; }
-.community-showcase .card:nth-child(3){ /* center handled by .center class */ }
-.community-showcase .card:nth-child(4){ transform: translateY(6px) rotate(-2.5deg) scale(.99); z-index:3; }
-.community-showcase .card:nth-child(5){ transform: translateY(12px) rotate(5deg) scale(.98); z-index:2; }
+/* hover brings card forward slightly */
+.marquee-track .card:hover{ transform: translateY(-6px) scale(1.03) rotate(0); box-shadow:0 34px 80px rgba(11,12,14,0.14); z-index:6; }
 
-/* on hover, raise the hovered card */
-.community-showcase .card:hover{
-  transform: translateY(-6px) scale(1.03) rotate(0);
-  box-shadow: 0 34px 80px rgba(11,12,14,0.14);
-  z-index:6;
-}
-
-/* smaller screens: become a scrollable carousel */
+/* responsive sizes */
 @media (max-width:1100px){
-  .community-showcase .card{ flex: 0 0 56%; min-width:260px; height:200px; border-radius:14px; }
-  .community-showcase .card.center{ transform: translateY(-8px) scale(1.04) rotate(-1deg); }
-  .community-showcase .cards{gap:18px;padding:18px 6px}
-  .community-showcase .card:nth-child(1), .community-showcase .card:nth-child(5){ transform: translateY(8px) rotate(-4deg) scale(.99); }
+  .marquee-track .card{flex:0 0 56%; min-width:260px; height:200px}
+  .marquee-track .card:nth-child(5n+3){ transform: translateY(-8px) rotate(-1deg) scale(1.04); }
 }
-
-/* mobile */
 @media (max-width:520px){
-  .community-showcase .cards{gap:14px}
-  .community-showcase .card{ flex:0 0 78%; height:170px; min-width:220px }
-  .community-section.large-showcase header h3{font-size:28px}
-  .community-section.large-showcase header p{font-size:14px;max-width:48ch}
+  .marquee-track .card{flex:0 0 78%; height:170px; min-width:220px}
+  .community-section.community-marquee header h3{font-size:28px}
 }
 
-/* hide native scrollbar in modern browsers for cleaner look (still scrollable) */
-.community-showcase .cards::-webkit-scrollbar{height:8px}
-.community-showcase .cards::-webkit-scrollbar-thumb{background:rgba(11,11,12,0.06);border-radius:999px}
+/* optional subtle scrollbar style */
+.marquee-track::-webkit-scrollbar{height:8px}
+.marquee-track::-webkit-scrollbar-thumb{background:rgba(11,11,12,0.06);border-radius:999px}
 
 </style>
   
@@ -819,9 +815,8 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
       </div>
     </section>
 
-    <!-- COMMUNITY MARQUEE — place this directly under the Read & Grow section -->
-<!-- ===== Community showcase: Join a community of believers (REPLACE existing community-section) ===== -->
-<section class="community-section large-showcase" aria-labelledby="community-heading">
+  <!-- COMMUNITY MARQUEE: moving band of community photos -->
+<section class="community-section community-marquee" aria-labelledby="community-heading">
   <div class="container">
     <header style="text-align:center; margin-bottom:18px;">
       <h3 id="community-heading" style="font-size:48px; line-height:1.02; margin-bottom:8px;">Join a community of believers</h3>
@@ -830,24 +825,19 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
       </p>
     </header>
 
-    <div class="community-showcase" role="list" aria-label="Community photos">
-      <div class="cards" tabindex="0" aria-live="polite">
-        <div class="card" role="listitem"><img src="community-1.jpg" alt="Campus outreach with Make Heaven Crowded tee"></div>
-        <div class="card" role="listitem"><img src="community-2.jpg" alt="Group worship and fellowship"></div>
-        <div class="card center" role="listitem"><img src="community-3.jpg" alt="Design reveal at an event"></div>
-        <div class="card" role="listitem"><img src="community-4.jpg" alt="Friends sharing testimony"></div>
-        <div class="card" role="listitem"><img src="community-5.jpg" alt="Street outreach with shirts"></div>
+    <div class="marquee-wrap" aria-hidden="false" role="region" aria-label="Community photos scrolling">
+      <div class="marquee-track" tabindex="0">
+        <!-- replace these src paths with your images -->
+        <div class="card"><img src="community-1.jpg" alt="Campus outreach with Make Heaven Crowded tee"></div>
+        <div class="card"><img src="community-2.jpg" alt="Group worship and fellowship"></div>
+        <div class="card"><img src="community-3.jpg" alt="Design reveal at an event"></div>
+        <div class="card"><img src="community-4.jpg" alt="Friends sharing testimony"></div>
+        <div class="card"><img src="community-5.jpg" alt="Street outreach with shirts"></div>
       </div>
-    </div>
-
-    <div class="showcase-controls" aria-hidden="false" style="margin-top:18px;display:flex;justify-content:center;gap:12px">
-      <button class="btn ghost" id="communityPrev" aria-label="Previous community photo">Prev</button>
-      <button class="btn ghost" id="communityNext" aria-label="Next community photo">Next</button>
     </div>
   </div>
 </section>
 
-<!-- end community marquee -->
 
     <!-- ==========================
          ABOUT / GET INVOLVED
@@ -1945,81 +1935,105 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
 </script>
 
   <script>
-/* Community showcase small behaviour helper:
-   - auto-center nearest card on scroll end
-   - Next/Prev buttons that move by one card
-   - keyboard arrow navigation when the .cards element is focused
+/* Marquee helper: duplicates track items to create an infinite loop,
+   calculates a natural duration based on track width, and wires pause on hover/focus.
 */
 (function(){
-  const cardsWrap = document.querySelector('.community-showcase .cards');
-  if (!cardsWrap) return;
+  const track = document.querySelector('.marquee-track');
+  if (!track) return;
 
-  const cards = Array.from(cardsWrap.querySelectorAll('.card'));
-  const prevBtn = document.getElementById('communityPrev');
-  const nextBtn = document.getElementById('communityNext');
+  // Duplicate children until track width >= 2x container width for smooth loop
+  const wrap = track.parentElement;
+  const children = Array.from(track.children);
+  if (!children.length) return;
 
-  // ensure one center card initially (choose middle if odd)
-  function setCenterClass(index){
-    cards.forEach((c,i) => c.classList.toggle('center', i === index));
+  // Clone once (we rely on CSS translateX(-50%) to loop)
+  // But ensure we have enough width — if short, duplicate repeatedly
+  function ensureDuplication(){
+    // compute widths AFTER any images load
+    let totalWidth = 0;
+    Array.from(track.children).forEach(c => totalWidth += c.getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 28));
+    const containerWidth = wrap.getBoundingClientRect().width;
+    // if track width < container * 2, duplicate original set
+    if (totalWidth < containerWidth * 2) {
+      const toClone = Array.from(track.children).slice(0, children.length);
+      toClone.forEach(node => track.appendChild(node.cloneNode(true)));
+      return true; // we did clone
+    }
+    return false; // enough
   }
-  const initialIndex = Math.floor(cards.length / 2);
-  setCenterClass(initialIndex);
-  // scroll the chosen center into view
-  function scrollToCard(i, behavior = 'smooth'){
-    if (!cards[i]) return;
-    cards[i].scrollIntoView({behavior: behavior, inline: 'center', block: 'nearest'});
-    setCenterClass(i);
+
+  // try duplicate until large enough (max 5 attempts)
+  let attempts = 0;
+  while (ensureDuplication() && attempts++ < 4) { /* loop */ }
+
+  // compute duration based on the total width of all children
+  function computeDuration(){
+    // total track scrollable width (after duplication)
+    const scrollWidth = Array.from(track.children).reduce((s, el) => s + el.getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 28), 0);
+    // base: more width => longer duration to keep speed comfortable
+    // pick a pixels-per-second speed (e.g. 80 px/s) and compute duration
+    const pxPerSecond = 90; // tweak to taste: higher = faster
+    const duration = Math.max(12, Math.round((scrollWidth / pxPerSecond)));
+    track.style.setProperty('--marquee-duration', duration + 's');
   }
-  // next / prev
-  function indexOfCentered(){
-    // determine which card is closest to center of the wrap
-    const wrapRect = cardsWrap.getBoundingClientRect();
-    const wrapCenterX = wrapRect.left + wrapRect.width / 2;
-    let bestIndex = 0;
-    let bestDist = Infinity;
-    cards.forEach((c,i) => {
-      const r = c.getBoundingClientRect();
-      const cardCenter = r.left + r.width / 2;
-      const dist = Math.abs(cardCenter - wrapCenterX);
-      if (dist < bestDist){ bestDist = dist; bestIndex = i; }
+
+  // wait for images to load (to get accurate sizes)
+  const imgs = track.querySelectorAll('img');
+  let imgsLeft = imgs.length;
+  if (imgsLeft === 0) {
+    computeDuration();
+  } else {
+    imgs.forEach(img => {
+      if (img.complete) {
+        imgsLeft--;
+      } else {
+        img.addEventListener('load', () => {
+          imgsLeft--;
+          if (imgsLeft === 0) computeDuration();
+        });
+        img.addEventListener('error', () => {
+          imgsLeft--;
+          if (imgsLeft === 0) computeDuration();
+        });
+      }
     });
-    return bestIndex;
+    // fallback timeout to compute anyway
+    setTimeout(() => { if (imgsLeft > 0) computeDuration(); }, 800);
   }
 
-  function goNext(){ const idx = Math.min(cards.length - 1, indexOfCentered() + 1); scrollToCard(idx); }
-  function goPrev(){ const idx = Math.max(0, indexOfCentered() - 1); scrollToCard(idx); }
+  // Pause/resume handlers (also used by keyboard)
+  function pause() { track.style.animationPlayState = 'paused'; track.dataset.paused = 'true'; }
+  function play()  { track.style.animationPlayState = 'running'; track.dataset.paused = 'false'; }
 
-  if (nextBtn) nextBtn.addEventListener('click', goNext);
-  if (prevBtn) prevBtn.addEventListener('click', goPrev);
+  // pause on hover / focus (CSS also handles this, but we set state for keyboard toggling)
+  track.addEventListener('mouseenter', pause);
+  track.addEventListener('mouseleave', () => { if (!track.dataset.userPaused) play(); });
+  track.addEventListener('focusin', pause);
+  track.addEventListener('focusout', () => { if (!track.dataset.userPaused) play(); });
 
-  // when user scrolls, debounce and center nearest card at the end
-  let scrollTimer = null;
-  cardsWrap.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const idx = indexOfCentered();
-      scrollToCard(idx, 'smooth');
-    }, 140);
-  }, {passive:true});
-
-  // keyboard nav when track is focused
-  cardsWrap.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+  // keyboard: space toggles pause/resume when the track has focus
+  track.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.key === ' '){
+      e.preventDefault();
+      if (track.dataset.paused === 'true'){
+        track.dataset.userPaused = 'false';
+        play();
+      } else {
+        track.dataset.userPaused = 'true';
+        pause();
+      }
+    }
   });
 
-  // make cards focusable for keyboard users
-  cards.forEach(c => c.setAttribute('tabindex', '0'));
+  // If user has prefers-reduced-motion, remove animation and enable horizontal scroll
+  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (media.matches) {
+    track.style.animation = 'none';
+    track.style.whiteSpace = 'nowrap';
+    track.style.overflowX = 'auto';
+  }
 
-  // optional: when card is focused (tab), bring it to center
-  cards.forEach((c,i) => {
-    c.addEventListener('focus', () => scrollToCard(i));
-  });
-
-  // small polish: on resize re-center
-  window.addEventListener('resize', () => {
-    scrollToCard(indexOfCentered(), 'instant');
-  });
 })();
 </script>
 
