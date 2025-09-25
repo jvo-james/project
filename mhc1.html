@@ -429,6 +429,71 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
   .card .article-media{ height: 120px; border-radius:8px; }
 }
 
+  /* -- Read & Grow: fix oversized images and responsive grid -- */
+.articles-grid {
+  display: grid;
+  /* responsive: 3 cols on desktop, 2 on tablet, 1 on mobile */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+/* article card baseline */
+.article-card {
+  background: var(--card);
+  padding: 14px;
+  border-radius: 12px;
+  overflow: hidden;              /* keep images inside card */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-soft);
+  min-height: 120px;
+}
+
+/* consistent media box */
+.article-card .article-media {
+  width: 100%;
+  height: 160px;                 /* desktop height */
+  max-height: 40vh;              /* prevents tall images from taking whole screen */
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(250,250,250,1), rgba(244,244,244,1));
+  flex-shrink: 0;
+}
+
+/* image: always fill container without breaking layout */
+.article-card .article-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* ensure small screens remain pleasant */
+@media (max-width:900px){
+  .article-card .article-media { height: 140px; }
+}
+@media (max-width:520px){
+  .article-card .article-media { height: 120px; border-radius:8px; max-height: 32vh; }
+}
+
+/* guard against unexpected global rules: keep images constrained */
+.articles-grid img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* If you still see full-screen images, this rule will prevent them */
+.article-card img {
+  max-height: 60vh;
+  width: 100%;
+  object-fit: cover;
+}
+
 </style>
   
 </head>
@@ -857,47 +922,43 @@ input::placeholder, textarea::placeholder{color:var(--muted-500)}
           <div class="section-actions"><a class="muted small" href="#">View all articles</a></div>
         </header>
 
-        <div class="articles-grid" style="margin-top:18px">
-         <article class="article-card">
-  <div style="display:flex;flex-direction:column;gap:10px">
+<div class="articles-grid" style="margin-top:18px">
+
+  <article class="article-card">
     <h4>How to Share Your Faith Naturally</h4>
     <p class="muted small">Practical tips for gospel conversations without pressure.</p>
 
-    <div class="article-media" style="margin-top:6px">
+    <div class="article-media" aria-hidden="false">
       <img src="article-share-faith.jpg" alt="Two students talking on campus" loading="lazy" />
     </div>
 
     <a class="small" href="#">Read »</a>
-  </div>
-</article>
+  </article>
 
-<article class="article-card">
-  <div style="display:flex;flex-direction:column;gap:10px">
+  <article class="article-card">
     <h4>Short Series: Identity in Christ</h4>
     <p class="muted small">A 7-day devotional exploring who we are in Jesus.</p>
 
-    <div class="article-media" style="margin-top:6px">
+    <div class="article-media" aria-hidden="false">
       <img src="article-identity.jpg" alt="Hands holding a Bible" loading="lazy" />
     </div>
 
     <a class="small" href="#">Read »</a>
-  </div>
-</article>
+  </article>
 
-<article class="article-card">
-  <div style="display:flex;flex-direction:column;gap:10px">
+  <article class="article-card">
     <h4>Testimony: From Doubt to Faith</h4>
     <p class="muted small">A campus encounter that changed a life.</p>
 
-    <div class="article-media" style="margin-top:6px">
+    <div class="article-media" aria-hidden="false">
       <img src="article-testimony.jpg" alt="Person sharing testimony with friends" loading="lazy" />
     </div>
 
     <a class="small" href="#">Read »</a>
-  </div>
-</article>
+  </article>
 
-        </div>
+</div>
+
       </div>
     </section>
 
