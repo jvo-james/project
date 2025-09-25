@@ -222,10 +222,10 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; }
   display:grid;
   grid-template-columns: 1fr minmax(280px, 420px);  
   gap:22px;
-  align-items:start;
+  align-items:stretch; 
   border-radius:16px;
   padding:26px;
-  overflow:visible;
+  overflow:hidden;
   background: var(--card-bg);
   border:1px solid var(--border-weak);
   box-shadow: 0 20px 60px rgba(0,0,0,0.12);
@@ -250,6 +250,7 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; }
   background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
   border:1px solid var(--border-weak);
   box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+   align-self:stretch; 
 }
 
  .preview-canvas{
@@ -273,7 +274,34 @@ body.light-mode .avatar-badge, body.light-mode .tool-icon { color: #021018; }
   min-width:0; 
   color:var(--text);
 }
-
+.hero-left{
+  min-width:0;                 
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:flex-start;
+  justify-content:flex-start;
+  height:100%;                   
+}
+  .hero-marquee{
+  margin-top:auto;              
+  margin-bottom:0;
+  width:100%;
+  max-width:100%;
+  border-radius:999px;
+  padding:10px 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  overflow:hidden;              
+  border:1px solid var(--border-weak);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  position:relative;
+}
+  .hero-ctas{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:8px;                
+}
  .mint-progress{ display:flex; flex-direction:column; gap:8px; width:100%; }
 .mint-info{ display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--text-dim) }
 .mint-price{ font-weight:800; color:var(--text) }
@@ -490,8 +518,18 @@ body.modal-open{ overflow:hidden }
   animation: marquee 16s linear infinite;
   font-weight:700;
   color: var(--text);
-  padding-right: 6rem;  
+  padding-right: 3rem;   
+  min-width:200%;         
+  box-sizing:border-box;
 }
+
+ @keyframes marquee{
+  from{ transform: translateX(0%); }
+  to  { transform: translateX(-50%); }
+}
+
+ .hero-marquee:hover .marq{ animation-play-state:paused; }
+
 
 
 @keyframes marquee{
