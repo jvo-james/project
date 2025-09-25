@@ -349,6 +349,50 @@ html,body{overflow-x:hidden}
 /* final safety: ensure hero decorative svg doesn't intercept pointer events */
 .hero-decor svg, .hero-decor img {pointer-events:none}
 
+    /* ========== Community Marquee Styles ========== */
+.community-section{padding:28px 0 36px}
+.community-section .container{max-width:var(--max-width);padding:0 14px}
+
+/* marquee frame */
+.marquee{overflow:hidden;width:100%;margin-top:6px;border-radius:14px;position:relative;padding:12px 0;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,248,244,0.9));box-shadow:0 8px 30px rgba(11,11,12,0.03)}
+.marquee-track{display:flex;gap:18px;align-items:center;will-change:transform; /* animation controlled via CSS variable */ 
+  animation: marquee-left var(--marquee-duration, 28s) linear infinite;
+  padding-left:18px;
+}
+/* make sure repeated group sits seamlessly */
+.marquee-item{flex:0 0 320px;display:block;border-radius:12px;overflow:hidden;background:var(--card);box-shadow:0 12px 36px rgba(11,11,12,0.06);transform:rotate(-1.5deg);transition:transform .22s var(--ease)}
+.marquee-item:nth-child(3n){transform:rotate(1.2deg)}
+.marquee-item img{width:100%;height:200px;object-fit:cover;display:block}
+
+/* hover/focus micro-lift */
+.marquee-item:hover{transform:scale(1.03) rotate(0deg);transition:transform .22s var(--ease)}
+.marquee-track:focus{outline:2px solid rgba(207,155,67,0.12);outline-offset:6px}
+
+/* reduce item size on smaller screens */
+@media (max-width:1100px){
+  .marquee-item{flex:0 0 260px}
+  .marquee-item img{height:170px}
+}
+@media (max-width:640px){
+  .marquee-item{flex:0 0 200px}
+  .marquee-item img{height:140px}
+  .marquee-track{gap:12px}
+}
+
+/* keyframes: because we duplicate the items and animate -50%, loop is seamless */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* reduce motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none !important; transform: none !important; }
+}
+
+/* small polish — keep marquee visible above background elements */
+.marquee, .marquee-track, .marquee-item{z-index:1}
+
 
 </style>
 
@@ -772,6 +816,37 @@ html,body{overflow-x:hidden}
         </div>
       </div>
     </section>
+
+    <!-- COMMUNITY MARQUEE — place this directly under the Read & Grow section -->
+<section class="community-section" aria-labelledby="community-heading">
+  <div class="container">
+    <header style="text-align:center; margin-bottom:18px;">
+      <h3 id="community-heading" style="font-size:36px; margin-bottom:6px;">Join a community of believers</h3>
+      <p class="muted small" style="max-width:72ch; margin:0 auto;">
+        You’re not alone — wear the message, meet the movement. See real people from our community sharing life, faith and conversations sparked by Make Heaven Crowded.
+      </p>
+    </header>
+
+    <div class="marquee" aria-hidden="false" role="group" aria-label="Community photos scrolling">
+      <div class="marquee-track" tabindex="0">
+        <!-- Replace these `src` paths with your own images -->
+        <div class="marquee-item"><img src="/assets/community-1.jpg" alt="Campus outreach with Make Heaven Crowded tee"></div>
+        <div class="marquee-item"><img src="/assets/community-2.jpg" alt="Group worship and fellowship"></div>
+        <div class="marquee-item"><img src="/assets/community-3.jpg" alt="Design reveal at an event"></div>
+        <div class="marquee-item"><img src="/assets/community-4.jpg" alt="Friends sharing testimony"></div>
+        <div class="marquee-item"><img src="/assets/community-5.jpg" alt="Street outreach with shirts"></div>
+
+        <!-- duplicate (the script will also ensure duplication) -->
+        <div class="marquee-item"><img src="/assets/community-1.jpg" alt="Campus outreach with Make Heaven Crowded tee"></div>
+        <div class="marquee-item"><img src="/assets/community-2.jpg" alt="Group worship and fellowship"></div>
+        <div class="marquee-item"><img src="/assets/community-3.jpg" alt="Design reveal at an event"></div>
+        <div class="marquee-item"><img src="/assets/community-4.jpg" alt="Friends sharing testimony"></div>
+        <div class="marquee-item"><img src="/assets/community-5.jpg" alt="Street outreach with shirts"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end community marquee -->
 
     <!-- ==========================
          ABOUT / GET INVOLVED
@@ -1625,5 +1700,59 @@ html,body{overflow-x:hidden}
   document.addEventListener('DOMContentLoaded', boot);
 })();
 </script>
+<script>
 
+  // Community marquee helper — ensures seamless loop, pause on hover/focus, dynamic speed
+(function(){
+  const tracks = document.querySelectorAll('.marquee-track');
+  tracks.forEach(track => {
+    // If track children are not duplicated, duplicate them for a seamless loop
+    const children = Array.from(track.children);
+    if (children.length && !track.dataset.duplicated) {
+      // compute total width to choose a good duration if desired
+      const totalItems = children.length;
+      // duplicate once so CSS animation can shift -50%
+      children.forEach(n => track.appendChild(n.cloneNode(true)));
+      track.dataset.duplicated = 'true';
+    }
+
+    // set a duration based on items (more items -> longer duration)
+    const itemCount = track.querySelectorAll('.marquee-item').length;
+    // use base speed per item (seconds per 4 items) — tweak multiplier as desired
+    const basePer4 = 12; // seconds per 4 items
+    const duration = Math.max(12, Math.round((itemCount / 4) * basePer4));
+    track.style.setProperty('--marquee-duration', duration + 's');
+
+    // pause on hover & focus for accessibility
+    track.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+    track.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+    track.addEventListener('focusin', () => { track.style.animationPlayState = 'paused'; });
+    track.addEventListener('focusout', () => { track.style.animationPlayState = 'running'; });
+
+    // keyboard control: space toggles pause
+    track.addEventListener('keydown', (ev) => {
+      if (ev.key === ' ' || ev.key === 'Spacebar') {
+        ev.preventDefault();
+        const state = getComputedStyle(track).animationPlayState;
+        track.style.animationPlayState = (state === 'running') ? 'paused' : 'running';
+      }
+    });
+
+    // defensive: if images haven't loaded yet, adjust duration after load
+    const imgs = track.querySelectorAll('img');
+    let loaded = 0;
+    if (imgs.length === 0) return;
+    imgs.forEach(img => {
+      if (img.complete) { loaded++; }
+      else img.addEventListener('load', () => {
+        loaded++;
+        if (loaded === imgs.length) {
+          // optionally you could recalc duration here if you want
+        }
+      });
+    });
+  });
+})();
+
+</script>
 </html>
