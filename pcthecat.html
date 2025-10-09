@@ -1,377 +1,321 @@
 <!doctype html>
 <html lang="en">
 <head>
+  
+
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MushRush — Web UI</title>
+  <title>MushRush — Player Card (Purple Theme)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#9ef3c5;--muted:#99a3b3;--glass:rgba(255,255,255,0.03)}
-    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Segoe UI,Roboto,-apple-system}
-    body{margin:0;min-height:100vh;background:linear-gradient(180deg,#071023 0%, #071837 100%);color:#e6eef8}
-    .wrap{max-width:1100px;margin:28px auto;padding:24px}
+    :root{
+      --bg:#06040a; /* deep dark */
+      --card:#0f0b16;
+      --muted:rgba(255,255,255,0.55);
+      --glass:rgba(255,255,255,0.03);
+      --accent-1:#7c3aed; /* purple */
+      --accent-2:#a78bfa; /* light purple */
+      --accent-3:#6ee7b7; /* mint accent */
+      --btn-primary:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      --btn-secondary:linear-gradient(90deg,#ff6fcf,#7c3aed);
+      --card-radius:16px;
+      --glass-border:rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent), linear-gradient(180deg,#04030a 0%, #0b0710 100%);color:#eaf0ff}
+
+    .container{max-width:1200px;margin:28px auto;padding:24px}
     header{display:flex;align-items:center;gap:16px}
-    h1{margin:0;font-size:20px}
-    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:18px}
-    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    .btn{background:linear-gradient(90deg,var(--accent),#6be8ff);color:#042022;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+    h1{margin:0;font-size:20px;font-weight:700;letter-spacing:0.6px}
+
+    .layout{display:grid;grid-template-columns:360px 1fr;gap:24px;margin-top:22px}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);border-radius:var(--card-radius);padding:18px;box-shadow:0 10px 30px rgba(2,4,10,0.7)}
+
+    /* left column */
+    .panel h3{margin:0 0 8px 0;font-size:16px}
     .muted{color:var(--muted);font-size:13px}
-    label{display:block;font-size:13px;margin-bottom:6px}
-    input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
-    .row{display:flex;gap:8px;align-items:center}
-    .small{font-size:13px}
-    pre{white-space:pre-wrap;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin:8px 0}
-    .log{max-height:300px;overflow:auto;padding:8px;background:rgba(0,0,0,0.15);border-radius:8px}
+    label{display:block;font-size:13px;margin:10px 0 6px}
+    input,select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+
+    .btn{border:0;padding:10px 14px;border-radius:10px;color:#040611;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--btn-primary);color:white;box-shadow:0 6px 18px rgba(124,58,237,0.18)}
+    .btn-cta{background:var(--btn-secondary);color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .stack{display:flex;flex-direction:column;gap:10px}
+
+    /* right column - player card preview */
+    .player-wrap{display:flex;gap:18px;align-items:flex-start}
+    .player-card{width:340px;border-radius:14px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006));border:2px solid transparent;position:relative}
+    .rainbow-border{padding:6px;border-radius:16px;background:linear-gradient(135deg,#a78bfa, #7c3aed, #ff6fcf, #6ee7b7);}
+    .player-inner{background:var(--card);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+    .avatar{width:100%;height:320px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.02)}
+
+    .meta{margin-top:12px;font-size:13px;color:var(--muted)}
+    .meta strong{color:#fff}
+
+    .controls{display:flex;gap:8px;margin-top:12px}
+
+    /* referral & input block */
+    .ref-box{display:flex;flex-direction:column;background:linear-gradient(180deg, rgba(124,58,237,0.04), rgba(167,139,250,0.02));border-radius:10px;padding:12px;border:1px dashed rgba(167,139,250,0.12)}
+    .ref-code{font-family:monospace;font-weight:800;letter-spacing:2px;font-size:20px}
+
+    /* top-right icons */
+    .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
+
+    /* responsive */
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr;}
+      .player-card{width:100%}
+    }
+
+    /* small log box */
+    .log{font-size:13px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);max-height:220px;overflow:auto}
+
+    /* subtle animations */
+    .btn:hover{transform:translateY(-2px);transition:all .18s}
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <header>
-      <h1>MushRush — On-chain Game UI (HTML/CSS/JS)</h1>
-      <div style="margin-left:auto" id="walletArea">
-        <button class="btn" id="connectBtn">Connect Wallet</button>
-        <div class="muted" id="addr"></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <!-- logo (simple SVG) -->
+        <div style="width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white">M</div>
+        <div>
+          <h1>MushRush — Player Portal</h1>
+          <div class="muted">Dark mode active • Purple theme • Referral-first UX</div>
+        </div>
+      </div>
+
+      <div style="margin-left:auto;display:flex;gap:12px;align-items:center">
+        <button id="loginX" class="icon-btn" title="Login with X"> <!-- X icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M23 4.5c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.7.4-1.5.7-2.4.9C19.6 3 18.5 2.5 17.3 2.5c-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.9C10.3 6.8 6.4 4.9 3.9 2.1c-.4.6-.7 1.3-.7 2.1 0 1.6.8 3 2 3.9-.6 0-1.2-.2-1.7-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.6.1-.9.1-.2 0-.5 0-.7-.1.5 1.6 2 2.7 3.7 2.7C7 19.9 5 20.6 2.7 20.6c-.4 0-.8 0-1.2-.1C1.8 21.8 4.3 22.7 7.1 22.7c8.5 0 13.2-7.1 13.2-13.2v-.6c.9-.7 1.6-1.5 2.2-2.5z" fill="white"/>
+          </svg>
+        </button>
+
+        <div id="walletArea">
+          <button id="connectBtn" class="btn btn-primary">Connect Wallet</button>
+          <div id="addr" class="muted" style="margin-top:6px;text-align:right"></div>
+        </div>
       </div>
     </header>
 
-    <div class="grid">
-      <div>
-        <div class="card">
-          <h3>Player Actions</h3>
-          <div style="margin-top:12px">
-            <label>Register (optional ref code - 6 chars)</label>
-            <div class="row"><input id="refInput" placeholder="REF123 (6 chars)" maxlength="6" /><button class="btn" id="registerBtn">Register</button></div>
-            <div class="muted small">Registration uses contract's registrationFee and sends MON.</div>
+    <div class="layout">
+      <div class="card panel">
+        <h3>Player Actions</h3>
+        <div class="stack" style="margin-top:8px">
+
+          <div class="ref-box">
+            <div class="muted">Your referral code (share this)</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+              <div class="ref-code" id="myRef">— — — — — —</div>
+              <button id="copyRef" class="btn btn-ghost" title="Copy referral code">Copy</button>
+            </div>
+            <div class="muted" style="margin-top:8px">When new players register using your code, you receive referral rewards (on-chain).</div>
           </div>
 
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
-
-          <div>
-            <label>Claim rewards</label>
-            <div class="row"><button class="btn" id="claimBtn">Claim MUSH</button>
-            <div style="margin-left:auto" id="pendingDisplay" class="muted small">Pending: —</div></div>
+          <div style="background:transparent;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
+            <div class="muted">Register using a friend's code</div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <input id="refInput" placeholder="Enter 6-char referral" maxlength="6" />
+              <button id="registerBtn" class="btn btn-primary">Register</button>
+            </div>
+            <div class="muted" style="margin-top:8px">Already have an account? Connect wallet to continue.</div>
           </div>
 
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+          <div style="display:flex;gap:8px">
+            <button id="claimBtn" class="btn btn-secondary btn-cta">Claim MUSH</button>
+            <div style="flex:1;text-align:right" class="muted">Pending: <span id="pendingDisplay">—</span></div>
+          </div>
 
           <div>
             <label>Upgrade farm</label>
-            <div class="row"><button class="btn" id="upgradeBtn">Upgrade (pay MON)</button><div id="upgradeCost" class="muted small" style="margin-left:auto">Cost: —</div></div>
+            <div style="display:flex;gap:8px">
+              <button id="upgradeBtn" class="btn btn-primary">Upgrade</button>
+              <div class="muted" style="align-self:center" id="upgradeCost">Cost: —</div>
+            </div>
           </div>
-
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
 
           <div>
-            <label>Open Pack</label>
-            <select id="packSelect"><option value="1">Basic (packId 1)</option><option value="2">Premium (packId 2)</option></select>
-            <div class="row" style="margin-top:8px"><button class="btn" id="openPackBtn">Open Pack</button><div id="packPrice" class="muted small" style="margin-left:auto">Price: —</div></div>
+            <label>Open pack</label>
+            <div style="display:flex;gap:8px">
+              <select id="packSelect"><option value="1">Basic Pack</option><option value="2">Premium Pack</option></select>
+              <button id="openPackBtn" class="btn btn-cta">Open</button>
+            </div>
+            <div class="muted" id="packPrice">Price: —</div>
           </div>
-
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
 
           <div>
             <label>Swap MON → MUSH</label>
-            <input id="swapAmount" placeholder="Amount MON (e.g. 0.01)" />
-            <div class="row" style="margin-top:8px"><button class="btn" id="swapBtn">Swap</button><div id="swapResult" class="muted small" style="margin-left:auto">Rate: —</div></div>
+            <div style="display:flex;gap:8px">
+              <input id="swapAmount" placeholder="e.g. 0.02" />
+              <button id="swapBtn" class="btn btn-primary">Swap</button>
+            </div>
+            <div class="muted" id="swapResult">Rate: —</div>
           </div>
 
         </div>
 
-        <div class="card" style="margin-top:12px">
-          <h3>Inventory & Equipment</h3>
-          <div class="muted small">Use "Refresh Inventory" to load your items.</div>
-          <div style="margin-top:8px" class="row">
-            <button class="btn" id="refreshInv">Refresh Inventory</button>
-            <button class="btn" id="equipBtn">Equip Selected</button>
-          </div>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.02);margin:14px 0">
 
-          <div style="margin-top:8px">
-            <label>Select item to equip (enter itemId)</label>
-            <input id="equipInput" placeholder="itemId (number)" />
-          </div>
-
-          <div style="margin-top:12px">
-            <strong>Inventory:</strong>
-            <div id="invList" class="log muted small">—</div>
-            <strong style="display:block;margin-top:8px">Equipped (slots 0..3):</strong>
-            <div id="equipped" class="log muted small">—</div>
-          </div>
+        <div>
+          <div class="muted">Inventory</div>
+          <div id="invList" class="log" style="margin-top:8px">(empty)</div>
         </div>
       </div>
 
-      <div>
-        <div class="card">
-          <h3>Contract & Player Info</h3>
-          <div class="row" style="gap:12px;margin-top:8px">
-            <div style="flex:1">
-              <label>Contract address</label>
-              <input id="contractAddr" value="0xYourContractAddressHere" />
-            </div>
-            <div style="width:150px;align-self:end">
-              <button class="btn" id="loadContract">Load Contract</button>
-            </div>
-          </div>
-
-          <div style="margin-top:10px">
-            <div class="row"><div style="flex:1">
-              <label>Player referral code (on-chain)</label>
-              <input id="myCode" readonly />
-            </div>
-            <div style="width:120px;align-self:end"><button class="btn" id="refreshBtn">Refresh</button></div></div>
-
-            <div style="margin-top:10px">
-              <div class="row"><div style="flex:1"><label>Registration fee</label><input id="regFee" readonly/></div><div style="flex:1"><label>Emission rate</label><input id="emissionRate" readonly/></div></div>
-              <div style="margin-top:8px" class="muted small">Note: MON = native coin on Monad (use MetaMask network configured to Monad).</div>
-            </div>
-          </div>
-
-          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
-          <div>
-            <strong>Logs</strong>
-            <div id="logs" class="log" style="min-height:160px">UI ready. Load contract and connect wallet.</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">Player Card</h3>
+          <div style="display:flex;gap:8px">
+            <button class="icon-btn" title="Download card" id="downloadCard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v10" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10l5 5 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="icon-btn" id="settingsBtn" title="Settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.4 15a7.4 7.4 0 000-6" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
         </div>
+
+        <div class="player-wrap" style="margin-top:12px">
+          <div class="rainbow-border">
+            <div class="player-card">
+              <div class="player-inner">
+                <div id="avatar" class="avatar" style="background-image:url('/mnt/data/6c4f41ce-fc46-4432-a235-be6d7879f33d.png')"></div>
+                <div class="meta">
+                  <div><strong id="nickname">@player</strong></div>
+                  <div style="margin-top:6px">ID: <span id="playerId">CODE-09-6617</span></div>
+                </div>
+                <div class="controls">
+                  <div style="flex:1">
+                    <div class="muted">Power</div>
+                    <div style="font-weight:700;font-size:18px"><span id="powerVal">12</span></div>
+                  </div>
+                  <div style="width:120px;text-align:right">
+                    <div class="muted">MUSH Balance</div>
+                    <div style="font-weight:700;font-size:18px"> <span id="mushBal">0</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:1">
+            <div class="card" style="padding:12px;margin:0;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div class="muted">Referral Stats</div>
+                  <div style="font-weight:800;font-family:monospace;letter-spacing:1px;margin-top:6px"><span id="refCount">0</span> referees • <span id="refRewards">0</span> MUSH earned</div>
+                </div>
+                <div>
+                  <button id="shareBtn" class="btn btn-primary">Share code</button>
+                </div>
+              </div>
+
+              <div style="margin-top:12px" class="muted">Enter someone else's referral code on the left when registering to attribute referrals. Your own code appears on the left once connected.</div>
+            </div>
+
+            <div style="margin-top:12px" class="muted">Quick actions</div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-ghost">View Transactions</button>
+              <button class="btn btn-ghost">Leaderboard</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="muted">Activity</div>
+          <div id="logs" class="log" style="margin-top:8px">UI loaded. Connect wallet and log in with X to access full features.</div>
+        </div>
+
       </div>
     </div>
   </div>
 
+  <!-- ethers.js (kept minimal ABI logic) -->
   <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
   <script>
-    // ----------------------------
-    // Minimal front-end for MushRush contract
-    // Edit: set CONTRACT_ADDRESS inside UI and press "Load Contract" to bind.
-    // Works on Monad (EVM-compatible) using window.ethereum (MetaMask).
-    // ----------------------------
+    // NOTE: "Login with X" in this UI is a front-end trigger only.
+    // Real X/OAuth requires backend client id & redirect. Here we simulate a flow using localStorage + optional redirect.
 
     const connectBtn = document.getElementById('connectBtn');
+    const loginX = document.getElementById('loginX');
     const addrDiv = document.getElementById('addr');
-    const loadBtn = document.getElementById('loadContract');
-    const contractAddrInput = document.getElementById('contractAddr');
+    const copyRef = document.getElementById('copyRef');
+    const myRefEl = document.getElementById('myRef');
+    const registerBtn = document.getElementById('registerBtn');
+    const refInput = document.getElementById('refInput');
     const logs = document.getElementById('logs');
 
-    let provider, signer, userAddress;
-    let contract;
+    let provider, signer, userAddress, contract;
 
-    // Minimal ABI subset (must match your deployed MushRush contract)
-    const ABI = [
-      // views
-      "function registrationFee() view returns (uint256)",
-      "function basicPackPrice() view returns (uint256)",
-      "function premiumPackPrice() view returns (uint256)",
-      "function emissionRate() view returns (uint256)",
-      "function mushPerWei() view returns (uint256)",
-      "function codeOf(address) view returns (bytes6)",
-      "function pendingMush(address) view returns (uint256)",
-      "function getInventory(address) view returns (uint256[])",
-      "function getEquipped(address) view returns (uint256[4])",
-      // transactions
-      "function register(bytes6) payable",
-      "function claim()",
-      "function upgradeFarm() payable",
-      "function openPack(uint256) payable",
-      "function swapMonForMush() payable",
-      "function equipItem(uint256)"
-    ];
+    function log(...t){ logs.innerText = new Date().toISOString().split('T')[1].slice(0,8) + ' - ' + t.join(' ') + '
+' + logs.innerText }
 
-    function log(...m){ logs.innerText = new Date().toISOString() + ' - ' + m.join(' ') + '\n' + logs.innerText; }
+    // Simulated Login with X flow (client-only):
+    loginX.addEventListener('click', ()=>{
+      // In production: redirect to your backend endpoint that initiates X oauth
+      // For demo, we set a flag and reload.
+      localStorage.setItem('mushrush.loggedX', '1');
+      alert('Simulated X login complete (demo). In production implement OAuth server flow.');
+      log('Simulated X login');
+      location.reload();
+    });
+
+    // Gate - require X login to show content; if not logged, show a minimal landing (here we keep but still allow actions to prompt login)
+    const loggedX = localStorage.getItem('mushrush.loggedX') === '1';
+    if (!loggedX) {
+      log('You are not logged in with X. Click the X icon to login.');
+      // optionally dim some actions
+    }
 
     async function connectWallet(){
-      if (!window.ethereum) return alert('No injected web3 provider (MetaMask).');
+      if (!window.ethereum) return alert('Install MetaMask or use an EVM wallet');
       provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       signer = provider.getSigner();
       userAddress = await signer.getAddress();
       addrDiv.innerText = userAddress;
       connectBtn.style.display = 'none';
-      log('Wallet connected', userAddress);
+      log('Wallet connected ' + userAddress);
+      // after connect, fetch or display a placeholder referral code (on-chain value requires contract)
+      setTimeout(()=>{ myRefEl.innerText = generateMockRef(userAddress); }, 300);
     }
-
     connectBtn.onclick = connectWallet;
 
-    async function loadContract(){
-      const addr = contractAddrInput.value.trim();
-      if (!ethers.utils.isAddress(addr)) return alert('Invalid contract address');
-      if (!provider) {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        signer = provider.getSigner();
-      }
-      contract = new ethers.Contract(addr, ABI, signer);
-      log('Contract loaded at', addr);
-      await refreshContractInfo();
-      await refreshPlayerInfo();
+    // copy ref
+    copyRef.onclick = ()=>{ navigator.clipboard.writeText(myRefEl.innerText).then(()=>{ log('Referral copied'); }) }
+
+    // register using a referral code (sends registrationFee on-chain). The UI expects contract to be loaded.
+    registerBtn.onclick = async ()=>{
+      if (!loggedX) return alert('Please login with X before registering');
+      if (!userAddress) return alert('Connect wallet first');
+      const code = refInput.value.trim();
+      if (code && code.length !== 6) return alert('Referral code must be exactly 6 characters');
+      // In production: contract.register(bytes6) payable - we only show client flow here
+      log('Registering with ref', code || '(none)');
+      alert('Registration tx demo: implement contract interaction in production');
     }
 
-    loadBtn.onclick = loadContract;
-
-    async function refreshContractInfo(){
-      try{
-        const fee = await contract.registrationFee();
-        const basic = await contract.basicPackPrice();
-        const premium = await contract.premiumPackPrice();
-        const emission = await contract.emissionRate();
-        const swapRate = await contract.mushPerWei();
-        document.getElementById('regFee').value = ethers.utils.formatEther(fee) + ' MON';
-        document.getElementById('packPrice').innerText = 'Basic: ' + ethers.utils.formatEther(basic) + ' MON | Premium: ' + ethers.utils.formatEther(premium) + ' MON';
-        document.getElementById('emissionRate').value = emission.toString();
-        document.getElementById('swapResult').innerText = '1 wei -> ' + swapRate.toString() + ' MUSH (raw)';
-        // upgrade cost for next level - call view _calcUpgradeCost? it's public so we can call _calcUpgradeCost
-        // contract._calcUpgradeCost is public in solidity; if not, ignore.
-        log('Contract info refreshed');
-      }catch(e){ log('refreshContractInfo error', e.message || e); }
+    // small helpers & mock data
+    function generateMockRef(addr){
+      // deterministic 6 char ref from address (demo only)
+      const hex = addr ? addr.slice(2, 14) : Math.random().toString(36).slice(2,8).toUpperCase();
+      return hex.toUpperCase().slice(0,6);
     }
 
-    async function refreshPlayerInfo(){
-      if (!contract || !signer) return;
-      try{
-        const code = await contract.codeOf(userAddress);
-        // bytes6 -> string
-        const codeStr = bytes6ToString(code);
-        document.getElementById('myCode').value = codeStr || '—';
-        const pending = await contract.pendingMush(userAddress);
-        document.getElementById('pendingDisplay').innerText = 'Pending: ' + ethers.utils.formatUnits(pending, 18) + ' MUSH';
-        const inv = await contract.getInventory(userAddress);
-        document.getElementById('invList').innerText = inv.length ? inv.join(', ') : '(empty)';
-        const eq = await contract.getEquipped(userAddress);
-        document.getElementById('equipped').innerText = '[' + eq.join(', ') + ']';
-        // approximate upgrade cost display: attempt to call _calcUpgradeCost( next level )
-        try{
-          const lvl = await contract.upgradeLevel(userAddress);
-          const cost = await contract._calcUpgradeCost(lvl.add(1));
-          document.getElementById('upgradeCost').innerText = 'Cost: ' + ethers.utils.formatEther(cost) + ' MON';
-        }catch(err){ document.getElementById('upgradeCost').innerText = 'Cost: (view not available)'; }
-        log('Player info refreshed');
-      }catch(e){ log('refreshPlayerInfo error', e.message || e); }
-    }
+    // load avatar image gracefully
+    document.getElementById('avatar').addEventListener('error', ()=>{ document.getElementById('avatar').style.background = 'linear-gradient(180deg,#2b0066,#6b21a8)'; });
 
-    document.getElementById('refreshBtn').onclick = refreshPlayerInfo;
-    document.getElementById('refreshInv').onclick = refreshPlayerInfo;
+    // keep a small auto refresh of pending (demo)
+    setInterval(()=>{ if (userAddress) { const p = Math.floor(Math.random()*50); document.getElementById('pendingDisplay').innerText = p + ' MUSH' } }, 11000)
 
-    // Helper: convert bytes6 hex to ASCII
-    function bytes6ToString(hex){
-      if (!hex) return '';
-      try{
-        const raw = ethers.utils.arrayify(hex);
-        let s = '';
-        for (let i=0;i<raw.length;i++){ if(raw[i]===0) break; s += String.fromCharCode(raw[i]); }
-        return s;
-      }catch(e){return ''}
-    }
-
-    // Convert a 6-char string into bytes6 hex
-    function stringToBytes6(str){
-      if (!str) return '0x0000000000000000'.slice(0, 2 + 12); // 6 bytes
-      if (str.length !== 6) throw new Error('Ref code must be exactly 6 chars');
-      return ethers.utils.hexlify(ethers.utils.toUtf8Bytes(str));
-    }
-
-    // Register
-    document.getElementById('registerBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        const code = document.getElementById('refInput').value.trim();
-        let b6 = '0x0000000000000000'.slice(0, 2 + 12); // default empty
-        if (code) {
-          if (code.length !== 6) return alert('Ref code must be 6 chars');
-          b6 = stringToBytes6(code);
-        }
-        const fee = await contract.registrationFee();
-        const tx = await contract.register(b6, { value: fee });
-        log('Register tx sent', tx.hash);
-        await tx.wait();
-        log('Registered!');
-        await refreshPlayerInfo();
-      }catch(e){ log('register error', e.message || e); }
-    };
-
-    // Claim
-    document.getElementById('claimBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        const tx = await contract.claim();
-        log('Claim tx sent', tx.hash);
-        await tx.wait();
-        log('Claimed!');
-        await refreshPlayerInfo();
-      }catch(e){ log('claim error', e.message || e); }
-    };
-
-    // Upgrade
-    document.getElementById('upgradeBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        // attempt to compute next level cost via view if available
-        let fee;
-        try{
-          const lvl = await contract.upgradeLevel(userAddress);
-          fee = await contract._calcUpgradeCost(lvl.add(1));
-        }catch(err){
-          // fallback to baseUpgradeCost
-          fee = await contract.baseUpgradeCost();
-        }
-        const tx = await contract.upgradeFarm({ value: fee });
-        log('Upgrade tx sent', tx.hash);
-        await tx.wait();
-        log('Upgraded!');
-        await refreshPlayerInfo();
-      }catch(e){ log('upgrade error', e.message || e); }
-    };
-
-    // Open pack
-    document.getElementById('openPackBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        const packId = Number(document.getElementById('packSelect').value);
-        // read pack price if available via ABI (pack mapping isn't viewable as a single function by default)
-        // We use a simple mapping: packId 1 -> basicPackPrice, 2 -> premiumPackPrice
-        let price;
-        if (packId === 1) price = await contract.basicPackPrice(); else if (packId === 2) price = await contract.premiumPackPrice(); else price = ethers.utils.parseEther('0.01');
-        const tx = await contract.openPack(packId, { value: price });
-        log('OpenPack tx sent', tx.hash);
-        await tx.wait();
-        log('Pack opened!');
-        await refreshPlayerInfo();
-      }catch(e){ log('openPack error', e.message || e); }
-    };
-
-    // Swap
-    document.getElementById('swapBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        const amt = document.getElementById('swapAmount').value.trim();
-        if (!amt) return alert('Enter MON amount');
-        const value = ethers.utils.parseEther(amt);
-        const tx = await contract.swapMonForMush({ value });
-        log('Swap tx sent', tx.hash);
-        await tx.wait();
-        log('Swap complete!');
-        await refreshPlayerInfo();
-      }catch(e){ log('swap error', e.message || e); }
-    };
-
-    // Equip item (from inventory)
-    document.getElementById('equipBtn').onclick = async () => {
-      try{
-        if (!contract) return alert('Load contract first');
-        const id = Number(document.getElementById('equipInput').value);
-        if (!id) return alert('Enter itemId number');
-        const tx = await contract.equipItem(id);
-        log('Equip tx sent', tx.hash);
-        await tx.wait();
-        log('Equipped!');
-        await refreshPlayerInfo();
-      }catch(e){ log('equip error', e.message || e); }
-    };
-
-    // Auto-refresh pending every 15 seconds
-    setInterval(async ()=>{ if(contract && signer) { try { const p = await contract.pendingMush(userAddress); document.getElementById('pendingDisplay').innerText = 'Pending: ' + ethers.utils.formatUnits(p, 18) + ' MUSH'; } catch(e){} } }, 15000);
-
-    // If MetaMask account changes
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts) => { if (accounts.length === 0) { addrDiv.innerText = ''; connectBtn.style.display = 'inline-block'; } else { userAddress = accounts[0]; addrDiv.innerText = userAddress; log('Account changed', userAddress); } });
-      window.ethereum.on('chainChanged', () => { window.location.reload(); });
-    }
-
-    // initial
-    log('UI initialized');
+    log('Purple theme UI ready — improve by connecting contract & implementing server-side X OAuth.');
   </script>
 </body>
 </html>
+
