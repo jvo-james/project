@@ -68,6 +68,77 @@
   .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
 
   button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(107,33,168,0.12)}
+  /* Variables (use existing theme vars if present) */
+:root {
+  --btn-size: 44px;
+  --glass-border: rgba(255,255,255,0.04);
+  --purple-600: #6b21a8;
+  --purple-400: #a78bfa;
+  --accent-teal: #00c2a8;
+  --focus-ring: rgba(107,33,168,0.14);
+}
+
+/* Generic icon button base (small, square icons) */
+.icon-btn {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: #fff;                    /* icon color */
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon-btn:focus { box-shadow: 0 6px 20px var(--focus-ring); outline: none; transform: translateY(-1px); }
+
+/* Close button: subtle, high-contrast, quick dismiss */
+.icon-btn.close {
+  background: rgba(255,255,255,0.02);
+  color: rgba(255,255,255,0.92);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.icon-btn.close:hover { background: rgba(255,255,255,0.035); transform: translateY(-2px); }
+.icon-btn.close:active { transform: translateY(0); }
+
+/* Menu button: slightly softer, glassy look */
+.icon-btn.menu {
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));
+  border-radius: 10px;
+  color: rgba(255,255,255,0.9);
+}
+.icon-btn.menu:hover { box-shadow: 0 8px 26px rgba(7,6,18,0.45); transform: translateY(-2px); }
+
+/* Sign-in with X: prominent pill (desktop) */
+.btn-x {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  color: #0b0b0d;
+  background: linear-gradient(90deg, var(--purple-600, #6b21a8), var(--purple-400, #a78bfa));
+  box-shadow: 0 10px 30px rgba(107,33,168,0.14);
+  border: 0;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.btn-x:hover { transform: translateY(-3px); filter: brightness(1.03); }
+.btn-x:active { transform: translateY(-1px); }
+.btn-x:focus { box-shadow: 0 0 0 6px var(--focus-ring); outline: none; }
+
+/* Variant: X logo only (compact) */
+.btn-x.icon-only { padding: 8px; width: var(--btn-size); height: var(--btn-size); border-radius: 10px; color: #fff; }
+
+/* Small accessibility helper: ensure icons use currentColor */
+.icon-btn svg, .btn-x svg { width: 18px; height: 18px; display: block; fill: currentColor; stroke: currentColor; }
+
 </style>
 </head>
 <body>
