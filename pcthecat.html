@@ -1,136 +1,109 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>MushRush — Player Card (Professional)</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MushRush — Player Card (Purple Theme)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+ 
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
-  /* Professional polish: refined typography, balanced spacing, subtle elevations */
-  :root{
-    --bg-900:#04040a;
-    --panel:#0b0b10;
-    --muted:rgba(255,255,255,0.64);
-    --muted-2:rgba(255,255,255,0.36);
-    --purple-600:#6b21a8; /* primary */
-    --purple-400:#a78bfa;
-    --accent:#8b5cf6;
-    --teal:#00c2a8;
-    --glass:rgba(255,255,255,0.03);
-    --card-radius:12px;
-    --shadow: 0 8px 28px rgba(6,8,20,0.6);
-    --focus: 0 0 0 4px rgba(107,33,168,0.12);
-  }
+  /* Global - mimic the provided image, keep everything on one screen */
+  :root{--bg:#070707;--card:#0b0b0d;--muted:rgba(255,255,255,0.55);--accent-purple:#7c3aed;--accent-light:#a78bfa;--teal:#00c2a8;--white:#ffffff}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(900px 500px at 10% 10%, rgba(167,139,250,0.03), transparent), #050505;overflow:hidden;color:var(--white)}
+  /* film grain */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 2px), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><filter id="n"><feTurbulence baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.02"/></svg>');mix-blend-mode:overlay}
 
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#02020a 0%, #06030b 100%);color:#f3f7ff;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;overflow:hidden}
-  body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.006) 1px, transparent 1px);background-size:6px 6px;mix-blend-mode:overlay;opacity:.6}
-
-  /* stage that scales to viewport (no scrolling) */
+  /* stage fixed to viewport - will scale to fit via JS */
   .stage-wrap{width:1200px;height:720px;margin:0 auto;transform-origin:top left}
-  .stage{display:grid;grid-template-columns:520px 1fr;gap:28px;height:100%;padding:22px;box-sizing:border-box}
+  .stage{display:grid;grid-template-columns:520px 1fr;gap:28px;height:100%;padding:18px;box-sizing:border-box}
 
-  /* top strip */
-  .topbar{display:flex;align-items:center;gap:12px;height:48px}
-  .logo{width:54px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--purple-600),var(--purple-400));display:flex;align-items:center;justify-content:center;font-weight:800;color:white}
-  .title{font-weight:700;font-size:16px}
-  .subtitle{font-size:12px;color:var(--muted-2)}
+  /* top bar (small) */
+  .topbar{position:relative;height:48px;display:flex;align-items:center;gap:12px}
+  .stars{font-family:'Press Start 2P',monospace;font-size:20px;letter-spacing:6px;color:var(--white);opacity:0.9}
+  .top-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .icon-btn{width:44px;height:44px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
 
-  /* common card style */
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:18px;border:1px solid var(--glass);box-shadow:var(--shadow)}
-
-  /* left column */
-  .left{display:flex;flex-direction:column;gap:14px}
-  .welcome{font-family:Space Mono, monospace;font-weight:700;letter-spacing:1px;color:#fff}
-  .code-large{font-family:Space Mono, monospace;font-size:36px;letter-spacing:2px;margin-top:6px;color:var(--purple-400)}
+  /* left panel - large code & CTAs */
+  .left{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-radius:10px;padding:26px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;justify-content:flex-start}
+  .welcome{font-family:'Press Start 2P',monospace;color:rgba(255,255,255,0.85);font-size:20px}
+  .big-code{font-family:'Press Start 2P',monospace;font-size:40px;margin:18px 0;color:var(--white);letter-spacing:2px}
   .muted{color:var(--muted);font-size:13px}
 
-  .ref-section{display:flex;flex-direction:column;gap:6px}
-  .ref-row{display:flex;gap:10px;align-items:center}
-  .ref-code{font-family:Space Mono,monospace;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--teal)}
-  .input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+  /* referral block (replaces access code) */
+  .ref-block{margin-top:6px}
+  .ref-label{font-family:'Press Start 2P',monospace;font-size:12px;color:rgba(255,255,255,0.12);}
+  .ref-code{font-family:'Press Start 2P',monospace;font-size:28px;margin-top:8px;color:var(--teal);letter-spacing:4px}
 
-  .cta-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
-  .btn{padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
-  .btn-primary{background:linear-gradient(90deg,var(--purple-600),var(--purple-400));color:white;box-shadow:0 8px 20px rgba(107,33,168,0.12)}
-  .btn-secondary{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-  .btn-cta{background:linear-gradient(90deg,#ff6fcf,#7c3aed);color:white}
+  .cta-stack{margin-top:28px;display:flex;flex-direction:column;gap:16px}
+  .btn{padding:18px;border-radius:6px;border:0;font-weight:800;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .btn-give{background:linear-gradient(90deg,#00b89a,#00c2a8);color:#02120f} /* changed green -> teal */
+  .btn-discord{background:linear-gradient(90deg,var(--accent-purple),var(--accent-light));color:white}
+  .btn-x{background:var(--white);color:#0b0b0d}
 
-  .small{font-size:12px;color:var(--muted-2)}
+  .buttons-small{display:flex;gap:12px;margin-top:14px}
+  .small-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:6px}
 
-  /* right column */
-  .right{display:flex;flex-direction:column;align-items:flex-end}
-  .card-wrap{width:440px}
-  .rainbow-border{padding:6px;border-radius:14px;background:linear-gradient(135deg,#a78bfa,#7c3aed,#ff6fcf,#6ee7b7)}
-  .player-card{background:linear-gradient(180deg,#0b0a0f, rgba(255,255,255,0.01));border-radius:10px;padding:12px;color:var(--muted)}
+  /* right panel - player card */
+  .right{display:flex;align-items:center}
+  .card-wrap{margin-left:auto;width:440px}
+  .player-card{border-radius:12px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:3px solid transparent;background-clip:padding-box;position:relative}
+  .rainbow{background:linear-gradient(135deg,#a78bfa,#7c3aed,#ff6fcf,#6ee7b7);padding:6px;border-radius:14px}
+  .player-inner{background:#07060a;border-radius:8px;padding:10px;color:var(--muted)}
+  .avatar{height:360px;border-radius:6px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03)}
+  .player-meta{margin-top:12px;font-family:monospace;color:var(--muted)}
+  .nickname{font-weight:800;color:#fff}
+  .idline{margin-top:6px;color:rgba(255,255,255,0.6)}
 
-  .avatar{height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 30px rgba(10,6,25,0.6)}
+  /* compact footer actions inside card */
+  .card-actions{display:flex;gap:10px;margin-top:12px}
 
-  .meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-  .nick{font-weight:800;color:white;font-family:Space Mono,monospace}
-  .idline{color:var(--muted-2)}
-
-  .stats{display:flex;gap:10px;margin-top:12px}
-  .stat{flex:1;background:rgba(255,255,255,0.01);padding:10px;border-radius:8px;text-align:center}
-  .stat .label{font-size:12px;color:var(--muted-2)}
-  .stat .value{font-weight:800;font-size:18px;color:white;margin-top:4px}
-
-  .actions{display:flex;gap:8px;margin-top:12px}
-
-  /* icons */
-  .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
-
-  /* accessibility focus states */
-  button:focus, input:focus{outline:none;box-shadow:var(--focus)}
-
-  /* fit to viewport scaling handled by JS */
+  /* ensure everything fits - JS will scale the .stage-wrap to fit viewport */
+  body,html{font-synthesis:none}
 </style>
 </head>
 <body>
   <div id="stageWrap" class="stage-wrap">
     <div class="stage">
 
-      <div class="left panel">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="logo">M</div>
-          <div>
-            <div class="title">MushRush — Player Portal</div>
-            <div class="subtitle">Dark • Professional • Referral-first</div>
-          </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <button class="icon-btn" title="Download">⬇</button>
-            <button class="icon-btn" id="loginX" title="Sign in with X">X</button>
+      <div class="left">
+        <div class="topbar"><div class="stars">*****</div>
+          <div class="top-right">
+            <button class="icon-btn" title="Menu">☰</button>
+            <button class="icon-btn" title="Login X" id="loginX">X</button>
           </div>
         </div>
 
-        <div style="margin-top:10px">
+        <div style="margin-top:18px">
           <div class="welcome">WELCOME BACK</div>
-          <div class="code-large" id="bigCode">CODE-09-6617</div>
-          <div class="small" style="margin-top:6px">Your referral code lives below — share it to earn rewards when friends join.</div>
-        </div>
+          <div class="big-code" id="bigCode">CODE-09-6617</div>
 
-        <div class="ref-section">
-          <div class="ref-row">
+          <div class="ref-block">
+            <div class="ref-label">YOUR REFERRAL CODE</div>
             <div class="ref-code" id="myRef">RF-7G-4K</div>
-            <button id="copyRef" class="btn btn-secondary">Copy</button>
+
+            <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+              <input id="useRef" placeholder="Use someone's ref code" style="flex:1;padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+              <button id="applyRef" class="btn btn-ghost small-ghost">Apply</button>
+            </div>
           </div>
 
-          <div style="margin-top:6px;display:flex;gap:8px;align-items:center">
-            <input id="useRef" class="input" placeholder="Use someone's referral code" maxlength="10" />
-            <button id="applyRef" class="btn btn-primary">Apply</button>
-          </div>
         </div>
 
-        <div class="cta-list">
-          <button class="btn btn-primary">GIVEAWAYS</button>
-          <button class="btn btn-cta">JOIN DISCORD</button>
-          <button class="btn btn-secondary">FOLLOW ON X</button>
+        <div class="cta-stack">
+          <button class="btn btn-give">GIVEAWAYS</button>
+          <button class="btn btn-discord">JOIN DISCORD</button>
+          <button class="btn btn-x">FOLLOW ON X</button>
         </div>
 
       </div>
 
       <div class="right">
         <div class="card-wrap">
-          <div class="rainbow-border">
+          <div class="rainbow">
             <div class="player-card">
               <div style="display:flex;justify-content:space-between;align-items:center">
                 <div style="font-weight:800">PLAYER CARD</div>
@@ -140,35 +113,21 @@
                 </div>
               </div>
 
-              <div style="margin-top:12px">
-                <div id="avatar" class="avatar" style="background-image:url('/mnt/data/6c4f41ce-fc46-4432-a235-be6d7879f33d.png')"></div>
-                <div class="meta">
-                  <div>
-                    <div class="nick" id="nick">@PICITHECAT</div>
-                    <div class="idline">ID: <span id="playerId">CODE-09-6617</span></div>
-                  </div>
-                  <div style="text-align:right">
-                    <div class="small">Power</div>
-                    <div style="font-weight:800;color:white">12</div>
-                  </div>
+              <div class="player-inner" style="margin-top:12px">
+                <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
+                <div class="player-meta">
+                  <div class="nickname" id="nick">@PICITHECAT</div>
+                  <div class="idline">ID: <span id="playerId">CODE-09-6617</span></div>
                 </div>
 
-                <div class="stats">
-                  <div class="stat"><div class="label">MUSH</div><div class="value" id="mushBal">0</div></div>
-                  <div class="stat"><div class="label">Refs</div><div class="value" id="refCount">0</div></div>
-                  <div class="stat"><div class="label">Rewards</div><div class="value" id="refRewards">0</div></div>
-                </div>
-
-                <div class="actions">
-                  <button class="btn btn-primary">Claim</button>
-                  <button class="btn btn-secondary">Upgrade</button>
-                  <button class="btn btn-secondary">Open Pack</button>
+                <div class="card-actions">
+                  <div style="flex:1;color:var(--muted)"><div style="font-size:12px">Power</div><div style="font-weight:800;color:#fff">12</div></div>
+                  <div style="flex:1;color:var(--muted)"><div style="font-size:12px">MUSH</div><div style="font-weight:800;color:#fff">0.00</div></div>
                 </div>
 
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -176,7 +135,7 @@
   </div>
 
   <script>
-    // Fit-to-viewport scale logic (no scrolling)
+    // scale-to-fit so no scrolling
     (function fitStage(){
       const wrap = document.getElementById('stageWrap');
       function apply(){
@@ -192,49 +151,52 @@
       apply();
     })();
 
-    // Simulated X login gating
+    // Block content until user "logs in with X" (simulated) - user required this behavior
     (function requireXLogin(){
       const logged = localStorage.getItem('mushrush.loggedX') === '1';
       if (!logged){
+        // overlay UI prompt
         const overlay = document.createElement('div');
-        overlay.style.position='fixed';overlay.style.inset='0';overlay.style.background='linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9))';overlay.style.display='flex';overlay.style.alignItems='center';overlay.style.justifyContent='center';overlay.style.zIndex=9999;
+        overlay.style.position = 'fixed';overlay.style.inset='0';overlay.style.display='flex';overlay.style.alignItems='center';overlay.style.justifyContent='center';overlay.style.background='linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9))';overlay.style.zIndex=9999;
         overlay.innerHTML = `
-          <div style='background:#0b0b10;padding:28px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);max-width:460px;text-align:center'>
-            <div style='font-weight:800;font-size:18px;margin-bottom:10px'>Sign in with X to continue</div>
-            <div style='color:var(--muted);margin-bottom:18px'>This is a demo. Click to simulate an X login. For production implement server-side OAuth.</div>
-            <div style='display:flex;gap:10px;justify-content:center'>
-              <button id='simX' style='background:linear-gradient(90deg,var(--purple-600),var(--purple-400));border:0;padding:12px 16px;border-radius:8px;color:white;cursor:pointer'>Sign in with X</button>
-              <button id='guest' style='background:transparent;border:1px solid rgba(255,255,255,0.04);padding:12px 16px;border-radius:8px;color:white;cursor:pointer'>Continue as guest</button>
+          <div style="background:#07070a;padding:28px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);text-align:center;max-width:420px;color:var(--white)">
+            <div style="font-weight:800;font-size:18px;margin-bottom:12px">Sign in with X to continue</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:13px;margin-bottom:18px">This page is visible only after logging in with X. (Demo uses simulated login.)</div>
+            <div style="display:flex;gap:8px;justify-content:center">
+              <button id="simX" style="background:linear-gradient(90deg,var(--accent-purple),var(--accent-light));border:0;padding:12px 16px;border-radius:8px;color:white;cursor:pointer">Sign in with X</button>
+              <button id="guest" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px 16px;border-radius:8px;color:var(--white);cursor:pointer">Continue as guest</button>
             </div>
           </div>
         `;
         document.body.appendChild(overlay);
-        document.getElementById('simX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); overlay.remove(); location.reload(); });
+        document.getElementById('simX').addEventListener('click', ()=>{
+          localStorage.setItem('mushrush.loggedX','1');
+          overlay.remove();
+          location.reload();
+        });
         document.getElementById('guest').addEventListener('click', ()=>{ overlay.remove(); });
       }
     })();
 
-    // small UX interactions
-    document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); alert('Simulated X login.'); location.reload(); });
-    document.getElementById('copyRef').addEventListener('click', ()=>{ const txt = document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); alert('Referral copied'); });
-    document.getElementById('applyRef').addEventListener('click', ()=>{ const v = document.getElementById('useRef').value.trim(); if (!v) return alert('Enter a referral code'); alert('Referral applied: ' + v + ' (demo)'); });
+    // small interactions
+    document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); alert('Simulated X login complete.'); location.reload(); });
+    document.getElementById('applyRef').addEventListener('click', ()=>{ const v=document.getElementById('useRef').value.trim(); if(!v) return alert('Enter a ref code'); alert('Applied ref: ' + v + ' (demo)'); });
 
-    // derive a friendly ref from wallet if connected
+    // set myRef automatically from local wallet if available
     (async function setRefFromWallet(){
       try{
         if (window.ethereum){
           const accs = await window.ethereum.request({method:'eth_accounts'});
           if (accs && accs[0]){
             const r = accs[0].slice(2,8).toUpperCase();
-            document.getElementById('myRef').innerText = 'RF-' + r.slice(0,2) + '-' + r.slice(2,4);
-            document.getElementById('bigCode').innerText = 'CODE-' + r.slice(0,2) + '-' + r.slice(2,4);
+            document.getElementById('myRef').innerText = r;
+            document.getElementById('bigCode').innerText = 'CODE-' + r.slice(0,2) + '-' + r.slice(2);
             document.getElementById('playerId').innerText = document.getElementById('bigCode').innerText;
             document.getElementById('nick').innerText = '@' + r.toLowerCase();
           }
         }
       }catch(e){console.log(e)}
     })();
-
   </script>
 </body>
 </html>
