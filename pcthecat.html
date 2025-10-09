@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MushRush — Web UI</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#9ef3c5;--muted:#99a3b3;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Segoe UI,Roboto,-apple-system}
+    body{margin:0;min-height:100vh;background:linear-gradient(180deg,#071023 0%, #071837 100%);color:#e6eef8}
+    .wrap{max-width:1100px;margin:28px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:20px}
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:18px}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .btn{background:linear-gradient(90deg,var(--accent),#6be8ff);color:#042022;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+    .muted{color:var(--muted);font-size:13px}
+    label{display:block;font-size:13px;margin-bottom:6px}
+    input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
+    .row{display:flex;gap:8px;align-items:center}
+    .small{font-size:13px}
+    pre{white-space:pre-wrap;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;margin:8px 0}
+    .log{max-height:300px;overflow:auto;padding:8px;background:rgba(0,0,0,0.15);border-radius:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>MushRush — On-chain Game UI (HTML/CSS/JS)</h1>
+      <div style="margin-left:auto" id="walletArea">
+        <button class="btn" id="connectBtn">Connect Wallet</button>
+        <div class="muted" id="addr"></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Player Actions</h3>
+          <div style="margin-top:12px">
+            <label>Register (optional ref code - 6 chars)</label>
+            <div class="row"><input id="refInput" placeholder="REF123 (6 chars)" maxlength="6" /><button class="btn" id="registerBtn">Register</button></div>
+            <div class="muted small">Registration uses contract's registrationFee and sends MON.</div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div>
+            <label>Claim rewards</label>
+            <div class="row"><button class="btn" id="claimBtn">Claim MUSH</button>
+            <div style="margin-left:auto" id="pendingDisplay" class="muted small">Pending: —</div></div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div>
+            <label>Upgrade farm</label>
+            <div class="row"><button class="btn" id="upgradeBtn">Upgrade (pay MON)</button><div id="upgradeCost" class="muted small" style="margin-left:auto">Cost: —</div></div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div>
+            <label>Open Pack</label>
+            <select id="packSelect"><option value="1">Basic (packId 1)</option><option value="2">Premium (packId 2)</option></select>
+            <div class="row" style="margin-top:8px"><button class="btn" id="openPackBtn">Open Pack</button><div id="packPrice" class="muted small" style="margin-left:auto">Price: —</div></div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div>
+            <label>Swap MON → MUSH</label>
+            <input id="swapAmount" placeholder="Amount MON (e.g. 0.01)" />
+            <div class="row" style="margin-top:8px"><button class="btn" id="swapBtn">Swap</button><div id="swapResult" class="muted small" style="margin-left:auto">Rate: —</div></div>
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Inventory & Equipment</h3>
+          <div class="muted small">Use "Refresh Inventory" to load your items.</div>
+          <div style="margin-top:8px" class="row">
+            <button class="btn" id="refreshInv">Refresh Inventory</button>
+            <button class="btn" id="equipBtn">Equip Selected</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <label>Select item to equip (enter itemId)</label>
+            <input id="equipInput" placeholder="itemId (number)" />
+          </div>
+
+          <div style="margin-top:12px">
+            <strong>Inventory:</strong>
+            <div id="invList" class="log muted small">—</div>
+            <strong style="display:block;margin-top:8px">Equipped (slots 0..3):</strong>
+            <div id="equipped" class="log muted small">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>Contract & Player Info</h3>
+          <div class="row" style="gap:12px;margin-top:8px">
+            <div style="flex:1">
+              <label>Contract address</label>
+              <input id="contractAddr" value="0xYourContractAddressHere" />
+            </div>
+            <div style="width:150px;align-self:end">
+              <button class="btn" id="loadContract">Load Contract</button>
+            </div>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="row"><div style="flex:1">
+              <label>Player referral code (on-chain)</label>
+              <input id="myCode" readonly />
+            </div>
+            <div style="width:120px;align-self:end"><button class="btn" id="refreshBtn">Refresh</button></div></div>
+
+            <div style="margin-top:10px">
+              <div class="row"><div style="flex:1"><label>Registration fee</label><input id="regFee" readonly/></div><div style="flex:1"><label>Emission rate</label><input id="emissionRate" readonly/></div></div>
+              <div style="margin-top:8px" class="muted small">Note: MON = native coin on Monad (use MetaMask network configured to Monad).</div>
+            </div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+          <div>
+            <strong>Logs</strong>
+            <div id="logs" class="log" style="min-height:160px">UI ready. Load contract and connect wallet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <script>
+    // ----------------------------
+    // Minimal front-end for MushRush contract
+    // Edit: set CONTRACT_ADDRESS inside UI and press "Load Contract" to bind.
+    // Works on Monad (EVM-compatible) using window.ethereum (MetaMask).
+    // ----------------------------
+
+    const connectBtn = document.getElementById('connectBtn');
+    const addrDiv = document.getElementById('addr');
+    const loadBtn = document.getElementById('loadContract');
+    const contractAddrInput = document.getElementById('contractAddr');
+    const logs = document.getElementById('logs');
+
+    let provider, signer, userAddress;
+    let contract;
+
+    // Minimal ABI subset (must match your deployed MushRush contract)
+    const ABI = [
+      // views
+      "function registrationFee() view returns (uint256)",
+      "function basicPackPrice() view returns (uint256)",
+      "function premiumPackPrice() view returns (uint256)",
+      "function emissionRate() view returns (uint256)",
+      "function mushPerWei() view returns (uint256)",
+      "function codeOf(address) view returns (bytes6)",
+      "function pendingMush(address) view returns (uint256)",
+      "function getInventory(address) view returns (uint256[])",
+      "function getEquipped(address) view returns (uint256[4])",
+      // transactions
+      "function register(bytes6) payable",
+      "function claim()",
+      "function upgradeFarm() payable",
+      "function openPack(uint256) payable",
+      "function swapMonForMush() payable",
+      "function equipItem(uint256)"
+    ];
+
+    function log(...m){ logs.innerText = new Date().toISOString() + ' - ' + m.join(' ') + '\n' + logs.innerText; }
+
+    async function connectWallet(){
+      if (!window.ethereum) return alert('No injected web3 provider (MetaMask).');
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send('eth_requestAccounts', []);
+      signer = provider.getSigner();
+      userAddress = await signer.getAddress();
+      addrDiv.innerText = userAddress;
+      connectBtn.style.display = 'none';
+      log('Wallet connected', userAddress);
+    }
+
+    connectBtn.onclick = connectWallet;
+
+    async function loadContract(){
+      const addr = contractAddrInput.value.trim();
+      if (!ethers.utils.isAddress(addr)) return alert('Invalid contract address');
+      if (!provider) {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+      }
+      contract = new ethers.Contract(addr, ABI, signer);
+      log('Contract loaded at', addr);
+      await refreshContractInfo();
+      await refreshPlayerInfo();
+    }
+
+    loadBtn.onclick = loadContract;
+
+    async function refreshContractInfo(){
+      try{
+        const fee = await contract.registrationFee();
+        const basic = await contract.basicPackPrice();
+        const premium = await contract.premiumPackPrice();
+        const emission = await contract.emissionRate();
+        const swapRate = await contract.mushPerWei();
+        document.getElementById('regFee').value = ethers.utils.formatEther(fee) + ' MON';
+        document.getElementById('packPrice').innerText = 'Basic: ' + ethers.utils.formatEther(basic) + ' MON | Premium: ' + ethers.utils.formatEther(premium) + ' MON';
+        document.getElementById('emissionRate').value = emission.toString();
+        document.getElementById('swapResult').innerText = '1 wei -> ' + swapRate.toString() + ' MUSH (raw)';
+        // upgrade cost for next level - call view _calcUpgradeCost? it's public so we can call _calcUpgradeCost
+        // contract._calcUpgradeCost is public in solidity; if not, ignore.
+        log('Contract info refreshed');
+      }catch(e){ log('refreshContractInfo error', e.message || e); }
+    }
+
+    async function refreshPlayerInfo(){
+      if (!contract || !signer) return;
+      try{
+        const code = await contract.codeOf(userAddress);
+        // bytes6 -> string
+        const codeStr = bytes6ToString(code);
+        document.getElementById('myCode').value = codeStr || '—';
+        const pending = await contract.pendingMush(userAddress);
+        document.getElementById('pendingDisplay').innerText = 'Pending: ' + ethers.utils.formatUnits(pending, 18) + ' MUSH';
+        const inv = await contract.getInventory(userAddress);
+        document.getElementById('invList').innerText = inv.length ? inv.join(', ') : '(empty)';
+        const eq = await contract.getEquipped(userAddress);
+        document.getElementById('equipped').innerText = '[' + eq.join(', ') + ']';
+        // approximate upgrade cost display: attempt to call _calcUpgradeCost( next level )
+        try{
+          const lvl = await contract.upgradeLevel(userAddress);
+          const cost = await contract._calcUpgradeCost(lvl.add(1));
+          document.getElementById('upgradeCost').innerText = 'Cost: ' + ethers.utils.formatEther(cost) + ' MON';
+        }catch(err){ document.getElementById('upgradeCost').innerText = 'Cost: (view not available)'; }
+        log('Player info refreshed');
+      }catch(e){ log('refreshPlayerInfo error', e.message || e); }
+    }
+
+    document.getElementById('refreshBtn').onclick = refreshPlayerInfo;
+    document.getElementById('refreshInv').onclick = refreshPlayerInfo;
+
+    // Helper: convert bytes6 hex to ASCII
+    function bytes6ToString(hex){
+      if (!hex) return '';
+      try{
+        const raw = ethers.utils.arrayify(hex);
+        let s = '';
+        for (let i=0;i<raw.length;i++){ if(raw[i]===0) break; s += String.fromCharCode(raw[i]); }
+        return s;
+      }catch(e){return ''}
+    }
+
+    // Convert a 6-char string into bytes6 hex
+    function stringToBytes6(str){
+      if (!str) return '0x0000000000000000'.slice(0, 2 + 12); // 6 bytes
+      if (str.length !== 6) throw new Error('Ref code must be exactly 6 chars');
+      return ethers.utils.hexlify(ethers.utils.toUtf8Bytes(str));
+    }
+
+    // Register
+    document.getElementById('registerBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        const code = document.getElementById('refInput').value.trim();
+        let b6 = '0x0000000000000000'.slice(0, 2 + 12); // default empty
+        if (code) {
+          if (code.length !== 6) return alert('Ref code must be 6 chars');
+          b6 = stringToBytes6(code);
+        }
+        const fee = await contract.registrationFee();
+        const tx = await contract.register(b6, { value: fee });
+        log('Register tx sent', tx.hash);
+        await tx.wait();
+        log('Registered!');
+        await refreshPlayerInfo();
+      }catch(e){ log('register error', e.message || e); }
+    };
+
+    // Claim
+    document.getElementById('claimBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        const tx = await contract.claim();
+        log('Claim tx sent', tx.hash);
+        await tx.wait();
+        log('Claimed!');
+        await refreshPlayerInfo();
+      }catch(e){ log('claim error', e.message || e); }
+    };
+
+    // Upgrade
+    document.getElementById('upgradeBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        // attempt to compute next level cost via view if available
+        let fee;
+        try{
+          const lvl = await contract.upgradeLevel(userAddress);
+          fee = await contract._calcUpgradeCost(lvl.add(1));
+        }catch(err){
+          // fallback to baseUpgradeCost
+          fee = await contract.baseUpgradeCost();
+        }
+        const tx = await contract.upgradeFarm({ value: fee });
+        log('Upgrade tx sent', tx.hash);
+        await tx.wait();
+        log('Upgraded!');
+        await refreshPlayerInfo();
+      }catch(e){ log('upgrade error', e.message || e); }
+    };
+
+    // Open pack
+    document.getElementById('openPackBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        const packId = Number(document.getElementById('packSelect').value);
+        // read pack price if available via ABI (pack mapping isn't viewable as a single function by default)
+        // We use a simple mapping: packId 1 -> basicPackPrice, 2 -> premiumPackPrice
+        let price;
+        if (packId === 1) price = await contract.basicPackPrice(); else if (packId === 2) price = await contract.premiumPackPrice(); else price = ethers.utils.parseEther('0.01');
+        const tx = await contract.openPack(packId, { value: price });
+        log('OpenPack tx sent', tx.hash);
+        await tx.wait();
+        log('Pack opened!');
+        await refreshPlayerInfo();
+      }catch(e){ log('openPack error', e.message || e); }
+    };
+
+    // Swap
+    document.getElementById('swapBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        const amt = document.getElementById('swapAmount').value.trim();
+        if (!amt) return alert('Enter MON amount');
+        const value = ethers.utils.parseEther(amt);
+        const tx = await contract.swapMonForMush({ value });
+        log('Swap tx sent', tx.hash);
+        await tx.wait();
+        log('Swap complete!');
+        await refreshPlayerInfo();
+      }catch(e){ log('swap error', e.message || e); }
+    };
+
+    // Equip item (from inventory)
+    document.getElementById('equipBtn').onclick = async () => {
+      try{
+        if (!contract) return alert('Load contract first');
+        const id = Number(document.getElementById('equipInput').value);
+        if (!id) return alert('Enter itemId number');
+        const tx = await contract.equipItem(id);
+        log('Equip tx sent', tx.hash);
+        await tx.wait();
+        log('Equipped!');
+        await refreshPlayerInfo();
+      }catch(e){ log('equip error', e.message || e); }
+    };
+
+    // Auto-refresh pending every 15 seconds
+    setInterval(async ()=>{ if(contract && signer) { try { const p = await contract.pendingMush(userAddress); document.getElementById('pendingDisplay').innerText = 'Pending: ' + ethers.utils.formatUnits(p, 18) + ' MUSH'; } catch(e){} } }, 15000);
+
+    // If MetaMask account changes
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => { if (accounts.length === 0) { addrDiv.innerText = ''; connectBtn.style.display = 'inline-block'; } else { userAddress = accounts[0]; addrDiv.innerText = userAddress; log('Account changed', userAddress); } });
+      window.ethereum.on('chainChanged', () => { window.location.reload(); });
+    }
+
+    // initial
+    log('UI initialized');
+  </script>
+</body>
+</html>
