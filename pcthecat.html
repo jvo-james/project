@@ -68,8 +68,7 @@
   .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
 
   button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(107,33,168,0.12)}
-  /* Variables (use existing theme vars if present) */
-:root {
+ :root {
   --btn-size: 44px;
   --glass-border: rgba(255,255,255,0.04);
   --purple-600: #6b21a8;
@@ -78,8 +77,7 @@
   --focus-ring: rgba(107,33,168,0.14);
 }
 
-/* Generic icon button base (small, square icons) */
-.icon-btn {
+ .icon-btn {
   width: var(--btn-size);
   height: var(--btn-size);
   display: inline-flex;
@@ -88,15 +86,14 @@
   border-radius: 10px;
   background: transparent;
   border: 1px solid var(--glass-border);
-  color: #fff;                    /* icon color */
+  color: #fff;                    
   cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   -webkit-tap-highlight-color: transparent;
 }
 .icon-btn:focus { box-shadow: 0 6px 20px var(--focus-ring); outline: none; transform: translateY(-1px); }
 
-/* Close button: subtle, high-contrast, quick dismiss */
-.icon-btn.close {
+ .icon-btn.close {
   background: rgba(255,255,255,0.02);
   color: rgba(255,255,255,0.92);
   border-radius: 8px;
@@ -105,16 +102,14 @@
 .icon-btn.close:hover { background: rgba(255,255,255,0.035); transform: translateY(-2px); }
 .icon-btn.close:active { transform: translateY(0); }
 
-/* Menu button: slightly softer, glassy look */
-.icon-btn.menu {
+ .icon-btn.menu {
   background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));
   border-radius: 10px;
   color: rgba(255,255,255,0.9);
 }
 .icon-btn.menu:hover { box-shadow: 0 8px 26px rgba(7,6,18,0.45); transform: translateY(-2px); }
 
-/* Sign-in with X: prominent pill (desktop) */
-.btn-x {
+ .btn-x {
   display: inline-flex;
   gap: 10px;
   align-items: center;
@@ -133,11 +128,9 @@
 .btn-x:active { transform: translateY(-1px); }
 .btn-x:focus { box-shadow: 0 0 0 6px var(--focus-ring); outline: none; }
 
-/* Variant: X logo only (compact) */
-.btn-x.icon-only { padding: 8px; width: var(--btn-size); height: var(--btn-size); border-radius: 10px; color: #fff; }
+ .btn-x.icon-only { padding: 8px; width: var(--btn-size); height: var(--btn-size); border-radius: 10px; color: #fff; }
 
-/* Small accessibility helper: ensure icons use currentColor */
-.icon-btn svg, .btn-x svg { width: 18px; height: 18px; display: block; fill: currentColor; stroke: currentColor; }
+ .icon-btn svg, .btn-x svg { width: 18px; height: 18px; display: block; fill: currentColor; stroke: currentColor; }
 
 </style>
 </head>
@@ -229,8 +222,7 @@
   </div>
 
   <script>
-    // Fit-to-viewport scale logic (no scrolling)
-    (function fitStage(){
+     (function fitStage(){
       const wrap = document.getElementById('stageWrap');
       function apply(){
         const vw = window.innerWidth - 24;
@@ -245,8 +237,7 @@
       apply();
     })();
 
-    // Simulated X login gating (demo)
-    (function requireXLogin(){
+     (function requireXLogin(){
       const logged = localStorage.getItem('mushrush.loggedX') === '1';
       if (!logged){
         const overlay = document.createElement('div');
@@ -267,20 +258,17 @@
       }
     })();
 
-    // Basic interactions
-    document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); alert('Simulated X login.'); location.reload(); });
+     document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); alert('Simulated X login.'); location.reload(); });
     document.getElementById('copyRef').addEventListener('click', ()=>{ const txt = document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); alert('Referral copied'); });
     document.getElementById('applyRef').addEventListener('click', ()=>{ const v = document.getElementById('useRef').value.trim(); if (!v) return alert('Enter a referral code'); alert('Referral applied: ' + v + ' (demo)'); });
 
-    // Register button (demo)
-    document.getElementById('registerBtn').addEventListener('click', ()=>{
+     document.getElementById('registerBtn').addEventListener('click', ()=>{
       const logged = localStorage.getItem('mushrush.loggedX') === '1';
       if (!logged) return alert('Please sign in with X first');
       alert('Registration simulated. In production this should submit an on-chain or backend registration.');
     });
 
-    // Primary share button - opens X compose with prefilled message including ref
-    function shareOnX(ref){
+     function shareOnX(ref){
       const pageUrl = window.location.href;
       const text = `I'm on the MushRush early access waitlist! 🎮🌱\nGet early access and join me — use my referral code ${ref} to increase your spot.\nClaim your slot: ` + pageUrl + `\n#MushRush #crypto #gaming`;
       const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
@@ -290,8 +278,7 @@
     document.getElementById('shareBtn').addEventListener('click', ()=>{ const ref = document.getElementById('myRef').innerText; shareOnX(ref); });
     document.getElementById('sharePrimary').addEventListener('click', ()=>{ const ref = document.getElementById('myRef').innerText; shareOnX(ref); });
 
-    // derive a friendly ref from wallet if connected
-    (async function setRefFromWallet(){
+     (async function setRefFromWallet(){
       try{
         if (window.ethereum){
           const accs = await window.ethereum.request({method:'eth_accounts'});
