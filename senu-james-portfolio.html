@@ -2,507 +2,386 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gabby Nyarko — Software & AI Portfolio</title>
-  <meta name="description" content="Gabby Nyarko — CS student, founder of Open Knowledge Ghana, winner of African Digital Innovation Challenge for Vitra AI. Portfolio showcasing Vitra AI, Shuttle Tracker, E-mart, Fitness Tracker, SkillForge Registration System." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JadsTek — Web Developer Portfolio</title>
+  <meta name="description" content="Portfolio showcasing web development projects: Vitra AI, Shuttle Tracker, E‑Mart, Fitness Tracker, SkillForge Workshop Registration." />
+
+  <!-- Professional font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icons (Font Awesome) -->
+  <script src="https://kit.fontawesome.com/a2d9b7b1d2.js" crossorigin="anonymous"></script>
+
   <style>
     :root{
-      --bg:#0f1724; /* deep navy */
-      --card:#0b1220;
-      --muted:#9aa4b2;
-      --accent:#7c3aed; /* violet */
-      --accent-2:#06b6d4; /* teal */
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --glass-border: rgba(255,255,255,0.06);
-      --max-width:1100px;
+      --bg: #ffffff;
+      --muted: #6b7280;
+      --accent: #0f172a; /* deep navy */
+      --primary: #0b5fff; /* strong blue */
+      --card: #fbfdff;
+      --glass: rgba(15,23,42,0.04);
+      --radius: 14px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color-scheme: light;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent),
-                  radial-gradient(900px 500px at 90% 90%, rgba(6,182,212,0.06), transparent),
-                  var(--bg);
-      color: #e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      padding:48px 24px;
-      display:flex;
-      justify-content:center;
-    }
-    .container{
-      width:100%;
-      max-width:var(--max-width);
-    }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);-webkit-font-smoothing:antialiased}
 
-    /* Header */
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:34px;
-    }
-    .brand{
-      display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit
-    }
-    .logo{
-      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 6px 18px rgba(0,0,0,0.6);
-    }
-    .brand h1{margin:0;font-family:'Playfair Display', serif;font-size:20px}
-    .brand p{margin:0;color:var(--muted);font-size:13px}
+    /* Layout container */
+    .wrap{max-width:1100px;margin:48px auto;padding:32px}
 
-    nav{display:flex;gap:14px;align-items:center}
-    .nav-link{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;font-size:14px}
-    .nav-link:hover{background:var(--glass);color: #fff}
-    .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:10px;color:white;font-weight:600;text-decoration:none;box-shadow:0 8px 30px rgba(124,58,237,0.12)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#7c5cff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:0 6px 20px rgba(11,95,255,0.12)}
+    nav a{margin-left:18px;color:var(--muted);text-decoration:none;font-weight:600}
+    nav a:hover{color:var(--primary)}
 
     /* Hero */
-    .hero{
-      display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center;margin-bottom:40px
-    }
-    .intro{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:32px;border-radius:14px;border:1px solid var(--glass-border);box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-    .intro h2{font-family:'Playfair Display', serif;margin:0 0 8px 0;font-size:34px}
-    .intro p.lead{margin:0;color:var(--muted);font-size:15px}
-    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .pill{background:var(--glass-2);padding:8px 12px;border-radius:999px;border:1px solid var(--glass-border);font-size:13px;color:var(--muted)}
-    .hero-visual{border-radius:14px;overflow:hidden;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border)}
-    .mock{
-      width:100%;height:280px;border-radius:10px;background:linear-gradient(120deg,#071028 0%, #091429 40%, #072a37 100%);display:flex;flex-direction:column;gap:10px;padding:18px
-    }
-    .mock .top{display:flex;justify-content:space-between;align-items:center}
-    .mock .screen{flex:1;border-radius:10px;background:linear-gradient(180deg,#061028, #0b2a3a);margin-top:10px;padding:16px;display:flex;flex-direction:column}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:32px;margin-top:28px;align-items:center}
+    .hero-card{background:linear-gradient(180deg,var(--card),#f7fbff);padding:28px;border-radius:18px;box-shadow:0 8px 30px rgba(15,23,42,0.06)}
+    .headline{font-size:28px;font-weight:800;line-height:1.02;margin:0}
+    .sub{color:var(--muted);margin-top:8px;font-weight:500}
+    .cta-row{margin-top:18px;display:flex;gap:12px}
+    .btn{padding:12px 16px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--primary);color:white;box-shadow:0 8px 20px rgba(11,95,255,0.12)}
+    .btn-outline{background:transparent;border:1px solid var(--glass);color:var(--accent)}
 
-    /* Projects grid */
-    .section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0}
-    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;border:1px solid var(--glass-border);padding:14px;display:flex;flex-direction:column;gap:12px;min-height:200px}
-    .thumb{height:110px;border-radius:8px;background:linear-gradient(135deg, rgba(124,58,237,0.16), rgba(6,182,212,0.06));display:flex;align-items:end;padding:12px;color:white;font-weight:700}
-    .proj-title{font-size:16px;margin:0}
-    .proj-desc{color:var(--muted);font-size:13px;margin:0}
-    .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);color:var(--muted)}
-    .actions{display:flex;gap:8px;margin-top:auto}
-    .btn{padding:10px 12px;border-radius:10px;border:1px solid transparent;background:rgba(255,255,255,0.03);color: #e6eef6;text-decoration:none;font-weight:600;font-size:13px}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 8px 20px rgba(124,58,237,0.12);border:none}
+    /* profile card */
+    .profile{background:white;padding:22px;border-radius:16px;text-align:center;box-shadow:0 10px 30px rgba(2,6,23,0.06)}
+    .avatar{width:120px;height:120px;border-radius:18px;overflow:hidden;margin:0 auto;display:block;box-shadow:0 12px 30px rgba(15,23,42,0.06)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .role{margin-top:12px;font-weight:700}
+    .meta{color:var(--muted);font-size:14px;margin-top:6px}
 
-    /* Skills & timeline */
-    .side-panels{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:28px}
-    .panel{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass-border)}
-    .skill-bars{display:flex;flex-direction:column;gap:12px}
-    .bar{background:var(--glass-2);height:12px;border-radius:999px;overflow:hidden}
-    .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:60%}
+    /* badges */
+    .badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+    .badge{background:var(--glass);padding:8px 10px;border-radius:999px;font-weight:600;font-size:13px}
+
+    /* Projects */
+    .section{margin-top:36px}
+    .section h3{margin:0;font-size:18px}
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:12px}
+    .project{background:white;border-radius:12px;padding:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 8px 28px rgba(2,6,23,0.04);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+    .project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.08)}
+    .p-thumb{width:140px;height:92px;border-radius:8px;overflow:hidden;flex-shrink:0}
+    .p-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .p-body{flex:1}
+    .p-title{font-weight:700;margin:0}
+    .p-desc{color:var(--muted);font-size:13px;margin-top:6px}
+    .p-tags{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;background:var(--glass);padding:6px 8px;border-radius:8px}
+
+    /* Skills + stats */
+    .grid-3{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{background:white;padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.04)}
 
     /* Footer */
-    footer{margin-top:36px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;justify-content:space-between;align-items:center;border:1px solid var(--glass-border)}
-    .socials{display:flex;gap:12px}
-    .socials a{display:inline-flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);text-decoration:none}
+    footer{margin-top:48px;padding:24px;text-align:center;color:var(--muted);font-size:14px}
 
-    /* Modal */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(3,6,23,0.6);display:none;align-items:center;justify-content:center;padding:24px;z-index:60}
-    .modal{width:100%;max-width:920px;background:linear-gradient(180deg,#071126, #07132a);border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 30px 80px rgba(0,0,0,0.7);}
-    .modal-grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
-    .close{background:transparent;border:1px solid var(--glass-border);color:var(--muted);padding:8px 12px;border-radius:10px}
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);opacity:0;pointer-events:none;transition:opacity .18s ease}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal-card{width:min(900px,92%);background:white;padding:20px;border-radius:12px}
+    .modal-head{display:flex;justify-content:space-between;align-items:center}
 
-    /* Responsive */
-    @media (max-width:1000px){
-      .hero{grid-template-columns:1fr 1fr}
-      .projects{grid-template-columns:repeat(2,1fr)}
-      .side-panels{grid-template-columns:1fr}
-      .modal-grid{grid-template-columns:1fr}
-    }
-    @media (max-width:640px){
-      header{flex-direction:column;align-items:flex-start}
-      .hero{grid-template-columns:1fr}
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
       .projects{grid-template-columns:1fr}
-      .brand h1{font-size:18px}
-      body{padding:24px}
+      .avatar{width:108px;height:108px}
+      .p-thumb{width:120px;height:80px}
     }
-
-    /* Little flourish */
-    .sparkle{position:relative}
-    .sparkle:after{content:'';position:absolute;right:8px;top:8px;width:18px;height:18px;border-radius:50%;background:linear-gradient(45deg,#fff,rgba(255,255,255,0.2));filter:blur(8px);opacity:0.6}
-
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
     <header>
-      <a class="brand" href="#">
-        <div class="logo">G</div>
+      <div class="brand">
+        <div class="logo">JT</div>
         <div>
-          <h1>Gabby Nyarko</h1>
-          <p>CS • AI • Social Impact</p>
+          <div style="font-weight:800;font-size:16px">JadsTek</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:2px">Full‑Stack Web Developer — UI/UX & AI Integration</div>
         </div>
-      </a>
-      <nav>
-        <a class="nav-link" href="#projects">Projects</a>
-        <a class="nav-link" href="#about">About</a>
-        <a class="nav-link" href="#contact">Contact</a>
-        <a class="cta" href="#projects">View Projects</a>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <main>
       <section class="hero">
-        <div class="intro">
-          <h2>Building practical AI & Web solutions that move communities forward</h2>
-          <p class="lead">I design and build web and AI products for healthcare, logistics, and education. Winner — African Digital Innovation Challenge for <strong>Vitra AI</strong>. Below are select projects showing product thinking, technical depth, and measurable impact.</p>
+        <div class="hero-card">
+          <h1 class="headline">I build elegant, production‑ready web apps that scale — with a focus on usability, performance, and smart AI integrations.</h1>
+          <p class="sub">Winner, African Digital Innovation Challenge — creator of <strong>Vitra AI</strong>. Experienced in full‑stack projects used by students and small businesses.</p>
 
-          <div class="meta">
-            <div class="pill">Winner: African Digital Innovation Challenge</div>
-            <div class="pill">Intern, Ghana Atomic Energy Commission</div>
-            <div class="pill">Founder, Open Knowledge Ghana</div>
-          </div>
-
-          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn primary" href="#projects">Explore Projects</a>
-            <a class="btn" href="#contact">Download Résumé</a>
-          </div>
-        </div>
-
-        <div class="hero-visual">
-          <div class="mock">
-            <div class="top">
-              <div style="display:flex;gap:8px;align-items:center">
-                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80"></div>
-                <div style="width:8px;height:8px;border-radius:50%;background:#f472b6"></div>
-                <div style="width:8px;height:8px;border-radius:50%;background:#60a5fa"></div>
-              </div>
-              <div style="font-size:13px;color:var(--muted)">Gabby / Portfolio</div>
+          <div style="display:flex;gap:12px;margin-top:18px;align-items:center">
+            <div class="cta-row">
+              <button class="btn btn-primary" onclick="downloadResume()"><i class="fa-solid fa-download" style="margin-right:8px"></i>Download Résumé</button>
+              <a class="btn btn-outline" href="#projects">View Projects</a>
             </div>
-            <div class="screen">
-              <div style="display:flex;align-items:center;justify-content:space-between">
-                <div>
-                  <div style="font-weight:700">Vitra AI Dashboard</div>
-                  <div style="font-size:13px;color:var(--muted)">AI‑driven provider matching & e-pharmacy</div>
-                </div>
-                <div style="font-size:12px;color:var(--muted)">Live demo</div>
-              </div>
-              <div style="flex:1;display:flex;align-items:end;justify-content:space-between;margin-top:12px">
-                <div style="font-size:13px;color:var(--muted)">Users • 3.2k</div>
-                <div style="font-size:13px;color:var(--muted)">Uptime • 99.8%</div>
-              </div>
+          </div>
+
+          <div style="display:flex;gap:18px;margin-top:20px;align-items:center">
+            <div style="display:flex;flex-direction:column">
+              <strong style="font-size:22px">5+</strong>
+              <span class="sub">Production projects</span>
+            </div>
+            <div style="display:flex;flex-direction:column">
+              <strong style="font-size:22px">2</strong>
+              <span class="sub">Major awards</span>
+            </div>
+            <div style="display:flex;flex-direction:column">
+              <strong style="font-size:22px">1000+</strong>
+              <span class="sub">Users served (projected)</span>
             </div>
           </div>
         </div>
+
+        <aside class="profile" aria-labelledby="profile-name">
+          <div class="avatar"><img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=800&auto=format&fit=crop" alt="Professional portrait"></div>
+          <div id="profile-name" class="role">JadsTek — Web Developer</div>
+          <div class="meta">Full‑stack • React • Node.js • Express • MongoDB • Python (AI)</div>
+
+          <div class="badges">
+            <div class="badge">Vitra AI — Winner</div>
+            <div class="badge">Shuttle Tracker</div>
+            <div class="badge">E‑Mart</div>
+            <div class="badge">SkillForge</div>
+          </div>
+        </aside>
       </section>
 
-      <section id="projects">
-        <div class="section-title">
-          <h3 style="margin:0;font-size:20px">Selected Projects</h3>
-          <div style="color:var(--muted);font-size:14px">Click any project to view details</div>
-        </div>
+      <section id="projects" class="section">
+        <h3>Selected Projects</h3>
+        <p style="color:var(--muted);margin-top:8px">Click any project to view details, screenshots, and the technical breakdown.</p>
 
         <div class="projects">
-          <!-- Project: Vitra AI -->
-          <article class="card" tabindex="0">
-            <div class="thumb" style="background:linear-gradient(135deg, rgba(124,58,237,0.32), rgba(6,182,212,0.12));">
-              <div>Vitra AI</div>
-            </div>
-            <h4 class="proj-title">Vitra AI — Herbal Medicine & E-Pharmacy Portal</h4>
-            <p class="proj-desc">Winner of the African Digital Innovation Challenge. AI provider matching, consultation booking, and integrated e-pharmacy for local communities.</p>
-            <div class="tags">
-              <div class="tag">AI Integration</div>
-              <div class="tag">React</div>
-              <div class="tag">Python (Flask)</div>
-            </div>
-            <div class="actions">
-              <button class="btn primary" data-project="vitra">View Project</button>
-              <a class="btn" href="#" onclick="event.preventDefault()">Case Study</a>
+          <!-- Vitra AI -->
+          <article class="project" tabindex="0" role="button" data-project="vitra">
+            <div class="p-thumb"><img src="https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=800&auto=format&fit=crop" alt="Vitra AI screenshot"></div>
+            <div class="p-body">
+              <h4 class="p-title">Vitra AI — Diagnostic & Triage Assistant</h4>
+              <p class="p-desc">Award-winning AI tool for early disease prediction and triage — uses explainable ML models and a clean, accessible interface.</p>
+              <div class="p-tags">
+                <span class="tag">React</span>
+                <span class="tag">Python (FastAPI)</span>
+                <span class="tag">TensorFlow</span>
+              </div>
             </div>
           </article>
 
           <!-- Shuttle Tracker -->
-          <article class="card">
-            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.24), rgba(124,58,237,0.06));">
-              <div>Shuttle Tracker</div>
-            </div>
-            <h4 class="proj-title">Shuttle Tracker — Real‑time Commute Mapping</h4>
-            <p class="proj-desc">A lightweight web app to track commuter shuttle locations, ETA calculations and route optimization for high-traffic corridors.</p>
-            <div class="tags">
-              <div class="tag">Maps API</div>
-              <div class="tag">Node.js</div>
-              <div class="tag">Socket.IO</div>
-            </div>
-            <div class="actions">
-              <button class="btn primary" data-project="shuttle">View Project</button>
-              <a class="btn" href="#" onclick="event.preventDefault()">Live</a>
+          <article class="project" tabindex="0" role="button" data-project="shuttle">
+            <div class="p-thumb"><img src="https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=800&auto=format&fit=crop" alt="Shuttle Tracker screenshot"></div>
+            <div class="p-body">
+              <h4 class="p-title">Shuttle Tracker — Campus Transit App</h4>
+              <p class="p-desc">Real‑time shuttle tracking web app with route planning, ETA calculations, and mobile‑friendly UI (built for KNUST campus).
+              </p>
+              <div class="p-tags">
+                <span class="tag">Leaflet</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">WebSockets</span>
+              </div>
             </div>
           </article>
 
-          <!-- E-mart -->
-          <article class="card">
-            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(124,58,237,0.16));">
-              <div>E-mart</div>
-            </div>
-            <h4 class="proj-title">E‑mart — Local Marketplace</h4>
-            <p class="proj-desc">An e-commerce platform focused on empowering local sellers with inventory management, search, and checkout built for low-bandwidth environments.</p>
-            <div class="tags">
-              <div class="tag">Django</div>
-              <div class="tag">Payment Integration</div>
-              <div class="tag">PWA</div>
-            </div>
-            <div class="actions">
-              <button class="btn primary" data-project="emart">View Project</button>
-              <a class="btn" href="#" onclick="event.preventDefault()">Repo</a>
+          <!-- E-Mart -->
+          <article class="project" tabindex="0" role="button" data-project="emart">
+            <div class="p-thumb"><img src="https://images.unsplash.com/photo-1515548211313-3f39c73b38d1?q=80&w=800&auto=format&fit=crop" alt="E‑Mart screenshot"></div>
+            <div class="p-body">
+              <h4 class="p-title">E‑Mart — E‑Commerce Platform</h4>
+              <p class="p-desc">Robust e‑commerce prototype with product management, payments (demo), and optimized mobile checkout.
+              </p>
+              <div class="p-tags">
+                <span class="tag">Next.js</span>
+                <span class="tag">Stripe (demo)</span>
+                <span class="tag">MongoDB</span>
+              </div>
             </div>
           </article>
 
           <!-- Fitness Tracker -->
-          <article class="card">
-            <div class="thumb" style="background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));">
-              <div>Fitness Tracker</div>
-            </div>
-            <h4 class="proj-title">Fitness Tracker — Personal & Group Challenges</h4>
-            <p class="proj-desc">A full-stack app with workouts, profiles, leaderboards and a responsive, mobile-first UI for tracking progress and motivating peers.</p>
-            <div class="tags">
-              <div class="tag">HTML/CSS/JS</div>
-              <div class="tag">LocalStorage</div>
-              <div class="tag">Responsive</div>
-            </div>
-            <div class="actions">
-              <button class="btn primary" data-project="fitness">View Project</button>
-              <a class="btn" href="#" onclick="event.preventDefault()">Demo</a>
+          <article class="project" tabindex="0" role="button" data-project="fitness">
+            <div class="p-thumb"><img src="https://images.unsplash.com/photo-1554284126-aa88f22d8d6c?q=80&w=800&auto=format&fit=crop" alt="Fitness Tracker screenshot"></div>
+            <div class="p-body">
+              <h4 class="p-title">Fitness Tracker — Health & Progress</h4>
+              <p class="p-desc">A progressive web app for tracking workouts, goals, and progress with data visualization and offline support.</p>
+              <div class="p-tags">
+                <span class="tag">PWA</span>
+                <span class="tag">Chart.js</span>
+                <span class="tag">Service Workers</span>
+              </div>
             </div>
           </article>
 
           <!-- SkillForge -->
-          <article class="card">
-            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.18), rgba(124,58,237,0.14));">
-              <div>SkillForge</div>
-            </div>
-            <h4 class="proj-title">SkillForge — Workshops Registration System</h4>
-            <p class="proj-desc">Registration & attendee management system for technical workshops. Features: roles, ticketing, CSV export, and attendance dashboards.</p>
-            <div class="tags">
-              <div class="tag">Flask</div>
-              <div class="tag">Postgres</div>
-              <div class="tag">Admin Dashboard</div>
-            </div>
-            <div class="actions">
-              <button class="btn primary" data-project="skillforge">View Project</button>
-              <a class="btn" href="#" onclick="event.preventDefault()">Docs</a>
+          <article class="project" tabindex="0" role="button" data-project="skillforge">
+            <div class="p-thumb"><img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop" alt="SkillForge screenshot"></div>
+            <div class="p-body">
+              <h4 class="p-title">SkillForge — Workshop Registration System</h4>
+              <p class="p-desc">A clean, accessible system used to register for workshops — includes admin dashboard, capacity management, and automated emails.</p>
+              <div class="p-tags">
+                <span class="tag">HTML/CSS</span>
+                <span class="tag">Express.js</span>
+                <span class="tag">Postgres</span>
+              </div>
             </div>
           </article>
-
         </div>
       </section>
 
-      <section style="margin-top:28px" id="about">
-        <div class="side-panels">
-          <div class="panel">
-            <h4 style="margin-top:0">About & Impact</h4>
-            <p style="color:var(--muted)">I’m a developer and product builder from Ghana focused on building practical solutions that work in constrained environments. I founded Open Knowledge Ghana (50+ translations, 10k+ readers) and interned at the Ghana Atomic Energy Commission. My work balances product thinking, accessible design, and reliable engineering.</p>
-
-            <div style="margin-top:12px">
-              <h5 style="margin:8px 0">Selected achievements</h5>
-              <ul style="color:var(--muted);margin:0;padding-left:18px">
-                <li>Winner — African Digital Innovation Challenge (Vitra AI)</li>
-                <li>Led NSMQ team to first-ever finals for my school</li>
-                <li>Mentored 100+ students through SkillForge workshops</li>
-              </ul>
+      <section id="skills" class="section">
+        <h3>Technical Skills & Tools</h3>
+        <div style="margin-top:12px;display:flex;gap:14px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:260px">
+            <h4 style="margin:0">Frontend</h4>
+            <p style="color:var(--muted);margin-top:6px">React, Next.js, TypeScript, Tailwind, HTML5, CSS3, Accessibility (WCAG), Responsive Design</p>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">ARIA</span>
             </div>
           </div>
 
-          <aside class="panel">
-            <h4 style="margin-top:0">Skills</h4>
-            <div style="margin:12px 0" class="skill-bars">
-              <div>
-                <div style="display:flex;justify-content:space-between"><strong>Full‑stack web</strong><span style="color:var(--muted)">Expert</span></div>
-                <div class="bar" aria-hidden><span style="width:92%"></span></div>
-              </div>
-              <div>
-                <div style="display:flex;justify-content:space-between"><strong>Machine Learning</strong><span style="color:var(--muted)">Intermediate</span></div>
-                <div class="bar"><span style="width:68%"></span></div>
-              </div>
-              <div>
-                <div style="display:flex;justify-content:space-between"><strong>Product Design</strong><span style="color:var(--muted)">Advanced</span></div>
-                <div class="bar"><span style="width:78%"></span></div>
-              </div>
+          <div class="card" style="flex:1;min-width:260px">
+            <h4 style="margin:0">Backend, AI & DevOps</h4>
+            <p style="color:var(--muted);margin-top:6px">Node.js, Express, FastAPI, PostgreSQL, MongoDB, Docker, CI/CD, TensorFlow, PyTorch</p>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <span class="tag">Node.js</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
             </div>
-
-            <div style="margin-top:16px">
-              <h5 style="margin:8px 0">Tech stack</h5>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <div class="tag">JavaScript</div>
-                <div class="tag">React</div>
-                <div class="tag">Python</div>
-                <div class="tag">Flask</div>
-                <div class="tag">Django</div>
-                <div class="tag">Postgres</div>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section id="contact" style="margin-top:28px">
-        <div style="display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-          <div style="flex:1;min-width:240px">
-            <h3 style="margin:0">Let's build something useful together</h3>
-            <p style="color:var(--muted);margin-top:6px">Available for internships, mentorship, and collaborations. I love projects that combine AI with community impact.</p>
-          </div>
-          <div style="display:flex;gap:12px;align-items:center">
-            <a class="cta" href="mailto:gabby@example.com">Email me</a>
-            <a class="btn" href="#">LinkedIn</a>
-            <a class="btn" href="#">GitHub</a>
           </div>
         </div>
       </section>
 
-      <footer>
-        <div>
-          <strong>Gabby Nyarko</strong>
-          <div style="color:var(--muted);font-size:13px">Computer Science • AI for Social Good</div>
+      <section id="about" class="section">
+        <h3>About Me</h3>
+        <div style="margin-top:12px;color:var(--muted)">
+          <p>I am a web developer focused on creating accessible, well‑tested, and beautiful web applications. My project <strong>Vitra AI</strong> won the <em>African Digital Innovation Challenge</em>, and I have shipped projects used by students and small businesses — including Shuttle Tracker, E‑Mart, Fitness Tracker, and SkillForge's registration system. I emphasize clean code, great UX, and practical AI integration.</p>
+
+          <p style="margin-top:8px">If you'd like to see source code or a live demo of any project, click the project card or contact me below — I can provide links, short walkthrough videos, and code samples on request.</p>
         </div>
-        <div class="socials">
-          <a href="#">GitHub</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Email</a>
+      </section>
+
+      <section id="contact" class="section">
+        <h3>Contact</h3>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
+          <div class="card" style="flex:1;min-width:280px">
+            <h4 style="margin:0">Get in touch</h4>
+            <p style="color:var(--muted);margin-top:6px">Email: <a href="mailto:jads@example.com">jads@example.com</a> · Location: Kumasi, Ghana</p>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <a href="#" title="GitHub" aria-label="github"><i class="fa-brands fa-github fa-lg"></i></a>
+              <a href="#" title="LinkedIn" aria-label="linkedin"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+              <a href="#" title="Portfolio PDF" aria-label="portfolio"><i class="fa-solid fa-file-lines fa-lg"></i></a>
+            </div>
+          </div>
+
+          <form class="card" style="flex:1;min-width:320px" onsubmit="event.preventDefault();contactForm()">
+            <label style="display:block;font-weight:700">Message</label>
+            <textarea id="message" required style="width:100%;margin-top:8px;padding:10px;border-radius:8px;border:1px solid var(--glass);min-height:96px"></textarea>
+            <div style="display:flex;gap:10px;margin-top:12px;justify-content:flex-end">
+              <button class="btn btn-outline" type="reset">Reset</button>
+              <button class="btn btn-primary" type="submit">Send</button>
+            </div>
+          </form>
         </div>
-      </footer>
+      </section>
     </main>
 
+    <footer>
+      Built by JadsTek • Winner, African Digital Innovation Challenge • © <span id="year"></span>
+    </footer>
   </div>
 
-  <!-- Modal (hidden by default) -->
-  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
-    <div class="modal" role="document">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3 id="modalTitle" style="margin:0">Project Title</h3>
-        <button class="close" id="modalClose">Close</button>
+  <!-- Modal (project details) -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="modal-title">Project</h3>
+        <button onclick="closeModal()" aria-label="Close modal" style="border:0;background:transparent;font-size:18px;cursor:pointer"><i class="fa-solid fa-xmark"></i></button>
       </div>
-
-      <div class="modal-grid">
-        <div>
-          <div id="modalImg" style="height:220px;border-radius:8px;background:linear-gradient(120deg,#061028,#072a37);margin-bottom:12px"></div>
-          <p id="modalDesc" style="color:var(--muted)">Detailed project description goes here. Explain the problem, your approach, your role, and measurable impact. Include links to repo, demo, and screenshots.</p>
-
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <a id="modalRepo" class="btn" href="#" target="_blank">View repo</a>
-            <a id="modalDemo" class="btn primary" href="#" target="_blank">Live demo</a>
-          </div>
-        </div>
-
-        <aside style="min-width:220px">
-          <h4 style="margin-top:0">Tech & Highlights</h4>
-          <ul id="modalBullets" style="color:var(--muted);padding-left:18px"></ul>
-
-          <div style="margin-top:12px">
-            <h5 style="margin:6px 0">My role</h5>
-            <div id="modalRole" style="color:var(--muted)"></div>
-          </div>
-        </aside>
+      <div id="modal-body" style="margin-top:10px;color:var(--muted)"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn btn-outline" onclick="closeModal()">Close</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Project data (replace links/images with your real ones)
+    // small helper to download a simple resume placeholder (replace with your PDF)
+    function downloadResume(){
+      const link = document.createElement('a');
+      link.href = 'data:application/pdf;base64,JVBERi0xLjQKJcfs...'; // replace with actual base64 or file link
+      link.download = 'JadsTek_Resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    // Project detail data (concise and professional)
     const PROJECTS = {
-      vitra: {
-        title: 'Vitra AI — Herbal Medicine & E-Pharmacy Portal',
-        desc: `Winner of the African Digital Innovation Challenge. Built an accessible web portal integrating AI provider matching, consultation booking, e-pharmacy ordering, and a conversational triage chatbot to connect patients to qualified providers and local herbalists. Focus: accessibility, offline-first features, and multilingual content.`,
-        img: '', // placeholder
-        repo: '#',
-        demo: '#',
-        bullets: [
-          'AI provider matching (similarity search + heuristics)',
-          'End-to-end booking and e-pharmacy checkout',
-          'Accessible UI and mobile-first design'
-        ],
-        role: 'Lead developer — front-end, product design, and AI integration'
+      'vitra':{
+        title:'Vitra AI — Diagnostic & Triage Assistant',
+        body:`<p><strong>Overview:</strong> Vitra AI is an explainable AI system designed for early detection and triage of common conditions. It combines lightweight ML models with a simple front‑end so health workers and users can get quick, interpretable guidance.</p>
+               <p><strong>Highlights:</strong> Winner — African Digital Innovation Challenge; explainable predictions, model confidence, and a clinician review workflow.</p>
+               <p><strong>Tech:</strong> React, FastAPI, TensorFlow, Docker, Postgres.</p>`
       },
-      shuttle: {
-        title: 'Shuttle Tracker — Real-time Commute Mapping',
-        desc: `A lightweight web app to track shuttle locations, compute ETA, and reduce wait times for commuters. Built with WebSockets for real-time updates and map clustering for optimized visualization.`,
-        repo: '#', demo: '#', bullets:['Real-time location via Socket.IO','ETA algorithm with historical speed profiles','Low-bandwidth map optimization'], role:'Full-stack developer'
+      'shuttle':{
+        title:'Shuttle Tracker — Campus Transit App',
+        body:`<p><strong>Overview:</strong> Real‑time shuttle tracking and ETA calculation built for campus transit. Includes route selection, live vehicle positions and arrival predictions.</p>
+               <p><strong>Highlights:</strong> Real‑time WebSocket updates, map integration, low‑bandwidth mode for older phones.</p>
+               <p><strong>Tech:</strong> Leaflet.js, Node.js, WebSockets, Redis.</p>`
       },
-      emart: {
-        title: 'E-mart — Local Marketplace',
-        desc: `E-commerce for local sellers with inventory management, offline fallback and progressive web app support for sellers with intermittent connectivity.`,
-        repo:'#', demo:'#', bullets:['Seller dashboards','Optimized image uploads','Payment gateway integration'], role:'Backend & product'
+      'emart':{
+        title:'E‑Mart — E‑Commerce Platform',
+        body:`<p><strong>Overview:</strong> Full featured e‑commerce prototype with product catalog, cart, admin product management and demo checkout flows.</p>
+               <p><strong>Highlights:</strong> Focus on conversion UX, accessibility in checkout, image optimization and responsive product grid.</p>
+               <p><strong>Tech:</strong> Next.js, MongoDB, Stripe (demo).</p>`
       },
-      fitness: {
-        title: 'Fitness Tracker — Personal & Group Challenges',
-        desc:`Responsive web app that tracks workouts, shows progress, and supports group leaderboards and challenges. Built to be lightweight and privacy-respecting.`,
-        repo:'#', demo:'#', bullets:['Responsive UI','LocalStorage sync','Leaderboard algorithms'], role:'Frontend lead'
+      'fitness':{
+        title:'Fitness Tracker — Health & Progress',
+        body:`<p><strong>Overview:</strong> A progressive web app for logging workouts, tracking goals, and visualising progress with charts and offline support.</p>
+               <p><strong>Highlights:</strong> PWA with service workers, data visualizations, offline sync and export.</p>
+               <p><strong>Tech:</strong> PWA, IndexedDB, Chart.js.</p>`
       },
-      skillforge: {
-        title: 'SkillForge — Workshops Registration System',
-        desc:`Attendee registration and management tool used for technical workshops. Features include role-based access, CSV exports, and attendance tracking.`,
-        repo:'#', demo:'#', bullets:['Role-based admin','CSV import/export','Attendance dashboard'], role:'Full-stack developer'
+      'skillforge':{
+        title:'SkillForge — Workshop Registration System',
+        body:`<p><strong>Overview:</strong> Workshop registration and admin dashboard used for capacity control and automated confirmation emails.</p>
+               <p><strong>Highlights:</strong> Customizable registration forms, capacity alerts, and a lightweight admin panel for event organizers.</p>
+               <p><strong>Tech:</strong> Express.js, Postgres, Nodemailer.</p>`
       }
     };
 
-    // open modal
-    const backdrop = document.getElementById('modalBackdrop');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalBullets = document.getElementById('modalBullets');
-    const modalRole = document.getElementById('modalRole');
-    const modalRepo = document.getElementById('modalRepo');
-    const modalDemo = document.getElementById('modalDemo');
-    const modalImg = document.getElementById('modalImg');
-    const modalClose = document.getElementById('modalClose');
+    // Modal handlers
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
 
-    document.querySelectorAll('[data-project]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const key = btn.dataset.project;
-        const p = PROJECTS[key];
-        if(!p) return;
-        modalTitle.textContent = p.title;
-        modalDesc.textContent = p.desc;
-        modalBullets.innerHTML = '';
-        p.bullets.forEach(b => { const li = document.createElement('li'); li.textContent = b; modalBullets.appendChild(li); });
-        modalRole.textContent = p.role;
-        modalRepo.href = p.repo;
-        modalDemo.href = p.demo;
-        // simple generated image
-        modalImg.style.background = `linear-gradient(120deg, rgba(124,58,237,0.14), rgba(6,182,212,0.06)), url('data:image/svg+xml;utf8,${encodeURIComponent(generateSVG(p.title))}') center/cover no-repeat`;
-        backdrop.style.display = 'flex';
-      });
+    document.querySelectorAll('.project').forEach(el=>{
+      el.addEventListener('click', ()=>openProject(el.dataset.project));
+      el.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') openProject(el.dataset.project); });
     });
 
-    modalClose.addEventListener('click', () => { backdrop.style.display = 'none'; });
-    backdrop.addEventListener('click', (e) => { if(e.target === backdrop) backdrop.style.display = 'none'; });
-
-    function generateSVG(title){
-      // creates a simple SVG placeholder with project title
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'>
-        <defs>
-          <linearGradient id='g' x1='0' x2='1'>
-            <stop stop-color='%237c3aed' offset='0'/>
-            <stop stop-color='%2306b6d4' offset='1'/>
-          </linearGradient>
-        </defs>
-        <rect width='100%' height='100%' fill='url(%23g)' />
-        <text x='50%' y='50%' font-family='Inter, Arial' font-size='36' fill='rgba(255,255,255,0.9)' text-anchor='middle'>${escapeXml(title)}</text>
-      </svg>`;
-      return svg;
+    function openProject(key){
+      const p = PROJECTS[key];
+      if(!p) return;
+      modalTitle.innerText = p.title;
+      modalBody.innerHTML = p.body + `<p style="margin-top:10px;color:#111"><a href='#' onclick="alert('I can provide code samples or a live demo on request')">Request code / demo</a></p>`;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
     }
-    function escapeXml(unsafe){ return unsafe.replace(/[<>&"']/g, function (c) { return {'<':'%3C','>':'%3E','&':'%26','"':'%22',"'":'%27'}[c]; }); }
+    function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
 
-    // Smooth scroll for nav
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = a.getAttribute('href');
-        if(target === '#' || target === '') return;
-        e.preventDefault();
-        const el = document.querySelector(target);
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-      });
-    });
+    // Contact form
+    function contactForm(){
+      const m = document.getElementById('message').value.trim();
+      if(!m) return alert('Please enter a message.');
+      // In a real portfolio you'd POST this to your backend. Here we'll just open mail client as a fallback.
+      window.location.href = `mailto:jads@example.com?subject=Portfolio%20Contact&body=${encodeURIComponent(m)}`;
+    }
 
-    // Accessibility: close modal with Escape
-    window.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') backdrop.style.display = 'none';
-    });
+    // small finishing touches
+    document.getElementById('year').innerText = new Date().getFullYear();
 
   </script>
 </body>
