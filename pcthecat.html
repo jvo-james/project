@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>MushRush — Early Access (Tasks Left, Ref Required)</title>
+<title>MushRush — Early Access (Final Tweaks)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -12,7 +12,6 @@
     --glass:rgba(255,255,255,0.04); --card-radius:12px; --shadow: 0 12px 40px rgba(3,6,20,0.65);
   }
 
-  /* Keep page fitting the viewport via transform-scaling */
   html,body{height:100%;margin:0;background:linear-gradient(180deg,#02020a 0%, #07030f 100%);color:#f6f9ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
   .stage-wrap{width:1200px;height:720px;margin:0 auto;transform-origin:top center;display:flex;align-items:center;justify-content:center}
   .stage{width:1160px;max-width:1160px;height:680px;padding:20px;box-sizing:border-box;display:grid;grid-template-columns:480px 1fr;gap:20px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass);box-shadow:var(--shadow)}
@@ -26,7 +25,6 @@
   .welcome{font-family:Space Mono,monospace;font-weight:700;color:white}
   .muted{color:var(--muted);font-size:13px}
 
-  /* REF code area: now required */
   .ref-row{display:flex;align-items:center;gap:10px}
   .ref-code{font-family:Space Mono,monospace;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--teal);font-size:16px}
   .input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
@@ -36,14 +34,26 @@
   .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
   .btn-cta{background:linear-gradient(90deg,#ff6fcf,#7c3aed);color:white}
 
+  /* TASK button unified style */
+  .btn-task{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);color:var(--muted);font-weight:700;cursor:pointer}
+  .btn-task:hover{transform:translateY(-2px)}
+  .btn-task.done{background:linear-gradient(90deg,var(--success),#7ee6a6);color:#05240f;border:0}
+
+  /* Main CTA pair style (similar but distinct) */
+  .btn-cta-main{padding:12px 14px;border-radius:10px;border:0;font-weight:800;cursor:pointer;background:linear-gradient(90deg,var(--purple-700),var(--purple-400));color:white;box-shadow:0 10px 30px rgba(107,33,168,0.12)}
+  .btn-cta-secondary{padding:12px 14px;border-radius:10px;border:2px solid rgba(255,255,255,0.06);font-weight:800;cursor:pointer;background:transparent;color:white}
+
   .card-wrap{display:flex;flex-direction:column;align-items:stretch;gap:12px}
   .rainbow{padding:6px;border-radius:12px;background:linear-gradient(135deg,#b89bff,#7c3aed,#ff6fcf,#6ee7b7)}
   .player-card{background:linear-gradient(180deg,#0b0a0f, rgba(255,255,255,0.01));border-radius:10px;padding:12px;color:var(--muted)}
-  .avatar{width:100%;height:calc((680px - 160px)/1.05);max-height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 36px rgba(8,6,20,0.7)}
+
+  /* reduce image container max width so it doesn't feel too wide */
+  .card-wrap.panel{display:flex;align-items:center;justify-content:center}
+  .avatar{width:100%;max-width:360px;height:auto;aspect-ratio:4/3;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 36px rgba(8,6,20,0.7)}
+
   .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
   .idline{color:var(--muted-2);font-weight:700}
 
-  /* TASKS moved to left column; polished look */
   .tasks{margin-top:12px;display:flex;flex-direction:column;gap:10px}
   .task-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:all .12s ease}
   .task-left{display:flex;align-items:center;gap:12px}
@@ -71,7 +81,7 @@
   <div id="stageWrap" class="stage-wrap">
     <div id="stage" class="stage">
 
-      <!-- LEFT: NOW contains referral input (required) and TASKS -->
+      <!-- LEFT: referral (required) + TASKS -->
       <div class="left-inner panel">
         <div class="header">
           <div class="logo">M</div>
@@ -99,30 +109,31 @@
           </div>
         </div>
 
-        <!-- TASKS: moved here from right -->
+        <!-- TASKS: same-styled task buttons -->
         <div class="tasks" id="tasks">
           <div class="task-row" data-task="follow">
             <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
-            <div><button class="btn btn-primary" id="task-follow">Follow</button></div>
-          </div> 
+            <div><button class="btn-task" id="task-follow">Follow</button></div>
+          </div>
           <div class="task-row" data-task="discord">
             <div class="task-left"><span class="task-dot" id="dot-discord"></span><div class="task-label">Join our Discord</div></div>
-            <div><button class="btn btn-primary" id="task-discord">Join</button></div>
+            <div><button class="btn-task" id="task-discord">Join</button></div>
           </div>
           <div class="task-row" data-task="share">
             <div class="task-left"><span class="task-dot" id="dot-share"></span><div class="task-label">Share your referral card</div></div>
-            <div><button class="btn btn-primary" id="task-share">Share</button></div>
+            <div><button class="btn-task" id="task-share">Share</button></div>
           </div>
+          <div class="progress" id="progressText">0 / 3 tasks completed</div>
         </div>
 
         <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
-          <button id="registerBtn" class="btn btn-primary" disabled>Register for Early Access</button>
-          <button id="sharePrimary" class="btn btn-cta">Share on X</button>
+          <button id="registerBtn" class="btn-cta-main" disabled>Register for Early Access</button>
+          <button id="sharePrimary" class="btn-cta-secondary">Share on X</button>
         </div>
 
       </div>
 
-      <!-- RIGHT: Player card kept but cleaner (no big code) -->
+      <!-- RIGHT: Player card cleaned up -->
       <div class="card-wrap panel">
         <div class="rainbow">
           <div class="player-card">
@@ -134,11 +145,11 @@
               </div>
             </div>
 
-            <div style="margin-top:12px">
+            <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center">
               <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
-              <div class="meta" style="margin-top:10px">
-                <div><div class="idline">ID: <span id="playerId">(hidden)</span></div></div>
-                <div style="text-align:right"><div class="muted">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
+              <div class="meta" style="margin-top:10px;width:100%">
+                <div style="text-align:left"><div class="idline">ID: <span id="playerId">(hidden)</span></div></div>
+                <div style="text-align:right;width:100%"><div class="muted">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
               </div>
 
               <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
@@ -172,33 +183,23 @@
       window.addEventListener('resize', apply); window.addEventListener('orientationchange', apply); apply();
     })();
 
-    // Toast
     function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
-
-    // Confetti
     function fireConfetti(){ const canvas=document.getElementById('confetti'); const ctx=canvas.getContext('2d'); canvas.width=window.innerWidth; canvas.height=window.innerHeight; const pieces=[]; const colors=['#ff6fcf','#b89bff','#6ee7b7','#ffd166','#ff8a65']; for(let i=0;i<120;i++){ pieces.push({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,vx:(Math.random()-0.5)*6,vy:2+Math.random()*6,size:6+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360}); } let t=0; function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of pieces){ p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.rot+=8; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size); ctx.restore(); } t++; if(t<160) requestAnimationFrame(frame); else ctx.clearRect(0,0,canvas.width,canvas.height); } frame(); }
 
-    // TASKS state
     const TASKS=['follow','discord','share'];
     function loadState(){ return JSON.parse(localStorage.getItem('mushrush.tasks')||'{}'); }
     function saveState(s){ localStorage.setItem('mushrush.tasks', JSON.stringify(s)); }
-    function updateUI(s){ let done=0; TASKS.forEach(t=>{ const el=document.getElementById('dot-'+t); if(s[t]) el.classList.add('task-done'); else el.classList.remove('task-done'); if(s[t]) done++; }); document.getElementById('progressText').textContent=`${done} / 3 tasks completed`; if(done===3){ document.getElementById('statusText').textContent='Registered'; showCongrats(); } }
+    function updateUI(s){ let done=0; TASKS.forEach(t=>{ const el=document.getElementById('dot-'+t); const btn=document.getElementById('task-'+t); if(s[t]){ el.classList.add('task-done'); btn.classList.add('done'); } else { el.classList.remove('task-done'); btn.classList.remove('done'); } if(s[t]) done++; }); document.getElementById('progressText').textContent=`${done} / 3 tasks completed`; if(done===3){ document.getElementById('statusText').textContent='Registered'; showCongrats(); } }
     function markTask(t){ const s=loadState(); s[t]=true; saveState(s); updateUI(s); }
 
     function openAndVerify(url,key){ const start=Date.now(); const w=window.open(url,'_blank'); if(!w){ alert('Pop-up blocked — allow popups'); return; } const onFocus=()=>{ const elapsed=Date.now()-start; if(elapsed>1200) { markTask(key); showToast('Verified: '+key); } else { markTask(key); showToast('Marked: '+key); } window.removeEventListener('focus', onFocus); }; window.addEventListener('focus', onFocus); }
-
     function shareOnX(ref){ const pageUrl=window.location.href; const text=`I'm on the MushRush early access waitlist! Use my referral code ${ref} to increase your spot. ${pageUrl} #MushRush`; const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text); const w=window.open(url,'_blank'); if(w){ const start=Date.now(); window.addEventListener('focus', function onF(){ const elapsed=Date.now()-start; markTask('share'); showToast('Thanks for sharing!'); window.removeEventListener('focus', onF); }); } }
 
-    // UI wiring and required-ref logic
-    const useRefInput = document.getElementById('useRef');
-    const registerBtn = document.getElementById('registerBtn');
-
-    function validateRefField(){ const v = useRefInput.value.trim(); if(v.length>0){ registerBtn.disabled=false; registerBtn.classList.remove('btn-disabled'); } else { registerBtn.disabled=true; } }
-    useRefInput.addEventListener('input', validateRefField);
-    validateRefField(); // initial
+    const useRefInput=document.getElementById('useRef'); const registerBtn=document.getElementById('registerBtn');
+    function validateRefField(){ const v=useRefInput.value.trim(); if(v.length>0){ registerBtn.disabled=false; registerBtn.classList.remove('disabled'); } else { registerBtn.disabled=true; } }
+    useRefInput.addEventListener('input', validateRefField); validateRefField();
 
     document.getElementById('applyRef').addEventListener('click', ()=>{ const v=useRefInput.value.trim(); if(!v){ showToast('Referral code is required'); return; } showToast('Referral applied: '+v); });
-
     document.getElementById('registerBtn').addEventListener('click', ()=>{ const v=useRefInput.value.trim(); if(!v){ alert('You must enter a referral code to register.'); return; } const logged = localStorage.getItem('mushrush.loggedX')==='1'; if(!logged) return alert('Please sign in with X first'); showToast('Registered (demo)'); document.getElementById('statusText').textContent='Registered'; markTask('share'); });
 
     document.getElementById('copyRef').addEventListener('click', ()=>{ const txt=document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); showToast('Referral copied'); });
@@ -209,7 +210,6 @@
 
     function showCongrats(){ if(document.getElementById('congrats')) return; fireConfetti(); const overlay=document.createElement('div'); overlay.className='overlay'; overlay.id='congrats'; overlay.innerHTML=`<div class='overlay-card'><h2>Congrats — 3/3 Complete</h2><p>You will be notified about your early access. We appreciate you sharing!</p><div style='display:flex;gap:8px;justify-content:center;margin-top:12px'><button id='closeCongrats' class='btn btn-primary'>Close</button></div></div>`; document.body.appendChild(overlay); document.getElementById('closeCongrats').addEventListener('click', ()=>{ overlay.remove(); }); }
 
-    // init: derive friendly ref from wallet & load state
     (async function init(){ try{ if(window.ethereum){ const accs=await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('myRef').innerText=f; document.getElementById('playerId').innerText='(hidden)'; } } }catch(e){console.log(e);} const s=loadState(); updateUI(s); })();
 
     document.querySelector('.icon-btn.download').addEventListener('click', ()=>{ showToast('Download starting...'); });
