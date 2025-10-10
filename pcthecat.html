@@ -242,238 +242,99 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard</div>
 
 <script>
-  // ---------- Configuration / Provided Address ----------
-  // The wallet address the user provided (used as referral)
-  const PROVIDED_ADDRESS = '0x7f921fab847b06da6a0357e0e662a8ade212dbb7';
+/* ---------- DEMO: mock "Sign in with X" (client-only) ---------- */
+(function(){
+  const PROVIDER_NAME = 'X';
+  const LOGIN_KEY = 'mushrush.user';
 
-  // ---------- Auto-fit scaling so nothing overflows ----------
-  (function autoFit(){
-    const wrap = document.getElementById('stageWrap');
-    const designW = 1280, designH = 760;
-    function apply(){
-      const vw = window.innerWidth; const vh = window.innerHeight;
-      const sx = (vw - 16) / designW; const sy = (vh - 16) / designH;
-      const scale = Math.min(sx, sy, 1);
-      wrap.style.transform = `scale(${scale})`;
-      const top = Math.max(8, (vh - designH*scale)/2);
-      wrap.style.marginTop = top + 'px';
-    }
-    window.addEventListener('resize', apply); window.addEventListener('orientationchange', apply); apply();
-  })();
+  function saveUser(u){ localStorage.setItem(LOGIN_KEY, JSON.stringify(u)); }
+  function loadUser(){ try{return JSON.parse(localStorage.getItem(LOGIN_KEY));}catch(e){return null;} }
 
-  // ---------- Toast ----------
-  function showToast(msg){
-    const t=document.getElementById('toast'); t.textContent=msg; t.style.opacity=1;
-    clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity=0,2200);
-  }
+  // create login button
+  const loginBtn = document.createElement('button');
+  loginBtn.id = 'loginX';
+  loginBtn.className = 'btn-task small';
+  loginBtn.textContent = 'Sign in with X';
+  loginBtn.style.marginLeft = '8px';
+  const headerRight = document.querySelector('.header > div[style*="margin-left:auto"]');
+  if(headerRight) headerRight.insertBefore(loginBtn, headerRight.firstChild);
 
-  // ---------- Confetti ----------
-  function fireConfetti(){
-    const canvas=document.getElementById('confetti'); if(!canvas) return;
-    const ctx=canvas.getContext('2d'); canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-    const pieces=[]; const colors=['#ff6fcf','#b89bff','#6ee7b7','#ffd166','#ff8a65'];
-    for(let i=0;i<120;i++){ pieces.push({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,vx:(Math.random()-0.5)*6,vy:2+Math.random()*6,size:6+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360}); }
-    let t=0; function frame(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(const p of pieces){
-        p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.rot+=8;
-        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
-        ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size); ctx.restore();
-      }
-      t++; if(t<180) requestAnimationFrame(frame); else ctx.clearRect(0,0,canvas.width,canvas.height);
-    } frame();
-  }
-
-  // ---------- Tasks state ----------
-  const TASKS = ['follow','discord','share'];
-  function loadState(){ try{ return JSON.parse(localStorage.getItem('mushrush.tasks')||'{}'); }catch(e){return{}} }
-  function saveState(s){ localStorage.setItem('mushrush.tasks', JSON.stringify(s)); }
-  function updateUI(s){
-    let done=0;
-    TASKS.forEach(t=>{
-      const dot=document.getElementById('dot-'+t);
-      const btn=document.getElementById('task-'+t);
-      if(s[t]){
-        if(dot) dot.classList.add('task-done');
-        if(btn) btn.classList.add('done');
-      } else {
-        if(dot) dot.classList.remove('task-done');
-        if(btn) btn.classList.remove('done');
-      }
-      if(s[t]) done++;
-    });
-    document.getElementById('progressText').textContent = `${done} / ${TASKS.length} tasks completed`;
-    if(done===TASKS.length){
-      document.getElementById('statusText').textContent='Registered';
-      showCongrats();
-    }
-  }
-  function markTask(t){
-    const s=loadState(); s[t]=true; saveState(s); updateUI(s);
-  }
-
-  // ---------- Open & verify (simple heuristic) ----------
-  function openAndVerify(url,key){
-    const start=Date.now();
-    const w = window.open(url,'_blank');
-    if(!w){ alert('Pop-up blocked — allow popups'); return; }
-    // Wait for window focus event once
-    function onFocus(){
-      const elapsed = Date.now()-start;
-      // consider as a completed action
-      markTask(key);
-      showToast('Verified: ' + key);
-      window.removeEventListener('focus', onFocus);
-    }
-    window.addEventListener('focus', onFocus);
-  }
-
-  // ---------- Share on X (Twitter) ----------
-  function shareOnX(ref){
-    const pageUrl = window.location.href;
-    const text = `I'm on the MushRush early access waitlist! Use my referral ${ref} to increase your spot. ${pageUrl} #MushRush`;
-    const url = 'https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
-    const w = window.open(url,'_blank');
-    if(!w){ alert('Pop-up blocked — allow popups'); return; }
-    // bind a one-time focus handler to consider share complete
-    function onF(){
-      markTask('share'); showToast('Thanks for sharing!'); window.removeEventListener('focus', onF);
-    }
-    window.addEventListener('focus', onF);
-  }
-
-  // ---------- Utilities: derive short referral from address ----------
-  function shortRefFromAddress(addr){
-    if(!addr) return 'RF-XXXX';
-    const clean = addr.replace(/^0x/i,'').toUpperCase();
-    return 'RF-' + clean.slice(0,2) + clean.slice(2,4) + '-' + clean.slice(4,6);
-  }
-
-  // ---------- Required-ref logic ----------
-  const useRefInput = document.getElementById('useRef');
-  const registerBtn = document.getElementById('registerBtn');
-  function validateRef(){
-    const v = useRefInput.value.trim();
-    if(v.length>0){ registerBtn.disabled=false; } else { registerBtn.disabled=true; }
-  }
-  useRefInput.addEventListener('input', validateRef);
-  validateRef();
-
-  document.getElementById('applyRef').addEventListener('click', ()=>{
-    const v = useRefInput.value.trim();
-    if(!v){ showToast('Referral code/address is required'); return; }
-    showToast('Referral applied: ' + v);
+  // popup mock flow
+  loginBtn.addEventListener('click', ()=>{
+    // small centered popup
+    const w = window.open('about:blank','_blank','width=520,height=640');
+    if(!w){ alert('Popup blocked — allow popups'); return; }
+    w.document.write(`<body style="font-family:Inter,system-ui,Arial;padding:24px;">
+      <h2>Sign in with X (Demo)</h2>
+      <p>Click to sign in as a demo user.</p>
+      <button id="ok">Sign in</button>
+      <script>
+        document.getElementById('ok').addEventListener('click', ()=>{
+          const user = {id:'demo-123',name:'Demo User',handle:'demo_user',avatar:''};
+          // send to opener
+          window.opener.postMessage({type:'mushrush.x.auth',user}, '*');
+          window.close();
+        });
+      <\/script>
+    </body>`);
   });
 
-  // ---------- Register (demo behavior) ----------
-  document.getElementById('registerBtn').addEventListener('click', ()=>{
-    const v = useRefInput.value.trim();
-    if(!v){ alert('You must enter a referral code or address to register.'); return; }
-    const logged = localStorage.getItem('mushrush.loggedX')==='1';
-    if(!logged){
-      // In the demo we ask to sign in with X first
-      return alert('Please sign in with X first');
+  // receive popup messages
+  window.addEventListener('message', (ev)=>{
+    try{
+      if(!ev.data || ev.data.type !== 'mushrush.x.auth') return;
+      const u = ev.data.user;
+      saveUser(u);
+      showToast('Signed in as @' + (u.handle||u.name));
+      applyLoginState(u);
+    }catch(e){console.error(e);}
+  });
+
+  function applyLoginState(user){
+    if(!user) {
+      loginBtn.textContent = 'Sign in with X';
+      return;
     }
+    loginBtn.textContent = 'Signed in: @' + (user.handle||user.name);
+    loginBtn.classList.add('done');
+    // enable register and share
+    document.getElementById('registerBtn').disabled = false;
+  }
+
+  // init from localStorage
+  const initial = loadUser();
+  if(initial) applyLoginState(initial);
+
+  // override register logic so it *requires* sign-in
+  document.getElementById('registerBtn').addEventListener('click', (e)=>{
+    const user = loadUser();
+    const ref = document.getElementById('useRef').value.trim();
+    if(!ref){ alert('Enter referral first'); return; }
+    if(!user){ return alert('Please sign in with X first (demo)'); }
+    // mark all tasks done and show congrats
+    markTask('follow'); markTask('discord'); markTask('share');
+    document.getElementById('statusText').innerText = 'Registered (' + (user.handle||user.name) + ')';
     showToast('Registered (demo)');
-    document.getElementById('statusText').textContent='Registered';
-    markTask('share'); // give them share credit for demo
+    showCongrats();
   });
 
-  // ---------- Copy referral behavior ----------
-  document.getElementById('copyRef').addEventListener('click', async ()=>{
-    const ref = PROVIDED_ADDRESS || document.getElementById('myRefShort').innerText;
-    try{
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        await navigator.clipboard.writeText(ref);
-      } else {
-        // fallback
-        const ta = document.createElement('textarea'); ta.value = ref; document.body.appendChild(ta); ta.select();
-        document.execCommand('copy'); ta.remove();
-      }
-      showToast('Referral copied');
-    }catch(e){
-      showToast('Unable to copy');
-    }
-  });
+  // small helper so shareOnX uses demo handle if available
+  const origShare = window.shareOnX;
+  window.shareOnX = function(ref){
+    const u = loadUser();
+    if(!u){ showToast('Sign in to share'); return; }
+    // use the real web intent so user can preview
+    const pageUrl = window.location.href;
+    const text = `I'm on MushRush early access! Use my referral ${ref} — @${u.handle}`;
+    const url = 'https://twitter.com/intent/tweet?text='+encodeURIComponent(text + ' ' + pageUrl + ' #MushRush');
+    window.open(url,'_blank');
+    // mark share after popup focus heuristic
+    setTimeout(()=> markTask('share'), 500);
+    showToast('Opening share window...');
+  };
 
-  // ---------- Task buttons ----------
-  document.getElementById('task-follow').addEventListener('click', ()=> openAndVerify('https://twitter.com/intent/follow?screen_name=your_project_handle','follow'));
-  document.getElementById('task-discord').addEventListener('click', ()=> openAndVerify('https://discord.gg/your-invite-code','discord'));
-  document.getElementById('task-share').addEventListener('click', ()=> {
-    const ref = document.getElementById('myFullRef').dataset.full || PROVIDED_ADDRESS || 'RF-7G-4K';
-    shareOnX(ref);
-  });
-  document.getElementById('sharePrimary').addEventListener('click', ()=> {
-    const ref = document.getElementById('myFullRef').dataset.full || PROVIDED_ADDRESS || 'RF-7G-4K';
-    shareOnX(ref);
-  });
-
-  // ---------- Congrats overlay ----------
-  function showCongrats(){
-    if(document.getElementById('congrats')) return;
-    fireConfetti();
-    const overlay=document.createElement('div'); overlay.className='overlay'; overlay.id='congrats';
-    overlay.innerHTML = `<div class='overlay-card'><h2 style='margin:0 0 8px 0'>Congrats — ${TASKS.length}/${TASKS.length} Complete</h2><p style='margin:0 0 12px 0;color:var(--muted-2)'>You will be notified about your early access. We appreciate you sharing!</p><div style='display:flex;gap:8px;justify-content:center;margin-top:12px'><button id='closeCongrats' class='btn-cta-primary'>Close</button></div></div>`;
-    document.body.appendChild(overlay);
-    document.getElementById('closeCongrats').addEventListener('click', ()=>{ overlay.remove(); });
-  }
-
-  // ---------- Init: set up UI with provided address ----------
-  (function init(){
-    try{
-      // Display provided address and derived short ref
-      const myShort = shortRefFromAddress(PROVIDED_ADDRESS);
-      const myShortEl = document.getElementById('myRefShort');
-      const myFullEl = document.getElementById('myFullRef');
-      myShortEl.innerText = myShort;
-      myFullEl.innerText = PROVIDED_ADDRESS;
-      myFullEl.dataset.full = PROVIDED_ADDRESS;
-
-      // Pre-fill input with provided address (use can override)
-      if(useRefInput && !useRefInput.value) useRefInput.value = PROVIDED_ADDRESS;
-      validateRef();
-
-      // Player ID (masked for UI)
-      const playerIdEl = document.getElementById('playerId');
-      if(playerIdEl) playerIdEl.innerText = PROVIDED_ADDRESS.slice(0,8) + '...';
-
-    }catch(e){ console.log(e); }
-
-    // Load saved tasks state
-    const s = loadState(); updateUI(s);
-  })();
-
-  // ---------- Close button: hide the card (nice fade) ----------
-  document.getElementById('closeBtn').addEventListener('click', (e) => {
-    const card = document.getElementById('playerCard');
-    if (!card) return;
-    card.style.transition = 'opacity 220ms ease, transform 220ms ease';
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(8px)';
-    setTimeout(() => { card.style.display = 'none'; }, 240);
-  });
-
-  // ---------- Download button: download the avatar image ----------
-  document.getElementById('downloadBtn').addEventListener('click', async (e) => {
-    const img = document.getElementById('avatarImg');
-    if (!img) { alert('No image found to download'); return; }
-    const src = img.src;
-    // Create an anchor to download the image directly (works if same-origin or CORS allowed)
-    const a = document.createElement('a'); a.href = src; a.download = 'mushrush-avatar.png';
-    document.body.appendChild(a); a.click(); a.remove();
-    showToast('Downloading avatar...');
-  });
-
-  // ---------- Optional: mock sign-in for demo (press 'L' to toggle logged state) ----------
-  // This is helpful in the demo to allow register to proceed
-  window.addEventListener('keydown', (e)=>{
-    if(e.key.toLowerCase()==='l' && (e.ctrlKey||e.metaKey)){
-      const cur = localStorage.getItem('mushrush.loggedX')==='1';
-      localStorage.setItem('mushrush.loggedX', cur ? '0' : '1');
-      showToast(cur ? 'Signed out (demo)' : 'Signed in with X (demo)');
-    }
-  });
-
+})();
 </script>
+
 </body>
 </html>
