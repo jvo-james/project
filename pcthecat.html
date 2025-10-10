@@ -3,22 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>MushRush — Landing / Referral Card (Polished)</title>
+<title>MushRush — Early Access (Final Polished)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#02020a;--muted:rgba(255,255,255,0.62);--muted-2:rgba(255,255,255,0.34);--purple-600:#6b21a8;--purple-400:#a78bfa;--teal:#00c2a8;--success:#22c55e}
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#03020a 0%, #07030f 100%);color:#f5f8ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
+  :root{
+    --bg:#03020a; --muted:rgba(255,255,255,0.68); --muted-2:rgba(255,255,255,0.36);
+    --purple-700:#5b21a6; --purple-400:#b89bff; --teal:#00c2a8; --success:#22c55e;
+    --glass:rgba(255,255,255,0.04); --card-radius:12px; --shadow: 0 12px 40px rgba(3,6,20,0.65);
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#02020a 0%, #07030f 100%);color:#f6f9ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
   .stage-wrap{width:1200px;height:720px;margin:0 auto;transform-origin:top left}
   .stage{display:grid;grid-template-columns:520px 1fr;gap:28px;height:100%;padding:22px;box-sizing:border-box}
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,6,20,0.6)}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:18px;border:1px solid var(--glass);box-shadow:var(--shadow)}
 
   /* header */
   .header{display:flex;align-items:center;gap:12px}
-  .logo{width:54px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--purple-600),var(--purple-400));display:flex;align-items:center;justify-content:center;font-weight:800}
-  .title{font-weight:700}
+  .logo{width:56px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--purple-700),var(--purple-400));display:flex;align-items:center;justify-content:center;font-weight:800}
+  .title{font-weight:700;font-size:16px}
   .subtitle{font-size:13px;color:var(--muted-2)}
 
-  /* left */
+  /* left content */
   .welcome{font-family:Space Mono,monospace;font-weight:700;color:white}
   .code-large{font-family:Space Mono,monospace;font-size:36px;color:var(--purple-400);letter-spacing:1px}
   .muted{color:var(--muted);font-size:13px}
@@ -27,18 +31,27 @@
   .input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
 
   .btn{padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
-  .btn-primary{background:linear-gradient(90deg,var(--purple-600),var(--purple-400));color:white}
+  .btn-primary{background:linear-gradient(90deg,var(--purple-700),var(--purple-400));color:white}
   .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
   .btn-cta{background:linear-gradient(90deg,#ff6fcf,#7c3aed);color:white}
 
-  /* right */
+  /* right content */
   .card-wrap{width:440px}
-  .rainbow{padding:6px;border-radius:14px;background:linear-gradient(135deg,#a78bfa,#7c3aed,#ff6fcf,#6ee7b7)}
+  .rainbow{padding:6px;border-radius:14px;background:linear-gradient(135deg,#b89bff,#7c3aed,#ff6fcf,#6ee7b7)}
   .player-card{background:linear-gradient(180deg,#0b0a0f, rgba(255,255,255,0.01));border-radius:10px;padding:12px;color:var(--muted)}
-  .avatar{height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03)}
+  .avatar{height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 36px rgba(8,6,20,0.7)}
   .idline{color:var(--muted-2);font-weight:700}
 
-  /* TASKS - polished */
+  /* polished buttons (close/menu/download) */
+  .icon-btn{width:46px;height:46px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);color:#fff;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+  .icon-btn:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(6,10,30,0.5)}
+  .icon-btn:active{transform:translateY(-1px)}
+  .icon-btn.close{background:linear-gradient(180deg, rgba(255,80,80,0.08), rgba(255,40,40,0.03));border-color:rgba(255,80,80,0.12)}
+  .icon-btn.menu{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));}
+  .icon-btn.download{background:linear-gradient(90deg,var(--purple-700),var(--purple-400));border:0}
+  .icon-btn svg{width:18px;height:18px;fill:currentColor}
+
+  /* tasks */
   .tasks{margin-top:14px;display:flex;flex-direction:column;gap:10px}
   .task-row{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:all .18s ease}
   .task-left{display:flex;align-items:center;gap:12px}
@@ -57,10 +70,7 @@
   .overlay-card p{margin:0 0 12px 0;color:var(--muted-2)}
   .confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:10000}
 
-  /* small interactions */
-  .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
-
-  button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(107,33,168,0.12)}
+  button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(91,33,166,0.12)}
 </style>
 </head>
 <body>
@@ -74,9 +84,13 @@
             <div class="title">MushRush — Early Access</div>
             <div class="subtitle">Marketing landing • Share to climb the queue</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <button class="icon-btn" title="Menu">≡</button>
-            <button class="icon-btn" id="loginX">X</button>
+          <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+            <button class="icon-btn menu" title="Menu" aria-label="Menu">
+              <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button id="loginX" class="icon-btn" title="Sign in with X" aria-label="Sign in with X">
+              <svg viewBox="0 0 24 24"><path d="M23 4.5c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.7.4-1.5.7-2.4.9C19.6 3 18.5 2.5 17.3 2.5c-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.9C10.3 6.8 6.4 4.9 3.9 2.1c-.4.6-.7 1.3-.7 2.1 0 1.6.8 3 2 3.9-.6 0-1.2-.2-1.7-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.6.1-.9.1-.2 0-.5 0-.7-.1.5 1.6 2 2.7 3.7 2.7C7 19.9 5 20.6 2.7 20.6c-.4 0-.8 0-1.2-.1C1.8 21.8 4.3 22.7 7.1 22.7c8.5 0 13.2-7.1 13.2-13.2v-.6c.9-.7 1.6-1.5 2.2-2.5z" fill="currentColor"/></svg>
+            </button>
           </div>
         </div>
 
@@ -86,18 +100,18 @@
           <div class="muted" style="margin-top:6px">This page is marketing-only while the game is in development. Share your referral to increase queue priority.</div>
         </div>
 
-        <div style="margin-top:6px">
+        <div style="margin-top:10px">
           <div class="ref-row">
             <div class="ref-code" id="myRef">RF-7G-4K</div>
-            <button id="copyRef" class="btn btn-ghost">Copy</button>
+            <button id="copyRef" class="btn btn-ghost" aria-label="Copy referral">Copy</button>
           </div>
           <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
-            <input id="useRef" class="input" placeholder="Use someone's referral code (optional)" maxlength="10" />
-            <button id="applyRef" class="btn btn-primary">Apply</button>
+            <input id="useRef" class="input" placeholder="Use someone's referral code (optional)" maxlength="10" aria-label="Referral input" />
+            <button id="applyRef" class="btn btn-primary" aria-label="Apply referral">Apply</button>
           </div>
         </div>
 
-        <div style="margin-top:12px;display:flex;gap:10px">
+        <div style="margin-top:14px;display:flex;gap:12px">
           <button id="registerBtn" class="btn btn-primary">Register for Early Access</button>
           <button id="sharePrimary" class="btn btn-cta">Share on X</button>
         </div>
@@ -111,8 +125,8 @@
               <div style="display:flex;justify-content:space-between;align-items:center">
                 <div style="font-weight:800">PLAYER CARD</div>
                 <div style="display:flex;gap:8px">
-                  <button class="icon-btn" title="Download">⬇</button>
-                  <button class="icon-btn" title="Close">✕</button>
+                  <button class="icon-btn download" title="Download" aria-label="Download card"><svg viewBox="0 0 24 24"><path d="M12 3v10M7 10l5 5 5-5M5 20h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+                  <button class="icon-btn close" title="Close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
                 </div>
               </div>
 
@@ -120,7 +134,7 @@
                 <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
                 <div class="meta" style="margin-top:12px">
                   <div><div class="idline">ID: <span id="playerId">CODE-09-6617</span></div></div>
-                  <div style="text-align:right"><div class="small">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
+                  <div style="text-align:right"><div class="muted">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
                 </div>
 
                 <div class="tasks" id="tasks">
@@ -152,7 +166,7 @@
   <canvas id="confetti" class="confetti-canvas"></canvas>
 
   <script>
-    // Scale-to-fit
+    // Fit-to-viewport
     (function fitStage(){
       const wrap = document.getElementById('stageWrap');
       function apply(){
@@ -171,56 +185,51 @@
     // Toast helper
     function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
 
-    // Confetti (small, no libs)
+    // Confetti
     function fireConfetti(){
       const canvas = document.getElementById('confetti'); const ctx = canvas.getContext('2d');
       canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-      const pieces = [];
-      const colors = ['#ff6fcf','#a78bfa','#6ee7b7','#ffd166','#ff8a65'];
+      const pieces = []; const colors = ['#ff6fcf','#b89bff','#6ee7b7','#ffd166','#ff8a65'];
       for(let i=0;i<120;i++){ pieces.push({x:Math.random()*canvas.width,y:Math.random()*-canvas.height, vx:(Math.random()-0.5)*6, vy:2+Math.random()*6, size:6+Math.random()*6, color:colors[Math.floor(Math.random()*colors.length)], rot:Math.random()*360}); }
       let t=0; function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of pieces){ p.x += p.vx; p.y += p.vy; p.vy += 0.08; p.rot += 8; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size); ctx.restore(); } t++; if(t<160) requestAnimationFrame(frame); else ctx.clearRect(0,0,canvas.width,canvas.height); }
       frame();
     }
 
-    // TASK CHECKER - improved verification: open new tab and detect focus return after a short time
+    // Task checker state
     const TASKS = ['follow','discord','share'];
     function loadState(){ return JSON.parse(localStorage.getItem('mushrush.tasks')||'{}'); }
     function saveState(s){ localStorage.setItem('mushrush.tasks', JSON.stringify(s)); }
     function updateUI(s){ let done=0; TASKS.forEach(t=>{ const el=document.getElementById('dot-'+t); if(s[t]){ el.classList.add('task-done'); } else el.classList.remove('task-done'); if(s[t]) done++; }); document.getElementById('progressText').textContent = `${done} / 3 tasks completed`; if(done===3) { document.getElementById('statusText').textContent='Registered'; showCongrats(); } }
+    function markTask(t){ const s=loadState(); s[t]=true; saveState(s); updateUI(s); }
 
-    function markTask(t){ const s = loadState(); s[t]=true; saveState(s); updateUI(s); }
+    // open + verify heuristic
+    function openAndVerify(url, key){ const start=Date.now(); const w=window.open(url,'_blank'); if(!w){ alert('Pop-up blocked — allow popups'); return; } const onFocus = ()=>{ const elapsed=Date.now()-start; if(elapsed>1200){ markTask(key); showToast('Verified: ' + key); } else { markTask(key); showToast('Marked: ' + key); } window.removeEventListener('focus', onFocus); }; window.addEventListener('focus', onFocus); }
 
-    // open and verify by focus heuristic
-    async function openAndVerify(url, taskKey){
-      const start = Date.now(); const w = window.open(url, '_blank'); if(!w){ alert('Pop-up blocked — allow popups to verify tasks'); return; }
-      // wait for focus back
-      const onFocus = ()=>{ const elapsed = Date.now() - start; // require user to spend small time (1.5s)
-        if(elapsed>1500){ markTask(taskKey); showToast('Verified: ' + taskKey); } else { /* too quick - but still mark, UX lenient */ markTask(taskKey); showToast('Marked: ' + taskKey); }
-        window.removeEventListener('focus', onFocus);
-      };
-      window.addEventListener('focus', onFocus);
-    }
-
-    // share via X intent
-    function shareOnX(ref){ const pageUrl = window.location.href; const text = `I'm on the MushRush early access waitlist! Use my referral code ${ref} to increase your spot. ${pageUrl} #MushRush`; const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text); const w = window.open(url,'_blank'); if(w) { const start=Date.now(); window.addEventListener('focus', function onF(){ const elapsed=Date.now()-start; markTask('share'); showToast('Thanks for sharing!'); window.removeEventListener('focus', onF); }); } }
+    // share
+    function shareOnX(ref){ const pageUrl = window.location.href; const text = `I'm on the MushRush early access waitlist! Use my referral code ${ref} to increase your spot. ${pageUrl} #MushRush`; const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text); const w = window.open(url,'_blank'); if(w){ const start=Date.now(); window.addEventListener('focus', function onF(){ const elapsed=Date.now()-start; markTask('share'); showToast('Thanks for sharing!'); window.removeEventListener('focus', onF); }); } }
 
     // UI wiring
     document.getElementById('copyRef').addEventListener('click', ()=>{ const txt=document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); showToast('Referral copied'); });
     document.getElementById('applyRef').addEventListener('click', ()=>{ const v=document.getElementById('useRef').value.trim(); if(!v) return showToast('Enter a referral code'); showToast('Referral applied: ' + v); });
-    document.getElementById('registerBtn').addEventListener('click', ()=>{ const logged = localStorage.getItem('mushrush.loggedX') === '1'; if(!logged) return alert('Please sign in with X first'); showToast('Registered (demo)'); document.getElementById('statusText').textContent='Registered'; });
+    document.getElementById('registerBtn').addEventListener('click', ()=>{ const logged = localStorage.getItem('mushrush.loggedX')==='1'; if(!logged) return alert('Please sign in with X first'); showToast('Registered (demo)'); document.getElementById('statusText').textContent='Registered'; markTask('share'); });
 
     document.getElementById('task-follow').addEventListener('click', ()=> openAndVerify('https://twitter.com/intent/follow?screen_name=your_project_handle','follow'));
     document.getElementById('task-discord').addEventListener('click', ()=> openAndVerify('https://discord.gg/your-invite-code','discord'));
     document.getElementById('task-share').addEventListener('click', ()=> { const ref=document.getElementById('myRef').innerText; shareOnX(ref); });
-
     document.getElementById('sharePrimary').addEventListener('click', ()=>{ const ref=document.getElementById('myRef').innerText; shareOnX(ref); });
 
-    // Show congrats modal with confetti
+    // congrats
     function showCongrats(){ if(document.getElementById('congrats')) return; fireConfetti(); const overlay=document.createElement('div'); overlay.className='overlay'; overlay.id='congrats'; overlay.innerHTML = `<div class='overlay-card'><h2>Congrats — 3/3 Complete</h2><p>You will be notified about your early access. We appreciate you sharing!</p><div style='display:flex;gap:8px;justify-content:center;margin-top:12px'><button id='closeCongrats' class='btn btn-primary'>Close</button></div></div>`; document.body.appendChild(overlay); document.getElementById('closeCongrats').addEventListener('click', ()=>{ overlay.remove(); }); }
 
-    // derive friendly ref from wallet
-    (async function setRef(){ try{ if(window.ethereum){ const accs = await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('myRef').innerText=f; document.getElementById('bigCode').innerText='CODE-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('playerId').innerText=document.getElementById('bigCode').innerText; } } }catch(e){console.log(e)} const s=loadState(); updateUI(s); })();
+    // derive ref from wallet and init
+    (async function init(){ try{ if(window.ethereum){ const accs=await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('myRef').innerText=f; document.getElementById('bigCode').innerText='CODE-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('playerId').innerText=document.getElementById('bigCode').innerText; } } }catch(e){console.log(e);} const s=loadState(); updateUI(s); })();
 
+    // polished button interactions: download & close
+    document.querySelector('.icon-btn.download').addEventListener('click', ()=>{ showToast('Download starting...'); /* implement download if desired */ });
+    document.querySelector('.icon-btn.close').addEventListener('click', ()=>{ showToast('Closed (demo)'); });
+
+    // simulated X login
+    document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); showToast('Signed in with X (demo)'); });
   </script>
 </body>
 </html>
