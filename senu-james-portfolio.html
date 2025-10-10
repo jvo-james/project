@@ -254,6 +254,136 @@ nav.primary .cta{padding:8px 14px;border-radius:12px;background:linear-gradient(
   .floating{display:none}
 }
 
+  /* ---------- HERO: full-background, overlay, and vignette ---------- */
+/* Replace or add to your existing .hero rules */
+.hero {
+  /* background image: replace the URL with your file path */
+  background-image: url("placeholder.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  /* keep layout grid so content & mockup stay where they are */
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 36px;
+  align-items: center;
+  position: relative;
+  border-radius: 18px;          /* soft rounded hero panel */
+  overflow: hidden;
+  padding: 44px;                /* more room so text isn't cramped on image */
+}
+
+/* soft dark overlay for readability */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,10,26,0.24) 0%, rgba(6,10,26,0.18) 35%, rgba(6,10,26,0.08) 70%, rgba(6,10,26,0.02) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* decorative radial vignette for focus on the left text */
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -18%;
+  top: -10%;
+  width: 80%;
+  height: 150%;
+  background: radial-gradient(600px 300px at 10% 20%, rgba(124,58,237,0.06), transparent 25%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* make sure hero children render above the overlay */
+.hero > * { position: relative; z-index: 2 }
+
+/* tighten hero-left typography when using a busy background */
+.hero-left .hi { color: #fff; text-shadow: 0 8px 30px rgba(6,10,26,0.42); }
+.hero-left .lead { color: rgba(255,255,255,0.92); text-shadow: 0 6px 18px rgba(6,10,26,0.28); }
+
+/* subtle glass behind CTAs so they pop on every background */
+.hero-left .cta-row .btn {
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* -------- PROFILE CARD: social icons placed on right border (vertical) ---------- */
+.profile-card {
+  position: relative;           /* keep relative for absolute .floating */
+  padding: 22px 28px 22px 22px; /* add a bit more right padding to visually balance */
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.88));
+  box-shadow: var(--shadow-2);
+  border-radius: 18px;
+}
+
+/* floating social rail that sits half-outside the card edge */
+.profile-card .floating {
+  position: absolute;
+  right: -34px;                 /* outside the card border */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  z-index: 30;
+  pointer-events: auto;
+  /* optional: soft backdrop + line connector */
+  padding: 10px 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(6,10,26,0.08);
+  border: 1px solid rgba(6,10,26,0.04);
+}
+
+/* vertical connector line that visually attaches the rail to the card */
+.profile-card .floating::before{
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(48,86,255,0.9), rgba(124,58,237,0.7));
+  opacity: 0.14;
+}
+
+/* button style inside floating rail */
+.profile-card .floating .float-btn {
+  width: 52px; height: 52px; border-radius: 12px;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:1px solid rgba(6,10,26,0.04);
+  box-shadow:0 12px 30px rgba(6,10,26,0.10);
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+.profile-card .floating .float-btn:hover{ transform: translateY(-6px); box-shadow:0 20px 40px rgba(6,10,26,0.12) }
+
+/* make sure icons inside are visible on dark backgrounds */
+.profile-card .floating i{ font-size:18px; color:var(--accent); }
+
+/* move social links text (if any) into tooltip on hover — keeps rail minimal */
+.profile-card .floating a{ text-decoration:none; color:inherit; display:block; }
+
+/* responsive: hide rail on narrow screens so it doesn't overlap layout */
+@media (max-width:760px){
+  .profile-card .floating{ display:none }
+  .hero{grid-template-columns:1fr} /* hero stacks */
+  .hero { padding: 22px; border-radius: 12px; }
+}
+
+/* ---------- small accessibility tweak: ensure floating is keyboard-accessible ---------- */
+.profile-card .floating a, .profile-card .floating button{
+  outline: none;
+}
+.profile-card .floating a:focus-visible, .profile-card .floating button:focus-visible{
+  box-shadow: 0 0 0 6px rgba(48,86,255,0.10);
+  transform: translateY(-4px);
+}
+
 /* ----------------------------
    Selected Projects grid
    ---------------------------- */
