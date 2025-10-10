@@ -85,6 +85,41 @@
   .hint{font-size:13px;color:var(--muted-2)}
 
   button:focus,input:focus{outline:none;box-shadow:0 0 0 6px var(--focus)}
+
+  /* Close & Download variants (keeps consistency with theme) */
+.icon-btn {
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+  color: #fff;
+  cursor:pointer;
+  transition: transform .14s ease, box-shadow .14s ease, background .12s ease;
+}
+.icon-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(6,10,30,0.45); }
+.icon-btn:active { transform: translateY(-1px); }
+.icon-btn:focus { outline: none; box-shadow: 0 0 0 6px rgba(139,92,246,0.12); }
+
+/* Close button: red-ish hint */
+.icon-btn.close {
+  background: linear-gradient(180deg, rgba(255,80,80,0.06), rgba(255,40,40,0.02));
+  border-color: rgba(255,80,80,0.10);
+  color: #fff;
+}
+
+/* Download button: purple solid */
+.icon-btn.download {
+  background: linear-gradient(90deg, #5b21a6, #8b5cf6);
+  border: 0;
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(91,33,166,0.14);
+}
+.icon-btn svg { width:18px; height:18px; display:block; fill: currentColor; stroke: currentColor; }
+
 </style>
 </head>
 <body>
@@ -117,17 +152,18 @@
         </div>
 
         <div class="tasks" id="tasks">
-          <div class="task-row" data-task="follow">
-            <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
-            <div><button class="btn-task" id="task-follow">Follow</button></div>
-          </div>
-          <div class="task-row" data-task="discord">
+           <div class="task-row" data-task="discord">
             <div class="task-left"><span class="task-dot" id="dot-discord"></span><div class="task-label">Join our Discord</div></div>
             <div><button class="btn-task" id="task-discord">Join</button></div>
           </div>
+         
           <div class="task-row" data-task="share">
             <div class="task-left"><span class="task-dot" id="dot-share"></span><div class="task-label">Share your referral card</div></div>
             <div><button class="btn-task" id="task-share">Share</button></div>
+          </div>
+           <div class="task-row" data-task="follow">
+            <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
+            <div><button class="btn-task" id="task-follow">Follow</button></div>
           </div>
           <div class="progress" id="progressText">0 / 3 tasks completed</div>
         </div>
@@ -143,8 +179,24 @@
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div style="font-weight:900;color:var(--muted-2)">PLAYER CARD</div>
             <div style="display:flex;gap:10px">
-              <button class="icon" title="Download" aria-label="Download"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v10" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10l5 5 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 20h14" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-              <button class="icon" title="Close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 6l12 12" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <!-- Put these where the card controls live -->
+<button id="downloadBtn" class="icon-btn download" title="Download card" aria-label="Download card">
+  <!-- Download SVG -->
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5 20h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<button id="closeBtn" class="icon-btn close" title="Close card" aria-label="Close card">
+  <!-- Close (X) SVG -->
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
             </div>
           </div>
 
@@ -220,5 +272,36 @@
 
   (async function init(){ try{ if(window.ethereum){ const accs=await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); const myRefEl = document.getElementById('myRef'); if(myRefEl) myRefEl.innerText=f; document.getElementById('playerId').innerText='(hidden)'; } } }catch(e){console.log(e);} const s=loadState(); updateUI(s); })();
 </script>
+  <script>
+    // CLOSE: hide the card (nice fade)
+document.getElementById('closeBtn').addEventListener('click', (e) => {
+  const card = e.currentTarget.closest('.player-card');
+  if (!card) return;
+  card.style.transition = 'opacity 220ms ease, transform 220ms ease';
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(8px)';
+  setTimeout(() => card.style.display = 'none', 240);
+});
+
+// SIMPLE DOWNLOAD: download the avatar image (fast and reliable)
+document.getElementById('downloadBtn').addEventListener('click', async (e) => {
+  const img = document.getElementById('avatarImg'); // ensure your image has this id
+  if (!img) { alert('No image found to download'); return; }
+  // Create an anchor to download the image directly (works if image is same-origin or has CORS enabled)
+  const src = img.src;
+  // If the image is cross-origin and not CORS-enabled, note: browsers may block direct download.
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = 'mushrush-avatar.png';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+
+  </script>
 </body>
 </html>
+
+
+
+"Your name is Lady?" is the typical short response when i introduce myself. "No, Gabby!" I would hastily correct in a mortified tone. As a child i was taught a specific notion of a lday: 
