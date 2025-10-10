@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gabby Nyarko — Software & AI Portfolio</title>
+  <meta name="description" content="Gabby Nyarko — CS student, founder of Open Knowledge Ghana, winner of African Digital Innovation Challenge for Vitra AI. Portfolio showcasing Vitra AI, Shuttle Tracker, E-mart, Fitness Tracker, SkillForge Registration System." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#7c3aed; /* violet */
+      --accent-2:#06b6d4; /* teal */
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --glass-border: rgba(255,255,255,0.06);
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                  radial-gradient(900px 500px at 90% 90%, rgba(6,182,212,0.06), transparent),
+                  var(--bg);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:48px 24px;
+      display:flex;
+      justify-content:center;
+    }
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:34px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit
+    }
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:white;box-shadow:0 6px 18px rgba(0,0,0,0.6);
+    }
+    .brand h1{margin:0;font-family:'Playfair Display', serif;font-size:20px}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:14px;align-items:center}
+    .nav-link{color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:8px;font-size:14px}
+    .nav-link:hover{background:var(--glass);color: #fff}
+    .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:10px;color:white;font-weight:600;text-decoration:none;box-shadow:0 8px 30px rgba(124,58,237,0.12)}
+
+    /* Hero */
+    .hero{
+      display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center;margin-bottom:40px
+    }
+    .intro{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:32px;border-radius:14px;border:1px solid var(--glass-border);box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    .intro h2{font-family:'Playfair Display', serif;margin:0 0 8px 0;font-size:34px}
+    .intro p.lead{margin:0;color:var(--muted);font-size:15px}
+    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .pill{background:var(--glass-2);padding:8px 12px;border-radius:999px;border:1px solid var(--glass-border);font-size:13px;color:var(--muted)}
+    .hero-visual{border-radius:14px;overflow:hidden;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border)}
+    .mock{
+      width:100%;height:280px;border-radius:10px;background:linear-gradient(120deg,#071028 0%, #091429 40%, #072a37 100%);display:flex;flex-direction:column;gap:10px;padding:18px
+    }
+    .mock .top{display:flex;justify-content:space-between;align-items:center}
+    .mock .screen{flex:1;border-radius:10px;background:linear-gradient(180deg,#061028, #0b2a3a);margin-top:10px;padding:16px;display:flex;flex-direction:column}
+
+    /* Projects grid */
+    .section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 0}
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;border:1px solid var(--glass-border);padding:14px;display:flex;flex-direction:column;gap:12px;min-height:200px}
+    .thumb{height:110px;border-radius:8px;background:linear-gradient(135deg, rgba(124,58,237,0.16), rgba(6,182,212,0.06));display:flex;align-items:end;padding:12px;color:white;font-weight:700}
+    .proj-title{font-size:16px;margin:0}
+    .proj-desc{color:var(--muted);font-size:13px;margin:0}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid var(--glass-border);color:var(--muted)}
+    .actions{display:flex;gap:8px;margin-top:auto}
+    .btn{padding:10px 12px;border-radius:10px;border:1px solid transparent;background:rgba(255,255,255,0.03);color: #e6eef6;text-decoration:none;font-weight:600;font-size:13px}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 8px 20px rgba(124,58,237,0.12);border:none}
+
+    /* Skills & timeline */
+    .side-panels{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:28px}
+    .panel{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass-border)}
+    .skill-bars{display:flex;flex-direction:column;gap:12px}
+    .bar{background:var(--glass-2);height:12px;border-radius:999px;overflow:hidden}
+    .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:60%}
+
+    /* Footer */
+    footer{margin-top:36px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;justify-content:space-between;align-items:center;border:1px solid var(--glass-border)}
+    .socials{display:flex;gap:12px}
+    .socials a{display:inline-flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);text-decoration:none}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(3,6,23,0.6);display:none;align-items:center;justify-content:center;padding:24px;z-index:60}
+    .modal{width:100%;max-width:920px;background:linear-gradient(180deg,#071126, #07132a);border-radius:12px;padding:20px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 30px 80px rgba(0,0,0,0.7);}
+    .modal-grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .close{background:transparent;border:1px solid var(--glass-border);color:var(--muted);padding:8px 12px;border-radius:10px}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr 1fr}
+      .projects{grid-template-columns:repeat(2,1fr)}
+      .side-panels{grid-template-columns:1fr}
+      .modal-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      header{flex-direction:column;align-items:flex-start}
+      .hero{grid-template-columns:1fr}
+      .projects{grid-template-columns:1fr}
+      .brand h1{font-size:18px}
+      body{padding:24px}
+    }
+
+    /* Little flourish */
+    .sparkle{position:relative}
+    .sparkle:after{content:'';position:absolute;right:8px;top:8px;width:18px;height:18px;border-radius:50%;background:linear-gradient(45deg,#fff,rgba(255,255,255,0.2));filter:blur(8px);opacity:0.6}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="#">
+        <div class="logo">G</div>
+        <div>
+          <h1>Gabby Nyarko</h1>
+          <p>CS • AI • Social Impact</p>
+        </div>
+      </a>
+      <nav>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <a class="cta" href="#projects">View Projects</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="intro">
+          <h2>Building practical AI & Web solutions that move communities forward</h2>
+          <p class="lead">I design and build web and AI products for healthcare, logistics, and education. Winner — African Digital Innovation Challenge for <strong>Vitra AI</strong>. Below are select projects showing product thinking, technical depth, and measurable impact.</p>
+
+          <div class="meta">
+            <div class="pill">Winner: African Digital Innovation Challenge</div>
+            <div class="pill">Intern, Ghana Atomic Energy Commission</div>
+            <div class="pill">Founder, Open Knowledge Ghana</div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="#projects">Explore Projects</a>
+            <a class="btn" href="#contact">Download Résumé</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="mock">
+            <div class="top">
+              <div style="display:flex;gap:8px;align-items:center">
+                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80"></div>
+                <div style="width:8px;height:8px;border-radius:50%;background:#f472b6"></div>
+                <div style="width:8px;height:8px;border-radius:50%;background:#60a5fa"></div>
+              </div>
+              <div style="font-size:13px;color:var(--muted)">Gabby / Portfolio</div>
+            </div>
+            <div class="screen">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-weight:700">Vitra AI Dashboard</div>
+                  <div style="font-size:13px;color:var(--muted)">AI‑driven provider matching & e-pharmacy</div>
+                </div>
+                <div style="font-size:12px;color:var(--muted)">Live demo</div>
+              </div>
+              <div style="flex:1;display:flex;align-items:end;justify-content:space-between;margin-top:12px">
+                <div style="font-size:13px;color:var(--muted)">Users • 3.2k</div>
+                <div style="font-size:13px;color:var(--muted)">Uptime • 99.8%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="section-title">
+          <h3 style="margin:0;font-size:20px">Selected Projects</h3>
+          <div style="color:var(--muted);font-size:14px">Click any project to view details</div>
+        </div>
+
+        <div class="projects">
+          <!-- Project: Vitra AI -->
+          <article class="card" tabindex="0">
+            <div class="thumb" style="background:linear-gradient(135deg, rgba(124,58,237,0.32), rgba(6,182,212,0.12));">
+              <div>Vitra AI</div>
+            </div>
+            <h4 class="proj-title">Vitra AI — Herbal Medicine & E-Pharmacy Portal</h4>
+            <p class="proj-desc">Winner of the African Digital Innovation Challenge. AI provider matching, consultation booking, and integrated e-pharmacy for local communities.</p>
+            <div class="tags">
+              <div class="tag">AI Integration</div>
+              <div class="tag">React</div>
+              <div class="tag">Python (Flask)</div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-project="vitra">View Project</button>
+              <a class="btn" href="#" onclick="event.preventDefault()">Case Study</a>
+            </div>
+          </article>
+
+          <!-- Shuttle Tracker -->
+          <article class="card">
+            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.24), rgba(124,58,237,0.06));">
+              <div>Shuttle Tracker</div>
+            </div>
+            <h4 class="proj-title">Shuttle Tracker — Real‑time Commute Mapping</h4>
+            <p class="proj-desc">A lightweight web app to track commuter shuttle locations, ETA calculations and route optimization for high-traffic corridors.</p>
+            <div class="tags">
+              <div class="tag">Maps API</div>
+              <div class="tag">Node.js</div>
+              <div class="tag">Socket.IO</div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-project="shuttle">View Project</button>
+              <a class="btn" href="#" onclick="event.preventDefault()">Live</a>
+            </div>
+          </article>
+
+          <!-- E-mart -->
+          <article class="card">
+            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.12), rgba(124,58,237,0.16));">
+              <div>E-mart</div>
+            </div>
+            <h4 class="proj-title">E‑mart — Local Marketplace</h4>
+            <p class="proj-desc">An e-commerce platform focused on empowering local sellers with inventory management, search, and checkout built for low-bandwidth environments.</p>
+            <div class="tags">
+              <div class="tag">Django</div>
+              <div class="tag">Payment Integration</div>
+              <div class="tag">PWA</div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-project="emart">View Project</button>
+              <a class="btn" href="#" onclick="event.preventDefault()">Repo</a>
+            </div>
+          </article>
+
+          <!-- Fitness Tracker -->
+          <article class="card">
+            <div class="thumb" style="background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));">
+              <div>Fitness Tracker</div>
+            </div>
+            <h4 class="proj-title">Fitness Tracker — Personal & Group Challenges</h4>
+            <p class="proj-desc">A full-stack app with workouts, profiles, leaderboards and a responsive, mobile-first UI for tracking progress and motivating peers.</p>
+            <div class="tags">
+              <div class="tag">HTML/CSS/JS</div>
+              <div class="tag">LocalStorage</div>
+              <div class="tag">Responsive</div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-project="fitness">View Project</button>
+              <a class="btn" href="#" onclick="event.preventDefault()">Demo</a>
+            </div>
+          </article>
+
+          <!-- SkillForge -->
+          <article class="card">
+            <div class="thumb" style="background:linear-gradient(135deg, rgba(6,182,212,0.18), rgba(124,58,237,0.14));">
+              <div>SkillForge</div>
+            </div>
+            <h4 class="proj-title">SkillForge — Workshops Registration System</h4>
+            <p class="proj-desc">Registration & attendee management system for technical workshops. Features: roles, ticketing, CSV export, and attendance dashboards.</p>
+            <div class="tags">
+              <div class="tag">Flask</div>
+              <div class="tag">Postgres</div>
+              <div class="tag">Admin Dashboard</div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-project="skillforge">View Project</button>
+              <a class="btn" href="#" onclick="event.preventDefault()">Docs</a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <section style="margin-top:28px" id="about">
+        <div class="side-panels">
+          <div class="panel">
+            <h4 style="margin-top:0">About & Impact</h4>
+            <p style="color:var(--muted)">I’m a developer and product builder from Ghana focused on building practical solutions that work in constrained environments. I founded Open Knowledge Ghana (50+ translations, 10k+ readers) and interned at the Ghana Atomic Energy Commission. My work balances product thinking, accessible design, and reliable engineering.</p>
+
+            <div style="margin-top:12px">
+              <h5 style="margin:8px 0">Selected achievements</h5>
+              <ul style="color:var(--muted);margin:0;padding-left:18px">
+                <li>Winner — African Digital Innovation Challenge (Vitra AI)</li>
+                <li>Led NSMQ team to first-ever finals for my school</li>
+                <li>Mentored 100+ students through SkillForge workshops</li>
+              </ul>
+            </div>
+          </div>
+
+          <aside class="panel">
+            <h4 style="margin-top:0">Skills</h4>
+            <div style="margin:12px 0" class="skill-bars">
+              <div>
+                <div style="display:flex;justify-content:space-between"><strong>Full‑stack web</strong><span style="color:var(--muted)">Expert</span></div>
+                <div class="bar" aria-hidden><span style="width:92%"></span></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between"><strong>Machine Learning</strong><span style="color:var(--muted)">Intermediate</span></div>
+                <div class="bar"><span style="width:68%"></span></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between"><strong>Product Design</strong><span style="color:var(--muted)">Advanced</span></div>
+                <div class="bar"><span style="width:78%"></span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px">
+              <h5 style="margin:8px 0">Tech stack</h5>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div class="tag">JavaScript</div>
+                <div class="tag">React</div>
+                <div class="tag">Python</div>
+                <div class="tag">Flask</div>
+                <div class="tag">Django</div>
+                <div class="tag">Postgres</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="contact" style="margin-top:28px">
+        <div style="display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+          <div style="flex:1;min-width:240px">
+            <h3 style="margin:0">Let's build something useful together</h3>
+            <p style="color:var(--muted);margin-top:6px">Available for internships, mentorship, and collaborations. I love projects that combine AI with community impact.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center">
+            <a class="cta" href="mailto:gabby@example.com">Email me</a>
+            <a class="btn" href="#">LinkedIn</a>
+            <a class="btn" href="#">GitHub</a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>
+          <strong>Gabby Nyarko</strong>
+          <div style="color:var(--muted);font-size:13px">Computer Science • AI for Social Good</div>
+        </div>
+        <div class="socials">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </div>
+      </footer>
+    </main>
+
+  </div>
+
+  <!-- Modal (hidden by default) -->
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 id="modalTitle" style="margin:0">Project Title</h3>
+        <button class="close" id="modalClose">Close</button>
+      </div>
+
+      <div class="modal-grid">
+        <div>
+          <div id="modalImg" style="height:220px;border-radius:8px;background:linear-gradient(120deg,#061028,#072a37);margin-bottom:12px"></div>
+          <p id="modalDesc" style="color:var(--muted)">Detailed project description goes here. Explain the problem, your approach, your role, and measurable impact. Include links to repo, demo, and screenshots.</p>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <a id="modalRepo" class="btn" href="#" target="_blank">View repo</a>
+            <a id="modalDemo" class="btn primary" href="#" target="_blank">Live demo</a>
+          </div>
+        </div>
+
+        <aside style="min-width:220px">
+          <h4 style="margin-top:0">Tech & Highlights</h4>
+          <ul id="modalBullets" style="color:var(--muted);padding-left:18px"></ul>
+
+          <div style="margin-top:12px">
+            <h5 style="margin:6px 0">My role</h5>
+            <div id="modalRole" style="color:var(--muted)"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Project data (replace links/images with your real ones)
+    const PROJECTS = {
+      vitra: {
+        title: 'Vitra AI — Herbal Medicine & E-Pharmacy Portal',
+        desc: `Winner of the African Digital Innovation Challenge. Built an accessible web portal integrating AI provider matching, consultation booking, e-pharmacy ordering, and a conversational triage chatbot to connect patients to qualified providers and local herbalists. Focus: accessibility, offline-first features, and multilingual content.`,
+        img: '', // placeholder
+        repo: '#',
+        demo: '#',
+        bullets: [
+          'AI provider matching (similarity search + heuristics)',
+          'End-to-end booking and e-pharmacy checkout',
+          'Accessible UI and mobile-first design'
+        ],
+        role: 'Lead developer — front-end, product design, and AI integration'
+      },
+      shuttle: {
+        title: 'Shuttle Tracker — Real-time Commute Mapping',
+        desc: `A lightweight web app to track shuttle locations, compute ETA, and reduce wait times for commuters. Built with WebSockets for real-time updates and map clustering for optimized visualization.`,
+        repo: '#', demo: '#', bullets:['Real-time location via Socket.IO','ETA algorithm with historical speed profiles','Low-bandwidth map optimization'], role:'Full-stack developer'
+      },
+      emart: {
+        title: 'E-mart — Local Marketplace',
+        desc: `E-commerce for local sellers with inventory management, offline fallback and progressive web app support for sellers with intermittent connectivity.`,
+        repo:'#', demo:'#', bullets:['Seller dashboards','Optimized image uploads','Payment gateway integration'], role:'Backend & product'
+      },
+      fitness: {
+        title: 'Fitness Tracker — Personal & Group Challenges',
+        desc:`Responsive web app that tracks workouts, shows progress, and supports group leaderboards and challenges. Built to be lightweight and privacy-respecting.`,
+        repo:'#', demo:'#', bullets:['Responsive UI','LocalStorage sync','Leaderboard algorithms'], role:'Frontend lead'
+      },
+      skillforge: {
+        title: 'SkillForge — Workshops Registration System',
+        desc:`Attendee registration and management tool used for technical workshops. Features include role-based access, CSV exports, and attendance tracking.`,
+        repo:'#', demo:'#', bullets:['Role-based admin','CSV import/export','Attendance dashboard'], role:'Full-stack developer'
+      }
+    };
+
+    // open modal
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalBullets = document.getElementById('modalBullets');
+    const modalRole = document.getElementById('modalRole');
+    const modalRepo = document.getElementById('modalRepo');
+    const modalDemo = document.getElementById('modalDemo');
+    const modalImg = document.getElementById('modalImg');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('[data-project]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const key = btn.dataset.project;
+        const p = PROJECTS[key];
+        if(!p) return;
+        modalTitle.textContent = p.title;
+        modalDesc.textContent = p.desc;
+        modalBullets.innerHTML = '';
+        p.bullets.forEach(b => { const li = document.createElement('li'); li.textContent = b; modalBullets.appendChild(li); });
+        modalRole.textContent = p.role;
+        modalRepo.href = p.repo;
+        modalDemo.href = p.demo;
+        // simple generated image
+        modalImg.style.background = `linear-gradient(120deg, rgba(124,58,237,0.14), rgba(6,182,212,0.06)), url('data:image/svg+xml;utf8,${encodeURIComponent(generateSVG(p.title))}') center/cover no-repeat`;
+        backdrop.style.display = 'flex';
+      });
+    });
+
+    modalClose.addEventListener('click', () => { backdrop.style.display = 'none'; });
+    backdrop.addEventListener('click', (e) => { if(e.target === backdrop) backdrop.style.display = 'none'; });
+
+    function generateSVG(title){
+      // creates a simple SVG placeholder with project title
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'>
+        <defs>
+          <linearGradient id='g' x1='0' x2='1'>
+            <stop stop-color='%237c3aed' offset='0'/>
+            <stop stop-color='%2306b6d4' offset='1'/>
+          </linearGradient>
+        </defs>
+        <rect width='100%' height='100%' fill='url(%23g)' />
+        <text x='50%' y='50%' font-family='Inter, Arial' font-size='36' fill='rgba(255,255,255,0.9)' text-anchor='middle'>${escapeXml(title)}</text>
+      </svg>`;
+      return svg;
+    }
+    function escapeXml(unsafe){ return unsafe.replace(/[<>&"']/g, function (c) { return {'<':'%3C','>':'%3E','&':'%26','"':'%22',"'":'%27'}[c]; }); }
+
+    // Smooth scroll for nav
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = a.getAttribute('href');
+        if(target === '#' || target === '') return;
+        e.preventDefault();
+        const el = document.querySelector(target);
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+
+    // Accessibility: close modal with Escape
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') backdrop.style.display = 'none';
+    });
+
+  </script>
+</body>
+</html>
