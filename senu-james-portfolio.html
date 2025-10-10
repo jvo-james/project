@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,6 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jads — Web Developer Portfolio</title>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"/>
+
+  <meta name="description" content="Jads — Web developer portfolio showcasing Vitra AI, Shuttle Tracker, E-Mart, Fitness Tracker, SkillForge and Make Heaven Crowded." />
   <!-- Professional font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -21,423 +27,331 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ==========================
-       VARIABLES & GLOBAL RESET
-       ========================== */
+    /* =====================
+       DESIGN TOKENS
+       ===================== */
     :root{
       --bg: #ffffff;
-      --card: #f8fafc;
+      --surface: #fbfdff;
       --muted: #6b7280;
       --text: #0f172a;
-      --accent: #0b82ff; /* electric blue accent */
-      --glass: rgba(255,255,255,0.6);
-      --shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --accent: #0b82ff; /* primary */
+      --accent-2: #d4ab4e; /* gold for MHC touches */
+      --card: #ffffff;
+      --glass: rgba(255,255,255,0.7);
+      --shadow-soft: 0 10px 30px rgba(16,24,40,0.06);
       --radius: 14px;
-      --max-width: 1100px;
-      --glass-border: rgba(11,130,255,0.12);
+      --max-width: 1200px;
       font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      background: linear-gradient(180deg,var(--bg),var(--surface));
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.5;
       font-size:16px;
     }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    /* ==========================
-       LAYOUT
-       ========================== */
-    .container{
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:48px 28px;
-    }
+    .container{max-width:var(--max-width); margin:0 auto; padding:36px 28px}
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:18px 28px;
-      position:sticky;
-      top:0;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+    /* ================
+       HEADER
+       ================ */
+    header.site-header{
+      position:sticky; top:0; z-index:80;
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));
+      backdrop-filter: blur(6px);
       border-bottom:1px solid #eef2f7;
-      z-index:60;
     }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
+    .nav-inner{max-width:var(--max-width); margin:0 auto; display:flex; align-items:center; gap:12px; padding:14px 28px; justify-content:space-between}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:56px; height:56px; border-radius:12px; display:grid; place-items:center;
+      background:linear-gradient(135deg,var(--accent),#6ee7b7); color:white; font-weight:800; font-size:20px;
+      box-shadow:var(--shadow-soft);
     }
-    .logo {
-      width:56px; height:56px;
-      display:grid; place-items:center;
-      background: linear-gradient(135deg,var(--accent),#6ee7b7);
-      color:white; font-weight:700;
-      border-radius:12px; box-shadow: var(--shadow);
-    }
-    nav a{ color:var(--muted); text-decoration:none; margin-left:18px; font-weight:600; }
-    nav a:hover{ color:var(--text); }
+    nav.main-nav{display:flex; gap:18px; align-items:center}
+    nav.main-nav a{color:var(--muted); font-weight:700}
+    nav.main-nav a:hover{color:var(--text)}
+    .nav-actions{display:flex; gap:10px; align-items:center}
 
-    /* ==========================
+    .btn{display:inline-flex; gap:8px; align-items:center; padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:700}
+    .btn-primary{background:var(--accent); color:white; box-shadow:0 10px 28px rgba(11,130,255,0.08)}
+    .btn-ghost{background:transparent; border:1px solid #eef6ff; color:var(--text)}
+
+    /* ================
        HERO
-       ========================== */
+       ================ */
     .hero{
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:36px;
-      align-items:center;
-      padding:48px 0;
+      display:grid; grid-template-columns: 1fr 420px; gap:36px; align-items:center; padding-top:28px;
     }
     .hero-left h1{
-      font-size:34px;
-      margin:0 0 12px 0;
-      line-height:1.05;
-      letter-spacing:-0.2px;
+      font-size:36px; margin:0 0 12px; line-height:1.03; font-weight:800;
     }
-    .tagline{ color:var(--muted); margin-bottom:16px; font-weight:500;}
-    .hero-desc{
-      color:var(--muted);
-      margin-bottom:22px;
-      max-width:60ch;
-    }
-    .cta-row{ display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-    .btn{
-      border:0; padding:12px 16px; border-radius:10px; font-weight:600; cursor:pointer;
-      box-shadow: 0 8px 24px rgba(11,130,255,0.08);
-    }
-    .btn-primary{ background:var(--accent); color:white; }
-    .btn-outline{ background:transparent; border:1px solid #e6eefc; color:var(--text) }
-    .tech-icons{ display:flex; gap:10px; margin-top:12px; color:var(--muted)}
-    .scroll-down{
-      display:inline-flex; gap:10px; align-items:center; color:var(--muted); margin-top:18px; font-weight:600;
-      cursor:pointer;
-    }
+    .hero-left p.lead{color:var(--muted); margin:0 0 18px; font-size:16px; max-width:70ch}
+    .tech-row{display:flex; gap:12px; color:var(--muted); margin-top:12px}
+    .scroll-link{display:inline-flex; align-items:center; gap:10px; color:var(--muted); margin-top:18px; font-weight:700; cursor:pointer}
 
-    /* floating icons / hero card */
-    .hero-right{
-      display:flex; align-items:center; justify-content:center;
-      position:relative;
+    /* hero mock */
+    .hero-right{position:relative; display:flex; align-items:center; justify-content:center}
+    .mock-card{
+      width:100%; max-width:420px; border-radius:18px; padding:14px; background:linear-gradient(180deg,#fff,#f6fbff);
+      border:1px solid #eef6ff; box-shadow:0 30px 60px rgba(14,30,60,0.06);
     }
-    .device-mock{
-      width:100%; max-width:380px;
-      border-radius:18px; overflow:hidden;
-      background:linear-gradient(180deg,#ffffff,#f6fbff);
-      border:1px solid #eef6ff;
-      box-shadow: 0 30px 60px rgba(14,30,60,0.08);
-      padding:18px;
-    }
-    .mock-img{ width:100%; height:260px; object-fit:cover; border-radius:12px; display:block; }
-    .floating-icons{
-      position:absolute; right:-24px; top:12px; display:flex; gap:12px; flex-direction:column;
-    }
-    .fi{
-      background:white; padding:10px; border-radius:12px; box-shadow:var(--shadow); border:1px solid #eef6ff;
-    }
-    .code-anim{
-      position:absolute; left: -12px; bottom:-28px; width:220px; height:120px; border-radius:12px;
-      background:linear-gradient(180deg,#f7fbff,#eef9ff); padding:12px; box-shadow:var(--shadow); border:1px solid #eef6ff;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-      color:#0f172a; font-size:12px; overflow:hidden;
-    }
-    .code-anim pre{ margin:0; opacity:0.85; line-height:1.35 }
+    .mock-card img{width:100%; height:260px; object-fit:cover; border-radius:12px; display:block}
+    .mock-badge{display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-weight:700}
+    .floating-icons{position:absolute; right:-18px; top:18px; display:flex; flex-direction:column; gap:12px}
+    .float { background:white; padding:10px; border-radius:12px; box-shadow:var(--shadow-soft); border:1px solid #eef6ff }
 
-    /* ==========================
-       ABOUT
-       ========================== */
-    .about{
-      display:grid; grid-template-columns: 1fr 320px; gap:28px; align-items:start; padding:30px 0 12px 0;
-    }
-    .about-card{
-      background:var(--card); border-radius:14px; padding:20px; box-shadow:var(--shadow);
-      border:1px solid #f0f6ff;
-    }
-    .profile{
-      display:flex; gap:16px; align-items:center;
-    }
-    .profile img{ width:120px; height:120px; border-radius:14px; object-fit:cover; border:1px solid #eef6ff; box-shadow: 0 12px 30px rgba(2,6,23,0.06); }
-    .facts{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap }
-    .fact{ background:white; border-radius:10px; padding:10px 12px; font-weight:600; color:var(--muted); border:1px solid #f0f6ff; }
+    /* hero code snippet */
+    .code-box{position:absolute; left:-20px; bottom:-28px; width:220px; padding:10px; border-radius:12px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid #eef6ff; box-shadow:var(--shadow-soft); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:12px}
 
-    /* ==========================
-       PROJECTS
-       ========================== */
-    .projects{
-      padding:18px 0 36px 0;
-    }
-    .projects-grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px;
-    }
-    .project-card{
-      background:white; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(2,6,23,0.06); border:1px solid #eef6ff;
-      transition: transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;
-      position:relative;
-    }
-    .project-card:hover{ transform: translateY(-8px); box-shadow: 0 30px 50px rgba(2,6,23,0.08); }
-    .project-card img{ width:100%; height:160px; object-fit:cover; display:block; }
-    .project-card .content{ padding:12px 14px; }
-    .project-title{ font-weight:700; margin:6px 0 8px; font-size:16px; color:var(--text); }
-    .project-desc{ color:var(--muted); font-size:14px; margin-bottom:10px; min-height:44px; }
-    .stack{ display:flex; gap:8px; color:var(--muted); font-size:14px; margin-bottom:12px; align-items:center; flex-wrap:wrap }
-    .project-actions{ display:flex; gap:10px; align-items:center; justify-content:space-between; }
-    .view-btn{ background:transparent; border:1px solid #e7f2ff; padding:8px 12px; border-radius:10px; font-weight:700; cursor:pointer; }
+    /* ================
+       ABOUT / QUICK STATS
+       ================ */
+    .about-grid{display:grid; grid-template-columns: 1fr 320px; gap:24px; margin-top:32px}
+    .card{background:var(--card); border-radius:14px; padding:18px; box-shadow:var(--shadow-soft); border:1px solid #f0f6ff}
+    .profile{display:flex; gap:14px; align-items:center}
+    .profile img{width:110px; height:110px; border-radius:12px; object-fit:cover; border:1px solid #eef6ff; box-shadow:0 10px 30px rgba(2,6,23,0.04)}
+    .facts{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .fact{background:white; padding:8px 10px; border-radius:10px; border:1px solid #f1f6ff; font-weight:700; color:var(--muted)}
 
-    /* ==========================
-       SKILLS & TOOLS
-       ========================== */
-    .skills{
-      display:grid; grid-template-columns: 1fr 320px; gap:20px; align-items:start; padding:26px 0;
-    }
-    .skill-list{ display:grid; gap:12px; }
-    .skill{
-      display:flex; align-items:center; gap:12px; padding:10px; border-radius:10px; background: #ffffff; border:1px solid #f3f7fb;
-    }
-    .skill .meta{ flex:1 }
-    .progress-bar{ height:8px; width:100%; background:#eef6ff; border-radius:999px; overflow:hidden; }
-    .progress-bar > i{ display:block; height:100%; width:50%; background:linear-gradient(90deg,var(--accent),#6ee7b7); border-radius:999px; }
+    /* ================
+       PROJECTS GRID
+       ================ */
+    section#projects{margin-top:36px}
+    .projects-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:12px}
+    .project-card{background:white; border-radius:12px; overflow:hidden; border:1px solid #eef6ff; box-shadow:var(--shadow-soft); transition:transform .25s, box-shadow .25s}
+    .project-card:hover{transform:translateY(-8px); box-shadow:0 30px 80px rgba(2,6,23,0.08)}
+    .project-card img{width:100%; height:160px; object-fit:cover; display:block}
+    .project-card .meta{padding:12px}
+    .project-title{font-weight:800; margin-bottom:6px}
+    .project-desc{color:var(--muted); margin-bottom:10px; min-height:44px}
+    .stack{display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .project-actions{display:flex; gap:8px; justify-content:space-between; align-items:center; margin-top:12px}
 
-    /* ==========================
-       ACHIEVEMENTS TIMELINE
-       ========================== */
-    .timeline{ padding:20px 0 40px 0; }
-    .tl-item{ display:flex; gap:16px; align-items:flex-start; margin-bottom:20px; }
-    .tl-point{ width:12px; height:12px; background:var(--accent); border-radius:999px; margin-top:6px; box-shadow:0 6px 20px rgba(11,130,255,0.12) }
-    .tl-body{ background: #fff; padding:12px 14px; border-radius:10px; border:1px solid #eef6ff; box-shadow: var(--shadow); }
-    .tl-date{ font-weight:700; color:var(--accent); margin-bottom:6px; }
+    /* special styling for Make Heaven Crowded card to show gold accent */
+    .project-card.mhc .meta { border-left:4px solid var(--accent-2); padding-left:10px; }
 
-    /* ==========================
+    /* ================
+       SKILLS & ACHIEVEMENTS
+       ================ */
+    .skills-grid{display:grid; grid-template-columns:1fr 320px; gap:20px; margin-top:28px}
+    .skill{display:flex; gap:12px; align-items:center; padding:10px; border-radius:10px; border:1px solid #f3f7fb; background:white}
+    .progress {height:8px; background:#eef6ff; border-radius:999px; overflow:hidden}
+    .progress > i{display:block; height:100%; width:80%; background:linear-gradient(90deg,var(--accent),#6ee7b7)}
+
+    .timeline{margin-top:22px}
+    .tl-item{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px}
+    .tl-dot{width:10px; height:10px; background:var(--accent); border-radius:999px; margin-top:6px}
+    .tl-body{background:white; padding:10px 12px; border-radius:10px; border:1px solid #eef6ff; box-shadow:var(--shadow-soft)}
+
+    /* ================
        CONTACT
-       ========================== */
-    .contact{
-      padding:26px 0;
-      display:flex; gap:20px; align-items:center; justify-content:space-between;
-    }
-    .contact .left{ max-width:720px; }
-    .socials{ display:flex; gap:12px; margin-top:12px; }
-    .icon-btn{ display:inline-flex; gap:8px; align-items:center; padding:10px 12px; background:#fff; border-radius:10px; border:1px solid #eef6ff; font-weight:700; text-decoration:none; color:var(--text) }
+       ================ */
+    .contact-grid{display:grid; grid-template-columns:1fr 380px; gap:20px; margin-top:28px}
+    form.contact-card{display:flex; flex-direction:column; gap:10px}
+    input, textarea{padding:10px; border-radius:8px; border:1px solid #eef6ff; font-family:inherit}
+    input:focus, textarea:focus{outline:none; box-shadow:0 8px 20px rgba(11,130,255,0.08)}
 
-    /* ==========================
+    /* ================
        FOOTER
-       ========================== */
-    footer{
-      padding:40px 0; text-align:center; color:var(--muted); border-top:1px solid #f1f5f9;
-    }
+       ================ */
+    footer{margin-top:40px; padding:36px 0; border-top:1px solid #f1f5f9; text-align:center; color:var(--muted)}
 
-    /* ==========================
+    /* ================
        MODAL
-       ========================== */
-    .modal-backdrop{
-      position:fixed; inset:0; display:none; background:rgba(4,10,25,0.45); z-index:120; align-items:center; justify-content:center;
-      padding:24px;
-    }
-    .modal{
-      width:100%; max-width:880px; background:white; border-radius:12px; padding:20px; box-shadow: 0 40px 90px rgba(2,6,23,0.4); border:1px solid #eef6ff;
-      transform: translateY(12px); opacity:0; transition: all 220ms ease;
-    }
-    .modal.show{ transform:none; opacity:1; }
-    .modal-grid{ display:grid; grid-template-columns: 1fr 320px; gap:18px; align-items:start; }
-    .modal .close{ position:absolute; right:18px; top:12px; border:0; background:transparent; font-size:20px; cursor:pointer; color:var(--muted) }
+       ================ */
+    .modal-backdrop{position:fixed; inset:0; display:none; background:rgba(4,10,25,0.5); z-index:120; align-items:center; justify-content:center; padding:20px}
+    .modal { width:100%; max-width:920px; background:white; border-radius:12px; padding:18px; box-shadow:0 40px 90px rgba(2,6,23,0.36) }
+    .modal h2{margin:0 0 8px}
+    .modal .modal-grid{display:grid; grid-template-columns:1fr 320px; gap:16px}
+    .modal .close{position:absolute; right:14px; top:10px; background:transparent; border:0; font-size:18px; cursor:pointer; color:var(--muted)}
 
-    /* ==========================
-       MINI CONSOLE (EASTER EGG)
-       ========================== */
-    .mini-console{
-      position:fixed; bottom:22px; left:22px; width:340px; max-width:calc(100% - 44px);
-      background:linear-gradient(180deg,#ffffff,#fbfcff); border:1px solid #e8f2ff; box-shadow: 0 20px 60px rgba(2,6,23,0.08);
-      padding:12px; border-radius:12px; z-index:100;
-    }
-    .console-output{ height:120px; overflow:auto; font-family: ui-monospace, SFMono-Regular,Menlo,monospace; font-size:13px; color:var(--muted); padding:8px; border-radius:8px; background:#fbfdff; border:1px dashed #eef6ff; margin-bottom:8px; }
-    .console-row{ display:flex; gap:6px; align-items:center }
-    .console-row input{ flex:1; border:0; background:transparent; padding:8px; outline:none; font-weight:700 }
-    .console-toggle{ position:fixed; bottom:22px; right:22px; background:var(--accent); color:white; border-radius:999px; padding:12px; border:0; box-shadow:var(--shadow); cursor:pointer; }
+    /* ================
+       MINI CONSOLE / EASTER EGG
+       ================ */
+    .console-toggle{position:fixed; right:18px; bottom:18px; width:52px; height:52px; border-radius:999px; background:var(--accent); color:white; border:0; box-shadow:var(--shadow-soft); cursor:pointer; z-index:200}
+    .mini-console{position:fixed; left:18px; bottom:18px; width:360px; background:white; border-radius:12px; padding:12px; border:1px solid #eef6ff; box-shadow:var(--shadow-soft); display:none; z-index:200}
+    .console-output{height:120px; overflow:auto; font-family:ui-monospace,monospace; font-size:13px; color:var(--muted); background:#fbfdff; padding:8px; border-radius:8px; border:1px dashed #eef6ff}
 
-    /* ==========================
-       RESPONSIVE
-       ========================== */
+    /* responsive */
     @media (max-width:980px){
-      .hero{ grid-template-columns: 1fr; }
-      .about{ grid-template-columns: 1fr; }
-      .skills{ grid-template-columns: 1fr; }
-      .hero-right{ order: -1; }
-      nav a{ display:none; }
+      .hero{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+      .skills-grid{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      nav.main-nav{display:none}
     }
+
+    /* small accessibility niceties */
+    :focus{outline:none}
+    a:focus,button:focus,input:focus,textarea:focus{box-shadow:0 8px 28px rgba(11,130,255,0.08); border-radius:8px}
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="brand container" style="max-width:calc(var(--max-width) + 56px)">
-      <div style="display:flex;gap:12px;align-items:center">
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <div class="brand" aria-label="Jads Brand">
         <div class="logo">J</div>
         <div>
           <div style="font-weight:800">Jads Tek</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:3px">Web Developer • AI & Product Builder</div>
+          <div style="font-size:13px;color:var(--muted)">Web Developer • AI & Product Builder</div>
         </div>
       </div>
 
-      <nav aria-label="Main navigation">
+      <nav class="main-nav" role="navigation" aria-label="Primary">
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#achievements">Achievements</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <div class="nav-actions">
+        <a href="resume.pdf" class="btn btn-ghost" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> Resume</a>
+        <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+      </div>
     </div>
   </header>
 
   <main class="container" role="main">
 
     <!-- HERO -->
-    <section class="hero" aria-label="Introduction">
+    <section class="hero" aria-labelledby="intro-heading">
       <div class="hero-left">
-        <h1>Hi, I’m <span style="color:var(--accent)">Jads</span> — a passionate web developer building intelligent tools for the future.</h1>
-        <div class="tagline">From AI-powered diagnosis systems to real-time shuttle tracking — I turn ideas into impact.</div>
-        <p class="hero-desc">
-          I design and ship polished web products that solve real problems. I love clean UI, robust front-end architecture, and
-          practical AI integrations that help people make better decisions. Winner — African Digital Innovation Challenge for Vitra AI.
-        </p>
+        <h1 id="intro-heading">Hi, I’m <span style="color:var(--accent)">Jads</span> — a web developer building intelligent products that ship.</h1>
+        <p class="lead">From AI-assisted healthcare tools to campus logistics and polished e-commerce, I design, implement, and iterate on web products with strong UX, robust front-end architecture and practical machine learning integrations.</p>
 
-        <div class="cta-row">
-          <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
-            View Projects <i class="fa-solid fa-arrow-right" style="margin-left:8px"></i>
-          </button>
-          <a class="btn btn-outline" href="resume.pdf" target="_blank" rel="noopener">View Resume</a>
+        <div class="tech-row" aria-hidden="true">
+          <span title="HTML"><i class="fa-brands fa-html5"></i> HTML</span>
+          <span title="CSS"><i class="fa-brands fa-css3-alt"></i> CSS</span>
+          <span title="JS"><i class="fa-brands fa-js"></i> JavaScript</span>
+          <span title="React"><i class="fa-brands fa-react"></i> React</span>
+          <span title="Python"><i class="fa-brands fa-python"></i> Python</span>
         </div>
 
-        <div class="tech-icons" aria-hidden="true">
-          <i class="fa-brands fa-html5 fa-lg" title="HTML5"></i>
-          <i class="fa-brands fa-css3-alt fa-lg" title="CSS3"></i>
-          <i class="fa-brands fa-js fa-lg" title="JavaScript"></i>
-          <i class="fa-brands fa-react fa-lg" title="React"></i>
-          <i class="fa-brands fa-python fa-lg" title="Python"></i>
+        <div style="margin-top:18px; display:flex; gap:12px; align-items:center">
+          <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Explore Projects <i class="fa-solid fa-arrow-right" style="margin-left:6px"></i></button>
+          <a class="btn btn-ghost" href="mailto:youremail@example.com"><i class="fa-solid fa-envelope"></i> Contact</a>
         </div>
 
-        <div class="scroll-down" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" style="margin-top:18px">
-          <i class="fa-solid fa-chevron-down" style="color:var(--muted)"></i> Scroll to learn more
+        <div class="scroll-link" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" style="user-select:none">
+          <i class="fa-solid fa-chevron-down" style="color:var(--muted)"></i> Learn more about me
         </div>
       </div>
 
       <div class="hero-right" aria-hidden="true">
-        <div class="device-mock" role="img" aria-label="Vitra AI dashboard mockup">
-          <!-- Replace the src with a screenshot of your Vitra AI dashboard -->
-          <img src="https://source.unsplash.com/collection/190727/800x600" alt="Vitra AI dashboard mockup" class="mock-img">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-            <div style="font-weight:700">Vitra AI</div>
-            <div style="font-size:13px;color:var(--muted)">Winner — African Digital Innovation Challenge</div>
+        <div class="mock-card" role="img" aria-label="Project mockup">
+          <!-- Replace with screenshot of Vitra AI dashboard -->
+          <img src="assets/vitra-dashboard.jpg" alt="Vitra AI dashboard screenshot (replace with your image)">
+          <div class="mock-badge">
+            <div style="font-weight:800">Vitra AI</div>
+            <div style="color:var(--muted); font-size:13px">Winner — African Digital Innovation Challenge</div>
           </div>
         </div>
 
         <div class="floating-icons" aria-hidden="true">
-          <div class="fi"><i class="fa-solid fa-robot"></i></div>
-          <div class="fi"><i class="fa-solid fa-map-location-dot"></i></div>
-          <div class="fi"><i class="fa-solid fa-shopping-cart"></i></div>
+          <div class="float"><i class="fa-solid fa-robot"></i></div>
+          <div class="float"><i class="fa-solid fa-map-location-dot"></i></div>
+          <div class="float"><i class="fa-solid fa-tshirt"></i></div>
         </div>
 
-        <div class="code-anim" aria-hidden="true">
-          <pre>// sample log
-fetch('/api/predict')
-  .then(res=>res.json())
-  .then(data=>{
-    if(data.risk > 0.7) alert('High risk detected');
-  })</pre>
+        <div class="code-box" aria-hidden="true">
+<pre>// sample integration
+fetch('/api/predict', {method:'POST', body:JSON.stringify(payload)})
+.then(r=>r.json()).then(d => console.log('risk', d.risk))</pre>
         </div>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="about" aria-label="About Jads">
-      <div class="about-card">
+    <section id="about" class="about-grid" aria-label="About section">
+      <div class="card">
         <div class="profile">
-          <!-- Replace with your portrait -->
-          <img src="https://source.unsplash.com/collection/888146/400x400" alt="Portrait of Jads">
+          <img src="assets/jads-portrait.jpg" alt="Portrait of Jads (replace)">
           <div>
-            <h3 style="margin:0 0 8px 0">About Me</h3>
-            <p style="color:var(--muted); margin:0 0 8px">I’m a second-year developer and student focused on building web experiences with practical AI. I grew up fascinated by problem-solving and typing — I represented Ghana in national typing competitions (1st runner-up, 2018 & 2019) and later used that discipline to build reliable software.</p>
-            <p style="color:var(--muted); margin:0">I believe technology should make life simpler, smarter, and more human.</p>
-
-            <div class="facts" style="margin-top:12px">
-              <div class="fact"><i class="fa-solid fa-trophy" style="color:var(--accent);margin-right:6px"></i> African Digital Innovation Winner</div>
-              <div class="fact"><i class="fa-solid fa-chalkboard-user" style="color:var(--accent);margin-right:6px"></i> Teaching Assistant (KNUST)</div>
+            <h3 style="margin:0">About Me</h3>
+            <p style="color:var(--muted); margin-top:8px">I’m a product-minded developer and student who enjoys designing interfaces that make complex data useful. I led Vitra AI (winner, African Digital Innovation Challenge) and built campus-grade tools like Shuttle Tracker to solve real problems where I study.</p>
+            <div class="facts">
+              <div class="fact"><i class="fa-solid fa-trophy" style="color:var(--accent); margin-right:8px"></i>African Digital Innovation Winner</div>
+              <div class="fact"><i class="fa-solid fa-chalkboard-user" style="color:var(--accent); margin-right:8px"></i>Teaching Assistant (KNUST)</div>
+              <div class="fact"><i class="fa-solid fa-keyboard" style="color:var(--accent); margin-right:8px"></i>Typing: 1st Runner-Up (2018, 2019)</div>
             </div>
           </div>
         </div>
       </div>
 
       <div>
-        <div class="about-card" style="margin-bottom:14px">
-          <h4 style="margin:0 0 8px 0">What drives me</h4>
-          <p style="color:var(--muted); margin:0 0 12px">I build with empathy and data — solving problems that people actually have. My strongest skills are in front-end engineering, product design, and integrating ML models into usable interfaces.</p>
+        <div class="card">
+          <h4 style="margin:0 0 8px 0">What I build</h4>
+          <p style="color:var(--muted); margin:0 0 12px">Polished front-ends, realtime features, and pragmatic ML integrations focusing on user impact — not novelty.</p>
 
-          <h4 style="margin:16px 0 8px 0">Quick stats</h4>
-          <ul style="margin:0;color:var(--muted)">
-            <li>Fast prototyping & polished UIs</li>
-            <li>AI integration (model + UX)</li>
-            <li>Real-time features (maps & sockets)</li>
-            <li>Workshops & mentorship</li>
+          <h4 style="margin-top:12px">Quick stats</h4>
+          <ul style="color:var(--muted); margin-top:6px">
+            <li>Frontend-first product design & engineering</li>
+            <li>Real-time maps & sockets (Shuttle Tracker)</li>
+            <li>AI-powered health tools (Vitra AI)</li>
+            <li>E-commerce & admin tooling (E-Mart, Make Heaven Crowded)</li>
           </ul>
         </div>
 
-        <div class="about-card">
+        <div class="card" style="margin-top:16px">
           <h4 style="margin:0 0 8px 0">Fun fact</h4>
-          <p style="color:var(--muted); margin:0 0 10px">Fastest Typist — 1st Runner-Up, Ghana National Typing Competition (2018 & 2019). I apply that speed & focus to shipping polished code.</p>
-
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <a class="icon-btn" href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
-            <a class="icon-btn" href="https://github.com/" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-          </div>
+          <p style="color:var(--muted); margin:0">I competed in national typing competitions—discipline learned there helps me ship clean, fast code today.</p>
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="projects" aria-label="Projects">
-      <h2 style="margin-top:8px">Featured Projects</h2>
-      <p style="color:var(--muted)">A selection of projects that showcase applied engineering, product thinking, and polished front-end design.</p>
+    <section id="projects" aria-label="Projects">
+      <h2 style="margin-top:18px">Featured Projects</h2>
+      <p style="color:var(--muted)">A curated selection that shows breadth (AI, realtime, e-commerce) and depth (UX, architecture, integrations).</p>
 
-      <div class="projects-grid" style="margin-top:16px">
+      <div class="projects-grid" aria-live="polite" style="margin-top:14px">
         <!-- Vitra AI -->
         <article class="project-card" data-project="vitra">
-          <img src="https://images.unsplash.com/photo-1581091228455-5c8d3b8f9a4a?auto=format&fit=crop&w=1200&q=80" alt="Vitra AI screenshot">
-          <div class="content">
+          <img src="assets/vitra-thumb.jpg" alt="Vitra AI screenshot">
+          <div class="meta">
             <div class="project-title">Vitra AI — Early Disease Prediction</div>
-            <div class="project-desc">AI-driven assistant for early detection of diabetes & cardiovascular risks. Designed for doctors and community clinics.</div>
+            <div class="project-desc">AI assistant designed to identify early risk signals for diabetes and cardiovascular conditions in clinic settings.</div>
             <div class="stack"><i class="fa-brands fa-python"></i> Python • Flask • TensorFlow • React • Firebase</div>
             <div class="project-actions">
-              <button class="view-btn" onclick="openProject('vitra')"><i class="fa-solid fa-eye"></i> Read Case Study</button>
-              <div style="color:var(--muted);font-weight:700">Winner — ADIC</div>
+              <button class="btn btn-ghost" onclick="openProject('vitra')"><i class="fa-solid fa-eye"></i> Case Study</button>
+              <div style="color:var(--muted); font-weight:700">Winner — ADIC</div>
             </div>
           </div>
         </article>
 
         <!-- Shuttle Tracker -->
         <article class="project-card" data-project="shuttle">
-          <img src="https://images.unsplash.com/photo-1502784444185-33c6a2f9d86b?auto=format&fit=crop&w=1200&q=80" alt="Shuttle tracker map">
-          <div class="content">
+          <img src="assets/shuttle-thumb.jpg" alt="Shuttle Tracker map">
+          <div class="meta">
             <div class="project-title">Shuttle Tracker — Campus Navigation</div>
-            <div class="project-desc">Real-time shuttle locations, arrival estimates and rider notifications for KNUST students.</div>
-            <div class="stack"><i class="fa-solid fa-map-location-dot"></i> JS • Leaflet • Socket.io • Firebase</div>
+            <div class="project-desc">Real-time shuttle positions, ETA calculations, and rider notifications to reduce wait time on campus.</div>
+            <div class="stack"><i class="fa-solid fa-map-location-dot"></i> Leaflet • Socket.io • Firebase • JS</div>
             <div class="project-actions">
-              <button class="view-btn" onclick="openProject('shuttle')"><i class="fa-solid fa-eye"></i> Read Case Study</button>
-              <div style="color:var(--muted)">Real-time tracking</div>
+              <button class="btn btn-ghost" onclick="openProject('shuttle')"><i class="fa-solid fa-eye"></i> Case Study</button>
+              <div style="color:var(--muted)">Realtime • Low bandwidth</div>
             </div>
           </div>
         </article>
 
         <!-- E-Mart -->
         <article class="project-card" data-project="emart">
-          <img src="https://images.unsplash.com/photo-1542831371-d531d36971e6?auto=format&fit=crop&w=1200&q=80" alt="E-Mart product grid">
-          <div class="content">
-            <div class="project-title">E-Mart — E-commerce Demo</div>
-            <div class="project-desc">A responsive online store with cart, checkout flow and admin dashboard for product management.</div>
-            <div class="stack"><i class="fa-solid fa-store"></i> React • Stripe • Node.js • MongoDB</div>
+          <img src="assets/emart-thumb.jpg" alt="E-Mart product grid">
+          <div class="meta">
+            <div class="project-title">E-Mart — E-commerce Prototype</div>
+            <div class="project-desc">Responsive online store with cart, checkout and admin product management for demo sales and testing.</div>
+            <div class="stack"><i class="fa-solid fa-store"></i> React • Node • Stripe • MongoDB</div>
             <div class="project-actions">
-              <button class="view-btn" onclick="openProject('emart')"><i class="fa-solid fa-eye"></i> Read Case Study</button>
+              <button class="btn btn-ghost" onclick="openProject('emart')"><i class="fa-solid fa-eye"></i> Case Study</button>
               <div style="color:var(--muted)">Responsive • Accessible</div>
             </div>
           </div>
@@ -445,28 +359,42 @@ fetch('/api/predict')
 
         <!-- Fitness Tracker -->
         <article class="project-card" data-project="fitness">
-          <img src="https://images.unsplash.com/photo-1517964103305-4f60f56f0353?auto=format&fit=crop&w=1200&q=80" alt="Fitness tracker dashboard">
-          <div class="content">
+          <img src="assets/fitness-thumb.jpg" alt="Fitness Tracker dashboard">
+          <div class="meta">
             <div class="project-title">Fitness Tracker</div>
-            <div class="project-desc">Track workouts, calories and visual progress. Offline-first with local persistence and charts.</div>
-            <div class="stack"><i class="fa-solid fa-heart-pulse"></i> JS • Chart.js • LocalStorage</div>
+            <div class="project-desc">Track workouts and progress with offline-first support and visual analytics.</div>
+            <div class="stack"><i class="fa-solid fa-heart-pulse"></i> Vanilla JS • Chart.js</div>
             <div class="project-actions">
-              <button class="view-btn" onclick="openProject('fitness')"><i class="fa-solid fa-eye"></i> Read Case Study</button>
-              <div style="color:var(--muted)">User-centered UX</div>
+              <button class="btn btn-ghost" onclick="openProject('fitness')"><i class="fa-solid fa-eye"></i> Case Study</button>
+              <div style="color:var(--muted)">Charts • Offline</div>
             </div>
           </div>
         </article>
 
         <!-- SkillForge -->
         <article class="project-card" data-project="skillforge">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80" alt="SkillForge registration">
-          <div class="content">
-            <div class="project-title">SkillForge — Workshop Registrations</div>
-            <div class="project-desc">A registration & admin system built for managing SkillForge workshops and attendee data at KNUST.</div>
+          <img src="assets/skillforge-thumb.jpg" alt="SkillForge registration">
+          <div class="meta">
+            <div class="project-title">SkillForge — Workshop Registration System</div>
+            <div class="project-desc">A scalable registration system used for workshop signups, capacity controls, and admin analytics.</div>
             <div class="stack"><i class="fa-solid fa-chalkboard-user"></i> React • Firebase • Firestore</div>
             <div class="project-actions">
-              <button class="view-btn" onclick="openProject('skillforge')"><i class="fa-solid fa-eye"></i> Read Case Study</button>
-              <div style="color:var(--muted)">Organized & Scalable</div>
+              <button class="btn btn-ghost" onclick="openProject('skillforge')"><i class="fa-solid fa-eye"></i> Case Study</button>
+              <div style="color:var(--muted)">Event mgmt</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Make Heaven Crowded (MHC) — new project added -->
+        <article class="project-card mhc" data-project="mhc">
+          <img src="assets/mhc-thumb.jpg" alt="Make Heaven Crowded preview">
+          <div class="meta">
+            <div class="project-title">Make Heaven Crowded — Faith-driven Shop & Hub</div>
+            <div class="project-desc">An online Christian apparel shop + gospel hub: shop, donate, read devotionals and customize verse designs. Designed for community outreach.</div>
+            <div class="stack"><i class="fa-solid fa-tshirt"></i> React • Stripe • Firebase • CMS</div>
+            <div class="project-actions">
+              <button class="btn btn-ghost" onclick="openProject('mhc')"><i class="fa-solid fa-eye"></i> Case Study</button>
+              <div style="font-weight:700; color:var(--accent-2)">E-commerce • Gospel Hub</div>
             </div>
           </div>
         </article>
@@ -475,66 +403,66 @@ fetch('/api/predict')
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="skills" aria-label="Skills and tools">
+    <section id="skills" class="skills-grid" aria-label="Skills & Tools">
       <div>
         <h3>Skills & Tools</h3>
-        <p style="color:var(--muted)">Front-end polish, product sensibility, and practical AI integrations.</p>
+        <p style="color:var(--muted)">Front-end craft, product thinking, and AI integrations.</p>
 
-        <div class="skill-list" style="margin-top:12px">
+        <div style="margin-top:12px; display:grid; gap:10px">
           <div class="skill">
-            <div style="width:48px;text-align:center"><i class="fa-brands fa-html5 fa-2x" style="color:#f16529"></i></div>
-            <div class="meta">
-              <div style="font-weight:700">HTML & Accessibility</div>
-              <div class="progress-bar" aria-hidden="true"><i style="width:95%"></i></div>
+            <div style="width:48px; text-align:center"><i class="fa-brands fa-html5 fa-2x" style="color:#f16529"></i></div>
+            <div style="flex:1">
+              <div style="font-weight:800">HTML & Accessibility</div>
+              <div class="progress" style="margin-top:8px"><i style="width:96%"></i></div>
             </div>
-            <div style="font-weight:700;color:var(--muted)">Expert</div>
+            <div style="font-weight:700; color:var(--muted)">Expert</div>
           </div>
 
           <div class="skill">
-            <div style="width:48px;text-align:center"><i class="fa-brands fa-css3-alt fa-2x" style="color:#2965f1"></i></div>
-            <div class="meta">
-              <div style="font-weight:700">CSS & Responsive Design</div>
-              <div class="progress-bar"><i style="width:92%"></i></div>
+            <div style="width:48px; text-align:center"><i class="fa-brands fa-css3-alt fa-2x" style="color:#2965f1"></i></div>
+            <div style="flex:1">
+              <div style="font-weight:800">CSS & Responsive Design</div>
+              <div class="progress" style="margin-top:8px"><i style="width:94%"></i></div>
             </div>
-            <div style="font-weight:700;color:var(--muted)">Expert</div>
+            <div style="font-weight:700; color:var(--muted)">Expert</div>
           </div>
 
           <div class="skill">
-            <div style="width:48px;text-align:center"><i class="fa-brands fa-js fa-2x" style="color:#f7df1e"></i></div>
-            <div class="meta">
-              <div style="font-weight:700">JavaScript & Architecture</div>
-              <div class="progress-bar"><i style="width:88%"></i></div>
+            <div style="width:48px; text-align:center"><i class="fa-brands fa-js fa-2x" style="color:#f7df1e"></i></div>
+            <div style="flex:1">
+              <div style="font-weight:800">JavaScript & Architecture</div>
+              <div class="progress" style="margin-top:8px"><i style="width:88%"></i></div>
             </div>
-            <div style="font-weight:700;color:var(--muted)">Advanced</div>
+            <div style="font-weight:700; color:var(--muted)">Advanced</div>
           </div>
 
           <div class="skill">
-            <div style="width:48px;text-align:center"><i class="fa-brands fa-react fa-2x" style="color:#61dafb"></i></div>
-            <div class="meta">
-              <div style="font-weight:700">React & State Management</div>
-              <div class="progress-bar"><i style="width:84%"></i></div>
+            <div style="width:48px; text-align:center"><i class="fa-brands fa-react fa-2x" style="color:#61dafb"></i></div>
+            <div style="flex:1">
+              <div style="font-weight:800">React & State</div>
+              <div class="progress" style="margin-top:8px"><i style="width:85%"></i></div>
             </div>
-            <div style="font-weight:700;color:var(--muted)">Advanced</div>
+            <div style="font-weight:700; color:var(--muted)">Advanced</div>
           </div>
 
           <div class="skill">
-            <div style="width:48px;text-align:center"><i class="fa-brands fa-python fa-2x" style="color:#3776ab"></i></div>
-            <div class="meta">
-              <div style="font-weight:700">Python & ML Basics</div>
-              <div class="progress-bar"><i style="width:78%"></i></div>
+            <div style="width:48px; text-align:center"><i class="fa-brands fa-python fa-2x" style="color:#3776ab"></i></div>
+            <div style="flex:1">
+              <div style="font-weight:800">Python & ML Basics</div>
+              <div class="progress" style="margin-top:8px"><i style="width:78%"></i></div>
             </div>
-            <div style="font-weight:700;color:var(--muted)">Intermediate</div>
+            <div style="font-weight:700; color:var(--muted)">Intermediate</div>
           </div>
         </div>
       </div>
 
-      <aside style="position:relative">
-        <div class="about-card" style="height:100%">
-          <h4 style="margin-top:4px">What I’m learning next</h4>
-          <p style="color:var(--muted); margin-bottom:12px">TypeScript, Next.js, TensorFlow model optimization — to bring typed safety, scalable SSG/SSR and performant ML to projects.</p>
+      <aside>
+        <div class="card">
+          <h4 style="margin:0">What I'm learning next</h4>
+          <p style="color:var(--muted); margin-top:8px">TypeScript, Next.js, TensorFlow model optimization — bringing typed safety and production ML to projects.</p>
 
-          <h4 style="margin-top:8px">Tools & Stack</h4>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+          <h4 style="margin-top:12px">Tools & Stack</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px">
             <div class="fact"><i class="fa-brands fa-github" style="margin-right:6px"></i> GitHub</div>
             <div class="fact"><i class="fa-solid fa-database" style="margin-right:6px"></i> Firebase</div>
             <div class="fact"><i class="fa-solid fa-server" style="margin-right:6px"></i> Node.js</div>
@@ -547,272 +475,259 @@ fetch('/api/predict')
     <!-- ACHIEVEMENTS -->
     <section id="achievements" class="timeline" aria-label="Achievements">
       <h3>Achievements & Timeline</h3>
-      <p style="color:var(--muted)">A concise timeline showing milestones and recognitions.</p>
-
-      <div style="margin-top:14px">
+      <div style="margin-top:12px">
         <div class="tl-item">
-          <div class="tl-point" aria-hidden="true"></div>
+          <div class="tl-dot"></div>
           <div class="tl-body">
-            <div class="tl-date">June 2025 — African Digital Innovation Challenge</div>
-            <div style="color:var(--muted)">Winner: Vitra AI — an early disease prediction assistant designed to help community clinics triage and prioritize care.</div>
+            <div style="font-weight:800; color:var(--accent)">June 2025</div>
+            <div style="color:var(--muted); margin-top:6px">Winner — African Digital Innovation Challenge for Vitra AI (early disease prediction tool).</div>
           </div>
         </div>
 
         <div class="tl-item">
-          <div class="tl-point" aria-hidden="true"></div>
+          <div class="tl-dot"></div>
           <div class="tl-body">
-            <div class="tl-date">2024 — Teaching Assistant, KNUST</div>
-            <div style="color:var(--muted)">Assisted with grading, tutorials and workshop delivery for programming and ICT courses.</div>
+            <div style="font-weight:800; color:var(--accent)">2024</div>
+            <div style="color:var(--muted); margin-top:6px">Teaching Assistant — KNUST (grading, tutorials, workshop delivery).</div>
           </div>
         </div>
 
         <div class="tl-item">
-          <div class="tl-point" aria-hidden="true"></div>
+          <div class="tl-dot"></div>
           <div class="tl-body">
-            <div class="tl-date">2018 & 2019 — National Typing Competition</div>
-            <div style="color:var(--muted)">1st Runner-Up (national) — disciplined practice & quick accuracy helped me develop a focus for detail. </div>
+            <div style="font-weight:800; color:var(--accent)">2018 & 2019</div>
+            <div style="color:var(--muted); margin-top:6px">National Typing Competition — 1st Runner-Up (national).</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="contact" aria-label="Contact">
-      <div class="left">
-        <h3>Let’s build something meaningful together.</h3>
-        <p style="color:var(--muted)">I’m accepting mentorship, research collaborations, and product-minded internships. Tell me about your initiative.</p>
+    <section id="contact" class="contact-grid" aria-label="Contact">
+      <div class="card contact-card">
+        <h3 style="margin:0 0 6px 0">Let’s build something meaningful together.</h3>
+        <p style="color:var(--muted); margin:0 0 12px">I’m open to internships, collaborations, and mentorship opportunities.</p>
 
-        <div class="socials" style="margin-top:10px">
-          <a class="icon-btn" href="mailto:youremail@example.com"><i class="fa-solid fa-envelope"></i> Email</a>
-          <a class="icon-btn" href="resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> Resume</a>
-          <a class="icon-btn" href="https://github.com/" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a class="icon-btn" href="https://www.linkedin.com/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        </div>
+        <form onsubmit="contactSubmit(event)" style="display:flex; flex-direction:column; gap:10px">
+          <input id="cName" type="text" placeholder="Your name" required>
+          <input id="cEmail" type="email" placeholder="Your email" required>
+          <textarea id="cMessage" rows="4" placeholder="Tell me about your project" required></textarea>
+          <div style="display:flex; gap:10px; align-items:center">
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <small style="color:var(--muted)">I usually reply within 2–3 business days</small>
+          </div>
+        </form>
       </div>
 
-      <form style="max-width:380px; display:flex; flex-direction:column; gap:10px; background:white; padding:18px; border-radius:12px; box-shadow:var(--shadow); border:1px solid #eef6ff" onsubmit="contactSubmit(event)">
-        <label style="font-weight:700">Send a quick message</label>
-        <input type="text" id="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid #eef6ff;outline:none">
-        <input type="email" id="email" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid #eef6ff;outline:none">
-        <textarea id="message" rows="4" placeholder="How can I help?" required style="padding:10px;border-radius:8px;border:1px solid #eef6ff;outline:none"></textarea>
-        <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-          <button class="btn btn-primary" type="submit">Send Message</button>
-          <small style="color:var(--muted)">I typically reply within 2–3 business days</small>
+      <aside class="card" aria-labelledby="contact-info">
+        <h4 id="contact-info" style="margin:0 0 8px 0">Contact & Links</h4>
+        <p style="color:var(--muted); margin:0 0 12px">Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+        <div style="display:flex; gap:8px; margin-top:10px">
+          <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
         </div>
-      </form>
+
+        <div style="margin-top:14px">
+          <h5 style="margin:0 0 8px 0">Resume</h5>
+          <a class="btn btn-primary" href="resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> Download PDF</a>
+        </div>
+      </aside>
     </section>
 
+    <footer>
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+        <div style="font-weight:800">Jads Tek</div>
+        <div style="color:var(--muted)">© <span id="year"></span> — Built with care for college applications and product showcases.</div>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    <div class="container">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div style="font-weight:700">Jads Tek</div>
-        <div style="color:var(--muted)">© <span id="year"></span> Jads — Built with care. <span style="margin-left:8px">Made for college applications & product showcases.</span></div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Project modal backbone -->
-  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true" aria-modal="true">
-    <div id="modal" class="modal" role="document" aria-labelledby="modalTitle">
-      <button class="close" onclick="closeModal()" title="Close modal"><i class="fa-solid fa-xmark"></i></button>
-      <div id="modalContent" class="modal-grid">
-        <!-- content replaced dynamically -->
-      </div>
+  <!-- PROJECT MODAL -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="close" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <div id="modalContent" class="modal-grid"></div>
     </div>
   </div>
 
-  <!-- Mini console (EASTER EGG) -->
-  <div id="miniConsole" class="mini-console" style="display:none;">
-    <div class="console-output" id="consoleOutput">Type <strong>help</strong> and press Enter. Try: <em>about</em>, <em>projects</em>, <em>contact</em>.</div>
-    <div class="console-row">
-      <span style="font-weight:700;color:var(--muted)">➜</span>
-      <input id="consoleInput" placeholder="Type a command..." autocomplete="off">
-      <button onclick="runConsole()" class="btn" style="padding:8px 10px">Run</button>
+  <!-- MINI CONSOLE EASTER EGG -->
+  <button class="console-toggle" onclick="toggleConsole()" aria-label="Open console"><i class="fa-solid fa-terminal"></i></button>
+  <div id="miniConsole" class="mini-console" aria-hidden="true" style="display:none">
+    <div class="console-output" id="consoleOutput">Type <strong>help</strong>. Try: <em>about</em>, <em>projects</em>, <em>contact</em>.</div>
+    <div style="display:flex; gap:8px; margin-top:8px">
+      <input id="consoleInput" placeholder="Command (e.g. help)" style="flex:1; padding:8px; border-radius:8px; border:1px solid #eef6ff">
+      <button class="btn btn-primary" onclick="runConsole()">Run</button>
     </div>
   </div>
-  <button class="console-toggle" onclick="toggleConsole()" aria-label="Toggle mini console"><i class="fa-solid fa-terminal"></i></button>
 
   <script>
-    // ================
-    // Basic page setup
-    // ================
+    // Basic page init
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Smooth reveal using IntersectionObserver
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting) e.target.style.opacity = 1;
-      });
-    }, {threshold: 0.12});
-    document.querySelectorAll('.project-card, .about-card, .skill, .tl-body').forEach(n => {
-      n.style.opacity = 0;
-      n.style.transition = 'opacity 680ms ease, transform 680ms ease';
-      observer.observe(n);
-    });
-
-    // Typing animation for hero small line (simple)
-    (function typeIntro(){
-      const el = document.querySelector('.tagline');
-      const text = "From AI-powered diagnosis systems to real-time shuttle tracking — I turn ideas into impact.";
-      let i=0;
-      el.textContent = '';
-      function step(){
-        el.textContent += text[i++] || '';
-        if(i < text.length) setTimeout(step, 18);
-      }
-      step();
-    })();
-
-    // ================
-    // Modal project logic
-    // ================
-    const projects = {
+    // Projects data (case studies). Replace images with your assets in /assets/
+    const PROJECTS = {
       'vitra': {
         title: 'Vitra AI — Early Disease Prediction',
-        subtitle: 'AI-driven assistant for early detection (Winner — African Digital Innovation Challenge)',
-        images: [
-          'https://source.unsplash.com/collection/190727/900x600'
-        ],
-        detail: `<p><strong>Overview:</strong> Vitra AI integrates predictive models with a clinician-friendly UI to help prioritize high-risk patients early.</p>
-                 <p><strong>My role:</strong> Front-end architecture, model integration (Python + Flask API), and dashboard UX. Implemented responsive charts, patient risk summaries, and secure data pipelines.</p>
-                 <p><strong>Tech:</strong> Python, Flask, TensorFlow, React, Firebase, Chart.js</p>`
+        subtitle: 'AI assistant to triage and prioritize patient risk',
+        hero: 'assets/vitra-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> Vitra AI integrates predictive models into a clinician-friendly dashboard to highlight patients at elevated risk of diabetes and cardiovascular disease.</p>
+                 <p><strong>Role:</strong> Front-end architecture, dashboard UX, model integration with Flask API, visualizations (Chart.js).</p>
+                 <p><strong>Tech:</strong> Python, TensorFlow, Flask, React, Firebase.</p>
+                 <p><strong>Impact:</strong> Winner — African Digital Innovation Challenge; helped clinicians triage limited resources more effectively.</p>`
       },
       'shuttle': {
-        title: 'Shuttle Tracker — KNUST Campus Navigation',
-        subtitle: 'Real-time shuttle locations and arrival estimates',
-        images: ['https://source.unsplash.com/collection/483251/900x600'],
-        detail: `<p><strong>Overview:</strong> A real-time tracking web app that shows shuttle positions, estimated arrival times, and simple route planning.</p>
-                 <p><strong>My role:</strong> Implemented maps, socket-based updates, and rider notifications. Focused on performance and low bandwidth optimizations.</p>
-                 <p><strong>Tech:</strong> JavaScript, Leaflet, Socket.io, Firebase</p>`
+        title: 'Shuttle Tracker — Campus Navigation System',
+        subtitle: 'Real-time shuttle positions & ETAs for KNUST students',
+        hero: 'assets/shuttle-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> Real-time tracker showing shuttle positions, estimated arrival times and low-bandwidth mode for campus coverage.</p>
+                 <p><strong>Role:</strong> Map integration (Leaflet), socket-based updates, mobile-first UI.</p>
+                 <p><strong>Tech:</strong> JavaScript, Socket.io, Firebase, Leaflet.</p>`
       },
       'emart': {
-        title: 'E-Mart — Responsive E-commerce Demo',
-        subtitle: 'Shopping cart, checkout, and admin dashboard',
-        images: ['https://source.unsplash.com/collection/888146/900x600'],
-        detail: `<p><strong>Overview:</strong> A full e-commerce prototype with product management and a simple order flow.</p>
-                 <p><strong>My role:</strong> Front-end UI, Stripe integration for payments, and admin interfaces.</p>
-                 <p><strong>Tech:</strong> React, Node.js, MongoDB, Stripe</p>`
+        title: 'E-Mart — E-commerce Prototype',
+        subtitle: 'Responsive storefront with admin dashboard',
+        hero: 'assets/emart-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> A polished e-commerce prototype with product CRUD, user carts, and Stripe checkout for demos.</p>
+                 <p><strong>Role:</strong> Front-end UI, Stripe payments integration, admin dashboard.</p>
+                 <p><strong>Tech:</strong> React, Node.js, MongoDB, Stripe.</p>`
       },
       'fitness': {
         title: 'Fitness Tracker',
-        subtitle: 'Track workouts, calories, and progress',
-        images: ['https://source.unsplash.com/collection/357786/900x600'],
-        detail: `<p><strong>Overview:</strong> An offline-friendly fitness tracker with charts and persisted sessions.</p>
-                 <p><strong>Tech:</strong> Vanilla JS, Chart.js, LocalStorage</p>`
+        subtitle: 'Offline-first workout tracker and charts',
+        hero: 'assets/fitness-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> Tracks workouts and progress with charts and local persistence.</p>
+                 <p><strong>Tech:</strong> Vanilla JS, Chart.js, LocalStorage.</p>`
       },
       'skillforge': {
-        title: 'SkillForge — Workshop Registrations',
-        subtitle: 'Registration & admin system for workshops',
-        images: ['https://source.unsplash.com/collection/1437380/900x600'],
-        detail: `<p><strong>Overview:</strong> A registration system tailored to manage event capacity, attendance and simple analytics.</p>
-                 <p><strong>Tech:</strong> React, Firebase (Firestore), Auth</p>`
+        title: 'SkillForge — Workshop Registration',
+        subtitle: 'Registration & admin system for workshop events',
+        hero: 'assets/skillforge-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> Manages registrations, capacities and analytics for student workshops.</p>
+                 <p><strong>Tech:</strong> React, Firebase (Firestore), Auth.</p>`
+      },
+      'mhc': {
+        title: 'Make Heaven Crowded — Faith-driven shop & gospel hub',
+        subtitle: 'Shop, donate, customize designs, and share devotionals',
+        hero: 'assets/mhc-thumb.jpg',
+        detail: `<p><strong>Overview:</strong> Make Heaven Crowded is an integrated online storefront and gospel hub. It combines e-commerce (apparel & custom designs), ministry content (devotionals, testimonies), donation flows, and community features (ambassador program).</p>
+                 <p><strong>Role:</strong> Product design, front-end implementation, e-commerce flows and CMS-style content for devotionals. Implemented a design generator to preview verses on apparel and a community marquee to showcase outreach photos.</p>
+                 <p><strong>Highlights:</strong></p>
+                 <ul>
+                   <li>Purpose-led commerce: a portion of profits funds outreach.</li>
+                   <li>Design generator: users preview custom verse text on shirts and add to cart.</li>
+                   <li>Community features: donation transparency and prayer/contact flows.</li>
+                 </ul>
+                 <p><strong>Tech:</strong> React/Static site (prototype), Stripe/PayPal integration, Firebase for forms and simple CMS, Canvas preview for custom designs.</p>
+                 <p><strong>Visuals:</strong> Polished product mockups, hero imagery, and a community marquee for outreach photos.</p>`
       }
     };
 
+    // Modal open/close
     function openProject(key){
-      const p = projects[key];
+      const p = PROJECTS[key];
       if(!p) return;
-      const container = document.getElementById('modalContent');
-      container.innerHTML = `
+      const modal = document.getElementById('modalBackdrop');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
         <div>
-          <h2 id="modalTitle" style="margin-top:6px">${p.title}</h2>
-          <div style="color:var(--muted)">${p.subtitle}</div>
-          <div style="margin-top:12px;color:var(--muted)">${p.detail}</div>
+          <h2>${p.title}</h2>
+          <div style="color:var(--muted);margin-bottom:12px">${p.subtitle}</div>
+          <div style="color:var(--muted)">${p.detail}</div>
         </div>
-        <aside style="min-width:280px">
+        <aside>
           <div style="border-radius:10px;overflow:hidden;border:1px solid #eef6ff">
-            <img src="${p.images[0]}" alt="${p.title} screenshot" style="width:100%;height:220px;object-fit:cover;display:block">
+            <img src="${p.hero}" alt="${p.title} screenshot" style="width:100%;height:220px;object-fit:cover;display:block">
             <div style="padding:12px;background:white">
-              <div style="font-weight:700;margin-bottom:6px">Quick facts</div>
-              <div style="color:var(--muted);font-size:14px">Role: Lead Front-end & Integration</div>
-              <div style="color:var(--muted);font-size:14px;margin-top:6px">Status: Active / Prototype</div>
-              <div style="display:flex;gap:8px;margin-top:10px">
-                <a class="icon-btn" href="#" onclick="event.preventDefault(); alert('Replace with live link');"><i class="fa-solid fa-globe"></i> Live</a>
-                <a class="icon-btn" href="#" onclick="event.preventDefault(); alert('Replace with repo link');"><i class="fa-brands fa-github"></i> Repo</a>
+              <div style="font-weight:800;margin-bottom:6px">Quick facts</div>
+              <div style="color:var(--muted);font-size:14px">${p.subtitle}</div>
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <a class="btn btn-ghost" href="#" onclick="event.preventDefault(); alert('Add live link here')">Live</a>
+                <a class="btn btn-ghost" href="#" onclick="event.preventDefault(); alert('Add repo link here')"><i class="fa-brands fa-github"></i> Repo</a>
               </div>
             </div>
           </div>
         </aside>
       `;
-      const backdrop = document.getElementById('modalBackdrop');
-      backdrop.style.display = 'flex';
-      setTimeout(()=>{ document.getElementById('modal').classList.add('show'); backdrop.setAttribute('aria-hidden','false') }, 10);
+      modal.style.display = 'flex'; modal.setAttribute('aria-hidden','false');
     }
     function closeModal(){
-      const backdrop = document.getElementById('modalBackdrop');
-      document.getElementById('modal').classList.remove('show');
-      backdrop.setAttribute('aria-hidden','true');
-      setTimeout(()=>backdrop.style.display='none',220);
+      const modal = document.getElementById('modalBackdrop');
+      modal.style.display = 'none'; modal.setAttribute('aria-hidden','true');
+      document.getElementById('modalContent').innerHTML = '';
     }
-    document.getElementById('modalBackdrop').addEventListener('click', (e) => {
-      if(e.target.id === 'modalBackdrop') closeModal();
-    });
+    document.getElementById('modalBackdrop').addEventListener('click', (e) => { if(e.target === e.currentTarget) closeModal(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-    // ================
-    // Contact form placeholder
-    // ================
-    function contactSubmit(e){
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      // For demo: just open mailto (replace with real submission in production)
-      const subject = encodeURIComponent('Portfolio contact from ' + name);
-      const body = encodeURIComponent(message + '\n\n— ' + name + ' • ' + email);
-      window.location.href = `mailto:youremail@example.com?subject=${subject}&body=${body}`;
+    // Contact form: opens mailto by default (replace with real endpoint later)
+    function contactSubmit(ev){
+      ev.preventDefault();
+      const name = document.getElementById('cName').value.trim();
+      const email = document.getElementById('cEmail').value.trim();
+      const msg = document.getElementById('cMessage').value.trim();
+      if(!name || !email || !msg) { alert('Please complete the form.'); return; }
+      const subj = encodeURIComponent('Portfolio message from ' + name);
+      const body = encodeURIComponent(msg + '\n\n— ' + name + ' • ' + email);
+      window.location.href = `mailto:youremail@example.com?subject=${subj}&body=${body}`;
     }
 
-    // ================
-    // Mini console
-    // ================
+    // Mini Console (Easter egg)
     function toggleConsole(){
-      const c = document.getElementById('miniConsole');
-      c.style.display = (c.style.display === 'none' || !c.style.display) ? 'block' : 'none';
-      document.getElementById('consoleInput').focus();
+      const node = document.getElementById('miniConsole');
+      if(node.style.display === 'none' || node.style.display === '') {
+        node.style.display = 'block';
+        document.getElementById('consoleInput').focus();
+      } else node.style.display = 'none';
     }
     function runConsole(){
       const input = document.getElementById('consoleInput');
       const out = document.getElementById('consoleOutput');
-      const cmd = input.value.trim().toLowerCase();
+      const cmd = (input.value || '').trim().toLowerCase();
       if(!cmd) return;
-      const push = (txt) => { out.innerHTML += '<div style="margin-top:6px">'+txt+'</div>'; out.scrollTop = out.scrollHeight; };
-      if(cmd === 'help'){
-        push('<strong>Commands:</strong> about, projects, contact, resume, clear');
-      } else if(cmd === 'about'){
-        push('Jads — web developer focused on web + AI. Winner — African Digital Innovation Challenge.');
-      } else if(cmd === 'projects'){
-        push('Featured: Vitra AI, Shuttle Tracker, E-Mart, Fitness Tracker, SkillForge.');
-      } else if(cmd === 'contact'){
-        push('Email: youremail@example.com');
-      } else if(cmd === 'resume'){
-        push('<a href="resume.pdf" target="_blank" style="color:var(--accent)">Open resume.pdf</a>');
-      } else if(cmd === 'clear'){
-        out.innerHTML = '';
-      } else {
-        push('Unknown command: ' + cmd + ' (type help)');
-      }
+      const push = txt => { out.innerHTML += '<div style="margin-top:6px">'+txt+'</div>'; out.scrollTop = out.scrollHeight; };
+      if(cmd === 'help'){ push('<strong>Commands:</strong> about, projects, contact, resume, clear'); }
+      else if(cmd === 'about'){ push('Jads — web developer focused on shipping product-grade apps. Winner: African Digital Innovation Challenge.'); }
+      else if(cmd === 'projects'){ push('Projects: Vitra AI, Shuttle Tracker, E-Mart, Fitness Tracker, SkillForge, Make Heaven Crowded.'); }
+      else if(cmd === 'contact'){ push('Email: youremail@example.com'); }
+      else if(cmd === 'resume'){ push('<a href="resume.pdf" target="_blank" style="color:var(--accent)">Open resume.pdf</a>'); }
+      else if(cmd === 'clear'){ out.innerHTML = ''; }
+      else push('Unknown command: ' + cmd + ' (type help)');
       input.value = '';
     }
-    document.getElementById('consoleInput').addEventListener('keydown', function(e){
-      if(e.key === 'Enter') runConsole();
+    document.getElementById('consoleInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') runConsole(); });
+
+    // Small reveal animation for cards
+    window.addEventListener('load', ()=> {
+      document.querySelectorAll('.project-card, .card, .skill').forEach((el,i) => {
+        el.style.opacity = 0; el.style.transform = 'translateY(8px)';
+        setTimeout(()=> { el.style.transition='opacity .6s ease, transform .6s ease'; el.style.opacity=1; el.style.transform='translateY(0)'; }, 120 + i*70);
+      });
     });
 
-    // Accessibility: trap focus for modal
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape'){
-        // close modal or hide console
-        if(document.getElementById('modalBackdrop').style.display === 'flex') closeModal();
-        else {
-          const c = document.getElementById('miniConsole');
-          if(c.style.display === 'block') c.style.display = 'none';
-        }
+    // Prevent focus outline except on keyboard (simple)
+    (function(){
+      let mouse = false;
+      window.addEventListener('mousedown', ()=> mouse = true);
+      window.addEventListener('keydown', (e)=> { if(e.key === 'Tab') mouse = false; });
+      document.addEventListener('focusin', (e)=> { if(mouse) e.target.style.outline='none'; });
+    })();
+
+    // Open project by data attribute on click (delegation)
+    document.body.addEventListener('click', (e) => {
+      const open = e.target.closest('[data-project]');
+      if(open) {
+        const key = open.dataset.project;
+        if(key) openProject(key);
       }
     });
 
-    // Small polish: reveal project cards on load
-    setTimeout(()=>document.querySelectorAll('.project-card').forEach((el,i)=>{ setTimeout(()=>el.style.opacity=1, i*90) }), 200);
+    // Helpful: keyboard escape to close modal etc.
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') {
+        closeModal();
+        const consoleNode = document.getElementById('miniConsole');
+        if(consoleNode && consoleNode.style.display === 'block') consoleNode.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
