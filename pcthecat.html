@@ -18,6 +18,7 @@
     --glass:rgba(255,255,255,0.03);
     --card-radius:12px;
     --shadow: 0 8px 28px rgba(6,8,20,0.6);
+    --success:#22c55e;
   }
 
   html,body{height:100%;margin:0;background:linear-gradient(180deg,#02020a 0%, #06030b 100%);color:#f3f7ff;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;overflow:hidden}
@@ -59,8 +60,8 @@
   .avatar{height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 30px rgba(10,6,25,0.6)}
 
   .meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-  .nick{font-weight:800;color:white;font-family:Space Mono,monospace}
-  .idline{color:var(--muted-2)}
+  /* removed nick styling per request (no IG handle shown) */
+  .idline{color:var(--muted-2);font-weight:700}
 
   .share-actions{display:flex;gap:8px;margin-top:12px}
   .share-btn{flex:1;padding:12px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--purple-600),var(--purple-400));color:white;font-weight:800;cursor:pointer}
@@ -68,69 +69,21 @@
   .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:inline-flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
 
   button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(107,33,168,0.12)}
- :root {
-  --btn-size: 44px;
-  --glass-border: rgba(255,255,255,0.04);
-  --purple-600: #6b21a8;
-  --purple-400: #a78bfa;
-  --accent-teal: #00c2a8;
-  --focus-ring: rgba(107,33,168,0.14);
-}
 
- .icon-btn {
-  width: var(--btn-size);
-  height: var(--btn-size);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  color: #fff;                    
-  cursor: pointer;
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.icon-btn:focus { box-shadow: 0 6px 20px var(--focus-ring); outline: none; transform: translateY(-1px); }
+  /* task checker */
+  .tasks{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+  .task-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02)}
+  .task-left{display:flex;align-items:center;gap:10px}
+  .task-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03)}
+  .task-done{background:var(--success);border-color:rgba(0,0,0,0.06)}
+  .progress{margin-top:10px;text-align:center;font-weight:700}
 
- .icon-btn.close {
-  background: rgba(255,255,255,0.02);
-  color: rgba(255,255,255,0.92);
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.03);
-}
-.icon-btn.close:hover { background: rgba(255,255,255,0.035); transform: translateY(-2px); }
-.icon-btn.close:active { transform: translateY(0); }
-
- .icon-btn.menu {
-  background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));
-  border-radius: 10px;
-  color: rgba(255,255,255,0.9);
-}
-.icon-btn.menu:hover { box-shadow: 0 8px 26px rgba(7,6,18,0.45); transform: translateY(-2px); }
-
- .btn-x {
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  color: #0b0b0d;
-  background: linear-gradient(90deg, var(--purple-600, #6b21a8), var(--purple-400, #a78bfa));
-  box-shadow: 0 10px 30px rgba(107,33,168,0.14);
-  border: 0;
-  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-}
-.btn-x:hover { transform: translateY(-3px); filter: brightness(1.03); }
-.btn-x:active { transform: translateY(-1px); }
-.btn-x:focus { box-shadow: 0 0 0 6px var(--focus-ring); outline: none; }
-
- .btn-x.icon-only { padding: 8px; width: var(--btn-size); height: var(--btn-size); border-radius: 10px; color: #fff; }
-
- .icon-btn svg, .btn-x svg { width: 18px; height: 18px; display: block; fill: currentColor; stroke: currentColor; }
+  /* congrats overlay */
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85));z-index:9999}
+  .overlay-card{background:#0b0b10;padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);text-align:center}
+  .overlay-card h2{margin:0 0 8px 0}
+  .overlay-card p{margin:0 0 12px 0;color:var(--muted-2)}
+  .overlay-card button{padding:10px 12px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--purple-600),var(--purple-400));color:white}
 
 </style>
 </head>
@@ -173,8 +126,8 @@
           <button class="btn btn-primary" id="registerBtn">Register for Early Access</button>
           <button class="btn btn-cta" id="sharePrimary">Share on X</button>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-secondary">Join Discord</button>
-            <button class="btn btn-secondary">Follow on X</button>
+            <button class="btn btn-secondary" id="discordBtn">Join Discord</button>
+            <button class="btn btn-secondary" id="followBtn">Follow on X</button>
           </div>
         </div>
 
@@ -196,12 +149,12 @@
                 <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
                 <div class="meta">
                   <div>
-                    <div class="nick" id="nick">@PICITHECAT</div>
+                    <!-- nickname / IG handle removed per request -->
                     <div class="idline">ID: <span id="playerId">CODE-09-6617</span></div>
                   </div>
                   <div style="text-align:right">
                     <div class="small">Status</div>
-                    <div style="font-weight:800;color:white">Registered</div>
+                    <div style="font-weight:800;color:white" id="statusText">Registered</div>
                   </div>
                 </div>
 
@@ -210,6 +163,23 @@
                 </div>
 
                 <div style="margin-top:12px" class="small">When people sign up with your referral code, your position in the early access queue improves. Share to increase your chances.</div>
+
+                <!-- TASK CHECKER -->
+                <div class="tasks" id="tasks">
+                  <div class="task-row" data-task="follow">
+                    <div class="task-left"><div class="task-dot" id="dot-follow"></div><div>Follow us on X</div></div>
+                    <div><button class="btn btn-secondary" id="task-follow">Follow</button></div>
+                  </div>
+                  <div class="task-row" data-task="discord">
+                    <div class="task-left"><div class="task-dot" id="dot-discord"></div><div>Join our Discord</div></div>
+                    <div><button class="btn btn-secondary" id="task-discord">Join</button></div>
+                  </div>
+                  <div class="task-row" data-task="share">
+                    <div class="task-left"><div class="task-dot" id="dot-share"></div><div>Share your referral card</div></div>
+                    <div><button class="btn btn-primary" id="task-share">Share</button></div>
+                  </div>
+                  <div class="progress" id="progressText">0 / 3 tasks completed</div>
+                </div>
 
               </div>
             </div>
@@ -222,7 +192,8 @@
   </div>
 
   <script>
-     (function fitStage(){
+    // Fit-to-viewport scale logic (no scrolling)
+    (function fitStage(){
       const wrap = document.getElementById('stageWrap');
       function apply(){
         const vw = window.innerWidth - 24;
@@ -237,7 +208,8 @@
       apply();
     })();
 
-     (function requireXLogin(){
+    // Simulated X login gating (demo)
+    (function requireXLogin(){
       const logged = localStorage.getItem('mushrush.loggedX') === '1';
       if (!logged){
         const overlay = document.createElement('div');
@@ -258,27 +230,72 @@
       }
     })();
 
-     document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); alert('Simulated X login.'); location.reload(); });
-    document.getElementById('copyRef').addEventListener('click', ()=>{ const txt = document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); alert('Referral copied'); });
-    document.getElementById('applyRef').addEventListener('click', ()=>{ const v = document.getElementById('useRef').value.trim(); if (!v) return alert('Enter a referral code'); alert('Referral applied: ' + v + ' (demo)'); });
+    // TASK CHECKER LOGIC
+    const TASKS = ['follow','discord','share'];
+    function loadTaskState(){
+      const s = JSON.parse(localStorage.getItem('mushrush.tasks') || '{}');
+      TASKS.forEach(t=>{ if (!s[t]) s[t]=false; });
+      return s;
+    }
+    function saveTaskState(state){ localStorage.setItem('mushrush.tasks', JSON.stringify(state)); }
+    function updateUI(state){
+      let done = 0;
+      TASKS.forEach(t=>{
+        const dot = document.getElementById('dot-'+t);
+        if (state[t]){ dot.classList.add('task-done'); done++; } else { dot.classList.remove('task-done'); }
+      });
+      document.getElementById('progressText').innerText = `${done} / 3 tasks completed`;
+      if (done === 3) showCongrats();
+    }
 
-     document.getElementById('registerBtn').addEventListener('click', ()=>{
-      const logged = localStorage.getItem('mushrush.loggedX') === '1';
-      if (!logged) return alert('Please sign in with X first');
-      alert('Registration simulated. In production this should submit an on-chain or backend registration.');
+    function showCongrats(){
+      // if overlay already shown, skip
+      if (document.getElementById('congratsOverlay')) return;
+      const overlay = document.createElement('div'); overlay.id='congratsOverlay'; overlay.className='overlay';
+      overlay.innerHTML = `<div class='overlay-card'><h2>Congrats — 3/3 Complete</h2><p>You will be notified about your early access. Thanks for sharing!</p><button id='closeCongrats'>Close</button></div>`;
+      document.body.appendChild(overlay);
+      document.getElementById('closeCongrats').addEventListener('click', ()=>{ overlay.remove(); });
+    }
+
+    // action handlers
+    const state = loadTaskState(); updateUI(state);
+
+    document.getElementById('followBtn').addEventListener('click', ()=>{
+      // open X profile in new tab
+      window.open('https://twitter.com/intent/follow?screen_name=your_project_handle', '_blank');
+      state.follow = true; saveTaskState(state); updateUI(state);
     });
 
-     function shareOnX(ref){
+    document.getElementById('discordBtn').addEventListener('click', ()=>{
+      window.open('https://discord.gg/your-invite-code', '_blank');
+      state.discord = true; saveTaskState(state); updateUI(state);
+    });
+
+    function shareOnX(ref){
       const pageUrl = window.location.href;
-      const text = `I'm on the MushRush early access waitlist! 🎮🌱\nGet early access and join me — use my referral code ${ref} to increase your spot.\nClaim your slot: ` + pageUrl + `\n#MushRush #crypto #gaming`;
+      const text = `I'm on the MushRush early access waitlist! 🎮🌱\nUse my referral code ${ref} to increase your spot.\nGet access when the game launches: ` + pageUrl + `\n#MushRush`;
       const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
       window.open(url, '_blank', 'noopener');
+      state.share = true; saveTaskState(state); updateUI(state);
     }
 
     document.getElementById('shareBtn').addEventListener('click', ()=>{ const ref = document.getElementById('myRef').innerText; shareOnX(ref); });
     document.getElementById('sharePrimary').addEventListener('click', ()=>{ const ref = document.getElementById('myRef').innerText; shareOnX(ref); });
 
-     (async function setRefFromWallet(){
+    // copy & apply ref
+    document.getElementById('copyRef').addEventListener('click', ()=>{ const txt=document.getElementById('myRef').innerText; navigator.clipboard.writeText(txt); alert('Referral copied'); });
+    document.getElementById('applyRef').addEventListener('click', ()=>{ const v=document.getElementById('useRef').value.trim(); if(!v) return alert('Enter a referral code'); alert('Referral applied: '+v+' (demo)'); });
+
+    // register (demo)
+    document.getElementById('registerBtn').addEventListener('click', ()=>{
+      const logged = localStorage.getItem('mushrush.loggedX') === '1';
+      if (!logged) return alert('Please sign in with X first');
+      alert('Registration simulated. In production this should submit an on-chain or backend registration.');
+      document.getElementById('statusText').innerText = 'Registered';
+    });
+
+    // derive a friendly ref from wallet if connected
+    (async function setRefFromWallet(){
       try{
         if (window.ethereum){
           const accs = await window.ethereum.request({method:'eth_accounts'});
@@ -288,11 +305,11 @@
             document.getElementById('myRef').innerText = formatted;
             document.getElementById('bigCode').innerText = 'CODE-' + r.slice(0,2) + '-' + r.slice(2,4);
             document.getElementById('playerId').innerText = document.getElementById('bigCode').innerText;
-            document.getElementById('nick').innerText = '@' + r.toLowerCase();
           }
         }
       }catch(e){console.log(e)}
     })();
+
   </script>
 </body>
 </html>
