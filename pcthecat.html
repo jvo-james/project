@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>MushRush — Early Access (Final Polished)</title>
+<title>MushRush — Early Access (Auto-fit)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -11,96 +11,99 @@
     --purple-700:#5b21a6; --purple-400:#b89bff; --teal:#00c2a8; --success:#22c55e;
     --glass:rgba(255,255,255,0.04); --card-radius:12px; --shadow: 0 12px 40px rgba(3,6,20,0.65);
   }
+
+  /* Page-level: prevent body scroll and let the stage scale to fit the viewport */
   html,body{height:100%;margin:0;background:linear-gradient(180deg,#02020a 0%, #07030f 100%);color:#f6f9ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
-  .stage-wrap{width:1200px;height:720px;margin:0 auto;transform-origin:top left}
-  .stage{display:grid;grid-template-columns:520px 1fr;gap:28px;height:100%;padding:22px;box-sizing:border-box}
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:18px;border:1px solid var(--glass);box-shadow:var(--shadow)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.006) 1px, transparent 1px);background-size:6px 6px;mix-blend-mode:overlay;opacity:.6}
+
+  /* Root stage size (design canvas). We will scale this to fit any viewport exactly. */
+  .stage-wrap{width:1200px;height:720px;margin:0 auto;transform-origin:top center;display:flex;align-items:center;justify-content:center}
+  .stage{width:1160px;max-width:1160px;height:680px;padding:20px;box-sizing:border-box;display:grid;grid-template-columns:480px 1fr;gap:20px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass);box-shadow:var(--shadow)}
 
   /* header */
   .header{display:flex;align-items:center;gap:12px}
   .logo{width:56px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--purple-700),var(--purple-400));display:flex;align-items:center;justify-content:center;font-weight:800}
-  .title{font-weight:700;font-size:16px}
-  .subtitle{font-size:13px;color:var(--muted-2)}
+  .title{font-weight:700;font-size:15px}
+  .subtitle{font-size:12px;color:var(--muted-2)}
 
-  /* left content */
+  .left-inner{display:flex;flex-direction:column;gap:10px}
   .welcome{font-family:Space Mono,monospace;font-weight:700;color:white}
-  .code-large{font-family:Space Mono,monospace;font-size:36px;color:var(--purple-400);letter-spacing:1px}
+  .code-large{font-family:Space Mono,monospace;font-size:30px;color:var(--purple-400);letter-spacing:1px}
   .muted{color:var(--muted);font-size:13px}
+
   .ref-row{display:flex;align-items:center;gap:10px}
-  .ref-code{font-family:Space Mono,monospace;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--teal);font-size:18px}
+  .ref-code{font-family:Space Mono,monospace;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--teal);font-size:16px}
   .input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
 
-  .btn{padding:12px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+  .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
   .btn-primary{background:linear-gradient(90deg,var(--purple-700),var(--purple-400));color:white}
   .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
   .btn-cta{background:linear-gradient(90deg,#ff6fcf,#7c3aed);color:white}
 
-  /* right content */
-  .card-wrap{width:440px}
-  .rainbow{padding:6px;border-radius:14px;background:linear-gradient(135deg,#b89bff,#7c3aed,#ff6fcf,#6ee7b7)}
+  /* right */
+  .card-wrap{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+  .rainbow{padding:6px;border-radius:12px;background:linear-gradient(135deg,#b89bff,#7c3aed,#ff6fcf,#6ee7b7)}
   .player-card{background:linear-gradient(180deg,#0b0a0f, rgba(255,255,255,0.01));border-radius:10px;padding:12px;color:var(--muted)}
-  .avatar{height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 36px rgba(8,6,20,0.7)}
+
+  /* Make avatar scale based on stage height while never overflowing the card */
+  .avatar{width:100%;height:calc( (680px - 160px) / 1.05 );max-height:360px;border-radius:8px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 36px rgba(8,6,20,0.7)}
+  /* If viewport is very short, the JS scale will reduce everything; these sizes are design defaults */
+
+  .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
   .idline{color:var(--muted-2);font-weight:700}
 
-  /* polished buttons (close/menu/download) */
-  .icon-btn{width:46px;height:46px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);color:#fff;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
-  .icon-btn:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(6,10,30,0.5)}
-  .icon-btn:active{transform:translateY(-1px)}
-  .icon-btn.close{background:linear-gradient(180deg, rgba(255,80,80,0.08), rgba(255,40,40,0.03));border-color:rgba(255,80,80,0.12)}
-  .icon-btn.menu{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));}
-  .icon-btn.download{background:linear-gradient(90deg,var(--purple-700),var(--purple-400));border:0}
-  .icon-btn svg{width:18px;height:18px;fill:currentColor}
-
   /* tasks */
-  .tasks{margin-top:14px;display:flex;flex-direction:column;gap:10px}
-  .task-row{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:all .18s ease}
-  .task-left{display:flex;align-items:center;gap:12px}
-  .task-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03);display:inline-block}
+  .tasks{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+  .task-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02);transition:all .12s ease}
+  .task-left{display:flex;align-items:center;gap:10px}
+  .task-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03);display:inline-block}
   .task-label{font-weight:700}
-  .task-done{background:var(--success);box-shadow:0 6px 18px rgba(34,197,94,0.14);transform:scale(1.05)}
-  .progress{margin-top:12px;text-align:center;font-weight:800}
+  .task-done{background:var(--success);box-shadow:0 6px 18px rgba(34,197,94,0.14);transform:scale(1.03)}
+  .progress{margin-top:8px;text-align:center;font-weight:800}
 
+  /* controls (close/menu/download) with nicer spacing */
+  .controls{display:flex;gap:8px}
+  .icon-btn{width:42px;height:42px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);color:#fff;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+  .icon-btn:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(6,10,30,0.45)}
+  .icon-btn.close{background:linear-gradient(180deg, rgba(255,80,80,0.08), rgba(255,40,40,0.03));border-color:rgba(255,80,80,0.12)}
+  .icon-btn.download{background:linear-gradient(90deg,var(--purple-700),var(--purple-400));border:0}
+  .icon-btn svg{width:16px;height:16px;fill:currentColor}
+
+  /* toast and overlay */
   .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:#0b0b10;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 12px 30px rgba(0,0,0,0.6);opacity:0;pointer-events:none;transition:opacity .18s ease}
   .toast.show{opacity:1;pointer-events:auto}
-
-  /* congrats modal */
   .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85));z-index:9999}
-  .overlay-card{background:#0b0b10;padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);text-align:center;max-width:520px}
-  .overlay-card h2{margin:0 0 8px 0}
-  .overlay-card p{margin:0 0 12px 0;color:var(--muted-2)}
+  .overlay-card{background:#0b0b10;padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);text-align:center;max-width:480px}
   .confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:10000}
 
-  button:focus,input:focus{outline:none;box-shadow:0 0 0 4px rgba(91,33,166,0.12)}
+  /* responsive: stack columns on narrow screens but keep everything visible via scale */
+  @media (max-width:920px){ .stage{grid-template-columns:1fr;grid-auto-rows:auto} .avatar{height:260px} }
 </style>
 </head>
 <body>
   <div id="stageWrap" class="stage-wrap">
-    <div class="stage">
+    <div id="stage" class="stage">
 
-      <div class="left panel">
+      <div class="left-inner">
         <div class="header">
           <div class="logo">M</div>
           <div>
             <div class="title">MushRush — Early Access</div>
             <div class="subtitle">Marketing landing • Share to climb the queue</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
-            <button class="icon-btn menu" title="Menu" aria-label="Menu">
-              <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button id="loginX" class="icon-btn" title="Sign in with X" aria-label="Sign in with X">
-              <svg viewBox="0 0 24 24"><path d="M23 4.5c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.7.4-1.5.7-2.4.9C19.6 3 18.5 2.5 17.3 2.5c-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.9C10.3 6.8 6.4 4.9 3.9 2.1c-.4.6-.7 1.3-.7 2.1 0 1.6.8 3 2 3.9-.6 0-1.2-.2-1.7-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.6.1-.9.1-.2 0-.5 0-.7-.1.5 1.6 2 2.7 3.7 2.7C7 19.9 5 20.6 2.7 20.6c-.4 0-.8 0-1.2-.1C1.8 21.8 4.3 22.7 7.1 22.7c8.5 0 13.2-7.1 13.2-13.2v-.6c.9-.7 1.6-1.5 2.2-2.5z" fill="currentColor"/></svg>
-            </button>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center" class="controls">
+            <button class="icon-btn menu" title="Menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button id="loginX" class="icon-btn" title="Sign in with X" aria-label="Sign in with X"><svg viewBox="0 0 24 24"><path d="M23 4.5c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.7.4-1.5.7-2.4.9C19.6 3 18.5 2.5 17.3 2.5c-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.9C10.3 6.8 6.4 4.9 3.9 2.1c-.4.6-.7 1.3-.7 2.1 0 1.6.8 3 2 3.9-.6 0-1.2-.2-1.7-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.6.1-.9.1-.2 0-.5 0-.7-.1.5 1.6 2 2.7 3.7 2.7C7 19.9 5 20.6 2.7 20.6c-.4 0-.8 0-1.2-.1C1.8 21.8 4.3 22.7 7.1 22.7c8.5 0 13.2-7.1 13.2-13.2v-.6c.9-.7 1.6-1.5 2.2-2.5z" fill="currentColor"/></svg></button>
           </div>
         </div>
 
-        <div style="margin-top:10px">
+        <div style="margin-top:8px">
           <div class="welcome">GET EARLY ACCESS</div>
           <div class="code-large" id="bigCode">CODE-09-6617</div>
           <div class="muted" style="margin-top:6px">This page is marketing-only while the game is in development. Share your referral to increase queue priority.</div>
         </div>
 
-        <div style="margin-top:10px">
+        <div style="margin-top:12px">
           <div class="ref-row">
             <div class="ref-code" id="myRef">RF-7G-4K</div>
             <button id="copyRef" class="btn btn-ghost" aria-label="Copy referral">Copy</button>
@@ -118,42 +121,40 @@
 
       </div>
 
-      <div class="right">
-        <div class="card-wrap">
-          <div class="rainbow">
-            <div class="player-card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div style="font-weight:800">PLAYER CARD</div>
-                <div style="display:flex;gap:8px">
-                  <button class="icon-btn download" title="Download" aria-label="Download card"><svg viewBox="0 0 24 24"><path d="M12 3v10M7 10l5 5 5-5M5 20h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-                  <button class="icon-btn close" title="Close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
-                </div>
+      <div class="card-wrap">
+        <div class="rainbow">
+          <div class="player-card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-weight:800">PLAYER CARD</div>
+              <div style="display:flex;gap:8px" class="controls">
+                <button class="icon-btn download" title="Download" aria-label="Download card"><svg viewBox="0 0 24 24"><path d="M12 3v10M7 10l5 5 5-5M5 20h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+                <button class="icon-btn close" title="Close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
+              <div class="meta" style="margin-top:10px">
+                <div><div class="idline">ID: <span id="playerId">CODE-09-6617</span></div></div>
+                <div style="text-align:right"><div class="muted">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
               </div>
 
-              <div style="margin-top:12px">
-                <div id="avatar" class="avatar" style="background-image:url('pc.avif')"></div>
-                <div class="meta" style="margin-top:12px">
-                  <div><div class="idline">ID: <span id="playerId">CODE-09-6617</span></div></div>
-                  <div style="text-align:right"><div class="muted">Status</div><div style="font-weight:800;color:white" id="statusText">Not registered</div></div>
+              <div class="tasks" id="tasks">
+                <div class="task-row" data-task="follow">
+                  <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
+                  <div><button class="btn btn-ghost" id="task-follow">Follow</button></div>
                 </div>
-
-                <div class="tasks" id="tasks">
-                  <div class="task-row" data-task="follow">
-                    <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
-                    <div><button class="btn btn-ghost" id="task-follow">Follow</button></div>
-                  </div>
-                  <div class="task-row" data-task="discord">
-                    <div class="task-left"><span class="task-dot" id="dot-discord"></span><div class="task-label">Join our Discord</div></div>
-                    <div><button class="btn btn-ghost" id="task-discord">Join</button></div>
-                  </div>
-                  <div class="task-row" data-task="share">
-                    <div class="task-left"><span class="task-dot" id="dot-share"></span><div class="task-label">Share your referral card</div></div>
-                    <div><button class="btn btn-primary" id="task-share">Share</button></div>
-                  </div>
-                  <div class="progress" id="progressText">0 / 3 tasks completed</div>
+                <div class="task-row" data-task="discord">
+                  <div class="task-left"><span class="task-dot" id="dot-discord"></span><div class="task-label">Join our Discord</div></div>
+                  <div><button class="btn btn-ghost" id="task-discord">Join</button></div>
                 </div>
-
+                <div class="task-row" data-task="share">
+                  <div class="task-left"><span class="task-dot" id="dot-share"></span><div class="task-label">Share your referral card</div></div>
+                  <div><button class="btn btn-primary" id="task-share">Share</button></div>
+                </div>
+                <div class="progress" id="progressText">0 / 3 tasks completed</div>
               </div>
+
             </div>
           </div>
         </div>
@@ -166,19 +167,24 @@
   <canvas id="confetti" class="confetti-canvas"></canvas>
 
   <script>
-    // Fit-to-viewport
-    (function fitStage(){
+    // New approach: auto-fit stage to viewport (width & height) so NOTHING overflows and page never needs scrolling.
+    (function autoFit(){
       const wrap = document.getElementById('stageWrap');
+      const designW = 1200, designH = 720; // design canvas size
       function apply(){
-        const vw = window.innerWidth - 24;
-        const vh = window.innerHeight - 24;
-        const iw = wrap.offsetWidth;
-        const ih = wrap.offsetHeight;
-        const scale = Math.min(vw/iw, vh/ih, 1);
-        wrap.style.transform = 'scale(' + scale + ')';
-        wrap.style.marginTop = ((vh - ih*scale)/2 + 12) + 'px';
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        // compute scale so both width and height fit (leave small margin)
+        const sx = (vw - 24) / designW;
+        const sy = (vh - 24) / designH;
+        const scale = Math.min(sx, sy, 1);
+        wrap.style.transform = `scale(${scale})`;
+        // center vertically with a little top margin
+        const top = Math.max(12, (vh - designH*scale)/2);
+        wrap.style.marginTop = top + 'px';
       }
       window.addEventListener('resize', apply);
+      window.addEventListener('orientationchange', apply);
       apply();
     })();
 
@@ -224,12 +230,10 @@
     // derive ref from wallet and init
     (async function init(){ try{ if(window.ethereum){ const accs=await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('myRef').innerText=f; document.getElementById('bigCode').innerText='CODE-'+r.slice(0,2)+'-'+r.slice(2,4); document.getElementById('playerId').innerText=document.getElementById('bigCode').innerText; } } }catch(e){console.log(e);} const s=loadState(); updateUI(s); })();
 
-    // polished button interactions: download & close
-    document.querySelector('.icon-btn.download').addEventListener('click', ()=>{ showToast('Download starting...'); /* implement download if desired */ });
+    document.querySelector('.icon-btn.download').addEventListener('click', ()=>{ showToast('Download starting...'); });
     document.querySelector('.icon-btn.close').addEventListener('click', ()=>{ showToast('Closed (demo)'); });
-
-    // simulated X login
     document.getElementById('loginX').addEventListener('click', ()=>{ localStorage.setItem('mushrush.loggedX','1'); showToast('Signed in with X (demo)'); });
+
   </script>
 </body>
 </html>
