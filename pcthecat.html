@@ -2,305 +2,446 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>MushRush — Early Access (Polished)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MushRush — On-Chain (Frontend)</title>
+
+<!-- Ethers.js v5 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-900:#05020a;
-    --panel:#0b0910;
-    --muted:rgba(255,255,255,0.72);
-    --muted-2:rgba(255,255,255,0.38);
-    --purple-800:#3b0f78;
-    --purple-700:#5b21a6;
-    --purple-500:#8b5cf6;
-    --purple-300:#c6a6ff;
-    --accent:#ff6fcf;
-    --success:#22c55e;
-    --glass:rgba(255,255,255,0.04);
-    --card-radius:14px;
-    --shadow-lg: 0 20px 50px rgba(6,8,20,0.7);
-    --focus: rgba(139,92,246,0.16);
+    --bg:#05020a; --panel:#0b0910; --muted:rgba(255,255,255,0.72);
+    --muted-2:rgba(255,255,255,0.38); --purple-700:#5b21a6; --purple-500:#8b5cf6;
+    --accent:#ff6fcf; --card-radius:12px; --glass:rgba(255,255,255,0.03);
   }
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#03010a 0%, #06020b 100%);color:#eef2ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
-  body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.004) 1px, transparent 1px);background-size:8px 8px;mix-blend-mode:overlay;opacity:.6;pointer-events:none}
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#03010a,#06020b);font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#eef2ff}
+  .container{max-width:1100px;margin:28px auto;padding:22px;display:grid;grid-template-columns:1fr 380px;gap:20px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:18px;border:1px solid var(--glass)}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .logo{width:54px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--purple-700),var(--purple-500));display:flex;align-items:center;justify-content:center;font-weight:800;font-family:Space Mono}
+  h1{font-family:Space Mono;margin:0;font-size:20px;color:#c6a6ff}
+  .muted{color:var(--muted-2);font-size:13px}
+  .row{display:flex;gap:10px;align-items:center}
+  .col{display:flex;flex-direction:column;gap:8px}
+  input, select, button{font-family:inherit}
+  input[type=text], select{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+  .btn{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--purple-700),var(--purple-500));cursor:pointer;color:white;font-weight:700}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--purple-300)}
+  .small{padding:8px 10px;font-size:14px}
+  .stat{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+  .right .card{height:100%}
+  .section-title{font-weight:700;color:var(--muted);font-size:13px;margin-bottom:6px}
 
-  /* design canvas auto-fit */
-  .stage-wrap{width:1280px;height:760px;margin:0 auto;transform-origin:top center;display:flex;align-items:center;justify-content:center}
-  .stage{width:1240px;height:720px;padding:22px;box-sizing:border-box;display:grid;grid-template-columns:1fr 480px;gap:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));border:1px solid var(--glass);box-shadow:var(--shadow-lg)}
+  /* inventory table */
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);font-size:13px}
+  th{color:var(--muted-2)}
+  .green{color:#7ee6a6}
 
-  /* LEFT column */
-  .left{display:flex;flex-direction:column;gap:14px;padding:10px}
-  .header{display:flex;align-items:center;gap:12px}
-  .logo{width:56px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--purple-700),var(--purple-500));display:flex;align-items:center;justify-content:center;font-weight:800}
-  .title{font-weight:700}
-  .subtitle{font-size:13px;color:var(--muted-2)}
-
-  .h1{font-family:Space Mono,monospace;font-weight:800;letter-spacing:1px;color:var(--purple-300);font-size:28px}
-  .lead{color:var(--muted);max-width:640px}
-
-  .ref-block{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-  .ref-required{color:var(--muted-2);font-size:13px}
-  .input-row{display:flex;gap:10px;align-items:center}
-  .input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-weight:600}
-  .btn-apply{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--purple-700),var(--purple-500));color:white;font-weight:800;cursor:pointer}
-
-  /* TASKS area (left) */
-  .tasks{margin-top:12px;display:flex;flex-direction:column;gap:12px}
-  .task-row{display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.012), transparent);border:1px solid rgba(255,255,255,0.02)}
-  .task-left{display:flex;align-items:center;gap:12px}
-  .task-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.03)}
-  .task-label{font-weight:700}
-
-  /* PURPLE task buttons (unified) */
-  .btn-task{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--purple-700),var(--purple-500));color:white;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(91,33,166,0.12)}
-  .btn-task.small{padding:8px 12px;font-weight:700}
-  .btn-task.done{background:linear-gradient(90deg,#22c55e,#7ee6a6);box-shadow:0 8px 20px rgba(34,197,94,0.12);color:#04220f}
-
-  .progress{margin-top:6px;text-align:left;color:var(--muted);font-weight:700}
-
-  /* MAIN CTA styles (distinct but cohesive) */
-  .cta-row{display:flex;gap:12px;margin-top:8px}
-  .btn-cta-primary{padding:12px 16px;border-radius:12px;border:0;background:linear-gradient(90deg,var(--purple-700),var(--purple-300));color:white;font-weight:900;cursor:pointer;box-shadow:0 14px 36px rgba(91,33,166,0.12)}
-  .btn-cta-secondary{padding:12px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.06);background:transparent;color:var(--purple-300);font-weight:900;cursor:pointer}
-
-  /* RIGHT column: player card with image container like screenshot */
-  .right{display:flex;flex-direction:column;gap:12px}
-  .card{border-radius:14px;padding:14px;background:linear-gradient(180deg, rgba(139,92,246,0.06), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 50px rgba(6,8,20,0.6)}
-
-  /* image container: rounded rectangle with large inset padding and subtle inset shadow (like screenshot) */
-  .image-frame{border-radius:14px;overflow:hidden;background:linear-gradient(180deg, var(--purple-300), var(--purple-500));padding:18px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -18px 30px rgba(0,0,0,0.18), 0 12px 36px rgba(10,6,25,0.6)}
-  .image-card{width:100%;max-width:420px;border-radius:12px;background:#fff;padding:6px;box-shadow:0 18px 40px rgba(16,10,30,0.6);}
-  .image-card img{display:block;width:100%;height:auto;border-radius:8px}
-
-  .card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-  .meta-left{color:var(--muted-2);font-weight:700}
-  .status{font-weight:900;color:white}
-
-  .card-tasks{margin-top:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
-  .card-tasks .task-row{background:transparent;border:0;padding:10px}
-
-  /* small helpers */
-  .muted{color:var(--muted)}
-  .hint{font-size:13px;color:var(--muted-2)}
-
-  button:focus,input:focus{outline:none;box-shadow:0 0 0 6px var(--focus)}
-
-  /* Close & Download variants (keeps consistency with theme) */
-.icon-btn {
-  width:42px;
-  height:42px;
-  border-radius:10px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.04);
-  color: #fff;
-  cursor:pointer;
-  transition: transform .14s ease, box-shadow .14s ease, background .12s ease;
-}
-.icon-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(6,10,30,0.45); }
-.icon-btn:active { transform: translateY(-1px); }
-.icon-btn:focus { outline: none; box-shadow: 0 0 0 6px rgba(139,92,246,0.12); }
-
-/* Close button: red-ish hint */
-.icon-btn.close {
-  background: linear-gradient(180deg, rgba(255,80,80,0.06), rgba(255,40,40,0.02));
-  border-color: rgba(255,80,80,0.10);
-  color: #fff;
-}
-
-/* Download button: purple solid */
-.icon-btn.download {
-  background: linear-gradient(90deg, #5b21a6, #8b5cf6);
-  border: 0;
-  color: #fff;
-  box-shadow: 0 10px 28px rgba(91,33,166,0.14);
-}
-.icon-btn svg { width:18px; height:18px; display:block; fill: currentColor; stroke: currentColor; }
-
+  .footer-note{font-size:12px;color:var(--muted-2);margin-top:8px}
+  .danger{color:#ff7a7a}
+  .success{color:#7ee6a6}
+  .center{display:flex;align-items:center;justify-content:center}
+  .code{font-family:Space Mono;background:rgba(255,255,255,0.02);padding:6px;border-radius:6px}
+  #toast{position:fixed;right:16px;bottom:16px;background:#111;border:1px solid rgba(255,255,255,0.03);padding:10px 12px;border-radius:10px;opacity:0;transition:opacity .2s;color:#fff}
 </style>
 </head>
 <body>
-  <div id="stageWrap" class="stage-wrap">
-    <div id="stage" class="stage">
+  <div class="container">
 
-      <div class="left panel">
-        <div class="header">
+    <!-- LEFT: main UI -->
+    <div>
+      <div class="card">
+        <header>
           <div class="logo">M</div>
           <div>
-            <div class="title">MushRush — Early Access</div>
-            <div class="subtitle">Marketing landing • Share to climb the queue</div>
+            <h1>MushRush — On-chain Game</h1>
+            <div class="muted">Early access frontend — interacts with your deployed contract</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <button class="btn-task small" id="copyRef">Copy ref</button>
+          <div style="margin-left:auto">
+            <button id="connectBtn" class="btn small">Connect Wallet</button>
+          </div>
+        </header>
+
+        <div style="display:flex;gap:12px;margin-bottom:12px">
+          <div class="stat" style="flex:1">
+            <div class="section-title">Connected</div>
+            <div id="addrDisplay" class="muted">Not connected</div>
+            <div id="refCodeLocal" class="code" style="margin-top:8px;display:inline-block"></div>
+          </div>
+          <div class="stat" style="width:180px">
+            <div class="section-title">Network</div>
+            <div id="networkName" class="muted">—</div>
           </div>
         </div>
+
+        <div style="display:flex;gap:12px;margin-bottom:12px">
+          <div style="flex:1">
+            <div class="section-title">Referral (required to register)</div>
+            <div class="row">
+              <input id="refInput" type="text" placeholder="Enter 6-char referral code or leave empty to use yours" maxlength="12" />
+              <button id="applyRef" class="btn ghost small">Use</button>
+            </div>
+            <div class="footer-note">If you don't have one yet the app will propose a code once you connect.</div>
+          </div>
+
+          <div style="width:180px">
+            <div class="section-title">Treasury</div>
+            <!-- user's provided treasury address used below -->
+            <div id="treasuryAddr" class="muted code">0x7f921fab847b06da6a0357e0e662a8ade212dbb7</div>
+          </div>
+        </div>
+
+        <!-- Main actions -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <button id="registerBtn" class="btn" disabled>Register (pay fee)</button>
+          <button id="claimBtn" class="btn ghost" disabled>Claim MUSH</button>
+
+          <button id="upgradeBtn" class="btn" disabled>Upgrade Farm</button>
+          <button id="swapBtn" class="btn ghost" disabled>Swap MON → MUSH</button>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:6px">
+          <div style="flex:1">
+            <div class="section-title">Packs (Open on-chain)</div>
+            <div class="row">
+              <button id="openBasic" class="btn small">Open Basic (0.01 MON)</button>
+              <button id="openPremium" class="btn small">Open Premium (0.05 MON)</button>
+            </div>
+            <div class="footer-note">Packs give randomized items. Results are emitted on-chain.</div>
+          </div>
+
+          <div style="width:220px">
+            <div class="section-title">Player stats</div>
+            <div class="muted">Power: <span id="playerPower">—</span></div>
+            <div class="muted">Pending: <span id="pendingRewards">—</span></div>
+            <div class="muted">Level: <span id="playerLevel">—</span></div>
+          </div>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
 
         <div>
-          <div class="h1">GET EARLY ACCESS</div>
-          <div class="lead" style="margin-top:8px">We’re building MushRush — a farming + item-drop on-chain experience. Complete a few simple tasks and share your referral to move up the early access queue.</div>
-        </div>
-
-        <div class="ref-block">
-          <div class="ref-required">Referral code is <strong>required</strong> to register</div>
-          <div class="input-row">
-            <input id="useRef" class="input" placeholder="Enter referral code (required)" maxlength="12" aria-label="Referral code" />
-            <button id="applyRef" class="btn-apply">Apply</button>
+          <div class="section-title">Inventory</div>
+          <div id="invArea">
+            <table id="invTable">
+              <thead><tr><th>Item ID</th><th>Power</th><th>Slot</th></tr></thead>
+              <tbody id="invBody"><tr><td colspan="3" class="muted center">Not loaded</td></tr></tbody>
+            </table>
           </div>
         </div>
 
-        <div class="tasks" id="tasks">
-           <div class="task-row" data-task="discord">
-            <div class="task-left"><span class="task-dot" id="dot-discord"></span><div class="task-label">Join our Discord</div></div>
-            <div><button class="btn-task" id="task-discord">Join</button></div>
-          </div>
-         
-          <div class="task-row" data-task="share">
-            <div class="task-left"><span class="task-dot" id="dot-share"></span><div class="task-label">Share your referral card</div></div>
-            <div><button class="btn-task" id="task-share">Share</button></div>
-          </div>
-           <div class="task-row" data-task="follow">
-            <div class="task-left"><span class="task-dot" id="dot-follow"></span><div class="task-label">Follow us on X</div></div>
-            <div><button class="btn-task" id="task-follow">Follow</button></div>
-          </div>
-          <div class="progress" id="progressText">0 / 3 tasks completed</div>
-        </div>
-
-        <div class="cta-row">
-          <button id="registerBtn" class="btn-cta-primary" disabled>Register for Early Access</button>
-          <button id="sharePrimary" class="btn-cta-secondary">Share on X</button>
+        <div style="margin-top:12px" class="footer-note">
+          Developer notes: this frontend expects a contract with the following methods (examples):
+          <div style="font-family:Space Mono;margin-top:6px">register(bytes6) payable | claim() | openPack(uint256) payable | upgrade(uint256) payable | swapMonForMush() payable | pendingRewards(address) view | getInventory(address) view</div>
         </div>
       </div>
-
-      <div class="right">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-weight:900;color:var(--muted-2)">PLAYER CARD</div>
-            <div style="display:flex;gap:10px">
-            <!-- Put these where the card controls live -->
-<button id="downloadBtn" class="icon-btn download" title="Download card" aria-label="Download card">
-  <!-- Download SVG -->
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 3v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M5 20h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-
-<button id="closeBtn" class="icon-btn close" title="Close card" aria-label="Close card">
-  <!-- Close (X) SVG -->
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-
-            </div>
-          </div>
-
-          <div class="image-frame" style="margin-top:14px">
-            <div class="image-card"><img id="avatarImg" src="pc.avif"/></div>
-          </div>
-
-          <div class="card-meta">
-            <div class="meta-left">ID: <span id="playerId">(hidden)</span></div>
-            <div class="status" id="statusText">Not registered</div>
-          </div>
-
-          <div class="card-tasks">
-            <div class="task-row"><div class="task-left"><span class="task-dot" style="background:var(--success)"></span><div class="task-label">Complete all tasks to move up the queue</div></div></div>
-            <div style="margin-top:10px" class="hint">Share your card on X to attract referrals — referrals boost your access priority.</div>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- RIGHT: admin / debug / logs -->
+    <div class="right">
+      <div class="card">
+        <div class="section-title">Config & Logs</div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+          <label class="muted">Game contract address</label>
+          <input id="contractAddress" type="text" value="" placeholder="0x..." />
+          <label class="muted">MUSH token address</label>
+          <input id="mushAddress" type="text" value="" placeholder="0x..." />
+          <div class="row" style="margin-top:6px">
+            <button id="setAddresses" class="btn small">Use addresses</button>
+            <button id="refreshBtn" class="btn ghost small">Refresh Data</button>
+          </div>
+        </div>
+
+        <div class="section-title">Quick actions (dev)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button id="showCodeBtn" class="btn small ghost">Show computed referral code</button>
+          <button id="copyAddrBtn" class="btn small">Copy my address</button>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="section-title">Realtime logs</div>
+          <div id="logArea" style="height:260px;overflow:auto;background:rgba(0,0,0,0.12);padding:8px;border-radius:8px;font-family:monospace;font-size:13px"></div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
-  <canvas id="confetti" class="confetti-canvas"></canvas>
-  <div id="toast" class="toast">Copied to clipboard</div>
+  <div id="toast">—</div>
 
 <script>
-  // auto-fit scaling so nothing overflows
-  (function autoFit(){
-    const wrap = document.getElementById('stageWrap');
-    const designW = 1280, designH = 760;
-    function apply(){
-      const vw = window.innerWidth; const vh = window.innerHeight;
-      const sx = (vw - 16) / designW; const sy = (vh - 16) / designH;
-      const scale = Math.min(sx, sy, 1);
-      wrap.style.transform = `scale(${scale})`;
-      const top = Math.max(8, (vh - designH*scale)/2);
-      wrap.style.marginTop = top + 'px';
+// ---------------------- CONFIG (edit as needed) ----------------------
+const TREASURY_ADDRESS = "0x7f921fab847b06da6a0357e0e662a8ade212dbb7"; // user's provided address (default)
+const GAME_CONTRACT_ADDRESS = "";   // set in UI (must be deployed)
+const MUSH_TOKEN_ADDRESS   = "";   // set in UI
+// Minimal ABI used by this frontend. Make sure your on-chain contract exposes matching function names/types.
+const GAME_ABI = [
+  // views
+  "function pendingRewards(address who) view returns (uint256)",
+  "function getPlayerPower(address who) view returns (uint256)",
+  "function getPlayerLevel(address who) view returns (uint256)",
+  "function getInventory(address who) view returns (uint256[])",
+  // actions
+  "function register(bytes6 refCode) payable",
+  "function claim()",
+  "function openPack(uint256 packId) payable",
+  "function upgrade(uint256 levels) payable",
+  "function swapMonForMush() payable",
+  // optional events
+  "event Registered(address indexed player, bytes6 code, address indexed referrer)",
+  "event Claimed(address indexed player, uint256 amount)",
+  "event PackOpened(address indexed player, uint256 indexed packId, uint256 itemId)"
+];
+// ---------------------- END CONFIG ----------------------
+
+let provider, signer, userAddr;
+let gameContract;
+let currentGameAddress = "";
+let currentMushAddress = "";
+
+// small helpers
+function log(msg){ const el=document.getElementById('logArea'); el.innerText = new Date().toISOString() + " | " + msg + "\n" + el.innerText; }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.opacity=1; setTimeout(()=>t.style.opacity=0,2200); }
+function toEth(wei){ try{ return ethers.utils.formatEther(wei); }catch(e){return '0';} }
+function fromEth(eth){ return ethers.utils.parseEther(String(eth)); }
+
+// compute a friendly referral code from an address (fallback if contract not returning one)
+function computeReferralFromAddr(addr){
+  if(!addr) return '';
+  const clean = addr.replace(/^0x/i,'').toUpperCase();
+  const part = clean.slice(2,8); // 6 hex chars
+  return ('RF-' + part.slice(0,2) + '-' + part.slice(2,4)).slice(0,6+3); // keeps format RF-XX-XX
+}
+
+// connect wallet
+async function connectWallet(){
+  if(!window.ethereum) { alert('Install MetaMask or other EVM wallet'); return; }
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  signer = provider.getSigner();
+  userAddr = await signer.getAddress();
+  document.getElementById('addrDisplay').textContent = userAddr;
+  document.getElementById('contractAddress').value = GAME_CONTRACT_ADDRESS || '';
+  document.getElementById('mushAddress').value = MUSH_TOKEN_ADDRESS || '';
+  document.getElementById('treasuryAddr').textContent = TREASURY_ADDRESS;
+  const network = await provider.getNetwork();
+  document.getElementById('networkName').textContent = network.name + ' ('+network.chainId +')';
+  document.getElementById('connectBtn').textContent = 'Connected';
+  document.getElementById('connectBtn').disabled = true;
+  document.getElementById('copyAddrBtn').disabled = false;
+  // display computed ref
+  const rc = computeReferralFromAddr(userAddr);
+  document.getElementById('refCodeLocal').textContent = rc;
+  document.getElementById('registerBtn').disabled = false;
+  document.getElementById('claimBtn').disabled = false;
+  document.getElementById('upgradeBtn').disabled = false;
+  document.getElementById('swapBtn').disabled = false;
+  // create game contract instance if addresses provided
+  tryInitContract();
+  // auto refresh player data
+  await refreshPlayerData();
+  log('Wallet connected: ' + userAddr);
+}
+
+// init contract
+function tryInitContract(){
+  const gameAddr = document.getElementById('contractAddress').value.trim();
+  const mushAddr = document.getElementById('mushAddress').value.trim();
+  if(!provider || !gameAddr) return;
+  if(currentGameAddress === gameAddr) return;
+  currentGameAddress = gameAddr;
+  currentMushAddress = mushAddr;
+  gameContract = new ethers.Contract(gameAddr, GAME_ABI, signer || provider);
+  log('Game contract initialized: ' + gameAddr);
+  // listen to PackOpened (if available)
+  try {
+    gameContract.on && gameContract.on('PackOpened', (player, packId, itemId, ev) => {
+      log(`PackOpened: player=${player} pack=${packId} item=${itemId}`);
+      if(player && player.toLowerCase() === userAddr.toLowerCase()) refreshPlayerData();
+    });
+  } catch(e){ /* ignore */ }
+}
+
+// register (calls payable register(bytes6))
+async function registerPlayer(){
+  if(!gameContract) { alert('Set game contract address first'); return; }
+  const raw = document.getElementById('refInput').value.trim();
+  // ensure bytes6 encoded value. We'll accept either hex bytes6 like 0x1234.. or string code and encode as bytes6.
+  let refBytes = '0x000000000000';
+  if(raw){
+    // take first 6 characters ASCII (padded)
+    const b = ethers.utils.toUtf8Bytes(raw);
+    const padded = ethers.utils.hexZeroPad(ethers.utils.hexlify(b.slice(0,6)), 6);
+    refBytes = padded;
+  } else {
+    // use computed ref code derived from address (frontend fallback)
+    const code = computeReferralFromAddr(userAddr);
+    const b = ethers.utils.toUtf8Bytes(code);
+    refBytes = ethers.utils.hexZeroPad(ethers.utils.hexlify(b.slice(0,6)), 6);
+  }
+  // call register payable. We don't know required fee from contract here; default we'll send 0.005 ETH (safe fallback)
+  const fee = fromEth('0.005'); // adjust if your contract uses different value
+  try{
+    const tx = await gameContract.register(refBytes, { value: fee });
+    toast('Register tx sent — waiting for confirmation');
+    log('register tx: ' + tx.hash);
+    await tx.wait();
+    toast('Registered on-chain');
+    await refreshPlayerData();
+  } catch(e){
+    console.error(e); toast('Register failed: ' + (e?.message || e));
+  }
+}
+
+// claim rewards
+async function claimRewards(){
+  if(!gameContract) { alert('set game contract'); return; }
+  try{
+    const tx = await gameContract.claim();
+    toast('Claim tx sent');
+    log('claim tx: ' + tx.hash);
+    await tx.wait();
+    toast('Claim completed');
+    await refreshPlayerData();
+  }catch(e){ console.error(e); toast('Claim failed: '+(e?.message||e)); }
+}
+
+// upgrade farm (simple single-step)
+async function upgradeFarm(){
+  if(!gameContract) { alert('set game contract'); return; }
+  // default pay 0.01 ETH for upgrade (adjust to match on-chain)
+  const cost = fromEth('0.01');
+  try{
+    const tx = await gameContract.upgrade(1, { value: cost });
+    toast('Upgrade tx sent');
+    log('upgrade tx: ' + tx.hash);
+    await tx.wait();
+    toast('Upgrade done');
+    await refreshPlayerData();
+  }catch(e){ console.error(e); toast('Upgrade failed: '+(e?.message||e)); }
+}
+
+// open pack
+async function openPack(packId){
+  if(!gameContract) { alert('set game contract'); return; }
+  let priceEth = '0.01';
+  if(packId === 2) priceEth = '0.05';
+  const value = fromEth(priceEth);
+  try{
+    const tx = await gameContract.openPack(packId, { value });
+    toast('Open pack tx sent');
+    log('openPack tx: ' + tx.hash);
+    await tx.wait();
+    toast('Pack opened');
+    await refreshPlayerData();
+  }catch(e){ console.error(e); toast('Open pack failed: '+(e?.message||e)); }
+}
+
+// swap MON -> MUSH
+async function swapMonForMush(){
+  if(!gameContract) { alert('set game contract'); return; }
+  // default swap amount 0.01 ETH
+  const val = fromEth('0.01');
+  try{
+    const tx = await gameContract.swapMonForMush({ value: val });
+    toast('Swap tx sent');
+    log('swap tx: ' + tx.hash);
+    await tx.wait();
+    toast('Swap done');
+    await refreshPlayerData();
+  }catch(e){ console.error(e); toast('Swap failed: '+(e?.message||e)); }
+}
+
+// refresh player data (calls several view functions if available)
+async function refreshPlayerData(){
+  if(!provider || !userAddr) return;
+  if(!gameContract){
+    document.getElementById('playerPower').textContent='—';
+    document.getElementById('pendingRewards').textContent='—';
+    document.getElementById('playerLevel').textContent='—';
+    return;
+  }
+  try{
+    // try different view functions; graceful failures handled
+    let power='—', pending='—', lvl='—';
+    try{ const p = await gameContract.getPlayerPower(userAddr); power = Number(ethers.utils.formatEther(p)); }catch(err){}
+    try{ const pend = await gameContract.pendingRewards(userAddr); pending = Number(ethers.utils.formatEther(pend)); }catch(err){}
+    try{ const l = await gameContract.getPlayerLevel(userAddr); lvl = l.toString(); }catch(err){}
+    document.getElementById('playerPower').textContent = power;
+    document.getElementById('pendingRewards').textContent = pending;
+    document.getElementById('playerLevel').textContent = lvl;
+  }catch(e){
+    console.error(e);
+  }
+
+  // inventory
+  try{
+    const inv = await gameContract.getInventory(userAddr);
+    const tbody = document.getElementById('invBody');
+    tbody.innerHTML = '';
+    if(inv && inv.length){
+      for(let i=0;i<inv.length;i++){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>#${inv[i].toString()}</td><td>—</td><td>—</td>`;
+        tbody.appendChild(tr);
+      }
+    } else {
+      tbody.innerHTML = `<tr><td colspan="3" class="muted center">No items</td></tr>`;
     }
-    window.addEventListener('resize', apply); window.addEventListener('orientationchange', apply); apply();
-  })();
+  }catch(err){
+    // couldn't fetch inventory
+    const tbody = document.getElementById('invBody');
+    tbody.innerHTML = `<tr><td colspan="3" class="muted center">Inventory not available</td></tr>`;
+  }
+}
 
-  function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.opacity=1; clearTimeout(t._t); t._t=setTimeout(()=>t.style.opacity=0,2200); }
+// ---------------- Event bindings ----------------
+document.getElementById('connectBtn').addEventListener('click', connectWallet);
+document.getElementById('refreshBtn').addEventListener('click', async ()=>{ tryInitContract(); await refreshPlayerData(); toast('Refreshed'); });
+document.getElementById('setAddresses').addEventListener('click', ()=>{ tryInitContract(); toast('Using addresses'); });
+document.getElementById('registerBtn').addEventListener('click', registerPlayer);
+document.getElementById('claimBtn').addEventListener('click', claimRewards);
+document.getElementById('upgradeBtn').addEventListener('click', upgradeFarm);
+document.getElementById('openBasic').addEventListener('click', ()=>openPack(1));
+document.getElementById('openPremium').addEventListener('click', ()=>openPack(2));
+document.getElementById('swapBtn').addEventListener('click', swapMonForMush);
+document.getElementById('applyRef').addEventListener('click', ()=>{
+  const v = document.getElementById('refInput').value.trim();
+  if(!v) toast('Empty: will use your computed referral when registering');
+  else toast('Referral set: ' + v);
+});
+document.getElementById('showCodeBtn').addEventListener('click', ()=>{
+  if(!userAddr) return toast('Connect wallet first');
+  const code = computeReferralFromAddr(userAddr);
+  toast('Ref code (computed): ' + code);
+  log('Computed ref: ' + code);
+});
+document.getElementById('copyAddrBtn').addEventListener('click', async ()=>{
+  if(!userAddr) return toast('Connect first');
+  await navigator.clipboard.writeText(userAddr);
+  toast('Address copied');
+});
 
-  function fireConfetti(){
-    const canvas=document.getElementById('confetti'); const ctx=canvas.getContext('2d'); canvas.width=window.innerWidth; canvas.height=window.innerHeight; const pieces=[]; const colors=['#ff6fcf','#b89bff','#6ee7b7','#ffd166','#ff8a65']; for(let i=0;i<120;i++){ pieces.push({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,vx:(Math.random()-0.5)*6,vy:2+Math.random()*6,size:6+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360}); } let t=0; function frame(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of pieces){ p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.rot+=8; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size); ctx.restore(); } t++; if(t<180) requestAnimationFrame(frame); else ctx.clearRect(0,0,canvas.width,canvas.height); } frame(); }
+// set initial treasury UI
+document.getElementById('treasuryAddr').textContent = TREASURY_ADDRESS;
 
-  // tasks state
-  const TASKS=['follow','discord','share'];
-  function loadState(){ return JSON.parse(localStorage.getItem('mushrush.tasks')||'{}'); }
-  function saveState(s){ localStorage.setItem('mushrush.tasks', JSON.stringify(s)); }
-  function updateUI(s){ let done=0; TASKS.forEach(t=>{ const dot=document.getElementById('dot-'+t); const btn=document.getElementById('task-'+t); if(s[t]){ if(dot) dot.classList.add('task-done'); if(btn) btn.classList.add('done'); } else { if(dot) dot.classList.remove('task-done'); if(btn) btn.classList.remove('done'); } if(s[t]) done++; }); document.getElementById('progressText').textContent = `${done} / 3 tasks completed`; if(done===3){ document.getElementById('statusText').textContent='Registered'; showCongrats(); } }
-  function markTask(t){ const s=loadState(); s[t]=true; saveState(s); updateUI(s); }
+// when user edits addresses, update local contract instance
+document.getElementById('contractAddress').addEventListener('change', tryInitContract);
+document.getElementById('mushAddress').addEventListener('change', tryInitContract);
 
-  function openAndVerify(url,key){ const start=Date.now(); const w=window.open(url,'_blank'); if(!w){ alert('Pop-up blocked — allow popups'); return; } const onFocus=()=>{ const elapsed=Date.now()-start; if(elapsed>1200) markTask(key); else markTask(key); showToast('Verified: '+key); window.removeEventListener('focus', onFocus); }; window.addEventListener('focus', onFocus); }
-
-  function shareOnX(ref){ const pageUrl=window.location.href; const text=`I'm on the MushRush early access waitlist! Use my referral code ${ref} to increase your spot. ${pageUrl} #MushRush`; const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text); const w=window.open(url,'_blank'); if(w){ const start=Date.now(); window.addEventListener('focus', function onF(){ markTask('share'); showToast('Thanks for sharing!'); window.removeEventListener('focus', onF); }); } }
-
-  // required-ref logic
-  const useRefInput=document.getElementById('useRef'); const registerBtn=document.getElementById('registerBtn');
-  function validateRef(){ const v=useRefInput.value.trim(); if(v.length>0){ registerBtn.disabled=false; registerBtn.classList.remove('disabled'); } else { registerBtn.disabled=true; } }
-  useRefInput.addEventListener('input', validateRef); validateRef();
-
-  document.getElementById('applyRef').addEventListener('click', ()=>{ const v=useRefInput.value.trim(); if(!v){ showToast('Referral code is required'); return; } showToast('Referral applied: '+v); });
-  document.getElementById('registerBtn').addEventListener('click', ()=>{ const v=useRefInput.value.trim(); if(!v){ alert('You must enter a referral code to register.'); return; } const logged = localStorage.getItem('mushrush.loggedX')==='1'; if(!logged) return alert('Please sign in with X first'); showToast('Registered (demo)'); document.getElementById('statusText').textContent='Registered'; markTask('share'); });
-
-  document.getElementById('copyRef').addEventListener('click', ()=>{ const myRef='RF-7G-4K'; navigator.clipboard.writeText(myRef); showToast('Referral copied'); });
-  document.getElementById('task-follow').addEventListener('click', ()=> openAndVerify('https://twitter.com/intent/follow?screen_name=your_project_handle','follow'));
-  document.getElementById('task-discord').addEventListener('click', ()=> openAndVerify('https://discord.gg/your-invite-code','discord'));
-  document.getElementById('task-share').addEventListener('click', ()=> { const ref=document.getElementById('myRef') ? document.getElementById('myRef').innerText : 'RF-7G-4K'; shareOnX(ref); });
-  document.getElementById('sharePrimary').addEventListener('click', ()=>{ const ref=document.getElementById('myRef') ? document.getElementById('myRef').innerText : 'RF-7G-4K'; shareOnX(ref); });
-
-  function showCongrats(){ if(document.getElementById('congrats')) return; fireConfetti(); const overlay=document.createElement('div'); overlay.className='overlay'; overlay.id='congrats'; overlay.innerHTML=`<div class='overlay-card'><h2 style='margin:0 0 8px 0'>Congrats — 3/3 Complete</h2><p style='margin:0 0 12px 0;color:var(--muted-2)'>You will be notified about your early access. We appreciate you sharing!</p><div style='display:flex;gap:8px;justify-content:center;margin-top:12px'><button id='closeCongrats' class='btn-cta-primary'>Close</button></div></div>`; document.body.appendChild(overlay); document.getElementById('closeCongrats').addEventListener('click', ()=>{ overlay.remove(); }); }
-
-  (async function init(){ try{ if(window.ethereum){ const accs=await window.ethereum.request({method:'eth_accounts'}); if(accs && accs[0]){ const r=accs[0].slice(2,8).toUpperCase(); const f='RF-'+r.slice(0,2)+'-'+r.slice(2,4); const myRefEl = document.getElementById('myRef'); if(myRefEl) myRefEl.innerText=f; document.getElementById('playerId').innerText='(hidden)'; } } }catch(e){console.log(e);} const s=loadState(); updateUI(s); })();
+// on page load: preload contract address if config has them
+window.addEventListener('load', ()=>{
+  if(GAME_CONTRACT_ADDRESS) document.getElementById('contractAddress').value = GAME_CONTRACT_ADDRESS;
+  if(MUSH_TOKEN_ADDRESS) document.getElementById('mushAddress').value = MUSH_TOKEN_ADDRESS;
+  // small UX: if injected wallet already connected, auto-read accounts
+  if(window.ethereum && window.ethereum.selectedAddress){
+    connectWallet().catch(()=>{});
+  }
+});
 </script>
-  <script>
-    // CLOSE: hide the card (nice fade)
-document.getElementById('closeBtn').addEventListener('click', (e) => {
-  const card = e.currentTarget.closest('.player-card');
-  if (!card) return;
-  card.style.transition = 'opacity 220ms ease, transform 220ms ease';
-  card.style.opacity = '0';
-  card.style.transform = 'translateY(8px)';
-  setTimeout(() => card.style.display = 'none', 240);
-});
-
-// SIMPLE DOWNLOAD: download the avatar image (fast and reliable)
-document.getElementById('downloadBtn').addEventListener('click', async (e) => {
-  const img = document.getElementById('avatarImg'); // ensure your image has this id
-  if (!img) { alert('No image found to download'); return; }
-  // Create an anchor to download the image directly (works if image is same-origin or has CORS enabled)
-  const src = img.src;
-  // If the image is cross-origin and not CORS-enabled, note: browsers may block direct download.
-  const a = document.createElement('a');
-  a.href = src;
-  a.download = 'mushrush-avatar.png';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-});
-
-  </script>
 </body>
 </html>
-
-
-
