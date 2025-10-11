@@ -459,30 +459,17 @@ body{overflow:auto}
 <script>
 /* client-auth.js: simple frontend hooks for real login + tasks */
 (function(){
-// open popup to start login
+// header sign-in button — open the *modal* (modal script attaches the click)
 const loginBtn = document.createElement('button');
-loginBtn.id = 'loginX';
-loginBtn.className = 'btn-task small';
-loginBtn.textContent = 'Sign in with X';
+// important: modal script looks for "#openSignIn" or ".mr-open-signin"
+loginBtn.id = 'openSignIn';
+loginBtn.className = 'btn-task small mr-open-signin';
+loginBtn.textContent = 'Sign in';
 loginBtn.style.marginLeft = '8px';
 const headerRight = document.querySelector('.header > div[style*="margin-left:auto"]');
-if(headerRight) headerRight.insertBefore(loginBtn, headerRight.firstChild);
+if (headerRight) headerRight.insertBefore(loginBtn, headerRight.firstChild);
 
-function openLoginPopup(){
-const w = window.open('/auth/x/login','xlogin','width=520,height=640');
-// wait for postMessage from popup
-function onMsg(ev){
-if(ev.data && ev.data.type === 'mushrush.x.auth'){
-window.removeEventListener('message', onMsg);
-pollMe();
-}
-}
-window.addEventListener('message', onMsg);
-// Also poll until session established
-setTimeout(pollMe, 800);
-}
-loginBtn.addEventListener('click', openLoginPopup);
-
+  
 async function pollMe(){
 try {
 const r = await fetch('/api/me');
