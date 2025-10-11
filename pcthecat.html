@@ -136,6 +136,102 @@ position:fixed;inset:0;display:flex;align-items:center;justify-content:center;ba
 .stage-wrap{width:100%}
 body{overflow:auto}
 }
+
+  /* =========== MushRush Auth Modal styles =========== */
+:root{
+  --mr-bg: #07040a;
+  --mr-panel: rgba(255,255,255,0.03);
+  --mr-muted: rgba(255,255,255,0.9);
+  --mr-muted-2: rgba(255,255,255,0.62);
+  --mr-purple-700: #5b21a6;
+  --mr-purple-500: #8b5cf6;
+  --mr-accent: #ff6fcf;
+  --mr-success: #22c55e;
+  --mr-radius: 14px;
+  --mr-shadow: 0 24px 60px rgba(6,8,20,0.8);
+  --mr-z: 9999;
+}
+
+.mr-auth-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: var(--mr-z); background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6)); backdrop-filter: blur(6px); padding: 28px; }
+
+.mr-auth-overlay[aria-hidden="false"] { display: flex; animation: mrFadeIn .18s ease both; }
+@keyframes mrFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.mr-auth-modal { width: 920px; max-width: calc(100% - 48px); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius: var(--mr-radius); padding: 20px; box-shadow: var(--mr-shadow); border: 1px solid rgba(255,255,255,0.04); color: var(--mr-muted); position: relative; overflow: hidden; }
+
+/* Close */
+.mr-auth-close { position: absolute; right: 12px; top: 12px; background: transparent; border: 0; color: var(--mr-muted-2); font-size: 26px; width: 40px; height: 40px; border-radius: 10px; display: inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+.mr-auth-close:focus { outline: none; box-shadow: 0 0 0 6px rgba(139,92,246,0.12); }
+
+/* grid */
+.mr-auth-grid { display: grid; grid-template-columns: 1fr 360px; gap: 22px; align-items: stretch; }
+
+/* Left */
+.mr-auth-left { padding-right: 6px; }
+
+.mr-brand { display:flex; gap:12px; align-items:center; margin-bottom: 8px; }
+.mr-logo { width:52px; height:46px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; color:white; background: linear-gradient(135deg, var(--mr-purple-700), var(--mr-purple-500)); box-shadow: 0 8px 26px rgba(91,33,166,0.12); font-family: 'Space Mono', monospace; font-size:20px; }
+.mr-title { font-weight:800; font-size:18px; color: var(--mr-muted); }
+.mr-sub { font-size:13px; color:var(--mr-muted-2); }
+
+/* tabs */
+.mr-tabs { display:flex; gap:8px; margin: 14px 0; }
+.mr-tab { padding:10px 12px; border-radius:10px; background: transparent; color: var(--mr-muted-2); border: 1px solid transparent; font-weight:700; cursor:pointer; }
+.mr-tab--active { background: linear-gradient(90deg, var(--mr-purple-700), var(--mr-purple-500)); color: white; border: 0; box-shadow: 0 12px 34px rgba(91,33,166,0.12); transform: translateY(-1px); }
+
+/* oauth */
+.mr-oauth-row { margin: 8px 0 4px 0; }
+.mr-oauth { display:flex; align-items:center; gap:10px; width:100%; padding:12px; border-radius:12px; font-weight:800; cursor:pointer; border:0; }
+.btn-x { background: linear-gradient(90deg,#1d9bf0,#0c7adf); color:white; box-shadow: 0 12px 34px rgba(13,93,168,0.12); }
+
+/* divider */
+.mr-divider { text-align:center; margin: 12px 0; position: relative; color: var(--mr-muted-2); font-weight:700; }
+.mr-divider::before, .mr-divider::after { content: ''; height:1px; background: rgba(255,255,255,0.03); position:absolute; left:12px; right:12px; top:50%; z-index:-1; }
+.mr-divider span { display:inline-block; padding:4px 12px; background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02)); border-radius:999px; }
+
+/* forms */
+.mr-form { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.mr-label { display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--mr-muted-2); font-weight:700; }
+.mr-input { padding:12px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background: transparent; color: var(--mr-muted); font-weight:700; }
+.mr-input:focus { outline: none; box-shadow: 0 0 0 6px rgba(139,92,246,0.12); border-color: rgba(139,92,246,0.18); }
+
+/* password strength */
+.mr-strength { margin-top:6px; height:8px; background: rgba(255,255,255,0.03); border-radius:6px; overflow:hidden; }
+.mr-strength-bar { display:block; height:100%; width:0%; background: linear-gradient(90deg, #ff8ab6, #8b5cf6); transition: width .28s ease; }
+
+/* errors */
+.mr-error { color: #ff9aa2; font-weight:800; font-size:13px; margin-top:6px; }
+
+/* actions */
+.mr-actions { display:flex; gap:10px; margin-top:8px; }
+.mr-btn { padding:10px 14px; border-radius:10px; font-weight:900; cursor:pointer; border:0; }
+.mr-btn-primary { background: linear-gradient(90deg,var(--mr-purple-700),var(--mr-purple-500)); color:white; box-shadow: 0 14px 38px rgba(91,33,166,0.12); flex:1; }
+.mr-btn-ghost { background: transparent; border:1px solid rgba(255,255,255,0.04); color: var(--mr-muted-2); padding:10px 12px; border-radius:10px; }
+
+/* aux */
+.mr-aux { display:flex; justify-content:space-between; align-items:center; margin-top:8px; color:var(--mr-muted-2); font-size:13px; }
+.mr-link { color: var(--mr-purple-300); text-decoration: none; font-weight:700; }
+
+/* right column */
+.mr-auth-right { display:flex; align-items:center; justify-content:center; }
+.mr-right-card { width:100%; height:100%; background: linear-gradient(180deg, rgba(139,92,246,0.06), rgba(255,255,255,0.02)); border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.04); box-shadow: 0 18px 40px rgba(6,8,20,0.6); color:var(--mr-muted); display:flex; flex-direction:column; gap:12px; align-items:stretch; }
+.mr-right-hero { position:relative; height:120px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.mr-right-wave path { fill: url(#grad); opacity: 0.12; }
+.mr-right-illustration { font-size:46px; transform: translateY(6px); }
+.mr-right-body h4 { margin:8px 0 6px 0; color:var(--mr-muted); font-weight:800; }
+.mr-hint { color:var(--mr-muted-2); font-size:13px; margin-bottom:8px; }
+.mr-benefits { margin:0; padding:0 0 0 18px; color:var(--mr-muted-2); font-weight:700; }
+
+/* footer */
+.mr-auth-foot { margin-top:12px; text-align:center; color:var(--mr-muted-2); font-size:12px; }
+
+/* small screens */
+@media (max-width:900px){
+  .mr-auth-grid { grid-template-columns: 1fr; }
+  .mr-auth-right { display:none; }
+  .mr-auth-modal { padding: 16px; }
+}
+
 </style>
 </head>
 <body>
@@ -240,6 +336,126 @@ body{overflow:auto}
 
 <canvas id="confetti" class="confetti-canvas" aria-hidden="true"></canvas>
 <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+
+  <!-- =========== MushRush Auth Modal (paste near end of <body>) =========== -->
+<div id="mr-auth-overlay" class="mr-auth-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="mr-auth-title">
+  <div class="mr-auth-modal" role="document">
+    <button class="mr-auth-close" id="mrAuthClose" aria-label="Close authentication dialog">&times;</button>
+
+    <div class="mr-auth-grid">
+      <!-- Left: forms -->
+      <div class="mr-auth-left">
+        <div class="mr-brand">
+          <div class="mr-logo">M</div>
+          <div class="mr-copy">
+            <div class="mr-title" id="mr-auth-title">Welcome back to MushRush</div>
+            <div class="mr-sub">Sign in or create an account to move up the queue</div>
+          </div>
+        </div>
+
+        <div class="mr-tabs" role="tablist" aria-label="Authentication tabs">
+          <button id="mrTabSignIn" class="mr-tab mr-tab--active" role="tab" aria-selected="true">Sign in</button>
+          <button id="mrTabSignUp" class="mr-tab" role="tab" aria-selected="false">Sign up</button>
+        </div>
+
+        <div class="mr-oauth-row">
+          <button id="mrOauthX" class="mr-oauth btn-x" aria-label="Continue with X (Twitter)">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M23 4.5c-.7.3-1.5.5-2.3.6.8-.5 1.4-1.3 1.7-2.2-.7.4-1.6.8-2.5 1C18.8 3 17.7 2.4 16.5 2.4c-2 0-3.6 1.7-3.6 3.8 0 .3 0 .7.1 1C9.7 7.1 6.1 5.4 3.8 3c-.4.7-.7 1.6-.7 2.6 0 1.6.8 3 2 3.9-.7 0-1.4-.2-2-.6v.1c0 2.3 1.6 4.2 3.7 4.6-.4.1-.8.2-1.3.2-.3 0-.6 0-.9-.1.6 2 2.5 3.5 4.7 3.5-1.8 1.3-4.1 2-6.6 2-.4 0-.8 0-1.2-.1 2.4 1.6 5.2 2.6 8.3 2.6 9.9 0 15.3-8.5 15.3-15.9V6.8c1.1-.8 2-1.7 2.7-2.7z"/></svg>
+            Continue with X
+          </button>
+        </div>
+
+        <div class="mr-divider"><span>or</span></div>
+
+        <!-- SIGN IN FORM -->
+        <form id="mrSignInForm" class="mr-form" autocomplete="on" novalidate>
+          <label class="mr-label">Email or username
+            <input id="mr-si-username" class="mr-input" name="username" required />
+          </label>
+
+          <label class="mr-label">Password
+            <input id="mr-si-password" class="mr-input" name="password" type="password" required />
+          </label>
+
+          <div id="mr-si-error" class="mr-error" aria-live="polite" style="display:none"></div>
+
+          <div class="mr-actions">
+            <button type="submit" class="mr-btn mr-btn-primary">Sign in</button>
+            <button type="button" id="mr-si-cancel" class="mr-btn mr-btn-ghost">Cancel</button>
+          </div>
+
+          <div class="mr-aux">
+            <label class="mr-aux-line"><input type="checkbox" id="mr-remember" /> Remember me</label>
+            <a href="#" class="mr-link">Forgot password?</a>
+          </div>
+        </form>
+
+        <!-- SIGN UP FORM -->
+        <form id="mrSignUpForm" class="mr-form" autocomplete="on" novalidate style="display:none">
+          <label class="mr-label">Username
+            <input id="mr-su-username" class="mr-input" name="username" required />
+          </label>
+          <label class="mr-label">Email
+            <input id="mr-su-email" class="mr-input" name="email" type="email" required />
+          </label>
+
+          <label class="mr-label">Password
+            <input id="mr-su-password" class="mr-input" name="password" type="password" minlength="8" required />
+            <div class="mr-strength" aria-hidden="true">
+              <span id="mrStrengthBar" class="mr-strength-bar"></span>
+            </div>
+          </label>
+
+          <label class="mr-label">Confirm password
+            <input id="mr-su-password-confirm" class="mr-input" name="passwordConfirm" type="password" required />
+          </label>
+
+          <label class="mr-label">Referral code (optional)
+            <input id="mr-su-ref" class="mr-input" name="ref" />
+          </label>
+
+          <div id="mr-su-error" class="mr-error" aria-live="polite" style="display:none"></div>
+
+          <div class="mr-actions">
+            <button type="submit" class="mr-btn mr-btn-primary">Create account</button>
+            <button type="button" id="mr-su-cancel" class="mr-btn mr-btn-ghost">Cancel</button>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Right: visual / benefits -->
+      <aside class="mr-auth-right" aria-hidden="true">
+        <div class="mr-right-card">
+          <div class="mr-right-hero">
+            <svg class="mr-right-wave" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,40 C40,0 120,90 200,40 L200,100 L0,100 Z"></path>
+            </svg>
+            <div class="mr-right-illustration" aria-hidden="true">🚀</div>
+          </div>
+
+          <div class="mr-right-body">
+            <h4>Fast signup — social or email</h4>
+            <p class="mr-hint">Use X to sign in instantly. Or create an account with email — both grant access to your referral & queue position.</p>
+
+            <ul class="mr-benefits">
+              <li>Secure sessions (cookie-based)</li>
+              <li>Referral preserves credit</li>
+              <li>One-click X login</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="mr-auth-foot">
+      By creating an account you agree to our <a href="#" class="mr-link">Terms</a> & <a href="#" class="mr-link">Privacy</a>.
+    </div>
+  </div>
+</div>
+<!-- =========== End modal =========== -->
+
 <script>
 /* client-auth.js: simple frontend hooks for real login + tasks */
 (function(){
@@ -365,7 +581,233 @@ pollMe();
 
 })();
 </script>
+<script>
+  /* =========== MushRush Auth Modal JS =========== */
+(function(){
+  /* Elements */
+  const overlay = document.getElementById('mr-auth-overlay');
+  const closeBtn = document.getElementById('mrAuthClose');
+  const openBtn = document.querySelector('#openSignIn') || document.querySelector('.mr-open-signin'); // if you have open button
+  const tabSignIn = document.getElementById('mrTabSignIn');
+  const tabSignUp = document.getElementById('mrTabSignUp');
+  const signInForm = document.getElementById('mrSignInForm');
+  const signUpForm = document.getElementById('mrSignUpForm');
+  const oauthX = document.getElementById('mrOauthX');
 
+  const siError = document.getElementById('mr-si-error');
+  const suError = document.getElementById('mr-su-error');
+
+  // Open/close modal
+  let lastActive = null;
+  function openModal(){
+    lastActive = document.activeElement;
+    overlay.setAttribute('aria-hidden','false');
+    // small delay to allow CSS animation
+    setTimeout(()=> overlay.style.opacity = 1, 10);
+    // focus on first tab
+    tabSignIn.focus();
+    trapFocus(overlay);
+  }
+  function closeModal(){
+    overlay.setAttribute('aria-hidden','true');
+    overlay.style.opacity = 0;
+    releaseFocusTrap();
+    if(lastActive) lastActive.focus();
+  }
+
+  // attach open button if present
+  if(openBtn) openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+
+  // close on Escape
+  document.addEventListener('keydown', (e)=> { if(e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeModal(); });
+
+  // tab switching
+  function showTab(which){
+    if(which === 'signin'){
+      tabSignIn.classList.add('mr-tab--active'); tabSignUp.classList.remove('mr-tab--active');
+      tabSignIn.setAttribute('aria-selected','true'); tabSignUp.setAttribute('aria-selected','false');
+      signInForm.style.display = ''; signUpForm.style.display = 'none';
+    } else {
+      tabSignIn.classList.remove('mr-tab--active'); tabSignUp.classList.add('mr-tab--active');
+      tabSignIn.setAttribute('aria-selected','false'); tabSignUp.setAttribute('aria-selected','true');
+      signInForm.style.display = 'none'; signUpForm.style.display = '';
+    }
+  }
+  tabSignIn.addEventListener('click', ()=> showTab('signin'));
+  tabSignUp.addEventListener('click', ()=> showTab('signup'));
+
+  /* Focus trap */
+  let focusables = [];
+  let firstFocusable = null, lastFocusable = null;
+  function trapFocus(container){
+    focusables = Array.from(container.querySelectorAll('a,button,input,[tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+    if(!focusables.length) return;
+    firstFocusable = focusables[0]; lastFocusable = focusables[focusables.length - 1];
+    container.addEventListener('keydown', handleKeydown);
+  }
+  function releaseFocusTrap(){
+    overlay.removeEventListener('keydown', handleKeydown);
+  }
+  function handleKeydown(e){
+    if(e.key === 'Tab'){
+      if(e.shiftKey && document.activeElement === firstFocusable){ e.preventDefault(); lastFocusable.focus(); }
+      else if(!e.shiftKey && document.activeElement === lastFocusable){ e.preventDefault(); firstFocusable.focus(); }
+    }
+  }
+
+  /* Tiny helpers: toast + shake (error) */
+  function shake(el){
+    el.classList.add('mr-shake');
+    setTimeout(()=> el.classList.remove('mr-shake'), 420);
+  }
+
+  // applyLoginState: global hook for your app (update header etc.)
+  window.applyLoginState = window.applyLoginState || function(user){
+    // default behavior: attempt to update sign-in button text if present
+    const headerBtn = document.querySelector('#openSignIn') || document.querySelector('.btn-task.small');
+    if(headerBtn) { headerBtn.textContent = 'Signed in: @' + (user.username || user.name || user.id); headerBtn.classList.add('done'); }
+    const registerBtn = document.getElementById('registerBtn');
+    if(registerBtn) registerBtn.disabled = false;
+    closeModal();
+  };
+
+  /* ============= Form handling ============= */
+
+  // helper to POST json
+  async function postJson(url, data){
+    const res = await fetch(url, { method:'POST', credentials:'include', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(data) });
+    const body = await res.json().catch(()=>({ ok:false, message:'Invalid JSON from server' }));
+    if(!res.ok) throw body;
+    return body;
+  }
+
+  // Sign-in
+  signInForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    siError.style.display = 'none';
+    const username = document.getElementById('mr-si-username').value.trim();
+    const password = document.getElementById('mr-si-password').value;
+    if(!username || !password){ siError.textContent = 'Please complete both fields.'; siError.style.display = ''; shake(siError); return; }
+
+    try {
+      // adjust endpoint as needed
+      const result = await postJson('/api/auth/signin', { username, password });
+      if(result.user) {
+        window.applyLoginState(result.user);
+      } else {
+        siError.textContent = result.message || 'Sign in failed';
+        siError.style.display = ''; shake(siError);
+      }
+    } catch(err){
+      siError.textContent = err.message || 'Network error';
+      siError.style.display = ''; shake(siError);
+      console.error('Sign in error', err);
+    }
+  });
+
+  document.getElementById('mr-si-cancel').addEventListener('click', closeModal);
+
+  // Sign-up
+  signUpForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    suError.style.display = 'none';
+    const username = document.getElementById('mr-su-username').value.trim();
+    const email = document.getElementById('mr-su-email').value.trim();
+    const password = document.getElementById('mr-su-password').value;
+    const passwordConfirm = document.getElementById('mr-su-password-confirm').value;
+    const ref = document.getElementById('mr-su-ref').value.trim();
+
+    if(!username || !email || !password || !passwordConfirm){ suError.textContent = 'Please fill all required fields.'; suError.style.display = ''; shake(suError); return; }
+    if(password !== passwordConfirm){ suError.textContent = 'Passwords do not match.'; suError.style.display = ''; shake(suError); return; }
+    if(password.length < 8){ suError.textContent = 'Password must be at least 8 characters.'; suError.style.display = ''; shake(suError); return; }
+
+    try {
+      const result = await postJson('/api/auth/signup', { username, email, password, ref });
+      if(result.user) window.applyLoginState(result.user);
+      else { suError.textContent = result.message || 'Sign up failed'; suError.style.display = ''; shake(suError); }
+    } catch(err) {
+      suError.textContent = err.message || 'Network error';
+      suError.style.display = ''; shake(suError);
+      console.error('Sign up error', err);
+    }
+  });
+
+  document.getElementById('mr-su-cancel').addEventListener('click', closeModal);
+
+  /* Password strength meter */
+  const strengthBar = document.getElementById('mrStrengthBar');
+  const suPassword = document.getElementById('mr-su-password');
+  if(suPassword && strengthBar){
+    suPassword.addEventListener('input', ()=> {
+      const val = suPassword.value || '';
+      const score = passwordScore(val); // 0-100
+      strengthBar.style.width = score + '%';
+      // optionally change color by low/medium/high
+      strengthBar.style.filter = score > 66 ? 'saturate(130%)' : score > 33 ? 'saturate(100%)' : 'grayscale(40%)';
+    });
+  }
+  function passwordScore(p){
+    let score = 0;
+    if(p.length > 7) score += Math.min(40, p.length * 2);
+    if(/[A-Z]/.test(p)) score += 20;
+    if(/[0-9]/.test(p)) score += 20;
+    if(/[^A-Za-z0-9]/.test(p)) score += 20;
+    return Math.min(100, score);
+  }
+
+  /* ============= OAuth (X/Twitter) popup + postMessage + poll fallback ============= */
+  oauthX.addEventListener('click', ()=>{
+    const popup = window.open('/auth/x/login', 'mushrush_x', 'width=640,height=720');
+    if(!popup){ alert('Please enable popups to sign in with X'); return; }
+
+    // listen for postMessage from popup
+    function onMessage(ev){
+      if(!ev.data) return;
+      if(ev.data.type === 'mushrush.x.auth'){
+        window.removeEventListener('message', onMessage);
+        if(ev.data.user) { window.applyLoginState(ev.data.user); }
+        else { alert('Authentication failed'); }
+      }
+    }
+    window.addEventListener('message', onMessage);
+
+    // fallback: poll /api/me while popup is open (in case popup sets cookie then redirects quietly)
+    const poll = setInterval(async ()=>{
+      try {
+        const r = await fetch('/api/me', { credentials:'include' });
+        if(r.ok){ const j = await r.json().catch(()=>null); if(j && j.logged){ clearInterval(poll); window.applyLoginState(j.user); } }
+      } catch(e){}
+      // stop polling if popup closed
+      if(popup && popup.closed){ clearInterval(poll); window.removeEventListener('message', onMessage); }
+    }, 900);
+  });
+
+  /* On load: try to detect existing session */
+  (async function initMe(){
+    try {
+      const r = await fetch('/api/me', { credentials: 'include' });
+      if(r.ok){
+        const j = await r.json().catch(()=>null);
+        if(j && j.logged) window.applyLoginState(j.user);
+      }
+    } catch(e){}
+  })();
+
+  /* Optional: close on click outside modal core */
+  overlay.addEventListener('click', (ev) => {
+    if(ev.target === overlay) closeModal();
+  });
+
+  /* Small shake animation style injection for errors (scoped) */
+  (function injectShake(){
+    const css = `.mr-shake{animation:mrShake .42s cubic-bezier(.36,.07,.19,.97);}@keyframes mrShake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)} }`;
+    const s = document.createElement('style'); s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+  })();
+
+})();
+
+</script>
 
 </body>
 </html>
