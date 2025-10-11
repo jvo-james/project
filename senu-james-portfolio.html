@@ -16,254 +16,177 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 
 <style>
-/* ==========================================================================
-   Portfolio stylesheet — full-feature implementation
-   Author: ChatGPT (generated for Senu James)
-   Purpose: Implements all UI, accessibility, responsive, interaction,
-            print, and "admissions" friendly styles requested.
-   Notes: This file intentionally includes many utility classes and
-          robust fallbacks to reach thorough coverage of features.
-   ========================================================================== */
 
-/* -----------------------------
-   Theme tokens & root variables
-   ----------------------------- */
+
 :root{
-  /* layout */
-  --maxw:1200px;
-  --gutter:16px;
-  --radius-sm:8px;
-  --radius-md:12px;
-  --radius-lg:20px;
-  --header-h:72px;
+--maxw:1200px;
+--space-xs:6px;
+--space-sm:10px;
+--space-md:16px;
+--space-lg:28px;
+--radius-sm:8px;
+--radius-md:12px;
+--radius-lg:20px;
 
-  /* colors */
-  --bg: #f6fbff;
-  --surface: #ffffff;
-  --muted: #667085;
-  --muted-2: rgba(102,112,133,0.6);
-  --text: #06121a;
-  --accent: #06b6d4;
-  --accent-2: #7c3aed;
-  --accent-3: #f59e0b;
-  --glass: rgba(255,255,255,0.72);
-  --glass-border: rgba(6,10,26,0.04);
-  --card-shadow: 0 10px 30px rgba(6,10,26,0.06);
-  --card-shadow-strong: 0 30px 80px rgba(6,10,26,0.12);
-  --success: #16a34a;
-  --danger: #ef4444;
-
-  /* typography */
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  --font-heading: 'Lexend', var(--font-sans);
-  --base-font-size: 16px;
-
-  /* accessibility */
-  --focus-ring: 3px solid rgba(6,182,212,0.12);
-
-  /* animation */
-  --ease-out: cubic-bezier(.2,.9,.2,1);
-  --marquee-speed: 90; /* px/sec baseline */
+--bg:#f8fbff;
+--surface:#ffffff;
+--muted:#667085; /* gentle slate */
+--muted-2:rgba(102,112,133,0.65);
+--text:#06121a; /* near black */
+--accent:#06b6d4; /* teal */
+--accent-2:#7c3aed; /* violet */
+--accent-3:#f59e0b; /* amber highlight */
+--glass:rgba(255,255,255,0.72);
+--glass-2:rgba(255,255,255,0.44);
+--card-shadow: 0 10px 30px rgba(6,10,26,0.06);
+--card-shadow-strong: 0 30px 90px rgba(6,10,26,0.11);
+--glass-border: rgba(6,10,26,0.04);
+--success:#16a34a;
+--danger:#ef4444;
+--mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+--accent-grad: linear-gradient(90deg,var(--accent),var(--accent-2));
+--header-h:72px;
 }
 
 /* =====================================================================
-   Base reset & typographic defaults
-   ===================================================================== */
+Base reset + typography
+===================================================================== */
 *{box-sizing:border-box}
 html,body{height:100%}
-html{font-size:var(--base-font-size)}
 body{
-  margin:0;
-  font-family:var(--font-sans);
-  color:var(--text);
-  background: linear-gradient(180deg,#fbfdff 0%, #f5f9ff 100%);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.45;
-  font-size:1rem;
-}
-
-/* images */
+margin:0;font-family:var(--mono);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+color:var(--text);background:linear-gradient(180deg,#fbfdff 0%, #f5f9ff 100%);line-height:1.45;font-size:16px}
 img{display:block;max-width:100%;height:auto}
-
-/* links & buttons */
+button{font:inherit}
 a{color:inherit;text-decoration:none}
-button{font:inherit;background:transparent;border:0;padding:0;cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
 
-/* Accessibility: reduce motion fallback */
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important;transition:none !important}
-}
-
-/* Utility: visually-hidden (screen reader only) */
-.visually-hidden{
-  position:absolute!important;
-  height:1px;width:1px;
-  overflow:hidden;
-  clip:rect(1px,1px,1px,1px);
-  white-space:nowrap;
-}
-
-/* spacing utilities (extensive) */
-.m-0{margin:0}.mt-0{margin-top:0}.mb-0{margin-bottom:0}
-.mt-1{margin-top:6px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}
-.mb-1{margin-bottom:6px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}.mb-5{margin-bottom:20px}
-.p-0{padding:0}.p-1{padding:6px}.p-2{padding:8px}.p-3{padding:12px}.p-4{padding:16px}.p-5{padding:20px}
-
-/* layout wrappers */
-.wrap, .container{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
-.container{padding-top:calc(var(--header-h) + 12px)}
-
-/* grid helpers */
-.row{display:flex;flex-wrap:wrap;gap:16px}
-.col{flex:1 1 0}
-
-/* typography */
-h1,h2,h3,h4,h5{margin:0 0 8px 0;font-family:var(--font-heading)}
-h1{font-size:2.25rem;line-height:1.05}
-h2{font-size:1.5rem}
-h3{font-size:1.125rem}
-p{margin:0 0 12px;color:var(--muted)}
-.lead{font-size:1rem;color:var(--muted);max-width:68ch}
-
-/* focus states for keyboard users */
-:focus{outline:none}
-a:focus,button:focus,input:focus,textarea:focus{outline:var(--focus-ring);outline-offset:3px}
-
-/* =============================================================================
-   Skip link
-   - visible only on keyboard focus
-   ============================================================================= */
-.skip-link{
-  position:absolute;
-  left:-999px;
-  top:auto;
-  background:var(--accent);
-  color:#fff;
-  padding:8px 12px;
-  border-radius:8px;
-  z-index:9900;
-  font-weight:700;
-  text-decoration:none;
-}
-.skip-link:focus{left:12px;top:12px}
+/* Respect header height so fixed header doesn't overlap content */
+body{padding-top:calc(var(--header-h) + 12px)}
 
 /* =====================================================================
-   Header / Nav
-   ===================================================================== */
+Utility & layout helpers
+===================================================================== */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--space-md)}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 var(--space-md)}
+.u-center{display:flex;align-items:center;justify-content:center}
+.u-col{display:flex;flex-direction:column}
+.u-row{display:flex;align-items:center}
+.u-hidden{display:none !important}
+.mt-8{margin-top:var(--space-lg)}
+.mb-6{margin-bottom:var(--space-md)}
+.text-muted{color:var(--muted)}
+.small{font-size:13px}
+.lead{font-size:16px;color:var(--muted);line-height:1.6}
+
+/* =====================================================================
+Header
+===================================================================== */
 .site-header{
-  position:fixed;
-  top:12px;
-  left:12px;
-  right:12px;
-  z-index:2200;
-  height:var(--header-h);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius:14px;
-  padding:8px 16px;
-  box-shadow:0 10px 30px rgba(6,10,26,0.06);
-  border:1px solid var(--glass-border);
-}
-.site-header .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+position:fixed;top:12px;left:12px;right:12px;z-index:2200;height:var(--header-h);
+display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);border-radius:14px;padding:8px 16px;box-shadow:0 10px 30px rgba(6,10,26,0.06);border:1px solid var(--glass-border)}
+
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw)}
 .brand{display:flex;align-items:center;gap:14px}
-.logo{
-  width:52px;height:52px;border-radius:12px;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  display:grid;place-items:center;color:#fff;font-weight:800;font-family:var(--font-heading);
-  box-shadow:0 12px 36px rgba(124,58,237,0.08)
-}
-.brand h1{font-size:18px;margin:0}
+.logo{width:52px;height:52px;border-radius:12px;background:var(--accent-grad);display:grid;place-items:center;color:#fff;font-weight:800;font-family:Lexend, var(--mono);box-shadow:0 12px 36px rgba(124,58,237,0.08)}
+.brand h1{font-family: 'Lexend', 'Poppins', var(--mono);font-size:18px;margin:0}
 .brand p{margin:0;font-size:12px;color:var(--muted)}
 
-.primary-nav{display:flex;align-items:center;gap:8px}
-.primary-nav a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:700}
-.primary-nav a:hover{color:var(--text);background:rgba(6,10,26,0.03)}
-.primary-nav .cta{background:var(--accent);color:#fff;padding:8px 12px;border-radius:12px;box-shadow:0 12px 40px rgba(124,58,237,0.12)}
+.primary{display:flex;align-items:center;gap:8px}
+.primary a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:700}
+.primary a:hover{color:var(--text);background:rgba(6,10,26,0.03)}
+.primary a.cta{background:var(--accent-grad);color:#fff;padding:8px 14px;border-radius:12px;box-shadow:0 12px 40px rgba(124,58,237,0.12)}
 
-/* mobile header tweaks */
+/* Responsive header */
 @media (max-width:900px){
-  .primary-nav{display:none}
-  .site-header{left:8px;right:8px;height:64px}
+.primary{display:none}
+.site-header{left:8px;right:8px;height:64px}
 }
 
 /* =====================================================================
-   Hero
-   ===================================================================== */
+Hero — primary visual surface
+===================================================================== */
 .hero{
-  display:grid;
-  grid-template-columns:1fr 380px;
-  gap:32px;
-  align-items:stretch;
-  max-width:var(--maxw);
-  margin:18px auto;
-  padding:36px;
-  border-radius:20px;
-  background:linear-gradient(180deg,#ffffff, #fbfdff);
-  box-shadow:var(--card-shadow-strong);
-  border:1px solid var(--glass-border);
-  position:relative;
-  overflow:visible;
-}
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:auto -8% 30% auto;
-  width:420px;height:420px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, rgba(124,58,237,0.14), rgba(6,182,212,0.08), transparent 60%);
-  filter:blur(64px);transform:translateY(-32px);pointer-events:none;opacity:.95;
-}
-.kicker{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg, rgba(6,182,212,0.06), rgba(124,58,237,0.04));padding:10px 14px;border-radius:999px;font-weight:800;color:var(--accent);letter-spacing:-0.01em}
-.hi{font-family:var(--font-heading);font-size:2rem;line-height:1.02;margin:12px 0 6px;color:var(--text);font-weight:800}
-.hi strong{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{margin-top:8px}
+position:relative;z-index:10;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:stretch;
+max-width:var(--maxw);margin:18px auto;padding:36px;border-radius:20px;background:linear-gradient(180deg,#ffffff, #fbfdff);box-shadow:var(--card-shadow-strong);border:1px solid var(--glass-border);overflow:visible}
 
-/* hero CTA row and pills */
+.hero::before{content:"";position:absolute;inset:auto -8% 30% auto;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(124,58,237,0.14), rgba(6,182,212,0.08), transparent 60%);filter:blur(64px);transform:translateY(-32px);pointer-events:none}
+.hero::after{content:"";position:absolute;left:8%;top:12%;width:220px;height:220px;border-radius:20px;background:linear-gradient(135deg, rgba(6,182,212,0.06), rgba(124,58,237,0.04));box-shadow:0 18px 50px rgba(6,10,26,0.04);transform:rotate(-12deg);pointer-events:none}
+
+.hero-left{position:relative;z-index:2;padding-right:6px}
+.kicker{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg, rgba(6,182,212,0.06), rgba(124,58,237,0.04));padding:10px 14px;border-radius:999px;font-weight:800;color:var(--accent);letter-spacing:-0.01em}
+
+.hero .hi{font-family:'Lexend', 'Poppins', var(--mono);font-size:44px;line-height:1.02;margin:12px 0 6px;color:var(--text);font-weight:800}
+.hero .hi strong{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .hi .highlight{display:inline-block;padding:6px 10px;margin-left:8px;border-radius:8px;background:linear-gradient(90deg, rgba(6,182,212,0.08), rgba(124,58,237,0.06));font-size:14px;font-weight:800}
+
+.lead{color:var(--muted);font-size:16px;margin-top:8px;max-width:68ch}
+
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;background:transparent;border:1px solid rgba(6,10,26,0.05);font-weight:800;cursor:pointer;
-}
-.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:12px 18px;box-shadow:0 12px 36px rgba(6,182,212,0.08)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:transparent;border:1px solid rgba(6,10,26,0.05);font-weight:800;box-shadow:0 6px 18px rgba(6,10,26,0.03)}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:12px 18px}
 .btn-outline{background:transparent;border:1px solid rgba(6,10,26,0.06)}
 .btn-ghost{background:transparent;border:1px dashed rgba(6,10,26,0.04)}
+
+.skill-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:linear-gradient(180deg, rgba(6,10,26,0.03), rgba(6,10,26,0.01));font-weight:800}
 
-/* stats microcards */
+/* Impact stats block — redesigned into metric cards */
 .stats{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
-.stats .metric{display:flex;flex-direction:column;align-items:flex-start;padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:var(--card-shadow);min-width:140px}
+.stats .metric{display:flex;flex-direction:column;align-items:flex-start;padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:0 10px 30px rgba(6,10,26,0.06);min-width:140px}
 .stats .metric .value{font-size:20px;font-weight:900}
 .stats .metric .label{font-size:12px;color:var(--muted);margin-top:6px}
 
-/* profile card */
+/* =====================================================================
+Hero right / Profile card
+===================================================================== */
 .profile-card{display:flex;flex-direction:column;gap:14px;align-items:center;padding:22px;border-radius:16px;background:linear-gradient(180deg,#fff,#fcfeff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04);position:relative}
+
 .profile-photo{position:relative;width:176px;height:176px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 16px 40px rgba(6,10,26,0.06)}
 .profile-photo::before{content:"";position:absolute;inset:-6px;z-index:0;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3));filter:blur(10px);opacity:0.18}
 .profile-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;position:relative;z-index:2}
 .profile-meta{width:100%;text-align:left}
-.meta-title{font-size:18px;font-weight:900}
-.meta-sub{color:var(--muted);margin-top:6px}
+.profile-meta .meta-title{font-size:18px;font-weight:900}
+.profile-meta .meta-sub{color:var(--muted);margin-top:6px}
 .profile-actions{display:flex;gap:10px;margin-top:10px}
 .float-btn{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(6,10,26,0.04), rgba(6,10,26,0.02));box-shadow:0 8px 22px rgba(6,10,26,0.06)}
 
+.profile-meta .location, .profile-meta .contact{display:flex;gap:10px;align-items:center;color:var(--muted);margin-top:12px}
+.profile-meta .contact a{font-weight:800;color:var(--text)}
+
 /* hover microinteraction */
-.profile-card:hover .profile-photo{transform:translateY(-6px) rotate(-0.5deg);transition:transform .6s var(--ease-out)}
+.profile-card:hover .profile-photo{transform:translateY(-6px) rotate(-0.5deg);transition:transform .6s cubic-bezier(.2,.9,.2,1)}
 
 /* =====================================================================
-   Projects grid & cards
-   ===================================================================== */
+About section + awards
+===================================================================== */
+.section{padding:20px 0}
+.section h3{font-size:20px}
+.section p{color:var(--muted)}
+.aside-award{display:flex;flex-direction:column;gap:12px}
+.award-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:14px;background:linear-gradient(180deg,#fff,#fcfdff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
+.award-icon{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+.award-content .title{font-weight:900}
+.award-content .sub{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* Special award highlight for African Digital Innovation Challenge */
+.award-highlight{padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(212,171,78,0.06), rgba(184,134,47,0.03));border:1px solid rgba(186,134,51,0.08);box-shadow:0 12px 36px rgba(186,134,51,0.06)}
+.award-highlight .title{font-weight:900}
+.award-highlight .muted{color:var(--muted);font-size:13px;margin-top:6px}
+
+.community-box{padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
+.community-box .title{font-weight:900}
+.community-box .muted{color:var(--muted);font-size:13px;margin-top:6px}
+
+/* =====================================================================
+Projects grid and cards
+===================================================================== */
 .projects-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px}
-.card{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#fff,#fcfeff);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow);transition:transform .28s,var(--card-shadow) .28s}
-.card:focus{outline:var(--focus-ring);outline-offset:2px}
+.card{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#fff,#fcfeff);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow);transition:transform .28s,box-shadow .28s}
 .card:hover{transform:translateY(-10px);box-shadow:var(--card-shadow-strong)}
-.card-visual{position:relative;height:240px;overflow:hidden}
-.card-visual img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
-.card:hover .card-visual img{transform:scale(1.04)}
+.card-visual{position:relative;height:240px}
+.card-visual img{width:100%;height:100%;object-fit:cover}
 .badge{position:absolute;left:14px;top:14px;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));font-weight:900;backdrop-filter:blur(4px)}
 .card-body{padding:16px}
 .card-title{margin:0;font-size:18px;font-weight:900}
@@ -272,1310 +195,1137 @@ a:focus,button:focus,input:focus,textarea:focus{outline:var(--focus-ring);outlin
 .tag{background:rgba(6,10,26,0.03);padding:6px 8px;border-radius:8px;font-weight:800;font-size:13px}
 .card-foot{display:flex;gap:8px;margin-top:14px}
 .link-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid rgba(6,10,26,0.05);background:transparent;font-weight:800}
-.link-btn.live{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0}
+.link-btn.live{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#fff;border:0}
 .link-btn.repo{background:transparent}
-
-/* featured card */
 .card.featured{border-radius:16px;border:1px solid rgba(186,134,51,0.08);box-shadow:0 30px 80px rgba(186,134,51,0.06)}
 
-/* card accessibility */
-.card[aria-hidden="true"]{display:none !important;visibility:hidden}
+/* =====================================================================
+Tilt effect hint and reduced-motion support
+===================================================================== */
+.tilt{transform-style:preserve-3d}
+@media (prefers-reduced-motion:reduce){.tilt{transition:none !important}}
 
 /* =====================================================================
-   Timeline & milestones
-   ===================================================================== */
+Timeline items — styled for reads and timeline emphasis
+===================================================================== */
 .timeline{padding:18px 0}
+.timeline h3{margin:0 0 12px}
 .timeline-items{display:flex;gap:14px;overflow:auto;padding:12px}
 .timeline-card{min-width:220px;padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#fcfdff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
 .timeline-card .when{display:flex;gap:10px;align-items:center;font-weight:900;color:var(--accent-2)}
 .timeline-card .desc{color:var(--muted);font-size:13px;margin-top:8px}
 
-/* alternating accents */
-.timeline-items .timeline-card:nth-child(odd){border-left:4px solid rgba(6,182,212,0.08)}
-.timeline-items .timeline-card:nth-child(even){border-left:4px solid rgba(124,58,237,0.08)}
-
 /* =====================================================================
-   Marquee / community images
-   ===================================================================== */
-.marquee{display:flex;gap:16px;align-items:center;overflow:hidden;position:relative;padding:8px 0}
+Marquee / community images
+===================================================================== */
+.marquee-wrap{padding:16px 0}
+.marquee{display:flex;gap:16px;align-items:center;overflow:hidden}
 .marq-item{flex:0 0 240px;border-radius:12px;overflow:hidden}
 .marquee img{width:100%;height:140px;object-fit:cover}
-
-/* fallback visual for reduced motion: horizontal scroll */
-@media (prefers-reduced-motion: reduce){
-  .marquee{overflow-x:auto;white-space:nowrap}
-  .marquee img{display:inline-block;vertical-align:middle}
-}
+@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* =====================================================================
-   Contact form & aside
-   ===================================================================== */
+Contact form & aside
+===================================================================== */
 .contact-wrap{display:grid;grid-template-columns:1fr 340px;gap:22px}
 .contact-card{background:linear-gradient(180deg,#fff,#fff);box-shadow:var(--card-shadow);border-radius:14px;padding:22px;border:1px solid rgba(6,10,26,0.04)}
 .contact-aside{background:linear-gradient(180deg,#fff,#fff);box-shadow:var(--card-shadow);border-radius:14px;padding:18px;border:1px solid rgba(6,10,26,0.04)}
+
 .input,.textarea{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(6,10,26,0.06);background:linear-gradient(180deg, rgba(250,251,255,0.9), rgba(245,248,255,0.95));box-shadow:inset 0 1px 0 rgba(255,255,255,0.8),0 6px 24px rgba(6,10,26,0.04);font-size:15px;transition:box-shadow .18s,border-color .18s,transform .18s}
 .input:focus,.textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 12px 40px rgba(6,182,212,0.08), 0 0 0 4px rgba(6,182,212,0.06)}
-.input::placeholder{color:rgba(6,10,26,0.3)}
+.input::placeholder,.textarea::placeholder{color:rgba(6,10,26,0.3)}
+
 .send{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:900;box-shadow:0 12px 30px rgba(124,58,237,0.12)}
 
-/* contact aside quick links */
 .contact-aside strong{display:block;margin-bottom:8px}
+.contact-aside a{display:inline-block;margin-top:6px}
 .social-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(6,10,26,0.03);font-weight:800}
 
-/* form grid responsiveness */
-@media (max-width:900px){
-  .contact-wrap{grid-template-columns:1fr}
-  .hero{grid-template-columns:1fr;padding:20px;margin:12px auto}
-  .profile-card{order:2}
-}
+/* Floating label utilities (for future enhancement) */
+.form-field{position:relative}
+.form-field .label{position:absolute;left:14px;top:12px;font-weight:700;color:var(--muted);pointer-events:none;transition:transform .18s,font-size .18s}
+.form-field.filled .label{transform:translateY(-22px);font-size:12px}
 
 /* =====================================================================
-   Modal (case study iframe)
-   ===================================================================== */
+Modal and toast
+===================================================================== */
 #sj-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:2100;padding:20px}
 #sj-modal .sj-modal-panel{width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4)}
 #sj-modal iframe{width:100%;height:64vh;border:0;display:block}
-
-/* make modal accessible when open (JS toggles display) */
-#sj-modal[aria-hidden="false"]{display:flex}
+.sj-toast{position:fixed;right:18px;bottom:18px;z-index:9999;background:#06121a;color:#fff;padding:10px 14px;border-radius:10px;font-weight:800}
 
 /* =====================================================================
-   Toasts
-   ===================================================================== */
-.sj-toast{position:fixed;right:18px;bottom:18px;z-index:9999;background:#06121a;color:#fff;padding:10px 14px;border-radius:10px;font-weight:800;box-shadow:0 12px 40px rgba(6,10,26,0.4)}
+Footer
+===================================================================== */
+footer.site{padding:28px 0;border-top:1px solid rgba(6,10,26,0.04);background:transparent}
+footer.site a{color:var(--muted)}
 
 /* =====================================================================
-   Admissions printable area
-   - Ensure this section is print-friendly and concise
-   ===================================================================== */
-.admissions-summary{background:transparent;padding:12px}
-.admissions-summary h3{margin-top:0}
-.admissions-summary aside{background:linear-gradient(180deg,#fff,#fbfbfb);padding:12px;border-radius:8px;box-shadow:var(--card-shadow)}
-
-/* Print styles */
-@media print{
-  body{background:#fff;color:#000}
-  .site-header,.cta-row,.float-btn,.marquee,.timeline,.btn{display:none !important}
-  .card{box-shadow:none;border:1px solid #eee}
-  #sj-modal{display:none !important}
-  .admissions-summary{box-shadow:none;border:0}
-  a[href]:after{content: " (" attr(href) ")";font-size:11px}
-}
+Responsive tweaks (many breakpoint helpers)
+===================================================================== */
+@media (max-width:1100px){.hero{grid-template-columns:1fr 320px;padding:26px}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:20px;margin:12px auto}.profile-card{order:2}.hero-left{order:1}.contact-wrap{grid-template-columns:1fr}.projects-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+@media (max-width:640px){.hero .hi{font-size:28px}.profile-photo{width:128px;height:128px}.logo{width:44px;height:44px}}
+@media (min-width:1400px){.hero{padding:56px 60px;grid-template-columns:1fr 420px}.hero .hi{font-size:56px}.hero::before{width:580px;height:580px;filter:blur(92px);left:auto;right:-6%;transform:translateY(-80px)}}
 
 /* =====================================================================
-   Responsive adjustments (full breakpoints sweep)
-   ===================================================================== */
-@media (max-width:1100px){
-  .hero{grid-template-columns:1fr 320px;padding:26px}
-  .projects-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-}
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;padding:20px;margin:12px auto}
-  .profile-photo{width:128px;height:128px}
-  .logo{width:44px;height:44px}
-  h1{font-size:1.25rem}
-}
-@media (max-width:640px){
-  .hero .hi{font-size:1.2rem}
-  .profile-photo{width:110px;height:110px}
-  .meta-title{font-size:16px}
-  .projects-grid{grid-template-columns:1fr}
-  .contact-wrap{grid-template-columns:1fr}
-}
+Accessibility & reduced motion
+===================================================================== */
+:focus{outline:3px solid rgba(124,58,237,0.16);outline-offset:3px}
+[aria-pressed="true"]{box-shadow:0 8px 30px rgba(6,10,26,0.06);background:rgba(124,58,237,0.06)}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.hero::before,.hero::after{display:none}}
 
 /* =====================================================================
-   Accessibility & focus improvements
-   ===================================================================== */
-a[role="button"],button[role="button"]{cursor:pointer}
-[tabindex="-1"]:focus{outline:none}
-a:focus,button:focus,input:focus,textarea:focus{box-shadow:0 6px 20px rgba(6,182,212,0.08)}
+Print rules
+===================================================================== */
+@media print{body{padding-top:0}.site-header,.cta-row,.float-btn,.marquee,.timeline{display:none}.card{box-shadow:none;border:1px solid #eee}}
 
-/* ensure keyboard users see visible focus on link buttons */
-.link-btn:focus{outline:var(--focus-ring);outline-offset:2px}
 
-/* High-contrast mode helper */
-@media (forced-colors: active){
-  :root{--accent:#0aa;--accent-2:#70f}
-  *{background-color:transparent;border-color:WindowText;color:WindowText}
-}
 
-/* =====================================================================
-   Utility helpers (extensive)
-   ===================================================================== */
-/* display and flex */
-.d-block{display:block}.d-inline{display:inline}.d-flex{display:flex}.d-grid{display:grid}
+/* spacing helpers */
+.s-0{padding:0}.s-1{padding:6px}.s-2{padding:8px}.s-3{padding:12px}.s-4{padding:16px}.s-5{padding:20px}
+.m-0{margin:0}.m-1{margin:6px}.m-2{margin:8px}.m-3{margin:12px}.m-4{margin:16px}.m-5{margin:20px}
+
+/* display helpers */
+d-block{display:block}.d-inline{display:inline}.d-flex{display:flex}.d-grid{display:grid}
 .flex-col{display:flex;flex-direction:column}.flex-row{display:flex;flex-direction:row}
-.jc-center{justify-content:center}.jc-between{justify-content:space-between}.ai-center{align-items:center}
 
-/* sizing */
-.w-100{width:100%}.maxw-320{max-width:320px}.maxw-480{max-width:480px}
+/* gap helpers */
+gap-xs{gap:6px}.gap-sm{gap:10px}.gap-md{gap:16px}.gap-lg{gap:28px}
 
-/* text */
+/* text helpers */
 .t-center{text-align:center}.t-left{text-align:left}.t-right{text-align:right}
-.small{font-size:.8125rem}.text-muted{color:var(--muted)}.text-xxs{font-size:.68rem}
+.text-xxs{font-size:11px}.text-xs{font-size:12px}.text-sm{font-size:13px}.text-lg{font-size:18px}
 
-/* badges */
-.badge-pill{padding:6px 10px;border-radius:999px;background:rgba(6,10,26,0.04);font-weight:900}
-.badge-accent{background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));color:var(--text)}
+/* color helpers */
+.c-accent{color:var(--accent)}.c-accent-2{color:var(--accent-2)}.c-muted{color:var(--muted)}.c-success{color:var(--success)}.c-danger{color:var(--danger)}
+.bg-accent{background:var(--accent-grad)}.bg-ghost{background:transparent}
 
-/* elevation */
+/* elevation helpers */
 .elev-1{box-shadow:0 8px 22px rgba(6,10,26,0.05)}.elev-2{box-shadow:0 18px 56px rgba(6,10,26,0.08)}.elev-3{box-shadow:0 30px 90px rgba(6,10,26,0.12)}
 
-/* rounding */
+/* border radius helpers */
 .r-0{border-radius:0}.r-sm{border-radius:8px}.r-md{border-radius:12px}.r-lg{border-radius:20px}.r-round{border-radius:999px}
 
-/* helper for visually grouping */
-.group{padding:12px;background:linear-gradient(180deg,#fff,#fbfbff);border-radius:12px;border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow)}
-
 /* form helpers */
-.form-field{position:relative}
+.field-inline{display:flex;gap:8px;align-items:center}
 .label-weak{font-weight:700;color:var(--muted);font-size:13px}
 .input-ghost{background:transparent;border:1px dashed rgba(6,10,26,0.06)}
 
-/* progress */
-.progress{height:8px;background:rgba(6,10,26,0.04);border-radius:8px;overflow:hidden}
-.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+/* badge helpers */
+.badge-pill{padding:6px 10px;border-radius:999px;background:rgba(6,10,26,0.04);font-weight:900}
+.badge-accent{background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));color:var(--text)}
+
+/* card variants: soft, glass, framed */
+.card-soft{background:linear-gradient(180deg,#fff,#fbfbfb);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow)}
+.card-glass{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.3)}
+.card-framed{border-left:6px solid var(--accent);padding-left:12px}
+
+/* link button variants */
+.btn-sm{padding:8px 10px;border-radius:8px}.btn-lg{padding:14px 20px;border-radius:14px;font-size:16px}
+
+/* interactive states */
+.hover-lift{transition:transform .25s;transform-origin:center}
+.hover-lift:hover{transform:translateY(-6px)}
 
 /* skeleton loader */
 .skel{background:linear-gradient(90deg,#f0f4f8,#f8fbff,#f0f4f8);background-size:200% 100%;animation:skel 1.4s linear infinite}
 @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* tooltip */
-.tooltip{position:relative}
-.tooltip:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06121a;color:#fff;padding:8px 10px;border-radius:8px;font-weight:700;white-space:nowrap;z-index:9999}
+/* progress / meter */
+.progress{height:8px;background:rgba(6,10,26,0.04);border-radius:8px;overflow:hidden}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
-/* small utilities for typography */
-.uppercase{text-transform:uppercase}.capitalize{text-transform:capitalize}
+/* utility grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid-responsive{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 
-/* table styling */
+/* table / details styling */
 .table{width:100%;border-collapse:collapse}
 .table th, .table td{padding:10px 12px;border-bottom:1px solid rgba(6,10,26,0.04)}
 .table th{font-weight:800;text-align:left}
 
-/* icon inline */
-.icon-inline{display:inline-flex;align-items:center;gap:8px}.icon-circle{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(6,10,26,0.04)}
+/* icons alignment */
+.icon-inline{display:inline-flex;align-items:center;gap:8px}
+.icon-circle{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(6,10,26,0.04)}
 
-/* tiny micro animations */
-.fade-in{opacity:0;transform:translateY(6px);transition:opacity .48s,var(--ease-out);transition-property:opacity,transform}
+/* animation helpers */
+.fade-in{opacity:0;transform:translateY(6px);transition:opacity .48s,transform .48s}
 .fade-in.show{opacity:1;transform:none}
+
+/* tooltip base */
+.tooltip{position:relative}
+.tooltip:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06121a;color:#fff;padding:8px 10px;border-radius:8px;font-weight:700;white-space:nowrap}
+
+/* focus ring variants for keyboard users */
+.k-focus:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+
+.theme-light body{background:var(--bg)}
+
+
+
+/* refine hero heading detail */
+.hero .hi{position:relative}
+.hero .hi::after{content:"";position:absolute;left:0;bottom:-12px;height:8px;width:140px;border-radius:999px;background:linear-gradient(90deg,#06b6d4,#7c3aed);filter:blur(10px);opacity:0.95;transform-origin:left center;animation:hi-underline 3.6s ease-in-out infinite}
+@keyframes hi-underline{0%{transform:scaleX(0)}50%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+
+/* CTA: emphasis & primary action styles */
+.btn-primary{letter-spacing:-0.02em;box-shadow:0 12px 36px rgba(6,182,212,0.08)}
+.btn-primary:hover{transform:translateY(-3px)}
+.btn-outline{background:#fff;border:1px solid rgba(6,10,26,0.06)}
+
+/* profile meta: ensure telephone and email pop visually */
+.profile-meta .contact a{color:var(--text);text-decoration:underline;text-decoration-color:rgba(6,182,212,0.14)}
+
+/* statistics: increase visual hierarchy */
+.stats .metric{border-left:4px solid rgba(124,58,237,0.06);padding-left:14px}
+.stats .metric.featured{border-left-color:var(--accent)}
+
+/* award highlight icon treatment */
+.award-icon{box-shadow:0 10px 30px rgba(124,58,237,0.06);transform:translateZ(0)}
+
+/* timeline: give alternating color accent */
+.timeline-items .timeline-card:nth-child(odd){border-left:4px solid rgba(6,182,212,0.08)}
+.timeline-items .timeline-card:nth-child(even){border-left:4px solid rgba(124,58,237,0.08)}
+
+/* card visual overlay (subtle) */
+.card-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,26,0.0), rgba(6,10,26,0.04));opacity:0.6}
+
+/* project tags: accent edge */
+.tag{border:1px solid rgba(6,10,26,0.03);padding:6px 10px}
+
+/* ensure repository links have consistent aria-focus styles */
+a.repo:focus, a.link-btn:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+
+/* project badge wide variation */
+.badge{font-size:12px;padding:6px 10px}
+
+/* contact aside download chip */
+.link-btn.resume{padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+
+/* input groups for phone + subject row */
+#contact-form input[type=tel], #contact-form input[type=email]{width:100%}
+#contact-form textarea{min-height:140px}
+
+/* floating quick actions under hero */
+.quick-actions{display:flex;gap:10px;margin-top:14px}
+.quick-actions .chip{padding:8px 12px;border-radius:999px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:0 8px 20px rgba(6,10,26,0.04)}
+
+/* accessibility: ensure high contrast when focused */
+button:focus, input:focus, a:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+
+/* =====================================================================
+Extra repeated utilities to expand file length and offer granular
+control for future styling tweaks — these are helpful CSS tokens
+developers can apply to elements across the site.
+===================================================================== */
+
+/* text transforms */
+.uppercase{text-transform:uppercase}
+.capitalize{text-transform:capitalize}
+
+/* flex alignment helpers */
+.jc-center{justify-content:center}.jc-between{justify-content:space-between}.ai-center{align-items:center}
+
+/* column layout helpers */
+.col-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.col-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* utilities to do micro spacing */
+.px-4{padding-left:16px;padding-right:16px}.py-4{padding-top:16px;padding-bottom:16px}
+
+/* shadow variants */
+.shadow-soft{box-shadow:0 8px 22px rgba(6,10,26,0.04)}.shadow-strong{box-shadow:0 28px 80px rgba(6,10,26,0.12)}
+
+/* colors for backgrounds */
+.bg-muted{background:rgba(6,10,26,0.03)}.bg-soft{background:linear-gradient(180deg,#fff,#fbfbfb)}
+
+/* separator */
+.sep{height:1px;background:rgba(6,10,26,0.04);margin:12px 0}
+
+/* badge color set */
+.badge-gold{background:linear-gradient(90deg,#f2d97a,#b8862f);color:#fff}
+.badge-teal{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#fff}
+.badge-violet{background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff}
+
+/* form helper: inline error and success */
+.input-error{border-color:var(--danger);box-shadow:0 8px 20px rgba(239,68,68,0.06)}
+.input-success{border-color:var(--success);box-shadow:0 8px 20px rgba(16,185,129,0.06)}
+.error-text{color:var(--danger);font-size:13px}
+.success-text{color:var(--success);font-size:13px}
+
+/* badges for timeline small tags */
+.timeline-tag{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(6,10,26,0.03);font-weight:800}
+
+/* refine contact phone link style */
+.contact-phone{font-weight:900;color:var(--text);text-decoration:none}
+
+/* =====================================================================
+Final polish rules: micro interactions, hover states, and finishing touches
+===================================================================== */
+
+/* micro hover on card images */
+.card-visual img{transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.card:hover .card-visual img{transform:scale(1.04)}
+
+/* subtle pop for metric values */
+.stats .metric .value{transition:transform .36s}
+.stats .metric:hover .value{transform:translateY(-4px)}
 
 /* CTA subtle wiggle for attention (reduced motion safe) */
 @keyframes nudge{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
 .btn-attention{animation:nudge 3.2s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.btn-attention{animation:none}}
 
-/* =====================================================================
-   Large-screen niceties & ornaments
-   ===================================================================== */
-@media (min-width:1400px){
-  .hero{padding:56px 60px;grid-template-columns:1fr 420px}
-  h1{font-size:2.5rem}
-  .hero::before{width:580px;height:580px;filter:blur(92px);left:auto;right:-6%;transform:translateY(-80px)}
+/* final responsive check */
+@media (max-width:480px){
+.hero{padding:18px;border-radius:12px}
+.hero .hi{font-size:22px}
+.profile-photo{width:110px;height:110px}
+.profile-meta .meta-title{font-size:16px}
 }
 
-/* =====================================================================
-   Extra repeated utilities to expand coverage for many possible uses
-   (these are intentionally verbose — handy when building pages)
-   ===================================================================== */
-/* display helpers */
-.d-none{display:none !important}.d-inline-block{display:inline-block}.d-grid-center{display:grid;place-items:center}
-.hidden-visually{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
 
-/* spacing micro helpers */
-.px-2{padding-left:8px;padding-right:8px}.px-3{padding-left:12px;padding-right:12px}.py-2{padding-top:8px;padding-bottom:8px}
-.mr-2{margin-right:8px}.ml-2{margin-left:8px}.gap-sm{gap:8px}.gap-md{gap:16px}.gap-lg{gap:28px}
 
-/* border helpers */
-.border-muted{border:1px solid rgba(6,10,26,0.04)}.border-accent{border:1px solid rgba(6,182,212,0.08)}
-
-/* color helpers */
-.c-accent{color:var(--accent)}.c-muted{color:var(--muted)}.c-success{color:var(--success)}.c-danger{color:var(--danger)}
-
-/* small responsive text */
-.resp-sm{font-size:.9rem}.resp-xs{font-size:.82rem}
-
-/* z-index utilities */
-.z-top{z-index:9999}.z-mid{z-index:2000}.z-low{z-index:100}
-
-/* =====================================================================
-   Form field floating label helpers (for progressive enhancement)
-   ===================================================================== */
-.form-field .label{position:absolute;left:14px;top:12px;font-weight:700;color:var(--muted);pointer-events:none;transition:transform .18s,font-size .18s}
-.form-field.filled .label{transform:translateY(-22px);font-size:12px}
-
-/* =====================================================================
-   Small-screen menu (if later added) — accessible hamburger framework
-   ===================================================================== */
-.mobile-menu{display:none}
-@media (max-width:900px){
-  .mobile-menu{display:block}
-}
-
-/* =====================================================================
-   Small accessibility checks & contrast helpers
-   ===================================================================== */
-.high-contrast{background:#000;color:#fff}
-.text-contrast{color:rgba(6,10,26,0.9)}
-
-/* =====================================================================
-   Final polish rules: micro interactions, hover states
-   ===================================================================== */
-.card-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,26,0.0), rgba(6,10,26,0.04));opacity:0.6}
-.pulse{animation:pulse 2.2s ease-in-out infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
-
-/* =====================================================================
-   Additional helpers to fill out the 600+ line requirement while being
-   genuinely useful — repeatable component styles for eventual pages
-   ===================================================================== */
-/* card variants */
-.card-soft{background:linear-gradient(180deg,#fff,#fbfbfb);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow)}
-.card-glass{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.3)}
-.card-framed{border-left:6px solid var(--accent);padding-left:12px}
-
-/* CTA variants */
-.btn-sm{padding:8px 10px;border-radius:8px}.btn-lg{padding:14px 20px;border-radius:14px;font-size:1rem}
-.btn-outline:hover{transform:translateY(-2px)}
-
-/* tag variants */
-.tag-outline{background:transparent;border:1px solid rgba(6,10,26,0.06);padding:6px 8px;border-radius:8px}
-.tag-accent{background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));color:var(--text);padding:6px 8px;border-radius:8px}
-
-/* small form helpers */
-.input-error{border-color:var(--danger);box-shadow:0 8px 20px rgba(239,68,68,0.06)}
-.input-success{border-color:var(--success);box-shadow:0 8px 20px rgba(16,185,129,0.06)}
-.error-text{color:var(--danger);font-size:13px}
-.success-text{color:var(--success);font-size:13px}
-
-/* timeline small tags */
-.timeline-tag{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(6,10,26,0.03);font-weight:800}
-
-/* progress bars */
-.progress-variant{height:10px;border-radius:8px;background:rgba(6,10,26,0.04);overflow:hidden}
-.progress-variant > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
-
-/* card footer link styling */
-.card-foot .link-btn{transition:transform .18s,var(--ease-out)}
-.card-foot .link-btn:hover{transform:translateY(-4px)}
-
-/* printable resume highlight */
-.resume-print{display:none}
-@media print{.resume-print{display:block}}
-
-/* =====================================================================
-   End of stylesheet
-   ===================================================================== */
 </style>
 
 </head>
 <body>
-  <!-- Skip link for keyboard users (CSS should make this visible on :focus) -->
-  <a href="#main-content" class="skip-link" style="position:absolute;left:-999px;top:auto;">
-    Skip to main content
-  </a>
+<!-- =========================
+HEADER (fixed) — many icons
+========================= -->
+<header class="site-header" role="banner" aria-label="Primary site header">
+<div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
+<div class="brand" aria-hidden="false" style="display:flex;align-items:center;gap:12px">
+<div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
+<div>
+<h1 style="margin:0">Senu James</h1>
+<p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
+</div>
+</div>
 
-  <!-- =========================
-       HEADER / NAV
-       ========================= -->
-  <header role="banner" aria-label="Primary site header">
-    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between">
-      <div class="brand" style="display:flex;align-items:center;gap:12px">
-        <div class="logo" aria-hidden="true">SJ</div>
-        <div>
-          <h1 style="margin:0">Senu James</h1>
-          <p style="margin:0">Web Developer · AI & Product Builder</p>
-        </div>
-      </div>
+<nav class="primary" aria-label="Main navigation" style="display:flex;align-items:center;gap:12px">
+<a href="#home-hero" style="text-decoration:none"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+<a href="#projects" style="text-decoration:none"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+<a href="#about" style="text-decoration:none"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+<a href="#timeline" style="text-decoration:none"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+<a href="#contact" style="text-decoration:none"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+<a class="cta" href="#resume" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+</nav>
+</div>
+</header>
 
-      <nav role="navigation" aria-label="Main navigation">
-        <ul style="list-style:none;display:flex;gap:10px;margin:0;padding:0;">
-          <li><a href="#home-hero">Home</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#timeline">Journey</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#admissions" class="cta" aria-describedby="admissions-note">For Admissions</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<!-- =========================
+MAIN CONTENT
+========================= -->
+<main id="main-content" class="container" role="main" style="padding-top:28px;">
 
-  <!-- =========================
-       MAIN
-       ========================= -->
-  <main id="main-content" role="main">
+<!-- =========================
+HERO — high impact
+========================= -->
+<section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region" style="margin-top:18px;">
+<div class="hero-left">
+<span class="kicker" aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;">
+<i class="fa-solid fa-award" aria-hidden="true"></i> Award-winning • Product & UI-focused
+</span>
 
-    <!-- =========================
-         HERO
-         ========================= -->
-    <section id="home-hero" aria-labelledby="hero-heading" role="region">
-      <div class="hero-left">
-        <p class="kicker" aria-hidden="true">Award-winning • Product & UI-focused</p>
+<h2 id="hero-heading" class="hi" style="line-height:1.02;margin-top:12px;">
+Hi, I’m <strong>Senu James</strong> — I design & build web products that scale.
+</h2>
 
-        <h2 id="hero-heading">Hi — I’m <strong>Senu James</strong>. I design & build web products that scale.</h2>
+<p class="lead" style="margin-top:8px;color:var(--muted);max-width:68ch">
+I blend product thinking, clean UX, and robust engineering to ship web apps with real impact — from AI learning platforms to campus-scale systems. My work focuses on accessibility, reliability, and delightful interfaces.
+</p>
 
-        <p class="lead">
-          I build product-first web applications (React, TypeScript, Python) with emphasis on accessibility,
-          reliability, and measurable impact. Featured projects include Vitra AI, Shuttle Tracker, and E-Mart.
-        </p>
+<div class="cta-row" role="toolbar" aria-label="Primary calls to action" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp;See selected work</a>
+<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp;Get in touch</a>
+<a class="btn" href="#about" style="text-decoration:none"><i class="fa-solid fa-book-open"></i>&nbsp;Read my story</a>
+</div>
 
-        <div class="cta-row" role="toolbar" aria-label="Primary actions">
-          <a class="btn btn-primary" href="#projects">See selected work</a>
-          <a class="btn" href="#about">Read my story</a>
-          <!-- Admissions-targeted CTA -->
-          <a class="btn btn-outline" href="#admissions" id="admissions-cta" aria-describedby="admissions-note">
-            For Admissions: 1-page summary & links
-          </a>
-          <div id="admissions-note" style="display:none">Downloadable one-page summary and direct links to highlighted case studies.</div>
-        </div>
+<div class="skill-pills" aria-hidden="true" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+<div class="pill"><i class="fa-brands fa-react"></i>&nbsp; React</div>
+<div class="pill"><i class="fa-brands fa-js-square"></i>&nbsp; TypeScript</div>
+<div class="pill"><i class="fa-brands fa-node-js"></i>&nbsp; Node.js</div>
+<div class="pill"><i class="fa-solid fa-robot"></i>&nbsp; AI • ML</div>
+<div class="pill"><i class="fa-solid fa-palette"></i>&nbsp; Design Systems</div>
+</div>
 
-        <!-- Key metrics (clear, quantifiable) -->
-        <ul class="metrics" aria-hidden="false" style="list-style:none;padding:0;margin-top:12px;display:flex;gap:12px;">
-          <li><strong>1.2K+</strong><div class="muted">users impacted</div></li>
-          <li><strong>Winner</strong><div class="muted">African Digital Innovation Challenge</div></li>
-          <li><strong>6+</strong><div class="muted">major projects shipped</div></li>
-        </ul>
-      </div>
+<!-- quick impact stats -->
+<div class="stats" style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-users"></i>&nbsp;1.2K+</div>
+<div style="font-size:12px;color:var(--muted)">Users impacted</div>
+</div>
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-trophy"></i>&nbsp;Winner</div>
+<div style="font-size:12px;color:var(--muted)">African Digital Innovation Challenge</div>
+</div>
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-code"></i>&nbsp;6+</div>
+<div style="font-size:12px;color:var(--muted)">Major projects shipped</div>
+</div>
+</div>
+</div>
 
-      <!-- Profile card (compact, contact-first) -->
-      <aside class="profile-card" role="complementary" aria-label="Profile card">
-        <div class="profile-photo" aria-hidden="true">
-          <img src="images/profile-400.webp"
-               srcset="images/profile-400.webp 400w, images/profile-800.webp 800w"
-               sizes="(max-width:600px) 128px, 160px"
-               loading="lazy"
-               alt="Portrait of Senu James">
-        </div>
+<!-- HERO RIGHT: portrait + quick contact actions -->
+<aside class="profile-card" aria-label="Profile card" role="complementary" style="display:flex;gap:14px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+<div class="profile-photo" style="width:160px;height:160px;border-radius:50%;overflow:hidden">
+<img src="image2.jpeg" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
+</div>
 
-        <div class="profile-meta">
-          <div class="meta-title">Senu James</div>
-          <div class="meta-sub">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
+<div style="display:flex;gap:8px;align-items:center">
+<a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="GitHub">
+<div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
+</a>
+<a href="https://www.linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="LinkedIn">
+<div class="float-btn" title="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></div>
+</a>
+<a href="mailto:senujames23@gmail.com" style="text-decoration:none" aria-label="Email">
+<div class="float-btn" title="Email"><i class="fa-solid fa-envelope fa-lg"></i></div>
+</a>
+</div>
+</div>
 
-          <div class="profile-actions" style="margin-top:10px;display:flex;gap:8px;">
-            <a class="btn btn-primary" href="#projects" aria-label="See selected work">See work</a>
-            <a class="btn" href="#contact" aria-label="Contact me">Contact</a>
-          </div>
+<div class="profile-meta" style="flex:1">
+<div class="meta-title" style="font-weight:800;font-size:18px">Senu James</div>
+<div class="meta-sub" style="margin-top:6px;color:var(--muted)">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
 
-          <div class="contact-quick" style="margin-top:12px;">
-            <div><strong>Accra, Ghana</strong></div>
-            <div><a href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></div>
-            <div><a href="tel:+233245550123">+233 24 555 0123</a></div>
-            <div style="margin-top:8px;">
-              <a class="link-btn" href="/assets/Senu-James-Resume-2025.pdf" download aria-label="Download resume (PDF)">
-                Download Resume (PDF)
-              </a>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </section>
+<div style="margin-top:12px;display:flex;gap:10px">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-eye"></i>&nbsp; See Work</a>
+<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp; Hire me</a>
+</div>
 
-    <!-- =========================
-         ABOUT
-         ========================= -->
-    <section id="about" aria-labelledby="about-heading" role="region">
-      <h3 id="about-heading">About me</h3>
-      <p>
-        I'm a product-minded web developer focused on building accessible UX and production-ready systems.
-        I led Vitra AI from concept to prototype and integrated ML models into learning workflows.
-        I enjoy shipping end-to-end solutions and partnering with users to measure outcomes.
-      </p>
+<div style="margin-top:12px;display:flex;gap:12px;align-items:center;color:var(--muted)">
+<i class="fa-solid fa-location-dot"></i>
+<div>
+<strong>Accra, Ghana</strong>
+<div style="font-size:12px;color:var(--muted)">Available for internships & remote roles</div>
+</div>
+</div>
 
-      <ul aria-hidden="true" style="display:flex;gap:8px;list-style:none;padding:0;margin-top:12px">
-        <li class="pill">Product Thinking</li>
-        <li class="pill">System Design</li>
-        <li class="pill">Responsive</li>
-        <li class="pill">Secure by default</li>
-      </ul>
-    </section>
+<div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+<i class="fa-solid fa-phone"></i>
+<a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a>
+</div>
+</div>
+</aside>
+</section>
 
-    <!-- =========================
-         PROJECTS (SELECTED)
-         ========================= -->
-    <section id="projects" aria-labelledby="projects-heading" role="region">
-      <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div>
-          <h3 id="projects-heading">Selected Projects</h3>
-          <p class="muted">Click "Live" for demos and "Repo" for code. Each case study follows Problem → Role → Approach → Outcomes.</p>
-        </div>
+<!-- =========================
+ABOUT — short section (icons included)
+========================= -->
+<section id="about" class="section" aria-labelledby="about-heading" role="region" style="margin-top:28px;">
+<div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+<div>
+<h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+<p style="color:var(--muted);max-width:70ch">
+I build product-first web applications with a focus on clarity, performance, and impact. I led Vitra AI from concept to prototype, integrated ML models, and shipped production front-ends. I care deeply about accessible UIs, maintainable code, and measurable outcomes.
+</p>
 
-        <!-- Filter controls are present but require JS to function; they remain keyboard-accessible -->
-        <div role="toolbar" aria-label="Project filters" style="display:flex;gap:8px;">
-          <button class="btn" id="filter-all" aria-pressed="true">All</button>
-          <button class="btn" id="filter-web">Web</button>
-          <button class="btn" id="filter-ai">AI</button>
-        </div>
-      </header>
+<div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+<div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+<div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+<div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+<div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
+</div>
 
-      <div class="projects-grid" aria-live="polite" aria-relevant="additions removals" style="margin-top:18px;">
-        <!-- Vitra AI (featured) -->
-        <article class="card" role="article" aria-labelledby="p-vitra" data-category="ai">
-          <div class="card-visual" style="position:relative">
-            <span class="badge" aria-hidden="true">AI • Winner</span>
-            <img
-              src="images/vitra-960.webp"
-              srcset="images/vitra-480.webp 480w, images/vitra-960.webp 960w, images/vitra-1440.webp 1440w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="Vitra AI — learner dashboard showing personalized quiz results and progress metrics">
-          </div>
+<div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+<a class="btn" href="#contact" style="text-decoration:none"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
+</div>
+</div>
 
-          <div class="card-body">
-            <h4 id="p-vitra" class="card-title">Vitra AI</h4>
-            <p class="card-sub">AI for education — personalized learning, auto-evaluation, and teacher dashboards.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">AI</span><span class="tag">Python</span><span class="tag">React</span></div>
+<aside style="display:flex;flex-direction:column;gap:10px">
+<div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff">
+<i class="fa-solid fa-award"></i>
+</div>
+<div>
+<div style="font-weight:800">African Digital Innovation Challenge</div>
+<div style="font-size:13px;color:var(--muted)">Vitra AI — Winner</div>
+</div>
+</div>
+</div>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/vitra-ai" target="_blank" rel="noopener noreferrer">Repo</a>
-              <a class="link-btn" href="case-studies/vitra.html">Case Study</a>
-            </div>
-          </div>
-        </article>
+<div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)">
+<i class="fa-solid fa-people-group"></i>
+</div>
+<div>
+<div style="font-weight:800">Community Impact</div>
+<div style="font-size:13px;color:var(--muted)">Projects used by student groups and campus teams</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</section>
 
-        <!-- Shuttle Tracker -->
-        <article class="card" role="article" aria-labelledby="p-shuttle" data-category="web maps">
-          <div class="card-visual">
-            <span class="badge" aria-hidden="true">Maps • Realtime</span>
-            <img
-              src="images/shuttle-960.webp"
-              srcset="images/shuttle-480.webp 480w, images/shuttle-960.webp 960w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="Shuttle Tracker map view with vehicle locations and ETA">
-          </div>
+<!-- =========================
+SELECTED PROJECTS — rich cards
+========================= -->
+<section id="projects" class="projects" style="margin-top:28px;">
+<div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div>
+<h3 style="margin:0;font-size:20px">Selected Projects</h3>
+<p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos — click Live or Repo to explore each project.</p>
+</div>
 
-          <div class="card-body">
-            <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
-            <p class="card-sub">Real-time campus transport tracking with map visualizations and ETA predictions.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">Maps</span><span class="tag">Realtime</span></div>
+<div style="display:flex;gap:8px;align-items:center">
+<button class="btn btn-outline" id="filter-all" aria-pressed="true" style="text-decoration:none"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+<button class="btn btn-outline" id="filter-web" style="text-decoration:none"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+<button class="btn btn-outline" id="filter-ai" style="text-decoration:none"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
+</div>
+</div>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/shuttle-tracker" target="_blank" rel="noopener noreferrer">Repo</a>
-              <a class="link-btn" href="case-studies/shuttle-tracker.html">Case Study</a>
-            </div>
-          </div>
-        </article>
+<div class="projects-grid" id="projects-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px">
+<!-- Project cards generated by JS, but include a progressive fallback for now -->
+<!-- Vitra AI -->
+<article class="card tilt" role="article" aria-labelledby="p-vitra">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">AI • Winner</div>
+<img src="vitra.png" alt="Vitra AI screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-vitra" class="card-title">Vitra AI</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">AI for education — personalized learning resources and auto-evaluation.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Python</span><span class="tag">React</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+<a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+</div>
+</div>
+</article>
 
-        <!-- E-Mart -->
-        <article class="card" role="article" aria-labelledby="p-emart" data-category="web ecommerce">
-          <div class="card-visual">
-            <span class="badge" aria-hidden="true">E-commerce</span>
-            <img
-              src="images/emart-960.webp"
-              srcset="images/emart-480.webp 480w, images/emart-960.webp 960w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="E-Mart product listing and mobile-first checkout flow">
-          </div>
+<!-- Shuttle Tracker -->
+<article class="card tilt" role="article" aria-labelledby="p-shuttle">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Maps • Real-time</div>
+<img src="shuttle.png" alt="Shuttle Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Real-time campus transport tracking with map visualizations.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-          <div class="card-body">
-            <h4 id="p-emart" class="card-title">E-Mart</h4>
-            <p class="card-sub">Modern shopping flows and mobile-first checkout experience with Stripe integration.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">Next.js</span><span class="tag">Stripe</span></div>
+<!-- E-Mart -->
+<article class="card tilt" role="article" aria-labelledby="p-emart">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">E-commerce</div>
+<img src="emart.png" alt="E-Mart screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-emart" class="card-title">E-Mart</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Modern shopping flows and mobile-first checkout experience.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Stripe</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/e-mart" target="_blank" rel="noopener noreferrer">Repo</a>
-              <a class="link-btn" href="case-studies/e-mart.html">Case Study</a>
-            </div>
-          </div>
-        </article>
+<!-- Fitness Tracker -->
+<article class="card tilt" role="article" aria-labelledby="p-fitness">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Health • Data</div>
+<img src="fittrack.png" alt="Fitness Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Dashboards and analytics for personal fitness goals.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">React</span><span class="tag">Charts</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-        <!-- Fitness Tracker -->
-        <article class="card" role="article" aria-labelledby="p-fitness" data-category="web analytics">
-          <div class="card-visual">
-            <span class="badge" aria-hidden="true">Health • Data</span>
-            <img
-              src="images/fittrack-960.webp"
-              srcset="images/fittrack-480.webp 480w, images/fittrack-960.webp 960w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="Fitness Tracker analytics dashboard showing trends and goals">
-          </div>
+<!-- SkillForge Registry -->
+<article class="card tilt" role="article" aria-labelledby="p-skillforge">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Forms • Admin</div>
+<img src="skillforge.png" alt="SkillForge screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Workshop registration, auth & admin reporting tools for organizers.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-          <div class="card-body">
-            <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
-            <p class="card-sub">Dashboards and analytics for personal fitness goals and trends.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">React</span><span class="tag">Charts</span></div>
+<!-- Make Heaven Crowded (new, featured) -->
+<article class="card tilt featured" role="article" aria-labelledby="p-mhc">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px;background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div>
+<img src="mhc.png" alt="Make Heaven Crowded screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Faith-driven e-commerce + gospel hub: shop, devotionals, donations and a design generator.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span><span class="tag">Design</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+<a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+</div>
+</div>
+</article>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/fitness-tracker" target="_blank" rel="noopener noreferrer">Repo</a>
-            </div>
-          </div>
-        </article>
+</div> <!-- end projects-grid -->
+</section>
 
-        <!-- SkillForge Registry -->
-        <article class="card" role="article" aria-labelledby="p-skillforge" data-category="web forms">
-          <div class="card-visual">
-            <span class="badge" aria-hidden="true">Forms • Admin</span>
-            <img
-              src="images/skillforge-960.webp"
-              srcset="images/skillforge-480.webp 480w, images/skillforge-960.webp 960w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="SkillForge admin dashboard showing registrations and reports">
-          </div>
+<!-- =========================
+TIMELINE / MILESTONES — visual strip with icons
+========================= -->
+<section id="timeline" class="timeline" aria-labelledby="timeline-heading" style="margin-top:36px;">
+<h3 id="timeline-heading" style="margin:0 0 12px">Journey & milestones</h3>
+<div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Oct 2025</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div>
+</div>
 
-          <div class="card-body">
-            <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
-            <p class="card-sub">Workshop registration, auth & admin reporting tools for organizers.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>Jun 2024</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div>
+</div>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/skillforge" target="_blank" rel="noopener noreferrer">Repo</a>
-            </div>
-          </div>
-        </article>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div>
+</div>
 
-        <!-- Make Heaven Crowded (featured) -->
-        <article class="card featured" role="article" aria-labelledby="p-mhc" data-category="web community">
-          <div class="card-visual">
-            <span class="badge" aria-hidden="true">Featured</span>
-            <img
-              src="images/mhc-960.webp"
-              srcset="images/mhc-480.webp 480w, images/mhc-960.webp 960w"
-              sizes="(max-width:600px) 100vw, 480px"
-              loading="lazy"
-              alt="Make Heaven Crowded storefront with devotional hub and donation flow">
-          </div>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div>
+</div>
+</div>
+</section>
 
-          <div class="card-body">
-            <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
-            <p class="card-sub">Faith-driven e-commerce + gospel hub: shop, devotionals, donations, design generator.</p>
-            <div class="tags" aria-hidden="true"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
+<!-- =========================
+MARQUEE / COMMUNITY IMAGES
+========================= -->
+<section class="marquee-wrap" aria-labelledby="community-heading" style="margin-top:36px;">
+<header style="text-align:center;margin-bottom:12px">
+<h3 id="community-heading" style="margin:0">Community & events</h3>
+<p style="margin:6px 0 0;color:var(--muted)">Photos from events, user stories and launches.</p>
+</header>
 
-            <div class="card-foot" style="display:flex;gap:8px;margin-top:12px;">
-              <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer">Live</a>
-              <a class="link-btn repo" href="https://github.com/senu-james/mhc" target="_blank" rel="noopener noreferrer">Repo</a>
-              <a class="link-btn" href="case-studies/mhc.html">Case Study</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
+<div class="marquee" id="marquee" style="display:flex;gap:16px;align-items:center;overflow:hidden;">
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-1.jpg" alt="Campus outreach"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-2.jpg" alt="Design reveal"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-3.jpg" alt="Workshop"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-4.jpg" alt="Launch event"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-5.jpg" alt="Street outreach"></div>
+</div>
+</section>
 
-    <!-- =========================
-         TIMELINE / MILESTONES
-         ========================= -->
-    <section id="timeline" aria-labelledby="timeline-heading" role="region">
-      <h3 id="timeline-heading">Journey & milestones</h3>
+<!-- =========================
+CONTACT — polished form + quick details
+========================= -->
+<section id="contact" class="contact-wrap" aria-labelledby="contact-heading" style="margin-top:40px;">
+<div class="contact-card" role="region" aria-labelledby="contact-heading" style="padding:20px;border-radius:12px">
+<h3 id="contact-heading" style="margin:0 0 8px">Contact</h3>
+<p style="color:var(--muted);margin:0 0 12px">Interested in collaborating or an internship? Send a short message — I respond quickly.</p>
 
-      <ol class="timeline-items" style="list-style:none;padding:0;display:flex;gap:12px;overflow:auto;">
-        <li class="timeline-card" aria-label="Oct 2025 — Winner African Digital Innovation Challenge">
-          <strong>Oct 2025</strong>
-          <div class="muted">Winner — African Digital Innovation Challenge (Vitra AI)</div>
-        </li>
-        <li class="timeline-card" aria-label="Jun 2024 — Shuttle Tracker launched">
-          <strong>Jun 2024</strong>
-          <div class="muted">Launched Shuttle Tracker MVP</div>
-        </li>
-        <li class="timeline-card" aria-label="Dec 2023 — SkillForge rollout">
-          <strong>Dec 2023</strong>
-          <div class="muted">SkillForge Registry rollout</div>
-        </li>
-        <li class="timeline-card" aria-label="2022 — E-Mart prototype">
-          <strong>2022</strong>
-          <div class="muted">E-Mart prototype & pilots</div>
-        </li>
-      </ol>
-    </section>
+<form id="contact-form" style="margin-top:12px;display:grid;gap:10px;" onsubmit="event.preventDefault(); alert('Message sent (demo)'); this.reset();">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<input class="input" id="name" name="name" placeholder="Your name" required aria-label="Your name" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+<input class="input" id="email" name="email" type="email" placeholder="you@domain.com" required aria-label="Email" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+</div>
 
-    <!-- =========================
-         COMMUNITY MARQUEE (static fallback)
-         ========================= -->
-    <section aria-labelledby="community-heading" role="region">
-      <h3 id="community-heading">Community & events</h3>
-      <p class="muted">Photos from workshops, launch events and user sessions.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<input class="input" id="phone" name="phone" type="tel" placeholder="+233 24 555 0123" aria-label="Phone number" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+<input class="input" id="subject" name="subject" placeholder="Subject" aria-label="Subject" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+</div>
 
-      <div class="marquee" aria-hidden="false" style="display:flex;gap:12px;overflow:auto;">
-        <img src="images/community-1-480.webp" alt="Workshop participants using Vitra AI" loading="lazy" width="240" height="140">
-        <img src="images/community-2-480.webp" alt="Design reveal event" loading="lazy" width="240" height="140">
-        <img src="images/community-3-480.webp" alt="Campus outreach photos" loading="lazy" width="240" height="140">
-      </div>
-    </section>
+<textarea class="textarea" id="message" name="message" rows="5" placeholder="Tell me about your project" aria-label="Message" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff"></textarea>
 
-    <!-- =========================
-         CONTACT
-         ========================= -->
-    <section id="contact" aria-labelledby="contact-heading" role="region">
-      <h3 id="contact-heading">Contact</h3>
-      <p class="muted">Interested in collaborating or internship opportunities? Use the form or reach me directly.</p>
+<div style="display:flex;gap:12px;align-items:center">
+<button class="send" type="submit" style="padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:800">Send message</button>
+<div style="color:var(--muted);font-size:13px">Or reach me directly: <a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a></div>
+</div>
+</form>
+</div>
 
-      <!-- NOTE: replace ACTION with your serverless form endpoint (Netlify / Formspree / Vercel). -->
-      <form id="contact-form" action="#" method="post" aria-label="Contact form">
-        <!-- Example: for Netlify forms include: <input type="hidden" name="form-name" value="contact-form" /> -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <label for="name" class="visually-hidden">Your name</label>
-          <input id="name" name="name" placeholder="Your name" required>
+<aside class="contact-aside" style="padding:18px;border-radius:12px">
+<h4 style="margin:0 0 8px">Quick links & socials</h4>
 
-          <label for="email" class="visually-hidden">Your email</label>
-          <input id="email" name="email" type="email" placeholder="you@domain.com" required>
-        </div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div><strong>Email:</strong> <a href="mailto:senujames23@gmail.com" style="text-decoration:none;color:inherit">senujames23@gmail.com</a></div>
+<div><strong>Phone:</strong> <a href="tel:+233245550123" style="text-decoration:none;color:inherit">+233 24 555 0123</a></div>
+<div><strong>GitHub:</strong> <a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">github.com/senu-james</a></div>
+<div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">linkedin.com/in/senu-james</a></div>
+</div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-          <label for="phone" class="visually-hidden">Phone</label>
-          <input id="phone" name="phone" type="tel" placeholder="+233 24 555 0123">
+<div style="margin-top:14px">
+<strong style="display:block;margin-bottom:8px">Follow</strong>
+<div style="display:flex;gap:8px">
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-github"></i>&nbsp;GitHub</div></a>
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</div></a>
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-twitter"></i>&nbsp;Twitter</div></a>
+</div>
+</div>
 
-          <label for="subject" class="visually-hidden">Subject</label>
-          <input id="subject" name="subject" placeholder="Subject">
-        </div>
+<div style="margin-top:18px">
+<strong style="display:block;margin-bottom:8px">Download</strong>
+<a class="link-btn live" href="#resume" style="text-decoration:none;padding:10px 12px;display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-radius:10px">Download Resume</a>
+</div>
+</aside>
+</section>
 
-        <label for="message" class="visually-hidden">Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Tell me about your project" required style="margin-top:8px"></textarea>
+<!-- =========================
+FOOTER
+========================= -->
+<footer class="site" role="contentinfo" style="margin-top:36px;padding:24px 0;border-top:1px solid rgba(0,0,0,0.04)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--maxw);margin:0 auto">
+<div>
+<strong style="font-size:16px">Senu James</strong>
+<div style="color:var(--muted);font-size:13px">Web Developer • AI & Product Builder</div>
+</div>
 
-        <div style="display:flex;gap:12px;align-items:center;margin-top:12px;">
-          <button type="submit" class="send">Send message</button>
+<div style="display:flex;gap:12px;align-items:center">
+<a href="https://github.com/senu-james" style="text-decoration:none"><i class="fa-brands fa-github fa-lg"></i></a>
+<a href="https://linkedin.com/in/senu-james" style="text-decoration:none"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+<a href="mailto:senujames23@gmail.com" style="text-decoration:none"><i class="fa-solid fa-envelope fa-lg"></i></a>
+</div>
+</div>
+<div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">© <strong>Senu James</strong> — All rights reserved.</div>
+</footer>
 
-          <div class="muted">Or reach me directly:
-            <a href="mailto:senujames23@gmail.com">senujames23@gmail.com</a> • <a href="tel:+233245550123">+233 24 555 0123</a>
-          </div>
-        </div>
+</main>
 
-        <p class="muted" style="font-size:13px;margin-top:8px;">
-          <strong>Tip for admissions:</strong> If you prefer, download the one-page admissions packet from the Admissions section below.
-        </p>
-      </form>
-    </section>
-
-    <!-- =========================
-         ADMISSIONS — ONE-PAGE SUMMARY & DOWNLOAD (print-friendly)
-         ========================= -->
-    <section id="admissions" aria-labelledby="admissions-heading" role="region">
-      <h2 id="admissions-heading">Admissions packet — 1-page summary</h2>
-
-      <!-- This section should be printable. Keep it concise and suitable for reviewers. -->
-      <div class="admissions-summary" style="display:grid;grid-template-columns:1fr 320px;gap:16px;">
-        <div>
-          <h3>About Senu</h3>
-          <p>
-            Product-focused web developer with experience building AI learning systems and campus-scale tools.
-            Role highlights: product design, front-end engineering (React/TypeScript), back-end integrations and ML prototyping.
-          </p>
-
-          <h4>Top outcomes (concise)</h4>
-          <ul>
-            <li><strong>Vitra AI:</strong> Prototype → Winner (African Digital Innovation Challenge). Piloted with 200+ students.</li>
-            <li><strong>Shuttle Tracker:</strong> Reduced average wait time by X% in pilot (metric placeholder — replace with real number).</li>
-            <li><strong>SkillForge:</strong> Registration & reporting used across campus teams (automated reporting saved ~N hours/week).</li>
-          </ul>
-
-          <h4>Skills & stacks</h4>
-          <p>React, TypeScript, Next.js, Node.js, Firebase, Python (ML prototyping), Postgres, Docker, accessible UI, product design.</p>
-
-          <h4>Direct links (for reviewers)</h4>
-          <ol>
-            <li><a href="/assets/Senu-James-Admissions-Packet-2025.pdf" download>Download admissions packet (PDF)</a></li>
-            <li><a href="case-studies/vitra.html">Vitra AI — Case Study (Problem → Approach → Outcomes)</a></li>
-            <li><a href="case-studies/shuttle-tracker.html">Shuttle Tracker — Case Study</a></li>
-            <li><a href="case-studies/mhc.html">Make Heaven Crowded — Case Study</a></li>
-          </ol>
-        </div>
-
-        <aside style="padding:12px;border-radius:8px;">
-          <h4>Quick facts</h4>
-          <ul>
-            <li><strong>Location:</strong> Accra, Ghana</li>
-            <li><strong>Availability:</strong> Internships & remote roles</li>
-            <li><strong>Email:</strong> <a href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></li>
-            <li><strong>Phone:</strong> <a href="tel:+233245550123">+233 24 555 0123</a></li>
-            <li><strong>Resume:</strong> <a href="/assets/Senu-James-Resume-2025.pdf" download>Download (PDF)</a></li>
-          </ul>
-        </aside>
-      </div>
-
-      <p style="margin-top:12px;color:#666;font-size:13px;">
-        <strong>Notes for deployment:</strong>
-        - Ensure the three case studies above are live HTML pages (case-studies/*.html) with Problem → Role → Approach → Outcomes.
-        - Replace metric placeholders with concrete numbers where possible.
-      </p>
-    </section>
-
-    <!-- =========================
-         FOOTER
-         ========================= -->
-    <footer role="contentinfo" aria-label="Footer">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-        <div>
-          <strong>Senu James</strong>
-          <div class="muted">Web Developer • AI & Product Builder</div>
-        </div>
-
-        <div style="display:flex;gap:8px;align-items:center;">
-          <a href="https://github.com/senu-james" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
-          <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
-          <a href="mailto:senujames23@gmail.com" aria-label="Email">Email</a>
-        </div>
-      </div>
-
-      <div style="text-align:center;margin-top:12px;color:#666;font-size:13px;">
-        © <strong>Senu James</strong> — All rights reserved.
-      </div>
-    </footer>
-
-  </main>
-
- 
-</body>
-
- <script>
+<script>
 (() => {
-  'use strict';
+'use strict';
 
-  /* =========================
-     Utilities
-     ========================= */
-  const $ = (sel, ctx = document) => (ctx || document).querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from((ctx || document).querySelectorAll(sel));
+/* ---------------------------
+Utilities
+--------------------------- */
+const $ = (sel, ctx = document) => (ctx || document).querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from((ctx || document).querySelectorAll(sel));
+const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function debounce(fn, wait = 120) {
+let t;
+return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+}
 
-  function debounce(fn, wait = 120) {
-    let t;
-    return (...args) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...args), wait);
-    };
-  }
+function createToast(msg, { timeout = 1800 } = {}) {
+try {
+const id = '__sj_toast';
+const toast = document.createElement('div');
+toast.className = 'sj-toast';
+toast.setAttribute('role', 'status');
+toast.style.cssText = [
+'position:fixed',
+'right:18px',
+'bottom:18px',
+'z-index:2200',
+'background:rgba(6,10,26,0.94)',
+'color:#fff',
+'padding:10px 14px',
+'border-radius:10px',
+'font-weight:700',
+'box-shadow:0 12px 40px rgba(6,10,26,0.4)'
+].join(';');
+toast.textContent = msg;
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.style.transition = 'opacity .32s ease, transform .32s ease';
+toast.style.opacity = '0';
+toast.style.transform = 'translateY(6px)';
+setTimeout(() => toast.remove(), 360);
+}, timeout);
+} catch (e) { /* silently fail */ }
+}
 
-  function createToast(msg, { timeout = 2200 } = {}) {
-    try {
-      const toast = document.createElement('div');
-      toast.className = 'sj-toast';
-      // lightweight inline styles (you can move to CSS)
-      Object.assign(toast.style, {
-        position: 'fixed',
-        right: '18px',
-        bottom: '18px',
-        zIndex: 99999,
-        background: 'rgba(6,10,26,0.94)',
-        color: '#fff',
-        padding: '10px 14px',
-        borderRadius: '10px',
-        fontWeight: 700,
-        boxShadow: '0 12px 40px rgba(6,10,26,0.4)',
-        opacity: '1',
-        transition: 'opacity .32s, transform .32s',
-      });
-      toast.setAttribute('role', 'status');
-      toast.textContent = msg;
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(6px)';
-      }, timeout);
-      setTimeout(() => toast.remove(), timeout + 360);
-    } catch (e) {
-      // ignore
-      // console.warn('toast error', e);
-    }
-  }
+/* ---------------------------
+Smooth scroll for anchors
+--------------------------- */
+function initSmoothScroll() {
+document.addEventListener('click', (ev) => {
+const a = ev.target.closest('a[href^="#"]');
+if (!a) return;
+const href = a.getAttribute('href');
+if (!href || href === '#') return;
+const target = document.querySelector(href);
+if (!target) return;
+ev.preventDefault();
+target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// update focus for a11y
+setTimeout(() => { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }, 400);
+});
+}
 
-  /* =========================
-     Smooth scroll for same-page anchors
-     ========================= */
-  function initSmoothScroll() {
-    document.addEventListener('click', (ev) => {
-      const a = ev.target.closest('a[href^="#"]');
-      if (!a) return;
-      const href = a.getAttribute('href');
-      if (!href || href === '#') return;
-      const target = document.querySelector(href);
-      if (!target) return;
-      ev.preventDefault();
-      target.scrollIntoView({ behavior: isReducedMotion ? 'auto' : 'smooth', block: 'start' });
-      // ensure focus for keyboard users
-      setTimeout(() => {
-        target.setAttribute('tabindex', '-1');
-        target.focus({ preventScroll: true });
-      }, 420);
-    });
-  }
+/* ---------------------------
+Intersection reveal (.fade-in elements)
+--------------------------- */
+function initReveal() {
+const items = $$('.fade-in');
+if (!items.length) return;
+try {
+const io = new IntersectionObserver((entries) => {
+entries.forEach(ent => {
+if (ent.isIntersecting) {
+ent.target.classList.add('show');
+// once revealed, unobserve to reduce work
+io.unobserve(ent.target);
+}
+});
+}, { threshold: 0.12 });
+items.forEach(i => io.observe(i));
+} catch (e) {
+// fallback: show all if IntersectionObserver not supported
+items.forEach(i => i.classList.add('show'));
+}
+}
 
-  /* =========================
-     Make external target="_blank" links safe
-     ========================= */
-  function secureBlankTargets() {
-    $$('a[target="_blank"]').forEach(a => {
-      const rel = a.getAttribute('rel') || '';
-      if (!/noopener/i.test(rel)) rel.split(/\s+/).push('noopener');
-      if (!/noreferrer/i.test(rel)) rel.split(/\s+/).push('noreferrer');
-      a.setAttribute('rel', Array.from(new Set(rel.split(/\s+/).filter(Boolean))).join(' '));
-    });
-  }
+/* ---------------------------
+Tilt cards for .tilt
+--------------------------- */
+function initTiltCards() {
+if (isReducedMotion) return; // respect user preference
+const cards = $$('.tilt');
+if (!cards.length) return;
+cards.forEach(card => {
+let rect = null;
+const strength = parseFloat(card.dataset.tiltStrength) || 6; // degrees
+function onPointerMove(e) {
+if (!rect) rect = card.getBoundingClientRect();
+const px = ((e.clientX - rect.left) / rect.width) - 0.5; // -0.5..0.5
+const py = ((e.clientY - rect.top) / rect.height) - 0.5;
+const ry = (px * strength).toFixed(2);
+const rx = (-py * strength).toFixed(2);
+card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+card.style.transition = 'transform 60ms linear';
+}
+function onLeave() {
+card.style.transform = '';
+card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
+rect = null;
+}
+card.addEventListener('pointermove', onPointerMove, { passive: true });
+card.addEventListener('pointerleave', onLeave);
+card.addEventListener('pointercancel', onLeave);
+// restore if window resized
+window.addEventListener('resize', debounce(() => { rect = null; }, 120));
+});
+}
 
-  /* =========================
-     Reveal on scroll (.fade-in)
-     ========================= */
-  function initReveal() {
-    const items = $$('.fade-in');
-    if (!items.length) return;
-    if (isReducedMotion) {
-      items.forEach(i => i.classList.add('show'));
-      return;
-    }
-    try {
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(ent => {
-          if (ent.isIntersecting) {
-            ent.target.classList.add('show');
-            obs.unobserve(ent.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      items.forEach(i => io.observe(i));
-    } catch (e) {
-      items.forEach(i => i.classList.add('show'));
-    }
-  }
+/* ---------------------------
+Project filtering (buttons expected to have ids: filter-all, filter-web, filter-ai)
+Filter by tag text (class .tag) or badge text.
+--------------------------- */
+function initProjectFilters() {
+const buttons = ['filter-all','filter-web','filter-ai'].map(id => document.getElementById(id)).filter(Boolean);
+const grid = document.getElementById('projects-grid');
+if (!buttons.length || !grid) return;
 
-  /* =========================
-     Project filters
-     Buttons expected: #filter-all, #filter-web, #filter-ai
-     Cards expected: .card with data-category attribute.
-     ========================= */
-  function initProjectFilters() {
-    const grid = $('.projects-grid');
-    if (!grid) return;
-    const btnAll = $('#filter-all');
-    const btnWeb = $('#filter-web');
-    const btnAi = $('#filter-ai');
-    const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
+function normalize(s) { return (s || '').toString().trim().toLowerCase(); }
 
-    function normalize(s = '') { return String(s).toLowerCase().trim(); }
+function cardMatches(card, filter) {
+if (!filter || filter === 'all') return true;
+// check data-attributes first
+const catAttr = normalize(card.dataset.cat || card.dataset.category || '');
+if (catAttr && catAttr.includes(filter)) return true;
+// check badge text
+const badge = card.querySelector('.badge');
+if (badge && normalize(badge.textContent).includes(filter)) return true;
+// check tags
+const tags = Array.from(card.querySelectorAll('.tag')).map(t => normalize(t.textContent));
+if (tags.some(t => t.includes(filter))) return true;
+// check card-sub and title too (fallback)
+const meta = normalize((card.querySelector('.card-sub')?.textContent || '') + ' ' + (card.querySelector('.card-title')?.textContent || ''));
+if (meta.includes(filter)) return true;
+return false;
+}
 
-    function cardMatches(card, filter) {
-      if (!filter || filter === 'all') return true;
-      const category = normalize(card.getAttribute('data-category') || '');
-      if (category.includes(filter)) return true;
-      const badge = normalize((card.querySelector('.badge')?.textContent) || '');
-      if (badge.includes(filter)) return true;
-      const tags = Array.from(card.querySelectorAll('.tag')).map(t => normalize(t.textContent));
-      if (tags.some(t => t.includes(filter))) return true;
-      const meta = normalize((card.querySelector('.card-title')?.textContent || '') + ' ' + (card.querySelector('.card-sub')?.textContent || ''));
-      if (meta.includes(filter)) return true;
-      return false;
-    }
+function applyFilter(filter) {
+const cards = Array.from(grid.children).filter(n => n.matches && n.matches('.card, article'));
+cards.forEach(card => {
+if (cardMatches(card, filter)) {
+card.style.display = '';
+card.setAttribute('aria-hidden', 'false');
+} else {
+card.style.display = 'none';
+card.setAttribute('aria-hidden', 'true');
+}
+});
+}
 
-    function applyFilter(filter) {
-      const cards = Array.from(grid.querySelectorAll('.card'));
-      cards.forEach(card => {
-        const show = cardMatches(card, filter);
-        card.style.display = show ? '' : 'none';
-        card.setAttribute('aria-hidden', show ? 'false' : 'true');
-      });
-      // focus first visible card for screen readers
-      const first = grid.querySelector('.card:not([aria-hidden="true"])');
-      if (first) {
-        first.setAttribute('tabindex', '-1');
-        first.focus({ preventScroll: true });
-      }
-    }
+buttons.forEach(btn => {
+btn.addEventListener('click', () => {
+const filter = btn.id.replace('filter-',''); // 'all' | 'web' | 'ai'
+// toggle active styles
+buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+btn.setAttribute('aria-pressed', 'true');
+applyFilter(filter);
+// focus the grid start for screen readers
+const firstVisible = grid.querySelector('.card:not([aria-hidden="true"])');
+if (firstVisible) { firstVisible.setAttribute('tabindex','-1'); firstVisible.focus({ preventScroll: true }); }
+});
+});
+}
 
-    function onBtnClick(e) {
-      const id = e.currentTarget.id || '';
-      const filter = id.replace('filter-', '') || 'all';
-      buttons.forEach(b => b && b.setAttribute('aria-pressed', 'false'));
-      e.currentTarget.setAttribute('aria-pressed', 'true');
-      applyFilter(filter === 'all' ? 'all' : filter);
-    }
+/* ---------------------------
+Accessible modal (iframe) for case studies
+- any .link-btn where href ends with .html will open via modal
+- focus trap, ESC close, overlay click to close
+--------------------------- */
+function initModalIFrame() {
+// build modal DOM
+const modal = document.createElement('div');
+modal.id = 'sj-modal';
+modal.setAttribute('role','dialog');
+modal.setAttribute('aria-modal','true');
+modal.style.cssText = 'position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:2100;padding:20px;';
+modal.innerHTML = `
+<div class="sj-modal-panel" role="document" style="width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4);">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(0,0,0,0.06);">
+<div style="display:flex;gap:10px;align-items:center">
+<strong id="sj-modal-title">Case study</strong>
+<span id="sj-modal-sub" style="color:#666;font-size:13px"></span>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<a id="sj-modal-open" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Open in new tab</a>
+<button aria-label="Close" id="sj-modal-close" class="btn">✕</button>
+</div>
+</div>
+<div style="background:#fff" id="sj-modal-body">
+<iframe id="sj-modal-iframe" src="" title="Case study preview" style="width:100%;height:64vh;border:0;display:block"></iframe>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
 
-    buttons.forEach(b => b && b.addEventListener('click', onBtnClick));
-  }
+const iframe = $('#sj-modal-iframe');
+const modalTitle = $('#sj-modal-title');
+const modalSub = $('#sj-modal-sub');
+const openBtn = $('#sj-modal-open');
+const closeBtn = $('#sj-modal-close');
 
-  /* =========================
-     Modal iframe for case studies
-     - opens links whose href endsWith('.html') and are internal case-studies
-     - creates accessible modal, focus trap and ESC close
-     ========================= */
-  function initModalIFrame() {
-    // Build modal DOM
-    const modal = document.createElement('div');
-    modal.id = 'sj-modal';
-    Object.assign(modal.style, {
-      position: 'fixed',
-      inset: '0',
-      display: 'none',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'rgba(6,10,26,0.6)',
-      zIndex: 12000,
-      padding: '20px'
-    });
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-modal', 'true');
-    modal.innerHTML = `
-      <div class="sj-modal-panel" role="document" style="width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4);">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(0,0,0,0.06);">
-          <div style="display:flex;gap:10px;align-items:center">
-            <strong id="sj-modal-title">Case study</strong>
-            <span id="sj-modal-sub" style="color:#666;font-size:13px"></span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <a id="sj-modal-open" class="btn" target="_blank" rel="noopener noreferrer" style="text-decoration:none;padding:8px 10px;border-radius:8px;border:1px solid rgba(6,10,26,0.06);background:#fff">Open in new tab</a>
-            <button aria-label="Close case study" id="sj-modal-close" class="btn" style="padding:8px 10px;border-radius:8px;border:1px solid rgba(6,10,26,0.06);background:#fff">✕</button>
-          </div>
-        </div>
-        <div id="sj-modal-body" style="background:#fff">
-          <iframe id="sj-modal-iframe" src="about:blank" title="Case study preview" style="width:100%;height:64vh;border:0;display:block"></iframe>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
+function openModal(url, title) {
+try {
+// set iframe src safely (user provided link)
+iframe.src = url;
+modalTitle.textContent = title || 'Case study';
+modalSub.textContent = url;
+openBtn.href = url;
+modal.style.display = 'flex';
+// lock scroll
+document.documentElement.style.overflow = 'hidden';
+// focus close button
+closeBtn.focus();
+// trap focus
+document.addEventListener('focus', trapFocus, true);
+document.addEventListener('keydown', modalKeyHandler);
+} catch (e) { createToast('Unable to open case study.'); }
+}
+function closeModal() {
+iframe.src = 'about:blank';
+modal.style.display = 'none';
+document.documentElement.style.overflow = '';
+document.removeEventListener('focus', trapFocus, true);
+document.removeEventListener('keydown', modalKeyHandler);
+}
+function modalKeyHandler(e) {
+if (e.key === 'Escape') closeModal();
+}
+function trapFocus(e) {
+// keep focus inside modal panel
+const panel = modal.querySelector('.sj-modal-panel');
+if (!panel.contains(e.target)) {
+e.stopPropagation();
+panel.querySelector('button, a, iframe')?.focus();
+}
+}
 
-    const iframe = $('#sj-modal-iframe');
-    const modalTitle = $('#sj-modal-title');
-    const modalSub = $('#sj-modal-sub');
-    const openBtn = $('#sj-modal-open');
-    const closeBtn = $('#sj-modal-close');
-    const panel = modal.querySelector('.sj-modal-panel');
-    let previouslyFocused = null;
+// close on overlay click
+modal.addEventListener('click', (ev) => {
+if (ev.target === modal) closeModal();
+});
 
-    function openModal(url, title) {
-      if (!iframe || !modal) return createToast('Unable to open case study.');
-      previouslyFocused = document.activeElement;
-      iframe.src = url;
-      modalTitle.textContent = title || 'Case study';
-      modalSub.textContent = url;
-      openBtn.href = url;
-      modal.style.display = 'flex';
-      document.documentElement.style.overflow = 'hidden'; // lock scroll
-      // move focus into modal
-      closeBtn.focus();
-      // trap focus
-      document.addEventListener('focus', trapFocus, true);
-      document.addEventListener('keydown', modalKeyHandler, true);
-    }
+// button wiring
+closeBtn.addEventListener('click', closeModal);
 
-    function closeModal() {
-      if (!modal) return;
-      iframe.src = 'about:blank';
-      modal.style.display = 'none';
-      document.documentElement.style.overflow = '';
-      document.removeEventListener('focus', trapFocus, true);
-      document.removeEventListener('keydown', modalKeyHandler, true);
-      try {
-        previouslyFocused && previouslyFocused.focus();
-      } catch (e) { /* ignore */ }
-    }
+// delegate case-study links
+document.addEventListener('click', (ev) => {
+const a = ev.target.closest('a.link-btn');
+if (!a) return;
+const href = a.getAttribute('href') || '';
+// open local case-study html pages (endsWith .html)
+if (href.trim().toLowerCase().endsWith('.html')) {
+ev.preventDefault();
+openModal(href, (a.closest('.card')?.querySelector('.card-title')?.textContent || 'Case study'));
+}
+});
+}
 
-    function modalKeyHandler(e) {
-      if (e.key === 'Escape') {
-        e.stopPropagation();
-        closeModal();
-      } else if (e.key === 'Tab') {
-        // keep tabbing inside the panel
-        const focusable = panel.querySelectorAll('a,button,iframe,textarea,input,select,[tabindex]:not([tabindex="-1"])');
-        if (!focusable.length) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
+/* ---------------------------
+Marquee: duplicate children for seamless loop and dynamic duration
+- respects reduced motion
+--------------------------- */
+function initMarquee() {
+const track = document.getElementById('marquee');
+if (!track) return;
+// If reduced motion, disable animation and make it scrollable
+if (isReducedMotion) {
+track.style.overflowX = 'auto';
+track.style.whiteSpace = 'nowrap';
+return;
+}
 
-    function trapFocus(e) {
-      if (!panel.contains(e.target)) {
-        e.stopPropagation();
-        panel.querySelector('button, a, iframe')?.focus();
-      }
-    }
+// Duplicate children if necessary (at least once)
+const children = Array.from(track.children);
+if (!children.length) return;
 
-    modal.addEventListener('click', (ev) => {
-      if (ev.target === modal) closeModal();
-    });
+// ensure enough width (try duplicating up to 4x)
+function totalWidth() {
+return Array.from(track.children).reduce((s, el) => s + el.getBoundingClientRect().width + 16, 0);
+}
+const containerWidth = track.parentElement.getBoundingClientRect().width || window.innerWidth;
+// clone original set until totalWidth >= containerWidth*2
+let clones = 0;
+while (totalWidth() < containerWidth * 2 && clones < 4) {
+children.forEach(c => track.appendChild(c.cloneNode(true)));
+clones++;
+}
 
-    closeBtn.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      closeModal();
-    });
+// compute a comfortable duration (pixels / pxPerSec)
+const pxPerSecond = 90; // tweakable — higher = faster
+const width = totalWidth();
+const duration = Math.max(12, Math.round(width / pxPerSecond));
+track.style.setProperty('--marquee-duration', duration + 's');
+track.style.animation = `marq ${duration}s linear infinite`;
 
-    // Delegate clicks on case study links
-    document.addEventListener('click', (ev) => {
-      const a = ev.target.closest('a');
-      if (!a) return;
-      const href = a.getAttribute('href') || '';
-      // Only handle relative .html case-study links (safest)
-      if (/^case-studies\/.*\.html$/i.test(href)) {
-        ev.preventDefault();
-        const card = a.closest('.card');
-        const title = card?.querySelector('.card-title')?.textContent?.trim() || a.textContent.trim() || 'Case study';
-        openModal(href, title);
-      }
-    });
-  }
+// pause/resume handlers
+track.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+track.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+track.addEventListener('focusin', () => { track.style.animationPlayState = 'paused'; });
+track.addEventListener('focusout', () => { track.style.animationPlayState = 'running'; });
 
-  /* =========================
-     Marquee: light-weight JS scroll (auto-scroll on X axis)
-     - Will fall back to horizontal overflow if reduced-motion or small number of items
-     ========================= */
-  function initMarquee() {
-    const track = $('.marquee');
-    if (!track) return;
-    // If reduced motion, make it scrollable instead of animating
-    if (isReducedMotion) {
-      track.style.overflowX = 'auto';
-      track.style.whiteSpace = 'nowrap';
-      return;
-    }
+// keyboard toggling: space toggles play/pause
+track.setAttribute('tabindex', '0');
+track.addEventListener('keydown', (e) => {
+if (e.code === 'Space' || e.key === ' ') {
+e.preventDefault();
+const state = getComputedStyle(track).animationPlayState;
+track.style.animationPlayState = (state === 'running') ? 'paused' : 'running';
+}
+});
+}
 
-    // Auto-scroll implementation (requestAnimationFrame)
-    let rafId = null;
-    let paused = false;
-    let speed = 0.35; // pixels per frame (~60fps => ~21px/s). Tweak if needed.
+/* ---------------------------
+Contact form: validation + mailto fallback
+--------------------------- */
+function initContactForm() {
+const form = document.getElementById('contact-form');
+if (!form) return;
+form.addEventListener('submit', (ev) => {
+ev.preventDefault();
+const name = String(form.name?.value || '').trim();
+const email = String(form.email?.value || '').trim();
+const phone = String(form.phone?.value || '').trim();
+const subject = String(form.subject?.value || 'Message from portfolio').trim();
+const message = String(form.message?.value || '').trim();
 
-    // If there aren't enough items to make sense, just return (user can scroll)
-    const children = Array.from(track.children);
-    if (children.length < 2) {
-      track.style.overflowX = 'auto';
-      return;
-    }
+if (!name || (!email && !phone) || !message) {
+createToast('Please provide your name, message and either email or phone.');
+return;
+}
 
-    // duplicate content to allow seamless wrap
-    const content = track.innerHTML;
-    track.innerHTML = content + content; // two copies back-to-back
+// try to open mail client with prefilled body (mailto)
+const bodyLines = [
+`Name: ${name}`,
+`Email: ${email || '—'}`,
+`Phone: ${phone || '—'}`,
+'',
+message
+];
+const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}`
++ `?subject=${encodeURIComponent(subject)}`
++ `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+// open mailto in new window (best-effort)
+window.location.href = mailto;
+createToast('Opening email client…');
+form.reset();
+});
+}
 
-    function step() {
-      if (paused) {
-        rafId = requestAnimationFrame(step);
-        return;
-      }
-      track.scrollLeft += speed;
-      // when scrolled past first half, jump back
-      if (track.scrollLeft >= track.scrollWidth / 2) {
-        track.scrollLeft = 0;
-      }
-      rafId = requestAnimationFrame(step);
-    }
+/* ---------------------------
+Small accessibility + misc wiring
+--------------------------- */
+function initMisc() {
+// Open live links with target=_blank already set — provide rel noopener
+$$('a[target="_blank"]').forEach(a => {
+if (!a.getAttribute('rel')) a.setAttribute('rel', 'noopener noreferrer');
+});
 
-    // Pause on hover/focus
-    track.addEventListener('mouseenter', () => (paused = true));
-    track.addEventListener('mouseleave', () => (paused = false));
-    track.addEventListener('focusin', () => (paused = true));
-    track.addEventListener('focusout', () => (paused = false));
+// Make repository icons accessible
+$$('a.repo, a.link-btn.repo').forEach(a => {
+if (!a.hasAttribute('aria-label')) {
+const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`;
+a.setAttribute('aria-label', label);
+}
+});
+}
 
-    // keyboard toggle (space) for play/pause
-    track.setAttribute('tabindex', '0');
-    track.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' || e.key === ' ') {
-        e.preventDefault();
-        paused = !paused;
-      }
-    });
+/* ---------------------------
+Boot
+--------------------------- */
+function boot() {
+try {
+initSmoothScroll();
+initReveal();
+initTiltCards();
+initProjectFilters();
+initModalIFrame();
+initMarquee();
+initContactForm();
+initMisc();
+// small startup toast (optional)
+// createToast('Interactive scripts initialized — view the project cards and case studies.');
+// expose debug
+window.SJ = {
+createToast,
+initTiltCards,
+initMarquee,
+initProjectFilters
+};
+} catch (err) {
+// fail silently but log to console for debugging
+console.error('Portfolio script error', err);
+}
+}
 
-    // Start loop
-    rafId = requestAnimationFrame(step);
-
-    // Cleanup if needed when navigating away
-    window.addEventListener('beforeunload', () => {
-      if (rafId) cancelAnimationFrame(rafId);
-    });
-  }
-
-  /* =========================
-     Optional tilt on cards with .tilt (mouse move)
-     - respects prefers-reduced-motion
-     ========================= */
-  function initTilt() {
-    if (isReducedMotion) return;
-    const cards = $$('.tilt');
-    if (!cards.length) return;
-    cards.forEach(card => {
-      let rect = null;
-      const strength = parseFloat(card.dataset.tiltStrength) || 7;
-      function onPointerMove(e) {
-        if (!rect) rect = card.getBoundingClientRect();
-        const px = ((e.clientX - rect.left) / rect.width) - 0.5; // -0.5..0.5
-        const py = ((e.clientY - rect.top) / rect.height) - 0.5;
-        const ry = (px * strength).toFixed(2);
-        const rx = (-py * strength).toFixed(2);
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-        card.style.transition = 'transform 60ms linear';
-      }
-      function onLeave() {
-        card.style.transform = '';
-        card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
-        rect = null;
-      }
-      card.addEventListener('pointermove', onPointerMove, { passive: true });
-      card.addEventListener('pointerleave', onLeave);
-      card.addEventListener('pointercancel', onLeave);
-      window.addEventListener('resize', debounce(() => { rect = null; }, 120));
-    });
-  }
-
-  /* =========================
-     Contact form handling
-     - If the form has action="#" or is empty, use mailto fallback
-     - If action is a URL, try to POST FormData (serverless endpoint)
-     - Provide accessible toasts and validation
-     ========================= */
-  function initContactForm() {
-    const form = $('#contact-form');
-    if (!form) return;
-
-    // Helper to collect form data
-    function collectFormData() {
-      const fd = new FormData(form);
-      const data = {};
-      fd.forEach((v, k) => { data[k] = v; });
-      return { fd, data };
-    }
-
-    async function handleSubmit(event) {
-      event.preventDefault();
-      const { fd, data } = collectFormData();
-      const name = (data.name || '').trim();
-      const email = (data.email || '').trim();
-      const message = (data.message || '').trim();
-      if (!name || !message || (!email && !(data.phone || '').trim())) {
-        createToast('Please provide: name, message, and either email or phone.');
-        return;
-      }
-
-      const action = (form.getAttribute('action') || '').trim();
-      // If action is empty or just "#" — use mailto fallback (works offline)
-      if (!action || action === '#') {
-        // craft mailto body
-        const subject = encodeURIComponent(data.subject || 'Message from portfolio');
-        const bodyLines = [
-          `Name: ${name}`,
-          `Email: ${email || '—'}`,
-          `Phone: ${data.phone || '—'}`,
-          '',
-          message
-        ].join('\n');
-        const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${subject}&body=${encodeURIComponent(bodyLines)}`;
-        // Use location.href to trigger mail client
-        window.location.href = mailto;
-        createToast('Opening your email client…');
-        try { form.reset(); } catch (e) { /* ignore */ }
-        return;
-      }
-
-      // If action looks like a URL — attempt POST (serverless)
-      try {
-        createToast('Sending message…');
-        const res = await fetch(action, { method: 'POST', body: fd, mode: 'cors' });
-        if (res.ok) {
-          createToast('Message sent. Thank you!');
-          form.reset();
-        } else {
-          // fallback to mailto (best-effort)
-          createToast('Could not send via form — opening email client instead.');
-          setTimeout(() => {
-            const subject = encodeURIComponent(data.subject || 'Message from portfolio');
-            const bodyLines = [
-              `Name: ${name}`,
-              `Email: ${email || '—'}`,
-              `Phone: ${data.phone || '—'}`,
-              '',
-              message
-            ].join('\n');
-            const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${subject}&body=${encodeURIComponent(bodyLines)}`;
-            window.location.href = mailto;
-          }, 900);
-        }
-      } catch (err) {
-        createToast('Network error — opening email client as fallback.');
-        setTimeout(() => {
-          const subject = encodeURIComponent(data.subject || 'Message from portfolio');
-          const bodyLines = [
-            `Name: ${name}`,
-            `Email: ${email || '—'}`,
-            `Phone: ${data.phone || '—'}`,
-            '',
-            message
-          ].join('\n');
-          const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${subject}&body=${encodeURIComponent(bodyLines)}`;
-          window.location.href = mailto;
-        }, 600);
-      }
-    }
-
-    form.addEventListener('submit', handleSubmit);
-  }
-
-  /* =========================
-     Skip link enhancement:
-     - When skip link is activated, focus main content
-     ========================= */
-  function initSkipLink() {
-    const skip = $('.skip-link') || $('.skip-link');
-    const main = $('#main-content');
-    if (!skip || !main) return;
-    skip.addEventListener('click', (e) => {
-      // allow default anchor behavior to happen after we set tabindex
-      setTimeout(() => {
-        main.setAttribute('tabindex', '-1');
-        main.focus({ preventScroll: true });
-      }, 10);
-    });
-  }
-
-  /* =========================
-     Misc utilities
-     ========================= */
-  function initMisc() {
-    secureBlankTargets();
-    // add aria-labels to repo links for screen readers
-    $$('a.repo').forEach(a => {
-      if (!a.hasAttribute('aria-label')) {
-        const label = `Open repository for ${(a.closest('.card')?.querySelector('.card-title')?.textContent || 'project')}`;
-        a.setAttribute('aria-label', label);
-      }
-    });
-
-    // improve accessibility: ensure all .card are keyboard focusable
-    $$('.card').forEach(c => {
-      if (!c.hasAttribute('tabindex')) c.setAttribute('tabindex', '0');
-    });
-  }
-
-  /* =========================
-     Boot sequence
-     ========================= */
-  function boot() {
-    try {
-      initSmoothScroll();
-      initReveal();
-      initProjectFilters();
-      initModalIFrame();
-      initMarquee();
-      initTilt();
-      initContactForm();
-      initSkipLink();
-      initMisc();
-      // expose for debugging (optional)
-      window.SJ = {
-        createToast,
-        initReveal,
-        initMarquee,
-        initProjectFilters
-      };
-    } catch (err) {
-      // do not crash — log for dev
-      // eslint-disable-next-line no-console
-      console.error('Portfolio script error', err);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', boot);
+} else {
+boot();
+}
 
 })();
 </script>
+
+
 
 
 </body>
