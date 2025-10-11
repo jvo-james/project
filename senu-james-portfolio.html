@@ -1,14 +1,11 @@
- <!doctype html>
+ 
+  <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio — Jensen Omega</title>
-  <meta name="description" content="Portfolio to showcase projects for college admissions" />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Senu James — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/1b6e6d2e8a.js" crossorigin="anonymous"></script>
    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -20,362 +17,1470 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 
+<style>
+/* ---------------------------------------------------------
+   Portfolio stylesheet for Senu James — adapted from template
+   Covers header, hero, profile card, projects, timeline,
+   marquee, contact form, modal, toasts, accessibility, and
+   responsive breakpoints.
+   --------------------------------------------------------- */
 
-  <style>
-    /* ----------------------------------------
-       Portfolio single-file stylesheet
-       Replace the hero image at: assets/hero.jpg
-       ---------------------------------------- */
+/* =============== Root variables =============== */
+:root{
+  --bg: #0f1417;
+  --panel: #0f1b23;
+  --muted: #98a3ad;
+  --accent: #ff725e;
+  --accent-2: #ff9478;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+  --white: #ffffff;
+  --text: #e8eef3;
+  --maxw: 1150px;
+  --radius: 12px;
+  --shadow-lg: 0 20px 60px rgba(2,6,23,0.6);
+  --shadow-md: 0 10px 30px rgba(2,6,23,0.45);
+  --ease: cubic-bezier(.2,.9,.3,1);
+  --glass-border: rgba(255,255,255,0.04);
+  --muted-2: rgba(152,163,173,0.85);
+  --glass-strong: rgba(255,255,255,0.06);
+  --surface: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  --marquee-gap: 16px;
+}
 
-    :root{
-      --bg:#0f1417; /* deep slate */
-      --panel:#0f1b23; /* slightly lighter */
-      --muted:#98a3ad;
-      --accent:#ff725e; /* coral */
-      --accent-2:#ff9478;
-      --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --white: #ffffff;
-      --max-width: 1150px;
-      --radius: 14px;
-      --shadow: 0 10px 30px rgba(2,6,23,0.6);
-      --ease: cubic-bezier(.2,.9,.3,1);
-    }
+/* =============== Reset & base =============== */
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg,#0b0f12 0%, #11161a 100%);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  padding: 48px 24px;
+  display:flex;
+  justify-content:center;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    /* Reset & base */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#0b0f12 0%, #11161a 100%);
-      color:var(--white);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      letter-spacing: -0.01em;
-      padding:48px 24px;
-      display:flex;
-      justify-content:center;
-    }
+/* ensure consistent max width wrapper */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
 
-    .wrap{
-      width:100%;
-      max-width:var(--max-width);
-    }
+/* Default anchor and heading styles */
+a { color: inherit; text-decoration: none; }
+h1,h2,h3,h4,h5 { margin: 0; color: var(--white); font-weight: 700; }
+p { margin: 0; color: var(--muted); }
 
-    /* NAV */
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;\      margin-bottom:28px;
-    }
+/* =============== Header / Nav =============== */
+.site-header {
+  position: sticky;
+  top: 18px;
+  z-index: 1500;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 12px 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+}
 
-    .brand{
-      display:flex;align-items:center;gap:12px;
-    }
+/* header inner layout override for inline style */
+.site-header .wrap { display:flex; align-items:center; justify-content:space-between; gap:20px; padding: 6px 0; }
 
-    .logo{
-      height:40px;width:40px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:grid;place-items:center;font-weight:700;color:#081219;font-family:Rubik, sans-serif;
-      box-shadow: 0 6px 18px rgba(255,114,94,0.12);
-    }
+/* brand + logo */
+.brand { display:flex; align-items:center; gap:12px; }
+.brand .logo {
+  height: 44px;
+  width: 44px;
+  border-radius: 10px;
+  display:grid;
+  place-items:center;
+  font-weight: 800;
+  color: #07121a;
+  font-family: 'Lexend', 'Rubik', sans-serif;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 8px 24px rgba(255,114,94,0.12);
+  flex-shrink: 0;
+  font-size: 15px;
+}
 
-    .brand h1{font-size:15px;margin:0;font-weight:700}
-    .brand p{margin:0;font-size:12px;color:var(--muted)}
+/* site title / subtitle */
+.site-header h1 { font-size: 15px; line-height:1; }
+.site-header p { margin:0; color:var(--muted); font-size:12px; }
 
-    nav{display:flex;gap:20px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:8px 10px;border-radius:8px}
-    nav a:hover{color:var(--white);background:var(--glass)}
+/* nav primary */
+nav.primary {
+  display:flex;
+  gap:14px;
+  align-items:center;
+  font-weight:600;
+}
+nav.primary a {
+  color: var(--muted);
+  padding:8px 10px;
+  border-radius:10px;
+  font-size:14px;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+}
+nav.primary a:hover, nav.primary a:focus { color:var(--white); background: var(--glass); outline: none; }
 
-    .cta{display:flex;gap:10px;align-items:center}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:700;border:0;cursor:pointer}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#07121a}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white)}
+/* cta nav item */
+nav.primary .cta {
+  background: transparent;
+  padding:8px 12px;
+  border-radius:10px;
+  color:var(--white);
+  font-weight:800;
+  border: 1px solid rgba(255,255,255,0.06);
+}
 
-    /* HERO GRID */
-    .hero{
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));
-      padding:36px;
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:36px;
-      align-items:center;
-    }
+/* focus ring for keyboard users */
+.site-header a:focus, .site-header button:focus {
+  outline: 3px solid rgba(255,114,94,0.12);
+  outline-offset: 3px;
+}
 
-    /* Left column content */
-    .intro small{display:block;color:var(--muted);font-weight:600;margin-bottom:12px}
-    .intro h2{font-family:Rubik, sans-serif;font-size:40px;margin:0 0 18px 0;line-height:1}
-    .intro h2 strong{display:block;font-size:28px;font-weight:800;color:var(--white)}
-    .intro p{color:var(--muted);max-width:60%;margin:0 0 22px}
+/* =============== Buttons =============== */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius: 10px;
+  font-weight:700;
+  border:0;
+  cursor:pointer;
+  background: transparent;
+  color: var(--white);
+  text-decoration: none;
+  transition: all .22s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
 
-    .hero-actions{display:flex;gap:12px}
+.btn:active { transform: translateY(1px); }
 
-    /* Skills ticker under hero */
-    .skills-bar{
-      margin-top:20px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      display:flex;gap:16px;align-items:center;flex-wrap:wrap;color:var(--muted);font-weight:600
-    }
-    .skill{padding:6px 12px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px}
+.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #07121a;
+  box-shadow: 0 8px 28px rgba(255,114,94,0.12);
+}
 
-    /* Right picture area with ring */
-    .portrait-wrap{
-      position:relative;height:340px;display:flex;align-items:center;justify-content:center;
-    }
-    .portrait-ring{
-      position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,114,94,0.06), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      display:grid;place-items:center;transform:translateY(-10px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    }
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+}
 
-    .portrait-ring::after{
-      content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 4px rgba(255,114,94,0.06);
-      pointer-events:none;
-    }
+/* ghost */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--white);
+}
 
-    .portrait{
-      position:relative;z-index:2;width:220px;height:220px;border-radius:50%;overflow:hidden;border:8px solid rgba(0,0,0,0.35);display:block;background:#111;
-    }
-    .portrait img{width:100%;height:100%;object-fit:cover;display:block}
+/* small visual helper for link buttons */
+.link-btn {
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:700;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.link-btn.live { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color: #07121a; border: none; }
+.link-btn.repo { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.04); }
 
-    /* ABOUT / STATS */
-    .panel{
-      margin-top:28px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:28px;border-radius:12px;display:flex;gap:24px;align-items:center
-    }
+/* =============== HERO =============== */
+.hero {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 36px;
+  align-items: center;
+  padding: 36px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
 
-    .about{flex:1}
-    .about h3{font-family:Rubik, sans-serif;font-size:24px;margin:0 0 10px}
-    .about p{color:var(--muted);margin:0}
+/* override inline styles if present */
+.hero-left { display: block; }
+.hero-left .kicker { color: var(--muted); font-weight:700; font-size:13px; display:inline-flex; gap:8px; align-items:center; }
+.hero-left .hi {
+  font-family: 'Poppins', 'Rubik', sans-serif;
+  font-size: 34px;
+  line-height: 1.05;
+  margin-top: 12px;
+}
 
-    .stats{display:flex;gap:18px}
-    .stat{min-width:92px}
-    .stat h4{margin:0;font-size:20px;font-weight:800}
-    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
+/* strong inside hero */
+.hero-left .hi strong { display:block; font-size:32px; color:var(--white); font-weight:800; }
 
-    /* Projects grid */
-    section.projects{margin-top:36px}
-    section.projects h3{font-family:Rubik, sans-serif;font-size:24px;margin-bottom:18px}
-    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+/* lead paragraph */
+.lead { color: var(--muted); max-width: 68ch; font-size:15px; margin-top:8px; }
 
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .25s var(--ease),box-shadow .25s var(--ease);}
-    .card:hover{transform:translateY(-6px);box-shadow: 0 18px 50px rgba(2,6,23,0.6)}
-    .card .title{font-weight:800;font-size:16px;margin-bottom:8px}
-    .card .desc{color:var(--muted);font-size:14px;margin-bottom:12px}
-    .card .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{padding:6px 10px;border-radius:10px;background:rgba(255,255,255,0.02);font-weight:700;font-size:12px;color:var(--muted)}
+/* hero call to action row */
+.cta-row { margin-top: 18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 
-    /* Contact */
-    footer{margin-top:36px;display:flex;gap:20px;align-items:center;justify-content:space-between}
-    .socials{display:flex;gap:12px}
-    .socials a{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);text-decoration:none;color:var(--muted)}
+/* skill pills */
+.skill-pills { margin-top: 20px; display:flex; gap:8px; flex-wrap:wrap; }
+.pill {
+  padding:8px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  color: var(--muted);
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
 
-    /* Small screen adjustments */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr 320px}
-      .intro p{max-width:100%}
-      .portrait-wrap{height:300px}
-    }
+/* stats group */
+.stats { display:flex; gap: 12px; margin-top: 20px; flex-wrap:wrap; align-items:center; }
+.stats .pill { display:flex; flex-direction:column; align-items:flex-start; padding:12px; min-width:140px; }
 
-    @media (max-width:720px){
-      body{padding:20px}
-      header{margin-bottom:18px}
-      nav{display:none}
-      .hero{grid-template-columns:1fr;gap:20px;padding:18px}
-      .portrait-wrap{order:-1;height:240px}
-      .portrait-ring{width:260px;height:260px}
-      .portrait{width:180px;height:180px}
-      .intro h2{font-size:28px}
-      .intro h2 strong{font-size:20px}
-      .intro p{margin-bottom:16px}
-      .proj-grid{grid-template-columns:repeat(1,1fr)}
-      .stats{gap:12px}
-      .panel{flex-direction:column;align-items:flex-start}
-    }
+/* =============== PROFILE CARD (right) =============== */
+.profile-card {
+  display:flex;
+  gap:14px;
+  align-items:center;
+  justify-content:flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
 
-    /* Tiny screens */
-    @media (max-width:420px){
-      .portrait-ring{width:220px;height:220px}
-      .portrait{width:140px;height:140px}
-      .hero{padding:14px}
-    }
+/* portrait */
+.profile-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid rgba(0,0,0,0.35);
+  background: #111;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  flex-shrink: 0;
+}
+.profile-photo img { width:100%; height:100%; object-fit:cover; display:block; }
 
-    /* subtle animated entrance */
-    .fade-up{opacity:0;transform:translateY(6px);transition:all .6s var(--ease)}
-    .fade-up.visible{opacity:1;transform:none}
+/* social float buttons under portrait */
+.float-btn {
+  width:40px; height:40px;
+  display:grid; place-items:center;
+  border-radius:10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  cursor:pointer;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+.float-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(2,6,23,0.45); }
+.float-btn i { color: var(--muted); }
 
-  </style>
+/* profile meta */
+.profile-meta .meta-title { font-weight:800; font-size:18px; }
+.profile-meta .meta-sub { margin-top:6px; color:var(--muted); font-size:13px; }
+
+/* quick actions inside meta */
+.profile-meta .btn { font-size:14px; padding:8px 12px; }
+
+/* location and phone rows */
+.profile-meta i { color: var(--muted); margin-right:6px; }
+
+/* =============== ABOUT section =============== */
+.section { margin-top: 28px; }
+#about { margin-top:28px; }
+#about h3 { font-size:20px; margin-bottom:8px; }
+#about p { color: var(--muted); max-width:70ch; }
+
+/* about aside cards (award / impact) */
+#about aside > div {
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#0f1b23, #0c1419);
+  border: 1px solid rgba(255,255,255,0.02);
+  color: var(--text);
+}
+
+/* lighten the icon tile inside these aside cards */
+#about aside .fa-award, #about aside .fa-people-group { color: var(--accent); }
+
+/* =============== PROJECTS =============== */
+.projects { margin-top: 28px; }
+.projects-header { display:flex; gap:12px; align-items:center; justify-content:space-between; }
+.projects-header h3 { font-size:20px; margin:0; }
+
+/* projects grid */
+.projects-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+  margin-top:18px;
+}
+
+/* project card */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  display:flex;
+  flex-direction:column;
+  min-height: 360px;
+  position: relative;
+}
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(2,6,23,0.6); }
+
+/* card visual area (image) */
+.card .card-visual { position: relative; height: 220px; overflow: hidden; background: #0b1014; }
+.card .card-visual img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* badge top-left */
+.card .badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(6,10,26,0.9);
+  color: var(--white);
+  font-weight:800;
+  font-size:12px;
+  border: 1px solid rgba(255,255,255,0.03);
+  z-index: 10;
+}
+
+/* card body */
+.card .card-body { padding:14px 16px 18px 16px; display:flex; flex-direction:column; flex:1; }
+.card .card-title { font-size:18px; font-weight:800; color:var(--white); margin-bottom:6px; }
+.card .card-sub { color:var(--muted); font-size:14px; }
+.card .tags { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+.card .tag {
+  padding:6px 10px;
+  border-radius:10px;
+  background: rgba(255,255,255,0.02);
+  font-weight:700;
+  font-size:12px;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* card foot links */
+.card .card-foot { margin-top:auto; display:flex; gap:8px; align-items:center; }
+
+/* featured card */
+.card.featured { grid-column: span 1; border: 1px solid rgba(255,191,170,0.06); box-shadow: 0 22px 70px rgba(255,114,94,0.06); }
+
+/* tilt (subtle) - CSS fallback if JS disabled */
+.tilt { transform-origin: center; will-change: transform; transition: transform .45s cubic-bezier(.2,.9,.2,1); }
+
+/* small tag color variations */
+.card .badge[style*="gold"], .card .badge[style*="d4ab4e"] { background: linear-gradient(90deg,#d4ab4e,#b8862f); color:#081219; }
+
+/* =============== TIMELINE =============== */
+.timeline { margin-top: 36px; }
+.timeline h3 { margin-bottom: 12px; }
+.timeline-items { display:flex; gap:12px; overflow:auto; padding:8px 4px; scrollbar-width: thin; }
+.timeline-card { min-width:200px; padding:12px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border:1px solid rgba(255,255,255,0.03); }
+
+/* =============== MARQUEE =============== */
+.marquee-wrap { margin-top:36px; }
+.marquee { display:flex; gap: var(--marquee-gap); align-items:center; overflow:hidden; }
+
+.marq-item { flex: 0 0 240px; border-radius:12px; overflow:hidden; background:#0c1114; border:1px solid rgba(255,255,255,0.03); }
+.marq-item img { display:block; width:100%; height:100%; object-fit:cover; }
+
+/* marquee animation */
+@keyframes marq {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - var(--marquee-gap))); }
+}
+
+/* JS sets --marquee-duration on #marquee element dynamically */
+
+/* =============== CONTACT =============== */
+.contact-wrap { margin-top:40px; display:grid; grid-template-columns: 1fr 340px; gap:18px; align-items:start; }
+.contact-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.contact-aside {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  border-radius: 12px;
+  padding:18px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* form inputs */
+.input, .textarea {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border: 1px solid #e9f0ff;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  color: var(--text);
+  font-size:14px;
+  transition: box-shadow .16s var(--ease), border-color .16s var(--ease);
+}
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: rgba(255,114,94,0.8);
+  box-shadow: 0 8px 30px rgba(255,114,94,0.06);
+}
+
+/* send button */
+.send {
+  padding:12px 18px;
+  border-radius:10px;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff;
+  border:0;
+  font-weight:800;
+}
+
+/* social pill inside contact */
+.social-pill {
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.02);
+}
+
+/* =============== FOOTER =============== */
+footer.site {
+  margin-top:36px;
+  padding:24px 0;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  color: var(--muted);
+}
+footer.site .fa-github, footer.site .fa-linkedin { color:var(--muted); }
+
+/* =============== MODAL (case studies) =============== */
+#sj-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6,10,26,0.6);
+  z-index: 2100;
+  padding: 20px;
+}
+#sj-modal .sj-modal-panel {
+  width: 92%;
+  max-width: 980px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  color: #081219;
+  box-shadow: 0 30px 80px rgba(6,10,26,0.4);
+  display:flex;
+  flex-direction:column;
+}
+#sj-modal iframe { width:100%; height:64vh; border:0; display:block; }
+
+/* modal header buttons */
+#sj-modal .btn { background: transparent; color: #07121a; border: none; padding:8px 10px; }
+#sj-modal .btn:hover { background: rgba(6,10,26,0.03); }
+
+/* accessibility: when modal open, body overflow is locked in JS */
+
+/* =============== TOAST =============== */
+.sj-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2200;
+  background: rgba(6,10,26,0.94);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 12px 40px rgba(6,10,26,0.4);
+}
+
+/* =============== ANIMATIONS & REVEAL =============== */
+.fade-in { opacity: 0; transform: translateY(8px); transition: all .6s var(--ease); }
+.fade-in.show { opacity: 1; transform: none; }
+
+/* small entrance for elements using .fade-up in template */
+.fade-up { opacity: 0; transform: translateY(6px); transition: all .6s var(--ease); }
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* =============== FOCUS & ACCESSIBILITY =============== */
+a:focus, button:focus, input:focus, textarea:focus { outline: none; box-shadow: 0 8px 30px rgba(255,114,94,0.06); }
+
+/* keyboard focus ring fallback for interactive elements */
+[tabindex]:focus { outline: 3px solid rgba(255,114,94,0.12); outline-offset: 3px; }
+
+/* =============== SMALL SCREEN ADJUSTMENTS =============== */
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr 320px; padding: 28px; gap: 20px; }
+  .profile-photo { width: 140px; height: 140px; }
+  .profile-card { padding: 14px; }
+  body { padding: 28px 18px; }
+}
+
+@media (max-width: 720px) {
+  body { padding: 20px; }
+  .site-header { top: 12px; padding:10px; }
+  .site-header .wrap { gap:12px; }
+  nav.primary { display:none; } /* mobile nav collapse - you can add a hamburger later */
+  .hero { grid-template-columns: 1fr; gap: 20px; padding: 18px; }
+  .profile-card { order: -1; width: 100%; justify-content: center; }
+  .profile-photo { width: 180px; height: 180px; }
+  .projects-grid { grid-template-columns: repeat(1,1fr); }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .timeline-items { overflow-x: auto; }
+  .marquee { overflow: auto; white-space: nowrap; }
+}
+
+/* tiny screens */
+@media (max-width:420px) {
+  .portrait-ring{ width:220px; height:220px; }
+  .profile-photo { width: 140px; height: 140px; }
+  .hero { padding: 14px; }
+  .hero-left .hi { font-size: 22px; }
+}
+
+/* =============== Scrollbar styling =============== */
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 999px; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 999px; }
+
+/* =============== Utility classes =============== */
+.hidden { display:none !important; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+/* =============== Override inline-heavy blocks gently =============== */
+/* Many elements in your HTML carry inline style attributes.
+   These rules aim to normalize and override visual properties
+   so the page matches the template. Use sparingly and only
+   where the page uses inline style for layout. */
+
+header.site-header[style] { padding: 10px !important; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)) !important; border-radius: 14px !important; }
+.wrap[style] { max-width: var(--maxw) !important; display:flex !important; align-items:center !important; justify-content:space-between !important; gap:20px !important; }
+.brand[style] { display:flex !important; align-items:center !important; gap:12px !important; }
+nav.primary[style] { display:flex !important; gap:12px !important; align-items:center !important; }
+
+/* override inline CTA anchor */
+a.cta[style] { padding:8px 12px !important; border-radius:10px !important; color:var(--white) !important; background: linear-gradient(90deg,var(--accent),var(--accent-2)) !important; }
+
+/* hero inline adjustments */
+.hero[style] { margin-top: 18px !important; }
+.hero-left[style] { display:block !important; }
+.profile-card[style] { display:flex !important; gap:14px !important; align-items:center !important; }
+
+/* projects grid inline override */
+.projects-grid[style] { display:grid !important; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)) !important; gap:18px !important; margin-top:18px !important; }
+
+/* marque & marquee items override */
+.marquee[style] { display:flex !important; gap:16px !important; align-items:center !important; overflow:hidden !important; }
+.marq-item[style] { flex: 0 0 240px !important; border-radius:12px !important; overflow:hidden !important; }
+
+/* contact form overrides */
+.contact-card[style] { padding:20px !important; border-radius:12px !important; }
+.contact-aside[style] { padding:18px !important; border-radius:12px !important; }
+
+/* ensure footer layout consistent */
+footer.site[style] { padding:24px 0 !important; margin-top:36px !important; border-top:1px solid rgba(0,0,0,0.04) !important; }
+
+/* =============== Minor theme polish =============== */
+/* subtle divider lines for big panels */
+.panel-divider { border-top: 1px dashed rgba(255,255,255,0.02); margin-top:12px; padding-top:12px; }
+
+/* subtle hover lift for many interactive surface */
+.card .link-btn, .card .tag, .pill, .float-btn {
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+}
+.card .tag:hover, .pill:hover, .float-btn:hover { transform: translateY(-4px); }
+
+/* small decorative portrait ring (if you add one) */
+.portrait-ring {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,114,94,0.06), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  display: grid;
+  place-items: center;
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.portrait-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px rgba(255,114,94,0.06);
+  pointer-events: none;
+}
+
+/* =============== JS helpers (visual) =============== */
+.sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* =============== End of stylesheet =============== */
+</style>
+
+
 </head>
 <body>
-  <div class="wrap">
-
-    <header>
-      <div class="brand">
-        <div class="logo">JO</div>
+  <!-- =========================
+       HEADER (fixed) — many icons
+       ========================= -->
+  <header class="site-header" role="banner" aria-label="Primary site header">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
+      <div class="brand" aria-hidden="false" style="display:flex;align-items:center;gap:12px">
+        <div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
         <div>
-          <h1 style="font-size:14px;margin:0">Jensen Omega</h1>
-          <p style="font-size:11px;margin:0;color:var(--muted)">Software Developer</p>
+          <h1 style="margin:0">Senu James</h1>
+          <p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
         </div>
       </div>
 
-      <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+      <nav class="primary" aria-label="Main navigation" style="display:flex;align-items:center;gap:12px">
+        <a href="#home-hero" style="text-decoration:none"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+        <a href="#projects" style="text-decoration:none"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+        <a href="#about" style="text-decoration:none"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+        <a href="#timeline" style="text-decoration:none"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+        <a href="#contact" style="text-decoration:none"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+        <a class="cta" href="#resume" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
       </nav>
+    </div>
+  </header>
 
-      <div class="cta">
-        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Got a project?</button>
-        <a class="btn btn-ghost" href="#" onclick="event.preventDefault()">My resume</a>
+  <!-- =========================
+       MAIN CONTENT
+       ========================= -->
+  <main id="main-content" class="container" role="main" style="padding-top:28px;">
+
+    <!-- =========================
+         HERO — high impact
+         ========================= -->
+    <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region" style="margin-top:18px;">
+      <div class="hero-left">
+        <span class="kicker" aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;">
+          <i class="fa-solid fa-award" aria-hidden="true"></i> Award-winning • Product & UI-focused
+        </span>
+
+        <h2 id="hero-heading" class="hi" style="line-height:1.02;margin-top:12px;">
+          Hi, I’m <strong>Senu James</strong> — I design & build web products that scale.
+        </h2>
+
+        <p class="lead" style="margin-top:8px;color:var(--muted);max-width:68ch">
+          I blend product thinking, clean UX, and robust engineering to ship web apps with real impact — from AI learning platforms to campus-scale systems. My work focuses on accessibility, reliability, and delightful interfaces.
+        </p>
+
+        <div class="cta-row" role="toolbar" aria-label="Primary calls to action" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp;See selected work</a>
+          <a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp;Get in touch</a>
+          <a class="btn" href="#about" style="text-decoration:none"><i class="fa-solid fa-book-open"></i>&nbsp;Read my story</a>
+        </div>
+
+        <div class="skill-pills" aria-hidden="true" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+          <div class="pill"><i class="fa-brands fa-react"></i>&nbsp; React</div>
+          <div class="pill"><i class="fa-brands fa-js-square"></i>&nbsp; TypeScript</div>
+          <div class="pill"><i class="fa-brands fa-node-js"></i>&nbsp; Node.js</div>
+          <div class="pill"><i class="fa-solid fa-robot"></i>&nbsp; AI • ML</div>
+          <div class="pill"><i class="fa-solid fa-palette"></i>&nbsp; Design Systems</div>
+        </div>
+
+        <!-- quick impact stats -->
+        <div class="stats" style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+          <div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-users"></i>&nbsp;1.2K+</div>
+            <div style="font-size:12px;color:var(--muted)">Users impacted</div>
+          </div>
+          <div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-trophy"></i>&nbsp;Winner</div>
+            <div style="font-size:12px;color:var(--muted)">African Digital Innovation Challenge</div>
+          </div>
+          <div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-code"></i>&nbsp;6+</div>
+            <div style="font-size:12px;color:var(--muted)">Major projects shipped</div>
+          </div>
+        </div>
       </div>
-    </header>
 
-    <main>
-      <section class="hero">
+      <!-- HERO RIGHT: portrait + quick contact actions -->
+      <aside class="profile-card" aria-label="Profile card" role="complementary" style="display:flex;gap:14px;align-items:center">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+          <div class="profile-photo" style="width:160px;height:160px;border-radius:50%;overflow:hidden">
+            <img src="image2.jpeg" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="GitHub">
+              <div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
+            </a>
+            <a href="https://www.linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="LinkedIn">
+              <div class="float-btn" title="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></div>
+            </a>
+            <a href="mailto:senujames23@gmail.com" style="text-decoration:none" aria-label="Email">
+              <div class="float-btn" title="Email"><i class="fa-solid fa-envelope fa-lg"></i></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="profile-meta" style="flex:1">
+          <div class="meta-title" style="font-weight:800;font-size:18px">Senu James</div>
+          <div class="meta-sub" style="margin-top:6px;color:var(--muted)">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
+
+          <div style="margin-top:12px;display:flex;gap:10px">
+            <a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-eye"></i>&nbsp; See Work</a>
+            <a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp; Hire me</a>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:12px;align-items:center;color:var(--muted)">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <strong>Accra, Ghana</strong>
+              <div style="font-size:12px;color:var(--muted)">Available for internships & remote roles</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <i class="fa-solid fa-phone"></i>
+            <a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- =========================
+         ABOUT — short section (icons included)
+         ========================= -->
+    <section id="about" class="section" aria-labelledby="about-heading" role="region" style="margin-top:28px;">
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
         <div>
-          <div class="intro">
-            <small>Hello.</small>
-            <h2 class="fade-up" style="transition-delay:.05s">I'm <strong>Jensen</strong><br>Software Developer</h2>
-            <p class="fade-up" style="transition-delay:.12s">I build clean, accessible web apps and interactive projects. These pieces show my technical skills and curiosity — perfect for admissions reviewers who want to see real work.</p>
+          <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+          <p style="color:var(--muted);max-width:70ch">
+            I build product-first web applications with a focus on clarity, performance, and impact. I led Vitra AI from concept to prototype, integrated ML models, and shipped production front-ends. I care deeply about accessible UIs, maintainable code, and measurable outcomes.
+          </p>
 
-            <div class="hero-actions fade-up" style="transition-delay:.18s">
-              <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">See projects</button>
-              <button class="btn btn-ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About me</button>
-            </div>
-
-            <div class="skills-bar fade-up" style="transition-delay:.25s">
-              <div class="skill">HTML5</div>
-              <div class="skill">CSS / SCSS</div>
-              <div class="skill">JavaScript</div>
-              <div class="skill">React</div>
-              <div class="skill">Node.js</div>
-              <div class="skill">Git</div>
-            </div>
+          <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+            <div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+            <div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+            <div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+            <div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
           </div>
 
-          <div class="panel fade-up" style="transition-delay:.32s">
-            <div class="about">
-              <h3>About me</h3>
-              <p>I started my software journey from curiosity — building small tools and websites that solved everyday problems. I value readable code, thoughtful UX, and building projects that tell a clear story.</p>
-            </div>
-            <div class="stats">
-              <div class="stat">
-                <h4>120+</h4>
-                <p>Completed projects</p>
+          <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+            <a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+            <a class="btn" href="#contact" style="text-decoration:none"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
+          </div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:10px">
+          <div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff">
+                <i class="fa-solid fa-award"></i>
               </div>
-              <div class="stat">
-                <h4>95%</h4>
-                <p>Client satisfaction</p>
-              </div>
-              <div class="stat">
-                <h4>10+</h4>
-                <p>Years experience</p>
+              <div>
+                <div style="font-weight:800">African Digital Innovation Challenge</div>
+                <div style="font-size:13px;color:var(--muted)">Vitra AI — Winner</div>
               </div>
             </div>
           </div>
+
+          <div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)">
+                <i class="fa-solid fa-people-group"></i>
+              </div>
+              <div>
+                <div style="font-weight:800">Community Impact</div>
+                <div style="font-size:13px;color:var(--muted)">Projects used by student groups and campus teams</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================
+         SELECTED PROJECTS — rich cards
+         ========================= -->
+    <section id="projects" class="projects" style="margin-top:28px;">
+      <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <h3 style="margin:0;font-size:20px">Selected Projects</h3>
+          <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos — click Live or Repo to explore each project.</p>
         </div>
 
-        <div class="portrait-wrap">
-          <div class="portrait-ring"></div>
-          <div class="portrait">
-            <!-- Replace the src with your photo. Use a square image for best results. -->
-            <img src="assets/hero.jpg" alt="Jensen portrait">
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-outline" id="filter-all" aria-pressed="true" style="text-decoration:none"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+          <button class="btn btn-outline" id="filter-web" style="text-decoration:none"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+          <button class="btn btn-outline" id="filter-ai" style="text-decoration:none"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projects-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px">
+        <!-- Project cards generated by JS, but include a progressive fallback for now -->
+        <!-- Vitra AI -->
+        <article class="card tilt" role="article" aria-labelledby="p-vitra">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px">AI • Winner</div>
+            <img src="vitra.png" alt="Vitra AI screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-vitra" class="card-title">Vitra AI</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">AI for education — personalized learning resources and auto-evaluation.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Python</span><span class="tag">React</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+              <a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Shuttle Tracker -->
+        <article class="card tilt" role="article" aria-labelledby="p-shuttle">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px">Maps • Real-time</div>
+            <img src="shuttle.png" alt="Shuttle Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">Real-time campus transport tracking with map visualizations.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- E-Mart -->
+        <article class="card tilt" role="article" aria-labelledby="p-emart">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px">E-commerce</div>
+            <img src="emart.png" alt="E-Mart screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-emart" class="card-title">E-Mart</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">Modern shopping flows and mobile-first checkout experience.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Stripe</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Fitness Tracker -->
+        <article class="card tilt" role="article" aria-labelledby="p-fitness">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px">Health • Data</div>
+            <img src="fittrack.png" alt="Fitness Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">Dashboards and analytics for personal fitness goals.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">React</span><span class="tag">Charts</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- SkillForge Registry -->
+        <article class="card tilt" role="article" aria-labelledby="p-skillforge">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px">Forms • Admin</div>
+            <img src="skillforge.png" alt="SkillForge screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">Workshop registration, auth & admin reporting tools for organizers.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Make Heaven Crowded (new, featured) -->
+        <article class="card tilt featured" role="article" aria-labelledby="p-mhc">
+          <div class="card-visual" style="position:relative;height:220px">
+            <div class="badge" aria-hidden="true" style="left:12px;top:12px;background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div>
+            <img src="mhc.png" alt="Make Heaven Crowded screenshot" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="card-body">
+            <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+            <div class="card-sub" style="margin-top:6px;color:var(--muted)">Faith-driven e-commerce + gospel hub: shop, devotionals, donations and a design generator.</div>
+            <div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span><span class="tag">Design</span></div>
+            <div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+              <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+              <a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+              <a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+            </div>
+          </div>
+        </article>
+
+      </div> <!-- end projects-grid -->
+    </section>
+
+    <!-- =========================
+         TIMELINE / MILESTONES — visual strip with icons
+         ========================= -->
+    <section id="timeline" class="timeline" aria-labelledby="timeline-heading" style="margin-top:36px;">
+      <h3 id="timeline-heading" style="margin:0 0 12px">Journey & milestones</h3>
+      <div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
+        <div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Oct 2025</strong></div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div>
+        </div>
+
+        <div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>Jun 2024</strong></div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div>
+        </div>
+
+        <div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div>
+        </div>
+
+        <div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         MARQUEE / COMMUNITY IMAGES
+         ========================= -->
+    <section class="marquee-wrap" aria-labelledby="community-heading" style="margin-top:36px;">
+      <header style="text-align:center;margin-bottom:12px">
+        <h3 id="community-heading" style="margin:0">Community & events</h3>
+        <p style="margin:6px 0 0;color:var(--muted)">Photos from events, user stories and launches.</p>
+      </header>
+
+      <div class="marquee" id="marquee" style="display:flex;gap:16px;align-items:center;overflow:hidden;">
+        <div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-1.jpg" alt="Campus outreach"></div>
+        <div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-2.jpg" alt="Design reveal"></div>
+        <div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-3.jpg" alt="Workshop"></div>
+        <div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-4.jpg" alt="Launch event"></div>
+        <div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-5.jpg" alt="Street outreach"></div>
+      </div>
+    </section>
+
+    <!-- =========================
+         CONTACT — polished form + quick details
+         ========================= -->
+    <section id="contact" class="contact-wrap" aria-labelledby="contact-heading" style="margin-top:40px;">
+      <div class="contact-card" role="region" aria-labelledby="contact-heading" style="padding:20px;border-radius:12px">
+        <h3 id="contact-heading" style="margin:0 0 8px">Contact</h3>
+        <p style="color:var(--muted);margin:0 0 12px">Interested in collaborating or an internship? Send a short message — I respond quickly.</p>
+
+        <form id="contact-form" style="margin-top:12px;display:grid;gap:10px;" onsubmit="event.preventDefault(); alert('Message sent (demo)'); this.reset();">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <input class="input" id="name" name="name" placeholder="Your name" required aria-label="Your name" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+            <input class="input" id="email" name="email" type="email" placeholder="you@domain.com" required aria-label="Email" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <input class="input" id="phone" name="phone" type="tel" placeholder="+233 24 555 0123" aria-label="Phone number" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+            <input class="input" id="subject" name="subject" placeholder="Subject" aria-label="Subject" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+          </div>
+
+          <textarea class="textarea" id="message" name="message" rows="5" placeholder="Tell me about your project" aria-label="Message" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff"></textarea>
+
+          <div style="display:flex;gap:12px;align-items:center">
+            <button class="send" type="submit" style="padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:800">Send message</button>
+            <div style="color:var(--muted);font-size:13px">Or reach me directly: <a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a></div>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-aside" style="padding:18px;border-radius:12px">
+        <h4 style="margin:0 0 8px">Quick links & socials</h4>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div><strong>Email:</strong> <a href="mailto:senujames23@gmail.com" style="text-decoration:none;color:inherit">senujames23@gmail.com</a></div>
+          <div><strong>Phone:</strong> <a href="tel:+233245550123" style="text-decoration:none;color:inherit">+233 24 555 0123</a></div>
+          <div><strong>GitHub:</strong> <a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">github.com/senu-james</a></div>
+          <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">linkedin.com/in/senu-james</a></div>
+        </div>
+
+        <div style="margin-top:14px">
+          <strong style="display:block;margin-bottom:8px">Follow</strong>
+          <div style="display:flex;gap:8px">
+            <a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-github"></i>&nbsp;GitHub</div></a>
+            <a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</div></a>
+            <a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-twitter"></i>&nbsp;Twitter</div></a>
           </div>
         </div>
 
-      </section>
+        <div style="margin-top:18px">
+          <strong style="display:block;margin-bottom:8px">Download</strong>
+          <a class="link-btn live" href="#resume" style="text-decoration:none;padding:10px 12px;display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-radius:10px">Download Resume</a>
+        </div>
+      </aside>
+    </section>
 
-      <section id="projects" class="projects">
-        <h3>Projects</h3>
-
-        <div class="proj-grid">
-
-          <article class="card fade-up" style="transition-delay:.08s">
-            <div class="title">Shuttle Tracker</div>
-            <div class="desc">A real-time shuttle tracking dashboard built with React and WebSockets to track vehicle positions and ETA on a map.</div>
-            <div class="tags">
-              <span class="tag">React</span>
-              <span class="tag">Socket</span>
-              <span class="tag">Mapbox</span>
-            </div>
-          </article>
-
-          <article class="card fade-up" style="transition-delay:.12s">
-            <div class="title">MushRush (Game)</div>
-            <div class="desc">A browser game that emphasizes performance, animations, and responsive controls. Built with Canvas and careful asset optimization.</div>
-            <div class="tags">
-              <span class="tag">Canvas</span>
-              <span class="tag">Animation</span>
-              <span class="tag">Performance</span>
-            </div>
-          </article>
-
-          <article class="card fade-up" style="transition-delay:.16s">
-            <div class="title">Portfolio CMS</div>
-            <div class="desc">A small CMS to let me add new projects quickly. JWT auth, CRUD UI, and image uploads with thumbnails.</div>
-            <div class="tags">
-              <span class="tag">Node</span>
-              <span class="tag">Express</span>
-              <span class="tag">MongoDB</span>
-            </div>
-          </article>
-
+    <!-- =========================
+         FOOTER
+         ========================= -->
+    <footer class="site" role="contentinfo" style="margin-top:36px;padding:24px 0;border-top:1px solid rgba(0,0,0,0.04)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--maxw);margin:0 auto">
+        <div>
+          <strong style="font-size:16px">Senu James</strong>
+          <div style="color:var(--muted);font-size:13px">Web Developer • AI & Product Builder</div>
         </div>
 
-      </section>
-
-      <section id="about" style="margin-top:36px">
-        <h3>More about my work</h3>
-        <p style="color:var(--muted);max-width:64%;">When I build projects I focus on clarity of purpose, consistent styling, and testable code. I like writing small README guides for each project so reviewers can quickly run the app locally and try features. If you'd like, I can provide short videos explaining each project so admissions officers can easily understand the goal and results.</p>
-      </section>
-
-      <section id="contact" style="margin-top:28px">
-        <h3>Get in touch</h3>
-        <div style="display:flex;gap:18px;align-items:center;margin-top:10px;flex-wrap:wrap">
-          <a class="btn btn-primary" href="mailto:hello@example.com">Email me</a>
-          <a class="btn btn-ghost" href="#">Download resume</a>
-          <div style="color:var(--muted);font-size:14px">Or follow me on
-            <a href="#" style="color:var(--accent);margin-left:8px">X</a>
-            <a href="#" style="color:var(--accent);margin-left:8px">Github</a>
-          </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <a href="https://github.com/senu-james" style="text-decoration:none"><i class="fa-brands fa-github fa-lg"></i></a>
+          <a href="https://linkedin.com/in/senu-james" style="text-decoration:none"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+          <a href="mailto:senujames23@gmail.com" style="text-decoration:none"><i class="fa-solid fa-envelope fa-lg"></i></a>
         </div>
-      </section>
+      </div>
+      <div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">© <strong>Senu James</strong> — All rights reserved.</div>
+    </footer>
 
-      <footer>
-        <div style="color:var(--muted);font-size:13px">© 2025 Jensen Omega — Portfolio</div>
-        <div class="socials">
-          <a href="#" aria-label="github">GH</a>
-          <a href="#" aria-label="linkedin">in</a>
-          <a href="#" aria-label="twitter">X</a>
-        </div>
-      </footer>
+  </main>
 
-    </main>
-  </div>
+<script>
+(() => {
+  'use strict';
 
-  <script>
-    // Simple intersection observer to reveal fade-up elements
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('visible');
-            obs.unobserve(e.target);
+  /* ---------------------------
+     Utilities
+     --------------------------- */
+  const $ = (sel, ctx = document) => (ctx || document).querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from((ctx || document).querySelectorAll(sel));
+  const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function debounce(fn, wait = 120) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+  }
+
+  function createToast(msg, { timeout = 1800 } = {}) {
+    try {
+      const id = '__sj_toast';
+      const toast = document.createElement('div');
+      toast.className = 'sj-toast';
+      toast.setAttribute('role', 'status');
+      toast.style.cssText = [
+        'position:fixed',
+        'right:18px',
+        'bottom:18px',
+        'z-index:2200',
+        'background:rgba(6,10,26,0.94)',
+        'color:#fff',
+        'padding:10px 14px',
+        'border-radius:10px',
+        'font-weight:700',
+        'box-shadow:0 12px 40px rgba(6,10,26,0.4)'
+      ].join(';');
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'opacity .32s ease, transform .32s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(6px)';
+        setTimeout(() => toast.remove(), 360);
+      }, timeout);
+    } catch (e) { /* silently fail */ }
+  }
+
+  /* ---------------------------
+     Smooth scroll for anchors
+     --------------------------- */
+  function initSmoothScroll() {
+    document.addEventListener('click', (ev) => {
+      const a = ev.target.closest('a[href^="#"]');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      ev.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // update focus for a11y
+      setTimeout(() => { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }, 400);
+    });
+  }
+
+  /* ---------------------------
+     Intersection reveal (.fade-in elements)
+     --------------------------- */
+  function initReveal() {
+    const items = $$('.fade-in');
+    if (!items.length) return;
+    try {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(ent => {
+          if (ent.isIntersecting) {
+            ent.target.classList.add('show');
+            // once revealed, unobserve to reduce work
+            io.unobserve(ent.target);
           }
-        })
-      },{threshold:0.08});
+        });
+      }, { threshold: 0.12 });
+      items.forEach(i => io.observe(i));
+    } catch (e) {
+      // fallback: show all if IntersectionObserver not supported
+      items.forEach(i => i.classList.add('show'));
+    }
+  }
 
-      document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  /* ---------------------------
+     Tilt cards for .tilt
+     --------------------------- */
+  function initTiltCards() {
+    if (isReducedMotion) return; // respect user preference
+    const cards = $$('.tilt');
+    if (!cards.length) return;
+    cards.forEach(card => {
+      let rect = null;
+      const strength = parseFloat(card.dataset.tiltStrength) || 6; // degrees
+      function onPointerMove(e) {
+        if (!rect) rect = card.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) - 0.5; // -0.5..0.5
+        const py = ((e.clientY - rect.top) / rect.height) - 0.5;
+        const ry = (px * strength).toFixed(2);
+        const rx = (-py * strength).toFixed(2);
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+        card.style.transition = 'transform 60ms linear';
+      }
+      function onLeave() {
+        card.style.transform = '';
+        card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
+        rect = null;
+      }
+      card.addEventListener('pointermove', onPointerMove, { passive: true });
+      card.addEventListener('pointerleave', onLeave);
+      card.addEventListener('pointercancel', onLeave);
+      // restore if window resized
+      window.addEventListener('resize', debounce(() => { rect = null; }, 120));
+    });
+  }
 
-      // small accessibility: keyboard focus style for interactive areas
-      document.querySelectorAll('button,a').forEach(el=>{
-        el.addEventListener('focus', ()=>el.style.outline = '3px solid rgba(255,114,94,0.12)');
-        el.addEventListener('blur', ()=>el.style.outline = 'none');
+  /* ---------------------------
+     Project filtering (buttons expected to have ids: filter-all, filter-web, filter-ai)
+     Filter by tag text (class .tag) or badge text.
+     --------------------------- */
+  function initProjectFilters() {
+    const buttons = ['filter-all','filter-web','filter-ai'].map(id => document.getElementById(id)).filter(Boolean);
+    const grid = document.getElementById('projects-grid');
+    if (!buttons.length || !grid) return;
+
+    function normalize(s) { return (s || '').toString().trim().toLowerCase(); }
+
+    function cardMatches(card, filter) {
+      if (!filter || filter === 'all') return true;
+      // check data-attributes first
+      const catAttr = normalize(card.dataset.cat || card.dataset.category || '');
+      if (catAttr && catAttr.includes(filter)) return true;
+      // check badge text
+      const badge = card.querySelector('.badge');
+      if (badge && normalize(badge.textContent).includes(filter)) return true;
+      // check tags
+      const tags = Array.from(card.querySelectorAll('.tag')).map(t => normalize(t.textContent));
+      if (tags.some(t => t.includes(filter))) return true;
+      // check card-sub and title too (fallback)
+      const meta = normalize((card.querySelector('.card-sub')?.textContent || '') + ' ' + (card.querySelector('.card-title')?.textContent || ''));
+      if (meta.includes(filter)) return true;
+      return false;
+    }
+
+    function applyFilter(filter) {
+      const cards = Array.from(grid.children).filter(n => n.matches && n.matches('.card, article'));
+      cards.forEach(card => {
+        if (cardMatches(card, filter)) {
+          card.style.display = '';
+          card.setAttribute('aria-hidden', 'false');
+        } else {
+          card.style.display = 'none';
+          card.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.id.replace('filter-',''); // 'all' | 'web' | 'ai'
+        // toggle active styles
+        buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        applyFilter(filter);
+        // focus the grid start for screen readers
+        const firstVisible = grid.querySelector('.card:not([aria-hidden="true"])');
+        if (firstVisible) { firstVisible.setAttribute('tabindex','-1'); firstVisible.focus({ preventScroll: true }); }
       });
     });
-  </script>
+  }
+
+  /* ---------------------------
+     Accessible modal (iframe) for case studies
+     - any .link-btn where href ends with .html will open via modal
+     - focus trap, ESC close, overlay click to close
+     --------------------------- */
+  function initModalIFrame() {
+    // build modal DOM
+    const modal = document.createElement('div');
+    modal.id = 'sj-modal';
+    modal.setAttribute('role','dialog');
+    modal.setAttribute('aria-modal','true');
+    modal.style.cssText = 'position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:2100;padding:20px;';
+    modal.innerHTML = `
+      <div class="sj-modal-panel" role="document" style="width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(0,0,0,0.06);">
+          <div style="display:flex;gap:10px;align-items:center">
+            <strong id="sj-modal-title">Case study</strong>
+            <span id="sj-modal-sub" style="color:#666;font-size:13px"></span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <a id="sj-modal-open" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Open in new tab</a>
+            <button aria-label="Close" id="sj-modal-close" class="btn">✕</button>
+          </div>
+        </div>
+        <div style="background:#fff" id="sj-modal-body">
+          <iframe id="sj-modal-iframe" src="" title="Case study preview" style="width:100%;height:64vh;border:0;display:block"></iframe>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    const iframe = $('#sj-modal-iframe');
+    const modalTitle = $('#sj-modal-title');
+    const modalSub = $('#sj-modal-sub');
+    const openBtn = $('#sj-modal-open');
+    const closeBtn = $('#sj-modal-close');
+
+    function openModal(url, title) {
+      try {
+        // set iframe src safely (user provided link)
+        iframe.src = url;
+        modalTitle.textContent = title || 'Case study';
+        modalSub.textContent = url;
+        openBtn.href = url;
+        modal.style.display = 'flex';
+        // lock scroll
+        document.documentElement.style.overflow = 'hidden';
+        // focus close button
+        closeBtn.focus();
+        // trap focus
+        document.addEventListener('focus', trapFocus, true);
+        document.addEventListener('keydown', modalKeyHandler);
+      } catch (e) { createToast('Unable to open case study.'); }
+    }
+    function closeModal() {
+      iframe.src = 'about:blank';
+      modal.style.display = 'none';
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('focus', trapFocus, true);
+      document.removeEventListener('keydown', modalKeyHandler);
+    }
+    function modalKeyHandler(e) {
+      if (e.key === 'Escape') closeModal();
+    }
+    function trapFocus(e) {
+      // keep focus inside modal panel
+      const panel = modal.querySelector('.sj-modal-panel');
+      if (!panel.contains(e.target)) {
+        e.stopPropagation();
+        panel.querySelector('button, a, iframe')?.focus();
+      }
+    }
+
+    // close on overlay click
+    modal.addEventListener('click', (ev) => {
+      if (ev.target === modal) closeModal();
+    });
+
+    // button wiring
+    closeBtn.addEventListener('click', closeModal);
+
+    // delegate case-study links
+    document.addEventListener('click', (ev) => {
+      const a = ev.target.closest('a.link-btn');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      // open local case-study html pages (endsWith .html)
+      if (href.trim().toLowerCase().endsWith('.html')) {
+        ev.preventDefault();
+        openModal(href, (a.closest('.card')?.querySelector('.card-title')?.textContent || 'Case study'));
+      }
+    });
+  }
+
+  /* ---------------------------
+     Marquee: duplicate children for seamless loop and dynamic duration
+     - respects reduced motion
+     --------------------------- */
+  function initMarquee() {
+    const track = document.getElementById('marquee');
+    if (!track) return;
+    // If reduced motion, disable animation and make it scrollable
+    if (isReducedMotion) {
+      track.style.overflowX = 'auto';
+      track.style.whiteSpace = 'nowrap';
+      return;
+    }
+
+    // Duplicate children if necessary (at least once)
+    const children = Array.from(track.children);
+    if (!children.length) return;
+
+    // ensure enough width (try duplicating up to 4x)
+    function totalWidth() {
+      return Array.from(track.children).reduce((s, el) => s + el.getBoundingClientRect().width + 16, 0);
+    }
+    const containerWidth = track.parentElement.getBoundingClientRect().width || window.innerWidth;
+    // clone original set until totalWidth >= containerWidth*2
+    let clones = 0;
+    while (totalWidth() < containerWidth * 2 && clones < 4) {
+      children.forEach(c => track.appendChild(c.cloneNode(true)));
+      clones++;
+    }
+
+    // compute a comfortable duration (pixels / pxPerSec)
+    const pxPerSecond = 90; // tweakable — higher = faster
+    const width = totalWidth();
+    const duration = Math.max(12, Math.round(width / pxPerSecond));
+    track.style.setProperty('--marquee-duration', duration + 's');
+    track.style.animation = `marq ${duration}s linear infinite`;
+
+    // pause/resume handlers
+    track.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+    track.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+    track.addEventListener('focusin', () => { track.style.animationPlayState = 'paused'; });
+    track.addEventListener('focusout', () => { track.style.animationPlayState = 'running'; });
+
+    // keyboard toggling: space toggles play/pause
+    track.setAttribute('tabindex', '0');
+    track.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        const state = getComputedStyle(track).animationPlayState;
+        track.style.animationPlayState = (state === 'running') ? 'paused' : 'running';
+      }
+    });
+  }
+
+  /* ---------------------------
+     Contact form: validation + mailto fallback
+     --------------------------- */
+  function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const name = String(form.name?.value || '').trim();
+      const email = String(form.email?.value || '').trim();
+      const phone = String(form.phone?.value || '').trim();
+      const subject = String(form.subject?.value || 'Message from portfolio').trim();
+      const message = String(form.message?.value || '').trim();
+
+      if (!name || (!email && !phone) || !message) {
+        createToast('Please provide your name, message and either email or phone.');
+        return;
+      }
+
+      // try to open mail client with prefilled body (mailto)
+      const bodyLines = [
+        `Name: ${name}`,
+        `Email: ${email || '—'}`,
+        `Phone: ${phone || '—'}`,
+        '',
+        message
+      ];
+      const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}`
+                    + `?subject=${encodeURIComponent(subject)}`
+                    + `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+      // open mailto in new window (best-effort)
+      window.location.href = mailto;
+      createToast('Opening email client…');
+      form.reset();
+    });
+  }
+
+  /* ---------------------------
+     Small accessibility + misc wiring
+     --------------------------- */
+  function initMisc() {
+    // Open live links with target=_blank already set — provide rel noopener
+    $$('a[target="_blank"]').forEach(a => {
+      if (!a.getAttribute('rel')) a.setAttribute('rel', 'noopener noreferrer');
+    });
+
+    // Make repository icons accessible
+    $$('a.repo, a.link-btn.repo').forEach(a => {
+      if (!a.hasAttribute('aria-label')) {
+        const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`;
+        a.setAttribute('aria-label', label);
+      }
+    });
+  }
+
+  /* ---------------------------
+     Boot
+     --------------------------- */
+  function boot() {
+    try {
+      initSmoothScroll();
+      initReveal();
+      initTiltCards();
+      initProjectFilters();
+      initModalIFrame();
+      initMarquee();
+      initContactForm();
+      initMisc();
+      // small startup toast (optional)
+      // createToast('Interactive scripts initialized — view the project cards and case studies.');
+      // expose debug
+      window.SJ = {
+        createToast,
+        initTiltCards,
+        initMarquee,
+        initProjectFilters
+      };
+    } catch (err) {
+      // fail silently but log to console for debugging
+      console.error('Portfolio script error', err);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+</script>
+
+
+  
+ 
 </body>
 </html>
