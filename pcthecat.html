@@ -240,17 +240,10 @@
 
   <canvas id="confetti" class="confetti-canvas" aria-hidden="true"></canvas>
   <div id="toast" class="toast" role="status" aria-live="polite">Copied to clipboard</div>
-
 <script>
-/* ---------- DEMO: mock "Sign in with X" (client-only) ---------- */
+/* client-auth.js: simple frontend hooks for real login + tasks */
 (function(){
-  const PROVIDER_NAME = 'X';
-  const LOGIN_KEY = 'mushrush.user';
-
-  function saveUser(u){ localStorage.setItem(LOGIN_KEY, JSON.stringify(u)); }
-  function loadUser(){ try{return JSON.parse(localStorage.getItem(LOGIN_KEY));}catch(e){return null;} }
-
-  // create login button
+  // open popup to start login
   const loginBtn = document.createElement('button');
   loginBtn.id = 'loginX';
   loginBtn.className = 'btn-task small';
@@ -259,82 +252,120 @@
   const headerRight = document.querySelector('.header > div[style*="margin-left:auto"]');
   if(headerRight) headerRight.insertBefore(loginBtn, headerRight.firstChild);
 
-  // popup mock flow
-  loginBtn.addEventListener('click', ()=>{
-    // small centered popup
-    const w = window.open('about:blank','_blank','width=520,height=640');
-    if(!w){ alert('Popup blocked — allow popups'); return; }
-    w.document.write(`<body style="font-family:Inter,system-ui,Arial;padding:24px;">
-      <h2>Sign in with X (Demo)</h2>
-      <p>Click to sign in as a demo user.</p>
-      <button id="ok">Sign in</button>
-      <script>
-        document.getElementById('ok').addEventListener('click', ()=>{
-          const user = {id:'demo-123',name:'Demo User',handle:'demo_user',avatar:''};
-          // send to opener
-          window.opener.postMessage({type:'mushrush.x.auth',user}, '*');
-          window.close();
-        });
-      <\/script>
-    </body>`);
-  });
+  function openLoginPopup(){
+    const w = window.open('/auth/x/login','xlogin','width=520,height=640');
+    // wait for postMessage from popup
+    function onMsg(ev){
+      if(ev.data && ev.data.type === 'mushrush.x.auth'){
+        window.removeEventListener('message', onMsg);
+        pollMe();
+      }
+    }
+    window.addEventListener('message', onMsg);
+    // Also poll until session established
+    setTimeout(pollMe, 800);
+  }
+  loginBtn.addEventListener('click', openLoginPopup);
 
-  // receive popup messages
-  window.addEventListener('message', (ev)=>{
-    try{
-      if(!ev.data || ev.data.type !== 'mushrush.x.auth') return;
-      const u = ev.data.user;
-      saveUser(u);
-      showToast('Signed in as @' + (u.handle||u.name));
-      applyLoginState(u);
-    }catch(e){console.error(e);}
-  });
+  async function pollMe(){
+    try {
+      const r = await fetch('/api/me');
+      const j = await r.json();
+      if(j.logged){
+        applyLoginState(j.user);
+      } else {
+        // not logged yet
+      }
+    } catch(e){ console.error(e); }
+  }
 
   function applyLoginState(user){
-    if(!user) {
-      loginBtn.textContent = 'Sign in with X';
-      return;
-    }
-    loginBtn.textContent = 'Signed in: @' + (user.handle||user.name);
+    loginBtn.textContent = 'Signed in: @' + (user.username || user.name || user.id);
     loginBtn.classList.add('done');
-    // enable register and share
     document.getElementById('registerBtn').disabled = false;
   }
 
-  // init from localStorage
-  const initial = loadUser();
-  if(initial) applyLoginState(initial);
+  // override share behaviour to call server /api/share
+  async function shareWithServer(ref){
+    try {
+      const res = await fetch('/api/share', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ ref })
+      });
+      const j = await res.json();
+      if(j.data){
+        markTaskClient('share');
+        showToast('Shared on X');
+      } else {
+        showToast('Share failed; check console');
+        console.log(j);
+      }
+    } catch(e){ console.error(e); showToast('Share failed'); }
+  }
 
-  // override register logic so it *requires* sign-in
-  document.getElementById('registerBtn').addEventListener('click', (e)=>{
-    const user = loadUser();
-    const ref = document.getElementById('useRef').value.trim();
-    if(!ref){ alert('Enter referral first'); return; }
-    if(!user){ return alert('Please sign in with X first (demo)'); }
-    // mark all tasks done and show congrats
-    markTask('follow'); markTask('discord'); markTask('share');
-    document.getElementById('statusText').innerText = 'Registered (' + (user.handle||user.name) + ')';
-    showToast('Registered (demo)');
-    showCongrats();
+  // helper: mark task server-side and client-side
+  async function markTaskServer(task){
+    try {
+      const r = await fetch('/api/task/mark', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ task }) });
+      const j = await r.json();
+      if(j.ok) markTaskClient(task);
+    } catch(e){ console.error(e); }
+  }
+  function markTaskClient(task){
+    // mirror original markTask behaviour (uses localStorage)
+    const s = JSON.parse(localStorage.getItem('mushrush.tasks')||'{}');
+    s[task] = true;
+    localStorage.setItem('mushrush.tasks', JSON.stringify(s));
+    // update UI (reuse your existing updateUI function)
+    if(window.updateUI) window.updateUI(s);
+  }
+
+  // wire up share buttons
+  document.getElementById('task-share').addEventListener('click', ()=> {
+    const ref = document.getElementById('myFullRef').dataset.full || document.getElementById('myRefShort').innerText;
+    shareWithServer(ref);
+  });
+  document.getElementById('sharePrimary').addEventListener('click', ()=> {
+    const ref = document.getElementById('myFullRef').dataset.full || document.getElementById('myRefShort').innerText;
+    shareWithServer(ref);
   });
 
-  // small helper so shareOnX uses demo handle if available
-  const origShare = window.shareOnX;
-  window.shareOnX = function(ref){
-    const u = loadUser();
-    if(!u){ showToast('Sign in to share'); return; }
-    // use the real web intent so user can preview
-    const pageUrl = window.location.href;
-    const text = `I'm on MushRush early access! Use my referral ${ref} — @${u.handle}`;
-    const url = 'https://twitter.com/intent/tweet?text='+encodeURIComponent(text + ' ' + pageUrl + ' #MushRush');
-    window.open(url,'_blank');
-    // mark share after popup focus heuristic
-    setTimeout(()=> markTask('share'), 500);
-    showToast('Opening share window...');
-  };
+  // follow verification: call /api/follows-status and mark task if true
+  document.getElementById('task-follow').addEventListener('click', async ()=>{
+    try {
+      const r = await fetch('/api/follows-status');
+      const j = await r.json();
+      if(j.follows){
+        markTaskServer('follow');
+        showToast('Follow verified');
+      } else {
+        showToast('Not following yet — open X to follow');
+        // open project X page so user can follow
+        window.open('https://twitter.com/' + (document.querySelector('#projectHandle')?.value || 'mushrush'), '_blank');
+      }
+    } catch(e){ console.error(e); showToast('Follow check failed'); }
+  });
+
+  // discord task: just open invite and mark when window regains focus
+  document.getElementById('task-discord').addEventListener('click', ()=>{
+    const start = Date.now();
+    const w = window.open('https://discord.gg/your-invite-code','_blank');
+    function onFocus(){
+      // simple heuristic: treat as done once user returns
+      markTaskServer('discord');
+      showToast('Discord joined (heuristic)');
+      window.removeEventListener('focus', onFocus);
+    }
+    window.addEventListener('focus', onFocus);
+  });
+
+  // when page loads, attempt to poll user status to update UI
+  pollMe();
 
 })();
 </script>
+
 
 </body>
 </html>
