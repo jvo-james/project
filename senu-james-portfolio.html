@@ -483,7 +483,136 @@ Final polish rules: micro interactions, hover states, and finishing touches
 .profile-meta .meta-title{font-size:16px}
 }
 
+/* ----- blob + sticker styles ----- */
+.hero { overflow:visible; position:relative; }
 
+/* subtle soft blob behind hero (enhanced) */
+.hero::before {
+  /* keep existing but slightly stronger glow */
+  content:"";
+  position:absolute;
+  inset:auto -6% 18% auto;
+  width:520px; height:520px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.14), rgba(6,182,212,0.08), transparent 60%);
+  filter: blur(72px); transform: translateY(-28px);
+  pointer-events:none; z-index:0;
+}
+
+/* mini ribbon */
+.mini-ribbon { display:flex; gap:8px; flex-wrap:wrap; align-items:center; z-index:3; }
+.ribbon-pill {
+  display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.94));
+  box-shadow:0 8px 26px rgba(6,10,26,0.04); font-weight:800; font-size:13px;
+}
+
+/* hero stickers container (absolutely positioned ornaments) */
+.hero-stickers { position:absolute; inset:6px -6% auto auto; width:420px; height:420px; pointer-events:none; z-index:1; }
+
+/* basic sticker style */
+.sticker { fill: #7c3aed; opacity:0.98; transform-origin:center; filter:drop-shadow(0 8px 20px rgba(6,10,26,0.06)); position:absolute; }
+
+/* place them roughly — you can tweak left/top as needed */
+.sticker.s-star { left: -20px; top: 10px; transform:translateY(0) scale(.95); }
+.sticker.s-rocket { right: -28px; top: 42px; transform:rotate(-14deg) scale(1.02); }
+.sticker.s-spark { left: 90px; bottom: 24px; transform:scale(.9); }
+
+/* floating animations */
+@keyframes floatY { 0% { transform: translateY(0) } 50% { transform: translateY(-10px) } 100% { transform: translateY(0) } }
+@keyframes floatRotate { 0% { transform: rotate(-6deg) } 50% { transform: rotate(6deg) } 100% { transform: rotate(-6deg) } }
+
+/* apply CSS fallback gentle animation if JS is off (reduced-motion respected) */
+@media (prefers-reduced-motion: no-preference) {
+  .sticker.s-star { animation: floatY 6.4s ease-in-out infinite; }
+  .sticker.s-rocket { animation: floatY 5.6s ease-in-out infinite, floatRotate 10s ease-in-out infinite; }
+  .sticker.s-spark  { animation: floatY 4.8s ease-in-out infinite; }
+}
+
+/* headline tweaks: make desc-line smaller and elegant */
+.hi .desc-line { display:block; font-size:18px; font-weight:600; margin-top:8px; color:var(--muted); opacity:0.95; }
+
+/* emphasis on kicker */
+.kicker { font-weight:900; letter-spacing:-0.01em; background:linear-gradient(90deg, rgba(6,182,212,0.06), rgba(124,58,237,0.06)); }
+
+/* slightly larger CTAs for hero */
+.cta-row .btn-lg { padding:14px 20px; border-radius:14px; font-weight:900; }
+
+/* profile photo ring */
+.profile-photo.ring::after {
+  content: "";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background: conic-gradient(from 0deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));
+  filter: blur(6px); z-index:0; pointer-events:none;
+}
+
+/* ensure stickers don't block clicks */
+.hero .hero-left, .hero .profile-card { position:relative; z-index:3; }
+
+/* reduce clutter on small screens */
+@media (max-width:900px) {
+  .hero-stickers { display:none; }
+  .mini-ribbon { display:none; }
+}
+
+/* Contact: floating labels + polished layout */
+.contact-pro { padding:22px; border-radius:14px; background:linear-gradient(180deg,#fff,#fcfeff); box-shadow:var(--card-shadow); border:1px solid rgba(6,10,26,0.04); }
+.contact-pro-aside { padding:18px; border-radius:14px; background:linear-gradient(180deg,#fff,#fbfbfb); box-shadow:var(--card-shadow); border:1px solid rgba(6,10,26,0.04); }
+
+.contact-form { display:grid; gap:10px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+/* floating label field */
+.field { position:relative; display:block; }
+.field input,
+.field textarea { width:100%; padding:14px 14px 12px 14px; border-radius:12px; border:1px solid rgba(6,10,26,0.06); background:linear-gradient(180deg, rgba(250,251,255,0.95), rgba(245,248,255,0.98)); font-size:15px; transition: box-shadow .18s, border-color .18s; }
+.field textarea { min-height:120px; resize:vertical; }
+
+.field .label { position:absolute; left:14px; top:12px; pointer-events:none; font-weight:700; color:var(--muted); transform-origin:left top; transition: transform .16s, font-size .16s, top .16s; background:transparent; padding:0 6px; }
+.field input:focus, .field textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 12px 40px rgba(6,182,212,0.06); }
+.field input:focus + .label,
+.field textarea:focus + .label,
+.field input:not(:placeholder-shown) + .label,
+.field textarea:not(:placeholder-shown) + .label {
+  transform: translateY(-22px) scale(.88);
+  font-size:12px;
+  top:8px;
+  color:var(--accent-2);
+}
+
+/* placeholder compatibility */
+input::placeholder, textarea::placeholder { color: transparent; }
+
+/* textarea-field expands full width */
+.textarea-field { grid-column:1 / -1; }
+
+/* button spinner */
+.btn-spinner { display:inline-block; margin-left:8px; transform-origin:center; opacity:0; transition:opacity .18s; }
+button.sending .btn-spinner { opacity:1; animation:spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* small helper styles */
+.form-actions .small { font-size:13px; color:var(--muted); }
+.field .hint { font-size:11px; color:var(--muted); margin-left:8px; }
+
+/* responsive tweaks */
+@media (max-width:900px) {
+  .form-row { grid-template-columns:1fr; }
+  .contact-wrap { grid-template-columns:1fr; gap:12px; }
+}
+
+/* focus states */
+.field input:focus, .field textarea:focus { box-shadow:0 12px 40px rgba(6,182,212,0.06); }
+
+/* subtle appear animation (respect reduced-motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .contact-pro { transform: translateY(6px); opacity:0; animation:contact-in .9s ease-out .18s forwards; }
+  @keyframes contact-in { to { transform:none; opacity:1; } }
+}
+
+/* copy email button style */
+#cf-copy-email { padding:10px 12px; border-radius:10px; cursor:pointer; }
 
 </style>
 
@@ -521,95 +650,86 @@ MAIN CONTENT
 <!-- =========================
 HERO — high impact
 ========================= -->
+<!-- =========================
+HERO — upgraded (replace existing hero section)
+========================= -->
 <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region" style="margin-top:18px;">
-<div class="hero-left">
-<span class="kicker" aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;">
-<i class="fa-solid fa-award" aria-hidden="true"></i> Award-winning • Product & UI-focused
-</span>
+  <div class="hero-left">
+    <span class="kicker" aria-hidden="true">
+      <i class="fa-solid fa-award" aria-hidden="true"></i>
+      <span>Winner • Product & UI</span>
+    </span>
 
-<h2 id="hero-heading" class="hi" style="line-height:1.02;margin-top:12px;">
-Hi, I’m <strong>Senu James</strong> — I design & build web products that scale.
-</h2>
+    <h2 id="hero-heading" class="hi">
+      Hi — I’m <strong>Senu James</strong>
+      <span class="desc-line">Designing delightful web products that scale</span>
+    </h2>
 
-<p class="lead" style="margin-top:8px;color:var(--muted);max-width:68ch">
-I blend product thinking, clean UX, and robust engineering to ship web apps with real impact — from AI learning platforms to campus-scale systems. My work focuses on accessibility, reliability, and delightful interfaces.
-</p>
+    <p class="lead" style="margin-top:12px;">
+      I combine product thinking, clean UX and engineering to ship reliable web apps — from AI classrooms to campus tools.
+    </p>
 
-<div class="cta-row" role="toolbar" aria-label="Primary calls to action" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
-<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp;See selected work</a>
-<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp;Get in touch</a>
-<a class="btn" href="#about" style="text-decoration:none"><i class="fa-solid fa-book-open"></i>&nbsp;Read my story</a>
-</div>
+    <div class="cta-row" role="toolbar" aria-label="Primary calls to action" style="margin-top:18px;">
+      <a class="btn btn-primary btn-lg btn-attention" href="#projects"><i class="fa-solid fa-briefcase"></i>&nbsp;Selected work</a>
+      <a class="btn btn-outline btn-lg" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Hire / internship</a>
+    </div>
 
-<div class="skill-pills" aria-hidden="true" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
-<div class="pill"><i class="fa-brands fa-react"></i>&nbsp; React</div>
-<div class="pill"><i class="fa-brands fa-js-square"></i>&nbsp; TypeScript</div>
-<div class="pill"><i class="fa-brands fa-node-js"></i>&nbsp; Node.js</div>
-<div class="pill"><i class="fa-solid fa-robot"></i>&nbsp; AI • ML</div>
-<div class="pill"><i class="fa-solid fa-palette"></i>&nbsp; Design Systems</div>
-</div>
+    <!-- Mini feature ribbon (small, subtle) -->
+    <div class="mini-ribbon" aria-hidden="true" style="margin-top:18px;">
+      <span class="ribbon-pill"><i class="fa-brands fa-react"></i>&nbsp;React</span>
+      <span class="ribbon-pill"><i class="fa-solid fa-robot"></i>&nbsp;AI</span>
+      <span class="ribbon-pill"><i class="fa-solid fa-code"></i>&nbsp;Production</span>
+    </div>
 
-<!-- quick impact stats -->
-<div class="stats" style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
-<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
-<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-users"></i>&nbsp;1.2K+</div>
-<div style="font-size:12px;color:var(--muted)">Users impacted</div>
-</div>
-<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
-<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-trophy"></i>&nbsp;Winner</div>
-<div style="font-size:12px;color:var(--muted)">African Digital Innovation Challenge</div>
-</div>
-<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
-<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-code"></i>&nbsp;6+</div>
-<div style="font-size:12px;color:var(--muted)">Major projects shipped</div>
-</div>
-</div>
-</div>
+    <!-- Floating stickers / ornaments -->
+    <div class="hero-stickers" aria-hidden="true">
+      <!-- SVG sticker examples -->
+      <svg class="sticker s-star" viewBox="0 0 24 24" width="44" height="44" aria-hidden="true">
+        <path d="M12 .587l3.668 7.431L23.6 9.75l-5.8 5.655L19.336 24 12 19.897 4.664 24l1.536-8.595L.4 9.75l7.932-1.732L12 .587z" />
+      </svg>
 
-<!-- HERO RIGHT: portrait + quick contact actions -->
-<aside class="profile-card" aria-label="Profile card" role="complementary" style="display:flex;gap:14px;align-items:center">
-<div style="display:flex;flex-direction:column;gap:12px;align-items:center">
-<div class="profile-photo" style="width:160px;height:160px;border-radius:50%;overflow:hidden">
-<img src="senu.PNG" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
-</div>
+      <svg class="sticker s-rocket" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true">
+        <path d="M12 2s4 1 6 3 3 6 3 6-3 1-5 3-5 5-5 5-4-6-5-8-2-6-2-6 4-3 8-3z"/>
+      </svg>
 
-<div style="display:flex;gap:8px;align-items:center">
-<a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="GitHub">
-<div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
-</a>
-<a href="https://www.linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="LinkedIn">
-<div class="float-btn" title="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></div>
-</a>
-<a href="mailto:senujames23@gmail.com" style="text-decoration:none" aria-label="Email">
-<div class="float-btn" title="Email"><i class="fa-solid fa-envelope fa-lg"></i></div>
-</a>
-</div>
-</div>
+      <svg class="sticker s-spark" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+        <path d="M12 2l1.5 4L18 8l-4.5 2L12 14l-1.5-4L6 8l4.5-2L12 2z"/>
+      </svg>
+    </div>
+  </div>
 
-<div class="profile-meta" style="flex:1">
-<div class="meta-title" style="font-weight:800;font-size:18px">Senu James</div>
-<div class="meta-sub" style="margin-top:6px;color:var(--muted)">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
+  <!-- HERO RIGHT: keep profile-card but small tweak for glass + animated ring (no structural change) -->
+  <aside class="profile-card" aria-label="Profile card" role="complementary" style="display:flex;gap:14px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+      <div class="profile-photo ring" style="width:160px;height:160px;border-radius:50%;overflow:hidden">
+        <img src="senu.PNG" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
+      </div>
 
-<div style="margin-top:12px;display:flex;gap:10px">
-<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-eye"></i>&nbsp; See Work</a>
-<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp; Hire me</a>
-</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a href="https://github.com/senu-james" target="_blank" rel="noopener" aria-label="GitHub">
+          <div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
+        </a>
+        <a href="https://www.linkedin.com/in/senu-james" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <div class="float-btn" title="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></div>
+        </a>
+        <a href="mailto:senujames23@gmail.com" aria-label="Email">
+          <div class="float-btn" title="Email"><i class="fa-solid fa-envelope fa-lg"></i></div>
+        </a>
+      </div>
+    </div>
 
-<div style="margin-top:12px;display:flex;gap:12px;align-items:center;color:var(--muted)">
-<i class="fa-solid fa-location-dot"></i>
-<div>
-<strong>Accra, Ghana</strong>
-<div style="font-size:12px;color:var(--muted)">Available for internships & remote roles</div>
-</div>
-</div>
+    <div class="profile-meta" style="flex:1">
+      <div class="meta-title">Senu James</div>
+      <div class="meta-sub" style="margin-top:6px;color:var(--muted)">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
 
-<div style="margin-top:12px;display:flex;gap:10px;align-items:center">
-<i class="fa-solid fa-phone"></i>
-<a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 59 412 1246</strong></a>
-</div>
-</div>
-</aside>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-eye"></i>&nbsp; See Work</a>
+        <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp; Hire me</a>
+      </div>
+    </div>
+  </aside>
 </section>
+
 
 <!-- =========================
 ABOUT — short section (icons included)
@@ -835,59 +955,99 @@ MARQUEE / COMMUNITY IMAGES
 </div>
 </section>
 
+
 <!-- =========================
-CONTACT — polished form + quick details
+CONTACT — upgraded form + pro aside (replace previous contact section)
 ========================= -->
 <section id="contact" class="contact-wrap" aria-labelledby="contact-heading" style="margin-top:40px;">
-<div class="contact-card" role="region" aria-labelledby="contact-heading" style="padding:20px;border-radius:12px">
-<h3 id="contact-heading" style="margin:0 0 8px">Contact</h3>
-<p style="color:var(--muted);margin:0 0 12px">Interested in collaborating or an internship? Send a short message — I respond quickly.</p>
+  <!-- FORM CARD -->
+  <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
+    <h3 id="contact-heading" style="margin:0 0 10px">Get in touch</h3>
+    <p class="lead" style="margin:0 0 12px;color:var(--muted)">Interested in collaborating, internships or freelance work? Send a short message — I reply within 48 hours.</p>
 
-<form id="contact-form" style="margin-top:12px;display:grid;gap:10px;" onsubmit="event.preventDefault(); alert('Message sent (demo)'); this.reset();">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<input class="input" id="name" name="name" placeholder="Your name" required aria-label="Your name" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
-<input class="input" id="email" name="email" type="email" placeholder="you@domain.com" required aria-label="Email" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
-</div>
+    <form id="contact-form-pro" class="contact-form" novalidate>
+      <!-- hidden honeypot to reduce spam -->
+      <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" />
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<input class="input" id="phone" name="phone" type="tel" placeholder="+233 24 555 0123" aria-label="Phone number" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
-<input class="input" id="subject" name="subject" placeholder="Subject" aria-label="Subject" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
-</div>
+      <div class="form-row">
+        <label class="field">
+          <input id="cf-name" name="name" type="text" required autocomplete="name" />
+          <span class="label">Your name</span>
+          <span class="hint" aria-hidden="true">Required</span>
+        </label>
 
-<textarea class="textarea" id="message" name="message" rows="5" placeholder="Tell me about your project" aria-label="Message" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff"></textarea>
+        <label class="field">
+          <input id="cf-email" name="email" type="email" required autocomplete="email" />
+          <span class="label">Email</span>
+          <span class="hint" aria-hidden="true">Required</span>
+        </label>
+      </div>
 
-<div style="display:flex;gap:12px;align-items:center">
-<button class="send" type="submit" style="padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:800">Send message</button>
-<div style="color:var(--muted);font-size:13px">Or reach me directly: <a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a></div>
-</div>
-</form>
-</div>
+      <div class="form-row">
+        <label class="field">
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel" />
+          <span class="label">Phone (optional)</span>
+        </label>
 
-<aside class="contact-aside" style="padding:18px;border-radius:12px">
-<h4 style="margin:0 0 8px">Quick links & socials</h4>
+        <label class="field">
+          <input id="cf-subject" name="subject" type="text" />
+          <span class="label">Subject</span>
+        </label>
+      </div>
 
-<div style="display:flex;flex-direction:column;gap:10px">
-<div><strong>Email:</strong> <a href="mailto:senujames23@gmail.com" style="text-decoration:none;color:inherit">senujames23@gmail.com</a></div>
-<div><strong>Phone:</strong> <a href="tel:+233245550123" style="text-decoration:none;color:inherit">+233 24 555 0123</a></div>
-<div><strong>GitHub:</strong> <a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">github.com/senu-james</a></div>
-<div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">linkedin.com/in/senu-james</a></div>
-</div>
+      <label class="field textarea-field" style="grid-column:1 / -1">
+        <textarea id="cf-message" name="message" rows="6" required></textarea>
+        <span class="label">Tell me about your project</span>
+      </label>
 
-<div style="margin-top:14px">
-<strong style="display:block;margin-bottom:8px">Follow</strong>
-<div style="display:flex;gap:8px">
-<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-github"></i>&nbsp;GitHub</div></a>
-<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</div></a>
-<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-twitter"></i>&nbsp;Twitter</div></a>
-</div>
-</div>
+      <div class="form-actions" style="display:flex;gap:12px;align-items:center;margin-top:12px">
+        <button id="cf-send" type="submit" class="send btn-primary btn-lg" aria-live="polite">
+          <span class="btn-text">Send message</span>
+          <svg class="btn-spinner" width="18" height="18" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 150"></circle></svg>
+        </button>
 
-<div style="margin-top:18px">
-<strong style="display:block;margin-bottom:8px">Download</strong>
-<a class="link-btn live" href="#resume" style="text-decoration:none;padding:10px 12px;display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-radius:10px">Download Resume</a>
-</div>
-</aside>
+        <button id="cf-copy-email" type="button" class="btn btn-outline" title="Copy email to clipboard">Copy email</button>
+
+        <div id="cf-status" class="small" aria-live="polite" style="color:var(--muted)"></div>
+      </div>
+
+      <!-- accessible success region -->
+      <div id="cf-result" role="status" aria-live="polite" style="margin-top:12px"></div>
+    </form>
+  </div>
+
+  <!-- ASIDE: polished contact details -->
+  <aside class="contact-aside contact-pro-aside" aria-label="Contact information">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <strong>Email</strong>
+        <div class="muted"><a id="aside-email" href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></div>
+      </div>
+
+      <div>
+        <strong>Phone</strong>
+        <div class="muted"><a href="tel:+233245550123">+233 24 555 0123</a></div>
+      </div>
+
+      <div>
+        <strong>Location</strong>
+        <div class="muted">Accra, Ghana — Open to remote & hybrid</div>
+      </div>
+
+      <div>
+        <strong>Schedule a call</strong>
+        <div class="muted"><a href="#" aria-label="Schedule a call (placeholder)">Book 15 min</a></div>
+      </div>
+
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+        <a class="link-btn resume" href="#resume">Download resume</a>
+        <a class="social-pill" href="https://github.com/senu-james" target="_blank" rel="noopener">GitHub</a>
+        <a class="social-pill" href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </aside>
 </section>
+
 
 <!-- =========================
 FOOTER
@@ -1323,8 +1483,202 @@ boot();
 })();
 </script>
 
+<script>
+  // add inside your IIFE, near other init* functions
+function initHeroAnimations() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof gsap === 'undefined') return;
 
+  const kicker = document.querySelector('#home-hero .kicker');
+  const heading = document.querySelector('#hero-heading');
+  const desc = document.querySelector('#hero-heading .desc-line');
+  const ctas = document.querySelectorAll('#home-hero .cta-row .btn');
+  const stickers = document.querySelectorAll('.hero-stickers .sticker');
 
+  // entrance timeline
+  const tl = gsap.timeline({ defaults: { duration: 0.6, ease: "power3.out" }});
+  tl.from(kicker, { y: 12, opacity: 0 }, 0);
+  tl.from(heading, { y: 18, opacity: 0, stagger: 0.06 }, 0.08);
+  if (desc) tl.from(desc, { y: 10, opacity: 0 }, 0.2);
+  tl.from(ctas, { y: 12, opacity: 0, stagger: 0.08 }, 0.36);
 
+  // subtle floating / parallax for stickers
+  stickers.forEach((s, i) => {
+    const dist = 8 + (i * 4);
+    gsap.to(s, {
+      y: `+=${dist}`,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      duration: 5 + (i * 1.5),
+      delay: i * 0.2
+    });
+    // tiny rotate for variety
+    gsap.to(s, {
+      rotation: (i % 2 === 0) ? 6 : -6,
+      repeat: -1,
+      yoyo: true,
+      duration: 8 + i,
+      ease: "sine.inOut"
+    });
+  });
+
+  // mouse-responsive parallax (subtle)
+  const heroEl = document.querySelector('#home-hero');
+  if (heroEl) {
+    heroEl.addEventListener('pointermove', (e) => {
+      const r = heroEl.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      const move = 12;
+      gsap.to('.hero-stickers', { x: px * move, y: py * move, duration: 0.9, ease: 'power2.out' });
+      gsap.to('.hero::before', { x: px * -6, y: py * -6, duration: 1.6, ease: 'power1.out' }); // best-effort; CSS pseudo can't be targeted directly always
+    }, { passive: true });
+  }
+}
+
+// call it from boot()
+window.SJ = window.SJ || {};
+window.SJ.initHeroAnimations = initHeroAnimations;
+
+</script>
+
+<script>
+  /* ---------------------------
+Enhanced contact form: validation + UX
+- uses mailto fallback
+- shows inline errors and status
+- copy-to-clipboard
+- respects prefers-reduced-motion
+--------------------------- */
+function initContactEnhanced() {
+  const form = document.getElementById('contact-form-pro');
+  if (!form) return;
+
+  const sendBtn = document.getElementById('cf-send');
+  const copyBtn = document.getElementById('cf-copy-email');
+  const statusEl = document.getElementById('cf-status');
+  const resultEl = document.getElementById('cf-result');
+  const nameEl = document.getElementById('cf-name');
+  const emailEl = document.getElementById('cf-email');
+  const messageEl = document.getElementById('cf-message');
+
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // small helper
+  function showStatus(text, isError = false) {
+    statusEl.textContent = text;
+    statusEl.style.color = isError ? 'var(--danger)' : 'var(--muted)';
+  }
+
+  function setSending(isSending) {
+    if (isSending) {
+      sendBtn.classList.add('sending');
+      sendBtn.setAttribute('aria-disabled', 'true');
+      sendBtn.disabled = true;
+    } else {
+      sendBtn.classList.remove('sending');
+      sendBtn.removeAttribute('aria-disabled');
+      sendBtn.disabled = false;
+    }
+  }
+
+  function validateEmail(e) {
+    // basic email regex (sufficient for UI validation)
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e || '').trim());
+  }
+
+  function validate() {
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const message = messageEl.value.trim();
+    const honeypot = form.querySelector('input[name="website"]').value;
+    if (honeypot) return { ok: false, reason: 'spam' };
+
+    if (!name) return { ok: false, reason: 'Please enter your name.' };
+    if (!email && !form.cf_phone?.value) return { ok: false, reason: 'Please provide an email or phone number.' };
+    if (email && !validateEmail(email)) return { ok: false, reason: 'Enter a valid email address.' };
+    if (!message || message.length < 8) return { ok: false, reason: 'Please give a short description (8+ characters).' };
+    return { ok: true };
+  }
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    resultEl.textContent = '';
+    const v = validate();
+    if (!v.ok) {
+      if (v.reason === 'spam') {
+        // silently fail to avoid giving bots signals
+        return;
+      }
+      showStatus(v.reason, true);
+      createToast(v.reason);
+      return;
+    }
+
+    // build mailto (fallback)
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const phone = document.getElementById('cf-phone')?.value.trim() || '—';
+    const subject = document.getElementById('cf-subject')?.value.trim() || 'Portfolio message';
+    const message = messageEl.value.trim();
+
+    const body = [
+      `Name: ${name}`,
+      `Email: ${email || '—'}`,
+      `Phone: ${phone}`,
+      '',
+      message
+    ].join('\n');
+
+    // simulate sending UX
+    setSending(true);
+    showStatus('Preparing message…');
+
+    // small timeout to show spinner and UX (no background sending available)
+    setTimeout(() => {
+      try {
+        // create mailto link and open
+        const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}`
+          + `?subject=${encodeURIComponent(subject)}`
+          + `&body=${encodeURIComponent(body)}`;
+        // use location to open default mail client
+        window.location.href = mailto;
+        setSending(false);
+        resultEl.textContent = 'Opened your mail client. If nothing opened, you can copy the email below.';
+        showStatus('Opened email client.');
+        form.reset();
+      } catch (err) {
+        setSending(false);
+        showStatus('Unable to open email client — message copied to clipboard.', true);
+        navigator.clipboard?.writeText(body).then(() => {
+          resultEl.textContent = 'Message copied to clipboard — paste it into your mail client.';
+        });
+      }
+    }, 700);
+  });
+
+  // copy email quick action
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText('senujames23@gmail.com');
+      createToast('Email copied to clipboard');
+    } catch (e) {
+      createToast('Unable to copy — highlight and copy manuallly');
+    }
+  });
+
+  // Simple a11y: show helpful inline messages on invalid fields
+  [nameEl, emailEl, messageEl].forEach(el => {
+    el.addEventListener('input', () => { statusEl.textContent = ''; resultEl.textContent = ''; });
+  });
+
+  // small entrance for form controls using GSAP if available and not reduced motion
+  if (!prefersReduced && typeof gsap !== 'undefined') {
+    gsap.from('#contact .contact-pro .field', { opacity: 0, y: 8, stagger: 0.04, duration: 0.5, ease: 'power2.out' });
+  }
+}
+
+</script>
 </body>
 </html>
