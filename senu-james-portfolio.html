@@ -13,1795 +13,1318 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<style>
 
- <style>
-/* ==========================================================================
-   Senu James — Portfolio Styles
-   - Comprehensive stylesheet for the portfolio HTML provided
-   - Includes light & dark theme variables, animations, responsive rules,
-     accessibility helpers, and style hooks for all JS interactions.
-   - Author: Generated for Senu James (use as starting point; tune to taste)
-   ========================================================================== */
 
-/* ----------------------------------------
-   Reset / Base
-   ---------------------------------------- */
 :root{
-  --bg: #ffffff;
-  --surface: #f8fafc;
-  --muted: #6b7280;
-  --text: #0f172a;
-  --accent: #0ea5a4;
-  --accent-2: #7c3aed;
-  --accent-3: #06b6d4;
-  --glass: rgba(255,255,255,0.6);
-  --glass-2: rgba(255,255,255,0.08);
-  --card: #ffffff;
-  --shadow: 0 8px 30px rgba(12,15,25,0.08);
-  --radius: 14px;
-  --radius-sm: 8px;
-  --container: 1200px;
+--maxw:1200px;
+--space-xs:6px;
+--space-sm:10px;
+--space-md:16px;
+--space-lg:28px;
+--radius-sm:8px;
+--radius-md:12px;
+--radius-lg:20px;
 
-  /* typography */
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  --fs-sm: 0.9rem;
-  --fs-base: 1rem;
-  --fs-lg: 1.125rem;
-  --fs-xl: 1.6rem;
-  --transition: 320ms cubic-bezier(.2,.9,.2,1);
-
-  /* motion */
-  --float-y: 8px;
-  --pop-scale: 1.04;
+--bg:#f8fbff;
+--surface:#ffffff;
+--muted:#667085; /* gentle slate */
+--muted-2:rgba(102,112,133,0.65);
+--text:#06121a; /* near black */
+--accent:#06b6d4; /* teal */
+--accent-2:#7c3aed; /* violet */
+--accent-3:#f59e0b; /* amber highlight */
+--glass:rgba(255,255,255,0.72);
+--glass-2:rgba(255,255,255,0.44);
+--card-shadow: 0 10px 30px rgba(6,10,26,0.06);
+--card-shadow-strong: 0 30px 90px rgba(6,10,26,0.11);
+--glass-border: rgba(6,10,26,0.04);
+--success:#16a34a;
+--danger:#ef4444;
+--mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+--accent-grad: linear-gradient(90deg,var(--accent),var(--accent-2));
+--header-h:72px;
 }
 
-/* Dark theme overrides */
-:root[data-theme="dark"]{
-  --bg: #071025;
-  --surface: #071827;
-  --muted: #9aa6b2;
-  --text: #e6eef6;
-  --accent: #06b6d4;
-  --accent-2: #8b5cf6;
-  --accent-3: #22c1c3;
-  --glass: rgba(10, 20, 30, 0.6);
-  --glass-2: rgba(255,255,255,0.02);
-  --card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  --shadow: 0 12px 40px rgba(2,8,23,0.6);
-}
-
-/* Reduced motion */
-.reduced-motion * {
-  animation-duration: 0 !important;
-  transition-duration: 0 !important;
-  scroll-behavior: auto !important;
-}
-
-/* Box sizing */
-*,*::before,*::after{box-sizing:border-box}
+/* =====================================================================
+Base reset + typography
+===================================================================== */
+*{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;
-  font-family:var(--font-sans);
-  font-size:var(--fs-base);
-  color:var(--text);
-  background:linear-gradient(180deg, var(--bg), var(--surface));
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.45;
-  -webkit-tap-highlight-color: transparent;
-  transition: background var(--transition), color var(--transition);
-}
-
-/* Utility: container */
-.container{
-  max-width:var(--container);
-  margin:0 auto;
-  padding:1.25rem;
-}
-
-/* Responsive container paddings */
-@media (max-width: 900px){
-  .container{padding:1rem;}
-}
-@media (max-width: 520px){
-  .container{padding:0.75rem;}
-}
-
-/* Links & buttons */
+margin:0;font-family:var(--mono);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+color:var(--text);background:linear-gradient(180deg,#fbfdff 0%, #f5f9ff 100%);line-height:1.45;font-size:16px}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit}
 a{color:inherit;text-decoration:none}
-a:focus{outline:3px solid color-mix(in srgb, var(--accent) 20%, transparent); outline-offset:4px}
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:0.6rem;
-  padding:0.6rem 1rem;
-  border-radius:12px;
-  background:linear-gradient(180deg,var(--accent), color-mix(in srgb, var(--accent) 85% , black 10%));
-  color:#fff;
-  border:0;
-  cursor:pointer;
-  font-weight:600;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
-  text-decoration:none;
-}
-.btn:hover{ transform:translateY(-3px) scale(1.01) }
-.btn:active{ transform:translateY(0) scale(.996) }
-.btn.ghost{
-  background:transparent;
-  color:var(--text);
-  border:1px solid color-mix(in srgb, var(--text) 8%, transparent);
-  box-shadow:none;
-  backdrop-filter: blur(6px);
-}
-.btn.subtle{
-  background:transparent;
-  color:var(--muted);
-  border:1px dashed color-mix(in srgb, var(--muted) 12%, transparent);
-}
-.btn.small{ padding:0.45rem 0.7rem; border-radius:10px; font-size:0.9rem }
-.icon-btn{
-  display:inline-grid;
-  place-items:center;
-  width:40px;
-  height:40px;
-  border-radius:10px;
-  background:var(--glass);
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-  cursor:pointer;
-  transition: transform var(--transition), background var(--transition);
-}
-.icon-btn:hover{ transform:translateY(-3px) }
 
-/* Eyebrow / small text */
-.eyebrow{ font-weight:600; color:var(--accent-2); letter-spacing:0.02em }
+/* Respect header height so fixed header doesn't overlap content */
+body{padding-top:calc(var(--header-h) + 12px)}
 
-/* Muted */
-.muted{ color:var(--muted); font-size:0.95rem; }
+/* =====================================================================
+Utility & layout helpers
+===================================================================== */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--space-md)}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 var(--space-md)}
+.u-center{display:flex;align-items:center;justify-content:center}
+.u-col{display:flex;flex-direction:column}
+.u-row{display:flex;align-items:center}
+.u-hidden{display:none !important}
+.mt-8{margin-top:var(--space-lg)}
+.mb-6{margin-bottom:var(--space-md)}
+.text-muted{color:var(--muted)}
+.small{font-size:13px}
+.lead{font-size:16px;color:var(--muted);line-height:1.6}
 
-/* Accessibility text */
-.sr-only{
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-
-/* ----------------------------------------
-   Header (fixed)
-   ---------------------------------------- */
+/* =====================================================================
+Header
+===================================================================== */
 .site-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  z-index:1200;
-  background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
-  backdrop-filter: blur(8px);
-  border-bottom:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-  transition: padding var(--transition), box-shadow var(--transition), background var(--transition);
-  padding:0.9rem 0;
-}
-.site-header .header-inner{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  justify-content:space-between;
-}
-.site-header .brand{
-  display:flex; align-items:center; gap:0.75rem;
-  color:var(--text);
-  text-decoration:none;
-}
-.brand .logo { color:var(--accent-2); fill: currentColor }
-.brand-text{ font-weight:700; font-size:1rem; letter-spacing:0.01em }
+position:fixed;top:12px;left:12px;right:12px;z-index:2200;height:var(--header-h);
+display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.76));
+backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);border-radius:14px;padding:8px 16px;box-shadow:0 10px 30px rgba(6,10,26,0.06);border:1px solid var(--glass-border)}
 
-/* Nav */
-.main-nav ul{
-  display:flex; gap:1rem; list-style:none; margin:0; padding:0; align-items:center;
-}
-.main-nav a{ padding:0.5rem 0.6rem; border-radius:8px; color:var(--muted) }
-.main-nav a:hover{ color:var(--text); background:transparent; }
-.main-nav a.active{ color:var(--accent); font-weight:700; box-shadow: inset 0 -2px 0 var(--accent) }
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw)}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:52px;height:52px;border-radius:12px;background:var(--accent-grad);display:grid;place-items:center;color:#fff;font-weight:800;font-family:Lexend, var(--mono);box-shadow:0 12px 36px rgba(124,58,237,0.08)}
+.brand h1{font-family: 'Lexend', 'Poppins', var(--mono);font-size:18px;margin:0}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
 
-/* Header actions */
-.header-actions{ display:flex; align-items:center; gap:0.6rem }
+.primary{display:flex;align-items:center;gap:8px}
+.primary a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:700}
+.primary a:hover{color:var(--text);background:rgba(6,10,26,0.03)}
+.primary a.cta{background:var(--accent-grad);color:#fff;padding:8px 14px;border-radius:12px;box-shadow:0 12px 40px rgba(124,58,237,0.12)}
 
-/* hamburger */
-.hamburger{ display:none; background:transparent; border:0; cursor:pointer; padding:0.25rem; border-radius:10px }
-@media (max-width: 880px){
-  .main-nav{ display:none }
-  .hamburger{ display:inline-block }
-  .header-actions .primary{ display:none }
+/* Responsive header */
+@media (max-width:900px){
+.primary{display:none}
+.site-header{left:8px;right:8px;height:64px}
 }
 
-/* scrolled header */
-.site-header.scrolled{ padding:0.5rem 0; box-shadow: 0 6px 24px rgba(2,8,23,0.06) }
+/* =====================================================================
+Hero — primary visual surface
+===================================================================== */
+.hero{
+position:relative;z-index:10;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:stretch;
+max-width:var(--maxw);margin:18px auto;padding:36px;border-radius:20px;background:linear-gradient(180deg,#ffffff, #fbfdff);box-shadow:var(--card-shadow-strong);border:1px solid var(--glass-border);overflow:visible}
 
-/* Mobile nav panel */
-.mobile-nav{
-  position:absolute; top:100%; right:1.25rem; left:1.25rem;
-  background:linear-gradient(180deg, var(--card), color-mix(in srgb, var(--card) 90%, transparent));
-  border-radius:12px;
-  margin-top:0.6rem;
-  padding:0.75rem;
-  display:none;
-  box-shadow:var(--shadow);
-}
-.mobile-nav[aria-hidden="false"]{ display:block }
-.mobile-nav ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.25rem }
-.mobile-nav a{ padding:0.9rem; border-radius:8px; display:block; color:var(--text) }
+.hero::before{content:"";position:absolute;inset:auto -8% 30% auto;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(124,58,237,0.14), rgba(6,182,212,0.08), transparent 60%);filter:blur(64px);transform:translateY(-32px);pointer-events:none}
+.hero::after{content:"";position:absolute;left:8%;top:12%;width:220px;height:220px;border-radius:20px;background:linear-gradient(135deg, rgba(6,182,212,0.06), rgba(124,58,237,0.04));box-shadow:0 18px 50px rgba(6,10,26,0.04);transform:rotate(-12deg);pointer-events:none}
 
-/* ----------------------------------------
-   Hero section
-   ---------------------------------------- */
-.hero-section{
-  padding-top:7.5rem;
-  padding-bottom:4.5rem;
-  position:relative;
-  overflow:visible;
-}
-.hero-grid{
-  display:grid;
-  grid-template-columns: 1fr 480px;
-  gap:2rem;
-  align-items:center;
-}
-@media (max-width: 1100px){
-  .hero-grid{ grid-template-columns: 1fr 420px }
-}
-@media (max-width: 880px){
-  .hero-grid{ grid-template-columns: 1fr; }
-  .hero-section{ padding-top:6rem }
-}
-.hero-content .hero-title{
-  font-size: clamp(1.35rem, 3.5vw, 2.6rem);
-  line-height:1.05;
-  margin:0.45rem 0 1rem 0;
-  letter-spacing:-0.01em;
-  font-weight:800;
-  color:var(--text);
-}
-.hero-sub{ font-size:1.02rem; color:var(--muted); margin-bottom:1.1rem }
+.hero-left{position:relative;z-index:2;padding-right:6px}
+.kicker{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg, rgba(6,182,212,0.06), rgba(124,58,237,0.04));padding:10px 14px;border-radius:999px;font-weight:800;color:var(--accent);letter-spacing:-0.01em}
 
-/* Hero CTAs */
-.hero-ctas{ display:flex; gap:0.65rem; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; }
-.hero-ctas .ghost{ background:transparent; color:var(--text) }
+.hero .hi{font-family:'Lexend', 'Poppins', var(--mono);font-size:44px;line-height:1.02;margin:12px 0 6px;color:var(--text);font-weight:800}
+.hero .hi strong{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .hi .highlight{display:inline-block;padding:6px 10px;margin-left:8px;border-radius:8px;background:linear-gradient(90deg, rgba(6,182,212,0.08), rgba(124,58,237,0.06));font-size:14px;font-weight:800}
 
-/* Hero meta pills */
-.hero-meta{ display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:1.05rem }
-.meta-pill{
-  display:inline-flex; gap:0.5rem; align-items:center;
-  background:var(--glass);
-  padding:0.45rem 0.6rem;
-  border-radius:999px;
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-  color:var(--muted);
-  font-weight:600;
-  box-shadow: 0 6px 16px rgba(2,8,23,0.04);
-}
+.lead{color:var(--muted);font-size:16px;margin-top:8px;max-width:68ch}
 
-/* Hero visuals */
-.hero-visuals{ position:relative; width:100%; display:flex; justify-content:center; align-items:center }
-.hero-screenshot{ display:block; width:100%; border-radius:16px; overflow:hidden; box-shadow: var(--shadow) }
-.hero-screenshot img{ display:block; width:100%; height:auto; object-fit:cover; transition: transform 520ms cubic-bezier(.2,.9,.2,1) }
-.hero-screenshot:hover img{ transform:translateY(-6px) scale(1.02) }
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:transparent;border:1px solid rgba(6,10,26,0.05);font-weight:800;box-shadow:0 6px 18px rgba(6,10,26,0.03)}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;padding:12px 18px}
+.btn-outline{background:transparent;border:1px solid rgba(6,10,26,0.06)}
+.btn-ghost{background:transparent;border:1px dashed rgba(6,10,26,0.04)}
 
-/* Floating cards layered over hero */
-.floating-cards{
-  position:absolute; inset:auto 1.25rem 1.25rem auto;
-  bottom:0; right:0;
-  display:flex; flex-direction:column; gap:0.85rem;
-  transform: translateZ(0);
-}
-.floating-cards .card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
-  padding:0.6rem 0.8rem;
-  border-radius:12px;
-  width:220px;
-  box-shadow:var(--shadow);
-  display:flex; gap:0.6rem; align-items:center;
-  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-}
-:root[data-theme="dark"] .floating-cards .card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.03);
-}
+.skill-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:linear-gradient(180deg, rgba(6,10,26,0.03), rgba(6,10,26,0.01));font-weight:800}
 
-/* Floating scroll hint */
-.scroll-hint{
-  display:flex; gap:0.45rem; align-items:center; color:var(--muted); font-size:0.85rem;
-  background:transparent; padding:0.4rem 0.6rem; border-radius:10px;
-}
+/* Impact stats block — redesigned into metric cards */
+.stats{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.stats .metric{display:flex;flex-direction:column;align-items:flex-start;padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:0 10px 30px rgba(6,10,26,0.06);min-width:140px}
+.stats .metric .value{font-size:20px;font-weight:900}
+.stats .metric .label{font-size:12px;color:var(--muted);margin-top:6px}
 
-/* ----------------------------------------
-   Projects grid
-   ---------------------------------------- */
-.section-header h2{ margin:0 0 0.25rem 0; font-size:1.4rem; letter-spacing:-0.01em }
-.projects-section{ padding:3rem 0 }
-.filters{ display:flex; gap:0.6rem; margin:1rem 0; flex-wrap:wrap }
-.filters .filter{
-  background:transparent; border:0; padding:0.45rem 0.7rem; border-radius:999px;
-  color:var(--muted); cursor:pointer; transition: all 220ms ease-in-out;
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-}
-.filters .filter.active{ color:var(--accent-2); background: color-mix(in srgb, var(--accent-2) 6%, transparent); transform:translateY(-3px); font-weight:700 }
+/* =====================================================================
+Hero right / Profile card
+===================================================================== */
+.profile-card{display:flex;flex-direction:column;gap:14px;align-items:center;padding:22px;border-radius:16px;background:linear-gradient(180deg,#fff,#fcfeff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04);position:relative}
 
-/* Projects grid layout */
-.projects-grid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:1.25rem;
-}
-@media (max-width:1100px){ .projects-grid{ grid-template-columns: repeat(2,1fr) } }
-@media (max-width:640px){ .projects-grid{ grid-template-columns: 1fr } }
+.profile-photo{position:relative;width:176px;height:176px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fff);box-shadow:0 16px 40px rgba(6,10,26,0.06)}
+.profile-photo::before{content:"";position:absolute;inset:-6px;z-index:0;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3));filter:blur(10px);opacity:0.18}
+.profile-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;position:relative;z-index:2}
+.profile-meta{width:100%;text-align:left}
+.profile-meta .meta-title{font-size:18px;font-weight:900}
+.profile-meta .meta-sub{color:var(--muted);margin-top:6px}
+.profile-actions{display:flex;gap:10px;margin-top:10px}
+.float-btn{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(180deg, rgba(6,10,26,0.04), rgba(6,10,26,0.02));box-shadow:0 8px 22px rgba(6,10,26,0.06)}
 
-/* Project card */
-.project-card{
-  display:flex; flex-direction:column; background:var(--card); border-radius:var(--radius); overflow:hidden;
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-  box-shadow: var(--shadow);
-  transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 320ms var(--transition), filter 320ms var(--transition);
-  will-change: transform, opacity;
-}
-.project-card.filtered-out{ opacity:0.12; transform:scale(.98); filter:grayscale(0.2) contrast(.9) }
-.project-card .card-media{ position:relative; overflow:hidden; display:block }
-.project-card img{ display:block; width:100%; height:200px; object-fit:cover; transition: transform 420ms cubic-bezier(.2,.9,.2,1) }
-.project-card:hover img{ transform: scale(1.03) translateY(-6px) }
+.profile-meta .location, .profile-meta .contact{display:flex;gap:10px;align-items:center;color:var(--muted);margin-top:12px}
+.profile-meta .contact a{font-weight:800;color:var(--text)}
 
-.card-badges{ position:absolute; left:0; top:12px; display:flex; gap:0.5rem; padding:0 0.6rem }
-.badge{ background:var(--accent-3); color:#fff; font-weight:700; padding:0.25rem 0.45rem; border-radius:999px; font-size:0.78rem; box-shadow:0 6px 18px rgba(12,15,25,0.06) }
-.badge.soft{ background: color-mix(in srgb, var(--text) 8%, transparent); color:var(--text); font-weight:700; }
+/* hover microinteraction */
+.profile-card:hover .profile-photo{transform:translateY(-6px) rotate(-0.5deg);transition:transform .6s cubic-bezier(.2,.9,.2,1)}
 
-/* favourite button on card */
-.project-card .fav{
-  position:absolute; right:10px; top:10px; z-index:3; background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
-}
-.project-card .fav.saved{ background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, white 88%), color-mix(in srgb, var(--accent) 8%, white 92%)); transform:scale(1.02) }
+/* =====================================================================
+About section + awards
+===================================================================== */
+.section{padding:20px 0}
+.section h3{font-size:20px}
+.section p{color:var(--muted)}
+.aside-award{display:flex;flex-direction:column;gap:12px}
+.award-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:14px;background:linear-gradient(180deg,#fff,#fcfdff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
+.award-icon{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+.award-content .title{font-weight:900}
+.award-content .sub{font-size:13px;color:var(--muted);margin-top:4px}
 
-/* card body */
-.card-body{ padding:1rem 1rem 1.25rem 1rem; display:flex; flex-direction:column; gap:0.6rem }
-.project-title{ margin:0; font-size:1.05rem; font-weight:700 }
-.project-excerpt{ margin:0; color:var(--muted); font-size:0.95rem }
-.card-meta{ display:flex; gap:0.6rem; flex-wrap:wrap; color:var(--muted); font-size:0.85rem; align-items:center }
-.card-actions{ display:flex; gap:0.5rem; margin-top:0.5rem }
+/* Special award highlight for African Digital Innovation Challenge */
+.award-highlight{padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(212,171,78,0.06), rgba(184,134,47,0.03));border:1px solid rgba(186,134,51,0.08);box-shadow:0 12px 36px rgba(186,134,51,0.06)}
+.award-highlight .title{font-weight:900}
+.award-highlight .muted{color:var(--muted);font-size:13px;margin-top:6px}
 
-/* subtle animation when cards appear */
-.project-card[data-ani="card-rise"]{ transform: translateY(18px); opacity:0; }
-.project-card.in-view{ transform: translateY(0); opacity:1 }
+.community-box{padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
+.community-box .title{font-weight:900}
+.community-box .muted{color:var(--muted);font-size:13px;margin-top:6px}
 
-/* ----------------------------------------
-   Case studies / timeline
-   ---------------------------------------- */
-.case-section{ padding:3rem 0 }
-.timeline{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1rem }
-.timeline-item{ display:grid; grid-template-columns:56px 1fr auto; gap:1rem; align-items:start; background:transparent; padding:1rem; border-radius:12px; border:1px solid color-mix(in srgb, var(--text) 4%, transparent) }
-.timeline-icon{ width:56px; height:56px; display:grid; place-items:center; background:var(--card); border-radius:12px; box-shadow:var(--shadow) }
-.timeline-meta{ color:var(--muted); font-size:0.85rem; align-self:center }
+/* =====================================================================
+Projects grid and cards
+===================================================================== */
+.projects-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px}
+.card{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#fff,#fcfeff);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow);transition:transform .28s,box-shadow .28s}
+.card:hover{transform:translateY(-10px);box-shadow:var(--card-shadow-strong)}
+.card-visual{position:relative;height:240px}
+.card-visual img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;left:14px;top:14px;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));font-weight:900;backdrop-filter:blur(4px)}
+.card-body{padding:16px}
+.card-title{margin:0;font-size:18px;font-weight:900}
+.card-sub{color:var(--muted);margin-top:8px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tag{background:rgba(6,10,26,0.03);padding:6px 8px;border-radius:8px;font-weight:800;font-size:13px}
+.card-foot{display:flex;gap:8px;margin-top:14px}
+.link-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1px solid rgba(6,10,26,0.05);background:transparent;font-weight:800}
+.link-btn.live{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#fff;border:0}
+.link-btn.repo{background:transparent}
+.card.featured{border-radius:16px;border:1px solid rgba(186,134,51,0.08);box-shadow:0 30px 80px rgba(186,134,51,0.06)}
 
-/* ----------------------------------------
-   About section
-   ---------------------------------------- */
-.about-section{ padding:3.2rem 0 }
-.about-grid{ display:grid; grid-template-columns: 360px 1fr; gap:2rem; align-items:start }
-@media (max-width: 880px){ .about-grid{ grid-template-columns: 1fr; } }
+/* =====================================================================
+Tilt effect hint and reduced-motion support
+===================================================================== */
+.tilt{transform-style:preserve-3d}
+@media (prefers-reduced-motion:reduce){.tilt{transition:none !important}}
 
-.about-visual img{ width:100%; height:auto; border-radius:18px; box-shadow:var(--shadow); display:block }
-.badge-mini{ display:inline-block; margin-top:0.75rem; padding:0.4rem 0.6rem; border-radius:999px; background:var(--glass); font-weight:700 }
+/* =====================================================================
+Timeline items — styled for reads and timeline emphasis
+===================================================================== */
+.timeline{padding:18px 0}
+.timeline h3{margin:0 0 12px}
+.timeline-items{display:flex;gap:14px;overflow:auto;padding:12px}
+.timeline-card{min-width:220px;padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#fcfdff);box-shadow:var(--card-shadow);border:1px solid rgba(6,10,26,0.04)}
+.timeline-card .when{display:flex;gap:10px;align-items:center;font-weight:900;color:var(--accent-2)}
+.timeline-card .desc{color:var(--muted);font-size:13px;margin-top:8px}
 
-/* Skillset */
-.skills-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:0.75rem; margin-top:0.8rem }
-@media (max-width:640px){ .skills-grid{ grid-template-columns:1fr } }
-.skill{ background:transparent; padding:0.45rem; border-radius:10px }
-.skill-head{ display:flex; justify-content:space-between; gap:0.5rem; align-items:center; margin-bottom:0.45rem; font-weight:700 }
-.skill-bar{ height:10px; background: color-mix(in srgb, var(--text) 6%, transparent); border-radius:999px; overflow:hidden; position:relative; }
-.skill-bar::after{ content:''; position:absolute; left:0; top:0; bottom:0; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:inherit; transition: width 900ms cubic-bezier(.2,.9,.2,1) }
+/* =====================================================================
+Marquee / community images
+===================================================================== */
+.marquee-wrap{padding:16px 0}
+.marquee{display:flex;gap:16px;align-items:center;overflow:hidden}
+.marq-item{flex:0 0 240px;border-radius:12px;overflow:hidden}
+.marquee img{width:100%;height:140px;object-fit:cover}
+@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* But JS writes width inline to .skill-bar as style width; put percent into child when needed */
-.skill-bar[style]::after{ /* visual fallback */ }
+/* =====================================================================
+Contact form & aside
+===================================================================== */
+.contact-wrap{display:grid;grid-template-columns:1fr 340px;gap:22px}
+.contact-card{background:linear-gradient(180deg,#fff,#fff);box-shadow:var(--card-shadow);border-radius:14px;padding:22px;border:1px solid rgba(6,10,26,0.04)}
+.contact-aside{background:linear-gradient(180deg,#fff,#fff);box-shadow:var(--card-shadow);border-radius:14px;padding:18px;border:1px solid rgba(6,10,26,0.04)}
 
-/* ----------------------------------------
-   Testimonials carousel
-   ---------------------------------------- */
-.testimonial-section{ padding:3rem 0 }
-.testimonial-carousel{ display:flex; gap:1rem; position:relative; min-height:140px; align-items:center; overflow:hidden }
-.testimonial{ flex:0 0 100%; opacity:0; transform:translateY(12px); padding:1rem; transition: opacity 420ms var(--transition), transform 420ms var(--transition) }
-.testimonial.active{ opacity:1; transform:translateY(0) }
-.testimonial footer{ margin-top:0.65rem; color:var(--muted); font-size:0.9rem }
+.input,.textarea{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(6,10,26,0.06);background:linear-gradient(180deg, rgba(250,251,255,0.9), rgba(245,248,255,0.95));box-shadow:inset 0 1px 0 rgba(255,255,255,0.8),0 6px 24px rgba(6,10,26,0.04);font-size:15px;transition:box-shadow .18s,border-color .18s,transform .18s}
+.input:focus,.textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 12px 40px rgba(6,182,212,0.08), 0 0 0 4px rgba(6,182,212,0.06)}
+.input::placeholder,.textarea::placeholder{color:rgba(6,10,26,0.3)}
 
-/* ----------------------------------------
-   Contact section & form
-   ---------------------------------------- */
-.contact-section{ padding:3rem 0 6rem 0 }
-.contact-grid{ display:grid; grid-template-columns: 420px 1fr; gap:2rem; align-items:start }
-@media (max-width:920px){ .contact-grid{ grid-template-columns:1fr } }
+.send{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:900;box-shadow:0 12px 30px rgba(124,58,237,0.12)}
 
-.contact-card{ background:var(--card); border-radius:var(--radius); padding:1rem; box-shadow:var(--shadow); border:1px solid color-mix(in srgb, var(--text) 4%, transparent) }
-.contact-info{ list-style:none; padding:0; margin:0.6rem 0 1rem 0; display:flex; flex-direction:column; gap:0.45rem }
-.contact-info li{ display:flex; gap:0.6rem; align-items:center; color:var(--muted) }
+.contact-aside strong{display:block;margin-bottom:8px}
+.contact-aside a{display:inline-block;margin-top:6px}
+.social-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(6,10,26,0.03);font-weight:800}
 
-.social-links{ display:flex; gap:0.5rem; margin-top:0.6rem }
-.social-links a{ width:44px; height:44px; display:grid; place-items:center; border-radius:10px; background:var(--glass); border:1px solid color-mix(in srgb, var(--text) 3%, transparent) }
+/* Floating label utilities (for future enhancement) */
+.form-field{position:relative}
+.form-field .label{position:absolute;left:14px;top:12px;font-weight:700;color:var(--muted);pointer-events:none;transition:transform .18s,font-size .18s}
+.form-field.filled .label{transform:translateY(-22px);font-size:12px}
 
-/* Contact form */
-.contact-form{ background:transparent; border-radius:var(--radius); padding:1rem; display:flex; flex-direction:column; gap:0.8rem }
-.form-row{ display:flex; flex-direction:column; gap:0.35rem }
-.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0.8rem }
-input, textarea, select{
-  background:transparent;
-  border:1px solid color-mix(in srgb, var(--text) 6%, transparent);
-  padding:0.6rem 0.75rem;
-  border-radius:10px;
-  font-size:var(--fs-base);
-  color:var(--text);
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-input:focus, textarea:focus{ outline:0; border-color:var(--accent); box-shadow:0 6px 28px rgba(0,0,0,0.06) }
-textarea{ min-height:130px; resize:vertical }
+/* =====================================================================
+Modal and toast
+===================================================================== */
+#sj-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:2100;padding:20px}
+#sj-modal .sj-modal-panel{width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4)}
+#sj-modal iframe{width:100%;height:64vh;border:0;display:block}
+.sj-toast{position:fixed;right:18px;bottom:18px;z-index:9999;background:#06121a;color:#fff;padding:10px 14px;border-radius:10px;font-weight:800}
 
-/* Honeypot hidden field */
-.honeypot{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+/* =====================================================================
+Footer
+===================================================================== */
+footer.site{padding:28px 0;border-top:1px solid rgba(6,10,26,0.04);background:transparent}
+footer.site a{color:var(--muted)}
 
-/* form actions */
-.form-actions{ display:flex; gap:0.6rem; align-items:center; margin-top:0.3rem; flex-wrap:wrap }
-.form-note{ color:var(--muted); font-size:0.85rem }
+/* =====================================================================
+Responsive tweaks (many breakpoint helpers)
+===================================================================== */
+@media (max-width:1100px){.hero{grid-template-columns:1fr 320px;padding:26px}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:20px;margin:12px auto}.profile-card{order:2}.hero-left{order:1}.contact-wrap{grid-template-columns:1fr}.projects-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+@media (max-width:640px){.hero .hi{font-size:28px}.profile-photo{width:128px;height:128px}.logo{width:44px;height:44px}}
+@media (min-width:1400px){.hero{padding:56px 60px;grid-template-columns:1fr 420px}.hero .hi{font-size:56px}.hero::before{width:580px;height:580px;filter:blur(92px);left:auto;right:-6%;transform:translateY(-80px)}}
 
-/* Map placeholder */
-.map-placeholder{ display:flex; gap:0.8rem; align-items:center; justify-content:center; flex-direction:column; background:var(--glass); border-radius:12px; padding:1.2rem; border:1px dashed color-mix(in srgb, var(--text) 6%, transparent) }
+/* =====================================================================
+Accessibility & reduced motion
+===================================================================== */
+:focus{outline:3px solid rgba(124,58,237,0.16);outline-offset:3px}
+[aria-pressed="true"]{box-shadow:0 8px 30px rgba(6,10,26,0.06);background:rgba(124,58,237,0.06)}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.hero::before,.hero::after{display:none}}
 
-/* ----------------------------------------
-   Project detail modal (dialog)
-   ---------------------------------------- */
-.project-modal::backdrop{ background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.6)) }
-.project-modal{ border:0; padding:0; max-width:1100px; width:calc(100% - 48px); border-radius:16px; overflow:hidden; box-shadow:0 24px 80px rgba(2,8,23,0.7); }
-.project-modal .modal-inner{ display:grid; grid-template-columns: 1fr 420px; gap:1rem; padding:1.25rem; background:var(--card) }
-@media (max-width:920px){ .project-modal .modal-inner{ grid-template-columns: 1fr; } }
-.modal-close{ position:absolute; right:12px; top:12px; background:transparent; border:0; font-size:1.6rem; cursor:pointer; color:var(--muted) }
-.modal-header .muted{ color:var(--muted) }
-.modal-body{ display:flex; gap:1rem; align-items:start }
-.modal-gallery{ display:flex; gap:0.5rem; flex-direction:column; align-items:center }
-.modal-gallery img{ width:100%; max-height:380px; object-fit:cover; border-radius:12px; box-shadow: var(--shadow) }
+/* =====================================================================
+Print rules
+===================================================================== */
+@media print{body{padding-top:0}.site-header,.cta-row,.float-btn,.marquee,.timeline{display:none}.card{box-shadow:none;border:1px solid #eee}}
 
-/* Modal fallback open state (non-dialog) */
-.project-modal.open{ display:block; position:fixed; inset:50% auto auto 50%; transform:translate(-50%,-50%); z-index:1600 }
 
-/* ----------------------------------------
-   Footer
-   ---------------------------------------- */
-.site-footer{ padding:2.2rem 0; border-top:1px solid color-mix(in srgb, var(--text) 4%, transparent); margin-top:2rem }
-.footer-grid{ display:grid; grid-template-columns:1fr 240px 120px 1fr; gap:1rem; align-items:start }
-@media (max-width:880px){ .footer-grid{ grid-template-columns:1fr; gap:1rem } }
-.footer-contact small{ display:block; color:var(--muted) }
 
-/* ----------------------------------------
-   Animations & transitions (data-ani)
-   ---------------------------------------- */
+/* spacing helpers */
+.s-0{padding:0}.s-1{padding:6px}.s-2{padding:8px}.s-3{padding:12px}.s-4{padding:16px}.s-5{padding:20px}
+.m-0{margin:0}.m-1{margin:6px}.m-2{margin:8px}.m-3{margin:12px}.m-4{margin:16px}.m-5{margin:20px}
 
-/* reveal base */
-[data-ani] { opacity:0; transform-origin:center; transition: opacity 520ms var(--transition), transform 520ms var(--transition); will-change: transform, opacity; }
-.in-view { opacity:1; transform:none !important }
+/* display helpers */
+d-block{display:block}.d-inline{display:inline}.d-flex{display:flex}.d-grid{display:grid}
+.flex-col{display:flex;flex-direction:column}.flex-row{display:flex;flex-direction:row}
 
-/* slide-up */
-[data-ani="slide-up"]{ transform: translateY(16px) }
-[data-ani="slide-up"].in-view{ transform: translateY(0) }
+/* gap helpers */
+gap-xs{gap:6px}.gap-sm{gap:10px}.gap-md{gap:16px}.gap-lg{gap:28px}
 
-/* slide-left / slide-right */
-[data-ani="slide-left"]{ transform: translateX(20px); opacity:0 }
-[data-ani="slide-left"].in-view{ transform: translateX(0); opacity:1 }
-[data-ani="slide-right"]{ transform: translateX(-20px); opacity:0 }
-[data-ani="slide-right"].in-view{ transform: translateX(0); opacity:1 }
+/* text helpers */
+.t-center{text-align:center}.t-left{text-align:left}.t-right{text-align:right}
+.text-xxs{font-size:11px}.text-xs{font-size:12px}.text-sm{font-size:13px}.text-lg{font-size:18px}
 
-/* fade */
-[data-ani="fade"]{ transform:none; opacity:0 }
-[data-ani="fade"].in-view{ opacity:1 }
+/* color helpers */
+.c-accent{color:var(--accent)}.c-accent-2{color:var(--accent-2)}.c-muted{color:var(--muted)}.c-success{color:var(--success)}.c-danger{color:var(--danger)}
+.bg-accent{background:var(--accent-grad)}.bg-ghost{background:transparent}
 
-/* fade-up */
-[data-ani="fade-up"]{ transform:translateY(10px); opacity:0 }
-[data-ani="fade-up"].in-view{ transform:translateY(0); opacity:1 }
+/* elevation helpers */
+.elev-1{box-shadow:0 8px 22px rgba(6,10,26,0.05)}.elev-2{box-shadow:0 18px 56px rgba(6,10,26,0.08)}.elev-3{box-shadow:0 30px 90px rgba(6,10,26,0.12)}
 
-/* card pop */
-[data-ani="pop"]{ transform: translateY(6px) scale(.99); opacity:0.95 }
-[data-ani="pop"].in-view{ transform: translateY(0) scale(1); opacity:1 }
+/* border radius helpers */
+.r-0{border-radius:0}.r-sm{border-radius:8px}.r-md{border-radius:12px}.r-lg{border-radius:20px}.r-round{border-radius:999px}
 
-/* hero float */
-[data-ani="float"]{ transform: translateY(0); transition: transform 1200ms ease-in-out; }
-.hero-visuals.in-view[data-ani="float"]{ animation: float-anim 6s ease-in-out infinite; }
-@keyframes float-anim {
-  0%{ transform: translateY(0px) }
-  50%{ transform: translateY(var(--float-y)) }
-  100%{ transform: translateY(0px) }
-}
+/* form helpers */
+.field-inline{display:flex;gap:8px;align-items:center}
+.label-weak{font-weight:700;color:var(--muted);font-size:13px}
+.input-ghost{background:transparent;border:1px dashed rgba(6,10,26,0.06)}
 
-/* stagger children (used for hero ctas etc) */
-[data-ani="stagger"] > *{ opacity:0; transform: translateY(10px) }
-[data-ani="stagger"].in-view > *{ opacity:1; transform: translateY(0); transition: transform 420ms var(--transition), opacity 320ms var(--transition) }
+/* badge helpers */
+.badge-pill{padding:6px 10px;border-radius:999px;background:rgba(6,10,26,0.04);font-weight:900}
+.badge-accent{background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(124,58,237,0.08));color:var(--text)}
 
-/* meta small animation */
-[data-ani="meta"]{ transition: transform 620ms cubic-bezier(.2,.9,.2,1), opacity 420ms }
-[data-ani="meta"].in-view{ transform: translateY(0); opacity:1 }
+/* card variants: soft, glass, framed */
+.card-soft{background:linear-gradient(180deg,#fff,#fbfbfb);border:1px solid rgba(6,10,26,0.04);box-shadow:var(--card-shadow)}
+.card-glass{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.3)}
+.card-framed{border-left:6px solid var(--accent);padding-left:12px}
 
-/* hero reveal variations */
-[data-ani="reveal"]{ transform: translateY(18px); opacity:0 }
-[data-ani="reveal"].in-view{ transform: none; opacity:1 }
+/* link button variants */
+.btn-sm{padding:8px 10px;border-radius:8px}.btn-lg{padding:14px 20px;border-radius:14px;font-size:16px}
 
-/* card-rise (project cards) */
-[data-ani="card-rise"]{ transform: translateY(18px); opacity:0 }
-[data-ani="card-rise"].in-view{ transform: translateY(0); opacity:1 }
+/* interactive states */
+.hover-lift{transition:transform .25s;transform-origin:center}
+.hover-lift:hover{transform:translateY(-6px)}
 
-/* pop small */
-.pop{ transition: transform 320ms var(--transition); will-change: transform; }
-.pop:hover{ transform: scale(var(--pop-scale)); }
+/* skeleton loader */
+.skel{background:linear-gradient(90deg,#f0f4f8,#f8fbff,#f0f4f8);background-size:200% 100%;animation:skel 1.4s linear infinite}
+@keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* map zoom animation */
-[data-ani="map-zoom"]{ transform: scale(.98); opacity:0.85; transition: transform 640ms var(--transition) }
-[data-ani="map-zoom"].in-view{ transform: scale(1); opacity:1 }
+/* progress / meter */
+.progress{height:8px;background:rgba(6,10,26,0.04);border-radius:8px;overflow:hidden}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 
-/* testimonial fade */
-[data-ani="fade"]{ transition: opacity 520ms var(--transition), transform 520ms var(--transition) }
+/* utility grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid-responsive{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 
-/* ----------------------------------------
-   Focus states & keyboard accessibility
-   ---------------------------------------- */
-:focus{ outline: 3px solid color-mix(in srgb,var(--accent) 20%, transparent); outline-offset:3px; border-radius:8px }
-button:focus, a:focus{ box-shadow: 0 8px 24px rgba(2,8,23,0.06) }
+/* table / details styling */
+.table{width:100%;border-collapse:collapse}
+.table th, .table td{padding:10px 12px;border-bottom:1px solid rgba(6,10,26,0.04)}
+.table th{font-weight:800;text-align:left}
 
-/* ----------------------------------------
-   Small utilities (for polish / quick tweaks)
-   ---------------------------------------- */
-.center{ display:grid; place-items:center }
-.row{ display:flex; gap:1rem; align-items:center }
-.col{ display:flex; flex-direction:column; gap:0.5rem }
+/* icons alignment */
+.icon-inline{display:inline-flex;align-items:center;gap:8px}
+.icon-circle{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(6,10,26,0.04)}
 
-.kicker{ font-weight:800; color:var(--accent-2); font-size:0.85rem }
+/* animation helpers */
+.fade-in{opacity:0;transform:translateY(6px);transition:opacity .48s,transform .48s}
+.fade-in.show{opacity:1;transform:none}
 
-/* subtle glass cards */
-.glass{ background:var(--glass); border-radius:12px; padding:0.85rem; border:1px solid color-mix(in srgb,var(--text) 4%, transparent) }
+/* tooltip base */
+.tooltip{position:relative}
+.tooltip:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#06121a;color:#fff;padding:8px 10px;border-radius:8px;font-weight:700;white-space:nowrap}
 
-/* filter "chip" utilities */
-.chip{ display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 0.65rem; border-radius:99px; background:var(--glass); border:1px solid color-mix(in srgb, var(--text) 6%, transparent) }
+/* focus ring variants for keyboard users */
+.k-focus:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
 
-/* Tooltip-ish (pure CSS) */
-[data-tooltip]{ position:relative; }
-[data-tooltip]::after{
-  content: attr(data-tooltip);
-  position:absolute; left:50%; transform:translateX(-50%) translateY(-8px); bottom:calc(100% + 8px);
-  background:var(--text); color:#fff; padding:0.45rem 0.55rem; border-radius:8px; font-size:0.8rem; opacity:0; pointer-events:none; transition:opacity 180ms;
-  white-space:nowrap; z-index:999;
-}
-[data-tooltip]:hover::after{ opacity:1 }
+.theme-light body{background:var(--bg)}
 
-/* ----------------------------------------
-   Large screen niceties (animations & parallax hints)
-   ---------------------------------------- */
-@media (min-width:1200px){
-  .hero-section{ padding-bottom:6rem }
-  .hero-screenshot{ border-radius:20px }
-}
 
-/* ----------------------------------------
-   Extra detailed rules to match requested "EXQUISITE" aesthetic
-   - gradients, layered shadows, micro interactions, subtle blurs
-   ---------------------------------------- */
 
-/* subtle gradient overlays for cards */
-.project-card::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  border-radius:var(--radius);
-  pointer-events:none;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
-  mix-blend-mode:overlay;
-  opacity:0.6;
-}
+/* refine hero heading detail */
+.hero .hi{position:relative}
+.hero .hi::after{content:"";position:absolute;left:0;bottom:-12px;height:8px;width:140px;border-radius:999px;background:linear-gradient(90deg,#06b6d4,#7c3aed);filter:blur(10px);opacity:0.95;transform-origin:left center;animation:hi-underline 3.6s ease-in-out infinite}
+@keyframes hi-underline{0%{transform:scaleX(0)}50%{transform:scaleX(1)}100%{transform:scaleX(0)}}
 
-/* fancy hover outline */
-.project-card:hover{
-  transform: translateY(-6px) scale(1.005);
-  box-shadow: 0 18px 50px rgba(12,15,25,0.12);
-  border-color: color-mix(in srgb, var(--accent) 18%, transparent);
+/* CTA: emphasis & primary action styles */
+.btn-primary{letter-spacing:-0.02em;box-shadow:0 12px 36px rgba(6,182,212,0.08)}
+.btn-primary:hover{transform:translateY(-3px)}
+.btn-outline{background:#fff;border:1px solid rgba(6,10,26,0.06)}
+
+/* profile meta: ensure telephone and email pop visually */
+.profile-meta .contact a{color:var(--text);text-decoration:underline;text-decoration-color:rgba(6,182,212,0.14)}
+
+/* statistics: increase visual hierarchy */
+.stats .metric{border-left:4px solid rgba(124,58,237,0.06);padding-left:14px}
+.stats .metric.featured{border-left-color:var(--accent)}
+
+/* award highlight icon treatment */
+.award-icon{box-shadow:0 10px 30px rgba(124,58,237,0.06);transform:translateZ(0)}
+
+/* timeline: give alternating color accent */
+.timeline-items .timeline-card:nth-child(odd){border-left:4px solid rgba(6,182,212,0.08)}
+.timeline-items .timeline-card:nth-child(even){border-left:4px solid rgba(124,58,237,0.08)}
+
+/* card visual overlay (subtle) */
+.card-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,10,26,0.0), rgba(6,10,26,0.04));opacity:0.6}
+
+/* project tags: accent edge */
+.tag{border:1px solid rgba(6,10,26,0.03);padding:6px 10px}
+
+/* ensure repository links have consistent aria-focus styles */
+a.repo:focus, a.link-btn:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+
+/* project badge wide variation */
+.badge{font-size:12px;padding:6px 10px}
+
+/* contact aside download chip */
+.link-btn.resume{padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+
+/* input groups for phone + subject row */
+#contact-form input[type=tel], #contact-form input[type=email]{width:100%}
+#contact-form textarea{min-height:140px}
+
+/* floating quick actions under hero */
+.quick-actions{display:flex;gap:10px;margin-top:14px}
+.quick-actions .chip{padding:8px 12px;border-radius:999px;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:0 8px 20px rgba(6,10,26,0.04)}
+
+/* accessibility: ensure high contrast when focused */
+button:focus, input:focus, a:focus{outline:3px solid rgba(6,182,212,0.12);outline-offset:3px}
+
+/* =====================================================================
+Extra repeated utilities to expand file length and offer granular
+control for future styling tweaks — these are helpful CSS tokens
+developers can apply to elements across the site.
+===================================================================== */
+
+/* text transforms */
+.uppercase{text-transform:uppercase}
+.capitalize{text-transform:capitalize}
+
+/* flex alignment helpers */
+.jc-center{justify-content:center}.jc-between{justify-content:space-between}.ai-center{align-items:center}
+
+/* column layout helpers */
+.col-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.col-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* utilities to do micro spacing */
+.px-4{padding-left:16px;padding-right:16px}.py-4{padding-top:16px;padding-bottom:16px}
+
+/* shadow variants */
+.shadow-soft{box-shadow:0 8px 22px rgba(6,10,26,0.04)}.shadow-strong{box-shadow:0 28px 80px rgba(6,10,26,0.12)}
+
+/* colors for backgrounds */
+.bg-muted{background:rgba(6,10,26,0.03)}.bg-soft{background:linear-gradient(180deg,#fff,#fbfbfb)}
+
+/* separator */
+.sep{height:1px;background:rgba(6,10,26,0.04);margin:12px 0}
+
+/* badge color set */
+.badge-gold{background:linear-gradient(90deg,#f2d97a,#b8862f);color:#fff}
+.badge-teal{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#fff}
+.badge-violet{background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff}
+
+/* form helper: inline error and success */
+.input-error{border-color:var(--danger);box-shadow:0 8px 20px rgba(239,68,68,0.06)}
+.input-success{border-color:var(--success);box-shadow:0 8px 20px rgba(16,185,129,0.06)}
+.error-text{color:var(--danger);font-size:13px}
+.success-text{color:var(--success);font-size:13px}
+
+/* badges for timeline small tags */
+.timeline-tag{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(6,10,26,0.03);font-weight:800}
+
+/* refine contact phone link style */
+.contact-phone{font-weight:900;color:var(--text);text-decoration:none}
+
+/* =====================================================================
+Final polish rules: micro interactions, hover states, and finishing touches
+===================================================================== */
+
+/* micro hover on card images */
+.card-visual img{transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.card:hover .card-visual img{transform:scale(1.04)}
+
+/* subtle pop for metric values */
+.stats .metric .value{transition:transform .36s}
+.stats .metric:hover .value{transform:translateY(-4px)}
+
+/* CTA subtle wiggle for attention (reduced motion safe) */
+@keyframes nudge{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+.btn-attention{animation:nudge 3.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.btn-attention{animation:none}}
+
+/* final responsive check */
+@media (max-width:480px){
+.hero{padding:18px;border-radius:12px}
+.hero .hi{font-size:22px}
+.profile-photo{width:110px;height:110px}
+.profile-meta .meta-title{font-size:16px}
 }
 
-/* subtle separator */
-hr{ border:0; height:1px; background: linear-gradient(90deg,color-mix(in srgb,var(--text) 6%, transparent), transparent); margin:1rem 0 }
 
-/* Fancy focus ring for form fields */
-input:focus, textarea:focus{
-  box-shadow: 0 8px 28px rgba(6,182,212,0.08), 0 2px 6px rgba(6,182,212,0.04);
-  border-color: var(--accent);
-}
 
-/* Input placeholders */
-::placeholder{ color: color-mix(in srgb, var(--text) 40%, transparent) }
-
-/* subtle badge animation */
-.badge{ transition: transform 420ms var(--transition), box-shadow 420ms var(--transition) }
-.badge:active{ transform:scale(.98) }
-
-/* tiny helper: subtle "shine" on hero CTA */
-.hero-ctas .cta-1{
-  position:relative;
-  overflow:hidden;
-}
-.hero-ctas .cta-1::after{
-  content:'';
-  position:absolute; left:-40%; top:0; height:100%; width:40%;
-  background: linear-gradient(90deg, rgba(255,255,255,0.22), rgba(255,255,255,0));
-  transform: skewX(-12deg);
-  transition: left 650ms cubic-bezier(.2,.9,.2,1);
-}
-.hero-ctas .cta-1:hover::after{ left:120% }
-
-/* ----------------------------------------
-   Print & small tweaks
-   ---------------------------------------- */
-@media print{
-  body{ background:#fff; color:#000 }
-  .site-header, .footer-grid, .hamburger, .icon-btn{ display:none }
-  .container{ padding:0 }
-}
-
-/* ----------------------------------------
-   End of stylesheet
-   ---------------------------------------- */
-
-/* Developer note:
-   - Tune the color variables to match brand.
-   - Add additional breakpoints or fine-grained motion rules as needed.
-   - Many transitions use CSS variables for consistent timing.
-   - The JS will toggle '.in-view', '.filtered-out', '.open', '.saved', and set inline widths on .skill-bar.
-*/
 </style>
 
 </head>
+<body>
+<!-- =========================
+HEADER (fixed) — many icons
+========================= -->
+<header class="site-header" role="banner" aria-label="Primary site header">
+<div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
+<div class="brand" aria-hidden="false" style="display:flex;align-items:center;gap:12px">
+<div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
+<div>
+<h1 style="margin:0">Senu James</h1>
+<p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
+</div>
+</div>
 
-  <body class="portfolio-page" data-theme="light">
-  <!-- Fixed Header -->
-  <header class="site-header fixed" role="banner" aria-label="Main header">
-    <div class="container header-inner">
-      <a class="brand" href="#hero" aria-label="Senu James - Home">
-        <!-- Minimal logo SVG -->
-        <svg class="logo" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="4" fill="currentColor" />
-        </svg>
-        <span class="brand-text">Senu James</span>
-      </a>
+<nav class="primary" aria-label="Main navigation" style="display:flex;align-items:center;gap:12px">
+<a href="#home-hero" style="text-decoration:none"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+<a href="#projects" style="text-decoration:none"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+<a href="#about" style="text-decoration:none"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+<a href="#timeline" style="text-decoration:none"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+<a href="#contact" style="text-decoration:none"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+<a class="cta" href="#resume" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+</nav>
+</div>
+</header>
 
-      <nav class="main-nav" role="navigation" aria-label="Primary">
-        <ul>
-          <li><a href="#projects" data-nav>Projects</a></li>
-          <li><a href="#about" data-nav>About</a></li>
-          <li><a href="#case-studies" data-nav>Case Studies</a></li>
-          <li><a href="#testimonials" data-nav>Testimonials</a></li>
-          <li><a href="#contact" data-nav>Contact</a></li>
-        </ul>
-      </nav>
+<!-- =========================
+MAIN CONTENT
+========================= -->
+<main id="main-content" class="container" role="main" style="padding-top:28px;">
 
-      <div class="header-actions">
-        <button class="btn icon-btn theme-toggle" aria-pressed="false" aria-label="Toggle light and dark mode" data-toggle-theme>
-          <!-- Sun / Moon icon pair -->
-          <svg class="icon sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4"/><g/></svg>
-          <svg class="icon moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-        </button>
-        <a class="btn primary" href="#contact">Hire / Contact</a>
-        <button class="hamburger" aria-expanded="false" aria-controls="mobileMenu" data-toggle-mobile>
-          <span class="sr-only">Open menu</span>
-          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
-      </div>
-    </div>
+<!-- =========================
+HERO — high impact
+========================= -->
+<section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region" style="margin-top:18px;">
+<div class="hero-left">
+<span class="kicker" aria-hidden="true" style="display:inline-flex;align-items:center;gap:8px;">
+<i class="fa-solid fa-award" aria-hidden="true"></i> Award-winning • Product & UI-focused
+</span>
 
-    <!-- Mobile nav (hidden by default) -->
-    <div id="mobileMenu" class="mobile-nav" aria-hidden="true">
-      <ul>
-        <li><a href="#hero" data-nav-mobile>Home</a></li>
-        <li><a href="#projects" data-nav-mobile>Projects</a></li>
-        <li><a href="#about" data-nav-mobile>About</a></li>
-        <li><a href="#case-studies" data-nav-mobile>Case Studies</a></li>
-        <li><a href="#contact" data-nav-mobile>Contact</a></li>
-      </ul>
-      <div class="mobile-socials">
-        <!-- inline social icons -->
-      </div>
-    </div>
-  </header>
+<h2 id="hero-heading" class="hi" style="line-height:1.02;margin-top:12px;">
+Hi, I’m <strong>Senu James</strong> — I design & build web products that scale.
+</h2>
 
-  <!-- HERO -->
-  <main id="main" role="main">
-    <section id="hero" class="hero-section" aria-label="Hero" data-ani="hero-fade">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <p class="eyebrow" data-ani="slide-up">Hello — I’m <strong>Senu James</strong>, product-focused web developer</p>
-          <h1 class="hero-title" data-ani="reveal">
-            I design & build practical, user-centered digital products<br>
-            that solve everyday problems in education, campus logistics, and community commerce.
-          </h1>
+<p class="lead" style="margin-top:8px;color:var(--muted);max-width:68ch">
+I blend product thinking, clean UX, and robust engineering to ship web apps with real impact — from AI learning platforms to campus-scale systems. My work focuses on accessibility, reliability, and delightful interfaces.
+</p>
 
-          <p class="hero-sub" data-ani="fade-up">
-            Highlights: <strong>Vitra AI (award-winning)</strong>, <strong>Shuttle Tracker</strong>, <strong>E-Mart</strong>, <strong>Make Heaven Crowded</strong>, and several admin + registry tools. I make systems simple to use, reliably accessible, and easy to maintain.
-          </p>
+<div class="cta-row" role="toolbar" aria-label="Primary calls to action" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp;See selected work</a>
+<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp;Get in touch</a>
+<a class="btn" href="#about" style="text-decoration:none"><i class="fa-solid fa-book-open"></i>&nbsp;Read my story</a>
+</div>
 
-          <div class="hero-ctas" data-ani="stagger">
-            <a class="btn cta-1" href="#projects" role="button">View Projects</a>
-            <a class="btn ghost" href="#case-studies" role="button">Read Case Studies</a>
-            <a class="btn subtle" href="/assets/Senu_James_CV.pdf" download>Download CV</a>
-          </div>
+<div class="skill-pills" aria-hidden="true" style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+<div class="pill"><i class="fa-brands fa-react"></i>&nbsp; React</div>
+<div class="pill"><i class="fa-brands fa-js-square"></i>&nbsp; TypeScript</div>
+<div class="pill"><i class="fa-brands fa-node-js"></i>&nbsp; Node.js</div>
+<div class="pill"><i class="fa-solid fa-robot"></i>&nbsp; AI • ML</div>
+<div class="pill"><i class="fa-solid fa-palette"></i>&nbsp; Design Systems</div>
+</div>
 
-          <div class="hero-meta" aria-hidden="false" data-ani="meta">
-            <div class="meta-pill">
-              <!-- award icon -->
-              <svg class="icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2l2.5 5L20 8l-4 3 1 6L12 14 7 17l1-6L4 8l5.5-.9L12 2z"/></svg>
-              <span>Winner — African Digital Innovation Challenge</span>
-            </div>
-            <div class="meta-pill">
-              <svg class="icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
-              <span>Real-time campus tools used by students & staff</span>
-            </div>
-          </div>
-        </div>
+<!-- quick impact stats -->
+<div class="stats" style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-users"></i>&nbsp;1.2K+</div>
+<div style="font-size:12px;color:var(--muted)">Users impacted</div>
+</div>
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-trophy"></i>&nbsp;Winner</div>
+<div style="font-size:12px;color:var(--muted)">African Digital Innovation Challenge</div>
+</div>
+<div class="pill" aria-hidden="true" style="display:flex;flex-direction:column;align-items:flex-start;padding:12px;border-radius:12px;">
+<div style="display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px"><i class="fa-solid fa-code"></i>&nbsp;6+</div>
+<div style="font-size:12px;color:var(--muted)">Major projects shipped</div>
+</div>
+</div>
+</div>
 
-        <figure class="hero-visuals" data-ani="float">
-          <!-- Featured project snapshot, layered with badges / icons -->
-          <picture class="hero-screenshot">
-            <source srcset="vitra.png" type="image/webp">
-            <img src="/assets/hero-1.jpg" alt="Screenshot of Vitra AI and Shuttle Tracker dashboards" loading="lazy">
-          </picture>
+<!-- HERO RIGHT: portrait + quick contact actions -->
+<aside class="profile-card" aria-label="Profile card" role="complementary" style="display:flex;gap:14px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+<div class="profile-photo" style="width:160px;height:160px;border-radius:50%;overflow:hidden">
+<img src="image2.jpeg" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
+</div>
 
-          <div class="floating-cards">
-            <div class="card small" data-ani="pop" title="Shuttle Tracker">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M3 11h18l-1 6H4zM6 6h12v3H6z"/></svg>
-              <strong>Shuttle Tracker</strong>
-              <small>real-time campus transport</small>
-            </div>
+<div style="display:flex;gap:8px;align-items:center">
+<a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="GitHub">
+<div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
+</a>
+<a href="https://www.linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none" aria-label="LinkedIn">
+<div class="float-btn" title="LinkedIn"><i class="fa-brands fa-linkedin fa-lg"></i></div>
+</a>
+<a href="mailto:senujames23@gmail.com" style="text-decoration:none" aria-label="Email">
+<div class="float-btn" title="Email"><i class="fa-solid fa-envelope fa-lg"></i></div>
+</a>
+</div>
+</div>
 
-            <div class="card small" data-ani="pop" title="Vitra AI">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-              <strong>Vitra AI</strong>
-              <small>personalized learning</small>
-            </div>
+<div class="profile-meta" style="flex:1">
+<div class="meta-title" style="font-weight:800;font-size:18px">Senu James</div>
+<div class="meta-sub" style="margin-top:6px;color:var(--muted)">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
 
-            <div class="scroll-hint" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M7 10l5 5 5-5"/></svg>
-              <span>Scroll</span>
-            </div>
-          </div>
-        </figure>
-      </div>
-    </section>
+<div style="margin-top:12px;display:flex;gap:10px">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-eye"></i>&nbsp; See Work</a>
+<a class="btn btn-outline" href="#contact" style="text-decoration:none"><i class="fa-solid fa-paper-plane"></i>&nbsp; Hire me</a>
+</div>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="projects-section" aria-labelledby="projects-title">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="projects-title">Select Projects</h2>
-          <p class="muted">A curated selection of finished projects and case studies — interactive demos, design systems, and product thinking included.</p>
-        </div>
+<div style="margin-top:12px;display:flex;gap:12px;align-items:center;color:var(--muted)">
+<i class="fa-solid fa-location-dot"></i>
+<div>
+<strong>Accra, Ghana</strong>
+<div style="font-size:12px;color:var(--muted)">Available for internships & remote roles</div>
+</div>
+</div>
 
-        <!-- Filters -->
-        <div class="filters" role="tablist" aria-label="Project filters" data-ani="stagger">
-          <button class="filter active" data-filter="all" aria-pressed="true">All</button>
-          <button class="filter" data-filter="education">Education</button>
-          <button class="filter" data-filter="logistics">Logistics</button>
-          <button class="filter" data-filter="ecommerce">E-commerce</button>
-          <button class="filter" data-filter="admin">Admin Tools</button>
-        </div>
+<div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+<i class="fa-solid fa-phone"></i>
+<a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a>
+</div>
+</div>
+</aside>
+</section>
 
-        <!-- Projects Grid -->
-        <div class="projects-grid" role="list" aria-live="polite" data-columns>
-          <!-- Project Card -->
-          <article class="project-card" role="listitem" data-category="education" data-ani="card-rise">
-            <div class="card-media">
-              <picture>
-                <source srcset="crowd-hoodie.jpg" type="image/webp">
-                <img src="fittrack.png" alt="Vitra AI dashboard screenshot" loading="lazy">
-              </picture>
-              <div class="card-badges">
-                <span class="badge">Award</span>
-                <span class="badge soft">SaaS</span>
-              </div>
-              <button class="icon-btn fav" aria-label="Bookmark Vitra AI" title="Bookmark">
-                <svg viewBox="0 0 24 24"><path d="M6 2h12v20l-6-4-6 4z"/></svg>
-              </button>
-            </div>
+<!-- =========================
+ABOUT — short section (icons included)
+========================= -->
+<section id="about" class="section" aria-labelledby="about-heading" role="region" style="margin-top:28px;">
+<div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+<div>
+<h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+<p style="color:var(--muted);max-width:70ch">
+I build product-first web applications with a focus on clarity, performance, and impact. I led Vitra AI from concept to prototype, integrated ML models, and shipped production front-ends. I care deeply about accessible UIs, maintainable code, and measurable outcomes.
+</p>
 
-            <div class="card-body">
-              <h3 class="project-title">Vitra AI</h3>
-              <p class="project-excerpt">Personalized learning & auto-evaluation platform that adapts to each learner and reduces teacher workload.</p>
-              <div class="card-meta">
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg> Education</span>
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 7v5l3 3"/></svg> React • Node</span>
-              </div>
+<div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+<div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+<div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+<div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+<div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
+</div>
 
-              <div class="card-actions">
-                <button class="btn small" data-open-project="vitra" aria-controls="projectModal">Case study</button>
-                <a class="btn small ghost" href="/demos/vitra" target="_blank" rel="noopener">Live demo</a>
-              </div>
-            </div>
-          </article>
+<div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+<a class="btn btn-primary" href="#projects" style="text-decoration:none"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+<a class="btn" href="#contact" style="text-decoration:none"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
+</div>
+</div>
 
-          <!-- Shuttle Tracker -->
-          <article class="project-card" role="listitem" data-category="logistics" data-ani="card-rise">
-            <div class="card-media">
-              <picture>
-                <source srcset="/assets/projects/shuttle@2x.webp" type="image/webp">
-                <img src="/assets/projects/shuttle.jpg" alt="Shuttle Tracker map and timeline" loading="lazy">
-              </picture>
-              <div class="card-badges">
-                <span class="badge">Campus</span>
-                <span class="badge soft">Realtime</span>
-              </div>
-            </div>
+<aside style="display:flex;flex-direction:column;gap:10px">
+<div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff">
+<i class="fa-solid fa-award"></i>
+</div>
+<div>
+<div style="font-weight:800">African Digital Innovation Challenge</div>
+<div style="font-size:13px;color:var(--muted)">Vitra AI — Winner</div>
+</div>
+</div>
+</div>
 
-            <div class="card-body">
-              <h3 class="project-title">Shuttle Tracker</h3>
-              <p class="project-excerpt">Real-time campus transport visualization used by students and staff to predict arrivals and track vehicles.</p>
-              <div class="card-meta">
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M3 12h18"/></svg> Logistics</span>
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2v20"/></svg> WebSocket • Map</span>
-              </div>
+<div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)">
+<i class="fa-solid fa-people-group"></i>
+</div>
+<div>
+<div style="font-weight:800">Community Impact</div>
+<div style="font-size:13px;color:var(--muted)">Projects used by student groups and campus teams</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</section>
 
-              <div class="card-actions">
-                <button class="btn small" data-open-project="shuttle" aria-controls="projectModal">Case study</button>
-                <a class="btn small ghost" href="/demos/shuttle" target="_blank" rel="noopener">Live demo</a>
-              </div>
-            </div>
-          </article>
+<!-- =========================
+SELECTED PROJECTS — rich cards
+========================= -->
+<section id="projects" class="projects" style="margin-top:28px;">
+<div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div>
+<h3 style="margin:0;font-size:20px">Selected Projects</h3>
+<p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos — click Live or Repo to explore each project.</p>
+</div>
 
-          <!-- E-Mart -->
-          <article class="project-card" role="listitem" data-category="ecommerce" data-ani="card-rise">
-            <div class="card-media">
-              <picture>
-                <source srcset="/assets/projects/emart@2x.webp" type="image/webp">
-                <img src="/assets/projects/emart.jpg" alt="E-Mart shopping experience" loading="lazy">
-              </picture>
-              <div class="card-badges">
-                <span class="badge">Commerce</span>
-                <span class="badge soft">UX</span>
-              </div>
-            </div>
+<div style="display:flex;gap:8px;align-items:center">
+<button class="btn btn-outline" id="filter-all" aria-pressed="true" style="text-decoration:none"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+<button class="btn btn-outline" id="filter-web" style="text-decoration:none"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+<button class="btn btn-outline" id="filter-ai" style="text-decoration:none"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
+</div>
+</div>
 
-            <div class="card-body">
-              <h3 class="project-title">E-Mart</h3>
-              <p class="project-excerpt">Modern shopping experience blended with community features and design tools to help local sellers thrive.</p>
-              <div class="card-meta">
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/></svg> E-commerce</span>
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2l3 10H9z"/></svg> React • Stripe</span>
-              </div>
+<div class="projects-grid" id="projects-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px">
+<!-- Project cards generated by JS, but include a progressive fallback for now -->
+<!-- Vitra AI -->
+<article class="card tilt" role="article" aria-labelledby="p-vitra">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">AI • Winner</div>
+<img src="vitra.png" alt="Vitra AI screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-vitra" class="card-title">Vitra AI</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">AI for education — personalized learning resources and auto-evaluation.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Python</span><span class="tag">React</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+<a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+</div>
+</div>
+</article>
 
-              <div class="card-actions">
-                <button class="btn small" data-open-project="emart" aria-controls="projectModal">Case study</button>
-                <a class="btn small ghost" href="/demos/emart" target="_blank" rel="noopener">Live demo</a>
-              </div>
-            </div>
-          </article>
+<!-- Shuttle Tracker -->
+<article class="card tilt" role="article" aria-labelledby="p-shuttle">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Maps • Real-time</div>
+<img src="shuttle.png" alt="Shuttle Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Real-time campus transport tracking with map visualizations.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-          <!-- Make Heaven Crowded -->
-          <article class="project-card" role="listitem" data-category="ecommerce" data-ani="card-rise">
-            <div class="card-media">
-              <picture>
-                <source srcset="/assets/projects/mhc@2x.webp" type="image/webp">
-                <img src="/assets/projects/mhc.jpg" alt="Make Heaven Crowded brand shop" loading="lazy">
-              </picture>
-              <div class="card-badges">
-                <span class="badge">Brand</span>
-                <span class="badge soft">Community</span>
-              </div>
-            </div>
+<!-- E-Mart -->
+<article class="card tilt" role="article" aria-labelledby="p-emart">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">E-commerce</div>
+<img src="emart.png" alt="E-Mart screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-emart" class="card-title">E-Mart</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Modern shopping flows and mobile-first checkout experience.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Stripe</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-            <div class="card-body">
-              <h3 class="project-title">Make Heaven Crowded</h3>
-              <p class="project-excerpt">A design-led shop and gospel platform uniting commerce with community content and design tools.</p>
-              <div class="card-meta">
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2l10 20H2z"/></svg> Brand</span>
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2v20"/></svg> Shopify • Custom</span>
-              </div>
+<!-- Fitness Tracker -->
+<article class="card tilt" role="article" aria-labelledby="p-fitness">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Health • Data</div>
+<img src="fittrack.png" alt="Fitness Tracker screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Dashboards and analytics for personal fitness goals.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">React</span><span class="tag">Charts</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-              <div class="card-actions">
-                <button class="btn small" data-open-project="mhc" aria-controls="projectModal">Case study</button>
-                <a class="btn small ghost" href="/demos/mhc" target="_blank" rel="noopener">Live demo</a>
-              </div>
-            </div>
-          </article>
+<!-- SkillForge Registry -->
+<article class="card tilt" role="article" aria-labelledby="p-skillforge">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px">Forms • Admin</div>
+<img src="skillforge.png" alt="SkillForge screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Workshop registration, auth & admin reporting tools for organizers.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+</div>
+</div>
+</article>
 
-          <!-- Admin Tools -->
-          <article class="project-card" role="listitem" data-category="admin" data-ani="card-rise">
-            <div class="card-media">
-              <picture>
-                <source srcset="/assets/projects/admin@2x.webp" type="image/webp">
-                <img src="/assets/projects/admin.jpg" alt="Admin registry tools UI" loading="lazy">
-              </picture>
-              <div class="card-badges">
-                <span class="badge">Internal</span>
-              </div>
-            </div>
+<!-- Make Heaven Crowded (new, featured) -->
+<article class="card tilt featured" role="article" aria-labelledby="p-mhc">
+<div class="card-visual" style="position:relative;height:220px">
+<div class="badge" aria-hidden="true" style="left:12px;top:12px;background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div>
+<img src="mhc.png" alt="Make Heaven Crowded screenshot" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="card-body">
+<h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+<div class="card-sub" style="margin-top:6px;color:var(--muted)">Faith-driven e-commerce + gospel hub: shop, devotionals, donations and a design generator.</div>
+<div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span><span class="tag">Design</span></div>
+<div class="card-foot" style="display:flex;gap:8px;margin-top:14px">
+<a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+<a class="link-btn repo" href="#" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+<a class="link-btn" href="make-heaven-crowded.html" target="_blank" rel="noopener" style="text-decoration:none"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</a>
+</div>
+</div>
+</article>
 
-            <div class="card-body">
-              <h3 class="project-title">Registry & Admin Tools</h3>
-              <p class="project-excerpt">Tools that reduce friction for organizers and student groups through better workflows and automation.</p>
-              <div class="card-meta">
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20"/></svg> Productivity</span>
-                <span class="meta"><svg viewBox="0 0 24 24"><path d="M4 6h16"/></svg> Internal • Node</span>
-              </div>
+</div> <!-- end projects-grid -->
+</section>
 
-              <div class="card-actions">
-                <button class="btn small" data-open-project="admin" aria-controls="projectModal">Case study</button>
-                <a class="btn small ghost" href="/demos/admin" target="_blank" rel="noopener">Live demo</a>
-              </div>
-            </div>
-          </article>
-        </div>
+<!-- =========================
+TIMELINE / MILESTONES — visual strip with icons
+========================= -->
+<section id="timeline" class="timeline" aria-labelledby="timeline-heading" style="margin-top:36px;">
+<h3 id="timeline-heading" style="margin:0 0 12px">Journey & milestones</h3>
+<div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Oct 2025</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div>
+</div>
 
-        <div class="more-ctas" data-ani="fade-up">
-          <a class="btn" href="/projects">See all projects</a>
-          <a class="btn ghost" href="#case-studies">Deep dive case studies</a>
-        </div>
-      </div>
-    </section>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>Jun 2024</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div>
+</div>
 
-    <!-- CASE STUDIES / TIMELINE -->
-    <section id="case-studies" class="case-section" aria-labelledby="case-title">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="case-title">Case Studies & Process</h2>
-          <p class="muted">My process: research → prototype → iterate → measure. Each case below includes problem framing, constraints, decisions, and outcomes.</p>
-        </div>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div>
+</div>
 
-        <ol class="timeline">
-          <li class="timeline-item" data-ani="slide-left">
-            <div class="timeline-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20"/></svg></div>
-            <div class="timeline-body">
-              <h3>Vitra AI — Personalized assessment</h3>
-              <p class="muted">Challenge: Scale personalized practice without overburdening teachers. Outcome: 40% faster grading workflows and improved student retention in pilot schools.</p>
-              <a class="link" href="#projects" data-open-case="vitra">Read the case study</a>
-            </div>
-            <div class="timeline-meta">2024 • Award-winning</div>
-          </li>
+<div class="timeline-card" style="min-width:200px;padding:12px;border-radius:12px">
+<div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div>
+<div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div>
+</div>
+</div>
+</section>
 
-          <li class="timeline-item" data-ani="slide-right">
-            <div class="timeline-icon"><svg viewBox="0 0 24 24"><path d="M3 12h18"/></svg></div>
-            <div class="timeline-body">
-              <h3>Shuttle Tracker — Campus mobility</h3>
-              <p class="muted">Challenge: Provide reliable ETAs on resource-constrained networks. Outcome: Real-time ETA updates and map overlays that improved average wait times.</p>
-              <a class="link" href="#projects" data-open-case="shuttle">Read the case study</a>
-            </div>
-            <div class="timeline-meta">2023 • Campus deployment</div>
-          </li>
-        </ol>
-      </div>
-    </section>
+<!-- =========================
+MARQUEE / COMMUNITY IMAGES
+========================= -->
+<section class="marquee-wrap" aria-labelledby="community-heading" style="margin-top:36px;">
+<header style="text-align:center;margin-bottom:12px">
+<h3 id="community-heading" style="margin:0">Community & events</h3>
+<p style="margin:6px 0 0;color:var(--muted)">Photos from events, user stories and launches.</p>
+</header>
 
-    <!-- ABOUT -->
-    <section id="about" class="about-section" aria-labelledby="about-title">
-      <div class="container about-grid">
-        <div class="about-visual" data-ani="scale-up">
-          <picture>
-            <source srcset="/assets/senu-portrait@2x.webp" type="image/webp">
-            <img src="/assets/senu-portrait.jpg" alt="Portrait of Senu James" loading="lazy">
-          </picture>
-          <div class="badge-mini">Professional web developer</div>
-        </div>
+<div class="marquee" id="marquee" style="display:flex;gap:16px;align-items:center;overflow:hidden;">
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-1.jpg" alt="Campus outreach"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-2.jpg" alt="Design reveal"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-3.jpg" alt="Workshop"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-4.jpg" alt="Launch event"></div>
+<div class="marq-item" style="flex:0 0 240px;border-radius:12px;overflow:hidden"><img src="community-5.jpg" alt="Street outreach"></div>
+</div>
+</section>
 
-        <div class="about-content">
-          <h2 id="about-title">About — Senu James</h2>
-          <p>
-            I create practical, user-centered digital products that solve everyday problems in education, campus logistics, and community commerce. My portfolio showcases a range of finished projects and case studies driven by a clear product philosophy: make systems simple to use, reliably accessible, and easy to maintain.
-          </p>
+<!-- =========================
+CONTACT — polished form + quick details
+========================= -->
+<section id="contact" class="contact-wrap" aria-labelledby="contact-heading" style="margin-top:40px;">
+<div class="contact-card" role="region" aria-labelledby="contact-heading" style="padding:20px;border-radius:12px">
+<h3 id="contact-heading" style="margin:0 0 8px">Contact</h3>
+<p style="color:var(--muted);margin:0 0 12px">Interested in collaborating or an internship? Send a short message — I respond quickly.</p>
 
-          <ul class="highlights">
-            <li><strong>Vitra AI</strong> — personalized learning & auto-evaluation (African Digital Innovation Challenge winner)</li>
-            <li><strong>Shuttle Tracker</strong> — campus transport visualization adopted by students & staff</li>
-            <li><strong>E-Mart & Make Heaven Crowded</strong> — modern shopping + community experiences</li>
-            <li>Several admin & registry tools that reduce friction for organizers and student groups</li>
-          </ul>
+<form id="contact-form" style="margin-top:12px;display:grid;gap:10px;" onsubmit="event.preventDefault(); alert('Message sent (demo)'); this.reset();">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<input class="input" id="name" name="name" placeholder="Your name" required aria-label="Your name" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+<input class="input" id="email" name="email" type="email" placeholder="you@domain.com" required aria-label="Email" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+</div>
 
-          <div class="skillset" aria-hidden="false" data-ani="stagger">
-            <h4>Skills & Tech</h4>
-            <div class="skills-grid">
-              <div class="skill">
-                <div class="skill-head"><span>Product Design</span><small>Research • UX</small></div>
-                <div class="skill-bar" data-skill="85" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
-              </div>
-              <div class="skill">
-                <div class="skill-head"><span>Frontend Engineering</span><small>HTML • CSS • React</small></div>
-                <div class="skill-bar" data-skill="92" role="progressbar"></div>
-              </div>
-              <div class="skill">
-                <div class="skill-head"><span>Backend & Infra</span><small>Node • Databases</small></div>
-                <div class="skill-bar" data-skill="78" role="progressbar"></div>
-              </div>
-              <div class="skill">
-                <div class="skill-head"><span>Accessibility</span><small>A11y • Inclusive design</small></div>
-                <div class="skill-bar" data-skill="88" role="progressbar"></div>
-              </div>
-            </div>
-          </div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<input class="input" id="phone" name="phone" type="tel" placeholder="+233 24 555 0123" aria-label="Phone number" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+<input class="input" id="subject" name="subject" placeholder="Subject" aria-label="Subject" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff">
+</div>
 
-          <div class="about-actions">
-            <a class="btn" href="/assets/Senu_James_CV.pdf" download>Download CV</a>
-            <a class="btn ghost" href="#contact">Get in touch</a>
-          </div>
+<textarea class="textarea" id="message" name="message" rows="5" placeholder="Tell me about your project" aria-label="Message" style="padding:12px;border-radius:10px;border:1px solid #e9f0ff"></textarea>
 
-        </div>
-      </div>
-    </section>
+<div style="display:flex;gap:12px;align-items:center">
+<button class="send" type="submit" style="padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:0;font-weight:800">Send message</button>
+<div style="color:var(--muted);font-size:13px">Or reach me directly: <a href="tel:+233245550123" style="text-decoration:none;color:inherit"><strong>+233 24 555 0123</strong></a></div>
+</div>
+</form>
+</div>
 
-    <!-- TESTIMONIALS -->
-    <section id="testimonials" class="testimonial-section" aria-labelledby="testimonials-title">
-      <div class="container">
-        <div class="section-header">
-          <h2 id="testimonials-title">What people say</h2>
-          <p class="muted">Short testimonials from partners, professors, and product users.</p>
-        </div>
+<aside class="contact-aside" style="padding:18px;border-radius:12px">
+<h4 style="margin:0 0 8px">Quick links & socials</h4>
 
-        <div class="testimonial-carousel" data-carousel>
-          <blockquote class="testimonial" data-ani="fade">
-            <p>“Senu turned a messy process into a clean product — students actually use it. Smart, fast, deliberate.”</p>
-            <footer>— Professor A., University Partner</footer>
-          </blockquote>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div><strong>Email:</strong> <a href="mailto:senujames23@gmail.com" style="text-decoration:none;color:inherit">senujames23@gmail.com</a></div>
+<div><strong>Phone:</strong> <a href="tel:+233245550123" style="text-decoration:none;color:inherit">+233 24 555 0123</a></div>
+<div><strong>GitHub:</strong> <a href="https://github.com/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">github.com/senu-james</a></div>
+<div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">linkedin.com/in/senu-james</a></div>
+</div>
 
-          <blockquote class="testimonial" data-ani="fade">
-            <p>“The Shuttle Tracker reduced complaints about late shuttles by half — a real impact for campus life.”</p>
-            <footer>— Student Union Rep</footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
+<div style="margin-top:14px">
+<strong style="display:block;margin-bottom:8px">Follow</strong>
+<div style="display:flex;gap:8px">
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-github"></i>&nbsp;GitHub</div></a>
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</div></a>
+<a href="#" style="text-decoration:none"><div class="social-pill"><i class="fa-brands fa-twitter"></i>&nbsp;Twitter</div></a>
+</div>
+</div>
 
-    <!-- CONTACT -->
-    <section id="contact" class="contact-section" aria-labelledby="contact-title" data-ani="fade-up">
-      <div class="container contact-grid">
-        <div class="contact-card">
-          <h2 id="contact-title">Let's talk</h2>
-          <p class="muted">Looking to hire a professional web developer who thinks product-first? Tell me about your project — I love ambitious, meaningful problems.</p>
+<div style="margin-top:18px">
+<strong style="display:block;margin-bottom:8px">Download</strong>
+<a class="link-btn live" href="#resume" style="text-decoration:none;padding:10px 12px;display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border-radius:10px">Download Resume</a>
+</div>
+</aside>
+</section>
 
-          <ul class="contact-info">
-            <li><svg viewBox="0 0 24 24"><path d="M21 8V7l-3 2-2-1-2 1-3-2-4 3v6h14"/></svg> Accra, Ghana</li>
-            <li><svg viewBox="0 0 24 24"><path d="M2 7v10h20V7"/></svg> <a href="mailto:senu@example.com">senu@example.com</a></li>
-            <li><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/></svg> <a href="tel:+233200000000">+233 20 000 0000</a></li>
-          </ul>
+<!-- =========================
+FOOTER
+========================= -->
+<footer class="site" role="contentinfo" style="margin-top:36px;padding:24px 0;border-top:1px solid rgba(0,0,0,0.04)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--maxw);margin:0 auto">
+<div>
+<strong style="font-size:16px">Senu James</strong>
+<div style="color:var(--muted);font-size:13px">Web Developer • AI & Product Builder</div>
+</div>
 
-          <div class="social-links">
-            <a href="https://github.com/senu" target="_blank" rel="noopener" aria-label="GitHub">
-              <svg viewBox="0 0 24 24"><path d="M12 2C7 2 4 5 4 9c0 4 3 6 8 6s8-2 8-6c0-4-3-7-8-7z"/></svg>
-            </a>
-            <a href="https://linkedin.com/in/senu" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/></svg>
-            </a>
-            <a href="https://x.com/senu" target="_blank" rel="noopener" aria-label="X">
-              <svg viewBox="0 0 24 24"><path d="M3 3l18 18M21 3L3 21"/></svg>
-            </a>
-          </div>
+<div style="display:flex;gap:12px;align-items:center">
+<a href="https://github.com/senu-james" style="text-decoration:none"><i class="fa-brands fa-github fa-lg"></i></a>
+<a href="https://linkedin.com/in/senu-james" style="text-decoration:none"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+<a href="mailto:senujames23@gmail.com" style="text-decoration:none"><i class="fa-solid fa-envelope fa-lg"></i></a>
+</div>
+</div>
+<div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">© <strong>Senu James</strong> — All rights reserved.</div>
+</footer>
 
-          <div class="contact-cta">
-            <a class="btn" href="mailto:senu@example.com?subject=Project%20Inquiry">Email me</a>
-            <a class="btn ghost" href="/assets/Senu_James_CV.pdf" download>Download CV</a>
-          </div>
-        </div>
+</main>
 
-        <div class="contact-form-wrap" aria-hidden="false">
-          <form id="contactForm" class="contact-form" action="#" method="POST" novalidate>
-            <!-- Hidden honeypot -->
-            <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-            <div class="form-row">
-              <label for="name">Your name</label>
-              <input id="name" name="name" type="text" required placeholder="Jane Doe">
-            </div>
-
-            <div class="form-row grid-2">
-              <div>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" required placeholder="you@domain.com">
-              </div>
-              <div>
-                <label for="subject">Subject</label>
-                <input id="subject" name="subject" type="text" placeholder="Short project title">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" required placeholder="Tell me about the project, timeline and budget (if any)"></textarea>
-            </div>
-
-            <div class="form-row form-actions">
-              <button class="btn" type="submit">Send message</button>
-              <button class="btn ghost" type="reset">Reset</button>
-              <div class="form-note">You'll hear back within a few business days. (If urgent, include 'URGENT' in the subject.)</div>
-            </div>
-          </form>
-
-          <div class="map-placeholder" aria-hidden="true" data-ani="map-zoom">
-            <svg viewBox="0 0 24 24" width="64" height="64" aria-hidden="true"><path d="M12 2C8 2 5 5 5 9c0 6 7 13 7 13s7-7 7-13c0-4-3-7-7-7z"/></svg>
-            <p>Interactive map / embed will appear here.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECT DETAIL MODAL (hidden) -->
-    <dialog id="projectModal" class="project-modal" aria-hidden="true" aria-labelledby="projectModalTitle">
-      <div class="modal-inner">
-        <button class="modal-close" aria-label="Close project" data-close>&times;</button>
-        <header class="modal-header">
-          <h3 id="projectModalTitle">Project Title</h3>
-          <p class="muted">Short project subtitle / category</p>
-        </header>
-
-        <section class="modal-body">
-          <div class="modal-gallery">
-            <!-- gallery images inserted dynamically -->
-            <img src="/assets/projects/placeholder@2x.jpg" alt="project screenshot" loading="lazy">
-          </div>
-
-          <div class="modal-copy">
-            <h4>Overview</h4>
-            <p>Problem, approach, impact, metrics, and the role I played. This modal should be filled by JS when user opens a project.</p>
-
-            <h5>Tech & Team</h5>
-            <ul class="modal-tags">
-              <li>React</li>
-              <li>Node</li>
-              <li>Postgres</li>
-              <li>Design system</li>
-            </ul>
-
-            <div class="modal-actions">
-              <a class="btn" href="#" target="_blank" rel="noopener">Live Demo</a>
-              <a class="btn ghost" href="#" target="_blank" rel="noopener">Full Case Study</a>
-            </div>
-          </div>
-        </section>
-      </div>
-    </dialog>
-
-    <!-- FOOTER -->
-    <footer class="site-footer" role="contentinfo">
-      <div class="container footer-grid">
-        <div class="footer-brand">
-          <a href="#hero" class="brand-min">
-            <svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
-            <span>Senu James</span>
-          </a>
-          <p class="muted">Product-first web developer. Accessible, maintainable, and delightful interfaces.</p>
-        </div>
-
-        <nav class="footer-nav" aria-label="Footer">
-          <ul>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#case-studies">Case Studies</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        <div class="footer-social">
-          <a href="https://github.com/senu" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d=""/></svg></a>
-          <a href="https://linkedin.com/in/senu" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d=""/></svg></a>
-          <a href="https://x.com/senu" aria-label="X"><svg viewBox="0 0 24 24"><path d=""/></svg></a>
-        </div>
-
-        <div class="footer-contact">
-          <small>&copy; <span id="year"></span> Senu James. All rights reserved.</small>
-          <small><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></small>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Hidden accessibility helpers -->
-    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-  </main>
-
-  <!-- Minimal inline scripts hooks (will be replaced with full JS later) -->
-  <script>
-    // Small DOM-ready hook for initial friendly interactions (no heavy logic here).
-    document.documentElement.setAttribute('data-js-ready', 'true');
-    // Fill in current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
 <script>
-  /* main.js — Full UI behavior for Senu James portfolio
-   - Self-contained, zero-deps
-   - Uses modern browser APIs with graceful fallbacks
-*/
-(function () {
-  'use strict';
+(() => {
+'use strict';
 
-  /* ---------------------
-     Helpers
-  ---------------------*/
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-  const debounce = (fn, wait = 150) => {
-    let t;
-    return (...args) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...args), wait);
-    };
-  };
+/* ---------------------------
+Utilities
+--------------------------- */
+const $ = (sel, ctx = document) => (ctx || document).querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from((ctx || document).querySelectorAll(sel));
+const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const a11yAnnouncer = $('#a11y-announcer');
+function debounce(fn, wait = 120) {
+let t;
+return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+}
 
-  function announce(msg) {
-    if (a11yAnnouncer) a11yAnnouncer.textContent = msg;
-  }
+function createToast(msg, { timeout = 1800 } = {}) {
+try {
+const id = '__sj_toast';
+const toast = document.createElement('div');
+toast.className = 'sj-toast';
+toast.setAttribute('role', 'status');
+toast.style.cssText = [
+'position:fixed',
+'right:18px',
+'bottom:18px',
+'z-index:2200',
+'background:rgba(6,10,26,0.94)',
+'color:#fff',
+'padding:10px 14px',
+'border-radius:10px',
+'font-weight:700',
+'box-shadow:0 12px 40px rgba(6,10,26,0.4)'
+].join(';');
+toast.textContent = msg;
+document.body.appendChild(toast);
+setTimeout(() => {
+toast.style.transition = 'opacity .32s ease, transform .32s ease';
+toast.style.opacity = '0';
+toast.style.transform = 'translateY(6px)';
+setTimeout(() => toast.remove(), 360);
+}, timeout);
+} catch (e) { /* silently fail */ }
+}
 
-  function toast(message, opts = {}) {
-    // Simple ephemeral toast using aria-live region if available
-    announce(message);
-    // Optionally we could show a visible toast; for now accessible announcement suffices.
-  }
+/* ---------------------------
+Smooth scroll for anchors
+--------------------------- */
+function initSmoothScroll() {
+document.addEventListener('click', (ev) => {
+const a = ev.target.closest('a[href^="#"]');
+if (!a) return;
+const href = a.getAttribute('href');
+if (!href || href === '#') return;
+const target = document.querySelector(href);
+if (!target) return;
+ev.preventDefault();
+target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// update focus for a11y
+setTimeout(() => { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }, 400);
+});
+}
 
-  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ---------------------------
+Intersection reveal (.fade-in elements)
+--------------------------- */
+function initReveal() {
+const items = $$('.fade-in');
+if (!items.length) return;
+try {
+const io = new IntersectionObserver((entries) => {
+entries.forEach(ent => {
+if (ent.isIntersecting) {
+ent.target.classList.add('show');
+// once revealed, unobserve to reduce work
+io.unobserve(ent.target);
+}
+});
+}, { threshold: 0.12 });
+items.forEach(i => io.observe(i));
+} catch (e) {
+// fallback: show all if IntersectionObserver not supported
+items.forEach(i => i.classList.add('show'));
+}
+}
 
-  /* ---------------------
-     Theme toggle + persistence
-  ---------------------*/
-  const themeToggleBtn = document.querySelector('[data-toggle-theme]');
-  const THEME_KEY = 'senu:theme';
+/* ---------------------------
+Tilt cards for .tilt
+--------------------------- */
+function initTiltCards() {
+if (isReducedMotion) return; // respect user preference
+const cards = $$('.tilt');
+if (!cards.length) return;
+cards.forEach(card => {
+let rect = null;
+const strength = parseFloat(card.dataset.tiltStrength) || 6; // degrees
+function onPointerMove(e) {
+if (!rect) rect = card.getBoundingClientRect();
+const px = ((e.clientX - rect.left) / rect.width) - 0.5; // -0.5..0.5
+const py = ((e.clientY - rect.top) / rect.height) - 0.5;
+const ry = (px * strength).toFixed(2);
+const rx = (-py * strength).toFixed(2);
+card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+card.style.transition = 'transform 60ms linear';
+}
+function onLeave() {
+card.style.transform = '';
+card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
+rect = null;
+}
+card.addEventListener('pointermove', onPointerMove, { passive: true });
+card.addEventListener('pointerleave', onLeave);
+card.addEventListener('pointercancel', onLeave);
+// restore if window resized
+window.addEventListener('resize', debounce(() => { rect = null; }, 120));
+});
+}
 
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (themeToggleBtn) themeToggleBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-    localStorage.setItem(THEME_KEY, theme);
-  }
+/* ---------------------------
+Project filtering (buttons expected to have ids: filter-all, filter-web, filter-ai)
+Filter by tag text (class .tag) or badge text.
+--------------------------- */
+function initProjectFilters() {
+const buttons = ['filter-all','filter-web','filter-ai'].map(id => document.getElementById(id)).filter(Boolean);
+const grid = document.getElementById('projects-grid');
+if (!buttons.length || !grid) return;
 
-  function initTheme() {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) {
-      applyTheme(saved);
-      return;
-    }
-    // default: follow system
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(prefersDark ? 'dark' : 'light');
-  }
+function normalize(s) { return (s || '').toString().trim().toLowerCase(); }
 
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'light';
-      const next = current === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-      toast(`Switched to ${next} mode`);
-    });
-  }
+function cardMatches(card, filter) {
+if (!filter || filter === 'all') return true;
+// check data-attributes first
+const catAttr = normalize(card.dataset.cat || card.dataset.category || '');
+if (catAttr && catAttr.includes(filter)) return true;
+// check badge text
+const badge = card.querySelector('.badge');
+if (badge && normalize(badge.textContent).includes(filter)) return true;
+// check tags
+const tags = Array.from(card.querySelectorAll('.tag')).map(t => normalize(t.textContent));
+if (tags.some(t => t.includes(filter))) return true;
+// check card-sub and title too (fallback)
+const meta = normalize((card.querySelector('.card-sub')?.textContent || '') + ' ' + (card.querySelector('.card-title')?.textContent || ''));
+if (meta.includes(filter)) return true;
+return false;
+}
 
-  initTheme();
+function applyFilter(filter) {
+const cards = Array.from(grid.children).filter(n => n.matches && n.matches('.card, article'));
+cards.forEach(card => {
+if (cardMatches(card, filter)) {
+card.style.display = '';
+card.setAttribute('aria-hidden', 'false');
+} else {
+card.style.display = 'none';
+card.setAttribute('aria-hidden', 'true');
+}
+});
+}
 
-  /* ---------------------
-     Mobile menu toggle
-  ---------------------*/
-  const hamburger = document.querySelector('[data-toggle-mobile]');
-  const mobileMenu = document.getElementById('mobileMenu');
+buttons.forEach(btn => {
+btn.addEventListener('click', () => {
+const filter = btn.id.replace('filter-',''); // 'all' | 'web' | 'ai'
+// toggle active styles
+buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
+btn.setAttribute('aria-pressed', 'true');
+applyFilter(filter);
+// focus the grid start for screen readers
+const firstVisible = grid.querySelector('.card:not([aria-hidden="true"])');
+if (firstVisible) { firstVisible.setAttribute('tabindex','-1'); firstVisible.focus({ preventScroll: true }); }
+});
+});
+}
 
-  function openMobileMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-    announce('Mobile menu opened');
-  }
-  function closeMobileMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-    announce('Mobile menu closed');
-  }
+/* ---------------------------
+Accessible modal (iframe) for case studies
+- any .link-btn where href ends with .html will open via modal
+- focus trap, ESC close, overlay click to close
+--------------------------- */
+function initModalIFrame() {
+// build modal DOM
+const modal = document.createElement('div');
+modal.id = 'sj-modal';
+modal.setAttribute('role','dialog');
+modal.setAttribute('aria-modal','true');
+modal.style.cssText = 'position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:2100;padding:20px;';
+modal.innerHTML = `
+<div class="sj-modal-panel" role="document" style="width:92%;max-width:980px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(6,10,26,0.4);">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(0,0,0,0.06);">
+<div style="display:flex;gap:10px;align-items:center">
+<strong id="sj-modal-title">Case study</strong>
+<span id="sj-modal-sub" style="color:#666;font-size:13px"></span>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<a id="sj-modal-open" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Open in new tab</a>
+<button aria-label="Close" id="sj-modal-close" class="btn">✕</button>
+</div>
+</div>
+<div style="background:#fff" id="sj-modal-body">
+<iframe id="sj-modal-iframe" src="" title="Case study preview" style="width:100%;height:64vh;border:0;display:block"></iframe>
+</div>
+</div>
+`;
+document.body.appendChild(modal);
 
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-      (expanded ? closeMobileMenu : openMobileMenu)();
-    });
-  }
+const iframe = $('#sj-modal-iframe');
+const modalTitle = $('#sj-modal-title');
+const modalSub = $('#sj-modal-sub');
+const openBtn = $('#sj-modal-open');
+const closeBtn = $('#sj-modal-close');
 
-  // close mobile menu when clicking links
-  $$( '[data-nav-mobile]' ).forEach(a => a.addEventListener('click', closeMobileMenu));
+function openModal(url, title) {
+try {
+// set iframe src safely (user provided link)
+iframe.src = url;
+modalTitle.textContent = title || 'Case study';
+modalSub.textContent = url;
+openBtn.href = url;
+modal.style.display = 'flex';
+// lock scroll
+document.documentElement.style.overflow = 'hidden';
+// focus close button
+closeBtn.focus();
+// trap focus
+document.addEventListener('focus', trapFocus, true);
+document.addEventListener('keydown', modalKeyHandler);
+} catch (e) { createToast('Unable to open case study.'); }
+}
+function closeModal() {
+iframe.src = 'about:blank';
+modal.style.display = 'none';
+document.documentElement.style.overflow = '';
+document.removeEventListener('focus', trapFocus, true);
+document.removeEventListener('keydown', modalKeyHandler);
+}
+function modalKeyHandler(e) {
+if (e.key === 'Escape') closeModal();
+}
+function trapFocus(e) {
+// keep focus inside modal panel
+const panel = modal.querySelector('.sj-modal-panel');
+if (!panel.contains(e.target)) {
+e.stopPropagation();
+panel.querySelector('button, a, iframe')?.focus();
+}
+}
 
-  /* ---------------------
-     Smooth scrolling + active nav highlighting (scroll spy)
-  ---------------------*/
-  const navLinks = $$('[data-nav]');
-  const sections = navLinks
-    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
-    .filter(Boolean);
+// close on overlay click
+modal.addEventListener('click', (ev) => {
+if (ev.target === modal) closeModal();
+});
 
-  function smoothScroll(e) {
-    const href = e.currentTarget.getAttribute('href');
-    if (!href || !href.startsWith('#')) return;
-    e.preventDefault();
-    const id = href.slice(1);
-    const target = document.getElementById(id);
-    if (!target) return;
-    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 80); // offset for fixed header
-    window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-  }
+// button wiring
+closeBtn.addEventListener('click', closeModal);
 
-  navLinks.forEach(link => link.addEventListener('click', smoothScroll));
-  $$('[data-nav-mobile]').forEach(link => link.addEventListener('click', smoothScroll));
+// delegate case-study links
+document.addEventListener('click', (ev) => {
+const a = ev.target.closest('a.link-btn');
+if (!a) return;
+const href = a.getAttribute('href') || '';
+// open local case-study html pages (endsWith .html)
+if (href.trim().toLowerCase().endsWith('.html')) {
+ev.preventDefault();
+openModal(href, (a.closest('.card')?.querySelector('.card-title')?.textContent || 'Case study'));
+}
+});
+}
 
-  // IntersectionObserver for scroll spy
-  const navObserverOptions = { root: null, rootMargin: '-30% 0px -55% 0px', threshold: 0 };
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const id = entry.target.id;
-      const link = navLinks.find(a => a.getAttribute('href') === `#${id}`);
-      if (!link) return;
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.classList.remove('active');
-        link.removeAttribute('aria-current');
-      }
-    });
-  }, navObserverOptions);
+/* ---------------------------
+Marquee: duplicate children for seamless loop and dynamic duration
+- respects reduced motion
+--------------------------- */
+function initMarquee() {
+const track = document.getElementById('marquee');
+if (!track) return;
+// If reduced motion, disable animation and make it scrollable
+if (isReducedMotion) {
+track.style.overflowX = 'auto';
+track.style.whiteSpace = 'nowrap';
+return;
+}
 
-  sections.forEach(s => navObserver.observe(s));
+// Duplicate children if necessary (at least once)
+const children = Array.from(track.children);
+if (!children.length) return;
 
-  /* ---------------------
-     Intersection-based reveal animations
-  ---------------------*/
-  const animatedEls = $$('[data-ani]');
-  const aniObserverOptions = { root: null, threshold: 0.12 };
-  const aniObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        if (entry.target.dataset.ani === 'stagger') {
-          // reveal children with stagger
-          const children = Array.from(entry.target.children);
-          children.forEach((c, i) => {
-            c.style.transitionDelay = `${i * 80}ms`;
-            c.classList.add('in-view');
-          });
-        }
-        // stop observing after first reveal (unless it's a repeating animation)
-        aniObserver.unobserve(entry.target);
-      }
-    });
-  }, aniObserverOptions);
+// ensure enough width (try duplicating up to 4x)
+function totalWidth() {
+return Array.from(track.children).reduce((s, el) => s + el.getBoundingClientRect().width + 16, 0);
+}
+const containerWidth = track.parentElement.getBoundingClientRect().width || window.innerWidth;
+// clone original set until totalWidth >= containerWidth*2
+let clones = 0;
+while (totalWidth() < containerWidth * 2 && clones < 4) {
+children.forEach(c => track.appendChild(c.cloneNode(true)));
+clones++;
+}
 
-  animatedEls.forEach(el => aniObserver.observe(el));
+// compute a comfortable duration (pixels / pxPerSec)
+const pxPerSecond = 90; // tweakable — higher = faster
+const width = totalWidth();
+const duration = Math.max(12, Math.round(width / pxPerSecond));
+track.style.setProperty('--marquee-duration', duration + 's');
+track.style.animation = `marq ${duration}s linear infinite`;
 
-  /* ---------------------
-     Project filters
-  ---------------------*/
-  const filterButtons = $$('.filters .filter');
-  const projectCards = $$('.projects-grid .project-card');
+// pause/resume handlers
+track.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+track.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+track.addEventListener('focusin', () => { track.style.animationPlayState = 'paused'; });
+track.addEventListener('focusout', () => { track.style.animationPlayState = 'running'; });
 
-  function applyFilter(filter) {
-    const showAll = filter === 'all';
-    projectCards.forEach(card => {
-      const cat = card.getAttribute('data-category') || 'other';
-      const match = showAll || cat === filter;
-      card.style.pointerEvents = match ? '' : 'none';
-      if (match) {
-        card.classList.remove('filtered-out');
-        // small stagger for appearance
-        card.style.transitionDelay = `${Math.random() * 120}ms`;
-      } else {
-        card.classList.add('filtered-out');
-        card.style.transitionDelay = '0ms';
-      }
-    });
-    announce(showAll ? 'Showing all projects' : `Filtered to ${filter} projects`);
-  }
+// keyboard toggling: space toggles play/pause
+track.setAttribute('tabindex', '0');
+track.addEventListener('keydown', (e) => {
+if (e.code === 'Space' || e.key === ' ') {
+e.preventDefault();
+const state = getComputedStyle(track).animationPlayState;
+track.style.animationPlayState = (state === 'running') ? 'paused' : 'running';
+}
+});
+}
 
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      applyFilter(f);
-    });
-  });
+/* ---------------------------
+Contact form: validation + mailto fallback
+--------------------------- */
+function initContactForm() {
+const form = document.getElementById('contact-form');
+if (!form) return;
+form.addEventListener('submit', (ev) => {
+ev.preventDefault();
+const name = String(form.name?.value || '').trim();
+const email = String(form.email?.value || '').trim();
+const phone = String(form.phone?.value || '').trim();
+const subject = String(form.subject?.value || 'Message from portfolio').trim();
+const message = String(form.message?.value || '').trim();
 
-  // Initialize showing all
-  applyFilter('all');
+if (!name || (!email && !phone) || !message) {
+createToast('Please provide your name, message and either email or phone.');
+return;
+}
 
-  /* ---------------------
-     Favorites (bookmarks)
-  ---------------------*/
-  const FAVORITES_KEY = 'senu:favs';
-  let favs = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
+// try to open mail client with prefilled body (mailto)
+const bodyLines = [
+`Name: ${name}`,
+`Email: ${email || '—'}`,
+`Phone: ${phone || '—'}`,
+'',
+message
+];
+const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}`
++ `?subject=${encodeURIComponent(subject)}`
++ `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+// open mailto in new window (best-effort)
+window.location.href = mailto;
+createToast('Opening email client…');
+form.reset();
+});
+}
 
-  function saveFavs() {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favs)));
-  }
+/* ---------------------------
+Small accessibility + misc wiring
+--------------------------- */
+function initMisc() {
+// Open live links with target=_blank already set — provide rel noopener
+$$('a[target="_blank"]').forEach(a => {
+if (!a.getAttribute('rel')) a.setAttribute('rel', 'noopener noreferrer');
+});
 
-  function updateFavButtons() {
-    $$('.project-card .fav').forEach(btn => {
-      const card = btn.closest('.project-card');
-      const id = (card && card.querySelector('.project-title')) ? card.querySelector('.project-title').textContent.trim().toLowerCase().replace(/\s+/g, '-') : null;
-      if (!id) return;
-      if (favs.has(id)) btn.classList.add('saved');
-      else btn.classList.remove('saved');
-    });
-  }
+// Make repository icons accessible
+$$('a.repo, a.link-btn.repo').forEach(a => {
+if (!a.hasAttribute('aria-label')) {
+const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`;
+a.setAttribute('aria-label', label);
+}
+});
+}
 
-  // hookup fav toggles
-  $$('.project-card .fav').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const card = btn.closest('.project-card');
-      const titleEl = card.querySelector('.project-title');
-      const id = titleEl ? titleEl.textContent.trim().toLowerCase().replace(/\s+/g, '-') : null;
-      if (!id) return;
-      if (favs.has(id)) {
-        favs.delete(id);
-        toast('Removed bookmark');
-      } else {
-        favs.add(id);
-        toast('Added bookmark');
-      }
-      saveFavs();
-      updateFavButtons();
-    });
-  });
+/* ---------------------------
+Boot
+--------------------------- */
+function boot() {
+try {
+initSmoothScroll();
+initReveal();
+initTiltCards();
+initProjectFilters();
+initModalIFrame();
+initMarquee();
+initContactForm();
+initMisc();
+// small startup toast (optional)
+// createToast('Interactive scripts initialized — view the project cards and case studies.');
+// expose debug
+window.SJ = {
+createToast,
+initTiltCards,
+initMarquee,
+initProjectFilters
+};
+} catch (err) {
+// fail silently but log to console for debugging
+console.error('Portfolio script error', err);
+}
+}
 
-  updateFavButtons();
-
-  /* ---------------------
-     Project modal (dynamic population)
-  ---------------------*/
-  const projectModal = document.getElementById('projectModal');
-  const projectModalTitle = $('#projectModalTitle');
-  const modalGallery = $('.modal-gallery');
-  const modalCopy = $('.modal-copy');
-
-  // Minimal project dataset to populate the modal — expand as needed
-  const PROJECTS = {
-    vitra: {
-      title: 'Vitra AI',
-      subtitle: 'Personalized learning & auto-evaluation',
-      images: ['/assets/projects/vitra@2x.webp', '/assets/projects/vitra-2.jpg'],
-      overview: `Vitra AI adapts practice content to students and offers auto-evaluation workflows to reduce teacher overhead. I led product design and frontend engineering. Pilot schools reported measurable improvement in engagement.`,
-      tech: ['React', 'Node', 'Postgres', 'Design System'],
-      demo: '/demos/vitra',
-      case: '/projects/vitra'
-    },
-    shuttle: {
-      title: 'Shuttle Tracker',
-      subtitle: 'Real-time campus transport visualization',
-      images: ['/assets/projects/shuttle@2x.webp', '/assets/projects/shuttle-2.jpg'],
-      overview: `Shuttle Tracker provides real-time ETAs using lightweight WebSocket feeds and map overlays to deliver reliable arrival predictions even on constrained mobile networks.`,
-      tech: ['WebSocket', 'Mapbox', 'React'],
-      demo: '/demos/shuttle',
-      case: '/projects/shuttle'
-    },
-    emart: {
-      title: 'E-Mart',
-      subtitle: 'Modern commerce for local sellers',
-      images: ['/assets/projects/emart@2x.webp', '/assets/projects/emart-2.jpg'],
-      overview: `A modern shopping experience blended with community features and seller design tools to help local merchants thrive.`,
-      tech: ['React', 'Stripe', 'Headless CMS'],
-      demo: '/demos/emart',
-      case: '/projects/emart'
-    },
-    mhc: {
-      title: 'Make Heaven Crowded',
-      subtitle: 'Brand + community commerce',
-      images: ['/assets/projects/mhc@2x.webp', '/assets/projects/mhc-2.jpg'],
-      overview: `Make Heaven Crowded unites commerce with gospel content and design tools to build community around a brand.`,
-      tech: ['Shopify', 'Custom Apps'],
-      demo: '/demos/mhc',
-      case: '/projects/mhc'
-    },
-    admin: {
-      title: 'Registry & Admin Tools',
-      subtitle: 'Organizers’ productivity suite',
-      images: ['/assets/projects/admin@2x.webp', '/assets/projects/admin-2.jpg'],
-      overview: `A suite of admin tools to reduce friction for organizers and student groups with better workflows and automation.`,
-      tech: ['Node', 'Postgres'],
-      demo: '/demos/admin',
-      case: '/projects/admin'
-    }
-  };
-
-  function populateModal(key) {
-    const data = PROJECTS[key];
-    if (!data) return;
-    // title & subtitle
-    projectModalTitle.textContent = data.title;
-    projectModal.querySelector('.modal-header .muted').textContent = data.subtitle || '';
-    // gallery
-    modalGallery.innerHTML = '';
-    data.images.forEach(src => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = `${data.title} screenshot`;
-      img.loading = 'lazy';
-      modalGallery.appendChild(img);
-    });
-    // copy
-    modalCopy.innerHTML = `
-      <h4>Overview</h4>
-      <p>${data.overview}</p>
-      <h5>Tech & Team</h5>
-      <ul class="modal-tags">${data.tech.map(t => `<li>${t}</li>`).join('')}</ul>
-      <div class="modal-actions">
-        <a class="btn" href="${data.demo}" target="_blank" rel="noopener">Live Demo</a>
-        <a class="btn ghost" href="${data.case}" target="_blank" rel="noopener">Full Case Study</a>
-      </div>
-    `;
-  }
-
-  // open modal when user clicks case study buttons
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-open-project]');
-    if (!btn) return;
-    const key = btn.dataset.openProject;
-    populateModal(key);
-    openProjectModal();
-  });
-
-  function openProjectModal() {
-    if (!projectModal) return;
-    try {
-      if (typeof projectModal.showModal === 'function') {
-        projectModal.showModal();
-      } else {
-        projectModal.classList.add('open');
-        projectModal.setAttribute('aria-hidden', 'false');
-      }
-      // trap focus
-      trapFocus(projectModal);
-      announce('Opened project modal');
-    } catch (err) {
-      // fallback for older browsers
-      projectModal.classList.add('open');
-      projectModal.setAttribute('aria-hidden', 'false');
-      trapFocus(projectModal);
-    }
-  }
-
-  function closeProjectModal() {
-    if (!projectModal) return;
-    try {
-      if (typeof projectModal.close === 'function') projectModal.close();
-      else {
-        projectModal.classList.remove('open');
-        projectModal.setAttribute('aria-hidden', 'true');
-      }
-      releaseFocusTrap();
-      announce('Closed project modal');
-    } catch (err) {
-      projectModal.classList.remove('open');
-      projectModal.setAttribute('aria-hidden', 'true');
-      releaseFocusTrap();
-    }
-  }
-
-  // close handlers: click on close button, click outside modal-inner, ESC
-  document.addEventListener('click', (e) => {
-    if (e.target.matches('[data-close]') || e.target.closest('[data-close]')) {
-      closeProjectModal();
-    }
-    if (projectModal && e.target === projectModal) {
-      closeProjectModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      // close modal if open
-      if (projectModal && (projectModal.open || projectModal.classList.contains('open'))) {
-        closeProjectModal();
-      }
-      // close mobile menu if open
-      if (hamburger && hamburger.getAttribute('aria-expanded') === 'true') closeMobileMenu();
-    }
-  });
-
-  /* ---------------------
-     Focus trap for modal (simple)
-  ---------------------*/
-  let lastFocused = null;
-  function trapFocus(container) {
-    lastFocused = document.activeElement;
-    const focusable = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
-    const nodes = Array.from(container.querySelectorAll(focusable)).filter(n => n.offsetParent !== null);
-    if (!nodes.length) return;
-    const first = nodes[0];
-    const last = nodes[nodes.length - 1];
-    first.focus();
-
-    container._trapHandler = function (e) {
-      if (e.key !== 'Tab') return;
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-    container.addEventListener('keydown', container._trapHandler);
-  }
-  function releaseFocusTrap() {
-    if (!projectModal) return;
-    if (projectModal._trapHandler) projectModal.removeEventListener('keydown', projectModal._trapHandler);
-    if (lastFocused) lastFocused.focus();
-    lastFocused = null;
-  }
-
-  /* ---------------------
-     Testimonials carousel
-  ---------------------*/
-  const carouselEl = $('[data-carousel]');
-  let carouselIndex = 0;
-  let carouselTimer = null;
-  const CAROUSEL_INTERVAL = 5000;
-
-  function showCarousel(index) {
-    if (!carouselEl) return;
-    const items = Array.from(carouselEl.children);
-    items.forEach((it, i) => {
-      it.classList.toggle('active', i === index);
-      it.setAttribute('aria-hidden', i === index ? 'false' : 'true');
-    });
-    announce(`Showing testimonial ${index + 1} of ${items.length}`);
-  }
-
-  function startCarousel() {
-    if (!carouselEl) return;
-    stopCarousel();
-    carouselTimer = setInterval(() => {
-      const items = Array.from(carouselEl.children);
-      carouselIndex = (carouselIndex + 1) % items.length;
-      showCarousel(carouselIndex);
-    }, CAROUSEL_INTERVAL);
-  }
-  function stopCarousel() {
-    if (carouselTimer) clearInterval(carouselTimer);
-    carouselTimer = null;
-  }
-
-  if (carouselEl) {
-    // show first
-    showCarousel(0);
-    if (!prefersReducedMotion) startCarousel();
-    // pause on hover/focus
-    carouselEl.addEventListener('mouseenter', stopCarousel);
-    carouselEl.addEventListener('mouseleave', () => !prefersReducedMotion && startCarousel());
-    carouselEl.addEventListener('focusin', stopCarousel);
-    carouselEl.addEventListener('focusout', () => !prefersReducedMotion && startCarousel());
-  }
-
-  /* ---------------------
-     Skill bars animation
-  ---------------------*/
-  function animateSkillBars() {
-    $$('.skill-bar').forEach(bar => {
-      const target = Number(bar.dataset.skill || 0);
-      if (Number.isNaN(target)) return;
-      bar.style.width = '0%';
-      setTimeout(() => {
-        bar.style.transition = 'width 900ms cubic-bezier(.2,.9,.2,1)';
-        bar.style.width = `${clamp(target, 0, 100)}%`;
-      }, 120);
-    });
-  }
-
-  // animate skill bars when about section comes into view
-  const aboutSection = document.getElementById('about');
-  if (aboutSection) {
-    const aboutObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateSkillBars();
-          aboutObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    aboutObserver.observe(aboutSection);
-  }
-
-  /* ---------------------
-     Contact form handling
-  ---------------------*/
-  const contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // simple client-side validation
-      const form = e.currentTarget;
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const message = form.message.value.trim();
-      const website = form.website.value.trim(); // honeypot
-
-      if (website) {
-        // honeypot filled — treat as spam silently
-        announce('Message blocked as spam.');
-        return;
-      }
-      if (!name || !email || !message) {
-        announce('Please complete required fields.');
-        toast('Please fill in required fields');
-        return;
-      }
-      // disable form while "sending"
-      const submitBtn = form.querySelector('[type="submit"]');
-      submitBtn.setAttribute('disabled', 'true');
-      submitBtn.textContent = 'Sending...';
-
-      // Simulate an async send (replace with real endpoint)
-      setTimeout(() => {
-        submitBtn.removeAttribute('disabled');
-        submitBtn.textContent = 'Send message';
-        form.reset();
-        announce('Message sent. Thank you!');
-        toast('Message sent — thanks! I will respond soon.');
-      }, 1100);
-    });
-  }
-
-  /* ---------------------
-     Header shrink / shadow on scroll (micro-interaction)
-  ---------------------*/
-  const header = document.querySelector('.site-header');
-  function onScroll() {
-    const y = window.scrollY;
-    if (!header) return;
-    if (y > 40) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  }
-  window.addEventListener('scroll', debounce(onScroll, 30), { passive: true });
-  onScroll();
-
-  /* ---------------------
-     Small accessibility & polish
-  ---------------------*/
-  // keyboard trap: make mobile menu closable with Escape handled earlier
-  // ensure images have alt attribute (developer note)
-  // fill in year (already done inline, but keep fallback)
-  const yearEl = document.getElementById('year');
-  if (yearEl && !yearEl.textContent.trim()) yearEl.textContent = new Date().getFullYear();
-
-  /* ---------------------
-     Observe images for lazy reveal (add 'loaded' class)
-  ---------------------*/
-  $$('img[loading="lazy"]').forEach(img => {
-    if (img.complete) img.classList.add('loaded');
-    else img.addEventListener('load', () => img.classList.add('loaded'));
-  });
-
-  /* ---------------------
-     Init actions at load
-  ---------------------*/
-  window.addEventListener('load', () => {
-    // ensure animations are started
-    if (prefersReducedMotion) document.documentElement.classList.add('reduced-motion');
-    // ensure carousel start if not
-    if (carouselEl && !prefersReducedMotion) startCarousel();
-    // initial announce
-    announce('Portfolio loaded');
-  });
-
-  /* ---------------------
-     Expose some debug utilities (optional)
-  ---------------------*/
-  window.__senu = {
-    openProjectModal: openProjectModal,
-    closeProjectModal: closeProjectModal,
-    applyFilter,
-    PROJECTS
-  };
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', boot);
+} else {
+boot();
+}
 
 })();
-
 </script>
+
+
+
+
+</body>
 </html>
