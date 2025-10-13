@@ -1086,7 +1086,16 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
 
             <!-- profile image -->
             <div class="profile-photo ring" style="width:160px;height:160px;border-radius:50%;overflow:hidden;z-index:2;position:relative">
-              <img src="senu.PNG" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
+             +              <!-- try the lowercase filename and add fallback + lazy loading -->
+              <img
+                src="./senu.png"
+                srcset="./senu.webp 1x, ./senu.png 1x"
+                alt="Senu James portrait"
+                loading="lazy"
+                style="width:100%;height:100%;object-fit:cover"
+                onerror="this.onerror=null;this.src='https://via.placeholder.com/400x400?text=No+Image'; console.error('Profile image failed to load:', this.src)"
+              >
+
             </div>
           </div>
 
