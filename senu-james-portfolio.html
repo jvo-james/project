@@ -874,51 +874,35 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
    --------------------------- */
 </style>
 <style>
-/* -----------------------------
- Quick fixes for the HERO & PROFILE
- - Paste this AFTER your existing <style> blocks (or in your head) to override problematic inline rules.
- - Comments explain each change; you can remove debug bits after verifying.
------------------------------- */
 
-/* 1) Header / hero spacing
-   Problem: your header is fixed and the hero had an inline margin-top:18px which likely
-   caused the header to overlap the hero/profile. Use a site header offset variable so you can tune it.
-*/
 :root{
-  --site-header-offset: 96px; /* adjust if your header is taller/shorter (try 80-110px) */
+  --site-header-offset: 96px;
 }
 
-/* Make the header height explicit (helps calculating offsets in some browsers) */
-.site-header{
+ .site-header{
   height: var(--site-header-offset);
   min-height: var(--site-header-offset);
   align-items:center;
 }
 
-/* Force hero to sit below the header (override inline style). Use !important so it wins. */
-.hero{
+ .hero{
   margin-top: calc(var(--site-header-offset) - 12px) !important;
-  /* slightly more generous padding for better visual separation */
-  padding: 36px !important;
+   padding: 36px !important;
 }
 
-/* 2) Make sure the profile ring/wrap and photo are not clipped and sit above other layers */
-.hero, .profile-card, .profile-ring-wrap, .profile-photo {
+ .hero, .profile-card, .profile-ring-wrap, .profile-photo {
   overflow: visible !important;
 }
 
-/* 3) Ensure the svg ring doesn't cover the photo; place photo above the ring using z-index */
-.profile-ring { 
-  z-index: 20 !important;       /* svg sits behind the photo */
+ .profile-ring { 
+  z-index: 20 !important;      
   pointer-events: none !important;
 }
 .profile-ring-wrap { 
   z-index: 21 !important;
 }
 
-/* 4) Force the profile-photo container size & styling (overrides inline width/height)
-   Use !important so your inline HTML height/width doesn't hide the image accidentally.
-*/
+ 
 .profile-photo{
   width: 180px !important;
   height: 180px !important;
@@ -926,7 +910,7 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   overflow: hidden !important;
   display: block !important;
   position: relative !important;
-  z-index: 30 !important; /* ensure it's above ring */
+  z-index: 30 !important;  
   border: 6px solid #fff !important;
   box-shadow: 0 30px 80px rgba(6,10,26,0.14) !important;
   background-color: #f8fafc !important;
@@ -934,8 +918,7 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   transition: transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .32s ease;
 }
 
-/* 5) Ensure the <img> fills the container (fixes broken or cropped images) */
-.profile-photo img{
+ .profile-photo img{
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
@@ -946,8 +929,7 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   transition: transform .6s var(--ease-soft);
 }
 
-/* 6) Decorative halo around the photo (enhances visibility) */
-.profile-photo::after{
+ .profile-photo::after{
   content: "";
   position: absolute;
   inset: -12px;
@@ -959,8 +941,7 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   opacity: 0.95;
 }
 
-/* 7) Micro-interaction (gentle lift when hovering the profile area) */
-.profile-card:hover .profile-photo{
+ .profile-card:hover .profile-photo{
   transform: translateY(-6px) rotateZ(-0.6deg) scale(1.02) !important;
   box-shadow: 0 36px 110px rgba(6,10,26,0.16) !important;
 }
@@ -968,14 +949,7 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   transform: scale(1.03) translateY(-2px);
 }
 
-/* 8) If you still can't see the image: common pitfalls checklist (apply one of these if needed)
-   - File path/case-sensitivity: if 'senu.PNG' is not found on the server, change to the correct filename.
-     Example: <img src="assets/photos/senu.png"> or check capitalization on the server.
-   - Temporarily show an outline to debug layout/clipping (uncomment to use):
-*/
-/* .profile-photo{ outline: 3px dashed rgba(99,102,241,0.6) !important; } */
-
-/* 9) Small-screen adjustments so the hero still looks polished on phones */
+ 
 @media (max-width: 760px){
   :root{ --site-header-offset: 84px; }
   .hero{ margin-top: calc(var(--site-header-offset) - 18px) !important; padding: 18px !important; }
@@ -984,23 +958,18 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   .profile-photo::after{ inset: -8px; filter: blur(8px); }
 }
 
-/* 10) Optional: stronger contrast between hero and header if header still visually overlaps */
-.site-header{
+ .site-header{
   backdrop-filter: blur(6px);
   background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.86)) !important;
 }
 
-/* -----------------------------
- End of quick-fix overrides
------------------------------- */
+ 
 </style>
 
 </head>
 
   <body>
-  <!-- =========================
-  HEADER (fixed)
-  ========================= -->
+ 
   <header class="site-header" role="banner" aria-label="Primary site header">
     <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
       <div class="brand" style="display:flex;align-items:center;gap:12px">
@@ -1022,14 +991,10 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
     </div>
   </header>
 
-  <!-- =========================
-  MAIN CONTENT
-  ========================= -->
+ 
   <main id="main-content" class="container" role="main" style="padding-top:28px;">
 
-    <!-- =========================
-    HERO — high impact (refined)
-    ========================= -->
+   
     <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region" style="margin-top:18px;">
       <div class="hero-left" aria-hidden="false">
         <span class="kicker" aria-hidden="true">
@@ -1051,32 +1016,26 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
           <a class="btn btn-outline btn-lg" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Hire / internship</a>
         </div>
 
-        <!-- quick feature chips -->
-        <div class="mini-ribbon" aria-hidden="true" style="margin-top:18px;">
+         <div class="mini-ribbon" aria-hidden="true" style="margin-top:18px;">
           <span class="ribbon-pill"><i class="fa-brands fa-react"></i>&nbsp;React</span>
           <span class="ribbon-pill"><i class="fa-solid fa-robot"></i>&nbsp;AI</span>
           <span class="ribbon-pill"><i class="fa-solid fa-cloud"></i>&nbsp;Realtime</span>
         </div>
 
-        <!-- slim feature cards (compact) -->
-        <div class="hero-features" style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+         <div class="hero-features" style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
           <div class="pill" title="Accessibility first"><i class="fa-solid fa-universal-access"></i>&nbsp;Accessible UIs</div>
           <div class="pill" title="Product driven"><i class="fa-solid fa-bullseye"></i>&nbsp;Product-led</div>
           <div class="pill" title="Engineering"><i class="fa-solid fa-code"></i>&nbsp;Production-ready</div>
         </div>
       </div>
 
-      <!-- HERO RIGHT: profile with animated ring and floating ornaments -->
-      <aside class="profile-card" aria-label="Profile and contact" role="complementary">
+       <aside class="profile-card" aria-label="Profile and contact" role="complementary">
         <div style="display:flex;flex-direction:column;gap:12px;align-items:center;position:relative;">
 
-          <!-- Animated ring wrapper (SVG ring + pulsating glow) -->
-<div class="profile-ring-wrap" aria-hidden="false" style="position:relative;display:grid;place-items:center">
-            <!-- decorative background dots (for styling/animation) -->
-            <div class="ring-bg-dots" aria-hidden="true" style="position:absolute;inset:auto -10% -8% auto;width:220px;height:220px;pointer-events:none"></div>
+ <div class="profile-ring-wrap" aria-hidden="false" style="position:relative;display:grid;place-items:center">
+             <div class="ring-bg-dots" aria-hidden="false" style="position:absolute;inset:auto -10% -8% auto;width:220px;height:220px;pointer-events:none"></div>
 
-            <!-- SVG ring (animatable by JS/CSS) -->
-            <svg class="profile-ring" width="220" height="220" viewBox="0 0 220 220" aria-hidden="true" style="position:absolute;left:0;top:0;z-index:1;pointer-events:none">
+             <svg class="profile-ring" width="220" height="220" viewBox="0 0 220 220" aria-hidden="true" style="position:absolute;left:0;top:0;z-index:1;pointer-events:none">
               <defs>
                 <radialGradient id="g1" cx="30%" cy="30%">
                   <stop offset="0%" stop-color="rgba(124,58,237,0.22)"/>
@@ -1085,20 +1044,17 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
                 </radialGradient>
               </defs>
               <circle cx="110" cy="110" r="86" fill="none" stroke="url(#g1)" stroke-width="8" stroke-linecap="round" class="ring-glow"/>
-              <!-- segmented ring for animated stroke -->
-              <circle cx="110" cy="110" r="96" fill="none" stroke="rgba(124,58,237,0.06)" stroke-width="2"/>
+               <circle cx="110" cy="110" r="96" fill="none" stroke="rgba(124,58,237,0.06)" stroke-width="2"/>
             </svg>
 
-            <!-- profile image -->
-            <div class="profile-photo ring" style="width:160px;height:160px;border-radius:50%;overflow:hidden;z-index:2;position:relative">
+             <div class="profile-photo ring" style="width:160px;height:160px;border-radius:50%;overflow:hidden;z-index:2;position:relative">
               <img src="senu.PNG" alt="Senu James portrait" style="width:100%;height:100%;object-fit:cover">
 
 
             </div>
           </div>
 
-          <!-- social quick actions -->
-          <div style="display:flex;gap:8px;align-items:center;z-index:3">
+           <div style="display:flex;gap:8px;align-items:center;z-index:3">
             <a href="https://github.com/senu-james" target="_blank" rel="noopener" aria-label="GitHub">
               <div class="float-btn" title="GitHub"><i class="fa-brands fa-github fa-lg"></i></div>
             </a>
