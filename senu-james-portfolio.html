@@ -891,6 +891,204 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .sticker { display: none; } /* hide stickers on narrow view; we'll provide a tailored mobile layout in step 2 */
 }
 </style>
+<style>
+/* ===========================
+   MOBILE RULES — iPhone 11 (≤ 430px)
+   Applies to most modern phones; tuned for iPhone 11 portrait.
+   Paste after your existing styles so these override them.
+   =========================== */
+
+/* Base small-screen adjustments */
+@media (max-width: 430px) {
+
+  /* ====== Page container & header ====== */
+  html, body { font-size: 15px; } /* slightly smaller base */
+  .container { padding: 0 14px; }
+
+  .site-header {
+    top: 8px;
+    margin: 8px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(16,24,40,0.08);
+  }
+  .site-header .wrap { gap:10px; padding:0; }
+  .brand h1 { font-size: 16px; }
+  .brand p { display: none; } /* simplify header */
+  .logo { width:40px; height:40px; border-radius:10px; font-size:16px; }
+
+  /* nav */
+  .nav-menu { display:flex; gap:8px; align-items:center; }
+  .nav-toggle { display:inline-flex; } /* show hamburger */
+  .nav-menu a { font-size:15px; padding:10px 12px; }
+  /* ensure nav menu uses full screen overlay pattern */
+  .nav-menu.open { padding-top:72px; }
+
+  /* ====== HERO: compact single-column layout ====== */
+  #home-hero.hero {
+    grid-template-columns: 1fr;
+    padding: 18px;
+    margin-top: 16px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+
+  .hero-left { order: 2; padding-right:0; }
+
+  /* Heading & lead scaling */
+  .hero-left .hi { font-size: 22px; line-height: 1.06; margin-bottom: 6px; }
+  .hero-left .hi strong { display:inline-block; font-size:22px; }
+  .hero-left .desc-line { font-size: 14px; margin-top:6px; color:var(--muted); display:block; }
+
+  .role-rotator { display:block; margin-top:8px; font-size:14px; }
+  .role-rotator .role-dynamic { min-width: 0; display:inline; }
+
+  .hero-left .lead { font-size: 14px; max-width: 100%; margin-top:10px; line-height:1.5; }
+
+  /* CTAs: stacked, full-width, clear hierarchy */
+  .cta-row { display:flex; flex-direction:column; gap:10px; margin-top:14px; align-items:stretch; }
+  .cta-row .btn { width:100%; justify-content:center; min-height:48px; padding:12px 14px; font-size:15px; }
+  .cta-row .btn.btn-primary { font-size:16px; }
+
+  /* ribbon and metrics */
+  .mini-ribbon { gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .ribbon-pill { padding:8px 10px; font-size:13px; min-height:40px; }
+
+  .hero-metrics { margin-top:12px; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:6px; }
+  .hero-metrics li { min-width:140px; flex:0 0 auto; padding:10px 12px; font-size:13px; }
+
+  /* ===== PROFILE CARD: horizontal compact row ====== */
+  .profile-card {
+    order: 1;
+    width: 100%;
+    max-width: none;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    background: linear-gradient(180deg,#fff,#fbfeff);
+    box-shadow: 0 18px 60px rgba(16,24,40,0.06);
+  }
+  .profile-visual-wrap {
+    width: 84px;
+    height: 84px;
+    margin: 0;
+    flex: 0 0 84px;
+  }
+  .profile-photo {
+    width: 76px;
+    height: 76px;
+    border-radius: 12px;
+    border-width: 4px;
+    box-shadow: 0 12px 40px rgba(6,10,26,0.08);
+  }
+  .profile-photo img { object-position: center top; }
+  .profile-meta { text-align:left; padding:0; flex:1; }
+  .profile-meta .meta-title { font-size:16px; }
+  .profile-meta .meta-sub { font-size:12px; color:var(--muted); margin-top:6px; }
+
+  /* float badges reposition (inline) */
+  .float-badge { position: static; display:inline-flex; margin-left:8px; box-shadow:none; border:none; background:transparent; padding:0; gap:8px; align-items:center; }
+  .float-badge .badge-icon { width:34px; height:34px; border-radius:8px; }
+
+  /* hide ornamental clutter on mobile */
+  .hero .ornament,
+  .hero-confetti-piece,
+  .profile-ring,
+  .sticker,
+  .marq-item img[loading="eager"] { display:none !important; }
+  .sticker { display:none !important; }
+
+  /* ===== Projects: single column, touch-friendly ====== */
+  .projects-grid { grid-template-columns: 1fr; gap:14px; margin-top:14px; }
+  .card { border-radius:12px; overflow:hidden; box-shadow: 0 18px 60px rgba(16,24,40,0.06); }
+  .card-visual { height:160px; }
+  .card-body { padding:12px; }
+  .card-title { font-size:15px; }
+  .card-sub { font-size:13px; color:var(--muted); }
+  .tag { padding:6px 8px; font-size:12px; }
+  .card-foot { gap:8px; flex-wrap:wrap; }
+  .link-btn, .badge { font-size:13px; min-height:44px; }
+
+  /* increase hit area for small icons & links */
+  .link-btn, .btn, a { min-height:44px; padding-left:14px; padding-right:14px; }
+
+  /* ===== Timeline: vertical stacking ====== */
+  .timeline-items { display:block; overflow:visible; padding:0; gap:12px; }
+  .timeline-card { width:100%; margin-bottom:10px; min-width:unset; padding:12px; border-radius:12px; }
+
+  /* ===== Marquee: collapse into grid / scroller ====== */
+  .marquee { overflow:auto; padding:8px 4px; }
+  .marquee-track { display:flex; gap:12px; }
+  .marq-item { width:160px; height:92px; flex:0 0 auto; border-radius:10px; overflow:hidden; }
+
+  /* ===== Contact form: full width stacked, accessible ====== */
+  .contact-wrap { display:block; gap:12px; margin-top:22px; }
+  .contact-card { width:100%; padding:14px; border-radius:12px; }
+  .contact-pro-aside { width:100%; padding:12px; border-radius:12px; margin-top:12px; }
+  .form-row { display:block; gap:10px; }
+  .field { width:100%; margin-bottom:12px; display:block; }
+  .field input, .field textarea { padding:14px 14px 14px 46px; font-size:15px; border-radius:12px; }
+  .field textarea { min-height:120px; }
+  .form-actions { display:flex; flex-direction:column; gap:10px; }
+  .form-actions .btn, .form-actions .btn-primary { width:100%; justify-content:center; }
+
+  /* copy button and extra links */
+  .contact-pro-aside .link-btn, .contact-card .link-btn { width:100%; justify-content:flex-start; gap:8px; }
+
+  /* icons and inline elements: slightly smaller */
+  .icon-circle { width:40px; height:40px; font-size:16px; }
+  .icon-inline { left:10px; top:12px; font-size:14px; }
+  .label { left:44px; top:14px; font-size:13px; }
+
+  /* ===== Modal: full-screen friendly ====== */
+  #case-modal { padding: 12px; }
+  .modal-panel {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    max-height: calc(100vh - 40px);
+    box-shadow: 0 50px 120px rgba(16,24,40,0.16);
+    overflow:auto;
+  }
+  #case-body { display:block; padding:12px; gap:12px; }
+  #case-body #case-aside { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+  #case-body #case-main { width:100%; }
+
+  /* ===== Footer: compact ====== */
+  footer.site { padding: 18px 6px; margin-top:20px; }
+  footer.site strong { font-size:15px; }
+  footer.site div a { padding:8px; min-width:44px; display:inline-grid; place-items:center; }
+
+  /* ===== Accessibility & touch ====== */
+  a, button, .link-btn, .btn { -webkit-tap-highlight-color: rgba(0,0,0,0.06); touch-action: manipulation; }
+  a:focus, button:focus { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px; border-radius:8px; }
+
+  /* reduce animations on mobile for battery & motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+}
+
+/* Landscape special-case for phones (iPhone 11 landscape ~ 896x414) */
+@media (max-height: 450px) and (max-width: 900px) {
+  /* Slightly different layout when device is turned landscape: keep hero readable */
+  #home-hero.hero { grid-template-columns: 1fr 260px; padding: 10px; gap:10px; }
+  .profile-card { padding:10px; }
+  .profile-visual-wrap { width: 110px; height:110px; }
+  .profile-photo { width: 96px; height:96px; border-radius:14px; }
+  .hero-left .hi { font-size:20px; }
+  .cta-row { flex-direction:row; gap:8px; }
+  .hero-metrics { overflow:auto; -webkit-overflow-scrolling:touch; }
+}
+
+/* Extra safety: ensure images don't overflow in any mobile container */
+@media (max-width: 430px) {
+  img, video { max-width: 100%; height: auto; display:block; }
+  .card-visual img, .marq-item img { width:100%; height:100%; object-fit:cover; }
+}
+</style>
 
 </head>
 <body>
