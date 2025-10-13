@@ -1054,6 +1054,138 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
   .hero-left .kicker,
   .hero-left .hi { animation: none !important; transition: none !important; }
 }
+/* -------------------------
+Hero: extra stickers, sparkles, CTA shimmer & confetti
+Paste this AFTER your existing CSS
+------------------------- */
+
+/* sticky/safe z-index baseline */
+.hero, .profile-visual-wrap { position: relative; z-index: 2; }
+
+/* STICKERS (small decorative cards you can treat like "stickers") */
+.sticker {
+  position:absolute;
+  width:64px;
+  height:64px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(180deg,#fff,#fbfdff);
+  border:1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 12px 36px rgba(16,24,40,0.06);
+  font-size:20px;
+  transform-origin:center;
+  pointer-events: none; /* decorative only; set to auto if interactive */
+  will-change: transform, opacity;
+}
+
+/* sticker positions (tweak as you like) */
+.sticker.s-1{ right: -6px; top: -6px; transform: translate(6px,-6px) scale(.98); }
+.sticker.s-2{ left: -12px; top: 8px; transform: translate(-6px,4px) scale(.96); }
+.sticker.s-3{ left: 8px; bottom: -10px; transform: translate(-4px,6px) scale(.94); }
+.sticker.s-4{ right: 14px; bottom: 12px; transform: translate(4px,2px) scale(.96); }
+.sticker.s-5{ left: 50%; top: -18px; transform: translateX(-50%) scale(.9); }
+
+/* float animation */
+@keyframes stickerFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(6deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+.sticker { animation: stickerFloat 4.8s ease-in-out infinite; }
+
+/* small staggered timings for natural motion */
+.sticker.s-1{ animation-delay: 0s; }
+.sticker.s-2{ animation-delay: 0.28s; animation-duration: 5.2s; }
+.sticker.s-3{ animation-delay: 0.6s; animation-duration: 4.6s; }
+.sticker.s-4{ animation-delay: 0.9s; animation-duration: 5s; }
+.sticker.s-5{ animation-delay: 1.2s; animation-duration: 6s; }
+
+/* hover pop (for non-decorative/bindable stickers, set pointer-events:auto) */
+.sticker[role="button"], .sticker.interactive { pointer-events:auto; cursor:pointer; }
+.sticker.interactive:hover{ transform: translateY(-6px) scale(1.06) rotate(2deg); transition: transform .18s ease; }
+
+/* STICKER CONTENT (icon/text inside sticker) */
+.sticker .sticker-inner{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; font-weight:800; color:var(--text); font-size:12px; padding:6px; }
+.sticker .sticker-emoji{ font-size:20px; line-height:1; }
+
+/* SPARKLES (tiny decorative dots) */
+.hero .ornament {
+  position:absolute;
+  width:10px; height:10px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+  box-shadow: 0 6px 18px rgba(96,165,250,0.06);
+  opacity:0.9;
+  filter: blur(.2px);
+  pointer-events:none;
+  animation: sparklePulse 3.8s linear infinite;
+  transform-origin:center;
+}
+@keyframes sparklePulse {
+  0%{ transform: scale(0.8); opacity:0.9; }
+  50%{ transform: scale(1.2); opacity:1; }
+  100%{ transform: scale(0.8); opacity:0.9; }
+}
+/* position a few: tweak offsets as desired */
+.orn-1{ right: 18%; top: 8%; animation-delay:0s; }
+.orn-2{ left: 6%; top: 18%; animation-delay:0.6s; }
+.orn-3{ right: 14%; bottom: 12%; animation-delay:1.1s; }
+
+/* CTA shimmer for primary button */
+.btn-primary {
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  left:-120%;
+  top:0;
+  width:40%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  transform: skewX(-18deg);
+  transition: none;
+  pointer-events:none;
+  opacity:0.9;
+}
+.btn-primary:hover::after{
+  animation: ctaShimmer 1.2s ease-in-out;
+}
+@keyframes ctaShimmer {
+  0% { left:-120%; }
+  50% { left:120%; }
+  100% { left:120%; }
+}
+
+/* CONFETTI pieces (created dynamically by JS) */
+.hero-confetti-piece {
+  position: absolute;
+  width:10px; height:14px;
+  border-radius: 2px;
+  will-change: transform, opacity;
+  pointer-events:none;
+  transform-origin:center;
+  opacity:0.95;
+  box-shadow: 0 6px 12px rgba(6,10,26,0.14);
+  backface-visibility:hidden;
+}
+/* confetti falling animation (JS uses inline transform+transition for variety) */
+
+/* subtle rotate for the profile ring to feel alive */
+@keyframes ringRotate {
+  0%{ transform: rotate(0deg); }
+  50%{ transform: rotate(4deg); }
+  100%{ transform: rotate(0deg); }
+}
+.profile-ring { animation: ringRotate 9s ease-in-out infinite; transform-origin: 50% 50%; }
+
+/* respect reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .sticker, .hero .ornament, .profile-ring, .btn-primary::after { animation: none !important; transition: none !important; }
+  .sticker { transform: none !important; }
+}
 
 </style>
 
@@ -1151,6 +1283,17 @@ html { font-size: clamp(var(--fluid-min), 1.8vw, var(--fluid-max)); }
       <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
         <img src="senu.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
       </div>
+
+      <!-- Stickers: paste inside .profile-visual-wrap (decorative) -->
+<div class="sticker s-1" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🏆</div><div class="sticker-text">ADIC</div></div></div>
+<div class="sticker s-2" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🧠</div><div class="sticker-text">AI</div></div></div>
+<div class="sticker s-3" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🌍</div><div class="sticker-text">Community</div></div></div>
+<div class="sticker s-4" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">⚙️</div><div class="sticker-text">Prod</div></div></div>
+<div class="sticker s-5" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">✨</div><div class="sticker-text">Design</div></div></div>
+<!-- Subtle decorative sparkles; paste once inside .hero -->
+<div class="ornament orn-1" aria-hidden="true"></div>
+<div class="ornament orn-2" aria-hidden="true"></div>
+<div class="ornament orn-3" aria-hidden="true"></div>
 
       <!-- floating highlight badges -->
       <div class="float-badge badge-1" aria-hidden="true">
@@ -2312,4 +2455,136 @@ function initHeroAnimations(){
 }
 
 </script>
+
+  <script>
+
+    /* -----------------------
+ Hero: extra animations, stickers & confetti
+ Paste after your other scripts (at bottom of page)
+ ----------------------- */
+(function initHeroExtra(){
+  try {
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hero = document.getElementById('home-hero');
+    if (!hero) return;
+
+    /* 1) gentle randomized float offsets for stickers (adds natural variety) */
+    (function randomizeStickers(){
+      if (prefersReduced) return;
+      const stickers = Array.from(hero.querySelectorAll('.sticker'));
+      if (!stickers.length) return;
+      stickers.forEach((s, i) => {
+        // small random translation and rotation seeded from index
+        const rx = (Math.random() - 0.5) * 6; // -3..3deg
+        const ry = (Math.random() - 0.5) * 6;
+        const tx = (Math.random() - 0.5) * 4;
+        const ty = (Math.random() - 0.5) * 6;
+        s.style.transform = `translate(${tx}px, ${ty}px) rotate(${rx}deg)`;
+        // slight staggered startup so they don't all pop at once
+        s.style.opacity = '0';
+        setTimeout(() => { s.style.transition = 'transform .6s cubic-bezier(.2,.85,.2,1), opacity .6s'; s.style.opacity = '1'; }, 220 + i*120);
+      });
+    })();
+
+    /* 2) mouse parallax for stickers (desktop) */
+    (function stickersParallax(){
+      if (prefersReduced) return;
+      const wrap = hero.querySelector('.profile-visual-wrap');
+      if (!wrap) return;
+      wrap.addEventListener('pointermove', (ev) => {
+        const rect = wrap.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const px = (ev.clientX - cx) / (rect.width/2); // -1..1
+        const py = (ev.clientY - cy) / (rect.height/2);
+        const stickers = wrap.querySelectorAll('.sticker');
+        stickers.forEach((st, idx) => {
+          // each sticker moves slightly differently
+          const depth = (idx % 3) + 1; // 1..3
+          const tx = px * (6 / depth);
+          const ty = py * (10 / depth);
+          st.style.transform = `translate(${tx}px, ${ty}px) rotate(${(idx%2?4:-4)}deg)`;
+        });
+      }, {passive:true});
+      wrap.addEventListener('pointerleave', () => {
+        wrap.querySelectorAll('.sticker').forEach((st, idx) => {
+          st.style.transform = ''; // back to CSS animation baseline
+        });
+      });
+    })();
+
+    /* 3) CONFETTI on CV download (or on any CTA you like) */
+    (function wireConfetti(){
+      if (prefersReduced) return; // no confetti if reduced motion
+      const cvBtn = document.getElementById('download-cv') || document.querySelector('.btn-primary');
+      if (!cvBtn) return;
+      cvBtn.addEventListener('click', (ev) => {
+        // small visual flourish
+        spawnConfetti(ev.clientX || window.innerWidth/2, ev.clientY || window.innerHeight/2, {count: 28});
+      });
+    })();
+
+    /* spawnConfetti: creates simple confetti pieces and animates them */
+    function spawnConfetti(x = window.innerWidth/2, y = window.innerHeight/2, opts = {}) {
+      const count = opts.count || 20;
+      const container = document.body;
+      const colors = ['#7C3AED', '#06B6D4', '#3B82F6', '#F59E0B', '#10B981', '#EF4444'];
+      const pieces = [];
+      for (let i=0;i<count;i++){
+        const el = document.createElement('div');
+        el.className = 'hero-confetti-piece';
+        const w = 8 + Math.round(Math.random()*8);
+        const h = 10 + Math.round(Math.random()*12);
+        el.style.width = w + 'px';
+        el.style.height = h + 'px';
+        el.style.left = (x - (w/2)) + 'px';
+        el.style.top = (y - (h/2)) + 'px';
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.opacity = String(0.95 - Math.random()*0.2);
+        container.appendChild(el);
+        pieces.push(el);
+
+        // random trajectory
+        const angle = (Math.PI * (Math.random()*1.4 - 0.7)); // -0.7pi..+0.7pi
+        const distance = 120 + Math.random()*220;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance - (40 + Math.random()*40);
+        const rot = (Math.random()*720 - 360);
+
+        // use transition instead of keyframes for variety
+        // small random delay
+        const delay = 10 + Math.random()*80;
+        el.style.transition = `transform 900ms cubic-bezier(.22,.9,.3,1) ${delay}ms, opacity 600ms linear ${delay+380}ms`;
+        // trigger transform in next frame
+        requestAnimationFrame(() => {
+          el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${0.92 + Math.random()*0.26})`;
+          el.style.opacity = '0';
+        });
+
+        // cleanup
+        setTimeout(()=> {
+          el.remove();
+        }, 1600 + delay);
+      }
+    }
+
+    /* 4) small keyboard/focus affordance for CV: quick focus ring pulse */
+    (function cvFocusAffordance(){
+      const cv = document.getElementById('download-cv');
+      if (!cv) return;
+      cv.addEventListener('focus', () => {
+        cv.style.boxShadow = '0 18px 60px rgba(59,130,246,0.12)';
+      });
+      cv.addEventListener('blur', () => {
+        cv.style.boxShadow = '';
+      });
+    })();
+
+    // done
+  } catch(e){
+    console.error('initHeroExtra error', e);
+  }
+})();
+
+  </script>
 </html>
