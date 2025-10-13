@@ -874,31 +874,115 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   opacity: .95; filter: blur(.2px); pointer-events: none; animation: sparklePulse 3.8s linear infinite; }
 @keyframes sparklePulse { 0%{ transform: scale(.8); opacity:.8 } 50%{ transform: scale(1.2); opacity:1 } 100%{ transform: scale(.8); opacity:.8 } }
 
-/* small layout safety for narrower hero (keeps profile card tidy) */
-@media (max-width: 1100px) {
+ @media (max-width: 1100px) {
   #home-hero.hero { grid-template-columns: 1fr 320px; gap: 18px; padding: 28px; }
   .profile-visual-wrap { width: 240px; height: 240px; }
   .profile-photo { width: 170px; height: 170px; border-width:5px; }
 }
 
-/* Keep hero single-column on narrow screens but do not restyle whole page here (you asked for mobile as step 2) */
-@media (max-width: 760px) {
+ @media (max-width: 760px) {
   #home-hero.hero { grid-template-columns: 1fr; padding: 20px; margin-top: 18px; border-radius: 14px; }
   .profile-card { width: 100%; max-width: none; padding: 12px; flex-direction: row; align-items: center; gap: 12px; }
   .profile-visual-wrap { width: 96px; height: 96px; margin-bottom: 0; }
   .profile-photo { width: 76px; height: 76px; border-radius: 12px; border-width: 4px; box-shadow: 0 10px 36px rgba(6,10,26,0.08); }
   .profile-meta { text-align: left; }
-  .sticker { display: none; } /* hide stickers on narrow view; we'll provide a tailored mobile layout in step 2 */
+  .sticker { display: none; }  
 }
 </style>
-<style>
-/* ===========================
-   MOBILE RULES — iPhone 11 (≤ 430px)
-   Applies to most modern phones; tuned for iPhone 11 portrait.
-   Paste after your existing styles so these override them.
-   =========================== */
+ <style>
+ 
+@media (max-width: 430px) {
 
-/* Base small-screen adjustments */
+   .container,
+  main.container,
+  #main-content.container {
+    max-width: none !important;
+    width: 100% !important;
+    padding-left: 8px !important;   
+    padding-right: 8px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ensure all top-level sections fill the container and align with header edges */
+  section, .projects, .marquee-wrap, footer.site, #about {
+    max-width: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hero specific: remove the centered max-width and let it fill the container */
+  #home-hero.hero {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 12px 0 0 !important; /* keep a small gap under header */
+    padding-left: 12px !important;  /* internal breathing room */
+    padding-right: 12px !important;
+    box-sizing: border-box !important;
+    border-radius: 12px !important;
+  }
+
+  /* Keep hero-left text lines from overflowing and allow wrapping */
+  .hero-left, .hero-left .hi, .hero-left .lead, .hero-left .desc-line {
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Make profile card occupy full width inside the hero container and not overflow */
+  .profile-card {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure cards, badges and metrics don't overflow */
+  .card, .card-body, .hero-metrics, .hero-metrics li {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .hero-metrics { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 6px !important; }
+
+  /* Align About section to container edges and stack the aside below the main copy (keeps widths consistent) */
+  #about > .about-grid,
+  #about > div[style*="display:grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #about { padding-left: 12px !important; padding-right: 12px !important; }
+
+  /* Prevent any element from causing horizontal scroll */
+  html, body, .container, section, .profile-card, .card, #home-hero {
+    overflow-x: hidden !important;
+  }
+
+  /* Images & media safety */
+  img, picture, video, svg { max-width: 100% !important; height: auto !important; display: block !important; box-sizing: border-box !important; }
+
+  /* Slightly tighten internal paddings so text fits better while keeping touch targets large */
+  .hero-left .lead, #about p, .card-sub { padding-right: 2px !important; padding-left: 2px !important; }
+
+  /* keep header and container visually aligned even if header has border-radius */
+  .site-header { left: 8px !important; right: 8px !important; }
+
+  /* safety for very long words or monospace content */
+  * { word-break: break-word !important; -webkit-hyphens: auto !important; hyphens: auto !important; }
+
+}
+</style>
+
+<style>
+
 @media (max-width: 430px) {
 
   /* ====== Page container & header ====== */
