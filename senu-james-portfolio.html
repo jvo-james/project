@@ -522,6 +522,57 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
  #about h4 { margin: 0 0 8px; font-size: 16px; color: var(--text); font-weight: 900; }
 #about h4::after { content: ''; display:block; width:36px; height:3px; border-radius:3px; margin-top:8px; background: linear-gradient(90deg,var(--accent-2),var(--accent-3)); opacity:.12; }
 
+ .nav-toggle{display:none;background:transparent;border:none;padding:8px;border-radius:10px;align-items:center;justify-content:center}
+.nav-toggle:focus{outline:3px solid var(--focus-ring);outline-offset:3px}
+.nav-toggle .hamburger{width:22px;height:2px;background:var(--text);display:block;position:relative;border-radius:2px;transition:transform .22s var(--ease-soft)}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after{content:'';position:absolute;left:0;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .22s var(--ease-soft),opacity .18s}
+.nav-toggle .hamburger::before{top:-7px}
+.nav-toggle .hamburger::after{top:7px}
+
+
+ .nav-toggle[aria-expanded="true"] .hamburger{background:transparent}
+.nav-toggle[aria-expanded="true"] .hamburger::before{transform:rotate(45deg) translate(4px,4px)}
+.nav-toggle[aria-expanded="true"] .hamburger::after{transform:rotate(-45deg) translate(4px,-4px)}
+
+
+ .nav-menu{display:flex;align-items:center;gap:12px}
+.nav-menu a{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--text);font-weight:700;font-size:14px}
+.nav-menu a.cta{background:var(--accent-grad);color:#fff;padding:10px 14px;border-radius:12px}
+
+
+ @media (max-width: 980px){
+.nav-toggle{display:inline-flex}
+}
+
+
+@media (max-width: 760px){
+ .nav-menu{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;justify-content:flex-start;padding:86px 20px 28px;gap:12px;background:linear-gradient(180deg,rgba(255,255,255,0.98),#fbfeff);border-top-left-radius:14px;border-top-right-radius:14px;transform:translateY(-6px);opacity:0;pointer-events:none;transition:opacity .26s var(--ease-soft),transform .28s var(--ease-soft);box-shadow:0 50px 120px rgba(16,24,40,0.12);border:1px solid rgba(10,20,30,0.04);}
+
+
+ .nav-menu.open{opacity:1;transform:translateY(0);pointer-events:auto}
+
+
+ .nav-menu a{display:flex;width:100%;padding:14px 16px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:800}
+.nav-menu a.cta{margin-top:8px;background:var(--accent-grad);color:#fff;border:none}
+
+
+ .nav-backdrop{position:fixed;inset:0;background:rgba(6,10,26,0.36);z-index:1980;opacity:0;pointer-events:none;transition:opacity .26s}
+.nav-backdrop.visible{opacity:1;pointer-events:auto}
+}
+
+
+ @media (max-width: 430px){
+.nav-toggle{padding:10px}
+.nav-toggle .hamburger{width:20px}
+.nav-menu{padding-top:78px}
+.nav-menu a{font-size:15px;padding:12px 14px}
+}
+
+
+ @media (prefers-reduced-motion: reduce){
+.nav-menu, .nav-backdrop, .nav-toggle .hamburger, .nav-toggle .hamburger::before, .nav-toggle .hamburger::after{transition:none}
+}
 </style>
 </head>
 <body>
@@ -534,14 +585,21 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
         <p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
       </div>
     </div>
-    <nav class="primary" aria-label="Main navigation" style="display:flex;align-items:center;gap:12px">
-      <a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
-      <a href="#projects"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
-      <a href="#about"><i class="fa-solid fa-user"></i>&nbsp;About</a>
-      <a href="#timeline"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
-      <a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
-      <a class="cta" href="#resume"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
-    </nav>
+  <nav class="primary" aria-label="Main navigation">
+ <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open main menu">
+<span class="hamburger" aria-hidden="true"></span>
+</button>
+
+
+ <div id="primary-nav" class="nav-menu" role="navigation">
+<a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+<a href="#projects"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+<a href="#about"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+<a href="#timeline"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+<a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+<a class="cta" href="#resume"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+</div>
+</nav>
   </div>
 </header>
 
@@ -1428,6 +1486,59 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
 })();
 </script>
+<script>
+ 
+(function(){
+const btn = document.querySelector('.nav-toggle');
+const menu = document.getElementById('primary-nav');
+if(!btn || !menu) return;
 
+
+ let backdrop = document.querySelector('.nav-backdrop');
+if(!backdrop){ backdrop = document.createElement('div'); backdrop.className = 'nav-backdrop'; document.body.appendChild(backdrop); }
+
+
+function open(){
+btn.setAttribute('aria-expanded','true');
+btn.setAttribute('aria-label','Close main menu');
+menu.classList.add('open');
+backdrop.classList.add('visible');
+ document.documentElement.style.overflow = 'hidden';
+ const first = menu.querySelector('a, button, [href]');
+if(first) first.focus();
+}
+function close(){
+btn.setAttribute('aria-expanded','false');
+btn.setAttribute('aria-label','Open main menu');
+menu.classList.remove('open');
+backdrop.classList.remove('visible');
+document.documentElement.style.overflow = '';
+btn.focus();
+}
+
+
+btn.addEventListener('click', (e)=>{
+const expanded = btn.getAttribute('aria-expanded') === 'true';
+if(expanded) close(); else open();
+});
+
+
+backdrop.addEventListener('click', close);
+
+
+ document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && menu.classList.contains('open')) close(); });
+
+
+ menu.addEventListener('click', (e)=>{ const a = e.target.closest('a[href]'); if(!a) return; if(a.getAttribute('href') && a.getAttribute('href').startsWith('#')){ close(); }});
+
+
+ let mql = window.matchMedia('(min-width: 761px)');
+function handleMqChange(ev){ if(ev.matches){  
+menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttribute('aria-expanded','false'); document.documentElement.style.overflow = '';
+}
+}
+try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(handleMqChange); }
+})();
+</script>
 </body>
 </html>
