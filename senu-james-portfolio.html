@@ -574,6 +574,324 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .nav-menu, .nav-backdrop, .nav-toggle .hamburger, .nav-toggle .hamburger::before, .nav-toggle .hamburger::after{transition:none}
 }
 </style>
+ <style>
+/* ====== HERO: focused styles (drop into your stylesheet AFTER existing rules) ====== */
+/* Use higher specificity so these override earlier rules where needed */
+#home-hero.hero {
+  margin: 96px auto 0;
+  max-width: var(--maxw);
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  padding: 36px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,1), rgba(251,254,255,1));
+  border: 1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 30px 90px rgba(16,24,40,0.08);
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+/* Left column content */
+.hero-left { padding-right: 6px; z-index: 3; }
+
+/* Kicker / pill */
+.hero-left .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(6,182,212,0.03));
+  color: var(--text);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .02em;
+  border: 1px solid rgba(124,58,237,0.06);
+  box-shadow: 0 6px 20px rgba(16,24,40,0.03);
+}
+
+/* Heading */
+.hero-left .hi {
+  margin: 8px 0 6px;
+  font-size: clamp(28px, 4.4vw, 40px);
+  line-height: 1.04;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.hero-left .hi strong {
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* description under name */
+.hero-left .desc-line {
+  display: block;
+  font-size: 15px;
+  color: var(--muted-2);
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* role rotator */
+.role-rotator {
+  display: inline-flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 14px;
+}
+.role-rotator .role-static { opacity: 0.85; font-weight: 800; color: var(--muted); }
+.role-rotator .role-dynamic {
+  display: inline-block;
+  font-weight: 900;
+  color: var(--text);
+  min-width: 140px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.role-rotator .role-cursor { opacity: .7; font-weight:900; margin-left:4px; color:var(--accent-3); }
+
+/* Lead paragraph */
+.hero-left .lead {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 68ch;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* CTAs */
+.cta-row { margin-top: 18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.cta-row .btn {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  border-radius:12px;
+  padding:12px 14px;
+  border:1px solid rgba(10,20,30,0.04);
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.04);
+  transition: transform .18s var(--ease-soft), box-shadow .18s var(--ease-soft), opacity .18s;
+}
+.cta-row .btn:focus { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+.cta-row .btn:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(16,24,40,0.08); }
+
+/* Primary CTA stronger */
+.cta-row .btn.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  color: #fff;
+  border: none;
+  box-shadow: 0 20px 70px rgba(59,130,246,0.12), inset 0 -1px 0 rgba(255,255,255,0.06);
+  padding: 12px 16px;
+}
+.cta-row .btn.btn-primary:active { transform: translateY(-2px) scale(.998); }
+
+/* Ribbon pills */
+.mini-ribbon { margin-top: 16px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.ribbon-pill { padding:8px 12px; border-radius:999px; font-weight:800; font-size:13px; color:var(--text);
+  background: linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 8px 26px rgba(16,24,40,0.04); }
+
+/* metrics */
+.hero-metrics { display:flex; gap:12px; margin-top:18px; align-items:center; z-index:2; padding:0; list-style:none; }
+.hero-metrics li {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  align-items:flex-start;
+  background:#fff;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 12px 30px rgba(16,24,40,0.04);
+  min-width:120px;
+}
+.hero-metrics .metric-number { font-size:18px; font-weight:900; color:var(--text); letter-spacing: -0.02em; }
+.hero-metrics .metric-label { font-size:12px; color:var(--muted); font-weight:700; opacity:.95; }
+
+/* ===== PROFILE CARD & VISUAL ===== */
+.profile-card {
+  padding: 18px;
+  border-radius: 18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(251,254,255,0.98));
+  border: 1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 30px 90px rgba(16,24,40,0.06);
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* visual wrap: centralised, with perspective for parallax */
+.profile-visual-wrap {
+  width: 280px;
+  height: 280px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  margin-bottom: 8px;
+  perspective: 1200px;
+}
+
+/* decorative ring */
+.profile-visual-wrap .profile-ring {
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(1);
+  filter: drop-shadow(0 18px 36px rgba(124,58,237,0.06));
+  z-index:1;
+  pointer-events:none;
+  transition: transform 600ms var(--ease-soft);
+}
+
+/* photo circle with crisp border + subtle gradient ring */
+.profile-photo {
+  width: 188px;
+  height: 188px;
+  border-radius: 50%;
+  overflow: hidden;
+  position:relative;
+  z-index:3;
+  border: 6px solid #fff;
+  box-shadow: 0 28px 80px rgba(6,10,26,0.10);
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  display:flex; align-items:center; justify-content:center;
+  transition: transform .32s var(--ease-soft), box-shadow .32s var(--ease-soft);
+  will-change:transform;
+}
+/* inner img tuning */
+.profile-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease-soft); }
+
+/* hover affordance around profile card */
+.profile-card:hover .profile-photo { transform: translateY(-6px) scale(1.01); box-shadow: 0 48px 130px rgba(6,10,26,0.16); }
+.profile-card:hover .profile-photo img { transform: scale(1.02); }
+
+/* profile meta */
+.profile-meta { width:100%; text-align:center; padding: 0 6px; }
+.profile-meta .meta-title { font-size:18px; font-weight:900; color:var(--text); }
+.profile-meta .meta-sub { color:var(--muted); font-size:13px; margin-top:6px; font-weight:700; }
+
+/* quick skills */
+.profile-quick { display:flex; gap:10px; margin-top:8px; justify-content:center; z-index:2; flex-wrap:wrap; }
+
+/* skill chips */
+.skill { display:inline-flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px;
+  background:#fff; border:1px solid rgba(10,20,30,0.04); box-shadow: 0 10px 30px rgba(16,24,40,0.03); color:var(--muted); font-weight:800; }
+
+/* float badges around card */
+.float-badge { position:absolute; display:flex; gap:10px; align-items:center; background: linear-gradient(180deg,#fff,#fbfdff);
+  border-radius:12px; padding:8px 12px; border:1px solid rgba(10,20,30,0.04); box-shadow: 0 16px 48px rgba(16,24,40,0.06);
+  transform-origin:center; z-index:4; pointer-events:none; transition: transform .42s cubic-bezier(.2,.9,.2,1), opacity .42s; }
+
+/* badge icon circle */
+.float-badge .badge-icon {
+  width:36px; height:36px; display:grid; place-items:center; border-radius:10px;
+  background: linear-gradient(180deg,#fff,#f7fbff);
+  border:1px solid rgba(10,20,30,0.04); color:var(--accent-2); font-size:16px;
+}
+
+/* badge text */
+.float-badge .badge-text { font-weight:800; font-size:13px; color:var(--text); }
+
+/* positions for badges (slightly pulled out and rotated for personality) */
+.float-badge.badge-1 { right: 6px; top: 12px; transform: translate(6px, -6px) rotate(-4deg); }
+.float-badge.badge-2 { left: 10px; bottom: 12px; transform: translate(-6px, 6px) rotate(4deg); }
+
+/* ===== STICKERS — improved, smaller, crisp, legible ===== */
+.profile-visual-wrap .sticker {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  border: 1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 12px 36px rgba(16,24,40,0.06);
+  font-size: 14px;
+  transform-origin: center;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: transform 520ms cubic-bezier(.2,.85,.2,1), opacity 520ms ease;
+  opacity: 1;
+}
+
+/* inner layout: emoji + short label */
+.sticker .sticker-inner { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center; font-weight:900; color:var(--text); font-size:12px; padding:4px; }
+
+/* emoji larger */
+.sticker .sticker-emoji { font-size:22px; line-height:1; transform: translateY(-2px); }
+
+/* small text under emoji */
+.sticker .sticker-text { font-size:11px; letter-spacing: 0.03em; color:var(--muted); font-weight:800; text-transform:uppercase; }
+
+/* individual sticker starting offsets (keeps layout predictable but nice) */
+.sticker.s-1 { right: -6px; top: -6px; transform: translate(6px, -6px) rotate(-6deg) scale(1); }
+.sticker.s-2 { left: -12px; top: 10px; transform: translate(-6px, 6px) rotate(-4deg) scale(.98); }
+.sticker.s-3 { left: 12px; bottom: -10px; transform: translate(-4px, 6px) rotate(4deg) scale(.96); }
+.sticker.s-4 { right: 16px; bottom: 12px; transform: translate(4px, 2px) rotate(-3deg) scale(.98); }
+.sticker.s-5 { left: 50%; top: -20px; transform: translateX(-50%) scale(.94); }
+
+/* subtle float animation (reduced for motion-preference) */
+@keyframes stickerFloatSubtle {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+.profile-visual-wrap .sticker { animation: stickerFloatSubtle 5.6s ease-in-out infinite; }
+.profile-visual-wrap .sticker.s-2 { animation-delay: .3s; }
+.profile-visual-wrap .sticker.s-3 { animation-delay: .6s; }
+.profile-visual-wrap .sticker.s-4 { animation-delay: .9s; }
+.profile-visual-wrap .sticker.s-5 { animation-delay: 1.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-visual-wrap .sticker,
+  .profile-ring,
+  .float-badge,
+  .hero-left .role-dynamic { animation: none !important; transition: none !important; }
+}
+
+/* Ornaments (tiny sparkles) */
+.hero .ornament { position:absolute; width:10px; height:10px; border-radius:50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+  box-shadow: 0 6px 18px rgba(96,165,250,0.06);
+  opacity: .95; filter: blur(.2px); pointer-events: none; animation: sparklePulse 3.8s linear infinite; }
+@keyframes sparklePulse { 0%{ transform: scale(.8); opacity:.8 } 50%{ transform: scale(1.2); opacity:1 } 100%{ transform: scale(.8); opacity:.8 } }
+
+/* small layout safety for narrower hero (keeps profile card tidy) */
+@media (max-width: 1100px) {
+  #home-hero.hero { grid-template-columns: 1fr 320px; gap: 18px; padding: 28px; }
+  .profile-visual-wrap { width: 240px; height: 240px; }
+  .profile-photo { width: 170px; height: 170px; border-width:5px; }
+}
+
+/* Keep hero single-column on narrow screens but do not restyle whole page here (you asked for mobile as step 2) */
+@media (max-width: 760px) {
+  #home-hero.hero { grid-template-columns: 1fr; padding: 20px; margin-top: 18px; border-radius: 14px; }
+  .profile-card { width: 100%; max-width: none; padding: 12px; flex-direction: row; align-items: center; gap: 12px; }
+  .profile-visual-wrap { width: 96px; height: 96px; margin-bottom: 0; }
+  .profile-photo { width: 76px; height: 76px; border-radius: 12px; border-width: 4px; box-shadow: 0 10px 36px rgba(6,10,26,0.08); }
+  .profile-meta { text-align: left; }
+  .sticker { display: none; } /* hide stickers on narrow view; we'll provide a tailored mobile layout in step 2 */
+}
+</style>
+
 </head>
 <body>
 <header class="site-header" role="banner" aria-label="Primary site header">
