@@ -1918,6 +1918,88 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 
 </style>
+  <!-- ======= Small fixes: header/hero spacing, CTAs on one line, show both photos, modal controls ======= -->
+<style>
+/* Reduce the large top-margin on hero and keep header fixed without huge gap */
+html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header */
+#main-content.container { padding-top: 72px !important; } /* main content sits under header */
+#home-hero.hero { margin-top: 18px !important; } /* override the large 96px margin */
+
+/* HERO CTAs: on very small screens keep CTAs on a single row and allow horizontal scroll */
+@media (max-width: 520px) {
+  #home-hero .cta-row {
+    flex-direction: row !important;       /* keep them in one row */
+    flex-wrap: nowrap !important;         /* don't wrap */
+    overflow-x: auto !important;          /* allow horizontal scroll if space limited */
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding-bottom: 6px !important;
+  }
+  #home-hero .cta-row .btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 96px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Ensure both photos show on smaller screens (you had code hiding secondary-photo) */
+@media (max-width: 760px) {
+  .double-photo { display:flex !important; align-items:center !important; gap:10px !important; }
+  .secondary-photo {
+    display: block !important;
+    position: relative !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 28px rgba(6,10,26,0.08) !important;
+    transform: none !important;
+    margin-left: 6px !important;
+  }
+  .secondary-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+}
+
+/* Micro polish for the smallest phones */
+@media (max-width: 430px) {
+  #main-content.container { padding-top: 72px !important; } /* keep header overlap small */
+  .profile-photo { width:76px !important; height:76px !important; border-radius:12px !important; }
+  .secondary-photo { width:48px !important; height:48px !important; border-radius:10px !important; }
+}
+
+/* Modal gallery controls: make prev/next visible + larger hit area on small screens */
+.case-gallery .control {
+  display: grid !important;               /* always visible */
+  place-items: center;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,0.95) !important;
+  z-index: 60 !important;
+  box-shadow: 0 12px 40px rgba(6,10,26,0.12) !important;
+  border: 1px solid rgba(10,20,30,0.06) !important;
+}
+
+/* Do not hide controls on small screens (was hidden at <=720px in original file) */
+@media (max-width: 720px) {
+  .case-gallery .control { display: grid !important; }
+  .case-gallery .viewer { min-height: 220px !important; }
+  .case-gallery .thumbs { gap: 8px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+}
+
+/* Ensure modal images are touch-friendly */
+.case-gallery .viewer img { cursor: zoom-in; max-width: 100%; height: auto; }
+
+/* improve z-index of modal panel so controls never get covered */
+#case-modal .modal-panel { z-index: 4000 !important; }
+
+/* keep hero components visible above decorative background */
+#home-hero .hero-left, #home-hero .profile-card { z-index: 10 !important; position: relative !important; }
+
+/* small utility: make CTA icons and text align nicely on narrow screens */
+#home-hero .cta-row .btn i { font-size: 14px !important; line-height: 1 !important; }
+</style>
+
 </head>
 <body>
 <header class="site-header" role="banner" aria-label="Primary site header">
@@ -2218,7 +2300,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
     <h3 id="contact-heading" style="margin:0 0 10px">Get in touch</h3>
     <p class="lead" style="margin:0 0 12px;color:var(--muted)">Interested in collaborating, internships or freelance work? Send a short message — I usually reply within 48 hours.</p>
-    <form id="contact-form-pro" class="contact-form" novalidate>
+<form id="contact-form-pro" class="contact-form" novalidate data-endpoint="https://formspree.io/f/xrbyrqry">
       <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" />
       <div class="form-row">
         <label class="field">
@@ -3271,6 +3353,124 @@ try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(
   // initial enhancement if modal already open
   if(modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex') {
     setTimeout(()=> enhanceModal(), 40);
+  }
+})();
+</script>
+<script>
+/*
+  Enhanced contact submit:
+  - If you set `data-endpoint="https://formspree.io/f/your-id"` (or any CORS-enabled webhook)
+    on the <form id="contact-form-pro"> element, the script will POST JSON to that URL.
+  - If no endpoint provided, it falls back to opening the user's mail client (mailto).
+  - Replace the endpoint with your Formspree or webhook URL to receive messages.
+*/
+(function(){
+  const form = document.getElementById('contact-form-pro');
+  if(!form) return;
+  const sendBtn = document.getElementById('cf-send');
+  const copyBtn = document.getElementById('cf-copy-email');
+  const statusEl = document.getElementById('cf-status');
+  const resultEl = document.getElementById('cf-result');
+  const endpoint = form.dataset.endpoint && form.dataset.endpoint.trim() ? form.dataset.endpoint.trim() : null;
+
+  function toast(msg, timeout=1800){
+    try{
+      const t = document.createElement('div');
+      t.className = 'sj-toast';
+      t.style.cssText = 'pointer-events:auto;margin-top:8px;background:rgba(6,10,26,0.92);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 12px 40px rgba(6,10,26,0.28);';
+      t.textContent = msg;
+      document.getElementById('toast-area').appendChild(t);
+      setTimeout(()=> { t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; t.style.transition='opacity .28s, transform .28s'; }, timeout);
+      setTimeout(()=> t.remove(), timeout + 420);
+    }catch(e){}
+  }
+
+  function setSending(on){
+    if(!sendBtn) return;
+    if(on){
+      sendBtn.classList.add('sending');
+      sendBtn.disabled = true;
+      sendBtn.setAttribute('aria-disabled','true');
+    } else {
+      sendBtn.classList.remove('sending');
+      sendBtn.disabled = false;
+      sendBtn.removeAttribute('aria-disabled');
+    }
+  }
+
+  function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
+
+  form.addEventListener('submit', async function evHandler(e){
+    e.preventDefault();
+    resultEl.textContent = '';
+    statusEl.textContent = '';
+    const name = (form.querySelector('#cf-name')?.value || '').trim();
+    const email = (form.querySelector('#cf-email')?.value || '').trim();
+    const phone = (form.querySelector('#cf-phone')?.value || '').trim();
+    const subject = (form.querySelector('#cf-subject')?.value || 'Portfolio message').trim();
+    const message = (form.querySelector('#cf-message')?.value || '').trim();
+    const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
+    if(honeypot) return; // bot caught
+
+    if(!name){ statusEl.textContent = 'Please enter your name'; toast('Please enter your name'); return; }
+    if(!email && !phone){ statusEl.textContent = 'Provide an email or phone'; toast('Provide email or phone'); return; }
+    if(email && !isValidEmail(email)){ statusEl.textContent = 'Enter a valid email'; toast('Enter a valid email'); return; }
+    if(!message || message.length < 8){ statusEl.textContent = 'Write a short message (8+ chars)'; toast('Write a short message'); return; }
+
+    const payload = {
+      name, email, phone, subject, message, timestamp: new Date().toISOString()
+    };
+
+    setSending(true);
+    statusEl.textContent = 'Sending…';
+
+    try{
+      if(endpoint){
+        // POST JSON to endpoint (expects JSON/CORS)
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if(res.ok){
+          statusEl.textContent = 'Message sent — thank you!';
+          resultEl.textContent = 'I received your message — I’ll reply shortly.';
+          toast('Message sent');
+          form.reset();
+        } else {
+          const txt = await res.text().catch(()=>res.statusText||'Error');
+          statusEl.textContent = 'Server error: ' + (res.status || '') + ' — falling back to email.';
+          toast('Server error — opening mail client');
+          // fallback to mailto
+          const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+          window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+      } else {
+        // fallback behavior: open mail client with pre-filled body
+        const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+        window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        resultEl.textContent = 'Opened mail client — if it did not open, copy the message below.';
+        toast('Opening email client');
+        form.reset();
+      }
+    }catch(err){
+      console.error(err);
+      statusEl.textContent = 'Network error — message not sent';
+      toast('Network error');
+    }finally{
+      setTimeout(()=> setSending(false), 350);
+    }
+  });
+
+  if(copyBtn){
+    copyBtn.addEventListener('click', async ()=> {
+      try{
+        await navigator.clipboard.writeText('senujames23@gmail.com');
+        toast('Email copied to clipboard');
+      }catch(e){
+        toast('Unable to copy — please copy manually');
+      }
+    });
   }
 })();
 </script>
