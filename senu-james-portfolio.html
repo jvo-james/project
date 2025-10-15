@@ -1004,8 +1004,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .nav-menu a { font-size:15px; padding:10px 12px; }
    .nav-menu.open { padding-top:72px; }
 
-  /* ====== HERO: compact single-column layout ====== */
-  #home-hero.hero {
+   #home-hero.hero {
     grid-template-columns: 1fr;
     padding: 18px;
     margin-top: 16px;
@@ -1443,6 +1442,81 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
 /* ===== small visual polish: make pills and CTAs look consistent ===== */
 .profile-quick .skill { background: linear-gradient(180deg,#fff,#fbfdff) !important; border:1px solid rgba(10,20,30,0.04) !important; box-shadow: 0 10px 30px rgba(16,24,40,0.04) !important; color: var(--muted) !important; }
+#home-hero.hero {
+  margin: 96px auto 0;
+  max-width: var(--maxw);
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 28px;
+  padding: 36px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,1), rgba(251,254,255,1));
+  border: 1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 30px 90px rgba(16,24,40,0.08);
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+#home-hero.hero::before {
+  content: "";
+  position: absolute;
+  right: 8%;
+  top: 8%;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle at 30% 20%, rgba(124,58,237,0.08), transparent 28%), radial-gradient(circle at 80% 80%, rgba(6,182,212,0.06), transparent 30%);
+  filter: blur(28px);
+  transform: translateZ(0);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 40%;
+  opacity: 0.95;
+}
+.hero-left { padding-right: 6px; z-index: 3; position: relative; }
+.hi { margin: 8px 0 6px; font-size: clamp(28px, 4.4vw, 40px); line-height: 1.04; font-weight: 900; color: var(--text); }
+.hi strong { background: linear-gradient(90deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+.role-rotator .role-dynamic { min-width: 140px; display: inline-block; }
+.profile-card { padding: 18px; border-radius: 18px; display:flex; flex-direction:column; gap:14px; align-items:center; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(251,254,255,0.98)); border: 1px solid rgba(10,20,30,0.04); box-shadow: 0 30px 90px rgba(16,24,40,0.06); position: relative; z-index: 3; width: 100%; max-width: 420px; overflow: visible; }
+.profile-visual-wrap { width: 300px; height: 300px; display:grid; place-items:center; position:relative; margin-bottom: 6px; perspective: 1200px; z-index: 2; }
+.profile-visual-wrap .profile-ring { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(1); filter: drop-shadow(0 18px 36px rgba(124,58,237,0.06)); z-index:1; pointer-events:none; transition: transform 600ms var(--ease-soft); }
+.double-photo { position: relative; width: 220px; height: 220px; display:grid; place-items:center; z-index: 3; }
+.profile-photo { width: 188px; height: 188px; border-radius: 50%; overflow:hidden; position:relative; z-index:3; border: 6px solid #fff; box-shadow: 0 28px 80px rgba(6,10,26,0.10); background: linear-gradient(180deg,#ffffff,#fbfdff); display:flex; align-items:center; justify-content:center; transition: transform .32s var(--ease-soft), box-shadow .32s var(--ease-soft); will-change:transform; }
+.profile-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease-soft); }
+.secondary-photo { position: absolute; right: -8px; bottom: -12px; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 4px solid #fff; box-shadow: 0 18px 48px rgba(6,10,26,0.12); background: linear-gradient(180deg,#fff,#fbfdff); transform-origin: center; transition: transform .42s var(--ease-soft), box-shadow .32s var(--ease-soft); z-index:4; display:grid; place-items:center; }
+.secondary-photo img { width:100%; height:100%; object-fit:cover; display:block; transform-origin:center; transition: transform .6s var(--ease-soft); }
+.profile-card:hover .profile-photo { transform: translateY(-6px) scale(1.02); box-shadow: 0 48px 130px rgba(6,10,26,0.16); }
+.profile-card:hover .profile-photo img { transform: scale(1.02); }
+.profile-card:hover .secondary-photo { transform: translateY(-6px) scale(1.03); box-shadow: 0 36px 100px rgba(6,10,26,0.12); }
+.float-badge { position:absolute; display:flex; gap:10px; align-items:center; background: linear-gradient(180deg,#fff,#fbfdff); border-radius:12px; padding:8px 12px; border:1px solid rgba(10,20,30,0.04); box-shadow: 0 16px 48px rgba(16,24,40,0.06); transform-origin:center; z-index:4; pointer-events:none; transition: transform .42s cubic-bezier(.2,.9,.2,1), opacity .42s; }
+.sticker { position:absolute; width:62px; height:62px; border-radius:14px; display:grid; place-items:center; background: linear-gradient(180deg,#ffffff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 12px 36px rgba(16,24,40,0.06); font-size:14px; transform-origin:center; pointer-events:none; will-change:transform,opacity; transition: transform 520ms cubic-bezier(.2,.85,.2,1), opacity 520ms ease; }
+@keyframes floatSlight { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+.sticker { animation: floatSlight 5.6s ease-in-out infinite; }
+@media (max-width:1100px){ #home-hero.hero { grid-template-columns: 1fr 360px; padding:28px; } .profile-visual-wrap { width: 240px; height:240px; } .double-photo { width: 200px; height:200px; } .profile-photo { width: 170px; height:170px; } .secondary-photo { width: 80px; height:80px; right:-8px; bottom:-10px; } }
+@media (max-width:760px){
+  #home-hero.hero { grid-template-columns: 1fr; padding:20px; margin-top:18px; border-radius:14px; }
+  .profile-card { width:100%; padding:12px; flex-direction:row; align-items:center; gap:12px; background: linear-gradient(180deg,#fff,#fbfeff); box-shadow: 0 18px 60px rgba(16,24,40,0.06); }
+  .profile-visual-wrap { width: 96px; height:96px; margin-bottom:0; perspective: none; }
+  .double-photo { width: 84px; height: 84px; }
+  .profile-photo { width: 76px; height:76px; border-radius: 12px; border-width:4px; box-shadow: 0 10px 36px rgba(6,10,26,0.08); }
+  .secondary-photo { width: 44px; height:44px; right:-6px; bottom:-6px; border-radius:10px; box-shadow: 0 8px 22px rgba(6,10,26,0.06); transform: translate(0,0); position: absolute; }
+  .profile-meta { text-align:left; }
+  .sticker { display:none; }
+  .profile-ring, .ornament { display:none; }
+}
+@media (max-width:430px){
+  #home-hero.hero { padding:14px; margin-top:12px; gap:12px; }
+  .profile-card { order: 0; display:flex; flex-direction:row; gap:12px; padding:10px 12px; border-radius:12px; }
+  .profile-visual-wrap { width:84px; height:84px; }
+  .profile-photo { width:76px; height:76px; border-radius:12px; }
+  .secondary-photo { display:none; }
+  .hero-left .hi { font-size:22px; }
+  .mini-ribbon { display:none; }
+  .hero-metrics { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+}
+@media (prefers-reduced-motion: reduce){
+  .sticker, .profile-ring, .profile-photo, .secondary-photo { animation: none !important; transition: none !important; }
+}
+
 </style>
 
 
@@ -1479,25 +1553,28 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
   <div class="hero-left">
     <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Winner • Product & UX</div>
-    <h2 id="hero-heading" class="hi" style="margin-top:10px;">Hi! I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
+    <h2 id="hero-heading" class="hi">Hi! I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
         <span class="role-static">I’m a</span>
         <span id="rotating-role" class="role-dynamic" aria-hidden="false">Product Designer</span>
-        <span class="role-cursor" aria-hidden="true"></span>
+        <span class="role-cursor" aria-hidden="true">|</span>
       </div>
-      <p class="lead" style="margin-top:12px;">I build product-first web apps — from AI health platforms to campus tools — focused on clarity, accessibility and measurable impact.</p>
+      <p class="lead">I build product-first web apps — from AI health platforms to campus tools — focused on clarity, accessibility and measurable impact.</p>
     </div>
+
     <ul class="hero-metrics" role="list" aria-hidden="false">
       <li><strong class="metric-number" data-value="1">Winner</strong><span class="metric-label">African Digital Innovation Challenge</span></li>
       <li><strong class="metric-number" data-value="1000">1k+</strong><span class="metric-label">Beta users engaged</span></li>
       <li><strong class="metric-number" data-value="3">3</strong><span class="metric-label">Major product launches</span></li>
     </ul>
+
     <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
       <a class="btn btn-primary" href="#projects" id="projects-cta"><i class="fa-solid fa-briefcase"></i>&nbsp;Selected work</a>
       <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Contact</a>
       <a class="btn btn-outline" href="#resume" id="download-cv"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
     </div>
+
     <div class="mini-ribbon" aria-hidden="true">
       <span class="ribbon-pill"><i class="fa-brands fa-react"></i>&nbsp;React</span>
       <span class="ribbon-pill"><i class="fa-solid fa-robot"></i>&nbsp;AI</span>
@@ -1517,19 +1594,22 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
         <circle cx="130" cy="130" r="100" fill="none" stroke="url(#pg)" stroke-width="8" stroke-opacity="0.14" />
       </svg>
 
-      <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
-        <img src="senu.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
+      <div class="double-photo">
+        <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
+          <img src="senu.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
+        </div>
+
+        <div class="secondary-photo" aria-hidden="false" role="img" aria-label="Senu James candid">
+          <img src="senu-2.PNG" alt="Senu James candid photo" width="160" height="160" loading="lazy" decoding="async">
+        </div>
       </div>
 
       <div class="sticker s-1" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🏆</div><div class="sticker-text">ADIC</div></div></div>
       <div class="sticker s-2" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🧠</div><div class="sticker-text">AI</div></div></div>
       <div class="sticker s-3" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🌍</div><div class="sticker-text">Community</div></div></div>
-      <div class="sticker s-4" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">⚙️</div><div class="sticker-text">Prod</div></div></div>
-      <div class="sticker s-5" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">✨</div><div class="sticker-text">Design</div></div></div>
 
       <div class="ornament orn-1" aria-hidden="true"></div>
       <div class="ornament orn-2" aria-hidden="true"></div>
-      <div class="ornament orn-3" aria-hidden="true"></div>
 
       <div class="float-badge badge-1" aria-hidden="true">
         <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
@@ -1551,6 +1631,8 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     </div>
   </aside>
 </section>
+
+  
 
 <section id="about" style="margin-top:28px;">
   <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
@@ -2412,5 +2494,40 @@ menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttr
 try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(handleMqChange); }
 })();
 </script>
+  <script>
+(function(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wrap = document.querySelector('.profile-visual-wrap');
+  const main = document.querySelector('.profile-photo');
+  const sec = document.querySelector('.secondary-photo');
+  if(!wrap || !main || !sec) return;
+  if(!prefersReduced){
+    try{
+      if(typeof gsap !== 'undefined'){
+        gsap.fromTo(sec, {y:8, opacity:0, scale:0.96}, {y:0, opacity:1, scale:1, duration:0.9, ease:'power3.out'});
+        gsap.to(sec, {y:'+=6', duration:3.6, yoyo:true, repeat:-1, ease:'sine.inOut'});
+      } else {
+        sec.style.opacity = '1';
+      }
+    }catch(e){}
+    function onMove(e){
+      const r = wrap.getBoundingClientRect();
+      const px = ((e.clientX - (r.left + r.width/2)) / (r.width/2));
+      const py = ((e.clientY - (r.top + r.height/2)) / (r.height/2));
+      const rx = Math.max(-6, Math.min(6, py * 4));
+      const ry = Math.max(-8, Math.min(8, px * -4));
+      main.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
+      const sx = Math.max(-10, Math.min(10, px * -12));
+      const sy = Math.max(-8, Math.min(8, py * -10));
+      sec.style.transform = `translate(${sx}px, ${sy}px) rotate(${px*6}deg)`;
+    }
+    function onLeave(){ main.style.transform=''; sec.style.transform=''; }
+    wrap.addEventListener('pointermove', onMove, {passive:true});
+    wrap.addEventListener('pointerleave', onLeave);
+    wrap.addEventListener('pointercancel', onLeave);
+  }
+})();
+</script>
+
 </body>
 </html>
