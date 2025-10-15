@@ -2938,6 +2938,37 @@ button[aria-pressed="true"] {
   transform: translateZ(0);
 }
 
+  /* improved continuous marquee (CSS-driven) */
+.marquee { overflow: hidden; position: relative; }
+.marquee-track.is-animated {
+  display: flex;
+  gap: 28px; /* keep same gap as your items */
+  animation-name: marqueeScroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+.marquee:hover .marquee-track.is-animated,
+.marquee:focus-within .marquee-track.is-animated {
+  animation-play-state: paused;
+}
+
+/* keyframes: translate exactly half the track (works when track content is duplicated) */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* animate one full "block" (half the track) */
+}
+
+/* reduce motion: fallback to scrollable panel */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track.is-animated { animation: none !important; }
+  .marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ensure the animation pauses visibly on user interaction on mobile too */
+.marquee:active .marquee-track.is-animated { animation-play-state: paused; }
+
 </style>
  <div id="primary-nav" class="nav-menu" role="navigation">
 <a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
@@ -3592,45 +3623,86 @@ button[aria-pressed="true"] {
       });
     });
   }
-  function initMarquee(){
-    const marquee = document.getElementById('marquee');
-    if(!marquee) return;
-    const track = marquee.querySelector('.marquee-track');
-    if(!track) return;
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(prefersReduced) { marquee.style.overflowX = 'auto'; return; }
-    function ensureClones(){
-      const containerW = marquee.getBoundingClientRect().width || window.innerWidth;
-      let tw = track.scrollWidth;
-      let tries = 0;
-      while(tw < containerW * 2 && tries < 8){
-        Array.from(track.children).slice(0).forEach(n => track.appendChild(n.cloneNode(true)));
-        tries++;
-        tw = track.scrollWidth;
-      }
-    }
-    let px = 0;
-    let last = performance.now();
-    let running = true;
-const baseFactor = 2.1; // 1.0 = current, >1 faster
-const speed = Math.max(0.35, Math.min(3.2, (window.innerWidth / 9000) * baseFactor));    function step(now){
-      if(!running){ last = now; requestAnimationFrame(step); return; }
-      const dt = now - last;
-      last = now;
-      px -= speed * (dt / 16.6667);
-      const half = track.scrollWidth / 2 || 1;
-      if(Math.abs(px) >= half) px = 0;
-      track.style.transform = `translate3d(${px}px,0,0)`;
-      requestAnimationFrame(step);
-    }
-    ensureClones();
-    requestAnimationFrame(step);
-    marquee.addEventListener('mouseenter', ()=> running = false);
-    marquee.addEventListener('mouseleave', ()=> running = true);
-    marquee.addEventListener('focusin', ()=> running = false);
-    marquee.addEventListener('focusout', ()=> running = true);
-    window.addEventListener('resize', ()=>{ setTimeout(()=>{ px = 0; track.style.transform = ''; ensureClones(); }, 220); });
+function initMarquee(){
+  const marquee = document.getElementById('marquee');
+  if(!marquee) return;
+  const track = marquee.querySelector('.marquee-track');
+  if(!track) return;
+
+  // Respect reduced motion: make marquee scrollable instead of animating
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    marquee.style.overflowX = 'auto';
+    track.classList.remove('is-animated');
+    return;
   }
+
+  // Capture original items (snapshot) to avoid cloning clones
+  const originals = Array.from(track.children);
+  if(originals.length === 0) return;
+
+  // Build a string representation of the "base block"
+  const baseHTML = originals.map(el => el.outerHTML).join('');
+
+  // Choose how many repetitions are needed so the base block >= marquee width
+  // We'll create a block that is at least marquee width and then duplicate it so track = block + block
+  function buildRepeatedBlock(){
+    let repeats = 1;
+    track.innerHTML = baseHTML.repeat(repeats);
+    // measure and increase repeats until big enough or safety cap
+    let tries = 0;
+    while(track.scrollWidth < marquee.clientWidth * 1.1 && tries < 12){
+      repeats++;
+      track.innerHTML = baseHTML.repeat(repeats);
+      tries++;
+    }
+    // now duplicate the current block once to create two identical halves
+    const currentBlockHTML = track.innerHTML;
+    track.innerHTML = currentBlockHTML + currentBlockHTML;
+  }
+
+  buildRepeatedBlock();
+
+  // compute animation duration proportional to content length (so speed feels consistent)
+  // larger content -> longer duration. Tune baseSpeed to taste.
+  const marqueeWidth = marquee.clientWidth || window.innerWidth;
+  const contentWidth = track.scrollWidth || (marqueeWidth * 2);
+  // base constant: seconds per marquee-width; tune 10..28 to preference
+  const secondsPerViewport = 12;
+  // total duration scales with how many viewports the content spans
+  const duration = Math.max(8, Math.round((contentWidth / marqueeWidth) * secondsPerViewport));
+
+  // apply animation duration
+  track.style.animationDuration = `${duration}s`;
+  track.classList.add('is-animated');
+
+  // Pause / resume on user interaction (extra robustness)
+  let running = true;
+  function pause(){ track.style.animationPlayState = 'paused'; running = false; }
+  function resume(){ track.style.animationPlayState = 'running'; running = true; }
+
+  marquee.addEventListener('mouseenter', pause, {passive:true});
+  marquee.addEventListener('mouseleave', ()=>{ if(!document.activeElement || !marquee.contains(document.activeElement)) resume(); }, {passive:true});
+  marquee.addEventListener('focusin', pause);
+  marquee.addEventListener('focusout', ()=>{ if(!marquee.matches(':hover')) resume(); });
+
+  // Rebuild on resize (debounced)
+  let to = null;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(to);
+    to = setTimeout(()=>{
+      // reset and rebuild to make sure halves remain identical and duration updates
+      track.classList.remove('is-animated');
+      track.style.animationDuration = '';
+      buildRepeatedBlock();
+      const newContentWidth = track.scrollWidth || marquee.clientWidth*2;
+      const newDuration = Math.max(8, Math.round((newContentWidth / marquee.clientWidth) * secondsPerViewport));
+      track.style.animationDuration = `${newDuration}s`;
+      track.classList.add('is-animated');
+    }, 180);
+  }, {passive:true});
+}
+
   function initCaseModal(){
     const modal = document.getElementById('case-modal');
     if(!modal) return;
