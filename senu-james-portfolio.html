@@ -974,8 +974,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
    .site-header { left: 8px !important; right: 8px !important; }
 
-  /* safety for very long words or monospace content */
-  * { word-break: break-word !important; -webkit-hyphens: auto !important; hyphens: auto !important; }
+   * { word-break: break-word !important; -webkit-hyphens: auto !important; hyphens: auto !important; }
 
 }
 </style>
@@ -1024,20 +1023,17 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
   .hero-left .lead { font-size: 14px; max-width: 100%; margin-top:10px; line-height:1.5; }
 
-  /* CTAs: stacked, full-width, clear hierarchy */
-  .cta-row { display:flex; flex-direction:column; gap:10px; margin-top:14px; align-items:stretch; }
+   .cta-row { display:flex; flex-direction:column; gap:10px; margin-top:14px; align-items:stretch; }
   .cta-row .btn { width:100%; justify-content:center; min-height:48px; padding:12px 14px; font-size:15px; }
   .cta-row .btn.btn-primary { font-size:16px; }
 
-  /* ribbon and metrics */
-  .mini-ribbon { gap:8px; margin-top:12px; flex-wrap:wrap; }
+   .mini-ribbon { gap:8px; margin-top:12px; flex-wrap:wrap; }
   .ribbon-pill { padding:8px 10px; font-size:13px; min-height:40px; }
 
   .hero-metrics { margin-top:12px; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:6px; }
   .hero-metrics li { min-width:140px; flex:0 0 auto; padding:10px 12px; font-size:13px; }
 
-  /* ===== PROFILE CARD: horizontal compact row ====== */
-  .profile-card {
+   .profile-card {
     order: 1;
     width: 100%;
     max-width: none;
@@ -1067,8 +1063,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .profile-meta .meta-title { font-size:16px; }
   .profile-meta .meta-sub { font-size:12px; color:var(--muted); margin-top:6px; }
 
-  /* float badges reposition (inline) */
-  .float-badge { position: static; display:inline-flex; margin-left:8px; box-shadow:none; border:none; background:transparent; padding:0; gap:8px; align-items:center; }
+   .float-badge { position: static; display:inline-flex; margin-left:8px; box-shadow:none; border:none; background:transparent; padding:0; gap:8px; align-items:center; }
   .float-badge .badge-icon { width:34px; height:34px; border-radius:8px; }
 
   /* hide ornamental clutter on mobile */
@@ -1551,8 +1546,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   user-select: none;
 }
 
-/* image inside the card */
-.marq-item img {
+ .marq-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1563,30 +1557,183 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   transition: transform 560ms cubic-bezier(.2,.9,.2,1);
 }
 
-/* hover/focus affordance - scale image slightly and lighten shadow */
-.marq-item:hover,
+ .marq-item:hover,
 .marq-item:focus-within {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 30px 90px rgba(6,10,26,0.12);
 }
 .marq-item:hover img { transform: scale(1.02); }
 
-/* subtle alternating rotation to create the "scattered cards" look —
-   we lightly rotate a few items for personality; JS also assigns individualized rotations */
-.marq-item.rotate-left { transform: rotate(-6deg); }
+ .marq-item.rotate-left { transform: rotate(-6deg); }
 .marq-item.rotate-right { transform: rotate(6deg); }
 
-/* reduce rotation and shadows on small screens */
-@media (max-width: 760px) {
+  @media (max-width: 760px) {
   .marq-item { padding: 10px; border-radius: 12px; }
   .marq-item.rotate-left, .marq-item.rotate-right { transform: none; }
   .marq-item { width: clamp(120px, 40vw, 160px); height: clamp(90px, 24vw, 120px); }
 }
 
-/* hide native scrollbars while allowing programmatic transform-based movement */
-.marquee { -ms-overflow-style: none; scrollbar-width: none; }
+ .marquee { -ms-overflow-style: none; scrollbar-width: none; }
 .marquee::-webkit-scrollbar { display: none; }
+/* Case modal: premium visual treatment */
+#case-modal { display: none; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(6,10,26,0.56), rgba(6,10,26,0.56)); backdrop-filter: blur(6px); }
+#case-modal[aria-hidden="false"] { display: flex; }
 
+.modal-panel {
+  width: 94%;
+  max-width: 1100px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.995), rgba(250,252,255,0.98));
+  border: 1px solid rgba(12,18,28,0.06);
+  box-shadow: 0 40px 120px rgba(6,10,26,0.28);
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+/* header inside modal */
+.modal-panel > div[style*="display:flex"] {
+  background: linear-gradient(180deg,#fff,#fbfeff);
+  border-bottom: 1px solid rgba(10,20,30,0.04);
+  padding: 16px 20px;
+  align-items: center;
+  gap: 12px;
+}
+.modal-panel #case-title { font-size:20px; font-weight:900; letter-spacing:-0.02em; }
+.modal-panel #case-sub { color:var(--muted); font-weight:700; }
+
+/* body grid */
+#case-body {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 22px;
+  padding: 22px;
+  max-height: calc(80vh);
+  overflow: auto;
+}
+
+/* main content */
+#case-main { display:flex; flex-direction:column; gap:18px; }
+
+/* premium section headings */
+#case-main h4 { margin:0; font-size:16px; font-weight:900; color:var(--text); font-family:var(--font-display); }
+#case-main p, #case-main ul { color:var(--muted); margin: 6px 0 0; font-size:15px; line-height:1.6; font-weight:600; }
+
+/* screenshot gallery shell */
+.case-gallery {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items: stretch;
+}
+.case-gallery .viewer {
+  position: relative;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  border-radius: 14px;
+  box-shadow: 0 30px 100px rgba(6,10,26,0.10);
+  border: 1px solid rgba(10,20,30,0.04);
+  overflow: hidden;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+}
+.case-gallery .viewer img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), filter 320ms;
+  cursor: zoom-in;
+}
+
+/* prev/next controls */
+.case-gallery .control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(10,20,30,0.06);
+  box-shadow: 0 8px 30px rgba(6,10,26,0.08);
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.case-gallery .control:hover { transform: translateY(-50%) scale(1.04); box-shadow: 0 18px 60px rgba(6,10,26,0.12); }
+.case-gallery .control[aria-hidden="true"] { display:none; }
+.case-gallery .control.prev { left:16px; }
+.case-gallery .control.next { right:16px; }
+
+/* thumbnail strip */
+.case-gallery .thumbs {
+  display:flex;
+  gap:10px;
+  overflow:auto;
+  padding:8px;
+  align-items:center;
+  justify-content:flex-start;
+  -webkit-overflow-scrolling:touch;
+}
+.case-gallery .thumb {
+  flex: 0 0 auto;
+  width:110px;
+  height:66px;
+  border-radius:10px;
+  overflow:hidden;
+  border: 2px solid transparent;
+  background:#fff;
+  box-shadow: 0 10px 28px rgba(6,10,26,0.06);
+  cursor:pointer;
+  transition: transform 240ms cubic-bezier(.2,.9,.2,1), border-color 180ms;
+}
+.case-gallery .thumb img { width:100%; height:100%; object-fit:cover; display:block; transform-origin:center center; }
+.case-gallery .thumb[aria-current="true"] { border-color: rgba(124,58,237,0.16); transform: translateY(-6px) scale(1.02); }
+
+/* badges and meta in aside */
+#case-aside { display:flex; flex-direction:column; gap:14px; align-self:start; }
+#case-aside strong { display:block; font-weight:900; margin-bottom:6px; color:var(--text); }
+#case-aside .badge-list { display:flex; gap:8px; flex-wrap:wrap; }
+.badge-pill { padding:8px 10px; border-radius:999px; background: linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 10px 30px rgba(16,24,40,0.04); font-weight:900; font-size:13px; color:var(--muted); }
+
+/* metrics styling */
+#case-metrics { color:var(--muted); font-weight:700; }
+
+/* links group */
+#case-links a { display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow:0 10px 30px rgba(16,24,40,0.04); font-weight:900; color:var(--text); text-decoration:none; }
+
+/* notes */
+#case-notes { color:var(--muted); font-size:14px; }
+
+/* zoom overlay */
+.case-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,10,26,0.86);
+  display:grid;
+  place-items:center;
+  z-index: 99999;
+  cursor: zoom-out;
+}
+.case-zoom-overlay img { max-width: 92vw; max-height: 92vh; object-fit:contain; border-radius:10px; box-shadow:0 40px 140px rgba(6,10,26,0.6); }
+
+/* responsive */
+@media (max-width: 980px) {
+  #case-body { grid-template-columns: 1fr 320px; padding:18px; }
+  .case-gallery .viewer { min-height: 260px; }
+}
+@media (max-width: 720px) {
+  .modal-panel { max-width: 96%; border-radius: 14px; }
+  #case-body { grid-template-columns: 1fr; gap:12px; padding:14px; }
+  #case-aside { order: 2; width:100%; }
+  .case-gallery .thumb { width:88px; height:56px; }
+  .case-gallery .control { display:none; }
+}
+
+  
 </style>
 
 
@@ -2823,6 +2970,123 @@ try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(
       whenImagesLoaded(track, ()=> { ensureClones(); running = true; });
     }, 260);
   });
+})();
+</script>
+<script>
+(function(){
+  const modal = document.getElementById('case-modal');
+  if(!modal) return;
+  const screensContainer = document.getElementById('case-screens-carousel');
+  if(!screensContainer) return;
+
+  function buildGallery(images) {
+    const gallery = document.createElement('div');
+    gallery.className = 'case-gallery';
+    const viewer = document.createElement('div');
+    viewer.className = 'viewer';
+    const mainImg = document.createElement('img');
+    mainImg.alt = '';
+    mainImg.setAttribute('decoding','async');
+    viewer.appendChild(mainImg);
+
+    const prev = document.createElement('button');
+    prev.className = 'control prev';
+    prev.setAttribute('aria-label','Previous image');
+    prev.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const next = document.createElement('button');
+    next.className = 'control next';
+    next.setAttribute('aria-label','Next image');
+    next.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    viewer.appendChild(prev);
+    viewer.appendChild(next);
+
+    const thumbs = document.createElement('div');
+    thumbs.className = 'thumbs';
+
+    images.forEach((src, i) => {
+      const t = document.createElement('button');
+      t.className = 'thumb';
+      t.type = 'button';
+      const ti = document.createElement('img');
+      ti.src = src;
+      ti.alt = `Screenshot ${i+1}`;
+      t.appendChild(ti);
+      t.addEventListener('click', ()=> setIndex(i));
+      thumbs.appendChild(t);
+    });
+
+    gallery.appendChild(viewer);
+    gallery.appendChild(thumbs);
+
+    let idx = 0;
+    function setIndex(n) {
+      idx = (n + images.length) % images.length;
+      mainImg.src = images[idx];
+      Array.from(thumbs.children).forEach((c, j)=> c.setAttribute('aria-current', j === idx ? 'true' : 'false'));
+      // keep the active thumb visible
+      const active = thumbs.children[idx];
+      if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+
+    prev.addEventListener('click', ()=> setIndex(idx-1));
+    next.addEventListener('click', ()=> setIndex(idx+1));
+
+    // keyboard nav
+    function onKey(e){
+      if(modal.getAttribute('aria-hidden') === 'true') return;
+      if(e.key === 'ArrowLeft') prev.click();
+      if(e.key === 'ArrowRight') next.click();
+      if(e.key === 'Escape') { /* let existing handlers close */ }
+    }
+    window.addEventListener('keydown', onKey);
+
+    // pointer swipe for viewer
+    let startX = null;
+    let startY = null;
+    viewer.addEventListener('pointerdown', (ev)=>{ startX = ev.clientX; startY = ev.clientY; viewer.setPointerCapture && viewer.setPointerCapture(ev.pointerId); });
+    viewer.addEventListener('pointerup', (ev)=>{ if(startX === null) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; if(Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) { if(dx < 0) next.click(); else prev.click(); } startX = null; startY = null; });
+
+    // zoom / lightbox
+    viewer.addEventListener('click', (ev)=>{
+      if(ev.target.tagName.toLowerCase() !== 'img') return;
+      const overlay = document.createElement('div');
+      overlay.className = 'case-zoom-overlay';
+      const big = document.createElement('img');
+      big.src = images[idx];
+      overlay.appendChild(big);
+      overlay.tabIndex = -1;
+      overlay.addEventListener('click', ()=> overlay.remove());
+      document.body.appendChild(overlay);
+      overlay.focus();
+    });
+
+    setIndex(0);
+
+    return gallery;
+  }
+
+  function enhanceModal() {
+    const container = document.getElementById('case-screens-carousel');
+    if(!container) return;
+    const imgs = Array.from(container.querySelectorAll('img')).map(i => i.getAttribute('src')).filter(Boolean);
+    if(!imgs.length) return;
+    container.innerHTML = '';
+    const gallery = buildGallery(imgs);
+    container.appendChild(gallery);
+  }
+
+  const mo = new MutationObserver(()=> {
+    const visible = modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex';
+    if(visible) {
+      setTimeout(()=> { enhanceModal(); }, 80);
+    }
+  });
+  mo.observe(modal, { attributes: true, attributeFilter: ['aria-hidden', 'style'] });
+
+  // initial enhancement if modal already open
+  if(modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex') {
+    setTimeout(()=> enhanceModal(), 40);
+  }
 })();
 </script>
 
