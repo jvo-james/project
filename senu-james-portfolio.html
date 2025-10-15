@@ -2518,6 +2518,21 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 /* responsive */
 @media (max-width: 1100px) { .projects-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 760px) { .projects-grid { grid-template-columns: 1fr; } .card { min-height: auto; } }
+/* role rotator fade */
+.role-fade {
+  transition: opacity .36s ease, transform .36s ease;
+  opacity: 0;
+  transform: translateY(6px);
+}
+.role-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.role-dynamic {
+  display:inline-block;
+  min-width: 140px;
+}
+
 </style>
 
 </head>
@@ -2823,6 +2838,107 @@ footer.site .socials a{display:inline-grid;place-items:center;width:44px;height:
 /* ensure images and galleries never overflow on narrow screens */
 img,video,picture,svg{max-width:100%;height:auto;display:block}
 
+  /* filter button container you already have; make responsive */
+.projects-header > div:last-child {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+/* mobile: convert to horizontal scroller if too many */
+@media (max-width:520px){
+  .projects-header > div:last-child {
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom:6px;
+    gap:10px;
+  }
+  .projects-header > div:last-child .btn {
+    flex: 0 0 auto;
+    min-width: 84px;
+  }
+}
+button[aria-pressed="true"] {
+  background: linear-gradient(90deg,var(--accent),var(--accent-3));
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 40px rgba(59,130,246,0.12);
+}
+/* ensure modal header items stay on one line and don't cause horizontal overflow */
+.modal-panel > div[style*="display:flex"] {
+  display:flex !important;
+  gap:8px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:nowrap;
+  padding:12px 16px;
+  box-sizing:border-box;
+}
+
+/* small screens: keep header controls on same line; allow them to shrink */
+@media (max-width:520px){
+  .modal-panel > div[style*="display:flex"] {
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:nowrap;
+  }
+  .modal-panel > div[style*="display:flex"] a#case-open-external,
+  .modal-panel > div[style*="display:flex"] button#case-close {
+    flex: 0 0 auto;
+    margin-left: 8px;
+  }
+}
+
+/* ensure modal body wraps instead of causing horizontal scroll */
+#case-body {
+  box-sizing: border-box;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* case gallery viewer: force images to wrap inside viewer */
+.case-gallery .viewer {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.case-gallery .viewer img {
+  max-width: 100%;
+  height: auto;
+  display:block;
+  object-fit:contain;
+}
+.case-gallery .control { display:grid !important; z-index:1200 !important; pointer-events:auto !important; }
+.case-gallery .control.prev { left: 12px !important; }
+.case-gallery .control.next { right: 12px !important; }
+
+  #case-main, #case-aside { word-break: break-word; -webkit-hyphens: auto; hyphens: auto; }
+
+/* full-screen modal on smalls — avoids horizontal scroll */
+@media (max-width:720px){
+  .modal-panel { max-width: 100% !important; padding: 0 !important; border-radius: 12px !important; }
+  #case-body { grid-template-columns: 1fr !important; padding: 12px !important; gap:12px !important; }
+  #case-aside { width: 100% !important; order: 2; }
+  #case-main { width: 100% !important; order: 1; }
+}
+#home-hero .hero-accent-blob {
+  position:absolute;
+  right: 6%;
+  top: 6%;
+  width: 360px;
+  height: 360px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(124,58,237,0.08), transparent 28%),
+    radial-gradient(circle at 70% 70%, rgba(6,182,212,0.06), transparent 32%);
+  filter: blur(36px);
+  border-radius: 40%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.95;
+  transform: translateZ(0);
+}
+
 </style>
  <div id="primary-nav" class="nav-menu" role="navigation">
 <a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
@@ -2847,9 +2963,9 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       <div class="role-rotator" aria-live="polite">
         <span class="role-static">I’m a</span>
         <span id="rotating-role" class="role-dynamic" aria-hidden="false">Product Designer</span>
-        <span class="role-cursor" aria-hidden="true">|</span>
+        <span class="role-cursor" aria-hidden="true"></span>
       </div>
-      <p class="lead">I build product-first web apps — from AI health platforms to campus tools — focused on clarity, accessibility and measurable impact.</p>
+      <p class="lead">I build product-first web apps, from AI health platforms to campus tools, focused on clarity, accessibility and measurable impact.</p>
     </div>
 
     <ul class="hero-metrics" role="list" aria-hidden="false">
@@ -2864,11 +2980,6 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       <a class="btn btn-outline" href="#resume" id="download-cv"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
     </div>
 
-    <div class="mini-ribbon" aria-hidden="true">
-      <span class="ribbon-pill"><i class="fa-brands fa-react"></i>&nbsp;React</span>
-      <span class="ribbon-pill"><i class="fa-solid fa-robot"></i>&nbsp;AI</span>
-      <span class="ribbon-pill"><i class="fa-solid fa-cloud"></i>&nbsp;Realtime</span>
-    </div>
   </div>
 
   <aside class="profile-card" aria-label="Profile and contact" role="complementary">
@@ -2967,7 +3078,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
   </div>
 
   <div class="projects-grid" id="projects-grid" style="margin-top:18px">
-    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra">
+    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra" data-categories="ai" data-categories="web">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
       <div class="card-body">
         <h4 id="p-vitra" class="card-title">Vitra AI</h4>
@@ -2981,7 +3092,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       </div>
     </article>
 
-    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle">
+    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle" data-categories="web">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
       <div class="card-body">
         <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
@@ -2995,7 +3106,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       </div>
     </article>
 
-    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart">
+    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart" data-categories="web">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
       <div class="card-body">
         <h4 id="p-emart" class="card-title">E-Mart</h4>
@@ -3009,7 +3120,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       </div>
     </article>
 
-    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness">
+    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness" data-categories="web" data-categories="ai">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
       <div class="card-body">
         <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
@@ -3023,7 +3134,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       </div>
     </article>
 
-    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge">
+    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge" data-categories="web">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
       <div class="card-body">
         <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
@@ -3037,7 +3148,7 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
       </div>
     </article>
 
-    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc">
+    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc" data-categories="web">
       <div class="card-visual" style="position:relative;height:220px"><div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
       <div class="card-body">
         <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
@@ -3502,8 +3613,8 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
     let px = 0;
     let last = performance.now();
     let running = true;
-    const speed = Math.max(0.15, Math.min(1.2, window.innerWidth / 9000));
-    function step(now){
+const baseFactor = 2.1; // 1.0 = current, >1 faster
+const speed = Math.max(0.35, Math.min(3.2, (window.innerWidth / 9000) * baseFactor));    function step(now){
       if(!running){ last = now; requestAnimationFrame(step); return; }
       const dt = now - last;
       last = now;
@@ -3742,6 +3853,205 @@ img,video,picture,svg{max-width:100%;height:auto;display:block}
 })();
 </script>
 
-  
+ <script>
+(function(){
+  const el = document.getElementById('rotating-role');
+  if(!el) return;
+  const roles = [
+    'Product Designer',
+    'Frontend Engineer',
+    'AI Specialist',
+    'Design Systems Lead',
+    'Performance-focused Frontend'
+  ];
+  let idx = roles.indexOf(el.textContent) >= 0 ? roles.indexOf(el.textContent) : 0;
+
+  // initialize
+  el.classList.add('role-fade','show'); // show initial
+  el.textContent = roles[idx];
+
+  // rotate every 2400ms (tweak to 2000-3000 as you like)
+  const interval = 2400;
+  setInterval(()=>{
+    // hide
+    el.classList.remove('show');
+    setTimeout(()=>{
+      idx = (idx + 1) % roles.length;
+      el.textContent = roles[idx];
+      // show
+      requestAnimationFrame(()=> el.classList.add('show'));
+    }, 380); // match fade-out timing
+  }, interval);
+})();
+</script>
+ <script>
+(function(){
+  const grid = document.getElementById('projects-grid');
+  const btnAll = document.getElementById('filter-all');
+  const btnWeb = document.getElementById('filter-web');
+  const btnAi = document.getElementById('filter-ai');
+  const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
+  if(!grid) return;
+
+  function setPressed(activeBtn){
+    buttons.forEach(b => b && b.setAttribute('aria-pressed', 'false'));
+    if(activeBtn) activeBtn.setAttribute('aria-pressed','true');
+  }
+
+  function applyFilter(name){ // name = 'all' | 'web' | 'ai'
+    const cards = Array.from(grid.querySelectorAll('.card'));
+    cards.forEach(c=>{
+      const cats = (c.dataset.categories || '').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
+      let match = (name === 'all') || (cats.includes(name));
+      c.style.display = match ? '' : 'none';
+      c.setAttribute('aria-hidden', match ? 'false' : 'true');
+    });
+  }
+
+  btnAll && btnAll.addEventListener('click', ()=>{ setPressed(btnAll); applyFilter('all'); });
+  btnWeb && btnWeb.addEventListener('click', ()=>{ setPressed(btnWeb); applyFilter('web'); });
+  btnAi && btnAi.addEventListener('click', ()=>{ setPressed(btnAi); applyFilter('ai'); });
+
+  // initial state
+  setPressed(btnAll);
+  applyFilter('all');
+})();
+</script>
+<script>
+(function(){
+  // Call createModalGallery(imagesArray, containerEl) when showing modal.
+  function createModalGallery(images, holder){
+    // remove old content
+    holder.innerHTML = '';
+    // viewer
+    const viewer = document.createElement('div');
+    viewer.className = 'case-gallery';
+    const big = document.createElement('div');
+    big.className = 'viewer';
+    const img = document.createElement('img');
+    img.alt = '';
+    img.decoding = 'async';
+    big.appendChild(img);
+    viewer.appendChild(big);
+
+    // controls
+    const prev = document.createElement('button');
+    prev.className = 'control prev';
+    prev.type = 'button';
+    prev.setAttribute('aria-label','Previous image');
+    prev.innerHTML = '&#8592;'; // fallback arrow
+    const next = document.createElement('button');
+    next.className = 'control next';
+    next.type = 'button';
+    next.setAttribute('aria-label','Next image');
+    next.innerHTML = '&#8594;';
+    // ensure visible + clickable
+    [prev,next].forEach(b=>{
+      b.style.zIndex = 1200;
+      b.style.pointerEvents = 'auto';
+    });
+    big.appendChild(prev);
+    big.appendChild(next);
+
+    // thumbs
+    const thumbs = document.createElement('div');
+    thumbs.className = 'thumbs';
+    viewer.appendChild(thumbs);
+
+    holder.appendChild(viewer);
+
+    let i = 0;
+    function renderIndex(){
+      img.src = images[i];
+      // mark current thumb
+      Array.from(thumbs.children).forEach((t, idx)=>{
+        t.setAttribute('aria-current', idx === i ? 'true' : 'false');
+      });
+    }
+
+    // build thumbs
+    images.forEach((src, idx)=>{
+      const b = document.createElement('button');
+      b.className = 'thumb';
+      b.type = 'button';
+      const ti = document.createElement('img');
+      ti.src = src;
+      ti.alt = `Screenshot ${idx+1}`;
+      b.appendChild(ti);
+      b.addEventListener('click', ()=>{ i = idx; renderIndex(); });
+      thumbs.appendChild(b);
+    });
+
+    // listeners
+    prev.addEventListener('click', ()=>{
+      i = (i - 1 + images.length) % images.length;
+      renderIndex();
+    });
+    next.addEventListener('click', ()=>{
+      i = (i + 1) % images.length;
+      renderIndex();
+    });
+
+    // keyboard support
+    window.addEventListener('keydown', function onKey(e){
+      if(document.getElementById('case-modal')?.getAttribute('aria-hidden') === 'false'){
+        if(e.key === 'ArrowLeft'){ prev.click(); }
+        if(e.key === 'ArrowRight'){ next.click(); }
+        if(e.key === 'Escape'){ document.getElementById('case-close')?.click(); }
+      }
+    }, {passive:true});
+
+    renderIndex();
+    return { viewer, prev, next, thumbs, setIndex: idx => { i = idx; renderIndex(); } };
+  }
+
+  // Example usage when you open a case (inside your modal builder):
+  // const carousel = createModalGallery( caseJson.screenshots.map(s => s), document.getElementById('case-screens-carousel') );
+
+  // If your images are relative filenames, ensure they are valid paths (same directory or correct URL).
+  window.createModalGallery = createModalGallery; // expose if you want to call externally
+})();
+</script>
+<script>
+(function(){
+  if(typeof gsap === 'undefined') return;
+
+  // gentle float on stickers and float-badges
+  gsap.utils.toArray('.sticker, .float-badge').forEach((el, i)=>{
+    gsap.fromTo(el, {y:0, rotation: (i%2? -4:4)}, {
+      y: (i%2? -6:6),
+      rotation: (i%2? 6:-6),
+      duration: 4 + (i*0.4),
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: i*0.12
+    });
+  });
+
+  // subtle profile ring scale / breathe
+  gsap.to('.profile-ring', {scale:1.03, duration: 6, yoyo:true, repeat:-1, ease:'sine.inOut'});
+
+  // small mouse parallax on the right accent blob
+  const hero = document.getElementById('home-hero');
+  const blob = document.querySelector('#home-hero .hero-accent-blob') || document.createElement('div');
+  if(!document.querySelector('#home-hero .hero-accent-blob')) {
+    blob.className = 'hero-accent-blob';
+    hero.appendChild(blob);
+  }
+  hero.addEventListener('pointermove', (e)=>{
+    const r = hero.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - 0.5;
+    const py = (e.clientY - r.top)/r.height - 0.5;
+    gsap.to(blob, {x: px * 40, y: py * 24, duration: 0.9, ease: 'power3.out'});
+  }, {passive:true});
+
+  // subtle entrance for left features
+  gsap.from('.hero-left .kicker, .hero-left .hi, .role-rotator, .lead, .cta-row .btn', {
+    stagger: 0.08, y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.16
+  });
+})();
+</script>
+
 </body>
 </html>
