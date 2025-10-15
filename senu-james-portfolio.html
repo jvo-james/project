@@ -1517,6 +1517,76 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .sticker, .profile-ring, .profile-photo, .secondary-photo { animation: none !important; transition: none !important; }
 }
 
+  /* Marquee: large framed cards with subtle tilt (inspired by your screenshot) */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.marquee:focus { outline: none; }
+
+.marquee-track {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+
+/* card framing */
+.marq-item {
+  flex: 0 0 auto;
+  width: clamp(200px, 28vw, 420px);   /* responsive width */
+  height: clamp(120px, 17.5vw, 260px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(6,10,26,0.08);
+  border: 1px solid rgba(10,20,30,0.04);
+  transform-origin: center center;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms ease;
+  user-select: none;
+}
+
+/* image inside the card */
+.marq-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 8px 26px rgba(6,10,26,0.06);
+  transform-origin: center center;
+  transition: transform 560ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* hover/focus affordance - scale image slightly and lighten shadow */
+.marq-item:hover,
+.marq-item:focus-within {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 90px rgba(6,10,26,0.12);
+}
+.marq-item:hover img { transform: scale(1.02); }
+
+/* subtle alternating rotation to create the "scattered cards" look —
+   we lightly rotate a few items for personality; JS also assigns individualized rotations */
+.marq-item.rotate-left { transform: rotate(-6deg); }
+.marq-item.rotate-right { transform: rotate(6deg); }
+
+/* reduce rotation and shadows on small screens */
+@media (max-width: 760px) {
+  .marq-item { padding: 10px; border-radius: 12px; }
+  .marq-item.rotate-left, .marq-item.rotate-right { transform: none; }
+  .marq-item { width: clamp(120px, 40vw, 160px); height: clamp(90px, 24vw, 120px); }
+}
+
+/* hide native scrollbars while allowing programmatic transform-based movement */
+.marquee { -ms-overflow-style: none; scrollbar-width: none; }
+.marquee::-webkit-scrollbar { display: none; }
+
 </style>
 
 
@@ -1771,50 +1841,46 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
 <section class="marquee-wrap" style="margin-top:36px;">
   <header style="text-align:center;margin-bottom:12px">
-    <h3 style="margin:0">Demos & Live Interactions</h3>
-    <p style="margin:6px 0 0;color:var(--muted)">    Wireframes, prototype gifs and research snapshots that show design decisions and impact.
-</p>
+    <h3 style="margin:0">Community & events</h3>
+    <p style="margin:6px 0 0;color:var(--muted)">Photos from events, user stories and launches.</p>
   </header>
-  <div class="marquee-controls" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px">
-    <button id="marq-pause" class="btn" aria-pressed="false" title="Pause marquee"><i class="fa-solid fa-pause"></i></button>
-    <button id="marq-play" class="btn" aria-pressed="true" title="Play marquee" style="display:none"><i class="fa-solid fa-play"></i></button>
-    <span class="small" style="color:var(--muted)">Looping photos — hover to pause</span>
-  </div>
-  <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
-   <div class="marquee-track" aria-hidden="false">
-  <div class="marq-item"><img src="vitra1.png" alt="Vitra AI — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="mhc3.png" alt="Make Heaven Crowded — screenshot 3" loading="lazy"></div>
-  <div class="marq-item"><img src="emart2.png" alt="E-Mart — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack5.png" alt="Fitness Tracker — screenshot 5" loading="lazy"></div>
-  <div class="marq-item"><img src="shuttle1.png" alt="Shuttle Tracker — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="skillforg2.png" alt="SkillForge — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="vitra4.png" alt="Vitra AI — screenshot 4" loading="lazy"></div>
-  <div class="marq-item"><img src="emart5.png" alt="E-Mart — screenshot 5" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack1.png" alt="Fitness Tracker — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="mhc1.png" alt="Make Heaven Crowded — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="shuttle2.png" alt="Shuttle Tracker — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="skillforg.png" alt="SkillForge — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="vitra2.png" alt="Vitra AI — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="emart1.png" alt="E-Mart — screenshot 1" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack3.png" alt="Fitness Tracker — screenshot 3" loading="lazy"></div>
-  <div class="marq-item"><img src="mhc4.png" alt="Make Heaven Crowded — screenshot 4" loading="lazy"></div>
-  <div class="marq-item"><img src="vitra6.png" alt="Vitra AI — screenshot 6" loading="lazy"></div>
-  <div class="marq-item"><img src="emart3.png" alt="E-Mart — screenshot 3" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack2.png" alt="Fitness Tracker — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="skillforg3.png" alt="SkillForge — screenshot 3" loading="lazy"></div>
-  <div class="marq-item"><img src="vitra5.png" alt="Vitra AI — screenshot 5" loading="lazy"></div>
-  <div class="marq-item"><img src="emart4.png" alt="E-Mart — screenshot 4" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack4.png" alt="Fitness Tracker — screenshot 4" loading="lazy"></div>
-  <div class="marq-item"><img src="mhc2.png" alt="Make Heaven Crowded — screenshot 2" loading="lazy"></div>
-  <div class="marq-item"><img src="vitra3.png" alt="Vitra AI — screenshot 3" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack6.png" alt="Fitness Tracker — screenshot 6" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack7.png" alt="Fitness Tracker — screenshot 7" loading="lazy"></div>
-  <div class="marq-item"><img src="fittrack8.png" alt="Fitness Tracker — screenshot 8" loading="lazy"></div>
-  <div class="marq-item"><img src="mhc5.png" alt="Make Heaven Crowded — screenshot 5" loading="lazy"></div>
-</div>
 
+  <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
+    <div class="marquee-track" aria-hidden="false">
+      <!-- mixed order of all provided screenshots -->
+      <div class="marq-item"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
+      <div class="marq-item"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
+      <div class="marq-item"><img src="emart2.png" alt="E-Mart screenshot"></div>
+      <div class="marq-item"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="shuttle1.png" alt="Shuttle Tracker screenshot"></div>
+      <div class="marq-item"><img src="skillforg2.png" alt="SkillForge screenshot"></div>
+      <div class="marq-item"><img src="emart1.png" alt="E-Mart screenshot"></div>
+      <div class="marq-item"><img src="vitra4.png" alt="Vitra screenshot"></div>
+      <div class="marq-item"><img src="fittrack2.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="mhc1.png" alt="Make Heaven Crowded screenshot"></div>
+      <div class="marq-item"><img src="skillforg.png" alt="SkillForge screenshot"></div>
+      <div class="marq-item"><img src="emart5.png" alt="E-Mart screenshot"></div>
+      <div class="marq-item"><img src="fittrack7.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="vitra2.png" alt="Vitra screenshot"></div>
+      <div class="marq-item"><img src="shuttle2.png" alt="Shuttle Tracker screenshot"></div>
+      <div class="marq-item"><img src="mhc4.png" alt="Make Heaven Crowded screenshot"></div>
+      <div class="marq-item"><img src="fittrack1.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="emart3.png" alt="E-Mart screenshot"></div>
+      <div class="marq-item"><img src="vitra3.png" alt="Vitra screenshot"></div>
+      <div class="marq-item"><img src="fittrack3.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="skillforg3.png" alt="SkillForge screenshot"></div>
+      <div class="marq-item"><img src="mhc2.png" alt="Make Heaven Crowded screenshot"></div>
+      <div class="marq-item"><img src="emart4.png" alt="E-Mart screenshot"></div>
+      <div class="marq-item"><img src="fittrack4.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="fittrack6.png" alt="Fitness Tracker screenshot"></div>
+      <div class="marq-item"><img src="vitra5.png" alt="Vitra screenshot"></div>
+      <div class="marq-item"><img src="mhc5.png" alt="Make Heaven Crowded screenshot"></div>
+      <div class="marq-item"><img src="vitra6.png" alt="Vitra screenshot"></div>
+      <div class="marq-item"><img src="fittrack8.png" alt="Fitness Tracker screenshot"></div>
+    </div>
   </div>
 </section>
+
 
 <section id="contact" class="contact-wrap" style="margin-top:40px;">
   <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
@@ -2641,6 +2707,122 @@ try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(
     wrap.addEventListener('pointerleave', onLeave);
     wrap.addEventListener('pointercancel', onLeave);
   }
+})();
+</script>
+<script>
+(function(){
+  const marquee = document.getElementById('marquee');
+  if(!marquee) return;
+  const track = marquee.querySelector('.marquee-track');
+  if(!track) return;
+
+  // assign small random rotations and micro offsets for each card for natural feel
+  Array.from(track.children).forEach((item, i) => {
+    const r = (Math.random() * 10) - 5; // -5deg to +5deg
+    item.style.transform = `rotate(${r}deg)`;
+    // store base rotation to keep hover transforms additive
+    item.dataset.baseRot = String(r);
+  });
+
+  // duplicate items until the track width comfortably exceeds container width (for seamless loop)
+  function ensureClones() {
+    const containerW = marquee.getBoundingClientRect().width;
+    // measure track children width
+    let tw = track.scrollWidth;
+    let clones = 0;
+    // clone until track width >= 2 * container width
+    while(tw < containerW * 2 && clones < 8) {
+      Array.from(track.children).slice(0).forEach(node=>{
+        const clone = node.cloneNode(true);
+        track.appendChild(clone);
+      });
+      clones++;
+      tw = track.scrollWidth;
+    }
+  }
+
+  // smooth pixel-based loop using requestAnimationFrame
+  let px = 0;
+  const speed = Math.max(0.25, Math.min(1.25, window.innerWidth / 8000)); // tuning by viewport
+  let running = true;
+  let last = performance.now();
+
+  function step(now) {
+    if(!running){ last = now; requestAnimationFrame(step); return; }
+    const dt = now - last;
+    last = now;
+    px -= speed * (dt / 16.6667); // normalize to 60fps
+    // reset once we've scrolled half the content (we duplicated earlier)
+    const half = track.scrollWidth / 2;
+    if(Math.abs(px) >= half) px = 0;
+    track.style.transform = `translate3d(${px}px, 0, 0)`;
+    requestAnimationFrame(step);
+  }
+
+  // pause on hover or focus for accessibility
+  marquee.addEventListener('mouseenter', ()=> running = false);
+  marquee.addEventListener('mouseleave', ()=> running = true);
+  marquee.addEventListener('focusin', ()=> running = false);
+  marquee.addEventListener('focusout', ()=> running = true);
+
+  // ensure clones after images load (so widths are correct)
+  function whenImagesLoaded(root, cb){
+    const imgs = Array.from(root.querySelectorAll('img'));
+    if(imgs.length === 0) return cb();
+    let count = imgs.length;
+    imgs.forEach(img=>{
+      if(img.complete) { if(--count === 0) cb(); }
+      else img.addEventListener('load', ()=> { if(--count === 0) cb(); });
+      img.addEventListener('error', ()=> { if(--count === 0) cb(); });
+    });
+  }
+
+  whenImagesLoaded(track, ()=> {
+    ensureClones();
+    // small staggered subtle transform to clones too
+    Array.from(track.children).forEach((item, idx)=>{
+      const base = parseFloat(item.dataset.baseRot || 0);
+      const jitter = (Math.random()*4 - 2);
+      item.style.transform = `rotate(${(base + jitter).toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(step);
+  });
+
+  // handle resize: clear clones and rebuild if necessary (keeps marquee coherent on dev/responsive)
+  let resizeTimer;
+  window.addEventListener('resize', ()=> {
+    clearTimeout(resizeTimer);
+    running = false;
+    resizeTimer = setTimeout(()=>{
+      // reset transform & clones; keep only original set (first N items)
+      const originals = [];
+      // assume your original set fits within first 40 items; find unique srcs from beginning
+      for(let i=0;i<track.children.length;i++){
+        const src = track.children[i].querySelector('img')?.getAttribute('src');
+        if(!src) continue;
+        if(!originals.some(s=>s === src)) originals.push(src);
+        if(originals.length >= 40) break;
+      }
+      // rebuild track
+      track.innerHTML = '';
+      originals.forEach(src => {
+        const wrap = document.createElement('div');
+        wrap.className = 'marq-item';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        wrap.appendChild(img);
+        track.appendChild(wrap);
+      });
+      // re-run initial setup
+      Array.from(track.children).forEach((item, i) => {
+        const r = (Math.random() * 10) - 5;
+        item.style.transform = `rotate(${r}deg)`;
+        item.dataset.baseRot = String(r);
+      });
+      whenImagesLoaded(track, ()=> { ensureClones(); running = true; });
+    }, 260);
+  });
 })();
 </script>
 
