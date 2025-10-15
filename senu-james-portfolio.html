@@ -2284,6 +2284,160 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   .profile-photo { width: 76px; height:76px; border-radius:12px; border-width:4px; }
   .profile-visual-wrap .sticker { display:none; }
 }
+.hero-left-visual {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 18px;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.hero-blob {
+  position: absolute;
+  right: -6%;
+  top: -8%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.09), transparent 28%), radial-gradient(circle at 70% 70%, rgba(6,182,212,0.06), transparent 32%);
+  filter: blur(36px);
+  border-radius: 40%;
+  opacity: 0.92;
+  transform: translateZ(0);
+  z-index: 0;
+}
+
+.hero-asset {
+  width: clamp(160px, 18vw, 240px);
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(6,10,26,0.06);
+  border: 1px solid rgba(10,20,30,0.04);
+  transform-origin: center;
+  transform: translateY(6px) rotate(-2deg);
+  transition: transform .6s cubic-bezier(.2,.9,.2,1), box-shadow .36s;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.hero-asset:hover {
+  transform: translateY(0) rotate(0deg) scale(1.02);
+  box-shadow: 0 48px 140px rgba(6,10,26,0.12);
+}
+
+.hero-features {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.feature-pill {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  border: 1px solid rgba(10,20,30,0.04);
+  box-shadow: 0 12px 36px rgba(16,24,40,0.04);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--muted);
+  transform: translateY(8px);
+  opacity: 0;
+}
+
+@keyframes pillRise {
+  0% { transform: translateY(12px); opacity: 0; }
+  60% { transform: translateY(-4px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.hero-left-visual .feature-pill:nth-child(1) { animation: pillRise 700ms cubic-bezier(.2,.9,.2,1) 220ms both; }
+.hero-left-visual .feature-pill:nth-child(2) { animation: pillRise 720ms cubic-bezier(.2,.9,.2,1) 340ms both; }
+.hero-left-visual .feature-pill:nth-child(3) { animation: pillRise 780ms cubic-bezier(.2,.9,.2,1) 460ms both; }
+
+.hi { position: relative; z-index: 10; }
+
+.hi::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 64%;
+  height: 6px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform .9s cubic-bezier(.2,.9,.2,1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+#home-hero.hero.in-view .hi::after { transform: scaleX(1); }
+
+.hero-left .lead { z-index: 10; position: relative; }
+
+.hero-left-visual .hero-asset, .hero-left-visual .feature-pill { will-change: transform, opacity; }
+
+.profile-visual-wrap { position: relative; overflow: visible; z-index: 8; }
+
+.double-photo { position: relative; z-index: 3; display:grid; place-items:center; width: 240px; height: 240px; }
+
+.profile-photo { z-index: 3; position: relative; transition: transform .42s var(--ease-soft), box-shadow .42s; }
+
+.above-secondary-wrap { position: absolute; inset: auto 6% auto auto; width: auto; height: auto; z-index: 16; display: grid; place-items: center; pointer-events: none; }
+
+.secondary-on-top {
+  position: absolute;
+  top: -18px;
+  right: -6px;
+  width: 96px;
+  height: 96px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 24px 80px rgba(6,10,26,0.12);
+  transform-origin: center;
+  transform: translateZ(0) rotate(-3deg);
+  transition: transform .6s cubic-bezier(.2,.9,.2,1), box-shadow .36s;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.secondary-on-top img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.profile-card:hover .secondary-on-top { transform: translateY(-6px) rotate(0deg) scale(1.03); box-shadow: 0 48px 120px rgba(6,10,26,0.16); }
+
+@media (max-width: 1100px) {
+  .hero-left-visual { grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+  .hero-asset { width: clamp(140px, 20vw, 200px); transform: translateY(4px) rotate(-2deg); }
+  .above-secondary-wrap { right: 6%; top: -16px; }
+  .secondary-on-top { width: 80px; height: 80px; top: -14px; right: -6px; border-radius: 12px; }
+  .double-photo { width: 200px; height: 200px; }
+  .profile-photo { width: 170px; height: 170px; }
+}
+
+@media (max-width: 760px) {
+  .hero-left-visual { display: none; }
+  .secondary-on-top { position: relative; top: 0; right: 0; transform: none; width: 56px; height: 56px; border-radius: 10px; margin-left: 8px; }
+  .above-secondary-wrap { position: relative; inset: auto; display:block; margin-left: 6px; z-index: 6; }
+  .double-photo { width: 84px; height: 84px; }
+  .profile-photo { width: 76px; height: 76px; border-radius: 12px; }
+  .hi::after { display: none; }
+}
+
+@media (max-width: 430px) {
+  .hero-asset { display: none; }
+  .feature-pill { padding: 6px 8px; font-size: 12px; }
+  .secondary-on-top { width: 48px; height: 48px; border-radius: 10px; box-shadow: 0 10px 28px rgba(6,10,26,0.08); }
+}
 
 </style>
 </head>
@@ -2319,6 +2473,16 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
   <div class="hero-left">
     <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Winner • Product & UX</div>
+    <div class="hero-left-visual" aria-hidden="true">
+  <div class="hero-blob" role="presentation"></div>
+  <img class="hero-asset" src="hero-abstract.png" alt="" loading="lazy" />
+  <div class="hero-features">
+    <div class="feature-pill"><i class="fa-solid fa-lightbulb"></i><span>Product-first</span></div>
+    <div class="feature-pill"><i class="fa-solid fa-shield-halved"></i><span>Accessible by design</span></div>
+    <div class="feature-pill"><i class="fa-solid fa-rocket"></i><span>Fast & reliable</span></div>
+  </div>
+</div>
+
     <h2 id="hero-heading" class="hi">Hi! I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
@@ -2369,6 +2533,11 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
           <img src="senu.PNG" alt="Senu James candid photo" width="160" height="160" loading="lazy" decoding="async">
         </div>
       </div>
+<div class="above-secondary-wrap" aria-hidden="false">
+  <div class="secondary-photo secondary-on-top" role="img" aria-label="Senu candid above portrait">
+    <img src="senu-small.png" alt="Senu smaller photo" loading="eager" decoding="sync" width="160" height="160">
+  </div>
+</div>
 
       <div class="sticker s-1" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🏆</div><div class="sticker-text">ADIC</div></div></div>
       <div class="sticker s-2" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🧠</div><div class="sticker-text">AI</div></div></div>
@@ -3825,5 +3994,26 @@ try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(
 })();
 
 </script>
+  <script>
+(function(){
+  const hero = document.getElementById('home-hero');
+  if(!hero) return;
+  function markInView(){
+    const r = hero.getBoundingClientRect();
+    if(r.top < window.innerHeight * 0.7 && r.bottom > 0){
+      hero.classList.add('in-view');
+      window.removeEventListener('scroll', markInView);
+    }
+  }
+  markInView();
+  window.addEventListener('scroll', markInView, {passive:true});
+  if(typeof gsap !== 'undefined'){
+    gsap.from('.hero-left-visual .hero-asset', {y:18, opacity:0, duration:0.9, ease:'power3.out', delay:0.18});
+    gsap.from('.hero-left-visual .feature-pill', {y:10, opacity:0, stagger:0.08, duration:0.64, ease:'power2.out', delay:0.28});
+    gsap.from('.secondary-on-top', {y:10, opacity:0, duration:0.8, ease:'power3.out', delay:0.36});
+  }
+})();
+</script>
+
 </body>
 </html>
