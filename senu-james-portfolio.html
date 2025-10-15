@@ -7,7 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Lexend:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
- <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q5GR0GCN9"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q5GR0GCN9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -2285,328 +2286,269 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 }
 
 </style>
-
-
 </head>
 <body>
 <header class="site-header" role="banner" aria-label="Primary site header">
-  <div class="wrap">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">SJ</div>
-      <div class="brand-meta">
-        <h1>Senu James</h1>
-        <p class="muted small">Web Developer · AI &amp; Product Builder</p>
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
+    <div class="brand" style="display:flex;align-items:center;gap:12px">
+      <div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
+      <div>
+        <h1 style="margin:0">Senu James</h1>
+        <p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
       </div>
     </div>
+  <nav class="primary" aria-label="Main navigation">
+ <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open main menu">
+<span class="hamburger" aria-hidden="true"></span>
+</button>
 
-    <nav class="primary" aria-label="Main navigation">
-      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open main menu">
-        <span class="hamburger" aria-hidden="true"></span>
-      </button>
 
-      <div id="primary-nav" class="nav-menu" role="navigation">
-        <a href="#home-hero"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
-        <a href="#projects"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Projects</a>
-        <a href="#about"><i class="fa-solid fa-user" aria-hidden="true"></i> About</a>
-        <a href="#timeline"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Journey</a>
-        <a href="#contact"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
-        <a class="cta" href="#resume"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Resume</a>
-      </div>
-    </nav>
+ <div id="primary-nav" class="nav-menu" role="navigation">
+<a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+<a href="#projects"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+<a href="#about"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+<a href="#timeline"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+<a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+<a class="cta" href="#resume"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+</div>
+</nav>
   </div>
 </header>
 
-<main id="main-content" class="container" role="main">
-  <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
-    <div class="hero-left">
-      <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Winner • Product &amp; UX</div>
+<main id="main-content" class="container" role="main" style="padding-top:28px;">
+<section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
+  <div class="hero-left">
+    <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Winner • Product & UX</div>
+    <h2 id="hero-heading" class="hi">Hi! I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
+    <div class="hero-sub">
+      <div class="role-rotator" aria-live="polite">
+        <span class="role-static">I’m a</span>
+        <span id="rotating-role" class="role-dynamic" aria-hidden="false">Product Designer</span>
+        <span class="role-cursor" aria-hidden="true">|</span>
+      </div>
+      <p class="lead">I build product-first web apps — from AI health platforms to campus tools — focused on clarity, accessibility and measurable impact.</p>
+    </div>
 
-      <h2 id="hero-heading" class="hi">
-        Hi! I’m <strong>Senu James</strong>
-        <span class="desc-line">Designing delightful web products &amp; AI experiences that scale.</span>
-      </h2>
+    <ul class="hero-metrics" role="list" aria-hidden="false">
+      <li><strong class="metric-number" data-value="1">Winner</strong><span class="metric-label">African Digital Innovation Challenge</span></li>
+      <li><strong class="metric-number" data-value="1000">1k+</strong><span class="metric-label">Beta users engaged</span></li>
+      <li><strong class="metric-number" data-value="3">3</strong><span class="metric-label">Major product launches</span></li>
+    </ul>
 
-      <div class="hero-sub">
-        <div class="role-rotator" aria-live="polite">
-          <span class="role-static">I’m a</span>
-          <span id="rotating-role" class="role-dynamic" aria-hidden="false">Product Designer</span>
-          <span class="role-cursor" aria-hidden="true">|</span>
+    <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
+      <a class="btn btn-primary" href="#projects" id="projects-cta"><i class="fa-solid fa-briefcase"></i>&nbsp;Selected work</a>
+      <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Contact</a>
+      <a class="btn btn-outline" href="#resume" id="download-cv"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
+    </div>
+
+    <div class="mini-ribbon" aria-hidden="true">
+      <span class="ribbon-pill"><i class="fa-brands fa-react"></i>&nbsp;React</span>
+      <span class="ribbon-pill"><i class="fa-solid fa-robot"></i>&nbsp;AI</span>
+      <span class="ribbon-pill"><i class="fa-solid fa-cloud"></i>&nbsp;Realtime</span>
+    </div>
+  </div>
+
+  <aside class="profile-card" aria-label="Profile and contact" role="complementary">
+    <div class="profile-visual-wrap" aria-hidden="false">
+      <svg class="profile-ring" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <linearGradient id="pg" x1="0" x2="1">
+            <stop offset="0" stop-color="#7c3aed"/>
+            <stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <circle cx="130" cy="130" r="100" fill="none" stroke="url(#pg)" stroke-width="8" stroke-opacity="0.14" />
+      </svg>
+
+      <div class="double-photo">
+        <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
+          <img src="senu-2.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
         </div>
 
-        <p class="lead">I build product-first web apps — from AI health platforms to campus tools — focused on clarity, accessibility and measurable impact.</p>
+        <div class="secondary-photo" aria-hidden="false" role="img" aria-label="Senu James candid">
+          <img src="senu.PNG" alt="Senu James candid photo" width="160" height="160" loading="lazy" decoding="async">
+        </div>
       </div>
 
-      <ul class="hero-metrics" role="list" aria-hidden="false">
-        <li>
-          <strong class="metric-number" data-value="1">Winner</strong>
-          <span class="metric-label">African Digital Innovation Challenge</span>
-        </li>
-        <li>
-          <strong class="metric-number" data-value="1000">1k+</strong>
-          <span class="metric-label">Beta users engaged</span>
-        </li>
-        <li>
-          <strong class="metric-number" data-value="3">3</strong>
-          <span class="metric-label">Major product launches</span>
-        </li>
-      </ul>
+      <div class="sticker s-1" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🏆</div><div class="sticker-text">ADIC</div></div></div>
+      <div class="sticker s-2" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🧠</div><div class="sticker-text">AI</div></div></div>
+      <div class="sticker s-3" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🌍</div><div class="sticker-text">Community</div></div></div>
 
-      <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
-        <a class="btn btn-primary" href="#projects" id="projects-cta"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Selected work</a>
-        <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Contact</a>
-        <a class="btn btn-outline" href="#resume" id="download-cv"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download CV</a>
+      <div class="ornament orn-1" aria-hidden="true"></div>
+      <div class="ornament orn-2" aria-hidden="true"></div>
+
+      <div class="float-badge badge-1" aria-hidden="true">
+        <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="badge-text"><strong>ADIC Winner</strong></div>
       </div>
-
-      <div class="mini-ribbon" aria-hidden="true">
-        <span class="ribbon-pill"><i class="fa-brands fa-react" aria-hidden="true"></i> React</span>
-        <span class="ribbon-pill"><i class="fa-solid fa-robot" aria-hidden="true"></i> AI</span>
-        <span class="ribbon-pill"><i class="fa-solid fa-cloud" aria-hidden="true"></i> Realtime</span>
+      <div class="float-badge badge-2" aria-hidden="true">
+        <div class="badge-icon"><i class="fa-solid fa-people-group"></i></div>
+        <div class="badge-text"><strong>Community Tools</strong></div>
       </div>
     </div>
 
-    <aside class="profile-card" aria-label="Profile and contact" role="complementary">
-      <div class="profile-visual-wrap" aria-hidden="false">
-        <svg class="profile-ring" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
-          <defs>
-            <linearGradient id="pg" x1="0" x2="1">
-              <stop offset="0" stop-color="#7c3aed"/>
-              <stop offset="1" stop-color="#06b6d4"/>
-            </linearGradient>
-          </defs>
-          <circle cx="130" cy="130" r="100" fill="none" stroke="url(#pg)" stroke-width="8" stroke-opacity="0.14" />
-        </svg>
-
-        <div class="double-photo">
-          <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
-            <img src="senu-2.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
-          </div>
-
-          <div class="secondary-photo" aria-hidden="false" role="img" aria-label="Senu James candid">
-            <img src="senu.PNG" alt="Senu James candid photo" width="160" height="160" loading="lazy" decoding="async">
-          </div>
-        </div>
-
-        <div class="sticker s-1" aria-hidden="true">
-          <div class="sticker-inner">
-            <div class="sticker-emoji">🏆</div>
-            <div class="sticker-text">ADIC</div>
-          </div>
-        </div>
-
-        <div class="sticker s-2" aria-hidden="true">
-          <div class="sticker-inner">
-            <div class="sticker-emoji">🧠</div>
-            <div class="sticker-text">AI</div>
-          </div>
-        </div>
-
-        <div class="sticker s-3" aria-hidden="true">
-          <div class="sticker-inner">
-            <div class="sticker-emoji">🌍</div>
-            <div class="sticker-text">Community</div>
-          </div>
-        </div>
-
-        <div class="ornament orn-1" aria-hidden="true"></div>
-        <div class="ornament orn-2" aria-hidden="true"></div>
-
-        <div class="float-badge badge-1" aria-hidden="true">
-          <div class="badge-icon"><i class="fa-solid fa-award" aria-hidden="true"></i></div>
-          <div class="badge-text"><strong>ADIC Winner</strong></div>
-        </div>
-
-        <div class="float-badge badge-2" aria-hidden="true">
-          <div class="badge-icon"><i class="fa-solid fa-people-group" aria-hidden="true"></i></div>
-          <div class="badge-text"><strong>Community Tools</strong></div>
-        </div>
+    <div class="profile-meta" style="flex:1">
+      <div class="meta-title">Senu James</div>
+      <div class="meta-sub">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
+      <div class="profile-quick" aria-hidden="true">
+        <div class="skill" title="Accessible UIs"><i class="fa-solid fa-universal-access"></i>&nbsp;Accessible UIs</div>
+        <div class="skill" title="Product thinking"><i class="fa-solid fa-bullseye"></i>&nbsp;Product-led</div>
       </div>
+    </div>
+  </aside>
+</section>
 
-      <div class="profile-meta">
-        <div class="meta-title">Senu James</div>
-        <div class="meta-sub">Award-winning creator — Vitra AI • Shuttle Tracker • E-Mart</div>
+  
 
-        <div class="profile-quick" aria-hidden="true">
-          <div class="skill" title="Accessible UIs"><i class="fa-solid fa-universal-access" aria-hidden="true"></i> Accessible UIs</div>
-          <div class="skill" title="Product thinking"><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Product-led</div>
-        </div>
+<section id="about" style="margin-top:28px;">
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+    <div>
+      <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+      <p style="color:var(--muted);max-width:70ch">I build product-first web applications with a focus on clarity, performance, and impact. I led Vitra AI from concept to prototype — integrating ML models, designing UX flows, and shipping production front-ends.</p>
+      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+        <div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+        <div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+        <div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+        <div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+        <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+        <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
+      </div>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="award-icon" style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-award"></i></div>
+        <div><div style="font-weight:900">African Digital Innovation Challenge</div><div style="font-size:13px;color:var(--muted)">Vitra AI — Winner</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-people-group"></i></div>
+        <div><div style="font-weight:800">Community Impact</div><div style="font-size:13px;color:var(--muted)">Tools used by student groups and campus teams</div></div>
       </div>
     </aside>
-  </section>
+  </div>
+</section>
 
-  <section id="about" class="about">
-    <div class="about-grid">
-      <div class="about-main">
-        <h3 id="about-heading">About me</h3>
-        <p>I build product-first web applications with a focus on clarity, performance, and impact. I led Vitra AI from concept to prototype — integrating ML models, designing UX flows, and shipping production front-ends.</p>
-
-        <div class="pill-list">
-          <div class="pill"><i class="fa-solid fa-brain" aria-hidden="true"></i> Product Thinking</div>
-          <div class="pill"><i class="fa-solid fa-cubes" aria-hidden="true"></i> System Design</div>
-          <div class="pill"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Responsive</div>
-          <div class="pill"><i class="fa-solid fa-lock" aria-hidden="true"></i> Secure by default</div>
-        </div>
-
-        <div class="about-actions">
-          <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> View case studies</a>
-          <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Let’s talk</a>
-        </div>
-      </div>
-
-      <aside class="about-aside">
-        <div class="aside-card">
-          <div class="award-icon"><i class="fa-solid fa-award" aria-hidden="true"></i></div>
-          <div class="aside-meta">
-            <div class="meta-title">African Digital Innovation Challenge</div>
-            <div class="meta-sub muted">Vitra AI — Winner</div>
-          </div>
-        </div>
-
-        <div class="aside-card">
-          <div class="award-icon"><i class="fa-solid fa-people-group" aria-hidden="true"></i></div>
-          <div class="aside-meta">
-            <div class="meta-title">Community Impact</div>
-            <div class="meta-sub muted">Tools used by student groups and campus teams</div>
-          </div>
-        </div>
-      </aside>
+<section id="projects" class="projects" style="margin-top:28px;">
+  <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div>
+      <h3 style="margin:0;font-size:20px">Selected Projects</h3>
+      <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos — open Case Study to preview inside a modal.</p>
     </div>
-  </section>
-
-  <section id="projects" class="projects">
-    <div class="projects-header">
-      <div>
-        <h3>Selected Projects</h3>
-        <p class="muted">Detailed case studies and live demos — open Case Study to preview inside a modal.</p>
-      </div>
-
-      <div class="projects-controls">
-        <button class="btn btn-outline" id="filter-all" aria-pressed="true"><i class="fa-solid fa-list" aria-hidden="true"></i> All</button>
-        <button class="btn btn-outline" id="filter-web"><i class="fa-solid fa-globe" aria-hidden="true"></i> Web</button>
-        <button class="btn btn-outline" id="filter-ai"><i class="fa-solid fa-robot" aria-hidden="true"></i> AI</button>
-      </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-outline" id="filter-all" aria-pressed="true"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+      <button class="btn btn-outline" id="filter-web"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+      <button class="btn btn-outline" id="filter-ai"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
     </div>
+  </div>
 
-    <div class="projects-grid" id="projects-grid" role="list">
-      <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra">
-        <div class="card-visual"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-vitra" class="card-title">Vitra AI</h4>
-          <div class="card-sub">AI-driven health &amp; wellbeing platform — therapy, herbal med, e-pharmacy, booking.</div>
-          <div class="tags"><span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
+  <div class="projects-grid" id="projects-grid" style="margin-top:18px">
+    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-vitra" class="card-title">Vitra AI</h4>
+        <div class="card-sub">AI-driven health & wellbeing platform — therapy, herbal med, e-pharmacy, booking.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
         </div>
-      </article>
-
-      <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle">
-        <div class="card-visual"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
-          <div class="card-sub">Real-time campus transport tracking to reduce waiting time and improve route awareness.</div>
-          <div class="tags"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart">
-        <div class="card-visual"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-emart" class="card-title">E-Mart</h4>
-          <div class="card-sub">Campus shopping &amp; checkout platform — mobile-first commerce for students.</div>
-          <div class="tags"><span class="tag">Next.js</span><span class="tag">Payments</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness">
-        <div class="card-visual"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
-          <div class="card-sub">Leaderboard-driven workout logging for gymnasts—competition-ready dashboards.</div>
-          <div class="tags"><span class="tag">Analytics</span><span class="tag">Challenge</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge">
-        <div class="card-visual"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
-          <div class="card-sub">Streamlined registration system replacing Google Forms for event organizers.</div>
-          <div class="tags"><span class="tag">Forms</span><span class="tag">Auth</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc">
-        <div class="card-visual"><div class="badge">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
-        <div class="card-body">
-          <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
-          <div class="card-sub">Faith-driven e-commerce &amp; gospel hub — shop, devotionals, donations, design generator.</div>
-          <div class="tags"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
-          <div class="card-foot">
-            <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Live</a>
-            <a class="link-btn repo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Repo</a>
-            <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Case Study</button>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section id="timeline" class="timeline">
-    <h3>Journey &amp; milestones</h3>
-    <div class="timeline-items" role="list">
-      <div class="timeline-card">
-        <div class="timeline-head"><i class="fa-solid fa-trophy" aria-hidden="true"></i> <strong>Oct 2025</strong></div>
-        <div class="muted small">Winner — African Digital Innovation Challenge (Vitra AI)</div>
       </div>
+    </article>
 
-      <div class="timeline-card">
-        <div class="timeline-head"><i class="fa-solid fa-bus" aria-hidden="true"></i> <strong>Jun 2024</strong></div>
-        <div class="muted small">Launched Shuttle Tracker MVP</div>
+    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+        <div class="card-sub">Real-time campus transport tracking to reduce waiting time and improve route awareness.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
       </div>
+    </article>
 
-      <div class="timeline-card">
-        <div class="timeline-head"><i class="fa-solid fa-people-roof" aria-hidden="true"></i> <strong>Dec 2023</strong></div>
-        <div class="muted small">SkillForge Registry rollout</div>
+    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-emart" class="card-title">E-Mart</h4>
+        <div class="card-sub">Campus shopping & checkout platform — mobile-first commerce for students.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Payments</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
       </div>
+    </article>
 
-      <div class="timeline-card">
-        <div class="timeline-head"><i class="fa-solid fa-store" aria-hidden="true"></i> <strong>2022</strong></div>
-        <div class="muted small">E-Mart prototype &amp; pilots</div>
+    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+        <div class="card-sub">Leaderboard-driven workout logging for gymnasts—competition-ready dashboards.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Analytics</span><span class="tag">Challenge</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                    <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
       </div>
-    </div>
-  </section>
+    </article>
 
-  <section class="marquee-wrap" aria-label="Community & events">
-    <header class="marquee-header">
-      <h3>Community &amp; events</h3>
-      <p class="muted">Photos from events, user stories and launches.</p>
-    </header>
+    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+        <div class="card-sub">Streamlined registration system replacing Google Forms for event organizers.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
 
-    <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
-      <div class="marquee-track" aria-hidden="false">
-             <div class="marq-item"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
+    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+        <div class="card-sub">Faith-driven e-commerce & gospel hub — shop, devotionals, donations, design generator.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                 <a class="link-btn repo" href="#" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="timeline" class="timeline" style="margin-top:36px;">
+  <h3 style="margin:0 0 12px">Journey & milestones</h3>
+  <div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Oct 2025</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>Jun 2024</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div></div>
+  </div>
+</section>
+
+<section class="marquee-wrap" style="margin-top:36px;">
+  <header style="text-align:center;margin-bottom:12px">
+    <h3 style="margin:0">Community & events</h3>
+    <p style="margin:6px 0 0;color:var(--muted)">Photos from events, user stories and launches.</p>
+  </header>
+
+  <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
+    <div class="marquee-track" aria-hidden="false">
+      <!-- mixed order of all provided screenshots -->
+      <div class="marq-item"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
       <div class="marq-item"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
       <div class="marq-item"><img src="emart2.png" alt="E-Mart screenshot"></div>
       <div class="marq-item"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
@@ -2635,192 +2577,162 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       <div class="marq-item"><img src="mhc5.png" alt="Make Heaven Crowded screenshot"></div>
       <div class="marq-item"><img src="vitra6.png" alt="Vitra screenshot"></div>
       <div class="marq-item"><img src="fittrack8.png" alt="Fitness Tracker screenshot"></div>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="contact" class="contact-wrap">
-    <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
-      <h3 id="contact-heading">Get in touch</h3>
-      <p class="lead muted">Interested in collaborating, internships or freelance work? Send a short message — I usually reply within 48 hours.</p>
 
-      <form id="contact-form-pro" class="contact-form" novalidate data-endpoint="https://formspree.io/f/xrbyrqry">
-        <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true">
-        <div class="form-row">
-          <label class="field">
-            <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-user" aria-hidden="true"></i></div>
-            <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder=" ">
-            <span class="label">Your name</span>
-          </label>
-
-          <label class="field">
-            <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
-            <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder=" ">
-            <span class="label">Email</span>
-          </label>
-        </div>
-
-        <div class="form-row">
-          <label class="field">
-            <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
-            <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder=" ">
-            <span class="label">Phone (optional)</span>
-          </label>
-
-          <label class="field">
-            <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-tag" aria-hidden="true"></i></div>
-            <input id="cf-subject" name="subject" type="text" placeholder=" ">
-            <span class="label">Subject</span>
-          </label>
-        </div>
-
-        <label class="field textarea-field" aria-label="Message field">
-          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i></div>
-          <textarea id="cf-message" name="message" rows="6" required placeholder=" "></textarea>
-          <span class="label">Tell me about your project</span>
+<section id="contact" class="contact-wrap" style="margin-top:40px;">
+  <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
+    <h3 id="contact-heading" style="margin:0 0 10px">Get in touch</h3>
+    <p class="lead" style="margin:0 0 12px;color:var(--muted)">Interested in collaborating, internships or freelance work? Send a short message — I usually reply within 48 hours.</p>
+<form id="contact-form-pro" class="contact-form" novalidate data-endpoint="https://formspree.io/f/xrbyrqry">
+      <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" />
+      <div class="form-row">
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder=" ">
+          <span class="label">Your name</span>
         </label>
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+          <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder=" ">
+          <span class="label">Email</span>
+        </label>
+      </div>
+      <div class="form-row">
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder=" ">
+          <span class="label">Phone (optional)</span>
+        </label>
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-tag"></i></div>
+          <input id="cf-subject" name="subject" type="text" placeholder=" ">
+          <span class="label">Subject</span>
+        </label>
+      </div>
+      <label class="field textarea-field" style="grid-column:1 / -1; position:relative">
+        <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-pen-nib"></i></div>
+        <textarea id="cf-message" name="message" rows="6" required placeholder=" "></textarea>
+        <span class="label">Tell me about your project</span>
+      </label>
+      <div class="form-actions">
+        <button id="cf-send" type="submit" class="send btn-primary btn-lg" aria-live="polite">
+          <span class="btn-text"><i class="fa-solid fa-paper-plane"></i>&nbsp;Send message</span>
+          <svg class="btn-spinner" width="18" height="18" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 150"></circle></svg>
+        </button>
+        <button id="cf-copy-email" type="button" class="btn btn-outline" title="Copy email to clipboard"><i class="fa-solid fa-copy"></i>&nbsp;Copy email</button>
+        <div id="cf-status" class="small" aria-live="polite" style="color:var(--muted)"></div>
+      </div>
+      <div id="cf-result" role="status" aria-live="polite" style="margin-top:12px"></div>
+    </form>
+  </div>
 
-        <div class="form-actions">
-          <button id="cf-send" type="submit" class="send btn-primary" aria-live="polite">
-            <span class="btn-text"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send message</span>
-            <svg class="btn-spinner" width="18" height="18" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 150"></circle></svg>
-          </button>
-
-          <button id="cf-copy-email" type="button" class="btn btn-outline" title="Copy email to clipboard"><i class="fa-solid fa-copy" aria-hidden="true"></i> Copy email</button>
-
-          <div id="cf-status" class="small" aria-live="polite"></div>
-        </div>
-
-        <div id="cf-result" role="status" aria-live="polite"></div>
-      </form>
-    </div>
-
-    <aside class="contact-aside contact-pro-aside" aria-label="Contact information">
-      <div class="contact-details">
-        <div class="contact-row">
-          <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
-          <div>
-            <strong>Email</strong>
-            <div class="muted"><a id="aside-email" href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></div>
-          </div>
-        </div>
-
-        <div class="contact-row">
-          <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
-          <div>
-            <strong>Phone</strong>
-            <div class="muted"><a href="tel:+233245550123">+233 24 555 0123</a></div>
-          </div>
-        </div>
-
-        <div class="contact-row">
-          <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-          <div>
-            <strong>Location</strong>
-            <div class="muted">Accra, Ghana — Open to remote &amp; hybrid</div>
-          </div>
-        </div>
-
-        <div class="contact-links">
-          <a class="link-btn resume" href="#resume"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download resume</a>
-          <a class="social-pill link-btn" href="https://github.com/senu-james" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
-          <a class="social-pill link-btn" href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
-          <a class="social-pill link-btn" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i> X</a>
+  <aside class="contact-aside contact-pro-aside" aria-label="Contact information">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <strong>Email</strong>
+          <div class="muted"><a id="aside-email" href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></div>
         </div>
       </div>
-    </aside>
-  </section>
-</main>
-
-<footer class="site" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <strong>Senu James</strong>
-      <div class="muted small">Web Developer • AI &amp; Product Builder</div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <strong>Phone</strong>
+          <div class="muted"><a href="tel:+233245550123">+233 24 555 0123</a></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <strong>Location</strong>
+          <div class="muted">Accra, Ghana — Open to remote & hybrid</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <a class="link-btn resume" href="#resume"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download resume</a>
+        <a class="social-pill link-btn" href="https://github.com/senu-james" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;GitHub</a>
+        <a class="social-pill link-btn" href="https://linkedin.com/in/senu-james" target="_blank"><i class="fa-brands fa-linkedin"></i>&nbsp;LinkedIn</a>
+        <a class="social-pill link-btn" href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i>&nbsp;X</a>
+      </div>
     </div>
+  </aside>
+</section>
 
-    <div class="footer-links">
-      <a href="https://github.com/senu-james" target="_blank" rel="noopener"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></a>
-      <a href="https://linkedin.com/in/senu-james" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i></a>
-      <a href="mailto:senujames23@gmail.com"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a>
+<footer class="site" role="contentinfo" style="margin-top:36px;padding:24px 0;border-top:1px solid rgba(10,20,30,0.04)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--maxw);margin:0 auto">
+    <div>
+      <strong style="font-size:16px">Senu James</strong>
+      <div style="color:var(--muted);font-size:13px">Web Developer • AI & Product Builder</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="https://github.com/senu-james"><i class="fa-brands fa-github fa-lg"></i></a>
+      <a href="https://linkedin.com/in/senu-james"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+      <a href="mailto:senujames23@gmail.com"><i class="fa-solid fa-envelope fa-lg"></i></a>
     </div>
   </div>
-
-  <div class="site-copyright muted">
-    © <strong>Senu James</strong> — All rights reserved.
-  </div>
+  <div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">© <strong>Senu James</strong> — All rights reserved.</div>
 </footer>
 
-<div id="case-modal" class="case-modal" role="dialog" aria-modal="true" aria-hidden="true">
+<div id="case-modal" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="modal-panel" role="document">
-    <div class="modal-header">
-      <div class="modal-title-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(10,20,30,0.04);position:sticky;top:0;background:linear-gradient(180deg,#fff,#fbfeff);z-index:2">
+      <div>
         <strong id="case-title">Case study</strong>
-        <div id="case-sub" class="muted small"></div>
+        <div id="case-sub" style="font-size:13px;color:var(--muted)"></div>
       </div>
-
-      <div class="modal-actions">
+      <div style="display:flex;gap:8px;align-items:center">
         <a id="case-open-external" class="btn" target="_blank" rel="noopener">Open live</a>
         <button id="case-close" class="btn" aria-label="Close case study">✕</button>
       </div>
     </div>
-
-    <div id="case-body" class="case-body">
-      <div id="case-main" class="case-main">
+    <div id="case-body" style="padding:18px;display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <div id="case-main">
         <section id="case-overview">
           <h4>Overview</h4>
-          <p id="case-overview-text" class="muted"></p>
+          <p id="case-overview-text" style="color:var(--muted)"></p>
         </section>
-
-        <section id="case-problem">
-          <h4>Problem &amp; opportunity</h4>
-          <p id="case-problem-text" class="muted"></p>
+        <section id="case-problem" style="margin-top:14px">
+          <h4>Problem & opportunity</h4>
+          <p id="case-problem-text" style="color:var(--muted)"></p>
         </section>
-
-        <section id="case-approach">
-          <h4>Approach &amp; my role</h4>
-          <p id="case-approach-text" class="muted"></p>
+        <section id="case-approach" style="margin-top:14px">
+          <h4>Approach & my role</h4>
+          <p id="case-approach-text" style="color:var(--muted)"></p>
         </section>
-
-        <section id="case-highlights">
+        <section id="case-highlights" style="margin-top:14px">
           <h4>Highlights</h4>
-          <ul id="case-highlights-list" class="muted"></ul>
+          <ul id="case-highlights-list" style="color:var(--muted)"></ul>
         </section>
-
-        <section id="case-screenshots">
+        <section id="case-screenshots" style="margin-top:14px">
           <h4>Screenshots</h4>
-          <div id="case-screens-carousel" class="case-screens-carousel"></div>
+          <div id="case-screens-carousel" style="display:flex;gap:8px;overflow:auto;padding:8px 0"></div>
         </section>
       </div>
-
-      <aside id="case-aside" class="case-aside">
+      <aside id="case-aside" style="display:flex;flex-direction:column;gap:12px">
         <div>
           <strong>Tech stack</strong>
-          <div id="case-tech" class="muted"></div>
+          <div id="case-tech" style="margin-top:8px;color:var(--muted)"></div>
         </div>
-
         <div>
-          <strong>Impact &amp; metrics</strong>
-          <div id="case-metrics" class="muted"></div>
+          <strong>Impact & metrics</strong>
+          <div id="case-metrics" style="margin-top:8px;color:var(--muted)"></div>
         </div>
-
         <div>
           <strong>Links</strong>
-          <div id="case-links" class="muted"></div>
+          <div id="case-links" style="margin-top:8px;color:var(--muted)"></div>
         </div>
-
         <div>
           <strong>Notes</strong>
-          <div id="case-notes" class="muted"></div>
+          <div id="case-notes" style="margin-top:8px;color:var(--muted)"></div>
         </div>
       </aside>
     </div>
   </div>
 </div>
-
-<div id="toast-area" aria-live="polite"></div>
-</body>
-
 
 <script type="application/json" id="case-vitra">
 {
@@ -2924,552 +2836,994 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 }
 </script>
 
-
+<div id="toast-area" aria-live="polite" style="position:fixed;right:18px;bottom:18px;z-index:9999;pointer-events:none"></div>
 
 <script>
 (function(){
-const $=(s,ctx=document)=>ctx.querySelector(s);
-const $$=(s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
-const prefersReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function ensureToastArea(){
-  let t=document.getElementById('toast-area');
-  if(!t){
-    t=document.createElement('div');
-    t.id='toast-area';
-    t.setAttribute('aria-live','polite');
-    t.style.position='fixed';
-    t.style.right='18px';
-    t.style.bottom='18px';
-    t.style.zIndex='9999';
-    t.style.pointerEvents='none';
-    document.body.appendChild(t);
+  const $ = (s, ctx=document) => (ctx||document).querySelector(s);
+  const $$ = (s, ctx=document) => Array.from((ctx||document).querySelectorAll(s));
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const supportsWAAPI = typeof Element !== 'undefined' && typeof Element.prototype.animate === 'function';
+  function createToast(text, opts={}) {
+    const timeout = opts.timeout || 2200;
+    try {
+      const area = document.getElementById('toast-area') || document.body;
+      const t = document.createElement('div');
+      t.className = 'sj-toast';
+      t.setAttribute('role','status');
+      t.style.cssText = 'pointer-events:auto;margin-top:8px;background:rgba(6,10,26,0.92);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 12px 40px rgba(6,10,26,0.28);';
+      t.textContent = text;
+      area.appendChild(t);
+      setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(6px)'; t.style.transition='opacity .28s, transform .28s'; }, timeout);
+      setTimeout(()=>{ try{ t.remove(); }catch(e){} }, timeout+420);
+    } catch(e){}
   }
-  return t;
-}
-function toast(text,opts){
-  const area=ensureToastArea();
-  const d=document.createElement('div');
-  d.className='sj-toast';
-  d.setAttribute('role','status');
-  d.style.pointerEvents='auto';
-  d.style.marginTop='8px';
-  d.style.background='rgba(6,10,26,0.92)';
-  d.style.color='#fff';
-  d.style.padding='8px 12px';
-  d.style.borderRadius='10px';
-  d.style.fontWeight='700';
-  d.style.boxShadow='0 12px 40px rgba(6,10,26,0.28)';
-  d.textContent=text;
-  area.appendChild(d);
-  const timeout=(opts&&opts.timeout)||2200;
-  setTimeout(()=>{ d.style.opacity='0'; d.style.transform='translateY(6px)'; d.style.transition='opacity .28s, transform .28s'; },timeout);
-  setTimeout(()=>{ try{ d.remove(); }catch(e){} },timeout+420);
-}
-function initExternalLinks(){
-  $$('a[target="_blank"]').forEach(a=>{ if(!a.getAttribute('rel')) a.setAttribute('rel','noopener noreferrer'); });
-}
-function initSmoothScroll(){
-  document.addEventListener('click',function(ev){
-    const a=ev.target.closest('a[href^="#"]');
-    if(!a) return;
-    const href=a.getAttribute('href');
-    if(!href||href==='#') return;
-    const target=document.querySelector(href);
-    if(!target) return;
-    ev.preventDefault();
-    target.scrollIntoView({behavior:'smooth',block:'start'});
-    setTimeout(()=>{ try{ target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }catch(e){} },520);
-  });
-}
-function initNavToggle(){
-  const btn=document.querySelector('.nav-toggle');
-  const menu=document.getElementById('primary-nav');
-  if(!btn||!menu) return;
-  let backdrop=document.querySelector('.nav-backdrop');
-  if(!backdrop){ backdrop=document.createElement('div'); backdrop.className='nav-backdrop'; document.body.appendChild(backdrop); }
-  function open(){
-    btn.setAttribute('aria-expanded','true');
-    btn.setAttribute('aria-label','Close main menu');
-    menu.classList.add('open');
-    backdrop.classList.add('visible');
-    document.documentElement.style.overflow='hidden';
-    const first=menu.querySelector('a,button,[href]');
-    if(first) first.focus();
+  function initSmoothScroll(){
+    document.addEventListener('click', (ev) => {
+      const a = ev.target.closest('a[href^="#"]');
+      if(!a) return;
+      const href = a.getAttribute('href');
+      if(!href || href === '#') return;
+      const target = document.querySelector(href);
+      if(!target) return;
+      ev.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(()=>{ try{ target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }catch(e){} }, 520);
+    });
   }
-  function close(){
-    btn.setAttribute('aria-expanded','false');
-    btn.setAttribute('aria-label','Open main menu');
-    menu.classList.remove('open');
-    backdrop.classList.remove('visible');
-    document.documentElement.style.overflow='';
-    btn.focus();
-  }
-  btn.addEventListener('click',function(){ const expanded=btn.getAttribute('aria-expanded')==='true'; if(expanded) close(); else open(); });
-  backdrop.addEventListener('click',close);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&menu.classList.contains('open')) close(); });
-  menu.addEventListener('click',function(e){ const a=e.target.closest('a[href]'); if(!a) return; if(a.getAttribute('href')&&a.getAttribute('href').startsWith('#')) close(); });
-  try{
-    const mql=window.matchMedia('(min-width: 761px)');
-    mql.addEventListener?mql.addEventListener('change',function(ev){ if(ev.matches){ menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttribute('aria-expanded','false'); document.documentElement.style.overflow=''; } }):mql.addListener(function(ev){ if(ev.matches){ menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttribute('aria-expanded','false'); document.documentElement.style.overflow=''; } });
-  }catch(e){}
-}
-function initTiltCards(){
-  if(prefersReduced) return;
-  const cards=$$('.tilt');
-  if(!cards.length) return;
-  cards.forEach(card=>{
-    let rect=null;
-    const strength=Number(card.dataset.tiltStrength)||6;
-    function onMove(e){
-      if(!rect) rect=card.getBoundingClientRect();
-      const px=((e.clientX-rect.left)/rect.width)-0.5;
-      const py=((e.clientY-rect.top)/rect.height)-0.5;
-      const ry=(px*strength).toFixed(2);
-      const rx=(-py*strength).toFixed(2);
-      card.style.transform=`perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-      card.style.transition='transform 60ms linear';
-    }
-    function onLeave(){ card.style.transform=''; card.style.transition='transform .45s cubic-bezier(.2,.9,.2,1)'; rect=null; }
-    card.addEventListener('pointermove',onMove,{passive:true});
-    card.addEventListener('pointerleave',onLeave);
-    card.addEventListener('pointercancel',onLeave);
-    window.addEventListener('resize',()=>{ rect=null; });
-  });
-}
-function initProjectFilters(){
-  const btnAll=document.getElementById('filter-all');
-  const btnWeb=document.getElementById('filter-web');
-  const btnAi=document.getElementById('filter-ai');
-  const grid=document.getElementById('projects-grid');
-  if(!grid||!btnAll) return;
-  const buttons=[btnAll,btnWeb,btnAi].filter(Boolean);
-  function normalize(s){ return String(s||'').trim().toLowerCase(); }
-  function cardMatches(card,filter){
-    if(!filter||filter==='all') return true;
-    const badge=card.querySelector('.badge');
-    if(badge&&normalize(badge.textContent).includes(filter)) return true;
-    const tags=Array.from(card.querySelectorAll('.tag')).map(t=>normalize(t.textContent));
-    if(tags.some(t=>t.includes(filter))) return true;
-    const meta=normalize((card.querySelector('.card-sub')?.textContent||'')+' '+(card.querySelector('.card-title')?.textContent||''));
-    if(meta.includes(filter)) return true;
-    return false;
-  }
-  function applyFilter(filter){
-    const cards=Array.from(grid.children).filter(n=>n.matches&&n.matches('.card, article'));
+  function initTiltCards(){
+    if(prefersReduced) return;
+    const cards = $$('.tilt');
+    if(!cards.length) return;
     cards.forEach(card=>{
-      if(cardMatches(card,filter)){ card.style.display=''; card.setAttribute('aria-hidden','false'); } else { card.style.display='none'; card.setAttribute('aria-hidden','true'); }
-    });
-  }
-  buttons.forEach(btn=>{
-    btn.addEventListener('click',function(){
-      buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
-      btn.setAttribute('aria-pressed','true');
-      const filter=(btn.id||'').replace('filter-','')||'all';
-      applyFilter(filter);
-      const first=grid.querySelector('.card:not([aria-hidden="true"])');
-      if(first){ try{ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); }catch(e){} }
-    });
-  });
-}
-function readCaseJson(id){
-  try{ const script=document.getElementById(`case-${id}`); if(!script) return null; return JSON.parse(script.textContent); }catch(e){ return null; }
-}
-function buildGallery(images){
-  const gallery=document.createElement('div'); gallery.className='case-gallery';
-  const viewer=document.createElement('div'); viewer.className='viewer';
-  const mainImg=document.createElement('img'); mainImg.alt=''; mainImg.decoding='async'; viewer.appendChild(mainImg);
-  const prev=document.createElement('button'); prev.className='control prev'; prev.setAttribute('aria-label','Previous image'); prev.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const next=document.createElement('button'); next.className='control next'; next.setAttribute('aria-label','Next image'); next.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  viewer.appendChild(prev); viewer.appendChild(next);
-  const thumbs=document.createElement('div'); thumbs.className='thumbs';
-  images.forEach((src,i)=>{
-    const t=document.createElement('button'); t.className='thumb'; t.type='button';
-    const ti=document.createElement('img'); ti.src=src; ti.alt=`Screenshot ${i+1}`;
-    t.appendChild(ti);
-    t.addEventListener('click',()=>setIndex(i));
-    thumbs.appendChild(t);
-  });
-  gallery.appendChild(viewer); gallery.appendChild(thumbs);
-  let idx=0;
-  function setIndex(n){
-    idx=(n+images.length)%images.length;
-    mainImg.src=images[idx];
-    Array.from(thumbs.children).forEach((c,j)=>c.setAttribute('aria-current',j===idx?'true':'false'));
-    const active=thumbs.children[idx];
-    if(active) active.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
-  }
-  prev.addEventListener('click',()=>setIndex(idx-1));
-  next.addEventListener('click',()=>setIndex(idx+1));
-  window.addEventListener('keydown',function(e){
-    if(document.getElementById('case-modal')?.getAttribute('aria-hidden')!=='false') return;
-    if(e.key==='ArrowLeft') prev.click();
-    if(e.key==='ArrowRight') next.click();
-  });
-  viewer.addEventListener('pointerdown',function(ev){ viewer._startX=ev.clientX; viewer._startY=ev.clientY; if(viewer.setPointerCapture) viewer.setPointerCapture(ev.pointerId); });
-  viewer.addEventListener('pointerup',function(ev){ if(viewer._startX==null) return; const dx=ev.clientX-viewer._startX; const dy=ev.clientY-viewer._startY; if(Math.abs(dx)>30&&Math.abs(dx)>Math.abs(dy)){ if(dx<0) next.click(); else prev.click(); } viewer._startX=null; viewer._startY=null; });
-  viewer.addEventListener('click',function(ev){ if(ev.target.tagName.toLowerCase()!=='img') return; const overlay=document.createElement('div'); overlay.className='case-zoom-overlay'; const big=document.createElement('img'); big.src=images[idx]; overlay.appendChild(big); overlay.tabIndex=-1; overlay.addEventListener('click',()=>overlay.remove()); document.body.appendChild(overlay); overlay.focus(); });
-  setIndex(0);
-  return gallery;
-}
-function initCaseModal(){
-  const modal=document.getElementById('case-modal');
-  if(!modal) return;
-  const panel=modal.querySelector('.modal-panel');
-  const titleEl=document.getElementById('case-title');
-  const subEl=document.getElementById('case-sub');
-  const openExternal=document.getElementById('case-open-external');
-  const closeBtn=document.getElementById('case-close');
-  const overview=document.getElementById('case-overview-text');
-  const problem=document.getElementById('case-problem-text');
-  const approach=document.getElementById('case-approach-text');
-  const highlightsList=document.getElementById('case-highlights-list');
-  const screenshotsEl=document.getElementById('case-screens-carousel');
-  const techEl=document.getElementById('case-tech');
-  const metricsEl=document.getElementById('case-metrics');
-  const linksEl=document.getElementById('case-links');
-  const notesEl=document.getElementById('case-notes');
-  let lastFocused=null;
-  function clearModal(){
-    if(titleEl) titleEl.textContent='';
-    if(subEl) subEl.textContent='';
-    if(overview) overview.textContent='';
-    if(problem) problem.textContent='';
-    if(approach) approach.textContent='';
-    if(highlightsList) highlightsList.innerHTML='';
-    if(screenshotsEl) screenshotsEl.innerHTML='';
-    if(techEl) techEl.textContent='';
-    if(metricsEl) metricsEl.textContent='';
-    if(linksEl) linksEl.innerHTML='';
-    if(notesEl) notesEl.textContent='';
-    if(openExternal) openExternal.removeAttribute('href');
-  }
-  function openModalWithCase(c){
-    if(!c){ toast('Case data not found'); return; }
-    lastFocused=document.activeElement;
-    if(titleEl) titleEl.textContent=c.title||'Case study';
-    if(subEl) subEl.textContent=c.subtitle||'';
-    if(overview) overview.textContent=c.overview||'';
-    if(problem) problem.textContent=c.problem||'';
-    if(approach) approach.textContent=c.approach||'';
-    if(highlightsList){
-      highlightsList.innerHTML='';
-      (c.highlights||[]).forEach(h=>{ const li=document.createElement('li'); li.textContent=h; highlightsList.appendChild(li); });
-    }
-    if(screenshotsEl){
-      screenshotsEl.innerHTML='';
-      const imgs=(c.screenshots||[]).slice();
-      if(imgs.length) {
-        const gallery=buildGallery(imgs);
-        screenshotsEl.appendChild(gallery);
+      let rect = null;
+      const strength = parseFloat(card.dataset.tiltStrength) || 6;
+      function onMove(e){
+        if(!rect) rect = card.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) - 0.5;
+        const py = ((e.clientY - rect.top) / rect.height) - 0.5;
+        const ry = (px * strength).toFixed(2);
+        const rx = (-py * strength).toFixed(2);
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        card.style.transition = 'transform 60ms linear';
       }
+      function onLeave(){
+        card.style.transform = '';
+        card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
+        rect = null;
+      }
+      card.addEventListener('pointermove', onMove, {passive:true});
+      card.addEventListener('pointerleave', onLeave);
+      card.addEventListener('pointercancel', onLeave);
+      window.addEventListener('resize', ()=>{ rect = null; });
+    });
+  }
+  function initProjectFilters(){
+    const btnAll = $('#filter-all');
+    const btnWeb = $('#filter-web');
+    const btnAi = $('#filter-ai');
+    const grid = $('#projects-grid');
+    if(!grid || !btnAll) return;
+    const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
+    function normalize(s=''){ return s.toString().trim().toLowerCase(); }
+    function cardMatches(card, filter){
+      if(!filter || filter==='all') return true;
+      const badge = card.querySelector('.badge');
+      if(badge && normalize(badge.textContent).includes(filter)) return true;
+      const tags = Array.from(card.querySelectorAll('.tag')).map(t=>normalize(t.textContent));
+      if(tags.some(t=>t.includes(filter))) return true;
+      const meta = normalize((card.querySelector('.card-sub')?.textContent||'')+' '+(card.querySelector('.card-title')?.textContent||''));
+      if(meta.includes(filter)) return true;
+      return false;
     }
-    if(techEl) techEl.innerHTML=(c.tech||[]).map(t=>`<span class="badge-pill" style="margin-right:6px">${t}</span>`).join(' ');
-    if(metricsEl) metricsEl.textContent=c.metrics||'';
-    if(notesEl) notesEl.textContent=c.notes||'';
-    if(linksEl){
-      linksEl.innerHTML='';
+    function applyFilter(filter){
+      const cards = Array.from(grid.children).filter(n => n.matches && n.matches('.card, article'));
+      cards.forEach(card=>{
+        if(cardMatches(card, filter)){
+          card.style.display = '';
+          card.setAttribute('aria-hidden','false');
+        } else {
+          card.style.display = 'none';
+          card.setAttribute('aria-hidden','true');
+        }
+      });
+    }
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        const filter = (btn.id||'').replace('filter-','') || 'all';
+        applyFilter(filter);
+        const first = grid.querySelector('.card:not([aria-hidden="true"])');
+        if(first){ try{ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); }catch(e){} }
+      });
+    });
+  }
+  function initCaseModal(){
+    const modal = $('#case-modal');
+    if(!modal) return;
+    const panel = modal.querySelector('.modal-panel');
+    const titleEl = $('#case-title', modal) || $('#case-title');
+    const subEl = $('#case-sub', modal) || $('#case-sub');
+    const openExternal = $('#case-open-external');
+    const closeBtn = $('#case-close');
+    const overview = $('#case-overview-text');
+    const problem = $('#case-problem-text');
+    const approach = $('#case-approach-text');
+    const highlightsList = $('#case-highlights-list');
+    const screenshotsEl = $('#case-screens-carousel');
+    const techEl = $('#case-tech');
+    const metricsEl = $('#case-metrics');
+    const linksEl = $('#case-links');
+    const notesEl = $('#case-notes');
+    let lastFocused = null;
+    function readCaseJson(id){
+      try{
+        const script = document.getElementById(`case-${id}`);
+        if(!script) return null;
+        return JSON.parse(script.textContent);
+      }catch(e){ return null; }
+    }
+    function clearModal(){
+      titleEl.textContent = '';
+      subEl.textContent = '';
+      overview.textContent = '';
+      problem.textContent = '';
+      approach.textContent = '';
+      highlightsList.innerHTML = '';
+      screenshotsEl.innerHTML = '';
+      techEl.textContent = '';
+      metricsEl.textContent = '';
+      linksEl.innerHTML = '';
+      notesEl.textContent = '';
+      openExternal.removeAttribute('href');
+    }
+    function openModalWithCase(c){
+      if(!c){ createToast('Case data not found'); return; }
+      lastFocused = document.activeElement;
+      titleEl.textContent = c.title || 'Case study';
+      subEl.textContent = c.subtitle || '';
+      overview.textContent = c.overview || '';
+      problem.textContent = c.problem || '';
+      approach.textContent = c.approach || '';
+      highlightsList.innerHTML = '';
+      (c.highlights||[]).forEach(h=>{
+        const li = document.createElement('li');
+        li.textContent = h;
+        highlightsList.appendChild(li);
+      });
+      screenshotsEl.innerHTML = '';
+      (c.screenshots||[]).forEach(src=>{
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `${c.title} screenshot`;
+        img.style.cssText = 'width:160px;height:100px;object-fit:cover;border-radius:10px';
+        screenshotsEl.appendChild(img);
+      });
+      techEl.innerHTML = (c.tech||[]).map(t=>`<span class="badge-pill" style="margin-right:6px">${t}</span>`).join(' ');
+      metricsEl.textContent = c.metrics || '';
+      notesEl.textContent = c.notes || '';
+      linksEl.innerHTML = '';
       (c.links||[]).forEach(l=>{
-        const a=document.createElement('a');
-        a.href=l.href||'#';
-        a.target='_blank';
-        a.rel='noopener noreferrer';
-        a.className='link-btn';
-        a.style.marginRight='8px';
-        a.textContent=l.label||'Open';
+        const a = document.createElement('a');
+        a.href = l.href||'#';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'link-btn';
+        a.style.marginRight = '8px';
+        a.textContent = l.label || 'Open';
         linksEl.appendChild(a);
       });
-    }
-    const live=(c.links||[]).find(x=>/live|staging|demo/i.test(x.label||''))||null;
-    const firstLink=(c.links||[])[0]||null;
-    if(openExternal) {
-      if(live) openExternal.href=live.href;
-      else if(firstLink) openExternal.href=firstLink.href;
+      const live = (c.links||[]).find(x=>/live|staging|demo/i.test((x.label||'')));
+      const firstLink = (c.links||[])[0];
+      if(live) openExternal.href = live.href;
+      else if(firstLink) openExternal.href = firstLink.href;
       else openExternal.removeAttribute('href');
-    }
-    modal.style.display='flex';
-    modal.setAttribute('aria-hidden','false');
-    document.documentElement.style.overflow='hidden';
-    try{ closeBtn.focus(); }catch(e){}
-    function trap(e){ if(!panel.contains(e.target)){ e.stopPropagation(); panel.querySelector('button, a, [href], input, textarea')?.focus(); } }
-    function onKey(e){ if(e.key==='Escape'){ e.preventDefault(); closeModal(); } }
-    document.addEventListener('focus',trap,true);
-    document.addEventListener('keydown',onKey);
-    modal._trap=trap;
-    modal._onKey=onKey;
-  }
-  function closeModal(){
-    modal.style.display='none';
-    modal.setAttribute('aria-hidden','true');
-    clearModal();
-    document.documentElement.style.overflow='';
-    if(modal._trap) document.removeEventListener('focus',modal._trap,true);
-    if(modal._onKey) document.removeEventListener('keydown',modal._onKey);
-    if(lastFocused&&typeof lastFocused.focus==='function') lastFocused.focus();
-  }
-  modal.addEventListener('click',function(ev){ if(ev.target===modal) closeModal(); });
-  if(closeBtn) closeBtn.addEventListener('click',closeModal);
-  document.addEventListener('click',function(ev){
-    const btn=ev.target.closest('[data-case-open]');
-    if(!btn) return;
-    const id=btn.getAttribute('data-case-open')||btn.closest('[data-case-id]')?.getAttribute('data-case-id');
-    if(!id) return;
-    ev.preventDefault();
-    const c=readCaseJson(id);
-    openModalWithCase(c);
-  });
-  const mo=new MutationObserver(()=>{ const visible=modal.getAttribute('aria-hidden')==='false'||modal.style.display==='flex'; if(visible){ setTimeout(()=>{ const scr=document.getElementById('case-screens-carousel'); if(scr) { const imgs=Array.from(scr.querySelectorAll('img')).map(i=>i.getAttribute('src')).filter(Boolean); if(imgs.length){ scr.innerHTML=''; scr.appendChild(buildGallery(imgs)); } } },80); } });
-  mo.observe(modal,{attributes:true,attributeFilter:['aria-hidden','style']});
-}
-function initMarquee(){
-  const marquee=document.getElementById('marquee');
-  if(!marquee) return;
-  const track=marquee.querySelector('.marquee-track');
-  if(!track) return;
-  if(prefersReduced||typeof Element==='undefined'&&!Element.prototype.animate){
-    marquee.style.overflowX='auto';
-    marquee.querySelectorAll('img').forEach(img=>img.setAttribute('loading','lazy'));
-    return;
-  }
-  function totalWidth(){
-    return Array.from(track.children).reduce((s,el)=>s+(el.getBoundingClientRect().width||el.offsetWidth)+16,0);
-  }
-  const original=Array.from(track.children);
-  let clones=0;
-  while(totalWidth()<((marquee.getBoundingClientRect().width||window.innerWidth))*2&&clones<8){
-    original.forEach(el=>track.appendChild(el.cloneNode(true)));
-    clones++;
-  }
-  const shift=totalWidth()/2;
-  const pxPerSecond=90;
-  const duration=Math.max(10000,Math.round((shift/pxPerSecond)*1000));
-  const anim=track.animate([{transform:'translateX(0)'},{transform:`translateX(-${shift}px)`}],{duration,iterations:Infinity,easing:'linear'});
-  marquee._marqueeAnim=anim;
-  marquee.addEventListener('mouseenter',()=>anim.pause());
-  marquee.addEventListener('mouseleave',()=>anim.play());
-  marquee.addEventListener('focusin',()=>anim.pause());
-  marquee.addEventListener('focusout',()=>anim.play());
-  marquee.addEventListener('keydown',function(e){ if(e.code==='Space'||e.key===' '){ e.preventDefault(); const state=anim.playState; if(state==='running') anim.pause(); else anim.play(); } });
-  window.addEventListener('resize',function(){
-    setTimeout(function(){
-      const containerW=marquee.getBoundingClientRect().width;
-      const imgs=Array.from(original).map(n=>n.querySelector('img')?.getAttribute('src')).filter(Boolean);
-      track.innerHTML='';
-      imgs.forEach(src=>{
-        const wrap=document.createElement('div');
-        wrap.className='marq-item';
-        const img=document.createElement('img');
-        img.src=src;
-        img.alt='';
-        wrap.appendChild(img);
-        track.appendChild(wrap);
-      });
-      let clonesLocal=0;
-      while(totalWidth()<containerW*2&&clonesLocal<8){
-        Array.from(track.children).slice(0).forEach(node=>track.appendChild(node.cloneNode(true)));
-        clonesLocal++;
-      }
-    },260);
-  });
-}
-function initMarqueeV2(){
-  const marquee=document.getElementById('marquee');
-  if(!marquee) return;
-  const track=marquee.querySelector('.marquee-track');
-  if(!track) return;
-  Array.from(track.children).forEach((item,i)=>{ const r=(Math.random()*10)-5; item.style.transform=`rotate(${r}deg)`; item.dataset.baseRot=String(r); });
-  function ensureClones(){
-    const containerW=marquee.getBoundingClientRect().width;
-    let tw=track.scrollWidth;
-    let clones=0;
-    while(tw<containerW*2&&clones<8){
-      Array.from(track.children).slice(0).forEach(node=>track.appendChild(node.cloneNode(true)));
-      clones++;
-      tw=track.scrollWidth;
-    }
-  }
-  let px=0;
-  const speed=Math.max(0.25,Math.min(1.25,window.innerWidth/8000));
-  let running=true;
-  let last=performance.now();
-  function step(now){
-    if(!running){ last=now; requestAnimationFrame(step); return; }
-    const dt=now-last;
-    last=now;
-    px-=speed*(dt/16.6667);
-    const half=track.scrollWidth/2;
-    if(Math.abs(px)>=half) px=0;
-    track.style.transform=`translate3d(${px}px,0,0)`;
-    requestAnimationFrame(step);
-  }
-  function whenImagesLoaded(root,cb){
-    const imgs=Array.from(root.querySelectorAll('img'));
-    if(imgs.length===0) return cb();
-    let count=imgs.length;
-    imgs.forEach(img=>{
-      if(img.complete){ if(--count===0) cb(); }
-      else img.addEventListener('load',()=>{ if(--count===0) cb(); });
-      img.addEventListener('error',()=>{ if(--count===0) cb(); });
-    });
-  }
-  whenImagesLoaded(track,()=>{ ensureClones(); Array.from(track.children).forEach((item,idx)=>{ const base=parseFloat(item.dataset.baseRot||0); const jitter=(Math.random()*4-2); item.style.transform=`rotate(${(base+jitter).toFixed(2)}deg)`; }); requestAnimationFrame(step); });
-  marquee.addEventListener('mouseenter',()=>running=false);
-  marquee.addEventListener('mouseleave',()=>running=true);
-  marquee.addEventListener('focusin',()=>running=false);
-  marquee.addEventListener('focusout',()=>running=true);
-  window.addEventListener('resize',function(){
-    setTimeout(function(){
-      const originals=[];
-      for(let i=0;i<track.children.length;i++){
-        const src=track.children[i].querySelector('img')?.getAttribute('src');
-        if(!src) continue;
-        if(!originals.some(s=>s===src)) originals.push(src);
-        if(originals.length>=40) break;
-      }
-      track.innerHTML='';
-      originals.forEach(src=>{
-        const wrap=document.createElement('div');
-        wrap.className='marq-item';
-        const img=document.createElement('img');
-        img.src=src;
-        img.alt='';
-        wrap.appendChild(img);
-        track.appendChild(wrap);
-      });
-      Array.from(track.children).forEach((item,i)=>{ const r=(Math.random()*10)-5; item.style.transform=`rotate(${r}deg)`; item.dataset.baseRot=String(r); });
-      whenImagesLoaded(track,()=>{ ensureClones(); running=true; });
-    },260);
-  });
-}
-function initContactForm(){
-  const form=document.getElementById('contact-form-pro');
-  if(!form) return;
-  const sendBtn=document.getElementById('cf-send');
-  const copyBtn=document.getElementById('cf-copy-email');
-  const statusEl=document.getElementById('cf-status');
-  const resultEl=document.getElementById('cf-result');
-  const endpoint=form.dataset.endpoint&&form.dataset.endpoint.trim()?form.dataset.endpoint.trim():null;
-  function setSending(on){ if(!sendBtn) return; if(on){ sendBtn.classList.add('sending'); sendBtn.disabled=true; sendBtn.setAttribute('aria-disabled','true'); } else { sendBtn.classList.remove('sending'); sendBtn.disabled=false; sendBtn.removeAttribute('aria-disabled'); } }
-  function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
-  form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    if(resultEl) resultEl.textContent='';
-    if(statusEl) statusEl.textContent='';
-    const name=(form.querySelector('#cf-name')?.value||'').trim();
-    const email=(form.querySelector('#cf-email')?.value||'').trim();
-    const phone=(form.querySelector('#cf-phone')?.value||'').trim();
-    const subject=(form.querySelector('#cf-subject')?.value||'Portfolio message').trim();
-    const message=(form.querySelector('#cf-message')?.value||'').trim();
-    const honeypot=(form.querySelector('[name="website"]')?.value||'').trim();
-    if(honeypot) return;
-    if(!name){ if(statusEl) statusEl.textContent='Please enter your name'; toast('Please enter your name'); return; }
-    if(!email&&!phone){ if(statusEl) statusEl.textContent='Provide an email or phone'; toast('Provide email or phone'); return; }
-    if(email&&!isValidEmail(email)){ if(statusEl) statusEl.textContent='Enter a valid email'; toast('Enter a valid email'); return; }
-    if(!message||message.length<8){ if(statusEl) statusEl.textContent='Write a short message (8+ chars)'; toast('Write a short message'); return; }
-    const payload={ name,email,phone,subject,message,timestamp:new Date().toISOString() };
-    setSending(true);
-    if(endpoint){
-      try{
-        const res=await fetch(endpoint,{ method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body:JSON.stringify(payload) });
-        if(res.ok){ if(statusEl) statusEl.textContent='Message sent — thank you!'; if(resultEl) resultEl.textContent='I received your message — I’ll reply shortly.'; toast('Message sent'); form.reset(); }
-        else{
-          const txt=await res.text().catch(()=>res.statusText||'Error');
-          if(statusEl) statusEl.textContent='Server error: '+(res.status||'')+' — falling back to email.';
-          toast('Server error — opening mail client');
-          const body=[`Name: ${name}`,`Email: ${email||'—'}`,`Phone: ${phone||'—'}`,'',message].join('\n');
-          window.location.href=`mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+      document.documentElement.style.overflow = 'hidden';
+      try{ closeBtn.focus(); }catch(e){}
+      function trap(e){
+        if(!panel.contains(e.target)){
+          e.stopPropagation();
+          panel.querySelector('button, a, [href], input, textarea')?.focus();
         }
-      }catch(err){
-        if(statusEl) statusEl.textContent='Network error — message not sent';
-        toast('Network error');
-      }finally{ setTimeout(()=>setSending(false),350); }
-    } else {
-      const body=[`Name: ${name}`,`Email: ${email||'—'}`,`Phone: ${phone||'—'}`,'',message].join('\n');
-      window.location.href=`mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      if(resultEl) resultEl.textContent='Opened mail client — if it did not open, copy the message below.';
-      toast('Opening email client');
-      form.reset();
-      setTimeout(()=>setSending(false),350);
+      }
+      function onKey(e){ if(e.key === 'Escape'){ e.preventDefault(); closeModal(); } }
+      document.addEventListener('focus', trap, true);
+      document.addEventListener('keydown', onKey);
+      modal._trap = trap;
+      modal._onKey = onKey;
     }
-  });
-  if(copyBtn){
-    copyBtn.addEventListener('click',async function(){ try{ await navigator.clipboard.writeText('senujames23@gmail.com'); toast('Email copied to clipboard'); }catch(e){ toast('Unable to copy — please copy manually'); } });
-  }
-}
-function initProfileParallax(){
-  const wrap=document.querySelector('.profile-visual-wrap');
-  const main=document.querySelector('.profile-photo');
-  const sec=document.querySelector('.secondary-photo');
-  if(!wrap||!main||!sec) return;
-  if(!prefersReduced){
-    try{
-      if(typeof gsap!=='undefined'){ gsap.fromTo(sec,{y:8,opacity:0,scale:0.96},{y:0,opacity:1,scale:1,duration:0.9,ease:'power3.out'}); gsap.to(sec,{y:'+=6',duration:3.6,yoyo:true,repeat:-1,ease:'sine.inOut'}); } else { sec.style.opacity='1'; }
-    }catch(e){}
-    function onMove(e){
-      const r=wrap.getBoundingClientRect();
-      const px=((e.clientX-(r.left+r.width/2))/(r.width/2));
-      const py=((e.clientY-(r.top+r.height/2))/(r.height/2));
-      const rx=Math.max(-6,Math.min(6,py*4));
-      const ry=Math.max(-8,Math.min(8,px*-4));
-      main.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
-      const sx=Math.max(-10,Math.min(10,px*-12));
-      const sy=Math.max(-8,Math.min(8,py*-10));
-      sec.style.transform=`translate(${sx}px, ${sy}px) rotate(${px*6}deg)`;
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+      clearModal();
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('focus', modal._trap, true);
+      document.removeEventListener('keydown', modal._onKey);
+      if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
     }
-    function onLeave(){ main.style.transform=''; sec.style.transform=''; }
-    wrap.addEventListener('pointermove',onMove,{passive:true});
-    wrap.addEventListener('pointerleave',onLeave);
-    wrap.addEventListener('pointercancel',onLeave);
-  }
-}
-function initStickersPlacement(){
-  const wrap=document.querySelector('.profile-visual-wrap');
-  if(!wrap) return;
-  const stickers=Array.from(wrap.querySelectorAll('.sticker'));
-  if(!stickers.length) return;
-  const prefers=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function place(){
-    const rect=wrap.getBoundingClientRect();
-    const cx=rect.width/2;
-    const cy=rect.height/2;
-    const minDim=Math.min(rect.width,rect.height);
-    const radius=Math.max(64,Math.floor(minDim/2)-46);
-    stickers.forEach((el,i)=>{
-      const a=(Math.PI*2)*(i/stickers.length)-Math.PI/2;
-      const jitter=(i<5)?[-0.6,-0.2,0.3,0.85,1.6][i]:(Math.random()*0.18-0.09);
-      const angle=a+jitter;
-      const sRect=el.getBoundingClientRect();
-      const sx=Math.round(cx+Math.cos(angle)*radius);
-      const sy=Math.round(cy+Math.sin(angle)*radius);
-      el.style.left=(sx-(sRect.width/2))+'px';
-      el.style.top=(sy-(sRect.height/2))+'px';
-      const rot=(i%2===0)?-6+Math.round(Math.random()*6):6+Math.round(Math.random()*6);
-      el.style.transform='translate(-50%,-50%) rotate('+rot+'deg)';
-      el.style.opacity='1';
+    modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
+    closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('[data-case-open]');
+      if(!btn) return;
+      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.getAttribute('data-case-id');
+      if(!id) return;
+      ev.preventDefault();
+      const c = readCaseJson(id);
+      openModalWithCase(c);
     });
   }
-  if(prefers){ stickers.forEach(s=>{ s.style.opacity='1'; s.style.transition='none'; }); place(); return; }
-  stickers.forEach(s=>{ s.style.opacity='0'; });
-  requestAnimationFrame(()=>{ place(); stickers.forEach((s,idx)=>{ s.style.transitionDelay=(idx*60)+'ms'; s.style.transform+= ' scale(1)'; s.style.opacity='1'; }); });
-  let t;
-  window.addEventListener('resize',()=>{ clearTimeout(t); t=setTimeout(()=>place(),120); });
-  wrap.addEventListener('pointermove',function(ev){ const r=wrap.getBoundingClientRect(); const px=(ev.clientX-r.left)/r.width-0.5; const py=(ev.clientY-r.top)/r.height-0.5; stickers.forEach((s,i)=>{ const depth=1+(i%3)*0.6; const tx=px*(12/depth); const ty=py*(18/depth); s.style.transform=s.style.transform.replace(/translate\([^)]+\)/,'translate(-50%,-50%)')+' translate('+Math.round(tx)+'px,'+Math.round(ty)+'px)'; }); },{passive:true});
-  wrap.addEventListener('pointerleave',()=>{ place(); });
-}
-document.addEventListener('DOMContentLoaded',function(){
-  initExternalLinks();
-  initSmoothScroll();
-  initNavToggle();
-  initTiltCards();
-  initProjectFilters();
-  initCaseModal();
-  initMarquee();
-  initMarqueeV2();
-  initContactForm();
-  initProfileParallax();
-  initStickersPlacement();
-  toast('Interactive scripts ready',{timeout:1200});
-});
+  function initMarquee(){
+    const marquee = document.getElementById('marquee');
+    if(!marquee) return;
+    const track = marquee.querySelector('.marquee-track');
+    if(!track) return;
+    const btnPause = document.getElementById('marq-pause');
+    const btnPlay = document.getElementById('marq-play');
+    if(prefersReduced || !supportsWAAPI){
+      marquee.style.overflowX = 'auto';
+      marquee.querySelectorAll('img').forEach(img=>img.setAttribute('loading','lazy'));
+      if(btnPause) btnPause.style.display = 'none';
+      if(btnPlay) btnPlay.style.display = 'none';
+      return;
+    }
+    const containerWidth = marquee.getBoundingClientRect().width || window.innerWidth;
+    const original = Array.from(track.children);
+    let clones = 0;
+    function totalWidth(){
+      return Array.from(track.children).reduce((s, el)=> s + (el.getBoundingClientRect().width || el.offsetWidth) + 16, 0);
+    }
+    while(totalWidth() < containerWidth * 2 && clones < 8){
+      original.forEach(el => track.appendChild(el.cloneNode(true)));
+      clones++;
+    }
+    const shift = totalWidth() / 2;
+    const pxPerSecond = 90;
+    const duration = Math.max(10000, Math.round((shift / pxPerSecond) * 1000));
+    const anim = track.animate([{ transform: 'translateX(0)' }, { transform: `translateX(-${shift}px)` }], { duration, iterations: Infinity, easing: 'linear' });
+    marquee._marqueeAnim = anim;
+    marquee.addEventListener('mouseenter', ()=>{ anim.pause(); if(btnPause) btnPause.setAttribute('aria-pressed','true'); if(btnPlay){ btnPlay.style.display='inline-flex'; btnPause.style.display='none'; } });
+    marquee.addEventListener('mouseleave', ()=>{ anim.play(); if(btnPause) btnPause.setAttribute('aria-pressed','false'); if(btnPlay){ btnPlay.style.display='none'; btnPause.style.display='inline-flex'; } });
+    marquee.addEventListener('focusin', ()=> anim.pause());
+    marquee.addEventListener('focusout', ()=> anim.play());
+    marquee.addEventListener('keydown', (e)=>{ if(e.code === 'Space' || e.key === ' '){ e.preventDefault(); const state = anim.playState; if(state === 'running') anim.pause(); else anim.play(); }});
+    if(btnPause && btnPlay){
+      btnPause.addEventListener('click', ()=>{ anim.pause(); btnPause.style.display = 'none'; btnPlay.style.display = 'inline-flex'; });
+      btnPlay.addEventListener('click', ()=>{ anim.play(); btnPlay.style.display = 'none'; btnPause.style.display = 'inline-flex'; });
+    }
+  }
+  function initContactEnhanced(){
+    const form = document.getElementById('contact-form-pro');
+    if(!form) return;
+    const sendBtn = document.getElementById('cf-send');
+    const copyBtn = document.getElementById('cf-copy-email');
+    const statusEl = document.getElementById('cf-status');
+    const resultEl = document.getElementById('cf-result');
+    function showStatus(text, isError=false){
+      if(statusEl){ statusEl.textContent = text; statusEl.style.color = isError ? 'var(--danger)' : 'var(--muted)'; }
+    }
+    function setSending(s){
+      if(!sendBtn) return;
+      if(s){ sendBtn.classList.add('sending'); sendBtn.disabled = true; sendBtn.setAttribute('aria-disabled','true'); }
+      else { sendBtn.classList.remove('sending'); sendBtn.disabled = false; sendBtn.removeAttribute('aria-disabled'); }
+    }
+    function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      resultEl.textContent = '';
+      showStatus('');
+      const name = (form.querySelector('#cf-name')?.value || '').trim();
+      const email = (form.querySelector('#cf-email')?.value || '').trim();
+      const phone = (form.querySelector('#cf-phone')?.value || '').trim();
+      const subject = (form.querySelector('#cf-subject')?.value || 'Portfolio message').trim();
+      const message = (form.querySelector('#cf-message')?.value || '').trim();
+      const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
+      if(honeypot) return;
+      if(!name){ createToast('Please enter your name'); showStatus('Please enter your name', true); return; }
+      if(!email && !phone){ createToast('Provide email or phone'); showStatus('Provide email or phone', true); return; }
+      if(email && !isValidEmail(email)){ createToast('Enter a valid email'); showStatus('Enter a valid email', true); return; }
+      if(!message || message.length < 8){ createToast('Tell me a bit about your project (8+ chars)'); showStatus('Please write a short message', true); return; }
+      const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+      setSending(true);
+      showStatus('Preparing message…');
+      setTimeout(()=>{
+        try{
+          const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = mailto;
+          setSending(false);
+          resultEl.textContent = 'Opened your mail client. If nothing opened, copy the email below.';
+          createToast('Opening email client…');
+          form.reset();
+        }catch(err){
+          setSending(false);
+          createToast('Unable to open mail client — copied to clipboard');
+          navigator.clipboard?.writeText(body).then(()=>{
+            resultEl.textContent = 'Message copied to clipboard — paste into your mail app.';
+          }).catch(()=>{
+            resultEl.textContent = 'Unable to copy automatically — please copy the message manually.';
+          });
+        }
+      }, 700);
+    });
+    if(copyBtn){
+      copyBtn.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText('senujames23@gmail.com');
+          createToast('Email copied to clipboard');
+        }catch(e){
+          createToast('Unable to copy — highlight and copy manually');
+        }
+      });
+    }
+  }
+  function initMisc(){
+    $$('a[target="_blank"]').forEach(a=>{ if(!a.getAttribute('rel')) a.setAttribute('rel','noopener noreferrer'); });
+    $$('a.repo, a.link-btn.repo').forEach(a=>{ if(!a.hasAttribute('aria-label')){ const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`; a.setAttribute('aria-label', label); }});
+  }
+  function initHeroAnimations(){
+    try{
+      (function roleRotator(){
+        const roles = ['Product Designer','Frontend Engineer','AI Builder','Community-focused Creator'];
+        const el = document.getElementById('rotating-role');
+        if(!el || prefersReduced) return;
+        let i = 0;
+        const swap = ()=>{ el.textContent = roles[i % roles.length]; i++; };
+        swap();
+        const interval = setInterval(swap, 2400);
+        window.addEventListener('unload', ()=> clearInterval(interval));
+      })();
+      (function statCounters(){
+        const nodes = document.querySelectorAll('.metric-number[data-value]');
+        if(!nodes.length) return;
+        nodes.forEach(node=>{
+          const target = parseInt(node.dataset.value || '0', 10);
+          if(isNaN(target) || prefersReduced) return;
+          if(node.textContent.trim().match(/[a-zA-Z]/)) return;
+          let cur = 0;
+          const step = Math.max(1, Math.round(target / 40));
+          const t = setInterval(()=>{
+            cur += step;
+            if(cur >= target){
+              node.textContent = target.toLocaleString();
+              clearInterval(t);
+            } else {
+              node.textContent = cur.toLocaleString();
+            }
+          }, 28);
+        });
+      })();
+      if(!prefersReduced && typeof gsap !== 'undefined'){
+        try{
+          const tl = gsap.timeline({defaults:{duration:0.8, ease:'power2.out'}});
+          tl.from('.hero-left .kicker', {y:18, opacity:0}, 0.05)
+            .from('.hero-left .hi', {y:22, opacity:0}, 0.12)
+            .from('.hero-left .lead', {y:18, opacity:0}, 0.18)
+            .from('.hero-metrics li', {y:10, opacity:0, stagger:0.06}, 0.26)
+            .from('.cta-row .btn', {y:12, opacity:0, stagger:0.06}, 0.36);
+          gsap.fromTo('.float-badge.badge-1', {y:-8,x:8,opacity:0}, {y:-2,x:0,opacity:1,duration:0.9,ease:'power3.out'});
+          gsap.fromTo('.float-badge.badge-2', {y:8,x:-8,opacity:0}, {y:2,x:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.12});
+          gsap.to('.float-badge', {y:"+=6", duration:3.6, yoyo:true, repeat:-1, ease:'sine.inOut', stagger:0.2});
+          gsap.to('.profile-ring', {rotation:6, transformOrigin:'50% 50%', duration:6, ease:'sine.inOut', yoyo:true, repeat:-1});
+        }catch(e){}
+      }
+      (function parallaxProfile(){
+        const wrap = document.querySelector('.profile-visual-wrap');
+        const photo = document.querySelector('.profile-photo');
+        if(!wrap || !photo || prefersReduced) return;
+        function onMove(e){
+          const r = wrap.getBoundingClientRect();
+          const px = (e.clientX - (r.left + r.width/2)) / (r.width/2);
+          const py = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+          const rx = Math.max(-6, Math.min(6, py * 6));
+          const ry = Math.max(-8, Math.min(8, px * -6));
+          photo.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
+        }
+        function onLeave(){ photo.style.transform = ''; }
+        wrap.addEventListener('pointermove', onMove, {passive:true});
+        wrap.addEventListener('pointerleave', onLeave);
+      })();
+    }catch(e){}
+  }
+  (function initHeroExtra(){
+    try{
+      const hero = document.getElementById('home-hero');
+      if(!hero) return;
+      if(!prefersReduced){
+        (function randomizeStickers(){
+          const stickers = Array.from(hero.querySelectorAll('.sticker'));
+          stickers.forEach((s,i)=>{
+            const rx = (Math.random()-0.5)*6;
+            const tx = (Math.random()-0.5)*4;
+            const ty = (Math.random()-0.5)*6;
+            s.style.transform = `translate(${tx}px, ${ty}px) rotate(${rx}deg)`;
+            s.style.opacity = '0';
+            setTimeout(()=>{ s.style.transition = 'transform .6s cubic-bezier(.2,.85,.2,1), opacity .6s'; s.style.opacity = '1'; }, 220 + i*120);
+          });
+        })();
+        (function stickersParallax(){
+          const wrap = hero.querySelector('.profile-visual-wrap');
+          if(!wrap) return;
+          wrap.addEventListener('pointermove', (ev)=>{
+            const rect = wrap.getBoundingClientRect();
+            const cx = rect.left + rect.width/2;
+            const cy = rect.top + rect.height/2;
+            const px = (ev.clientX - cx) / (rect.width/2);
+            const py = (ev.clientY - cy) / (rect.height/2);
+            const stickers = wrap.querySelectorAll('.sticker');
+            stickers.forEach((st, idx)=>{
+              const depth = (idx % 3) + 1;
+              const tx = px * (6 / depth);
+              const ty = py * (10 / depth);
+              st.style.transform = `translate(${tx}px, ${ty}px) rotate(${(idx%2?4:-4)}deg)`;
+            });
+          }, {passive:true});
+          wrap.addEventListener('pointerleave', ()=>{ wrap.querySelectorAll('.sticker').forEach((st)=>{ st.style.transform = ''; }); });
+        })();
+        (function wireConfetti(){
+          const cvBtn = document.getElementById('download-cv') || document.querySelector('.btn-primary');
+          if(!cvBtn) return;
+          cvBtn.addEventListener('click', (ev)=>{
+            spawnConfetti(ev.clientX || window.innerWidth/2, ev.clientY || window.innerHeight/2, {count:28});
+          });
+        })();
+      }
+      function spawnConfetti(x=window.innerWidth/2, y=window.innerHeight/2, opts={}) {
+        const count = opts.count || 20;
+        const container = document.body;
+        const colors = ['#7C3AED','#06B6D4','#3B82F6','#F59E0B','#10B981','#EF4444'];
+        for(let i=0;i<count;i++){
+          const el = document.createElement('div');
+          el.className = 'hero-confetti-piece';
+          const w = 8 + Math.round(Math.random()*8);
+          const h = 10 + Math.round(Math.random()*12);
+          el.style.width = w + 'px';
+          el.style.height = h + 'px';
+          el.style.left = (x - (w/2)) + 'px';
+          el.style.top = (y - (h/2)) + 'px';
+          el.style.background = colors[Math.floor(Math.random()*colors.length)];
+          el.style.opacity = String(0.95 - Math.random()*0.2);
+          container.appendChild(el);
+          const angle = (Math.PI * (Math.random()*1.4 - 0.7));
+          const distance = 120 + Math.random()*220;
+          const dx = Math.cos(angle) * distance;
+          const dy = Math.sin(angle) * distance - (40 + Math.random()*40);
+          const rot = (Math.random()*720 - 360);
+          const delay = 10 + Math.random()*80;
+          el.style.transition = `transform 900ms cubic-bezier(.22,.9,.3,1) ${delay}ms, opacity 600ms linear ${delay+380}ms`;
+          requestAnimationFrame(()=>{ el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${0.92 + Math.random()*0.26})`; el.style.opacity='0'; });
+          setTimeout(()=>{ try{ el.remove(); }catch(e){} }, 1600 + delay);
+        }
+      }
+      (function cvFocusAffordance(){
+        const cv = document.getElementById('download-cv');
+        if(!cv) return;
+        cv.addEventListener('focus', ()=>{ cv.style.boxShadow = '0 18px 60px rgba(59,130,246,0.12)'; });
+        cv.addEventListener('blur', ()=>{ cv.style.boxShadow = ''; });
+      })();
+    }catch(e){}
+  })();
+  function boot(){
+    try{
+      initSmoothScroll();
+      initTiltCards();
+      initProjectFilters();
+      initCaseModal();
+      initMarquee();
+      initHeroAnimations();
+      initContactEnhanced();
+      initMisc();
+      createToast('Interactive scripts ready', {timeout:1200});
+    }catch(err){}
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
 })();
 </script>
+<script>
+ 
+(function(){
+const btn = document.querySelector('.nav-toggle');
+const menu = document.getElementById('primary-nav');
+if(!btn || !menu) return;
 
+
+ let backdrop = document.querySelector('.nav-backdrop');
+if(!backdrop){ backdrop = document.createElement('div'); backdrop.className = 'nav-backdrop'; document.body.appendChild(backdrop); }
+
+
+function open(){
+btn.setAttribute('aria-expanded','true');
+btn.setAttribute('aria-label','Close main menu');
+menu.classList.add('open');
+backdrop.classList.add('visible');
+ document.documentElement.style.overflow = 'hidden';
+ const first = menu.querySelector('a, button, [href]');
+if(first) first.focus();
+}
+function close(){
+btn.setAttribute('aria-expanded','false');
+btn.setAttribute('aria-label','Open main menu');
+menu.classList.remove('open');
+backdrop.classList.remove('visible');
+document.documentElement.style.overflow = '';
+btn.focus();
+}
+
+
+btn.addEventListener('click', (e)=>{
+const expanded = btn.getAttribute('aria-expanded') === 'true';
+if(expanded) close(); else open();
+});
+
+
+backdrop.addEventListener('click', close);
+
+
+ document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && menu.classList.contains('open')) close(); });
+
+
+ menu.addEventListener('click', (e)=>{ const a = e.target.closest('a[href]'); if(!a) return; if(a.getAttribute('href') && a.getAttribute('href').startsWith('#')){ close(); }});
+
+
+ let mql = window.matchMedia('(min-width: 761px)');
+function handleMqChange(ev){ if(ev.matches){  
+menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttribute('aria-expanded','false'); document.documentElement.style.overflow = '';
+}
+}
+try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(handleMqChange); }
+})();
+</script>
+  <script>
+(function(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wrap = document.querySelector('.profile-visual-wrap');
+  const main = document.querySelector('.profile-photo');
+  const sec = document.querySelector('.secondary-photo');
+  if(!wrap || !main || !sec) return;
+  if(!prefersReduced){
+    try{
+      if(typeof gsap !== 'undefined'){
+        gsap.fromTo(sec, {y:8, opacity:0, scale:0.96}, {y:0, opacity:1, scale:1, duration:0.9, ease:'power3.out'});
+        gsap.to(sec, {y:'+=6', duration:3.6, yoyo:true, repeat:-1, ease:'sine.inOut'});
+      } else {
+        sec.style.opacity = '1';
+      }
+    }catch(e){}
+    function onMove(e){
+      const r = wrap.getBoundingClientRect();
+      const px = ((e.clientX - (r.left + r.width/2)) / (r.width/2));
+      const py = ((e.clientY - (r.top + r.height/2)) / (r.height/2));
+      const rx = Math.max(-6, Math.min(6, py * 4));
+      const ry = Math.max(-8, Math.min(8, px * -4));
+      main.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
+      const sx = Math.max(-10, Math.min(10, px * -12));
+      const sy = Math.max(-8, Math.min(8, py * -10));
+      sec.style.transform = `translate(${sx}px, ${sy}px) rotate(${px*6}deg)`;
+    }
+    function onLeave(){ main.style.transform=''; sec.style.transform=''; }
+    wrap.addEventListener('pointermove', onMove, {passive:true});
+    wrap.addEventListener('pointerleave', onLeave);
+    wrap.addEventListener('pointercancel', onLeave);
+  }
+})();
+</script>
+<script>
+(function(){
+  const marquee = document.getElementById('marquee');
+  if(!marquee) return;
+  const track = marquee.querySelector('.marquee-track');
+  if(!track) return;
+
+  // assign small random rotations and micro offsets for each card for natural feel
+  Array.from(track.children).forEach((item, i) => {
+    const r = (Math.random() * 10) - 5; // -5deg to +5deg
+    item.style.transform = `rotate(${r}deg)`;
+    // store base rotation to keep hover transforms additive
+    item.dataset.baseRot = String(r);
+  });
+
+  // duplicate items until the track width comfortably exceeds container width (for seamless loop)
+  function ensureClones() {
+    const containerW = marquee.getBoundingClientRect().width;
+    // measure track children width
+    let tw = track.scrollWidth;
+    let clones = 0;
+    // clone until track width >= 2 * container width
+    while(tw < containerW * 2 && clones < 8) {
+      Array.from(track.children).slice(0).forEach(node=>{
+        const clone = node.cloneNode(true);
+        track.appendChild(clone);
+      });
+      clones++;
+      tw = track.scrollWidth;
+    }
+  }
+
+  // smooth pixel-based loop using requestAnimationFrame
+  let px = 0;
+  const speed = Math.max(0.25, Math.min(1.25, window.innerWidth / 8000)); // tuning by viewport
+  let running = true;
+  let last = performance.now();
+
+  function step(now) {
+    if(!running){ last = now; requestAnimationFrame(step); return; }
+    const dt = now - last;
+    last = now;
+    px -= speed * (dt / 16.6667); // normalize to 60fps
+    // reset once we've scrolled half the content (we duplicated earlier)
+    const half = track.scrollWidth / 2;
+    if(Math.abs(px) >= half) px = 0;
+    track.style.transform = `translate3d(${px}px, 0, 0)`;
+    requestAnimationFrame(step);
+  }
+
+  // pause on hover or focus for accessibility
+  marquee.addEventListener('mouseenter', ()=> running = false);
+  marquee.addEventListener('mouseleave', ()=> running = true);
+  marquee.addEventListener('focusin', ()=> running = false);
+  marquee.addEventListener('focusout', ()=> running = true);
+
+  // ensure clones after images load (so widths are correct)
+  function whenImagesLoaded(root, cb){
+    const imgs = Array.from(root.querySelectorAll('img'));
+    if(imgs.length === 0) return cb();
+    let count = imgs.length;
+    imgs.forEach(img=>{
+      if(img.complete) { if(--count === 0) cb(); }
+      else img.addEventListener('load', ()=> { if(--count === 0) cb(); });
+      img.addEventListener('error', ()=> { if(--count === 0) cb(); });
+    });
+  }
+
+  whenImagesLoaded(track, ()=> {
+    ensureClones();
+    // small staggered subtle transform to clones too
+    Array.from(track.children).forEach((item, idx)=>{
+      const base = parseFloat(item.dataset.baseRot || 0);
+      const jitter = (Math.random()*4 - 2);
+      item.style.transform = `rotate(${(base + jitter).toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(step);
+  });
+
+  // handle resize: clear clones and rebuild if necessary (keeps marquee coherent on dev/responsive)
+  let resizeTimer;
+  window.addEventListener('resize', ()=> {
+    clearTimeout(resizeTimer);
+    running = false;
+    resizeTimer = setTimeout(()=>{
+      // reset transform & clones; keep only original set (first N items)
+      const originals = [];
+      // assume your original set fits within first 40 items; find unique srcs from beginning
+      for(let i=0;i<track.children.length;i++){
+        const src = track.children[i].querySelector('img')?.getAttribute('src');
+        if(!src) continue;
+        if(!originals.some(s=>s === src)) originals.push(src);
+        if(originals.length >= 40) break;
+      }
+      // rebuild track
+      track.innerHTML = '';
+      originals.forEach(src => {
+        const wrap = document.createElement('div');
+        wrap.className = 'marq-item';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        wrap.appendChild(img);
+        track.appendChild(wrap);
+      });
+      // re-run initial setup
+      Array.from(track.children).forEach((item, i) => {
+        const r = (Math.random() * 10) - 5;
+        item.style.transform = `rotate(${r}deg)`;
+        item.dataset.baseRot = String(r);
+      });
+      whenImagesLoaded(track, ()=> { ensureClones(); running = true; });
+    }, 260);
+  });
+})();
+</script>
+<script>
+(function(){
+  const modal = document.getElementById('case-modal');
+  if(!modal) return;
+  const screensContainer = document.getElementById('case-screens-carousel');
+  if(!screensContainer) return;
+
+  function buildGallery(images) {
+    const gallery = document.createElement('div');
+    gallery.className = 'case-gallery';
+    const viewer = document.createElement('div');
+    viewer.className = 'viewer';
+    const mainImg = document.createElement('img');
+    mainImg.alt = '';
+    mainImg.setAttribute('decoding','async');
+    viewer.appendChild(mainImg);
+
+    const prev = document.createElement('button');
+    prev.className = 'control prev';
+    prev.setAttribute('aria-label','Previous image');
+    prev.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const next = document.createElement('button');
+    next.className = 'control next';
+    next.setAttribute('aria-label','Next image');
+    next.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    viewer.appendChild(prev);
+    viewer.appendChild(next);
+
+    const thumbs = document.createElement('div');
+    thumbs.className = 'thumbs';
+
+    images.forEach((src, i) => {
+      const t = document.createElement('button');
+      t.className = 'thumb';
+      t.type = 'button';
+      const ti = document.createElement('img');
+      ti.src = src;
+      ti.alt = `Screenshot ${i+1}`;
+      t.appendChild(ti);
+      t.addEventListener('click', ()=> setIndex(i));
+      thumbs.appendChild(t);
+    });
+
+    gallery.appendChild(viewer);
+    gallery.appendChild(thumbs);
+
+    let idx = 0;
+    function setIndex(n) {
+      idx = (n + images.length) % images.length;
+      mainImg.src = images[idx];
+      Array.from(thumbs.children).forEach((c, j)=> c.setAttribute('aria-current', j === idx ? 'true' : 'false'));
+      // keep the active thumb visible
+      const active = thumbs.children[idx];
+      if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+
+    prev.addEventListener('click', ()=> setIndex(idx-1));
+    next.addEventListener('click', ()=> setIndex(idx+1));
+
+    // keyboard nav
+    function onKey(e){
+      if(modal.getAttribute('aria-hidden') === 'true') return;
+      if(e.key === 'ArrowLeft') prev.click();
+      if(e.key === 'ArrowRight') next.click();
+      if(e.key === 'Escape') { /* let existing handlers close */ }
+    }
+    window.addEventListener('keydown', onKey);
+
+    // pointer swipe for viewer
+    let startX = null;
+    let startY = null;
+    viewer.addEventListener('pointerdown', (ev)=>{ startX = ev.clientX; startY = ev.clientY; viewer.setPointerCapture && viewer.setPointerCapture(ev.pointerId); });
+    viewer.addEventListener('pointerup', (ev)=>{ if(startX === null) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; if(Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) { if(dx < 0) next.click(); else prev.click(); } startX = null; startY = null; });
+
+    // zoom / lightbox
+    viewer.addEventListener('click', (ev)=>{
+      if(ev.target.tagName.toLowerCase() !== 'img') return;
+      const overlay = document.createElement('div');
+      overlay.className = 'case-zoom-overlay';
+      const big = document.createElement('img');
+      big.src = images[idx];
+      overlay.appendChild(big);
+      overlay.tabIndex = -1;
+      overlay.addEventListener('click', ()=> overlay.remove());
+      document.body.appendChild(overlay);
+      overlay.focus();
+    });
+
+    setIndex(0);
+
+    return gallery;
+  }
+
+  function enhanceModal() {
+    const container = document.getElementById('case-screens-carousel');
+    if(!container) return;
+    const imgs = Array.from(container.querySelectorAll('img')).map(i => i.getAttribute('src')).filter(Boolean);
+    if(!imgs.length) return;
+    container.innerHTML = '';
+    const gallery = buildGallery(imgs);
+    container.appendChild(gallery);
+  }
+
+  const mo = new MutationObserver(()=> {
+    const visible = modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex';
+    if(visible) {
+      setTimeout(()=> { enhanceModal(); }, 80);
+    }
+  });
+  mo.observe(modal, { attributes: true, attributeFilter: ['aria-hidden', 'style'] });
+
+  // initial enhancement if modal already open
+  if(modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex') {
+    setTimeout(()=> enhanceModal(), 40);
+  }
+})();
+</script>
+<script>
+/*
+  Enhanced contact submit:
+  - If you set `data-endpoint="https://formspree.io/f/your-id"` (or any CORS-enabled webhook)
+    on the <form id="contact-form-pro"> element, the script will POST JSON to that URL.
+  - If no endpoint provided, it falls back to opening the user's mail client (mailto).
+  - Replace the endpoint with your Formspree or webhook URL to receive messages.
+*/
+(function(){
+  const form = document.getElementById('contact-form-pro');
+  if(!form) return;
+  const sendBtn = document.getElementById('cf-send');
+  const copyBtn = document.getElementById('cf-copy-email');
+  const statusEl = document.getElementById('cf-status');
+  const resultEl = document.getElementById('cf-result');
+  const endpoint = form.dataset.endpoint && form.dataset.endpoint.trim() ? form.dataset.endpoint.trim() : null;
+
+  function toast(msg, timeout=1800){
+    try{
+      const t = document.createElement('div');
+      t.className = 'sj-toast';
+      t.style.cssText = 'pointer-events:auto;margin-top:8px;background:rgba(6,10,26,0.92);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 12px 40px rgba(6,10,26,0.28);';
+      t.textContent = msg;
+      document.getElementById('toast-area').appendChild(t);
+      setTimeout(()=> { t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; t.style.transition='opacity .28s, transform .28s'; }, timeout);
+      setTimeout(()=> t.remove(), timeout + 420);
+    }catch(e){}
+  }
+
+  function setSending(on){
+    if(!sendBtn) return;
+    if(on){
+      sendBtn.classList.add('sending');
+      sendBtn.disabled = true;
+      sendBtn.setAttribute('aria-disabled','true');
+    } else {
+      sendBtn.classList.remove('sending');
+      sendBtn.disabled = false;
+      sendBtn.removeAttribute('aria-disabled');
+    }
+  }
+
+  function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
+
+  form.addEventListener('submit', async function evHandler(e){
+    e.preventDefault();
+    resultEl.textContent = '';
+    statusEl.textContent = '';
+    const name = (form.querySelector('#cf-name')?.value || '').trim();
+    const email = (form.querySelector('#cf-email')?.value || '').trim();
+    const phone = (form.querySelector('#cf-phone')?.value || '').trim();
+    const subject = (form.querySelector('#cf-subject')?.value || 'Portfolio message').trim();
+    const message = (form.querySelector('#cf-message')?.value || '').trim();
+    const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
+    if(honeypot) return; // bot caught
+
+    if(!name){ statusEl.textContent = 'Please enter your name'; toast('Please enter your name'); return; }
+    if(!email && !phone){ statusEl.textContent = 'Provide an email or phone'; toast('Provide email or phone'); return; }
+    if(email && !isValidEmail(email)){ statusEl.textContent = 'Enter a valid email'; toast('Enter a valid email'); return; }
+    if(!message || message.length < 8){ statusEl.textContent = 'Write a short message (8+ chars)'; toast('Write a short message'); return; }
+
+    const payload = {
+      name, email, phone, subject, message, timestamp: new Date().toISOString()
+    };
+
+    setSending(true);
+    statusEl.textContent = 'Sending…';
+
+    try{
+      if(endpoint){
+        // POST JSON to endpoint (expects JSON/CORS)
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if(res.ok){
+          statusEl.textContent = 'Message sent — thank you!';
+          resultEl.textContent = 'I received your message — I’ll reply shortly.';
+          toast('Message sent');
+          form.reset();
+        } else {
+          const txt = await res.text().catch(()=>res.statusText||'Error');
+          statusEl.textContent = 'Server error: ' + (res.status || '') + ' — falling back to email.';
+          toast('Server error — opening mail client');
+          // fallback to mailto
+          const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+          window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+      } else {
+        // fallback behavior: open mail client with pre-filled body
+        const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+        window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        resultEl.textContent = 'Opened mail client — if it did not open, copy the message below.';
+        toast('Opening email client');
+        form.reset();
+      }
+    }catch(err){
+      console.error(err);
+      statusEl.textContent = 'Network error — message not sent';
+      toast('Network error');
+    }finally{
+      setTimeout(()=> setSending(false), 350);
+    }
+  });
+
+  if(copyBtn){
+    copyBtn.addEventListener('click', async ()=> {
+      try{
+        await navigator.clipboard.writeText('senujames23@gmail.com');
+        toast('Email copied to clipboard');
+      }catch(e){
+        toast('Unable to copy — please copy manually');
+      }
+    });
+  }
+})();
+</script>
+<script>
+  (function(){
+  const wrap = document.querySelector('.profile-visual-wrap');
+  if(!wrap) return;
+  const stickers = Array.from(wrap.querySelectorAll('.sticker'));
+  if(!stickers.length) return;
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function place(){
+    const rect = wrap.getBoundingClientRect();
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const minDim = Math.min(rect.width, rect.height);
+    const radius = Math.max(64, Math.floor(minDim / 2) - 46);
+    const offsetAngles = [ -0.6, -0.2, 0.3, 0.85, 1.6 ];
+    const count = stickers.length;
+    stickers.forEach((el, i) => {
+      const a = (Math.PI * 2) * (i / count) - Math.PI / 2;
+      const jitter = (i < offsetAngles.length) ? offsetAngles[i] : (Math.random() * 0.18 - 0.09);
+      const angle = a + jitter;
+      const sRect = el.getBoundingClientRect();
+      const sx = Math.round(cx + Math.cos(angle) * radius);
+      const sy = Math.round(cy + Math.sin(angle) * radius);
+      el.style.left = (sx - (sRect.width / 2)) + 'px';
+      el.style.top = (sy - (sRect.height / 2)) + 'px';
+      const rot = (i % 2 === 0) ? -6 + Math.round(Math.random() * 6) : 6 + Math.round(Math.random() * 6);
+      el.style.transform = 'translate(-50%,-50%) rotate(' + rot + 'deg)';
+      el.style.opacity = '1';
+    });
+  }
+  if(prefersReduced){
+    stickers.forEach(s => { s.style.opacity = '1'; s.style.transition = 'none'; });
+    place();
+    return;
+  }
+  stickers.forEach(s => { s.style.opacity = '0'; });
+  window.requestAnimationFrame(()=> {
+    place();
+    stickers.forEach((s, idx) => {
+      s.style.transitionDelay = (idx * 60) + 'ms';
+      s.style.transform += ' scale(1)';
+      s.style.opacity = '1';
+    });
+  });
+  let t;
+  window.addEventListener('resize', ()=> {
+    clearTimeout(t);
+    t = setTimeout(()=> place(), 120);
+  });
+  wrap.addEventListener('pointermove', (ev)=> {
+    const r = wrap.getBoundingClientRect();
+    const px = (ev.clientX - r.left) / r.width - 0.5;
+    const py = (ev.clientY - r.top) / r.height - 0.5;
+    stickers.forEach((s, i) => {
+      const depth = 1 + (i % 3) * 0.6;
+      const tx = px * (12 / depth);
+      const ty = py * (18 / depth);
+      s.style.transform = s.style.transform.replace(/translate\([^)]+\)/,'translate(-50%,-50%)') + ' translate(' + Math.round(tx) + 'px,' + Math.round(ty) + 'px)';
+    });
+  }, { passive: true });
+  wrap.addEventListener('pointerleave', ()=> {
+    place();
+  });
+})();
+
+</script>
+</body>
 </html>
