@@ -3116,7 +3116,7 @@ button[aria-pressed="true"] {
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
         <span class="role-static">I’m a</span>
-        <span id="rotating-role" class="role-dynamic" aria-hidden="false">Product Designer</span>
+        <span id="rotating-role" class="role-dynamic" aria-hidden="false">Web Developer</span>
         <span class="role-cursor" aria-hidden="true"></span>
       </div>
       <p class="lead">I build product-first web apps, from AI health platforms to campus tools, focused on clarity, accessibility and measurable impact.</p>
@@ -4199,11 +4199,11 @@ function initMarquee(){
   const el = document.getElementById('rotating-role');
   if(!el) return;
   const roles = [
-    'Product Designer',
+    'Web Developer',
     'Frontend Engineer',
     'AI Specialist',
     'Design Systems Lead',
-    'Performance-focused Frontend'
+    'Backend Engineer'
   ];
   let idx = roles.indexOf(el.textContent) >= 0 ? roles.indexOf(el.textContent) : 0;
 
