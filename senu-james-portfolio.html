@@ -2968,6 +2968,130 @@ button[aria-pressed="true"] {
 
 /* ensure the animation pauses visibly on user interaction on mobile too */
 .marquee:active .marquee-track.is-animated { animation-play-state: paused; }
+/* Marquee: framed photos (image style like your screenshot) */
+.marquee--framed {
+  position: relative;
+  overflow: visible;
+  padding: 40px 18px;
+  -webkit-tap-highlight-color: transparent;
+}
+.marquee--framed .marquee-track {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  will-change: transform;
+  padding-left: 8px;
+}
+
+/* card wrapper: houses a rotated white frame and the image */
+.marq-card {
+  flex: 0 0 auto;
+  width: clamp(220px, 30vw, 420px);
+  height: clamp(140px, 18.5vw, 260px);
+  position: relative;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  transform-origin: center center;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
+  pointer-events: auto;
+}
+
+/* white outer frame (visible tilted slab) */
+.marq-card .marq-frame {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 36px 90px rgba(6,10,26,0.12), 0 6px 18px rgba(6,10,26,0.06);
+  z-index: 1;
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
+  /* give the frame a slightly thick feel by pushing it out a bit */
+  padding: 0;
+  border: 1px solid rgba(10,20,30,0.04);
+}
+
+/* the photo surface sits inset from the frame */
+.marq-card .marq-image {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  bottom: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 16px 46px rgba(6,10,26,0.08);
+  transition: transform 560ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease, filter 320ms ease;
+  background: #f8f8f8;
+}
+
+/* the <img> inside */
+.marq-card .marq-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  transition: transform 560ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+}
+
+/* Alternating rotations for the slab/frame vs image to get that playful offset */
+.marq-card.rotate-left .marq-frame  { transform: rotate(-6deg) translate(-6px, -6px); }
+.marq-card.rotate-left .marq-image  { transform: rotate(4deg) translate(2px, 4px); }
+
+.marq-card.rotate-right .marq-frame { transform: rotate(6deg) translate(6px, -6px); }
+.marq-card.rotate-right .marq-image { transform: rotate(-4deg) translate(-2px, 4px); }
+
+/* Hover: lift and straighten slightly (matches the screenshot where hover makes cards pop) */
+.marq-card:hover,
+.marq-card:focus-within {
+  transform: translateY(-12px) scale(1.02);
+  z-index: 60;
+}
+.marq-card:hover .marq-frame,
+.marq-card:focus-within .marq-frame {
+  transform: rotate(0deg) translate(0, -4px);
+  box-shadow: 0 48px 140px rgba(6,10,26,0.14);
+}
+.marq-card:hover .marq-image img,
+.marq-card:focus-within .marq-image img {
+  transform: scale(1.04);
+}
+
+/* Slight caption overlay possibility (optional) */
+.marq-card .overlay {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  pointer-events: none;
+  transform: translateY(8px);
+  opacity: 0;
+  transition: transform .28s ease, opacity .28s ease;
+}
+.marq-card:hover .overlay { transform: translateY(0); opacity: 1; }
+
+/* responsive niceties */
+@media (max-width: 760px) {
+  .marquee--framed { padding: 18px 8px; }
+  .marq-card { width: clamp(140px, 42vw, 180px); height: clamp(90px, 24vw, 120px); }
+  .marq-card .marq-image { left: 10px; right: 10px; top: 10px; bottom: 10px; border-radius: 10px; }
+  .marq-card .overlay { font-size: 12px; }
+  .marquee--framed .marquee-track { gap: 12px; }
+}
+
+/* hide the native scrollbar visually while keeping scroll */
+.marquee--framed { -ms-overflow-style: none; scrollbar-width: none; }
+.marquee--framed::-webkit-scrollbar { display: none; }
 
 </style>
  <div id="primary-nav" class="nav-menu" role="navigation">
@@ -3204,45 +3328,191 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
+
 <section class="marquee-wrap" style="margin-top:36px;">
   <header style="text-align:center;margin-bottom:12px">
-  <h3 style="margin:0">Work & Photo Archive</h3>
-  <p style="margin:6px 0 0;color:var(--muted)">
-    Curated screenshots, behind-the-scenes shots and event highlights selected for storytelling and product context.
-  </p>
-</header>
+    <h3 style="margin:0">Work & Photo Archive</h3>
+    <p style="margin:6px 0 0;color:var(--muted)">
+      Curated screenshots, behind-the-scenes shots and event highlights selected for storytelling and product context.
+    </p>
+  </header>
+
   <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
-    <div class="marquee-track" aria-hidden="false">
-      <!-- mixed order of all provided screenshots -->
-      <div class="marq-item"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
-      <div class="marq-item"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
-      <div class="marq-item"><img src="emart2.png" alt="E-Mart screenshot"></div>
-      <div class="marq-item"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="shuttle1.png" alt="Shuttle Tracker screenshot"></div>
-      <div class="marq-item"><img src="skillforg2.png" alt="SkillForge screenshot"></div>
-      <div class="marq-item"><img src="emart1.png" alt="E-Mart screenshot"></div>
-      <div class="marq-item"><img src="vitra4.png" alt="Vitra screenshot"></div>
-      <div class="marq-item"><img src="fittrack2.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="mhc1.png" alt="Make Heaven Crowded screenshot"></div>
-      <div class="marq-item"><img src="skillforg.png" alt="SkillForge screenshot"></div>
-      <div class="marq-item"><img src="emart5.png" alt="E-Mart screenshot"></div>
-      <div class="marq-item"><img src="fittrack7.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="vitra2.png" alt="Vitra screenshot"></div>
-      <div class="marq-item"><img src="shuttle2.png" alt="Shuttle Tracker screenshot"></div>
-      <div class="marq-item"><img src="mhc4.png" alt="Make Heaven Crowded screenshot"></div>
-      <div class="marq-item"><img src="fittrack1.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="emart3.png" alt="E-Mart screenshot"></div>
-      <div class="marq-item"><img src="vitra3.png" alt="Vitra screenshot"></div>
-      <div class="marq-item"><img src="fittrack3.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="skillforg3.png" alt="SkillForge screenshot"></div>
-      <div class="marq-item"><img src="mhc2.png" alt="Make Heaven Crowded screenshot"></div>
-      <div class="marq-item"><img src="emart4.png" alt="E-Mart screenshot"></div>
-      <div class="marq-item"><img src="fittrack4.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="fittrack6.png" alt="Fitness Tracker screenshot"></div>
-      <div class="marq-item"><img src="vitra5.png" alt="Vitra screenshot"></div>
-      <div class="marq-item"><img src="mhc5.png" alt="Make Heaven Crowded screenshot"></div>
-      <div class="marq-item"><img src="vitra6.png" alt="Vitra screenshot"></div>
-      <div class="marq-item"><img src="fittrack8.png" alt="Fitness Tracker screenshot"></div>
+    <div class="marquee-track" role="list" aria-hidden="false">
+      <!-- mixed order of all provided screenshots — each item is now a framed card -->
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
+        <div class="overlay">Make Heaven Crowded</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="emart2.png" alt="E-Mart screenshot"></div>
+        <div class="overlay">E-Mart</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="shuttle1.png" alt="Shuttle Tracker screenshot"></div>
+        <div class="overlay">Shuttle Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="skillforg2.png" alt="SkillForge screenshot"></div>
+        <div class="overlay">SkillForge</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="emart1.png" alt="E-Mart screenshot"></div>
+        <div class="overlay">E-Mart</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra4.png" alt="Vitra screenshot"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack2.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="mhc1.png" alt="Make Heaven Crowded screenshot"></div>
+        <div class="overlay">Make Heaven Crowded</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="skillforg.png" alt="SkillForge screenshot"></div>
+        <div class="overlay">SkillForge</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="emart5.png" alt="E-Mart screenshot"></div>
+        <div class="overlay">E-Mart</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack7.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra2.png" alt="Vitra screenshot"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="shuttle2.png" alt="Shuttle Tracker screenshot"></div>
+        <div class="overlay">Shuttle Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="mhc4.png" alt="Make Heaven Crowded screenshot"></div>
+        <div class="overlay">Make Heaven Crowded</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack1.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="emart3.png" alt="E-Mart screenshot"></div>
+        <div class="overlay">E-Mart</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra3.png" alt="Vitra screenshot"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack3.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="skillforg3.png" alt="SkillForge screenshot"></div>
+        <div class="overlay">SkillForge</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="mhc2.png" alt="Make Heaven Crowded screenshot"></div>
+        <div class="overlay">Make Heaven Crowded</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="emart4.png" alt="E-Mart screenshot"></div>
+        <div class="overlay">E-Mart</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack4.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack6.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra5.png" alt="Vitra screenshot"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="mhc5.png" alt="Make Heaven Crowded screenshot"></div>
+        <div class="overlay">Make Heaven Crowded</div>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="vitra6.png" alt="Vitra screenshot"></div>
+        <div class="overlay">Vitra</div>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <div class="marq-image"><img src="fittrack8.png" alt="Fitness Tracker screenshot"></div>
+        <div class="overlay">Fitness Tracker</div>
+      </div>
     </div>
   </div>
 </section>
@@ -4120,6 +4390,41 @@ function initMarquee(){
   // subtle entrance for left features
   gsap.from('.hero-left .kicker, .hero-left .hi, .role-rotator, .lead, .cta-row .btn', {
     stagger: 0.08, y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.16
+  });
+})();
+</script>
+<script>
+(function(){
+  const track = document.querySelector('.marquee-track');
+  if(!track) return;
+  // apply alternating rotation classes
+  Array.from(track.children).forEach((card, i) => {
+    card.classList.add(i % 2 === 0 ? 'rotate-left' : 'rotate-right');
+    // improve keyboard focusability
+    card.setAttribute('tabindex', '0');
+  });
+
+  // basic drag-to-scroll for nicer touch/mouse interaction (optional)
+  const marquee = document.querySelector('.marquee--framed');
+  let isDown=false, startX=0, scrollLeft=0;
+  marquee.addEventListener('pointerdown', (e)=>{
+    isDown = true;
+    marquee.setPointerCapture(e.pointerId);
+    startX = e.clientX;
+    scrollLeft = marquee.scrollLeft;
+    marquee.style.cursor = 'grabbing';
+  }, {passive:false});
+  marquee.addEventListener('pointermove', (e)=>{
+    if(!isDown) return;
+    const dx = e.clientX - startX;
+    marquee.scrollLeft = scrollLeft - dx;
+  }, {passive:false});
+  ['pointerup','pointercancel','pointerleave'].forEach(ev => {
+    marquee.addEventListener(ev, (e)=>{
+      isDown=false;
+      marquee.style.cursor = 'auto';
+      try{ marquee.releasePointerCapture && marquee.releasePointerCapture(e.pointerId); }catch(e){}
+    });
   });
 })();
 </script>
