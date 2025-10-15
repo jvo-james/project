@@ -3228,24 +3228,38 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 (function(){
   const $ = (s, ctx=document) => (ctx||document).querySelector(s);
   const $$ = (s, ctx=document) => Array.from((ctx||document).querySelectorAll(s));
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const supportsWAAPI = typeof Element !== 'undefined' && typeof Element.prototype.animate === 'function';
-  function createToast(text, opts={}) {
-    const timeout = opts.timeout || 2200;
-    try {
-      const area = document.getElementById('toast-area') || document.body;
-      const t = document.createElement('div');
-      t.className = 'sj-toast';
-      t.setAttribute('role','status');
-      t.style.cssText = 'pointer-events:auto;margin-top:8px;background:rgba(6,10,26,0.92);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 12px 40px rgba(6,10,26,0.28);';
-      t.textContent = text;
-      area.appendChild(t);
-      setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(6px)'; t.style.transition='opacity .28s, transform .28s'; }, timeout);
-      setTimeout(()=>{ try{ t.remove(); }catch(e){} }, timeout+420);
-    } catch(e){}
+  const toastArea = document.getElementById('toast-area') || (function(){ const el=document.createElement('div'); el.id='toast-area'; el.style.position='fixed'; el.style.right='18px'; el.style.bottom='18px'; el.style.zIndex='99999'; el.style.pointerEvents='none'; document.body.appendChild(el); return el; })();
+  function createToast(text, opts){
+    opts = opts || {};
+    const timeout = typeof opts.timeout === 'number' ? opts.timeout : 3200;
+    const type = opts.type || 'default';
+    const t = document.createElement('div');
+    t.className = 'sj-toast';
+    t.setAttribute('role','status');
+    t.style.pointerEvents = 'auto';
+    t.style.marginTop = '10px';
+    t.style.padding = '12px 16px';
+    t.style.borderRadius = '12px';
+    t.style.fontWeight = '800';
+    t.style.color = '#fff';
+    t.style.boxShadow = '0 18px 50px rgba(6,10,26,0.24)';
+    t.style.border = '1px solid rgba(255,255,255,0.04)';
+    t.style.transition = 'transform .32s ease, opacity .32s ease';
+    t.style.opacity = '0';
+    t.style.transform = 'translateY(6px)';
+    if(type === 'success') t.style.background = 'linear-gradient(90deg,#10B981,#059669)';
+    else if(type === 'error') t.style.background = 'linear-gradient(90deg,#EF4444,#DC2626)';
+    else if(type === 'warn') t.style.background = 'linear-gradient(90deg,#F59E0B,#D97706)';
+    else t.style.background = 'linear-gradient(90deg,#3B82F6,#06B6D4)';
+    t.textContent = text;
+    toastArea.appendChild(t);
+    requestAnimationFrame(()=>{ t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
+    const hide = setTimeout(()=>{ t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; setTimeout(()=>{ try{ t.remove(); }catch(e){} }, 400); }, timeout);
+    t.addEventListener('click', ()=>{ clearTimeout(hide); t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; setTimeout(()=>{ try{ t.remove(); }catch(e){} }, 220); });
+    return t;
   }
   function initSmoothScroll(){
-    document.addEventListener('click', (ev) => {
+    document.addEventListener('click', (ev)=>{
       const a = ev.target.closest('a[href^="#"]');
       if(!a) return;
       const href = a.getAttribute('href');
@@ -3253,11 +3267,14 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       const target = document.querySelector(href);
       if(!target) return;
       ev.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
       setTimeout(()=>{ try{ target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }catch(e){} }, 520);
-    });
+      const menu = document.getElementById('primary-nav');
+      if(menu && menu.classList.contains('open')){ const btn = document.querySelector('.nav-toggle'); try{ btn && btn.click(); }catch(e){} }
+    }, {passive:true});
   }
   function initTiltCards(){
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(prefersReduced) return;
     const cards = $$('.tilt');
     if(!cards.length) return;
@@ -3289,11 +3306,11 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
     const btnWeb = $('#filter-web');
     const btnAi = $('#filter-ai');
     const grid = $('#projects-grid');
-    if(!grid || !btnAll) return;
+    if(!grid) return;
     const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
-    function normalize(s=''){ return s.toString().trim().toLowerCase(); }
+    function normalize(s){ return String(s||'').trim().toLowerCase(); }
     function cardMatches(card, filter){
-      if(!filter || filter==='all') return true;
+      if(!filter || filter === 'all') return true;
       const badge = card.querySelector('.badge');
       if(badge && normalize(badge.textContent).includes(filter)) return true;
       const tags = Array.from(card.querySelectorAll('.tag')).map(t=>normalize(t.textContent));
@@ -3303,15 +3320,10 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       return false;
     }
     function applyFilter(filter){
-      const cards = Array.from(grid.children).filter(n => n.matches && n.matches('.card, article'));
-      cards.forEach(card=>{
-        if(cardMatches(card, filter)){
-          card.style.display = '';
-          card.setAttribute('aria-hidden','false');
-        } else {
-          card.style.display = 'none';
-          card.setAttribute('aria-hidden','true');
-        }
+      Array.from(grid.children).forEach(card=>{
+        if(!card.matches || !card.matches('.card')) return;
+        if(cardMatches(card, filter)){ card.style.display = ''; card.setAttribute('aria-hidden','false'); }
+        else { card.style.display = 'none'; card.setAttribute('aria-hidden','true'); }
       });
     }
     buttons.forEach(btn=>{
@@ -3320,13 +3332,50 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
         btn.setAttribute('aria-pressed','true');
         const filter = (btn.id||'').replace('filter-','') || 'all';
         applyFilter(filter);
-        const first = grid.querySelector('.card:not([aria-hidden="true"])');
-        if(first){ try{ first.setAttribute('tabindex','-1'); first.focus({preventScroll:true}); }catch(e){} }
       });
     });
   }
+  function initMarquee(){
+    const marquee = document.getElementById('marquee');
+    if(!marquee) return;
+    const track = marquee.querySelector('.marquee-track');
+    if(!track) return;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced) { marquee.style.overflowX = 'auto'; return; }
+    function ensureClones(){
+      const containerW = marquee.getBoundingClientRect().width || window.innerWidth;
+      let tw = track.scrollWidth;
+      let tries = 0;
+      while(tw < containerW * 2 && tries < 8){
+        Array.from(track.children).slice(0).forEach(n => track.appendChild(n.cloneNode(true)));
+        tries++;
+        tw = track.scrollWidth;
+      }
+    }
+    let px = 0;
+    let last = performance.now();
+    let running = true;
+    const speed = Math.max(0.15, Math.min(1.2, window.innerWidth / 9000));
+    function step(now){
+      if(!running){ last = now; requestAnimationFrame(step); return; }
+      const dt = now - last;
+      last = now;
+      px -= speed * (dt / 16.6667);
+      const half = track.scrollWidth / 2 || 1;
+      if(Math.abs(px) >= half) px = 0;
+      track.style.transform = `translate3d(${px}px,0,0)`;
+      requestAnimationFrame(step);
+    }
+    ensureClones();
+    requestAnimationFrame(step);
+    marquee.addEventListener('mouseenter', ()=> running = false);
+    marquee.addEventListener('mouseleave', ()=> running = true);
+    marquee.addEventListener('focusin', ()=> running = false);
+    marquee.addEventListener('focusout', ()=> running = true);
+    window.addEventListener('resize', ()=>{ setTimeout(()=>{ px = 0; track.style.transform = ''; ensureClones(); }, 220); });
+  }
   function initCaseModal(){
-    const modal = $('#case-modal');
+    const modal = document.getElementById('case-modal');
     if(!modal) return;
     const panel = modal.querySelector('.modal-panel');
     const titleEl = $('#case-title', modal) || $('#case-title');
@@ -3337,18 +3386,15 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
     const problem = $('#case-problem-text');
     const approach = $('#case-approach-text');
     const highlightsList = $('#case-highlights-list');
-    const screenshotsEl = $('#case-screens-carousel');
+    const screenshotsHolder = $('#case-screens-carousel');
     const techEl = $('#case-tech');
     const metricsEl = $('#case-metrics');
     const linksEl = $('#case-links');
     const notesEl = $('#case-notes');
     let lastFocused = null;
+    let keyHandler = null;
     function readCaseJson(id){
-      try{
-        const script = document.getElementById(`case-${id}`);
-        if(!script) return null;
-        return JSON.parse(script.textContent);
-      }catch(e){ return null; }
+      try{ const script = document.getElementById('case-'+id); if(!script) return null; return JSON.parse(script.textContent); }catch(e){ return null; }
     }
     function clearModal(){
       titleEl.textContent = '';
@@ -3357,15 +3403,76 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       problem.textContent = '';
       approach.textContent = '';
       highlightsList.innerHTML = '';
-      screenshotsEl.innerHTML = '';
-      techEl.textContent = '';
+      screenshotsHolder.innerHTML = '';
+      techEl.innerHTML = '';
       metricsEl.textContent = '';
       linksEl.innerHTML = '';
       notesEl.textContent = '';
-      openExternal.removeAttribute('href');
+      if(openExternal) openExternal.removeAttribute('href');
+    }
+    function buildGallery(images){
+      const gallery = document.createElement('div');
+      gallery.className = 'case-gallery';
+      const viewer = document.createElement('div');
+      viewer.className = 'viewer';
+      const mainImg = document.createElement('img');
+      mainImg.alt = '';
+      mainImg.decoding = 'async';
+      mainImg.style.maxWidth = '100%';
+      mainImg.style.maxHeight = '100%';
+      mainImg.style.objectFit = 'contain';
+      viewer.appendChild(mainImg);
+      const prev = document.createElement('button');
+      prev.className = 'control prev';
+      prev.setAttribute('aria-label','Previous image');
+      prev.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      const next = document.createElement('button');
+      next.className = 'control next';
+      next.setAttribute('aria-label','Next image');
+      next.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      viewer.appendChild(prev);
+      viewer.appendChild(next);
+      const thumbs = document.createElement('div');
+      thumbs.className = 'thumbs';
+      images.forEach((src, i)=>{
+        const t = document.createElement('button');
+        t.className = 'thumb';
+        t.type = 'button';
+        const ti = document.createElement('img');
+        ti.src = src;
+        ti.alt = `Screenshot ${i+1}`;
+        ti.decoding = 'async';
+        t.appendChild(ti);
+        t.addEventListener('click', ()=> setIndex(i));
+        thumbs.appendChild(t);
+      });
+      gallery.appendChild(viewer);
+      gallery.appendChild(thumbs);
+      let idx = 0;
+      function setIndex(n){
+        idx = (n + images.length) % images.length;
+        mainImg.src = images[idx];
+        Array.from(thumbs.children).forEach((c,j)=> c.setAttribute('aria-current', j === idx ? 'true' : 'false'));
+        const active = thumbs.children[idx];
+        if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+      }
+      prev.addEventListener('click', ()=> setIndex(idx-1));
+      next.addEventListener('click', ()=> setIndex(idx+1));
+      function onKey(e){
+        if(modal.getAttribute('aria-hidden') === 'true') return;
+        if(e.key === 'ArrowLeft') prev.click();
+        if(e.key === 'ArrowRight') next.click();
+      }
+      window.addEventListener('keydown', onKey);
+      let startX = null, startY = null;
+      viewer.addEventListener('pointerdown', (ev)=>{ startX = ev.clientX; startY = ev.clientY; viewer.setPointerCapture && viewer.setPointerCapture(ev.pointerId); });
+      viewer.addEventListener('pointerup', (ev)=>{ if(startX === null) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; if(Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)){ if(dx < 0) next.click(); else prev.click(); } startX = null; startY = null; });
+      viewer.addEventListener('click', (ev)=>{ if(ev.target && ev.target.tagName && ev.target.tagName.toLowerCase() === 'img'){ const overlay = document.createElement('div'); overlay.className = 'case-zoom-overlay'; overlay.tabIndex = -1; const big = document.createElement('img'); big.src = images[idx]; big.alt = ''; overlay.appendChild(big); overlay.addEventListener('click', ()=> overlay.remove()); document.body.appendChild(overlay); overlay.focus(); } });
+      setIndex(0);
+      return { gallery, cleanup: ()=>{ window.removeEventListener('keydown', onKey); } };
     }
     function openModalWithCase(c){
-      if(!c){ createToast('Case data not found'); return; }
+      if(!c){ createToast('Case data missing', {type:'error'}); return; }
       lastFocused = document.activeElement;
       titleEl.textContent = c.title || 'Case study';
       subEl.textContent = c.subtitle || '';
@@ -3373,62 +3480,42 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       problem.textContent = c.problem || '';
       approach.textContent = c.approach || '';
       highlightsList.innerHTML = '';
-      (c.highlights||[]).forEach(h=>{
-        const li = document.createElement('li');
-        li.textContent = h;
-        highlightsList.appendChild(li);
-      });
-      screenshotsEl.innerHTML = '';
-      (c.screenshots||[]).forEach(src=>{
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = `${c.title} screenshot`;
-        img.style.cssText = 'width:160px;height:100px;object-fit:cover;border-radius:10px';
-        screenshotsEl.appendChild(img);
-      });
+      (c.highlights||[]).forEach(h=>{ const li = document.createElement('li'); li.textContent = h; highlightsList.appendChild(li); });
+      screenshotsHolder.innerHTML = '';
+      const images = (c.screenshots||[]).slice();
+      const built = images.length ? buildGallery(images) : null;
+      if(built) screenshotsHolder.appendChild(built.gallery);
       techEl.innerHTML = (c.tech||[]).map(t=>`<span class="badge-pill" style="margin-right:6px">${t}</span>`).join(' ');
       metricsEl.textContent = c.metrics || '';
       notesEl.textContent = c.notes || '';
       linksEl.innerHTML = '';
-      (c.links||[]).forEach(l=>{
-        const a = document.createElement('a');
-        a.href = l.href||'#';
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.className = 'link-btn';
-        a.style.marginRight = '8px';
-        a.textContent = l.label || 'Open';
-        linksEl.appendChild(a);
-      });
-      const live = (c.links||[]).find(x=>/live|staging|demo/i.test((x.label||'')));
-      const firstLink = (c.links||[])[0];
-      if(live) openExternal.href = live.href;
-      else if(firstLink) openExternal.href = firstLink.href;
-      else openExternal.removeAttribute('href');
+      (c.links||[]).forEach(l=>{ const a = document.createElement('a'); a.href = l.href||'#'; a.target = '_blank'; a.rel = 'noopener'; a.className = 'link-btn'; a.style.marginRight = '8px'; a.textContent = l.label || 'Open'; linksEl.appendChild(a); });
+      const live = (c.links||[]).find(x=>/live|staging|demo/i.test((x.label||''))) || (c.links||[])[0];
+      if(openExternal && live) openExternal.href = live.href;
+      else if(openExternal) openExternal.removeAttribute('href');
       modal.style.display = 'flex';
       modal.setAttribute('aria-hidden','false');
       document.documentElement.style.overflow = 'hidden';
       try{ closeBtn.focus(); }catch(e){}
-      function trap(e){
-        if(!panel.contains(e.target)){
-          e.stopPropagation();
-          panel.querySelector('button, a, [href], input, textarea')?.focus();
-        }
-      }
-      function onKey(e){ if(e.key === 'Escape'){ e.preventDefault(); closeModal(); } }
-      document.addEventListener('focus', trap, true);
-      document.addEventListener('keydown', onKey);
-      modal._trap = trap;
-      modal._onKey = onKey;
+      function trapFocus(e){ if(!panel.contains(e.target)){ e.stopPropagation(); panel.querySelector('button, a, [href], input, textarea')?.focus(); } }
+      keyHandler = function(e){ if(e.key === 'Escape'){ closeModal(); } };
+      document.addEventListener('focus', trapFocus, true);
+      document.addEventListener('keydown', keyHandler);
+      modal._trapFocus = trapFocus;
+      modal._built = built;
     }
     function closeModal(){
       modal.style.display = 'none';
       modal.setAttribute('aria-hidden','true');
       clearModal();
       document.documentElement.style.overflow = '';
-      document.removeEventListener('focus', modal._trap, true);
-      document.removeEventListener('keydown', modal._onKey);
+      if(modal._trapFocus) document.removeEventListener('focus', modal._trapFocus, true);
+      if(keyHandler) document.removeEventListener('keydown', keyHandler);
+      if(modal._built && modal._built.cleanup) modal._built.cleanup();
       if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      modal._trapFocus = null;
+      modal._built = null;
+      keyHandler = null;
     }
     modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
     closeBtn.addEventListener('click', closeModal);
@@ -3442,65 +3529,19 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       openModalWithCase(c);
     });
   }
-  function initMarquee(){
-    const marquee = document.getElementById('marquee');
-    if(!marquee) return;
-    const track = marquee.querySelector('.marquee-track');
-    if(!track) return;
-    const btnPause = document.getElementById('marq-pause');
-    const btnPlay = document.getElementById('marq-play');
-    if(prefersReduced || !supportsWAAPI){
-      marquee.style.overflowX = 'auto';
-      marquee.querySelectorAll('img').forEach(img=>img.setAttribute('loading','lazy'));
-      if(btnPause) btnPause.style.display = 'none';
-      if(btnPlay) btnPlay.style.display = 'none';
-      return;
-    }
-    const containerWidth = marquee.getBoundingClientRect().width || window.innerWidth;
-    const original = Array.from(track.children);
-    let clones = 0;
-    function totalWidth(){
-      return Array.from(track.children).reduce((s, el)=> s + (el.getBoundingClientRect().width || el.offsetWidth) + 16, 0);
-    }
-    while(totalWidth() < containerWidth * 2 && clones < 8){
-      original.forEach(el => track.appendChild(el.cloneNode(true)));
-      clones++;
-    }
-    const shift = totalWidth() / 2;
-    const pxPerSecond = 90;
-    const duration = Math.max(10000, Math.round((shift / pxPerSecond) * 1000));
-    const anim = track.animate([{ transform: 'translateX(0)' }, { transform: `translateX(-${shift}px)` }], { duration, iterations: Infinity, easing: 'linear' });
-    marquee._marqueeAnim = anim;
-    marquee.addEventListener('mouseenter', ()=>{ anim.pause(); if(btnPause) btnPause.setAttribute('aria-pressed','true'); if(btnPlay){ btnPlay.style.display='inline-flex'; btnPause.style.display='none'; } });
-    marquee.addEventListener('mouseleave', ()=>{ anim.play(); if(btnPause) btnPause.setAttribute('aria-pressed','false'); if(btnPlay){ btnPlay.style.display='none'; btnPause.style.display='inline-flex'; } });
-    marquee.addEventListener('focusin', ()=> anim.pause());
-    marquee.addEventListener('focusout', ()=> anim.play());
-    marquee.addEventListener('keydown', (e)=>{ if(e.code === 'Space' || e.key === ' '){ e.preventDefault(); const state = anim.playState; if(state === 'running') anim.pause(); else anim.play(); }});
-    if(btnPause && btnPlay){
-      btnPause.addEventListener('click', ()=>{ anim.pause(); btnPause.style.display = 'none'; btnPlay.style.display = 'inline-flex'; });
-      btnPlay.addEventListener('click', ()=>{ anim.play(); btnPlay.style.display = 'none'; btnPause.style.display = 'inline-flex'; });
-    }
-  }
   function initContactEnhanced(){
     const form = document.getElementById('contact-form-pro');
     if(!form) return;
-    const sendBtn = document.getElementById('cf-send');
-    const copyBtn = document.getElementById('cf-copy-email');
+    const sendBtn = form.querySelector('#cf-send');
+    const copyBtn = form.querySelector('#cf-copy-email');
     const statusEl = document.getElementById('cf-status');
     const resultEl = document.getElementById('cf-result');
-    function showStatus(text, isError=false){
-      if(statusEl){ statusEl.textContent = text; statusEl.style.color = isError ? 'var(--danger)' : 'var(--muted)'; }
-    }
-    function setSending(s){
-      if(!sendBtn) return;
-      if(s){ sendBtn.classList.add('sending'); sendBtn.disabled = true; sendBtn.setAttribute('aria-disabled','true'); }
-      else { sendBtn.classList.remove('sending'); sendBtn.disabled = false; sendBtn.removeAttribute('aria-disabled'); }
-    }
+    function setSending(v){ if(!sendBtn) return; if(v){ sendBtn.classList.add('sending'); sendBtn.disabled = true; sendBtn.setAttribute('aria-disabled','true'); } else { sendBtn.classList.remove('sending'); sendBtn.disabled = false; sendBtn.removeAttribute('aria-disabled'); } }
     function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
-    form.addEventListener('submit', (ev)=>{
-      ev.preventDefault();
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      statusEl.textContent = '';
       resultEl.textContent = '';
-      showStatus('');
       const name = (form.querySelector('#cf-name')?.value || '').trim();
       const email = (form.querySelector('#cf-email')?.value || '').trim();
       const phone = (form.querySelector('#cf-phone')?.value || '').trim();
@@ -3508,40 +3549,32 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
       const message = (form.querySelector('#cf-message')?.value || '').trim();
       const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
       if(honeypot) return;
-      if(!name){ createToast('Please enter your name'); showStatus('Please enter your name', true); return; }
-      if(!email && !phone){ createToast('Provide email or phone'); showStatus('Provide email or phone', true); return; }
-      if(email && !isValidEmail(email)){ createToast('Enter a valid email'); showStatus('Enter a valid email', true); return; }
-      if(!message || message.length < 8){ createToast('Tell me a bit about your project (8+ chars)'); showStatus('Please write a short message', true); return; }
-      const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
+      if(!name){ statusEl.textContent = 'Please enter your name'; createToast('Please enter your name', {type:'warn'}); return; }
+      if(!email && !phone){ statusEl.textContent = 'Provide an email or phone'; createToast('Provide email or phone', {type:'warn'}); return; }
+      if(email && !isValidEmail(email)){ statusEl.textContent = 'Enter a valid email'; createToast('Enter a valid email', {type:'warn'}); return; }
+      if(!message || message.length < 8){ statusEl.textContent = 'Write a short message (8+ chars)'; createToast('Write a short message (8+ chars)', {type:'warn'}); return; }
+      const payload = { name, email, phone, subject, message, ts: new Date().toISOString() };
+      const endpoint = form.dataset.endpoint && form.dataset.endpoint.trim() ? form.dataset.endpoint.trim() : null;
       setSending(true);
-      showStatus('Preparing message…');
-      setTimeout(()=>{
-        try{
-          const mailto = `mailto:${encodeURIComponent('senujames23@gmail.com')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          window.location.href = mailto;
-          setSending(false);
-          resultEl.textContent = 'Opened your mail client. If nothing opened, copy the email below.';
-          createToast('Opening email client…');
-          form.reset();
-        }catch(err){
-          setSending(false);
-          createToast('Unable to open mail client — copied to clipboard');
-          navigator.clipboard?.writeText(body).then(()=>{
-            resultEl.textContent = 'Message copied to clipboard — paste into your mail app.';
-          }).catch(()=>{
-            resultEl.textContent = 'Unable to copy automatically — please copy the message manually.';
-          });
+      statusEl.textContent = 'Sending…';
+      try{
+        if(endpoint){
+          const res = await fetch(endpoint, { method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(payload) });
+          if(res.ok){ statusEl.textContent = 'Message sent — thank you!'; resultEl.textContent = 'I received your message — I’ll reply shortly.'; createToast('Message sent', {type:'success'}); form.reset(); }
+          else { const txt = await res.text().catch(()=>res.statusText||'Error'); statusEl.textContent = 'Server error: message not sent'; createToast('Server error — try again later', {type:'error'}); }
+        } else {
+          try{ await navigator.clipboard.writeText(JSON.stringify(payload, null, 2)); createToast('No endpoint configured — message copied to clipboard', {type:'warn'}); resultEl.textContent = 'No endpoint configured — message copied to clipboard'; form.reset(); }
+          catch(e){ createToast('No endpoint and unable to copy — please configure an endpoint', {type:'error'}); statusEl.textContent = 'No endpoint configured'; }
         }
-      }, 700);
+      }catch(err){
+        statusEl.textContent = 'Network error — message not sent';
+        createToast('Network error', {type:'error'});
+      }finally{ setTimeout(()=> setSending(false), 320); }
     });
     if(copyBtn){
       copyBtn.addEventListener('click', async ()=>{
-        try{
-          await navigator.clipboard.writeText('senujames23@gmail.com');
-          createToast('Email copied to clipboard');
-        }catch(e){
-          createToast('Unable to copy — highlight and copy manually');
-        }
+        try{ await navigator.clipboard.writeText(document.getElementById('aside-email')?.textContent || 'senujames23@gmail.com'); createToast('Email copied to clipboard', {type:'success'}); }
+        catch(e){ createToast('Unable to copy — please copy manually', {type:'error'}); }
       });
     }
   }
@@ -3549,775 +3582,19 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
     $$('a[target="_blank"]').forEach(a=>{ if(!a.getAttribute('rel')) a.setAttribute('rel','noopener noreferrer'); });
     $$('a.repo, a.link-btn.repo').forEach(a=>{ if(!a.hasAttribute('aria-label')){ const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`; a.setAttribute('aria-label', label); }});
   }
-  function initHeroAnimations(){
-    try{
-      (function roleRotator(){
-        const roles = ['Product Designer','Frontend Engineer','AI Builder','Community-focused Creator'];
-        const el = document.getElementById('rotating-role');
-        if(!el || prefersReduced) return;
-        let i = 0;
-        const swap = ()=>{ el.textContent = roles[i % roles.length]; i++; };
-        swap();
-        const interval = setInterval(swap, 2400);
-        window.addEventListener('unload', ()=> clearInterval(interval));
-      })();
-      (function statCounters(){
-        const nodes = document.querySelectorAll('.metric-number[data-value]');
-        if(!nodes.length) return;
-        nodes.forEach(node=>{
-          const target = parseInt(node.dataset.value || '0', 10);
-          if(isNaN(target) || prefersReduced) return;
-          if(node.textContent.trim().match(/[a-zA-Z]/)) return;
-          let cur = 0;
-          const step = Math.max(1, Math.round(target / 40));
-          const t = setInterval(()=>{
-            cur += step;
-            if(cur >= target){
-              node.textContent = target.toLocaleString();
-              clearInterval(t);
-            } else {
-              node.textContent = cur.toLocaleString();
-            }
-          }, 28);
-        });
-      })();
-      if(!prefersReduced && typeof gsap !== 'undefined'){
-        try{
-          const tl = gsap.timeline({defaults:{duration:0.8, ease:'power2.out'}});
-          tl.from('.hero-left .kicker', {y:18, opacity:0}, 0.05)
-            .from('.hero-left .hi', {y:22, opacity:0}, 0.12)
-            .from('.hero-left .lead', {y:18, opacity:0}, 0.18)
-            .from('.hero-metrics li', {y:10, opacity:0, stagger:0.06}, 0.26)
-            .from('.cta-row .btn', {y:12, opacity:0, stagger:0.06}, 0.36);
-          gsap.fromTo('.float-badge.badge-1', {y:-8,x:8,opacity:0}, {y:-2,x:0,opacity:1,duration:0.9,ease:'power3.out'});
-          gsap.fromTo('.float-badge.badge-2', {y:8,x:-8,opacity:0}, {y:2,x:0,opacity:1,duration:0.9,ease:'power3.out',delay:0.12});
-          gsap.to('.float-badge', {y:"+=6", duration:3.6, yoyo:true, repeat:-1, ease:'sine.inOut', stagger:0.2});
-          gsap.to('.profile-ring', {rotation:6, transformOrigin:'50% 50%', duration:6, ease:'sine.inOut', yoyo:true, repeat:-1});
-        }catch(e){}
-      }
-      (function parallaxProfile(){
-        const wrap = document.querySelector('.profile-visual-wrap');
-        const photo = document.querySelector('.profile-photo');
-        if(!wrap || !photo || prefersReduced) return;
-        function onMove(e){
-          const r = wrap.getBoundingClientRect();
-          const px = (e.clientX - (r.left + r.width/2)) / (r.width/2);
-          const py = (e.clientY - (r.top + r.height/2)) / (r.height/2);
-          const rx = Math.max(-6, Math.min(6, py * 6));
-          const ry = Math.max(-8, Math.min(8, px * -6));
-          photo.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
-        }
-        function onLeave(){ photo.style.transform = ''; }
-        wrap.addEventListener('pointermove', onMove, {passive:true});
-        wrap.addEventListener('pointerleave', onLeave);
-      })();
-    }catch(e){}
-  }
-  (function initHeroExtra(){
-    try{
-      const hero = document.getElementById('home-hero');
-      if(!hero) return;
-      if(!prefersReduced){
-        (function randomizeStickers(){
-          const stickers = Array.from(hero.querySelectorAll('.sticker'));
-          stickers.forEach((s,i)=>{
-            const rx = (Math.random()-0.5)*6;
-            const tx = (Math.random()-0.5)*4;
-            const ty = (Math.random()-0.5)*6;
-            s.style.transform = `translate(${tx}px, ${ty}px) rotate(${rx}deg)`;
-            s.style.opacity = '0';
-            setTimeout(()=>{ s.style.transition = 'transform .6s cubic-bezier(.2,.85,.2,1), opacity .6s'; s.style.opacity = '1'; }, 220 + i*120);
-          });
-        })();
-        (function stickersParallax(){
-          const wrap = hero.querySelector('.profile-visual-wrap');
-          if(!wrap) return;
-          wrap.addEventListener('pointermove', (ev)=>{
-            const rect = wrap.getBoundingClientRect();
-            const cx = rect.left + rect.width/2;
-            const cy = rect.top + rect.height/2;
-            const px = (ev.clientX - cx) / (rect.width/2);
-            const py = (ev.clientY - cy) / (rect.height/2);
-            const stickers = wrap.querySelectorAll('.sticker');
-            stickers.forEach((st, idx)=>{
-              const depth = (idx % 3) + 1;
-              const tx = px * (6 / depth);
-              const ty = py * (10 / depth);
-              st.style.transform = `translate(${tx}px, ${ty}px) rotate(${(idx%2?4:-4)}deg)`;
-            });
-          }, {passive:true});
-          wrap.addEventListener('pointerleave', ()=>{ wrap.querySelectorAll('.sticker').forEach((st)=>{ st.style.transform = ''; }); });
-        })();
-        (function wireConfetti(){
-          const cvBtn = document.getElementById('download-cv') || document.querySelector('.btn-primary');
-          if(!cvBtn) return;
-          cvBtn.addEventListener('click', (ev)=>{
-            spawnConfetti(ev.clientX || window.innerWidth/2, ev.clientY || window.innerHeight/2, {count:28});
-          });
-        })();
-      }
-      function spawnConfetti(x=window.innerWidth/2, y=window.innerHeight/2, opts={}) {
-        const count = opts.count || 20;
-        const container = document.body;
-        const colors = ['#7C3AED','#06B6D4','#3B82F6','#F59E0B','#10B981','#EF4444'];
-        for(let i=0;i<count;i++){
-          const el = document.createElement('div');
-          el.className = 'hero-confetti-piece';
-          const w = 8 + Math.round(Math.random()*8);
-          const h = 10 + Math.round(Math.random()*12);
-          el.style.width = w + 'px';
-          el.style.height = h + 'px';
-          el.style.left = (x - (w/2)) + 'px';
-          el.style.top = (y - (h/2)) + 'px';
-          el.style.background = colors[Math.floor(Math.random()*colors.length)];
-          el.style.opacity = String(0.95 - Math.random()*0.2);
-          container.appendChild(el);
-          const angle = (Math.PI * (Math.random()*1.4 - 0.7));
-          const distance = 120 + Math.random()*220;
-          const dx = Math.cos(angle) * distance;
-          const dy = Math.sin(angle) * distance - (40 + Math.random()*40);
-          const rot = (Math.random()*720 - 360);
-          const delay = 10 + Math.random()*80;
-          el.style.transition = `transform 900ms cubic-bezier(.22,.9,.3,1) ${delay}ms, opacity 600ms linear ${delay+380}ms`;
-          requestAnimationFrame(()=>{ el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${0.92 + Math.random()*0.26})`; el.style.opacity='0'; });
-          setTimeout(()=>{ try{ el.remove(); }catch(e){} }, 1600 + delay);
-        }
-      }
-      (function cvFocusAffordance(){
-        const cv = document.getElementById('download-cv');
-        if(!cv) return;
-        cv.addEventListener('focus', ()=>{ cv.style.boxShadow = '0 18px 60px rgba(59,130,246,0.12)'; });
-        cv.addEventListener('blur', ()=>{ cv.style.boxShadow = ''; });
-      })();
-    }catch(e){}
-  })();
   function boot(){
-    try{
-      initSmoothScroll();
-      initTiltCards();
-      initProjectFilters();
-      initCaseModal();
-      initMarquee();
-      initHeroAnimations();
-      initContactEnhanced();
-      initMisc();
-      createToast('Interactive scripts ready', {timeout:1200});
-    }catch(err){}
+    initSmoothScroll();
+    initTiltCards();
+    initProjectFilters();
+    initCaseModal();
+    initMarquee();
+    initContactEnhanced();
+    initMisc();
   }
-  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
-<script>
- 
-(function(){
-const btn = document.querySelector('.nav-toggle');
-const menu = document.getElementById('primary-nav');
-if(!btn || !menu) return;
 
-
- let backdrop = document.querySelector('.nav-backdrop');
-if(!backdrop){ backdrop = document.createElement('div'); backdrop.className = 'nav-backdrop'; document.body.appendChild(backdrop); }
-
-
-function open(){
-btn.setAttribute('aria-expanded','true');
-btn.setAttribute('aria-label','Close main menu');
-menu.classList.add('open');
-backdrop.classList.add('visible');
- document.documentElement.style.overflow = 'hidden';
- const first = menu.querySelector('a, button, [href]');
-if(first) first.focus();
-}
-function close(){
-btn.setAttribute('aria-expanded','false');
-btn.setAttribute('aria-label','Open main menu');
-menu.classList.remove('open');
-backdrop.classList.remove('visible');
-document.documentElement.style.overflow = '';
-btn.focus();
-}
-
-
-btn.addEventListener('click', (e)=>{
-const expanded = btn.getAttribute('aria-expanded') === 'true';
-if(expanded) close(); else open();
-});
-
-
-backdrop.addEventListener('click', close);
-
-
- document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && menu.classList.contains('open')) close(); });
-
-
- menu.addEventListener('click', (e)=>{ const a = e.target.closest('a[href]'); if(!a) return; if(a.getAttribute('href') && a.getAttribute('href').startsWith('#')){ close(); }});
-
-
- let mql = window.matchMedia('(min-width: 761px)');
-function handleMqChange(ev){ if(ev.matches){  
-menu.classList.remove('open'); backdrop.classList.remove('visible'); btn.setAttribute('aria-expanded','false'); document.documentElement.style.overflow = '';
-}
-}
-try{ mql.addEventListener('change', handleMqChange); }catch(e){ mql.addListener(handleMqChange); }
-})();
-</script>
-  <script>
-(function(){
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const wrap = document.querySelector('.profile-visual-wrap');
-  const main = document.querySelector('.profile-photo');
-  const sec = document.querySelector('.secondary-photo');
-  if(!wrap || !main || !sec) return;
-  if(!prefersReduced){
-    try{
-      if(typeof gsap !== 'undefined'){
-        gsap.fromTo(sec, {y:8, opacity:0, scale:0.96}, {y:0, opacity:1, scale:1, duration:0.9, ease:'power3.out'});
-        gsap.to(sec, {y:'+=6', duration:3.6, yoyo:true, repeat:-1, ease:'sine.inOut'});
-      } else {
-        sec.style.opacity = '1';
-      }
-    }catch(e){}
-    function onMove(e){
-      const r = wrap.getBoundingClientRect();
-      const px = ((e.clientX - (r.left + r.width/2)) / (r.width/2));
-      const py = ((e.clientY - (r.top + r.height/2)) / (r.height/2));
-      const rx = Math.max(-6, Math.min(6, py * 4));
-      const ry = Math.max(-8, Math.min(8, px * -4));
-      main.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(1.02)`;
-      const sx = Math.max(-10, Math.min(10, px * -12));
-      const sy = Math.max(-8, Math.min(8, py * -10));
-      sec.style.transform = `translate(${sx}px, ${sy}px) rotate(${px*6}deg)`;
-    }
-    function onLeave(){ main.style.transform=''; sec.style.transform=''; }
-    wrap.addEventListener('pointermove', onMove, {passive:true});
-    wrap.addEventListener('pointerleave', onLeave);
-    wrap.addEventListener('pointercancel', onLeave);
-  }
-})();
-</script>
-<script>
-(function(){
-  const marquee = document.getElementById('marquee');
-  if(!marquee) return;
-  const track = marquee.querySelector('.marquee-track');
-  if(!track) return;
-
-  // assign small random rotations and micro offsets for each card for natural feel
-  Array.from(track.children).forEach((item, i) => {
-    const r = (Math.random() * 10) - 5; // -5deg to +5deg
-    item.style.transform = `rotate(${r}deg)`;
-    // store base rotation to keep hover transforms additive
-    item.dataset.baseRot = String(r);
-  });
-
-  // duplicate items until the track width comfortably exceeds container width (for seamless loop)
-  function ensureClones() {
-    const containerW = marquee.getBoundingClientRect().width;
-    // measure track children width
-    let tw = track.scrollWidth;
-    let clones = 0;
-    // clone until track width >= 2 * container width
-    while(tw < containerW * 2 && clones < 8) {
-      Array.from(track.children).slice(0).forEach(node=>{
-        const clone = node.cloneNode(true);
-        track.appendChild(clone);
-      });
-      clones++;
-      tw = track.scrollWidth;
-    }
-  }
-
-  // smooth pixel-based loop using requestAnimationFrame
-  let px = 0;
-  const speed = Math.max(0.25, Math.min(1.25, window.innerWidth / 8000)); // tuning by viewport
-  let running = true;
-  let last = performance.now();
-
-  function step(now) {
-    if(!running){ last = now; requestAnimationFrame(step); return; }
-    const dt = now - last;
-    last = now;
-    px -= speed * (dt / 16.6667); // normalize to 60fps
-    // reset once we've scrolled half the content (we duplicated earlier)
-    const half = track.scrollWidth / 2;
-    if(Math.abs(px) >= half) px = 0;
-    track.style.transform = `translate3d(${px}px, 0, 0)`;
-    requestAnimationFrame(step);
-  }
-
-  // pause on hover or focus for accessibility
-  marquee.addEventListener('mouseenter', ()=> running = false);
-  marquee.addEventListener('mouseleave', ()=> running = true);
-  marquee.addEventListener('focusin', ()=> running = false);
-  marquee.addEventListener('focusout', ()=> running = true);
-
-  // ensure clones after images load (so widths are correct)
-  function whenImagesLoaded(root, cb){
-    const imgs = Array.from(root.querySelectorAll('img'));
-    if(imgs.length === 0) return cb();
-    let count = imgs.length;
-    imgs.forEach(img=>{
-      if(img.complete) { if(--count === 0) cb(); }
-      else img.addEventListener('load', ()=> { if(--count === 0) cb(); });
-      img.addEventListener('error', ()=> { if(--count === 0) cb(); });
-    });
-  }
-
-  whenImagesLoaded(track, ()=> {
-    ensureClones();
-    // small staggered subtle transform to clones too
-    Array.from(track.children).forEach((item, idx)=>{
-      const base = parseFloat(item.dataset.baseRot || 0);
-      const jitter = (Math.random()*4 - 2);
-      item.style.transform = `rotate(${(base + jitter).toFixed(2)}deg)`;
-    });
-    requestAnimationFrame(step);
-  });
-
-  // handle resize: clear clones and rebuild if necessary (keeps marquee coherent on dev/responsive)
-  let resizeTimer;
-  window.addEventListener('resize', ()=> {
-    clearTimeout(resizeTimer);
-    running = false;
-    resizeTimer = setTimeout(()=>{
-      // reset transform & clones; keep only original set (first N items)
-      const originals = [];
-      // assume your original set fits within first 40 items; find unique srcs from beginning
-      for(let i=0;i<track.children.length;i++){
-        const src = track.children[i].querySelector('img')?.getAttribute('src');
-        if(!src) continue;
-        if(!originals.some(s=>s === src)) originals.push(src);
-        if(originals.length >= 40) break;
-      }
-      // rebuild track
-      track.innerHTML = '';
-      originals.forEach(src => {
-        const wrap = document.createElement('div');
-        wrap.className = 'marq-item';
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        wrap.appendChild(img);
-        track.appendChild(wrap);
-      });
-      // re-run initial setup
-      Array.from(track.children).forEach((item, i) => {
-        const r = (Math.random() * 10) - 5;
-        item.style.transform = `rotate(${r}deg)`;
-        item.dataset.baseRot = String(r);
-      });
-      whenImagesLoaded(track, ()=> { ensureClones(); running = true; });
-    }, 260);
-  });
-})();
-</script>
-<script>
-(function(){
-  const modal = document.getElementById('case-modal');
-  if(!modal) return;
-  const screensContainer = document.getElementById('case-screens-carousel');
-  if(!screensContainer) return;
-
-  function buildGallery(images) {
-    const gallery = document.createElement('div');
-    gallery.className = 'case-gallery';
-    const viewer = document.createElement('div');
-    viewer.className = 'viewer';
-    const mainImg = document.createElement('img');
-    mainImg.alt = '';
-    mainImg.setAttribute('decoding','async');
-    viewer.appendChild(mainImg);
-
-    const prev = document.createElement('button');
-    prev.className = 'control prev';
-    prev.setAttribute('aria-label','Previous image');
-    prev.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    const next = document.createElement('button');
-    next.className = 'control next';
-    next.setAttribute('aria-label','Next image');
-    next.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    viewer.appendChild(prev);
-    viewer.appendChild(next);
-
-    const thumbs = document.createElement('div');
-    thumbs.className = 'thumbs';
-
-    images.forEach((src, i) => {
-      const t = document.createElement('button');
-      t.className = 'thumb';
-      t.type = 'button';
-      const ti = document.createElement('img');
-      ti.src = src;
-      ti.alt = `Screenshot ${i+1}`;
-      t.appendChild(ti);
-      t.addEventListener('click', ()=> setIndex(i));
-      thumbs.appendChild(t);
-    });
-
-    gallery.appendChild(viewer);
-    gallery.appendChild(thumbs);
-
-    let idx = 0;
-    function setIndex(n) {
-      idx = (n + images.length) % images.length;
-      mainImg.src = images[idx];
-      Array.from(thumbs.children).forEach((c, j)=> c.setAttribute('aria-current', j === idx ? 'true' : 'false'));
-      // keep the active thumb visible
-      const active = thumbs.children[idx];
-      if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-    }
-
-    prev.addEventListener('click', ()=> setIndex(idx-1));
-    next.addEventListener('click', ()=> setIndex(idx+1));
-
-    // keyboard nav
-    function onKey(e){
-      if(modal.getAttribute('aria-hidden') === 'true') return;
-      if(e.key === 'ArrowLeft') prev.click();
-      if(e.key === 'ArrowRight') next.click();
-      if(e.key === 'Escape') { /* let existing handlers close */ }
-    }
-    window.addEventListener('keydown', onKey);
-
-    // pointer swipe for viewer
-    let startX = null;
-    let startY = null;
-    viewer.addEventListener('pointerdown', (ev)=>{ startX = ev.clientX; startY = ev.clientY; viewer.setPointerCapture && viewer.setPointerCapture(ev.pointerId); });
-    viewer.addEventListener('pointerup', (ev)=>{ if(startX === null) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; if(Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) { if(dx < 0) next.click(); else prev.click(); } startX = null; startY = null; });
-
-    // zoom / lightbox
-    viewer.addEventListener('click', (ev)=>{
-      if(ev.target.tagName.toLowerCase() !== 'img') return;
-      const overlay = document.createElement('div');
-      overlay.className = 'case-zoom-overlay';
-      const big = document.createElement('img');
-      big.src = images[idx];
-      overlay.appendChild(big);
-      overlay.tabIndex = -1;
-      overlay.addEventListener('click', ()=> overlay.remove());
-      document.body.appendChild(overlay);
-      overlay.focus();
-    });
-
-    setIndex(0);
-
-    return gallery;
-  }
-
-  function enhanceModal() {
-    const container = document.getElementById('case-screens-carousel');
-    if(!container) return;
-    const imgs = Array.from(container.querySelectorAll('img')).map(i => i.getAttribute('src')).filter(Boolean);
-    if(!imgs.length) return;
-    container.innerHTML = '';
-    const gallery = buildGallery(imgs);
-    container.appendChild(gallery);
-  }
-
-  const mo = new MutationObserver(()=> {
-    const visible = modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex';
-    if(visible) {
-      setTimeout(()=> { enhanceModal(); }, 80);
-    }
-  });
-  mo.observe(modal, { attributes: true, attributeFilter: ['aria-hidden', 'style'] });
-
-  // initial enhancement if modal already open
-  if(modal.getAttribute('aria-hidden') === 'false' || modal.style.display === 'flex') {
-    setTimeout(()=> enhanceModal(), 40);
-  }
-})();
-</script>
-<script>
-
-(function(){
-  const form = document.getElementById('contact-form-pro');
-  if(!form) return;
-  const sendBtn = document.getElementById('cf-send');
-  const copyBtn = document.getElementById('cf-copy-email');
-  const statusEl = document.getElementById('cf-status');
-  const resultEl = document.getElementById('cf-result');
-  const endpoint = form.dataset.endpoint && form.dataset.endpoint.trim() ? form.dataset.endpoint.trim() : null;
-
-  function toast(msg, timeout=1800){
-    try{
-      const t = document.createElement('div');
-      t.className = 'sj-toast';
-      t.style.cssText = 'pointer-events:auto;margin-top:8px;background:rgba(6,10,26,0.92);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700;box-shadow:0 12px 40px rgba(6,10,26,0.28);';
-      t.textContent = msg;
-      document.getElementById('toast-area').appendChild(t);
-      setTimeout(()=> { t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; t.style.transition='opacity .28s, transform .28s'; }, timeout);
-      setTimeout(()=> t.remove(), timeout + 420);
-    }catch(e){}
-  }
-
-  function setSending(on){
-    if(!sendBtn) return;
-    if(on){
-      sendBtn.classList.add('sending');
-      sendBtn.disabled = true;
-      sendBtn.setAttribute('aria-disabled','true');
-    } else {
-      sendBtn.classList.remove('sending');
-      sendBtn.disabled = false;
-      sendBtn.removeAttribute('aria-disabled');
-    }
-  }
-
-  function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
-
-  form.addEventListener('submit', async function evHandler(e){
-    e.preventDefault();
-    resultEl.textContent = '';
-    statusEl.textContent = '';
-    const name = (form.querySelector('#cf-name')?.value || '').trim();
-    const email = (form.querySelector('#cf-email')?.value || '').trim();
-    const phone = (form.querySelector('#cf-phone')?.value || '').trim();
-    const subject = (form.querySelector('#cf-subject')?.value || 'Portfolio message').trim();
-    const message = (form.querySelector('#cf-message')?.value || '').trim();
-    const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
-    if(honeypot) return; // bot caught
-
-    if(!name){ statusEl.textContent = 'Please enter your name'; toast('Please enter your name'); return; }
-    if(!email && !phone){ statusEl.textContent = 'Provide an email or phone'; toast('Provide email or phone'); return; }
-    if(email && !isValidEmail(email)){ statusEl.textContent = 'Enter a valid email'; toast('Enter a valid email'); return; }
-    if(!message || message.length < 8){ statusEl.textContent = 'Write a short message (8+ chars)'; toast('Write a short message'); return; }
-
-    const payload = {
-      name, email, phone, subject, message, timestamp: new Date().toISOString()
-    };
-
-    setSending(true);
-    statusEl.textContent = 'Sending…';
-
-    try{
-      if(endpoint){
-        // POST JSON to endpoint (expects JSON/CORS)
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if(res.ok){
-          statusEl.textContent = 'Message sent — thank you!';
-          resultEl.textContent = 'I received your message — I’ll reply shortly.';
-          toast('Message sent');
-          form.reset();
-        } else {
-          const txt = await res.text().catch(()=>res.statusText||'Error');
-          statusEl.textContent = 'Server error: ' + (res.status || '') + ' — falling back to email.';
-          toast('Server error — opening mail client');
-          // fallback to mailto
-          const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
-          window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        }
-      } else {
-        // fallback behavior: open mail client with pre-filled body
-        const body = [`Name: ${name}`, `Email: ${email || '—'}`, `Phone: ${phone || '—'}`, '', message].join('\n');
-        window.location.href = `mailto:senujames23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        resultEl.textContent = 'Opened mail client — if it did not open, copy the message below.';
-        toast('Opening email client');
-        form.reset();
-      }
-    }catch(err){
-      console.error(err);
-      statusEl.textContent = 'Network error — message not sent';
-      toast('Network error');
-    }finally{
-      setTimeout(()=> setSending(false), 350);
-    }
-  });
-
-  if(copyBtn){
-    copyBtn.addEventListener('click', async ()=> {
-      try{
-        await navigator.clipboard.writeText('senujames23@gmail.com');
-        toast('Email copied to clipboard');
-      }catch(e){
-        toast('Unable to copy — please copy manually');
-      }
-    });
-  }
-})();
-</script>
-<script>
-  (function(){
-  const wrap = document.querySelector('.profile-visual-wrap');
-  if(!wrap) return;
-  const stickers = Array.from(wrap.querySelectorAll('.sticker'));
-  if(!stickers.length) return;
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function place(){
-    const rect = wrap.getBoundingClientRect();
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const minDim = Math.min(rect.width, rect.height);
-    const radius = Math.max(64, Math.floor(minDim / 2) - 46);
-    const offsetAngles = [ -0.6, -0.2, 0.3, 0.85, 1.6 ];
-    const count = stickers.length;
-    stickers.forEach((el, i) => {
-      const a = (Math.PI * 2) * (i / count) - Math.PI / 2;
-      const jitter = (i < offsetAngles.length) ? offsetAngles[i] : (Math.random() * 0.18 - 0.09);
-      const angle = a + jitter;
-      const sRect = el.getBoundingClientRect();
-      const sx = Math.round(cx + Math.cos(angle) * radius);
-      const sy = Math.round(cy + Math.sin(angle) * radius);
-      el.style.left = (sx - (sRect.width / 2)) + 'px';
-      el.style.top = (sy - (sRect.height / 2)) + 'px';
-      const rot = (i % 2 === 0) ? -6 + Math.round(Math.random() * 6) : 6 + Math.round(Math.random() * 6);
-      el.style.transform = 'translate(-50%,-50%) rotate(' + rot + 'deg)';
-      el.style.opacity = '1';
-    });
-  }
-  if(prefersReduced){
-    stickers.forEach(s => { s.style.opacity = '1'; s.style.transition = 'none'; });
-    place();
-    return;
-  }
-  stickers.forEach(s => { s.style.opacity = '0'; });
-  window.requestAnimationFrame(()=> {
-    place();
-    stickers.forEach((s, idx) => {
-      s.style.transitionDelay = (idx * 60) + 'ms';
-      s.style.transform += ' scale(1)';
-      s.style.opacity = '1';
-    });
-  });
-  let t;
-  window.addEventListener('resize', ()=> {
-    clearTimeout(t);
-    t = setTimeout(()=> place(), 120);
-  });
-  wrap.addEventListener('pointermove', (ev)=> {
-    const r = wrap.getBoundingClientRect();
-    const px = (ev.clientX - r.left) / r.width - 0.5;
-    const py = (ev.clientY - r.top) / r.height - 0.5;
-    stickers.forEach((s, i) => {
-      const depth = 1 + (i % 3) * 0.6;
-      const tx = px * (12 / depth);
-      const ty = py * (18 / depth);
-      s.style.transform = s.style.transform.replace(/translate\([^)]+\)/,'translate(-50%,-50%)') + ' translate(' + Math.round(tx) + 'px,' + Math.round(ty) + 'px)';
-    });
-  }, { passive: true });
-  wrap.addEventListener('pointerleave', ()=> {
-    place();
-  });
-})();
-
-</script>
-  <script>
-(function(){
-  const hero = document.getElementById('home-hero');
-  if(!hero) return;
-  function markInView(){
-    const r = hero.getBoundingClientRect();
-    if(r.top < window.innerHeight * 0.7 && r.bottom > 0){
-      hero.classList.add('in-view');
-      window.removeEventListener('scroll', markInView);
-    }
-  }
-  markInView();
-  window.addEventListener('scroll', markInView, {passive:true});
-  if(typeof gsap !== 'undefined'){
-    gsap.from('.hero-left-visual .hero-asset', {y:18, opacity:0, duration:0.9, ease:'power3.out', delay:0.18});
-    gsap.from('.hero-left-visual .feature-pill', {y:10, opacity:0, stagger:0.08, duration:0.64, ease:'power2.out', delay:0.28});
-    gsap.from('.secondary-on-top', {y:10, opacity:0, duration:0.8, ease:'power3.out', delay:0.36});
-  }
-})();
-</script>
-<!-- Gallery prev/next safety handler: place after your modal/gallery code -->
-<script>
-(function(){
-  // Delegated handler: if any .case-gallery .control button is clicked, find the nearest gallery and simulate prev/next
-  document.addEventListener('click', function(e){
-    const btn = e.target.closest('.case-gallery .control, .case-gallery .control *');
-    if(!btn) return;
-    // normalize to button
-    const control = btn.classList ? (btn.classList.contains('control') ? btn : btn.closest('.control')) : null;
-    if(!control) return;
-    // find gallery container with thumbs + viewer
-    const gallery = control.closest('.case-gallery');
-    if(!gallery) return;
-    const viewer = gallery.querySelector('.viewer');
-    const thumbs = gallery.querySelector('.thumbs');
-    // find index of current thumb
-    const thumbsList = Array.from(thumbs ? thumbs.children : []);
-    let idx = thumbsList.findIndex(t => t.getAttribute('aria-current') === 'true');
-    if(idx < 0) idx = 0;
-    if(control.classList.contains('prev')) idx = (idx - 1 + thumbsList.length) % Math.max(1, thumbsList.length);
-    else idx = (idx + 1) % Math.max(1, thumbsList.length);
-    // simulate click on thumb for consistent behavior (focusing, scrolling into view, etc.)
-    const targetThumb = thumbsList[idx];
-    if(targetThumb){
-      targetThumb.click();
-      // also ensure main viewer image updates if gallery code expects different interface
-      const main = gallery.querySelector('.viewer img');
-      if(main && targetThumb.querySelector('img')) main.src = targetThumb.querySelector('img').src;
-    }
-  }, false);
-})();
-</script>
-<script>
-/**
- * createToast(text, opts)
- * opts: { timeout: number (ms), variant: 'info'|'success'|'warn' }
- */
-window.createToast = (function(){
-  const area = document.getElementById('toast-area') || (function(){
-    const d = document.createElement('div');
-    d.id = 'toast-area';
-    d.style.position = 'fixed';
-    d.style.right = '18px';
-    d.style.bottom = '18px';
-    d.style.zIndex = '99999';
-    d.style.pointerEvents = 'none';
-    d.style.display = 'flex';
-    d.style.flexDirection = 'column';
-    d.style.gap = '8px';
-    document.body.appendChild(d);
-    return d;
-  })();
-
-  return function createToast(text, opts = {}) {
-    try {
-      const timeout = typeof opts.timeout === 'number' ? opts.timeout : 2600;
-      const variant = opts.variant || 'info';
-      const t = document.createElement('div');
-      t.className = `sj-toast ${variant}`;
-      t.setAttribute('role','status');
-      t.setAttribute('aria-live','polite');
-      t.style.pointerEvents = 'auto';
-      // icon
-      const icon = document.createElement('span');
-      icon.style.display = 'inline-flex';
-      icon.style.alignItems = 'center';
-      icon.style.justifyContent = 'center';
-      icon.style.width = '28px';
-      icon.style.height = '28px';
-      icon.style.borderRadius = '8px';
-      icon.style.background = 'rgba(255,255,255,0.08)';
-      icon.style.flex = '0 0 auto';
-      icon.style.fontSize = '14px';
-      icon.style.lineHeight = '1';
-      if(variant === 'success') icon.innerHTML = '✓';
-      else if(variant === 'warn') icon.innerHTML = '!';
-      else icon.innerHTML = 'ℹ';
-      const textNode = document.createElement('div');
-      textNode.textContent = text;
-      t.appendChild(icon);
-      t.appendChild(textNode);
-      area.appendChild(t);
-      // trigger show
-      requestAnimationFrame(()=> t.classList.add('show'));
-      // remove after timeout
-      setTimeout(()=>{
-        t.classList.remove('show');
-        setTimeout(()=> { try{ t.remove(); }catch(e){} }, 340);
-      }, timeout);
-      return t;
-    } catch(e){ console.error(e); }
-  };
-})();
-</script>
+  
 </body>
 </html>
