@@ -3100,7 +3100,7 @@ button[aria-pressed="true"] {
 <a href="#about"><i class="fa-solid fa-user"></i>&nbsp;About</a>
 <a href="#timeline"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
 <a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
-<a class="cta" href="#resume"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+<a class="cta" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
 </div>
 </nav>
   </div>
@@ -3112,7 +3112,7 @@ button[aria-pressed="true"] {
     <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Fullstack</div>
    
 
-    <h2 id="hero-heading" class="hi">Hiii👋 I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
+    <h2 id="hero-heading" class="hi">Hi👋 I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
         <span class="role-static">I’m a</span>
@@ -3131,7 +3131,7 @@ button[aria-pressed="true"] {
     <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
       <a class="btn btn-primary" href="#projects" id="projects-cta"><i class="fa-solid fa-briefcase"></i>&nbsp;Selected work</a>
       <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Contact</a>
-      <a class="btn btn-outline" href="#resume" id="download-cv"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
+      <a class="btn btn-outline" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
     </div>
 
   </div>
@@ -3649,7 +3649,7 @@ button[aria-pressed="true"] {
         </div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-        <a class="link-btn resume" href="#resume"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download resume</a>
+        <a class="link-btn resume" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download resume</a>
         <a class="social-pill link-btn" href="https://github.com/jvo-james" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;GitHub</a>
        <a class="social-pill link-btn" href="https://wa.me/233594121246?text=Hi%20Senu%2C%20I%27d%20like%20to%20talk%20about%20a%20project" target="_blank" rel="noopener noreferrer">
   <i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp
@@ -4488,6 +4488,51 @@ function initMarquee(){
   });
 })();
 </script>
+<script>
+document.getElementById('download-resume-btn').addEventListener('click', async function (e) {
+  e.preventDefault();
+  const url = this.href;
 
+  // 1) Open a blank tab first to avoid popup blockers
+  const newTab = window.open('', '_blank', 'noopener,noreferrer');
+
+  try {
+    // 2) Fetch the PDF as a blob
+    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+    if (!res.ok) throw new Error('Network error: ' + res.status);
+
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    // 3a) Trigger download
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    // Suggested filename for the downloaded file:
+    a.download = 'Senu_James_Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    // 3b) Open the PDF in the tab we created
+    if (newTab) {
+      newTab.location = blobUrl;
+    } else {
+      // if newTab blocked, open another (may get blocked)
+      window.open(blobUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    // 4) revoke after some time
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+  } catch (err) {
+    console.error('Resume download/open failed', err);
+    // fallback: navigate to the file (browser handles it)
+    if (newTab) {
+      newTab.location = url;
+    } else {
+      window.location.href = url;
+    }
+  }
+});
+</script>
 </body>
 </html>
