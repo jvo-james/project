@@ -583,8 +583,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 </style>
  <style>
-/* ====== HERO: focused styles (drop into your stylesheet AFTER existing rules) ====== */
-/* Use higher specificity so these override earlier rules where needed */
+ 
 #home-hero.hero {
   margin: 96px auto 0;
   max-width: var(--maxw);
@@ -601,11 +600,9 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   overflow: visible;
 }
 
-/* Left column content */
-.hero-left { padding-right: 6px; z-index: 3; }
+ .hero-left { padding-right: 6px; z-index: 3; }
 
-/* Kicker / pill */
-.hero-left .kicker {
+ .hero-left .kicker {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -620,8 +617,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   box-shadow: 0 6px 20px rgba(16,24,40,0.03);
 }
 
-/* Heading */
-.hero-left .hi {
+ .hero-left .hi {
   margin: 8px 0 6px;
   font-size: clamp(28px, 4.4vw, 40px);
   line-height: 1.04;
@@ -638,8 +634,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   display: inline-block;
 }
 
-/* description under name */
-.hero-left .desc-line {
+ .hero-left .desc-line {
   display: block;
   font-size: 15px;
   color: var(--muted-2);
@@ -647,8 +642,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   font-weight: 600;
 }
 
-/* role rotator */
-.role-rotator {
+ .role-rotator {
   display: inline-flex;
   gap: 10px;
   align-items: baseline;
@@ -669,8 +663,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 .role-rotator .role-cursor { opacity: .7; font-weight:900; margin-left:4px; color:var(--accent-3); }
 
-/* Lead paragraph */
-.hero-left .lead {
+ .hero-left .lead {
   margin-top: 12px;
   color: var(--muted);
   font-size: 15px;
@@ -679,8 +672,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   line-height: 1.6;
 }
 
-/* CTAs */
-.cta-row { margin-top: 18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+ .cta-row { margin-top: 18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
 .cta-row .btn {
   display:inline-flex;
   align-items:center;
@@ -696,8 +688,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .cta-row .btn:focus { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
 .cta-row .btn:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(16,24,40,0.08); }
 
-/* Primary CTA stronger */
-.cta-row .btn.btn-primary {
+ .cta-row .btn.btn-primary {
   background: linear-gradient(90deg, var(--accent), var(--accent-3));
   color: #fff;
   border: none;
@@ -706,13 +697,11 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 .cta-row .btn.btn-primary:active { transform: translateY(-2px) scale(.998); }
 
-/* Ribbon pills */
-.mini-ribbon { margin-top: 16px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+ .mini-ribbon { margin-top: 16px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
 .ribbon-pill { padding:8px 12px; border-radius:999px; font-weight:800; font-size:13px; color:var(--text);
   background: linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 8px 26px rgba(16,24,40,0.04); }
 
-/* metrics */
-.hero-metrics { display:flex; gap:12px; margin-top:18px; align-items:center; z-index:2; padding:0; list-style:none; }
+ .hero-metrics { display:flex; gap:12px; margin-top:18px; align-items:center; z-index:2; padding:0; list-style:none; }
 .hero-metrics li {
   display:flex;
   flex-direction:column;
@@ -728,8 +717,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .hero-metrics .metric-number { font-size:18px; font-weight:900; color:var(--text); letter-spacing: -0.02em; }
 .hero-metrics .metric-label { font-size:12px; color:var(--muted); font-weight:700; opacity:.95; }
 
-/* ===== PROFILE CARD & VISUAL ===== */
-.profile-card {
+ .profile-card {
   padding: 18px;
   border-radius: 18px;
   display:flex;
@@ -745,8 +733,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   max-width: 380px;
 }
 
-/* visual wrap: centralised, with perspective for parallax */
-.profile-visual-wrap {
+ .profile-visual-wrap {
   width: 280px;
   height: 280px;
   display:grid;
@@ -756,8 +743,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   perspective: 1200px;
 }
 
-/* decorative ring */
-.profile-visual-wrap .profile-ring {
+ .profile-visual-wrap .profile-ring {
   position:absolute;
   left:50%;
   top:50%;
@@ -768,8 +754,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   transition: transform 600ms var(--ease-soft);
 }
 
-/* photo circle with crisp border + subtle gradient ring */
-.profile-photo {
+ .profile-photo {
   width: 188px;
   height: 188px;
   border-radius: 50%;
@@ -783,46 +768,36 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   transition: transform .32s var(--ease-soft), box-shadow .32s var(--ease-soft);
   will-change:transform;
 }
-/* inner img tuning */
-.profile-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease-soft); }
+ .profile-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease-soft); }
 
-/* hover affordance around profile card */
-.profile-card:hover .profile-photo { transform: translateY(-6px) scale(1.01); box-shadow: 0 48px 130px rgba(6,10,26,0.16); }
+ .profile-card:hover .profile-photo { transform: translateY(-6px) scale(1.01); box-shadow: 0 48px 130px rgba(6,10,26,0.16); }
 .profile-card:hover .profile-photo img { transform: scale(1.02); }
 
-/* profile meta */
-.profile-meta { width:100%; text-align:center; padding: 0 6px; }
+ .profile-meta { width:100%; text-align:center; padding: 0 6px; }
 .profile-meta .meta-title { font-size:18px; font-weight:900; color:var(--text); }
 .profile-meta .meta-sub { color:var(--muted); font-size:13px; margin-top:6px; font-weight:700; }
 
-/* quick skills */
-.profile-quick { display:flex; gap:10px; margin-top:8px; justify-content:center; z-index:2; flex-wrap:wrap; }
+ .profile-quick { display:flex; gap:10px; margin-top:8px; justify-content:center; z-index:2; flex-wrap:wrap; }
 
-/* skill chips */
-.skill { display:inline-flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px;
+ .skill { display:inline-flex; gap:8px; align-items:center; padding:8px 10px; border-radius:10px;
   background:#fff; border:1px solid rgba(10,20,30,0.04); box-shadow: 0 10px 30px rgba(16,24,40,0.03); color:var(--muted); font-weight:800; }
 
-/* float badges around card */
-.float-badge { position:absolute; display:flex; gap:10px; align-items:center; background: linear-gradient(180deg,#fff,#fbfdff);
+ .float-badge { position:absolute; display:flex; gap:10px; align-items:center; background: linear-gradient(180deg,#fff,#fbfdff);
   border-radius:12px; padding:8px 12px; border:1px solid rgba(10,20,30,0.04); box-shadow: 0 16px 48px rgba(16,24,40,0.06);
   transform-origin:center; z-index:4; pointer-events:none; transition: transform .42s cubic-bezier(.2,.9,.2,1), opacity .42s; }
 
-/* badge icon circle */
-.float-badge .badge-icon {
+ .float-badge .badge-icon {
   width:36px; height:36px; display:grid; place-items:center; border-radius:10px;
   background: linear-gradient(180deg,#fff,#f7fbff);
   border:1px solid rgba(10,20,30,0.04); color:var(--accent-2); font-size:16px;
 }
 
-/* badge text */
-.float-badge .badge-text { font-weight:800; font-size:13px; color:var(--text); }
+ .float-badge .badge-text { font-weight:800; font-size:13px; color:var(--text); }
 
-/* positions for badges (slightly pulled out and rotated for personality) */
-.float-badge.badge-1 { right: 6px; top: 12px; transform: translate(6px, -6px) rotate(-4deg); }
+ .float-badge.badge-1 { right: 6px; top: 12px; transform: translate(6px, -6px) rotate(-4deg); }
 .float-badge.badge-2 { left: 10px; bottom: 12px; transform: translate(-6px, 6px) rotate(4deg); }
 
-/* ===== STICKERS — improved, smaller, crisp, legible ===== */
-.profile-visual-wrap .sticker {
+ .profile-visual-wrap .sticker {
   position: absolute;
   width: 62px;
   height: 62px;
@@ -840,24 +815,19 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   opacity: 1;
 }
 
-/* inner layout: emoji + short label */
-.sticker .sticker-inner { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center; font-weight:900; color:var(--text); font-size:12px; padding:4px; }
+ .sticker .sticker-inner { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center; font-weight:900; color:var(--text); font-size:12px; padding:4px; }
 
-/* emoji larger */
-.sticker .sticker-emoji { font-size:22px; line-height:1; transform: translateY(-2px); }
+ .sticker .sticker-emoji { font-size:22px; line-height:1; transform: translateY(-2px); }
 
-/* small text under emoji */
-.sticker .sticker-text { font-size:11px; letter-spacing: 0.03em; color:var(--muted); font-weight:800; text-transform:uppercase; }
+ .sticker .sticker-text { font-size:11px; letter-spacing: 0.03em; color:var(--muted); font-weight:800; text-transform:uppercase; }
 
-/* individual sticker starting offsets (keeps layout predictable but nice) */
-.sticker.s-1 { right: -6px; top: -6px; transform: translate(6px, -6px) rotate(-6deg) scale(1); }
+ .sticker.s-1 { right: -6px; top: -6px; transform: translate(6px, -6px) rotate(-6deg) scale(1); }
 .sticker.s-2 { left: -12px; top: 10px; transform: translate(-6px, 6px) rotate(-4deg) scale(.98); }
 .sticker.s-3 { left: 12px; bottom: -10px; transform: translate(-4px, 6px) rotate(4deg) scale(.96); }
 .sticker.s-4 { right: 16px; bottom: 12px; transform: translate(4px, 2px) rotate(-3deg) scale(.98); }
 .sticker.s-5 { left: 50%; top: -20px; transform: translateX(-50%) scale(.94); }
 
-/* subtle float animation (reduced for motion-preference) */
-@keyframes stickerFloatSubtle {
+ @keyframes stickerFloatSubtle {
   0% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-6px) rotate(4deg); }
   100% { transform: translateY(0) rotate(0deg); }
@@ -912,8 +882,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     box-sizing: border-box !important;
   }
 
-  /* ensure all top-level sections fill the container and align with header edges */
-  section, .projects, .marquee-wrap, footer.site, #about {
+   section, .projects, .marquee-wrap, footer.site, #about {
     max-width: none !important;
     width: 100% !important;
     margin-left: 0 !important;
@@ -998,7 +967,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .logo { width:40px; height:40px; border-radius:10px; font-size:16px; }
 
    .nav-menu { display:flex; gap:8px; align-items:center; }
-  .nav-toggle { display:inline-flex; } /* show hamburger */
+  .nav-toggle { display:inline-flex; }  
   .nav-menu a { font-size:15px; padding:10px 12px; }
    .nav-menu.open { padding-top:72px; }
 
@@ -1012,8 +981,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
   .hero-left { order: 2; padding-right:0; }
 
-  /* Heading & lead scaling */
-  .hero-left .hi { font-size: 22px; line-height: 1.06; margin-bottom: 6px; }
+   .hero-left .hi { font-size: 22px; line-height: 1.06; margin-bottom: 6px; }
   .hero-left .hi strong { display:inline-block; font-size:22px; }
   .hero-left .desc-line { font-size: 14px; margin-top:6px; color:var(--muted); display:block; }
 
@@ -1065,16 +1033,14 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
    .float-badge { position: static; display:inline-flex; margin-left:8px; box-shadow:none; border:none; background:transparent; padding:0; gap:8px; align-items:center; }
   .float-badge .badge-icon { width:34px; height:34px; border-radius:8px; }
 
-  /* hide ornamental clutter on mobile */
-  .hero .ornament,
+   .hero .ornament,
   .hero-confetti-piece,
   .profile-ring,
   .sticker,
   .marq-item img[loading="eager"] { display:none !important; }
   .sticker { display:none !important; }
 
-  /* ===== Projects: single column, touch-friendly ====== */
-  .projects-grid { grid-template-columns: 1fr; gap:14px; margin-top:14px; }
+   .projects-grid { grid-template-columns: 1fr; gap:14px; margin-top:14px; }
   .card { border-radius:12px; overflow:hidden; box-shadow: 0 18px 60px rgba(16,24,40,0.06); }
   .card-visual { height:160px; }
   .card-body { padding:12px; }
@@ -1084,20 +1050,16 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .card-foot { gap:8px; flex-wrap:wrap; }
   .link-btn, .badge { font-size:13px; min-height:44px; }
 
-  /* increase hit area for small icons & links */
-  .link-btn, .btn, a { min-height:44px; padding-left:14px; padding-right:14px; }
+   .link-btn, .btn, a { min-height:44px; padding-left:14px; padding-right:14px; }
 
-  /* ===== Timeline: vertical stacking ====== */
-  .timeline-items { display:block; overflow:visible; padding:0; gap:12px; }
+   .timeline-items { display:block; overflow:visible; padding:0; gap:12px; }
   .timeline-card { width:100%; margin-bottom:10px; min-width:unset; padding:12px; border-radius:12px; }
 
-  /* ===== Marquee: collapse into grid / scroller ====== */
-  .marquee { overflow:auto; padding:8px 4px; }
+   .marquee { overflow:auto; padding:8px 4px; }
   .marquee-track { display:flex; gap:12px; }
   .marq-item { width:160px; height:92px; flex:0 0 auto; border-radius:10px; overflow:hidden; }
 
-  /* ===== Contact form: full width stacked, accessible ====== */
-  .contact-wrap { display:block; gap:12px; margin-top:22px; }
+   .contact-wrap { display:block; gap:12px; margin-top:22px; }
   .contact-card { width:100%; padding:14px; border-radius:12px; }
   .contact-pro-aside { width:100%; padding:12px; border-radius:12px; margin-top:12px; }
   .form-row { display:block; gap:10px; }
@@ -1107,16 +1069,13 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .form-actions { display:flex; flex-direction:column; gap:10px; }
   .form-actions .btn, .form-actions .btn-primary { width:100%; justify-content:center; }
 
-  /* copy button and extra links */
-  .contact-pro-aside .link-btn, .contact-card .link-btn { width:100%; justify-content:flex-start; gap:8px; }
+   .contact-pro-aside .link-btn, .contact-card .link-btn { width:100%; justify-content:flex-start; gap:8px; }
 
-  /* icons and inline elements: slightly smaller */
-  .icon-circle { width:40px; height:40px; font-size:16px; }
+   .icon-circle { width:40px; height:40px; font-size:16px; }
   .icon-inline { left:10px; top:12px; font-size:14px; }
   .label { left:44px; top:14px; font-size:13px; }
 
-  /* ===== Modal: full-screen friendly ====== */
-  #case-modal { padding: 12px; }
+   #case-modal { padding: 12px; }
   .modal-panel {
     width: 100%;
     max-width: 100%;
@@ -1129,25 +1088,20 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   #case-body #case-aside { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
   #case-body #case-main { width:100%; }
 
-  /* ===== Footer: compact ====== */
-  footer.site { padding: 18px 6px; margin-top:20px; }
+   footer.site { padding: 18px 6px; margin-top:20px; }
   footer.site strong { font-size:15px; }
   footer.site div a { padding:8px; min-width:44px; display:inline-grid; place-items:center; }
 
-  /* ===== Accessibility & touch ====== */
-  a, button, .link-btn, .btn { -webkit-tap-highlight-color: rgba(0,0,0,0.06); touch-action: manipulation; }
+   a, button, .link-btn, .btn { -webkit-tap-highlight-color: rgba(0,0,0,0.06); touch-action: manipulation; }
   a:focus, button:focus { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px; border-radius:8px; }
 
-  /* reduce animations on mobile for battery & motion */
-  @media (prefers-reduced-motion: reduce) {
+   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
   }
 }
 
-/* Landscape special-case for phones (iPhone 11 landscape ~ 896x414) */
-@media (max-height: 450px) and (max-width: 900px) {
-  /* Slightly different layout when device is turned landscape: keep hero readable */
-  #home-hero.hero { grid-template-columns: 1fr 260px; padding: 10px; gap:10px; }
+ @media (max-height: 450px) and (max-width: 900px) {
+   #home-hero.hero { grid-template-columns: 1fr 260px; padding: 10px; gap:10px; }
   .profile-card { padding:10px; }
   .profile-visual-wrap { width: 110px; height:110px; }
   .profile-photo { width: 96px; height:96px; border-radius:14px; }
@@ -1156,18 +1110,14 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .hero-metrics { overflow:auto; -webkit-overflow-scrolling:touch; }
 }
 
-/* Extra safety: ensure images don't overflow in any mobile container */
-@media (max-width: 430px) {
+ @media (max-width: 430px) {
   img, video { max-width: 100%; height: auto; display:block; }
   .card-visual img, .marq-item img { width:100%; height:100%; object-fit:cover; }
 }
 </style>
-<!-- Paste this last in your CSS -->
-<style>
-/* Quick mobile fix tuned for iPhone 11 portrait (≤ 430px) */
-@media (max-width: 430px) {
-  /* Make header visually above everything and prevent overlap */
-  .site-header {
+ <style>
+ @media (max-width: 430px) {
+   .site-header {
     position: fixed !important;
     top: 8px !important;
     left: 8px !important;
@@ -1180,15 +1130,13 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     box-shadow: 0 18px 60px rgba(16,24,40,0.08) !important;
   }
 
-  /* Ensure main content starts below the fixed header */
-  #main-content.container,
+   #main-content.container,
   main.container,
   .container {
-    padding-top: 84px !important; /* header height + gap */
+    padding-top: 84px !important; 
   }
 
-  /* HERO: single column, compact spacing */
-  #home-hero.hero {
+   #home-hero.hero {
     grid-template-columns: 1fr !important;
     padding: 14px !important;
     margin-top: 12px !important;
@@ -1197,8 +1145,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     overflow: visible !important;
   }
 
-  /* Keep profile-card in the normal document flow (no overlap) */
-  .profile-card {
+   .profile-card {
     position: relative !important;
     order: 0 !important;
     display: flex !important;
@@ -1215,8 +1162,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     z-index: 2 !important;
   }
 
-  /* Smaller avatar — square for compactness */
-  .profile-visual-wrap {
+   .profile-visual-wrap {
     width: 84px !important;
     height: 84px !important;
     flex: 0 0 84px !important;
@@ -1233,8 +1179,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   }
   .profile-photo img { object-position: center top !important; }
 
-  /* Remove / hide visual clutter that causes overlap */
-  .profile-ring,
+   .profile-ring,
   .float-badge,
   .profile-visual-wrap .sticker,
   .hero-confetti-piece,
@@ -1244,8 +1189,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     pointer-events: none !important;
   }
 
-  /* Make hero text flow under profile neatly */
-  .hero-left {
+   .hero-left {
     order: 1 !important;
     padding-right: 0 !important;
     margin: 0 !important;
@@ -1253,12 +1197,10 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .hero-left .hi { font-size: 22px !important; line-height: 1.05 !important; margin-bottom: 6px !important; }
   .hero-left .desc-line, .hero-left .lead { font-size: 14px !important; max-width: 100% !important; }
 
-  /* CTAs: stacked & full width */
-  .cta-row { display:flex !important; flex-direction:column !important; gap:10px !important; margin-top:12px !important; }
+   .cta-row { display:flex !important; flex-direction:column !important; gap:10px !important; margin-top:12px !important; }
   .cta-row .btn { width:100% !important; min-height:44px !important; justify-content:center !important; padding:10px 12px !important; }
 
-  /* Metrics become a horizontal scroller */
-  .hero-metrics {
+   .hero-metrics {
     display: flex !important;
     gap: 10px !important;
     overflow-x: auto !important;
@@ -1272,8 +1214,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
     padding: 10px 12px !important;
   }
 
-  /* ABOUT: force single column and stack the aside below content */
-  #about > .about-grid,
+   #about > .about-grid,
   #about > div[style*="display:grid"] {
     grid-template-columns: 1fr !important;
     gap: 14px !important;
@@ -1290,26 +1231,21 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   }
   #about > div { order: 1 !important; }
 
-  /* Tighten about copy for narrow screens */
-  #about p { font-size: 15px !important; line-height: 1.6 !important; max-width: 100% !important; }
+   #about p { font-size: 15px !important; line-height: 1.6 !important; max-width: 100% !important; }
 
-  /* Projects, timeline & marquee compactness */
-  .projects-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+   .projects-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
   .timeline-items { display: block !important; overflow: visible !important; padding: 0 !important; }
   .marquee { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
 
-  /* Contact: stack fields full width */
-  .contact-wrap { display: block !important; gap: 12px !important; }
+   .contact-wrap { display: block !important; gap: 12px !important; }
   .contact-card, .contact-pro-aside { width: 100% !important; padding: 12px !important; }
   .form-row { display: block !important; }
   .field input, .field textarea { padding-left: 44px !important; font-size: 15px !important; border-radius: 12px !important; }
 
-  /* Make sure modals are full-screen friendly */
-  #case-modal { padding: 12px !important; }
+   #case-modal { padding: 12px !important; }
   .modal-panel { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; max-height: calc(100vh - 36px) !important; overflow: auto !important; }
 
-  /* Reduce heavy shadows & animations on mobile for clarity */
-  .card, .profile-card, .contact-card { box-shadow: 0 12px 40px rgba(16,24,40,0.05) !important; }
+   .card, .profile-card, .contact-card { box-shadow: 0 12px 40px rgba(16,24,40,0.05) !important; }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
   }
@@ -1388,16 +1324,14 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   #home-hero .cta-row .btn { width: 100% !important; justify-content: center !important; }
 }
 
-/* ====== 2) Force profile pills (Accessible UIs / Product-led) on the SAME LINE ====== */
-
-/* Make profile-quick a single-row, non-wrapping horizontal list */
+ 
 .profile-quick {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   gap: 10px !important;
   white-space: nowrap !important;
-  overflow-x: auto !important;           /* allow horizontal scroll if forced narrow */
+  overflow-x: auto !important;           
   -webkit-overflow-scrolling: touch !important;
   flex-wrap: nowrap !important;
   padding-bottom: 4px !important;
@@ -1406,36 +1340,28 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   z-index: 140 !important;
 }
 
-/* Each pill: compact, single-line, don't allow wrap */
-.profile-quick .skill {
+ .profile-quick .skill {
   white-space: nowrap !important;
   flex: 0 0 auto !important;
   padding: 8px 12px !important;
   border-radius: 10px !important;
   font-weight: 800 !important;
-  font-size: clamp(12px, 1.6vw, 13px) !important;  /* scale slightly but keep readable */
+  font-size: clamp(12px, 1.6vw, 13px) !important;   
   min-width: 0 !important;
 }
 
-/* If the pills have icons, keep icon and text aligned */
-.profile-quick .skill i { margin-right: 8px !important; font-size: 14px !important; }
-
-/* Hide native scrollbars while retaining scrollability (visual only) */
-.profile-quick::-webkit-scrollbar { height: 6px; width: 6px; display: none; }
+ .profile-quick .skill i { margin-right: 8px !important; font-size: 14px !important; }
+ .profile-quick::-webkit-scrollbar { height: 6px; width: 6px; display: none; }
 .profile-quick { scrollbar-width: none; -ms-overflow-style: none; }
 
-/* On very small screens slightly reduce pill padding to keep both visible */
-@media (max-width: 360px) {
+ @media (max-width: 360px) {
   .profile-quick .skill { padding: 6px 8px !important; font-size: 12px !important; }
-  /* fall back to horizontal scroll (never wrap) */
-  .profile-quick { justify-content: flex-start !important; }
+   .profile-quick { justify-content: flex-start !important; }
 }
 
-/* Extra safety: prevent pills from being hidden by overflow of profile card */
-.profile-card { overflow: visible !important; }
+ .profile-card { overflow: visible !important; }
 
-/* ===== small visual polish: make pills and CTAs look consistent ===== */
-.profile-quick .skill { background: linear-gradient(180deg,#fff,#fbfdff) !important; border:1px solid rgba(10,20,30,0.04) !important; box-shadow: 0 10px 30px rgba(16,24,40,0.04) !important; color: var(--muted) !important; }
+ .profile-quick .skill { background: linear-gradient(180deg,#fff,#fbfdff) !important; border:1px solid rgba(10,20,30,0.04) !important; box-shadow: 0 10px 30px rgba(16,24,40,0.04) !important; color: var(--muted) !important; }
 #home-hero.hero {
   margin: 96px auto 0;
   max-width: var(--maxw);
@@ -1511,8 +1437,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .sticker, .profile-ring, .profile-photo, .secondary-photo { animation: none !important; transition: none !important; }
 }
 
-  /* Marquee: large framed cards with subtle tilt (inspired by your screenshot) */
-.marquee {
+ .marquee {
   position: relative;
   overflow: hidden;
   padding: 32px 0;
@@ -1528,10 +1453,9 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   transform: translate3d(0,0,0);
 }
 
-/* card framing */
-.marq-item {
+ .marq-item {
   flex: 0 0 auto;
-  width: clamp(200px, 28vw, 420px);   /* responsive width */
+  width: clamp(200px, 28vw, 420px);    
   height: clamp(120px, 17.5vw, 260px);
   display: grid;
   place-items: center;
@@ -1574,8 +1498,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
  .marquee { -ms-overflow-style: none; scrollbar-width: none; }
 .marquee::-webkit-scrollbar { display: none; }
-/* Case modal: premium visual treatment */
-#case-modal { display: none; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(6,10,26,0.56), rgba(6,10,26,0.56)); backdrop-filter: blur(6px); }
+ #case-modal { display: none; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(6,10,26,0.56), rgba(6,10,26,0.56)); backdrop-filter: blur(6px); }
 #case-modal[aria-hidden="false"] { display: flex; }
 
 .modal-panel {
@@ -1591,8 +1514,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   grid-template-rows: auto 1fr;
 }
 
-/* header inside modal */
-.modal-panel > div[style*="display:flex"] {
+ .modal-panel > div[style*="display:flex"] {
   background: linear-gradient(180deg,#fff,#fbfeff);
   border-bottom: 1px solid rgba(10,20,30,0.04);
   padding: 16px 20px;
@@ -1602,8 +1524,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .modal-panel #case-title { font-size:20px; font-weight:900; letter-spacing:-0.02em; }
 .modal-panel #case-sub { color:var(--muted); font-weight:700; }
 
-/* body grid */
-#case-body {
+ #case-body {
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 22px;
@@ -1612,15 +1533,12 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   overflow: auto;
 }
 
-/* main content */
-#case-main { display:flex; flex-direction:column; gap:18px; }
+ #case-main { display:flex; flex-direction:column; gap:18px; }
 
-/* premium section headings */
-#case-main h4 { margin:0; font-size:16px; font-weight:900; color:var(--text); font-family:var(--font-display); }
+ #case-main h4 { margin:0; font-size:16px; font-weight:900; color:var(--text); font-family:var(--font-display); }
 #case-main p, #case-main ul { color:var(--muted); margin: 6px 0 0; font-size:15px; line-height:1.6; font-weight:600; }
 
-/* screenshot gallery shell */
-.case-gallery {
+ .case-gallery {
   display:flex;
   flex-direction:column;
   gap:12px;
@@ -1646,8 +1564,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   cursor: zoom-in;
 }
 
-/* prev/next controls */
-.case-gallery .control {
+ .case-gallery .control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -1667,8 +1584,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .case-gallery .control.prev { left:16px; }
 .case-gallery .control.next { right:16px; }
 
-/* thumbnail strip */
-.case-gallery .thumbs {
+ .case-gallery .thumbs {
   display:flex;
   gap:10px;
   overflow:auto;
@@ -1692,23 +1608,18 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 .case-gallery .thumb img { width:100%; height:100%; object-fit:cover; display:block; transform-origin:center center; }
 .case-gallery .thumb[aria-current="true"] { border-color: rgba(124,58,237,0.16); transform: translateY(-6px) scale(1.02); }
 
-/* badges and meta in aside */
-#case-aside { display:flex; flex-direction:column; gap:14px; align-self:start; }
+ #case-aside { display:flex; flex-direction:column; gap:14px; align-self:start; }
 #case-aside strong { display:block; font-weight:900; margin-bottom:6px; color:var(--text); }
 #case-aside .badge-list { display:flex; gap:8px; flex-wrap:wrap; }
 .badge-pill { padding:8px 10px; border-radius:999px; background: linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 10px 30px rgba(16,24,40,0.04); font-weight:900; font-size:13px; color:var(--muted); }
 
-/* metrics styling */
-#case-metrics { color:var(--muted); font-weight:700; }
+ #case-metrics { color:var(--muted); font-weight:700; }
 
-/* links group */
-#case-links a { display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow:0 10px 30px rgba(16,24,40,0.04); font-weight:900; color:var(--text); text-decoration:none; }
+ #case-links a { display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow:0 10px 30px rgba(16,24,40,0.04); font-weight:900; color:var(--text); text-decoration:none; }
 
-/* notes */
-#case-notes { color:var(--muted); font-size:14px; }
+ #case-notes { color:var(--muted); font-size:14px; }
 
-/* zoom overlay */
-.case-zoom-overlay {
+ .case-zoom-overlay {
   position: fixed;
   inset: 0;
   background: rgba(6,10,26,0.86);
@@ -1719,8 +1630,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 .case-zoom-overlay img { max-width: 92vw; max-height: 92vh; object-fit:contain; border-radius:10px; box-shadow:0 40px 140px rgba(6,10,26,0.6); }
 
-/* responsive */
-@media (max-width: 980px) {
+ @media (max-width: 980px) {
   #case-body { grid-template-columns: 1fr 320px; padding:18px; }
   .case-gallery .viewer { min-height: 260px; }
 }
@@ -1796,8 +1706,7 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 
    .profile-ring, .sticker, .float-badge, .hero-confetti-piece, .hero .ornament { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
-  /* HERO text column */
-  .hero-left { order: 1 !important; padding-right: 0 !important; }
+   .hero-left { order: 1 !important; padding-right: 0 !important; }
   .hero-left .hi {
     font-size: 22px !important;
     line-height: 1.05 !important;
@@ -1807,17 +1716,14 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .hero-left .desc-line,
   .hero-left .lead { font-size: 14px !important; max-width: 100% !important; color: var(--muted) !important; }
 
-  /* CTAs: stacked full-width, larger tap targets */
-  .cta-row { flex-direction: column !important; gap: 10px !important; margin-top: 12px !important; align-items: stretch !important; }
+   .cta-row { flex-direction: column !important; gap: 10px !important; margin-top: 12px !important; align-items: stretch !important; }
   .cta-row .btn { width: 100% !important; min-height: 48px !important; padding: 12px 14px !important; justify-content: center !important; }
   .cta-row .btn.btn-primary { font-size: 15px !important; }
 
-  /* ribbon pills: collapse to horizontal scroller */
-  .mini-ribbon { gap: 8px !important; margin-top: 12px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 6px !important; }
+   .mini-ribbon { gap: 8px !important; margin-top: 12px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 6px !important; }
   .ribbon-pill { flex: 0 0 auto !important; min-width: 0 !important; white-space: nowrap !important; }
 
-  /* metrics become touch-scroller for readability */
-  .hero-metrics {
+   .hero-metrics {
     display: flex !important;
     gap: 10px !important;
     overflow-x: auto !important;
@@ -1827,46 +1733,37 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   }
   .hero-metrics li { flex: 0 0 auto !important; min-width: 140px !important; padding: 10px 12px !important; }
 
-  /* profile meta text stack & left align */
-  .profile-meta { text-align: left !important; padding: 0 !important; }
+   .profile-meta { text-align: left !important; padding: 0 !important; }
   .profile-meta .meta-title { font-size: 16px !important; }
   .profile-meta .meta-sub { font-size: 12px !important; color: var(--muted) !important; }
 
-  /* skills -> single-row scrollable chips */
-  .profile-quick { justify-content: flex-start !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; gap: 8px !important; padding-bottom: 6px !important; }
+   .profile-quick { justify-content: flex-start !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; gap: 8px !important; padding-bottom: 6px !important; }
   .profile-quick .skill { white-space: nowrap !important; flex: 0 0 auto !important; font-size: 13px !important; }
 
-  /* Projects/grid -> single column on narrow */
-  .projects-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+   .projects-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
 
-  /* Marquee: reduce card size and make horizontally scrollable fallback */
-  .marquee { padding: 12px 8px !important; }
+   .marquee { padding: 12px 8px !important; }
   .marq-item { width: 160px !important; height: 96px !important; padding: 10px !important; border-radius: 12px !important; }
   .marq-item img { object-fit: cover !important; height: 100% !important; width: 100% !important; }
 
-  /* contact form: stacked fields, full-width buttons */
-  .contact-wrap { display: block !important; gap: 12px !important; }
+   .contact-wrap { display: block !important; gap: 12px !important; }
   .contact-card, .contact-pro-aside { width: 100% !important; padding: 14px !important; border-radius: 12px !important; }
   .form-row { display: block !important; gap: 10px !important; }
   .form-actions { flex-direction: column !important; gap: 10px !important; }
   .form-actions .btn { width: 100% !important; justify-content: center !important; }
 
-  /* case modal: make viewer full width when stacked */
-  #case-body { grid-template-columns: 1fr !important; padding: 14px !important; gap: 12px !important; }
+   #case-body { grid-template-columns: 1fr !important; padding: 14px !important; gap: 12px !important; }
   .case-gallery .viewer { min-height: 220px !important; }
   .case-gallery .thumbs { gap: 8px !important; padding: 6px !important; }
 }
 
-/* Very small phones / portrait (≤ 430px) — further tightening */
-@media (max-width: 430px) {
+ @media (max-width: 430px) {
   html, body { font-size: 15px !important; }
 
-  /* header & page spacing */
-  .site-header { top: 8px !important; left: 8px !important; right: 8px !important; padding: 8px 10px !important; }
+   .site-header { top: 8px !important; left: 8px !important; right: 8px !important; padding: 8px 10px !important; }
   #main-content.container, main.container, .container { padding-top: 80px !important; }
 
-  /* HERO — most compact readable sizes */
-  #home-hero.hero {
+   #home-hero.hero {
     padding: 12px !important;
     margin-top: 12px !important;
     gap: 10px !important;
@@ -1875,40 +1772,31 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
   .hero-left .hi { font-size: 20px !important; line-height: 1.06 !important; }
   .hero-left .desc-line, .hero-left .lead { font-size: 14px !important; line-height: 1.5 !important; }
 
-  /* CTAs — stacked with consistent margins */
-  .cta-row { gap: 10px !important; }
+   .cta-row { gap: 10px !important; }
   .cta-row .btn { padding: 10px 12px !important; min-height: 48px !important; font-size: 15px !important; }
 
-  /* profile card: avatar + meta compact */
-  .profile-card { padding: 10px 12px !important; gap: 10px !important; }
+   .profile-card { padding: 10px 12px !important; gap: 10px !important; }
   .profile-visual-wrap { flex: 0 0 76px !important; width: 76px !important; height: 76px !important; }
   .profile-photo { width: 72px !important; height: 72px !important; border-radius: 12px !important; }
 
-  /* metrics & pills: keep horizontal scroll */
-  .hero-metrics { padding-bottom: 8px !important; gap: 10px !important; }
+   .hero-metrics { padding-bottom: 8px !important; gap: 10px !important; }
   .mini-ribbon { padding-bottom: 8px !important; }
 
-  /* marquee & cards tuned for smallest widths */
-  .marq-item { width: 140px !important; height: 84px !important; padding: 8px !important; }
+   .marq-item { width: 140px !important; height: 84px !important; padding: 8px !important; }
   .marquee-track { gap: 12px !important; }
 
-  /* modal: full-screen friendly and comfortable spacing */
-  .modal-panel { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; max-height: calc(100vh - 32px) !important; overflow: auto !important; }
+   .modal-panel { width: 100% !important; max-width: 100% !important; border-radius: 12px !important; max-height: calc(100vh - 32px) !important; overflow: auto !important; }
   .case-gallery .viewer img { object-fit: contain !important; max-height: 56vh !important; }
 
-  /* reduce shadows for clarity on constrained screens */
-  .card, .profile-card, .contact-card { box-shadow: 0 12px 36px rgba(16,24,40,0.05) !important; }
+   .card, .profile-card, .contact-card { box-shadow: 0 12px 36px rgba(16,24,40,0.05) !important; }
 
-  /* ensure images don't overflow containers */
-  img, picture, svg, video { max-width: 100% !important; height: auto !important; display: block !important; }
+   img, picture, svg, video { max-width: 100% !important; height: auto !important; display: block !important; }
 
-  /* accessibility & hit area improvement */
-  a, button, .link-btn, .btn { -webkit-tap-highlight-color: rgba(0,0,0,0.06) !important; touch-action: manipulation !important; }
+   a, button, .link-btn, .btn { -webkit-tap-highlight-color: rgba(0,0,0,0.06) !important; touch-action: manipulation !important; }
   a:focus, button:focus, .link-btn:focus { outline: 3px solid rgba(59,130,246,0.18) !important; outline-offset: 3px !important; border-radius: 8px !important; }
 }
 
-/* Micro-tuning for very-narrow devices (≤ 360px) */
-@media (max-width: 360px) {
+ @media (max-width: 360px) {
   .hero-left .hi { font-size: 18px !important; }
   .hero-left .lead, .hero-left .desc-line { font-size: 13px !important; }
   .profile-quick .skill { padding: 6px 8px !important; font-size: 12px !important; }
@@ -1917,19 +1805,16 @@ a:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px;
 }
 
 </style>
-  <!-- ======= Small fixes: header/hero spacing, CTAs on one line, show both photos, modal controls ======= -->
-<style>
-/* Reduce the large top-margin on hero and keep header fixed without huge gap */
-html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header */
-#main-content.container { padding-top: 72px !important; } /* main content sits under header */
-#home-hero.hero { margin-top: 18px !important; } /* override the large 96px margin */
+ <style>
+ html, body { scroll-padding-top: 84px; } 
+#main-content.container { padding-top: 72px !important; }  
+#home-hero.hero { margin-top: 18px !important; }  
 
-/* HERO CTAs: on very small screens keep CTAs on a single row and allow horizontal scroll */
-@media (max-width: 520px) {
+ @media (max-width: 520px) {
   #home-hero .cta-row {
-    flex-direction: row !important;       /* keep them in one row */
-    flex-wrap: nowrap !important;         /* don't wrap */
-    overflow-x: auto !important;          /* allow horizontal scroll if space limited */
+    flex-direction: row !important;   
+    flex-wrap: nowrap !important;         
+    overflow-x: auto !important;         
     -webkit-overflow-scrolling: touch !important;
     gap: 8px !important;
     padding-bottom: 6px !important;
@@ -1942,8 +1827,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   }
 }
 
-/* Ensure both photos show on smaller screens (you had code hiding secondary-photo) */
-@media (max-width: 760px) {
+ @media (max-width: 760px) {
   .double-photo { display:flex !important; align-items:center !important; gap:10px !important; }
   .secondary-photo {
     display: block !important;
@@ -1959,16 +1843,14 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   .secondary-photo img { width:100%; height:100%; object-fit:cover; display:block; }
 }
 
-/* Micro polish for the smallest phones */
-@media (max-width: 430px) {
-  #main-content.container { padding-top: 72px !important; } /* keep header overlap small */
+ @media (max-width: 430px) {
+  #main-content.container { padding-top: 72px !important; }  
   .profile-photo { width:76px !important; height:76px !important; border-radius:12px !important; }
   .secondary-photo { width:48px !important; height:48px !important; border-radius:10px !important; }
 }
 
-/* Modal gallery controls: make prev/next visible + larger hit area on small screens */
-.case-gallery .control {
-  display: grid !important;               /* always visible */
+ .case-gallery .control {
+  display: grid !important;             
   place-items: center;
   width: 48px !important;
   height: 48px !important;
@@ -1979,24 +1861,19 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   border: 1px solid rgba(10,20,30,0.06) !important;
 }
 
-/* Do not hide controls on small screens (was hidden at <=720px in original file) */
-@media (max-width: 720px) {
+ @media (max-width: 720px) {
   .case-gallery .control { display: grid !important; }
   .case-gallery .viewer { min-height: 220px !important; }
   .case-gallery .thumbs { gap: 8px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
 }
 
-/* Ensure modal images are touch-friendly */
-.case-gallery .viewer img { cursor: zoom-in; max-width: 100%; height: auto; }
+  .case-gallery .viewer img { cursor: zoom-in; max-width: 100%; height: auto; }
 
-/* improve z-index of modal panel so controls never get covered */
-#case-modal .modal-panel { z-index: 4000 !important; }
+ #case-modal .modal-panel { z-index: 4000 !important; }
 
-/* keep hero components visible above decorative background */
-#home-hero .hero-left, #home-hero .profile-card { z-index: 10 !important; position: relative !important; }
+ #home-hero .hero-left, #home-hero .profile-card { z-index: 10 !important; position: relative !important; }
 
-/* small utility: make CTA icons and text align nicely on narrow screens */
-#home-hero .cta-row .btn i { font-size: 14px !important; line-height: 1 !important; }
+ #home-hero .cta-row .btn i { font-size: 14px !important; line-height: 1 !important; }
 </style>
 <style>
   #home-hero.hero {
@@ -2439,23 +2316,19 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 }
 
 </style>
-  <!-- Selected Projects: Premium CSS (paste after your other CSS in <head>) -->
-<style>
-/* Projects: premium framing */
-#projects { padding: 28px 0 40px; }
+ <style>
+ #projects { padding: 28px 0 40px; }
 #projects .projects-header h3 { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.02em; }
 #projects .projects-header p { color: var(--muted); font-weight:700; font-size:14px; margin-top:6px; }
 
-/* grid */
-.projects-grid {
+ .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   margin-top: 18px;
 }
 
-/* premium card */
-.card {
+ .card {
   background: linear-gradient(180deg, #ffffff, #fbfeff);
   border-radius: 16px;
   overflow: hidden;
@@ -2476,12 +2349,10 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   background: linear-gradient(180deg, rgba(124,58,237,0.02), rgba(6,182,212,0.02));
 }
 
-/* rounded image with subtle zoom */
-.card-visual img { width:100%; height:100%; object-fit:cover; transition: transform .8s var(--ease-soft); }
+ .card-visual img { width:100%; height:100%; object-fit:cover; transition: transform .8s var(--ease-soft); }
 .card:hover .card-visual img { transform: scale(1.06) translateY(-6px); }
 
-/* badge */
-.card .badge {
+ .card .badge {
   left: 14px;
   top: 14px;
   padding: 8px 12px;
@@ -2494,31 +2365,25 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   box-shadow: 0 8px 30px rgba(16,24,40,0.06);
 }
 
-/* body */
-.card-body { padding: 16px 18px 20px; display:flex; flex-direction:column; gap:10px; }
+ .card-body { padding: 16px 18px 20px; display:flex; flex-direction:column; gap:10px; }
 .card-title { font-size:18px; font-weight:900; margin:0; }
 .card-sub { color:var(--muted); font-weight:700; font-size:14px; margin:0; }
 
-/* tags */
-.tags { margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; }
+ .tags { margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; }
 .tag { font-weight:900; font-size:12px; padding:6px 8px; border-radius:12px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow:0 8px 30px rgba(16,24,40,0.04); color:var(--muted); }
 
-/* footer */
-.card-foot { margin-top:auto; display:flex; gap:10px; align-items:center; padding-top:6px; }
+ .card-foot { margin-top:auto; display:flex; gap:10px; align-items:center; padding-top:6px; }
 .link-btn { padding:9px 12px; border-radius:12px; font-weight:900; box-shadow:0 10px 34px rgba(16,24,40,0.04); border:1px solid rgba(10,20,30,0.04); background:linear-gradient(180deg,#fff,#fbfdff); color:var(--muted); }
 .link-btn.live { background: linear-gradient(90deg, rgba(6,182,212,0.06), rgba(59,130,246,0.04)); color:var(--accent-3); border-color: rgba(6,182,212,0.08); box-shadow: 0 16px 40px rgba(6,182,212,0.04); }
 
 .card:hover { transform: translateY(-10px); box-shadow: 0 36px 120px rgba(6,10,26,0.12); }
 
-/* featured card special accent */
-.card.featured { border: 1px solid rgba(196,136,44,0.06); box-shadow: 0 36px 120px rgba(180,120,40,0.06); }
+ .card.featured { border: 1px solid rgba(196,136,44,0.06); box-shadow: 0 36px 120px rgba(180,120,40,0.06); }
 .card.featured .badge { background: linear-gradient(90deg,#d4ab4e,#b8862f); color: #fff; border: none; box-shadow: 0 10px 36px rgba(184,134,47,0.10); }
 
-/* responsive */
-@media (max-width: 1100px) { .projects-grid { grid-template-columns: repeat(2,1fr); } }
+ @media (max-width: 1100px) { .projects-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 760px) { .projects-grid { grid-template-columns: 1fr; } .card { min-height: auto; } }
-/* role rotator fade */
-.role-fade {
+ .role-fade {
   transition: opacity .36s ease, transform .36s ease;
   opacity: 0;
   transform: translateY(6px);
@@ -2536,10 +2401,8 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 
 
 
-<!-- Case modal premium CSS -->
-<style>
-/* modal panel refinement */
-.modal-panel {
+ <style>
+ .modal-panel {
   border-radius: 18px;
   overflow: hidden;
   background: linear-gradient(180deg,#ffffff,#fbfeff);
@@ -2547,8 +2410,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   box-shadow: 0 60px 160px rgba(6,10,26,0.28);
 }
 
-/* viewer styling + image */
-.case-gallery .viewer {
+ .case-gallery .viewer {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
@@ -2560,11 +2422,9 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   box-shadow: 0 30px 90px rgba(6,10,26,0.08);
 }
 
-/* main screenshot should sit behind controls */
-.case-gallery .viewer img { z-index: 10; position: relative; width:100%; height:100%; object-fit:contain; }
+ .case-gallery .viewer img { z-index: 10; position: relative; width:100%; height:100%; object-fit:contain; }
 
-/* prev / next controls — force visible with good hit area and z-index */
-.case-gallery .control {
+ .case-gallery .control {
   display:grid !important;
   place-items:center;
   width:52px;
@@ -2584,17 +2444,14 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 .case-gallery .control.next { right: 16px; }
 .case-gallery .control:hover { transform: translateY(-50%) scale(1.04); box-shadow: 0 22px 80px rgba(6,10,26,0.16); }
 
-/* hide rule override (if earlier rule hides by aria-hidden) */
-.case-gallery .control[aria-hidden="true"] { display: grid !important; }
+ .case-gallery .control[aria-hidden="true"] { display: grid !important; }
 
-/* thumbnail strip */
-.case-gallery .thumbs { display:flex; gap:10px; overflow:auto; padding:8px; z-index: 20; }
+ .case-gallery .thumbs { display:flex; gap:10px; overflow:auto; padding:8px; z-index: 20; }
 .case-gallery .thumb { flex: 0 0 auto; width:110px; height:66px; border-radius:10px; overflow:hidden; border:2px solid transparent; cursor:pointer; box-shadow:0 10px 28px rgba(6,10,26,0.06); }
 .case-gallery .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 .case-gallery .thumb[aria-current="true"] { border-color: rgba(124,58,237,0.18); transform: translateY(-6px) scale(1.02); }
 
-/* keyboard focus */
-.case-gallery .control:focus, .case-gallery .thumb:focus { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 4px; border-radius:10px; }
+ .case-gallery .control:focus, .case-gallery .thumb:focus { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 4px; border-radius:10px; }
 @media (max-width:720px) {
   .case-gallery .control { width:46px; height:46px; }
   .case-gallery .viewer { min-height: 220px; }
@@ -2603,8 +2460,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 .case-gallery .control { z-index: 60; }
 
 </style>
-<!-- Marquee / Community styling -->
-<style>
+ <style>
 .marquee-wrap { padding: 28px; border-radius: 16px; background: linear-gradient(180deg,#fff,#fbfeff); border: 1px solid rgba(10,20,30,0.04); box-shadow: 0 30px 90px rgba(6,10,26,0.06); }
 .marquee-wrap header h3 { font-family: var(--font-display); font-size: 20px; font-weight: 800; letter-spacing:-0.02em; }
 .marquee { padding: 8px 6px; }
@@ -2621,16 +2477,14 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 .marq-item:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 36px 120px rgba(6,10,26,0.12); }
 .marq-item:hover img { transform: scale(1.06) translateY(-6px); }
 
-/* optional subtle caption overlay when hovered (if you later add captions) */
-.marq-item .overlay {
+ .marq-item .overlay {
   position:absolute; left:0; right:0; bottom:0; padding:8px 10px; backdrop-filter: blur(4px);
   background: linear-gradient(180deg, rgba(0,0,0,0), rgba(6,10,26,0.32));
   color:#fff; font-weight:700; font-size:13px; transform: translateY(10px); opacity: 0; transition: transform .28s, opacity .28s;
 }
 .marq-item:hover .overlay { transform: translateY(0); opacity:1; }
 
-/* scroll hint */
-.marquee:after {
+ .marquee:after {
   content: '';
   position: absolute;
   right: 10px; top: 50%; transform: translateY(-50%);
@@ -2644,8 +2498,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 @media (max-width:760px) { .marquee-wrap { padding: 16px; } .marq-item { border-radius:10px; } }
 </style>
 <style>
-/* toast base */
-.sj-toast {
+ .sj-toast {
   pointer-events: auto;
   min-width: 180px;
   max-width: 360px;
@@ -2666,22 +2519,18 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   font-size: 13px;
 }
 
-/* variants */
-.sj-toast.info { background: linear-gradient(90deg, rgba(59,130,246,0.95), rgba(6,182,212,0.92)); }
+ .sj-toast.info { background: linear-gradient(90deg, rgba(59,130,246,0.95), rgba(6,182,212,0.92)); }
 .sj-toast.success { background: linear-gradient(90deg, rgba(16,185,129,0.95), rgba(6,182,212,0.9)); }
 .sj-toast.warn { background: linear-gradient(90deg, rgba(245,158,11,0.95), rgba(220,38,38,0.9)); }
 
-/* stack container already in your markup: #toast-area at bottom-right */
-#toast-area { display:flex; flex-direction:column; align-items:flex-end; gap:8px; padding: 12px; right: 18px; bottom: 18px; position: fixed; z-index: 99999; pointer-events: none; }
+ #toast-area { display:flex; flex-direction:column; align-items:flex-end; gap:8px; padding: 12px; right: 18px; bottom: 18px; position: fixed; z-index: 99999; pointer-events: none; }
 
-/* show */
-.sj-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+ .sj-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
 
   :root{--mobile-gap:12px;--accent-grad:linear-gradient(90deg,#7c3aed,#06b6d4);--muted-2:rgba(20,28,38,0.46);--text:#0b1220}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
-/* HERO improvements */
-#home-hero.hero{padding:28px;gap:22px;border-radius:18px;box-shadow:0 40px 120px rgba(16,24,40,0.06)}
+ #home-hero.hero{padding:28px;gap:22px;border-radius:18px;box-shadow:0 40px 120px rgba(16,24,40,0.06)}
 #home-hero .hi{font-size:clamp(26px,5.2vw,44px);line-height:1.04;margin:6px 0 8px}
 #home-hero .desc-line{font-size:15px;color:var(--muted-2);display:block;margin-top:8px}
 #home-hero .lead{font-size:15.5px;line-height:1.6;color:var(--muted-2);max-width:62ch;font-weight:600}
@@ -2724,8 +2573,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   .cta-row .btn{width:100%}
 }
 
-/* ABOUT mobile polish */
-#about{padding-top:16px;padding-bottom:18px}
+ #about{padding-top:16px;padding-bottom:18px}
 #about p{font-size:15px;line-height:1.6;color:var(--muted-2)}
 #about .pill{padding:8px 10px;border-radius:12px;font-weight:800}
 @media (max-width:760px){
@@ -2737,8 +2585,7 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
   #about h3{font-size:20px}
 }
 
-/* CASE STUDY modal full-screen and header hide */
-#case-modal{display:none;position:fixed;inset:0;z-index:999999;background:linear-gradient(180deg,rgba(6,10,26,0.6),rgba(6,10,26,0.6));backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px}
+ #case-modal{display:none;position:fixed;inset:0;z-index:999999;background:linear-gradient(180deg,rgba(6,10,26,0.6),rgba(6,10,26,0.6));backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:18px}
 #case-modal[aria-hidden="false"]{display:flex}
 #case-modal[aria-hidden="false"] .modal-panel{width:100%;height:100%;max-width:none;max-height:none;border-radius:0;overflow:auto;background:linear-gradient(180deg,#fff,#fbfeff);border:none;box-shadow:none;display:block}
 #case-modal[aria-hidden="false"] .modal-panel > div[style*="display:flex"]{position:sticky;top:0;z-index:60;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#fff,#fbfeff);border-bottom:1px solid rgba(10,20,30,0.04)}
@@ -2749,12 +2596,10 @@ html, body { scroll-padding-top: 84px; } /* make anchor scroll land below header
 #case-modal[aria-hidden="false"] .modal-panel .case-gallery .viewer img{max-height:56vh;object-fit:contain}
 #case-modal[aria-hidden="false"] .modal-panel #case-screenshots{padding-bottom:16px}
 
-/* hide page header visually when modal open using :has and ensure modal covers header as fallback */
-body:has(#case-modal[aria-hidden="false"]) .site-header{opacity:0;transform:translateY(-16px);pointer-events:none;transition:opacity .24s ease,transform .24s ease}
+ body:has(#case-modal[aria-hidden="false"]) .site-header{opacity:0;transform:translateY(-16px);pointer-events:none;transition:opacity .24s ease,transform .24s ease}
 #case-modal[aria-hidden="false"]{z-index:999999!important}
 
-/* modal controls sizing and layout */
-.modal-panel > div[style*="display:flex"] a#case-open-external, .modal-panel > div[style*="display:flex"] button#case-close{min-width:96px;padding:10px 12px;border-radius:12px;font-weight:900;display:inline-flex;align-items:center;gap:8px}
+ .modal-panel > div[style*="display:flex"] a#case-open-external, .modal-panel > div[style*="display:flex"] button#case-close{min-width:96px;padding:10px 12px;border-radius:12px;font-weight:900;display:inline-flex;align-items:center;gap:8px}
 @media (max-width:520px){
   .modal-panel > div[style*="display:flex"]{flex-wrap:wrap;gap:8px}
   .modal-panel > div[style*="display:flex"] a#case-open-external, .modal-panel > div[style*="display:flex"] button#case-close{flex:0 0 auto;min-width:44%;justify-content:center}
@@ -2763,13 +2608,11 @@ body:has(#case-modal[aria-hidden="false"]) .site-header{opacity:0;transform:tran
   .modal-panel > div[style*="display:flex"] a#case-open-external, .modal-panel > div[style*="display:flex"] button#case-close{min-width:48%;padding:10px 8px;font-size:14px}
 }
 
-/* gallery controls hit area */
-.case-gallery .control{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,0.96);box-shadow:0 12px 40px rgba(6,10,26,0.12);border:1px solid rgba(10,20,30,0.06)}
+ .case-gallery .control{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,0.96);box-shadow:0 12px 40px rgba(6,10,26,0.12);border:1px solid rgba(10,20,30,0.06)}
 .case-gallery .thumbs{display:flex;gap:8px;overflow:auto;padding:6px;-webkit-overflow-scrolling:touch}
 .case-gallery .thumb{width:96px;height:56px;border-radius:10px;overflow:hidden;border:2px solid transparent}
 
-/* JOURNEYS / MILESTONES mobile styling */
-.timeline-items{display:flex;gap:12px;overflow:auto;padding:8px 4px;-webkit-overflow-scrolling:touch}
+ .timeline-items{display:flex;gap:12px;overflow:auto;padding:8px 4px;-webkit-overflow-scrolling:touch}
 @media (max-width:760px){
   .timeline-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:6px}
   .timeline-card{padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfeff);box-shadow:0 12px 40px rgba(16,24,40,0.04);min-height:unset}
@@ -2777,8 +2620,7 @@ body:has(#case-modal[aria-hidden="false"]) .site-header{opacity:0;transform:tran
   .timeline-card div{color:var(--muted-2);font-size:13px;margin-top:6px}
 }
 
-/* CONTACT section: responsive button arrangement & polish */
-.contact-wrap{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+ .contact-wrap{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
 @media (max-width:760px){
   .contact-wrap{display:block}
   .contact-card{padding:14px;border-radius:12px}
@@ -2793,12 +2635,10 @@ body:has(#case-modal[aria-hidden="false"]) .site-header{opacity:0;transform:tran
   .contact-pro-aside .icon-circle{width:44px;height:44px}
 }
 
-/* social buttons inline on phone */
-.contact-pro-aside > div:last-child{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+ .contact-pro-aside > div:last-child{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
 @media (max-width:520px){ .contact-pro-aside > div:last-child{grid-template-columns:repeat(3,1fr)} }
 
-/* FOOTER: premium mobile layout */
-footer.site{padding:22px 12px;background:linear-gradient(180deg,#ffffff,#fbfeff);border-top:1px solid rgba(10,20,30,0.04)}
+ footer.site{padding:22px 12px;background:linear-gradient(180deg,#ffffff,#fbfeff);border-top:1px solid rgba(10,20,30,0.04)}
 footer.site > div{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
 footer.site strong{font-size:16px}
 footer.site .socials{display:flex;gap:12px;align-items:center}
@@ -2820,19 +2660,16 @@ footer.site .socials a{display:inline-grid;place-items:center;width:44px;height:
   footer.site .legal{font-size:13px;color:var(--muted-2)}
 }
 
-/* ensure images and galleries never overflow on narrow screens */
-img,video,picture,svg{max-width:100%;height:auto;display:block}
+ img,video,picture,svg{max-width:100%;height:auto;display:block}
 
-  /* filter button container you already have; make responsive */
-.projects-header > div:last-child {
+ .projects-header > div:last-child {
   display:flex;
   gap:8px;
   align-items:center;
   flex-wrap:wrap;
 }
 
-/* mobile: convert to horizontal scroller if too many */
-@media (max-width:520px){
+ @media (max-width:520px){
   .projects-header > div:last-child {
     overflow-x:auto;
     -webkit-overflow-scrolling: touch;
@@ -2850,8 +2687,7 @@ button[aria-pressed="true"] {
   border: none;
   box-shadow: 0 12px 40px rgba(59,130,246,0.12);
 }
-/* ensure modal header items stay on one line and don't cause horizontal overflow */
-.modal-panel > div[style*="display:flex"] {
+ .modal-panel > div[style*="display:flex"] {
   display:flex !important;
   gap:8px;
   align-items:center;
@@ -2861,8 +2697,7 @@ button[aria-pressed="true"] {
   box-sizing:border-box;
 }
 
-/* small screens: keep header controls on same line; allow them to shrink */
-@media (max-width:520px){
+ @media (max-width:520px){
   .modal-panel > div[style*="display:flex"] {
     gap:8px;
     align-items:center;
@@ -2876,15 +2711,13 @@ button[aria-pressed="true"] {
   }
 }
 
-/* ensure modal body wraps instead of causing horizontal scroll */
-#case-body {
+ #case-body {
   box-sizing: border-box;
   width: 100%;
   overflow-wrap: break-word;
 }
 
-/* case gallery viewer: force images to wrap inside viewer */
-.case-gallery .viewer {
+ .case-gallery .viewer {
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -2900,8 +2733,7 @@ button[aria-pressed="true"] {
 
   #case-main, #case-aside { word-break: break-word; -webkit-hyphens: auto; hyphens: auto; }
 
-/* full-screen modal on smalls — avoids horizontal scroll */
-@media (max-width:720px){
+ @media (max-width:720px){
   .modal-panel { max-width: 100% !important; padding: 0 !important; border-radius: 12px !important; }
   #case-body { grid-template-columns: 1fr !important; padding: 12px !important; gap:12px !important; }
   #case-aside { width: 100% !important; order: 2; }
@@ -2924,11 +2756,10 @@ button[aria-pressed="true"] {
   transform: translateZ(0);
 }
 
-  /* improved continuous marquee (CSS-driven) */
-.marquee { overflow: hidden; position: relative; }
+ .marquee { overflow: hidden; position: relative; }
 .marquee-track.is-animated {
   display: flex;
-  gap: 28px; /* keep same gap as your items */
+  gap: 28px;  
   animation-name: marqueeScroll;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -2940,22 +2771,18 @@ button[aria-pressed="true"] {
   animation-play-state: paused;
 }
 
-/* keyframes: translate exactly half the track (works when track content is duplicated) */
-@keyframes marqueeScroll {
+ @keyframes marqueeScroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); } /* animate one full "block" (half the track) */
+  to   { transform: translateX(-50%); } 
 }
 
-/* reduce motion: fallback to scrollable panel */
-@media (prefers-reduced-motion: reduce) {
+ @media (prefers-reduced-motion: reduce) {
   .marquee-track.is-animated { animation: none !important; }
   .marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
 
-/* ensure the animation pauses visibly on user interaction on mobile too */
-.marquee:active .marquee-track.is-animated { animation-play-state: paused; }
-/* Marquee: framed photos (image style like your screenshot) */
-.marquee--framed {
+ .marquee:active .marquee-track.is-animated { animation-play-state: paused; }
+ .marquee--framed {
   position: relative;
   overflow: visible;
   padding: 40px 18px;
@@ -2969,8 +2796,7 @@ button[aria-pressed="true"] {
   padding-left: 8px;
 }
 
-/* card wrapper: houses a rotated white frame and the image */
-.marq-card {
+ .marq-card {
   flex: 0 0 auto;
   width: clamp(220px, 30vw, 420px);
   height: clamp(140px, 18.5vw, 260px);
@@ -2983,8 +2809,7 @@ button[aria-pressed="true"] {
   pointer-events: auto;
 }
 
-/* white outer frame (visible tilted slab) */
-.marq-card .marq-frame {
+ .marq-card .marq-frame {
   position: absolute;
   inset: 0;
   background: #fff;
@@ -2993,13 +2818,11 @@ button[aria-pressed="true"] {
   z-index: 1;
   transform-origin: center;
   transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
-  /* give the frame a slightly thick feel by pushing it out a bit */
-  padding: 0;
+   padding: 0;
   border: 1px solid rgba(10,20,30,0.04);
 }
 
-/* the photo surface sits inset from the frame */
-.marq-card .marq-image {
+ .marq-card .marq-image {
   position: absolute;
   left: 14px;
   right: 14px;
@@ -3013,8 +2836,7 @@ button[aria-pressed="true"] {
   background: #f8f8f8;
 }
 
-/* the <img> inside */
-.marq-card .marq-image img {
+ .marq-card .marq-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -3024,15 +2846,13 @@ button[aria-pressed="true"] {
   will-change: transform;
 }
 
-/* Alternating rotations for the slab/frame vs image to get that playful offset */
-.marq-card.rotate-left .marq-frame  { transform: rotate(-6deg) translate(-6px, -6px); }
+ .marq-card.rotate-left .marq-frame  { transform: rotate(-6deg) translate(-6px, -6px); }
 .marq-card.rotate-left .marq-image  { transform: rotate(4deg) translate(2px, 4px); }
 
 .marq-card.rotate-right .marq-frame { transform: rotate(6deg) translate(6px, -6px); }
 .marq-card.rotate-right .marq-image { transform: rotate(-4deg) translate(-2px, 4px); }
 
-/* Hover: lift and straighten slightly (matches the screenshot where hover makes cards pop) */
-.marq-card:hover,
+ .marq-card:hover,
 .marq-card:focus-within {
   transform: translateY(-12px) scale(1.02);
   z-index: 60;
@@ -3047,8 +2867,7 @@ button[aria-pressed="true"] {
   transform: scale(1.04);
 }
 
-/* Slight caption overlay possibility (optional) */
-.marq-card .overlay {
+ .marq-card .overlay {
   position: absolute;
   left: 14px;
   right: 14px;
@@ -3066,8 +2885,7 @@ button[aria-pressed="true"] {
 }
 .marq-card:hover .overlay { transform: translateY(0); opacity: 1; }
 
-/* responsive niceties */
-@media (max-width: 760px) {
+ @media (max-width: 760px) {
   .marquee--framed { padding: 18px 8px; }
   .marq-card { width: clamp(140px, 42vw, 180px); height: clamp(90px, 24vw, 120px); }
   .marq-card .marq-image { left: 10px; right: 10px; top: 10px; bottom: 10px; border-radius: 10px; }
@@ -3075,8 +2893,7 @@ button[aria-pressed="true"] {
   .marquee--framed .marquee-track { gap: 12px; }
 }
 
-/* hide the native scrollbar visually while keeping scroll */
-.marquee--framed { -ms-overflow-style: none; scrollbar-width: none; }
+ .marquee--framed { -ms-overflow-style: none; scrollbar-width: none; }
 .marquee--framed::-webkit-scrollbar { display: none; }
 
 </style>
@@ -3960,55 +3777,44 @@ function initMarquee(){
   const track = marquee.querySelector('.marquee-track');
   if(!track) return;
 
-  // Respect reduced motion: make marquee scrollable instead of animating
-  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced){
     marquee.style.overflowX = 'auto';
     track.classList.remove('is-animated');
     return;
   }
 
-  // Capture original items (snapshot) to avoid cloning clones
-  const originals = Array.from(track.children);
+   const originals = Array.from(track.children);
   if(originals.length === 0) return;
 
-  // Build a string representation of the "base block"
-  const baseHTML = originals.map(el => el.outerHTML).join('');
+   const baseHTML = originals.map(el => el.outerHTML).join('');
 
-  // Choose how many repetitions are needed so the base block >= marquee width
-  // We'll create a block that is at least marquee width and then duplicate it so track = block + block
+  
   function buildRepeatedBlock(){
     let repeats = 1;
     track.innerHTML = baseHTML.repeat(repeats);
-    // measure and increase repeats until big enough or safety cap
-    let tries = 0;
+     let tries = 0;
     while(track.scrollWidth < marquee.clientWidth * 1.1 && tries < 12){
       repeats++;
       track.innerHTML = baseHTML.repeat(repeats);
       tries++;
     }
-    // now duplicate the current block once to create two identical halves
-    const currentBlockHTML = track.innerHTML;
+     const currentBlockHTML = track.innerHTML;
     track.innerHTML = currentBlockHTML + currentBlockHTML;
   }
 
   buildRepeatedBlock();
 
-  // compute animation duration proportional to content length (so speed feels consistent)
-  // larger content -> longer duration. Tune baseSpeed to taste.
+ 
   const marqueeWidth = marquee.clientWidth || window.innerWidth;
   const contentWidth = track.scrollWidth || (marqueeWidth * 2);
-  // base constant: seconds per marquee-width; tune 10..28 to preference
-  const secondsPerViewport = 12;
-  // total duration scales with how many viewports the content spans
-  const duration = Math.max(8, Math.round((contentWidth / marqueeWidth) * secondsPerViewport));
+   const secondsPerViewport = 12;
+   const duration = Math.max(8, Math.round((contentWidth / marqueeWidth) * secondsPerViewport));
 
-  // apply animation duration
-  track.style.animationDuration = `${duration}s`;
+   track.style.animationDuration = `${duration}s`;
   track.classList.add('is-animated');
 
-  // Pause / resume on user interaction (extra robustness)
-  let running = true;
+   let running = true;
   function pause(){ track.style.animationPlayState = 'paused'; running = false; }
   function resume(){ track.style.animationPlayState = 'running'; running = true; }
 
@@ -4017,13 +3823,11 @@ function initMarquee(){
   marquee.addEventListener('focusin', pause);
   marquee.addEventListener('focusout', ()=>{ if(!marquee.matches(':hover')) resume(); });
 
-  // Rebuild on resize (debounced)
-  let to = null;
+   let to = null;
   window.addEventListener('resize', ()=>{
     clearTimeout(to);
     to = setTimeout(()=>{
-      // reset and rebuild to make sure halves remain identical and duration updates
-      track.classList.remove('is-animated');
+       track.classList.remove('is-animated');
       track.style.animationDuration = '';
       buildRepeatedBlock();
       const newContentWidth = track.scrollWidth || marquee.clientWidth*2;
@@ -4268,21 +4072,17 @@ function initMarquee(){
   ];
   let idx = roles.indexOf(el.textContent) >= 0 ? roles.indexOf(el.textContent) : 0;
 
-  // initialize
-  el.classList.add('role-fade','show'); // show initial
+   el.classList.add('role-fade','show'); 
   el.textContent = roles[idx];
 
-  // rotate every 2400ms (tweak to 2000-3000 as you like)
-  const interval = 2400;
+   const interval = 2400;
   setInterval(()=>{
-    // hide
-    el.classList.remove('show');
+     el.classList.remove('show');
     setTimeout(()=>{
       idx = (idx + 1) % roles.length;
       el.textContent = roles[idx];
-      // show
-      requestAnimationFrame(()=> el.classList.add('show'));
-    }, 380); // match fade-out timing
+       requestAnimationFrame(()=> el.classList.add('show'));
+    }, 380);  
   }, interval);
 })();
 </script>
@@ -4300,7 +4100,7 @@ function initMarquee(){
     if(activeBtn) activeBtn.setAttribute('aria-pressed','true');
   }
 
-  function applyFilter(name){ // name = 'all' | 'web' | 'ai'
+  function applyFilter(name){  
     const cards = Array.from(grid.querySelectorAll('.card'));
     cards.forEach(c=>{
       const cats = (c.dataset.categories || '').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
@@ -4314,19 +4114,15 @@ function initMarquee(){
   btnWeb && btnWeb.addEventListener('click', ()=>{ setPressed(btnWeb); applyFilter('web'); });
   btnAi && btnAi.addEventListener('click', ()=>{ setPressed(btnAi); applyFilter('ai'); });
 
-  // initial state
-  setPressed(btnAll);
+   setPressed(btnAll);
   applyFilter('all');
 })();
 </script>
 <script>
 (function(){
-  // Call createModalGallery(imagesArray, containerEl) when showing modal.
-  function createModalGallery(images, holder){
-    // remove old content
-    holder.innerHTML = '';
-    // viewer
-    const viewer = document.createElement('div');
+   function createModalGallery(images, holder){
+     holder.innerHTML = '';
+     const viewer = document.createElement('div');
     viewer.className = 'case-gallery';
     const big = document.createElement('div');
     big.className = 'viewer';
@@ -4336,27 +4132,24 @@ function initMarquee(){
     big.appendChild(img);
     viewer.appendChild(big);
 
-    // controls
-    const prev = document.createElement('button');
+     const prev = document.createElement('button');
     prev.className = 'control prev';
     prev.type = 'button';
     prev.setAttribute('aria-label','Previous image');
-    prev.innerHTML = '&#8592;'; // fallback arrow
+    prev.innerHTML = '&#8592;';  
     const next = document.createElement('button');
     next.className = 'control next';
     next.type = 'button';
     next.setAttribute('aria-label','Next image');
     next.innerHTML = '&#8594;';
-    // ensure visible + clickable
-    [prev,next].forEach(b=>{
+     [prev,next].forEach(b=>{
       b.style.zIndex = 1200;
       b.style.pointerEvents = 'auto';
     });
     big.appendChild(prev);
     big.appendChild(next);
 
-    // thumbs
-    const thumbs = document.createElement('div');
+     const thumbs = document.createElement('div');
     thumbs.className = 'thumbs';
     viewer.appendChild(thumbs);
 
@@ -4365,14 +4158,12 @@ function initMarquee(){
     let i = 0;
     function renderIndex(){
       img.src = images[i];
-      // mark current thumb
-      Array.from(thumbs.children).forEach((t, idx)=>{
+       Array.from(thumbs.children).forEach((t, idx)=>{
         t.setAttribute('aria-current', idx === i ? 'true' : 'false');
       });
     }
 
-    // build thumbs
-    images.forEach((src, idx)=>{
+     images.forEach((src, idx)=>{
       const b = document.createElement('button');
       b.className = 'thumb';
       b.type = 'button';
@@ -4384,8 +4175,7 @@ function initMarquee(){
       thumbs.appendChild(b);
     });
 
-    // listeners
-    prev.addEventListener('click', ()=>{
+     prev.addEventListener('click', ()=>{
       i = (i - 1 + images.length) % images.length;
       renderIndex();
     });
@@ -4394,8 +4184,7 @@ function initMarquee(){
       renderIndex();
     });
 
-    // keyboard support
-    window.addEventListener('keydown', function onKey(e){
+     window.addEventListener('keydown', function onKey(e){
       if(document.getElementById('case-modal')?.getAttribute('aria-hidden') === 'false'){
         if(e.key === 'ArrowLeft'){ prev.click(); }
         if(e.key === 'ArrowRight'){ next.click(); }
@@ -4407,19 +4196,15 @@ function initMarquee(){
     return { viewer, prev, next, thumbs, setIndex: idx => { i = idx; renderIndex(); } };
   }
 
-  // Example usage when you open a case (inside your modal builder):
-  // const carousel = createModalGallery( caseJson.screenshots.map(s => s), document.getElementById('case-screens-carousel') );
-
-  // If your images are relative filenames, ensure they are valid paths (same directory or correct URL).
-  window.createModalGallery = createModalGallery; // expose if you want to call externally
+   
+  window.createModalGallery = createModalGallery;  
 })();
 </script>
 <script>
 (function(){
   if(typeof gsap === 'undefined') return;
 
-  // gentle float on stickers and float-badges
-  gsap.utils.toArray('.sticker, .float-badge').forEach((el, i)=>{
+   gsap.utils.toArray('.sticker, .float-badge').forEach((el, i)=>{
     gsap.fromTo(el, {y:0, rotation: (i%2? -4:4)}, {
       y: (i%2? -6:6),
       rotation: (i%2? 6:-6),
@@ -4431,11 +4216,9 @@ function initMarquee(){
     });
   });
 
-  // subtle profile ring scale / breathe
-  gsap.to('.profile-ring', {scale:1.03, duration: 6, yoyo:true, repeat:-1, ease:'sine.inOut'});
+   gsap.to('.profile-ring', {scale:1.03, duration: 6, yoyo:true, repeat:-1, ease:'sine.inOut'});
 
-  // small mouse parallax on the right accent blob
-  const hero = document.getElementById('home-hero');
+   const hero = document.getElementById('home-hero');
   const blob = document.querySelector('#home-hero .hero-accent-blob') || document.createElement('div');
   if(!document.querySelector('#home-hero .hero-accent-blob')) {
     blob.className = 'hero-accent-blob';
@@ -4448,8 +4231,7 @@ function initMarquee(){
     gsap.to(blob, {x: px * 40, y: py * 24, duration: 0.9, ease: 'power3.out'});
   }, {passive:true});
 
-  // subtle entrance for left features
-  gsap.from('.hero-left .kicker, .hero-left .hi, .role-rotator, .lead, .cta-row .btn', {
+   gsap.from('.hero-left .kicker, .hero-left .hi, .role-rotator, .lead, .cta-row .btn', {
     stagger: 0.08, y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.16
   });
 })();
@@ -4458,15 +4240,12 @@ function initMarquee(){
 (function(){
   const track = document.querySelector('.marquee-track');
   if(!track) return;
-  // apply alternating rotation classes
-  Array.from(track.children).forEach((card, i) => {
+   Array.from(track.children).forEach((card, i) => {
     card.classList.add(i % 2 === 0 ? 'rotate-left' : 'rotate-right');
-    // improve keyboard focusability
-    card.setAttribute('tabindex', '0');
+     card.setAttribute('tabindex', '0');
   });
 
-  // basic drag-to-scroll for nicer touch/mouse interaction (optional)
-  const marquee = document.querySelector('.marquee--framed');
+   const marquee = document.querySelector('.marquee--framed');
   let isDown=false, startX=0, scrollLeft=0;
   marquee.addEventListener('pointerdown', (e)=>{
     isDown = true;
@@ -4494,40 +4273,32 @@ document.getElementById('download-resume-btn').addEventListener('click', async f
   e.preventDefault();
   const url = this.href;
 
-  // 1) Open a blank tab first to avoid popup blockers
-  const newTab = window.open('', '_blank', 'noopener,noreferrer');
+   const newTab = window.open('', '_blank', 'noopener,noreferrer');
 
   try {
-    // 2) Fetch the PDF as a blob
-    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+     const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
     if (!res.ok) throw new Error('Network error: ' + res.status);
 
     const blob = await res.blob();
     const blobUrl = URL.createObjectURL(blob);
 
-    // 3a) Trigger download
-    const a = document.createElement('a');
+     const a = document.createElement('a');
     a.href = blobUrl;
-    // Suggested filename for the downloaded file:
-    a.download = 'Senu_James_Resume.pdf';
+     a.download = 'Senu_James_Resume.pdf';
     document.body.appendChild(a);
     a.click();
     a.remove();
 
-    // 3b) Open the PDF in the tab we created
-    if (newTab) {
+     if (newTab) {
       newTab.location = blobUrl;
     } else {
-      // if newTab blocked, open another (may get blocked)
-      window.open(blobUrl, '_blank', 'noopener,noreferrer');
+       window.open(blobUrl, '_blank', 'noopener,noreferrer');
     }
 
-    // 4) revoke after some time
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+     setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
   } catch (err) {
     console.error('Resume download/open failed', err);
-    // fallback: navigate to the file (browser handles it)
-    if (newTab) {
+     if (newTab) {
       newTab.location = url;
     } else {
       window.location.href = url;
