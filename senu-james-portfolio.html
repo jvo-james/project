@@ -3591,60 +3591,63 @@ button[aria-pressed="true"] {
   </aside>
 </section>
 
-<!-- START: Design-to-Launch Roadmap (paste in place of old section) -->
+<!-- START: Design-to-Launch Roadmap (updated: icons-in-nodes, no tooltip button, nodes on road, fast tooltip) -->
 <section id="design-launch-roadmap" aria-labelledby="roadmap-title" role="region">
   <style>
-    /* scoped to #design-launch-roadmap */
+    /* scoped */
     #design-launch-roadmap { padding:20px; display:flex; justify-content:center; box-sizing:border-box; }
     #design-launch-roadmap .card {
       width:100%; max-width:1120px;
       background: linear-gradient(180deg,#ffffff,#fbfeff);
-      border-radius:16px; padding:16px; border:1px solid rgba(10,20,30,0.04);
+      border-radius:16px; padding:18px; border:1px solid rgba(10,20,30,0.04);
       box-shadow:0 26px 60px rgba(6,10,26,0.06);
       box-sizing:border-box; overflow:visible;
     }
-    #roadmap-title { font-family: "Lexend", Inter, system-ui; font-size:20px; font-weight:900; margin:0 0 6px; color:var(--text); }
-    #roadmap-lead { margin:0 0 10px; color:var(--muted-2); font-weight:700; font-size:13px; }
+    #roadmap-title { font-family: "Inter", system-ui, -apple-system, "Segoe UI"; font-size:20px; font-weight:800; margin:0 0 6px; color:var(--text,#0b1220); }
+    #roadmap-lead { margin:0 0 10px; color:var(--muted-2,#475569); font-weight:600; font-size:13px; }
 
     .stage { width:100%; height: min(56vh,520px); position:relative; margin-top:8px; }
     .stage svg { width:100%; height:100%; display:block; overflow:visible; }
 
-    .path-glow { stroke-linecap:round; stroke-width:22; stroke: rgba(99,102,241,0.06); fill:none; }
+    .path-glow { stroke-linecap:round; stroke-width:20; stroke: rgba(99,102,241,0.06); fill:none; }
     .path-dotted { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; stroke-dasharray:8 12; fill:none; animation: dashShift 6s linear infinite; }
     @keyframes dashShift { to { stroke-dashoffset: -40; } }
 
-    .node { cursor:pointer; transform-origin:center; transition:transform .18s cubic-bezier(.2,.9,.2,1); }
-    .node:focus-visible, .node:hover { transform: translateY(-7px) scale(1.02); outline: none; }
+    /* node visuals */
+    .node { cursor:pointer; transform-origin:center; transition:transform .12s cubic-bezier(.2,.9,.2,1); }
+    .node:focus-visible, .node:hover { transform: translateY(-6px) scale(1.02); outline: none; }
     .square { rx:14; ry:14; filter: drop-shadow(0 14px 36px rgba(6,10,26,0.06)); }
     .icon-circle { fill: #fff; }
 
-    .label { font-weight:900; font-size:12px; fill:#0b1220; text-anchor:middle; }
-    .subtext { font-size:11px; fill:rgba(11,18,32,0.58); text-anchor:middle; }
+    .label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; pointer-events:none; }
+    .subtext { font-size:11px; fill:rgba(11,18,32,0.58); text-anchor:middle; pointer-events:none; }
 
+    /* subtle pulse */
     @keyframes nodePulse { 0% { transform: scale(1) } 50% { transform: scale(1.03) } 100% { transform: scale(1) } }
     .node.pulse { animation: nodePulse 4s ease-in-out infinite; }
 
+    /* tooltip (fast) */
     .tooltip {
-      position:absolute; left:0; top:0; min-width:240px; max-width:380px; padding:12px 14px;
+      position:absolute; left:0; top:0; min-width:240px; max-width:380px; padding:10px 12px;
       background: linear-gradient(180deg,#fff,#fbfdff);
-      border-radius:12px; box-shadow: 0 20px 48px rgba(9,14,24,0.12);
+      border-radius:10px; box-shadow: 0 18px 44px rgba(9,14,24,0.10);
       border:1px solid rgba(10,20,30,0.06);
-      transform: translateY(12px) scale(.98); opacity:0; pointer-events:none;
-      transition: opacity .16s ease, transform .18s cubic-bezier(.2,.9,.2,1);
+      transform: translateY(8px) scale(.98); opacity:0; pointer-events:none;
+      transition: opacity .08s ease, transform .08s ease;
       z-index:80; backdrop-filter: blur(6px);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
-    .tooltip.show { opacity:1; transform: translateY(6px) scale(1); pointer-events:auto; }
-
-    .tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:900; color:var(--text); }
-    .tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.76); line-height:1.4; }
+    .tooltip.show { opacity:1; transform: translateY(2px) scale(1); pointer-events:auto; }
+    .tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:800; color:var(--text,#0b1220); }
+    .tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35; }
 
     .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
     .btn {
       display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:12px;
-      font-weight:900; border:none; cursor:pointer; text-decoration:none;
+      font-weight:800; border:none; cursor:pointer; text-decoration:none;
     }
     .btn.primary { background: linear-gradient(90deg,#6366f1,#7c3aed); color:#fff; box-shadow:0 18px 50px rgba(99,102,241,0.12); }
-    .btn.secondary { background:#fff; border:1px solid rgba(10,20,30,0.06); color:var(--text); box-shadow:0 12px 36px rgba(16,24,40,0.04); }
+    .btn.secondary { background:#fff; border:1px solid rgba(10,20,30,0.06); color:var(--text,#0b1220); box-shadow:0 12px 36px rgba(16,24,40,0.04); }
 
     @media (max-width:980px){ .stage{ height: min(70vh,720px); } }
     @media (max-width:700px){
@@ -3659,7 +3662,7 @@ button[aria-pressed="true"] {
 
   <div class="card" role="group" aria-label="Design to Launch roadmap card">
     <h3 id="roadmap-title">Design → Launch Roadmap</h3>
-    <p id="roadmap-lead">A clear five-step product path I use when building projects — from spark to scale. Tap or focus each step to see the outcome and how it connects to the case studies in this portfolio.</p>
+    <p id="roadmap-lead">A concise five-step product path I follow when building — from spark to scale. Focus on each step to reveal the outcome and where you can find the related case study in this portfolio.</p>
 
     <div class="stage" id="roadmap-stage">
       <svg viewBox="0 0 1200 420" class="stage-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Design to Launch five step roadmap">
@@ -3671,22 +3674,28 @@ button[aria-pressed="true"] {
           <linearGradient id="dg5" x1="0" x2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient>
         </defs>
 
-        <!-- path -->
+        <!-- shared path (glow + dotted) -->
         <path id="routeGlow" class="path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240" />
         <path id="routeMain" class="path-dotted" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240" />
+
+        <!-- Nodes: placed on the road (same Y baseline so they align to the path visually).
+             Update the transform translate(x,238) values if you change the path or need to align precisely.
+        -->
 
         <!-- Step 1: Concept -->
         <g transform="translate(140,238)">
           <g class="node pulse" role="button" tabindex="0"
              data-title="Concept — Problem & thesis"
-             data-desc="Define the problem, target user and a concise value hypothesis. I capture this as a one-page brief that guides design decisions and metrics."
+             data-desc="Define the problem, target user, and the core hypothesis. I draft a one-page brief that anchors the project goals and metrics."
              data-ref="concept"
              aria-label="Concept step">
             <rect class="square" x="-46" y="-46" width="92" height="92" fill="url(#dg1)"></rect>
             <circle class="icon-circle" cx="0" cy="-6" r="30"></circle>
-            <!-- idea bulb icon -->
-            <g transform="translate(-12,-22) scale(0.9)">
-              <path d="M12 2c-3 0-5 3-5 5 0 2 1 3 2 4 0 0 0 2 1 3h4c1-1 1-3 1-3 1-1 2-2 2-4 0-2-2-5-5-5z" fill="#fff" opacity="0.95"></path>
+
+            <!-- icon: lightbulb inside the circle -->
+            <g transform="translate(-10,-22) scale(0.9)" aria-hidden="true">
+              <path d="M12 2c-3 0-5 3-5 5 0 2 1 3 2 4 0 0 0 2 1 3h4c1-1 1-3 1-3 1-1 2-2 2-4 0-2-2-5-5-5z" fill="#111827" opacity="0.95"></path>
+              <rect x="10" y="10" width="4" height="4" rx="1" fill="#111827"></rect>
             </g>
           </g>
           <text class="label" y="64">CONCEPT</text>
@@ -3694,18 +3703,19 @@ button[aria-pressed="true"] {
         </g>
 
         <!-- Step 2: Prototype -->
-        <g transform="translate(340,170)">
+        <g transform="translate(340,238)">
           <g class="node pulse" role="button" tabindex="0"
              data-title="Prototype — Fast, testable flows"
-             data-desc="Build clickable prototypes or lightweight MVPs to validate interaction and core value — iterate with rapid design sprints."
+             data-desc="Build clickable prototypes or lightweight MVPs to validate core interaction and value hypotheses through rapid design sprints."
              data-ref="prototype"
              aria-label="Prototype step">
             <rect class="square" x="-52" y="-52" width="104" height="104" fill="url(#dg2)"></rect>
             <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <!-- prototype wire icon -->
-            <g transform="translate(-10,-18) scale(1)">
-              <rect x="4" y="4" width="22" height="16" rx="3" fill="#fff"></rect>
-              <circle cx="8" cy="12" r="2" fill="rgba(11,18,30,0.06)"></circle>
+
+            <!-- icon: prototype wireframe -->
+            <g transform="translate(-12,-22) scale(0.95)" aria-hidden="true">
+              <rect x="6" y="6" width="24" height="16" rx="3" fill="#111827"></rect>
+              <circle cx="12" cy="14" r="1.8" fill="#fff"></circle>
             </g>
           </g>
           <text class="label" y="74">PROTOTYPE</text>
@@ -3713,17 +3723,18 @@ button[aria-pressed="true"] {
         </g>
 
         <!-- Step 3: Testing -->
-        <g transform="translate(540,244)">
+        <g transform="translate(540,238)">
           <g class="node pulse" role="button" tabindex="0"
              data-title="Testing — Real users, measurable outcomes"
-             data-desc="Conduct usability sessions and short pilots to collect qualitative and quantitative signals; prioritize fixes by impact vs. effort."
+             data-desc="Run usability sessions and pilots to capture both qualitative feedback and quantitative metrics; prioritize fixes by impact."
              data-ref="testing"
              aria-label="Testing step">
             <rect class="square" x="-48" y="-48" width="96" height="96" fill="url(#dg3)"></rect>
             <circle class="icon-circle" cx="0" cy="-6" r="30"></circle>
-            <!-- test / check icon -->
-            <g transform="translate(-14,-18) scale(1)">
-              <path d="M6 10l4 4 10-12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+            <!-- icon: checkmark -->
+            <g transform="translate(-14,-18) scale(1)" aria-hidden="true">
+              <path d="M6 10l4 4 10-12" stroke="#111827" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
             </g>
           </g>
           <text class="label" y="68">TESTING</text>
@@ -3731,17 +3742,18 @@ button[aria-pressed="true"] {
         </g>
 
         <!-- Step 4: Launch -->
-        <g transform="translate(760,304)">
+        <g transform="translate(760,238)">
           <g class="node pulse" role="button" tabindex="0"
              data-title="Launch — Production & acquisition"
-             data-desc="Ship a stable release with analytics, onboarding and a measured acquisition plan. I focus on retention hooks and first-week activation metrics."
+             data-desc="Ship a stable release with analytics and onboarding. Focus on first-week activation and measurable acquisition channels."
              data-ref="launch"
              aria-label="Launch step">
             <rect class="square" x="-48" y="-48" width="96" height="96" fill="url(#dg4)"></rect>
             <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <!-- rocket / launch icon -->
-            <g transform="translate(-12,-20) scale(0.95)">
-              <path d="M12 2c-2 1-4 3-5 6 0 3 3 6 3 6s3-3 4-6c1-3-2-6-2-6z" fill="#fff"></path>
+
+            <!-- icon: rocket simplified -->
+            <g transform="translate(-12,-20) scale(0.95)" aria-hidden="true">
+              <path d="M12 2c-2 1-4 3-5 6 0 3 3 6 3 6s3-3 4-6c1-3-2-6-2-6z" fill="#111827"></path>
             </g>
           </g>
           <text class="label" y="64">LAUNCH</text>
@@ -3749,19 +3761,20 @@ button[aria-pressed="true"] {
         </g>
 
         <!-- Step 5: Scale -->
-        <g transform="translate(1040,258)">
+        <g transform="translate(1040,238)">
           <g class="node pulse" role="button" tabindex="0"
              data-title="Scale — Growth & design systems"
-             data-desc="Invest in systems: design tokens, automation and growth experiments that make the product reliable while accelerating acquisition and ops."
+             data-desc="Invest in design systems, automation and growth experiments to increase reliability while accelerating acquisition."
              data-ref="scale"
              aria-label="Scale step">
             <rect class="square" x="-48" y="-48" width="96" height="96" fill="url(#dg5)"></rect>
             <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <!-- people / network icon -->
-            <g transform="translate(-12,-18) scale(1)">
-              <circle cx="10" cy="10" r="3" fill="#fff"></circle>
-              <circle cx="22" cy="10" r="3" fill="#fff"></circle>
-              <path d="M6 18c3-3 6-4 14-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"></path>
+
+            <!-- icon: network/people simplified -->
+            <g transform="translate(-12,-18) scale(1)" aria-hidden="true">
+              <circle cx="10" cy="10" r="3" fill="#111827"></circle>
+              <circle cx="22" cy="10" r="3" fill="#111827"></circle>
+              <path d="M6 18c3-3 6-4 14-4" stroke="#111827" stroke-width="2" fill="none" stroke-linecap="round"></path>
             </g>
           </g>
           <text class="label" y="64">SCALE</text>
@@ -3777,7 +3790,7 @@ button[aria-pressed="true"] {
         </g>
       </svg>
 
-      <!-- Tooltip -->
+      <!-- Tooltip (no buttons inside) -->
       <div id="roadmap-tooltip" class="tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
     </div>
 
@@ -3798,6 +3811,7 @@ button[aria-pressed="true"] {
       const tooltip = document.getElementById('roadmap-tooltip');
       const nodes = Array.from(stage.querySelectorAll('.node'));
 
+      // Show tooltip immediately (fast)
       function showTooltip(node){
         const stageRect = stage.getBoundingClientRect();
         const nRect = node.getBoundingClientRect();
@@ -3805,95 +3819,83 @@ button[aria-pressed="true"] {
         const desc = node.dataset.desc || '';
         const ref = node.dataset.ref || '';
 
-        tooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
-        tooltip.style.left = '0px';
-        tooltip.style.top = '0px';
+        tooltip.innerHTML = '<div><h4>' + escapeHtml(title) + '</h4><p>' + escapeHtml(desc) + '</p></div>';
         tooltip.classList.add('show');
         tooltip.setAttribute('aria-hidden','false');
 
-        const tooltipW = tooltip.offsetWidth || 280;
+        // position horizontally centered on node, and above if space otherwise below
+        const tooltipW = Math.min(tooltip.offsetWidth || 300, stage.clientWidth - 24);
         const left = Math.min( Math.max(nRect.left - stageRect.left + nRect.width/2 - tooltipW/2, 12), stage.clientWidth - tooltipW - 12 );
-        let top = nRect.top - stageRect.top - tooltip.offsetHeight - 12;
-        if (top < 8) top = nRect.bottom - stageRect.top + 12;
+        let top = nRect.top - stageRect.top - tooltip.offsetHeight - 10;
+        if (top < 8) top = nRect.bottom - stageRect.top + 10;
 
         tooltip.style.left = left + 'px';
         tooltip.style.top = top + 'px';
 
+        // a11y state
         nodes.forEach(n => n.setAttribute('aria-expanded','false'));
         node.setAttribute('aria-expanded','true');
-
-        if (!tooltip.querySelector('.open-case-btn')) {
-          const btn = document.createElement('button');
-          btn.className = 'btn secondary open-case-btn';
-          btn.style.marginTop = '8px';
-          btn.innerText = 'Open related case';
-          btn.addEventListener('click', () => {
-            // attempt to find a case element matching data-case-id
-            const target = document.querySelector('[data-case-id="' + ref + '"]') || document.querySelector('[data-case-open="' + ref + '"]') || null;
-            if (target) {
-              if (typeof target.click === 'function') target.click();
-              target.scrollIntoView({behavior:'smooth', block:'center'});
-            } else {
-              hideTooltip();
-            }
-          });
-          tooltip.appendChild(btn);
-        }
+        tooltip.setAttribute('data-ref', ref);
       }
 
       function hideTooltip(){
         tooltip.classList.remove('show');
         tooltip.setAttribute('aria-hidden','true');
         nodes.forEach(n => n.setAttribute('aria-expanded','false'));
+        tooltip.removeAttribute('data-ref');
       }
 
-      // interactions
+      // basic text escaping to avoid accidental injection if using dynamic content
+      function escapeHtml(s){
+        return String(s).replace(/[&<>"'`]/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;', '`':'&#96;'}[m]));
+      }
+
+      // interactions: hover/focus show, leave/blur hide
       nodes.forEach(node => {
         node.addEventListener('pointerenter', () => showTooltip(node));
         node.addEventListener('pointerleave', () => hideTooltip());
         node.addEventListener('focus', () => showTooltip(node));
         node.addEventListener('blur', () => hideTooltip());
 
-        node.addEventListener('click', (e) => {
-          const isOpen = node.getAttribute('aria-expanded') === 'true';
-          if (isOpen) hideTooltip(); else showTooltip(node);
-        });
-
+        // keyboard activation: Enter or Space shows tooltip (but we leave it ephemeral)
         node.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showTooltip(node); }
           if (e.key === 'Escape') { hideTooltip(); node.blur(); }
         });
       });
 
+      // click outside to close
       document.addEventListener('pointerdown', (e) => {
         if (!stage.contains(e.target) && !tooltip.contains(e.target)) hideTooltip();
       });
 
+      // reposition tooltip when window changes
       ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, () => {
         const open = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
         if (open) showTooltip(open);
       }));
 
-      // Hook for the "Open Roadmap Case Study" button
+      // keep the "Open Roadmap Case Study" button behavior small and easy to wire:
+      // it scrolls to the first matching element with data-case-id equal to the currently hovered node's data-ref,
+      // or to #projects if none found.
       const openCaseBtn = document.getElementById('open-roadmap-case');
       if (openCaseBtn) {
         openCaseBtn.addEventListener('click', () => {
-          // try to locate a case with data-case-id="prototype" (example)
-          const primaryCase = document.querySelector('[data-case-id="prototype"]') || null;
-          if (primaryCase) {
-            const opener = primaryCase.querySelector('[data-case-open]') || primaryCase.querySelector('button, a');
-            if (opener && typeof opener.click === 'function') opener.click();
-            primaryCase.scrollIntoView({behavior:'smooth', block:'center'});
-          } else {
-            const projects = document.getElementById('projects');
-            if (projects) projects.scrollIntoView({behavior:'smooth', block:'start'});
-          }
+          const ref = tooltip.getAttribute('data-ref') || 'prototype';
+          // look for project cards with data-case-id="<ref>"
+          const primaryCase = document.querySelector('[data-case-id="' + ref + '"]') || document.getElementById('projects');
+          if (primaryCase) primaryCase.scrollIntoView({behavior:'smooth', block:'center'});
         });
       }
+
+      // ensure nodes are keyboard-focus-visible for accessibility
+      nodes.forEach(n => { n.setAttribute('tabindex', '0'); });
+
     })();
   </script>
 </section>
 <!-- END: Design-to-Launch Roadmap -->
+
 
 
 
