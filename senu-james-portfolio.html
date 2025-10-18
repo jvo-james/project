@@ -3725,316 +3725,300 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-<section id="campus-impact-track" class="campus-impact" aria-labelledby="cpt-title" style="margin-top:32px;">
+
+<!-- CAMPUS IMPACT TRACK — Professional version START -->
+<section id="campus-impact-track" class="campus-impact" aria-labelledby="cpt-title">
   <style>
-    /* Scoped styles for Campus Impact Track (paste-only section) */
-    :root {
-      --c1: #8ad34a; /* step 1 green */
-      --c2: #00c1a7; /* teal */
-      --c3: #15c7e6; /* cyan */
-      --c4: #2b95f2; /* blue */
-      --c5: #8b46e6; /* purple */
-      --muted: rgba(20,28,38,0.56);
-      --bg: #fff;
-      --card-bg: linear-gradient(180deg,#fff,#fbfdff);
-      --shadow: 0 20px 60px rgba(6,10,26,0.06);
+    /* Scoped / professional styling */
+    :root{
+      --cpt-w:1200px;
+      --bg:#ffffff;
+      --muted:#6b7280;
+      --text:#0b1220;
+      --card-radius:16px;
+      --node-size:92px;
+      --node-inner:64px;
+      --shadow-soft: 0 10px 30px rgba(12,18,32,0.06);
+      --shadow-sm: 0 6px 18px rgba(12,18,32,0.05);
+      --glass: rgba(255,255,255,0.6);
     }
 
-    .campus-impact {
-      max-width: 1200px;
-      margin: 18px auto;
-      padding: 20px;
-      border-radius: 16px;
-      background: var(--card-bg);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(10,20,30,0.04);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color: #07133a;
+    .campus-impact{
+      max-width:var(--cpt-w);
+      margin:28px auto;
+      padding:28px;
+      border-radius:18px;
+      background: linear-gradient(180deg,#fff,#fbfdff);
+      box-shadow: 0 18px 48px rgba(10,14,30,0.06);
+      border:1px solid rgba(10,16,28,0.03);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
     }
 
-    .campus-impact .header {
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
-      margin-bottom:8px;
+    .campus-impact-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    h3#cpt-title{font-size:22px;margin:0 0 6px 0;font-weight:800;letter-spacing:-0.02em}
+    p.lead{margin:0;color:var(--muted);font-weight:600}
+
+    .cpt-stage{margin-top:22px;position:relative;min-height:260px}
+
+    /* SVG area responsive */
+    .cpt-canvas{width:100%;height:auto;display:block;max-height:420px}
+
+    /* Node card common */
+    .cpt-node{
+      cursor:pointer;
+      outline: none;
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
+      transform-origin:center;
     }
-    .campus-impact h3 { margin:0; font-weight:900; font-family: "Lexend", Inter, sans-serif; font-size:20px; }
-    .campus-impact p.lead { margin:6px 0 0; color:var(--muted); font-weight:700; font-size:13px; max-width:70ch; }
-
-    /* svg container */
-    .cpt-stage { position:relative; margin-top:14px; }
-    .cpt-svg { width:100%; height:auto; display:block; }
-
-    /* dotted flight path */
-    .cpt-path { fill:none; stroke:#111827; stroke-width:2.2; stroke-dasharray:8 10; opacity:0.82; stroke-linecap:round; stroke-linejoin:round; }
-
-    /* faint lane glow to mimic original */
-    .cpt-glow { fill:none; stroke: url(#laneGlow); stroke-width:80; opacity:0.06; stroke-linecap:round; }
-
-    /* node styles */
-    .node-group { cursor:pointer; outline:none; }
-    .node-outer { fill:none; stroke-width:10; stroke-linecap:round; stroke-linejoin:round; filter: drop-shadow(0 8px 20px rgba(6,10,26,0.08)); }
-    .node-core { fill:#fff; stroke: rgba(10,20,30,0.06); stroke-width:1.6; }
-    .node-small { fill:#fff; stroke: rgba(10,20,30,0.06); stroke-width:1.6; }
-
-    /* labels beside each node */
-    .cpt-label { font-size:13px; font-weight:900; fill:#07133a; text-transform:uppercase; letter-spacing:0.02em; }
-    .cpt-sub { font-size:12px; fill:var(--muted); font-weight:700; }
+    .cpt-node:focus, .cpt-node:hover{
+      transform: translateY(-8px);
+      filter: drop-shadow(0 18px 40px rgba(8,12,24,0.08));
+    }
 
     /* tooltip */
-    .cpt-tooltip {
-      position: absolute;
-      min-width:220px;
-      max-width:340px;
-      padding:10px 12px;
-      border-radius:10px;
-      background:var(--card-bg);
-      box-shadow: 0 20px 60px rgba(6,10,26,0.12);
-      border:1px solid rgba(10,20,30,0.04);
-      font-weight:800;
-      color:#07133a;
-      font-size:13px;
-      transform-origin: left top;
-      pointer-events: none;
+    .cpt-tooltip{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
       opacity:0;
-      transform: translateY(8px) scale(.98);
-      transition: transform .12s ease, opacity .12s ease;
-      z-index:120;
+      pointer-events:none;
+      transition: opacity .14s ease, transform .14s ease;
+      min-width:220px;max-width:360px;padding:12px 14px;border-radius:12px;
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      box-shadow: var(--shadow-soft);
+      border:1px solid rgba(10,20,30,0.04);
+      font-weight:700;color:var(--text);z-index:1400;
     }
-    .cpt-tooltip.show { pointer-events:auto; opacity:1; transform: translateY(6px) scale(1); }
+    .cpt-tooltip.show{opacity:1;pointer-events:auto}
 
-    /* small arrow (paper plane) at end */
-    .plane-stroke { fill:none; stroke:#111827; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .cpt-tooltip .title{font-size:13px;margin-bottom:6px}
+    .cpt-tooltip .desc{font-size:13px;color:var(--muted);font-weight:600}
 
-    /* responsive: stack labels on small screens */
-    @media (max-width:760px) {
-      .campus-impact { padding:14px; }
-      .cpt-svg { height: 420px; }
-      .cpt-tooltip { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); width: calc(100% - 36px); max-width: none; }
+    /* mobile stacked cards */
+    .cpt-vertical{display:none;margin-top:14px;gap:12px}
+    .cpt-card{display:flex;gap:14px;align-items:center;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(10,20,30,0.03);box-shadow:var(--shadow-sm)}
+    .cpt-card .ico{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;color:white;font-weight:800}
+
+    .cpt-card h4{margin:0;font-size:14px;font-weight:800}
+    .cpt-card p{margin:6px 0 0;color:var(--muted);font-size:13px;font-weight:600}
+
+    @media (max-width:820px){
+      .cpt-canvas{display:none}
+      .cpt-vertical{display:flex;flex-direction:column}
+      .campus-impact{padding:18px}
+      .cpt-tooltip{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);max-width:calc(100% - 40px)}
     }
+
+    /* Visually hidden for accessible icons where needed */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 
-  <div class="header">
+  <div class="campus-impact-header">
     <div>
-      <h3 id="cpt-title">Campus Impact Track</h3>
-      <p class="lead">Five focused steps to validate, launch and grow student-first products.</p>
+      <h3 id="cpt-title">Journey — concise & premium</h3>
+      <p class="lead">A refined timeline with visible icons and lightweight details on hover or focus.</p>
     </div>
   </div>
 
-  <div class="cpt-stage" id="cpt-stage" aria-hidden="false">
+  <div class="cpt-stage" id="cpt-stage">
     <!-- Responsive SVG roadmap -->
-    <svg class="cpt-svg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Campus roadmap with five steps">
+    <svg class="cpt-canvas" viewBox="0 0 1200 420" role="img" aria-label="Product journey with five milestones" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <linearGradient id="laneGlow" x1="0" x2="1">
-          <stop offset="0" stop-color="#7c3aed"/>
-          <stop offset="1" stop-color="#06b6d4"/>
-        </linearGradient>
+        <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+        <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
+        <linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+        <filter id="soft-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="14" stdDeviation="26" flood-color="#0b1220" flood-opacity="0.06"/>
+        </filter>
       </defs>
 
-      <!-- Road base (subtle wide stroke) -->
-      <path d="M60 320 C 200 160, 360 420, 500 320 C 640 220, 780 420, 900 320 C 1020 220, 1140 420, 1160 240"
-            class="cpt-glow" />
+      <!-- smooth dashed path -->
+      <path d="M120 300 C 240 190, 360 360, 480 260 C 600 140, 720 360, 840 260 C 960 160, 1040 300, 1100 220"
+            stroke="#e6e9ef" stroke-width="18" stroke-linecap="round" fill="none" opacity="1" />
+      <!-- inner dashed for lane -->
+      <path d="M120 300 C 240 190, 360 360, 480 260 C 600 140, 720 360, 840 260 C 960 160, 1040 300, 1100 220"
+            stroke="#f4f6fb" stroke-width="8" stroke-linecap="round" stroke-dasharray="22 14" fill="none" opacity="1" />
 
-      <!-- dashed centerline -->
-      <path id="cpt-mainpath" d="M60 320 C 200 160, 360 420, 500 320 C 640 220, 780 420, 900 320 C 1020 220, 1140 420, 1160 240"
-            class="cpt-path" />
-
-      <!-- STEP NODES (positions chosen along the path) -->
-      <!-- Node 1: Survey (left low) -->
-      <g class="node-group" tabindex="0" data-title="Survey — Student needs" data-desc="Short surveys & micro-interviews to surface top pain points and priorities." transform="translate(140,280)" role="button" aria-label="Survey — Student needs">
-        <!-- colored partial arc -->
-        <path d="M -42 0 A 42 42 0 1 1  42 0" class="node-outer" stroke="var(--c1)" stroke-dasharray="120" stroke-dashoffset="28"/>
-        <circle cx="0" cy="0" r="28" class="node-core"></circle>
-
-        <!-- LIGHTBULB icon -->
-        <g transform="translate(-8,-6) scale(0.85)" aria-hidden="true">
-          <path class="icon" d="M8 8c0-2.8 2-4 4-4s4 1.2 4 4c0 1.6-0.3 2.3-1 3.2-0.7 0.8-0.9 1.8-0.9 2.8h-5c0-1-0.2-2-0.9-2.8C8.3 10.3 8 9.6 8 8z"></path>
-          <path class="icon" d="M11 18h6"></path>
-          <rect x="10" y="19" width="6" height="2" rx="1" fill="none" class="icon"></rect>
+      <!-- NODES: each group contains background rounded square + inner white circle + icon -->
+      <!-- IDEA -->
+      <g class="cpt-node" data-title="IDEA" data-desc="Seed concept" tabindex="0" transform="translate(180,300)" role="button" aria-label="Idea — Seed concept">
+        <rect x="-46" y="-46" width="92" height="92" rx="18" fill="url(#g3)"></rect>
+        <rect x="-40" y="-40" width="80" height="80" rx="14" fill="white" opacity="0.04"></rect>
+        <circle cx="0" cy="0" r="26" fill="#fff"></circle>
+        <!-- lightbulb icon -->
+        <g transform="translate(-9,-9) scale(1)" aria-hidden="true">
+          <path d="M13 5a4 4 0 1 0-6 3c0 1.9 1.3 3 2 3 .7 0 2-1.1 2-3a4 4 0 0 0 2-3z" fill="none" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 12v2" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M8 16h4" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/>
         </g>
       </g>
 
-      <!-- Node 2: Pilot (upper) -->
-      <g class="node-group" tabindex="0" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics." transform="translate(360,170)" role="button" aria-label="Pilot — Focused testing">
-        <path d="M -42 0 A 42 42 0 0 0 42 0" class="node-outer" stroke="var(--c2)" stroke-dasharray="120" stroke-dashoffset="28"/>
-        <circle cx="0" cy="0" r="28" class="node-core"></circle>
-
-        <!-- MICROSCOPE icon -->
-        <g transform="translate(-9,-6) scale(0.9)" aria-hidden="true">
-          <path class="icon" d="M6 18c6-4 12-4 16 0"></path>
-          <path class="icon" d="M8 8c6-4 12-4 16 0"></path>
-          <rect x="5" y="19" width="12" height="3" rx="1" class="icon"></rect>
+      <!-- RESEARCH -->
+      <g class="cpt-node" data-title="RESEARCH" data-desc="User insights" tabindex="0" transform="translate(360,200)" role="button" aria-label="Research — User insights">
+        <rect x="-46" y="-46" width="92" height="92" rx="18" fill="url(#g1)"></rect>
+        <rect x="-40" y="-40" width="80" height="80" rx="14" fill="white" opacity="0.04"></rect>
+        <circle cx="0" cy="0" r="26" fill="#fff"></circle>
+        <!-- magnifier icon -->
+        <g transform="translate(-6,-6) scale(1)" aria-hidden="true">
+          <circle cx="8" cy="8" r="5.2" fill="none" stroke="#0b1220" stroke-width="1.4"/>
+          <path d="M13.5 13.5L18 18" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/>
         </g>
       </g>
 
-      <!-- Node 3: Shuttle (lower center) -->
-      <g class="node-group" tabindex="0" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts." transform="translate(560,300)" role="button" aria-label="Shuttle — Live tracking">
-        <path d="M -42 0 A 42 42 0 1 1 -10 -40" class="node-outer" stroke="var(--c3)" stroke-dasharray="120" stroke-dashoffset="28"/>
-        <circle cx="0" cy="0" r="28" class="node-core"></circle>
-
-        <!-- VEHICLE icon -->
-        <g transform="translate(-10,-6) scale(0.92)" aria-hidden="true">
-          <rect x="0" y="5" width="20" height="10" rx="2" class="icon"></rect>
-          <circle cx="5" cy="18" r="2" class="icon" fill="#111827"></circle>
-          <circle cx="15" cy="18" r="2" class="icon" fill="#111827"></circle>
+      <!-- PROTO -->
+      <g class="cpt-node" data-title="PROTO" data-desc="Clickable MVP" tabindex="0" transform="translate(560,300)" role="button" aria-label="Proto — Clickable MVP">
+        <rect x="-46" y="-46" width="92" height="92" rx="18" fill="url(#g2)"></rect>
+        <rect x="-40" y="-40" width="80" height="80" rx="14" fill="white" opacity="0.04"></rect>
+        <circle cx="0" cy="0" r="26" fill="#fff"></circle>
+        <!-- wireframe/prototype icon -->
+        <g transform="translate(-8,-8) scale(1)" aria-hidden="true">
+          <rect x="2" y="2" width="12" height="6" rx="1" fill="none" stroke="#0b1220" stroke-width="1.2"></rect>
+          <rect x="2" y="10" width="18" height="6" rx="1" fill="none" stroke="#0b1220" stroke-width="1.2"></rect>
         </g>
       </g>
 
-      <!-- Node 4: Marketplace (upper right) -->
-      <g class="node-group" tabindex="0" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students." transform="translate(780,200)" role="button" aria-label="Marketplace — Campus commerce">
-        <path d="M 42 0 A 42 42 0 1 1 -10 40" class="node-outer" stroke="var(--c4)" stroke-dasharray="120" stroke-dashoffset="28"/>
-        <circle cx="0" cy="0" r="28" class="node-core"></circle>
-
-        <!-- STOREFRONT icon -->
-        <g transform="translate(-10,-6) scale(0.95)" aria-hidden="true">
-          <path class="icon" d="M2 12h24v-6a8 8 0 0 0-8-8H10a8 8 0 0 0-8 8v6z"></path>
-          <path class="icon" d="M6 12v8"></path>
-          <path class="icon" d="M22 12v8"></path>
+      <!-- LAUNCH -->
+      <g class="cpt-node" data-title="LAUNCH" data-desc="Pilot live" tabindex="0" transform="translate(760,200)" role="button" aria-label="Launch — Pilot live">
+        <rect x="-46" y="-46" width="92" height="92" rx="18" fill="url(#g3)"></rect>
+        <rect x="-40" y="-40" width="80" height="80" rx="14" fill="white" opacity="0.04"></rect>
+        <circle cx="0" cy="0" r="26" fill="#fff"></circle>
+        <!-- check icon -->
+        <g transform="translate(-6,-6) scale(1)" aria-hidden="true">
+          <path d="M4 10l3 3 8-8" fill="none" stroke="#0b1220" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </g>
       </g>
 
-      <!-- Node 5: Community (end) -->
-      <g class="node-group" tabindex="0" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions." transform="translate(1040,240)" role="button" aria-label="Community — Ongoing adoption">
-        <path d="M -42 0 A 42 42 0 1 1 42 0" class="node-outer" stroke="var(--c5)" stroke-dasharray="120" stroke-dashoffset="28"/>
-        <circle cx="0" cy="0" r="28" class="node-core"></circle>
-
-        <!-- COMMUNITY heads -->
-        <g transform="translate(-12,-8) scale(0.95)" aria-hidden="true">
-          <circle cx="12" cy="8" r="3" class="icon" fill="#111827"></circle>
-          <circle cx="24" cy="8" r="3" class="icon" fill="#111827"></circle>
-          <path class="icon" d="M4 24c6-8 26-8 40 0"></path>
+      <!-- SCALE -->
+      <g class="cpt-node" data-title="SCALE" data-desc="Growth" tabindex="0" transform="translate(980,240)" role="button" aria-label="Scale — Growth">
+        <rect x="-46" y="-46" width="92" height="92" rx="18" fill="url(#g1)"></rect>
+        <rect x="-40" y="-40" width="80" height="80" rx="14" fill="white" opacity="0.04"></rect>
+        <circle cx="0" cy="0" r="26" fill="#fff"></circle>
+        <!-- star icon -->
+        <g transform="translate(-9,-9) scale(1)" aria-hidden="true">
+          <path d="M9 3l2.3 4.7L16 9.2l-3.8 2.8L13 17 9 14.4 5 17l1.8-4.9L3 9.2l4.7-1.5L9 3z"
+                fill="none" stroke="#0b1220" stroke-width="1.2" stroke-linejoin="round"/>
         </g>
       </g>
 
-      <!-- Paper plane finishing the route -->
-      <g transform="translate(1168,232) rotate(-12)">
-        <path class="plane-stroke" d="M2 0 L18 6 L6 8 L2 0 Z" fill="#111827" />
-        <path class="plane-stroke" d="M6 8 L7 18" stroke-opacity="0.5" />
-      </g>
-
-      <!-- textual step labels (positioned close to nodes) -->
-      <g aria-hidden="true" font-family="Inter,system-ui,sans-serif">
-        <text x="52" y="240" class="cpt-label">STEP 01</text>
-        <text x="52" y="258" class="cpt-sub">Survey — Student needs</text>
-
-        <text x="260" y="130" class="cpt-label">STEP 02</text>
-        <text x="260" y="148" class="cpt-sub">Pilot — Focused testing</text>
-
-        <text x="470" y="340" class="cpt-label">STEP 03</text>
-        <text x="470" y="358" class="cpt-sub">Shuttle — Live tracking</text>
-
-        <text x="700" y="160" class="cpt-label">STEP 04</text>
-        <text x="700" y="178" class="cpt-sub">Marketplace — Campus commerce</text>
-
-        <text x="980" y="200" class="cpt-label">STEP 05</text>
-        <text x="980" y="218" class="cpt-sub">Community — Ongoing adoption</text>
-      </g>
     </svg>
 
-    <!-- tooltip (positioned in JS) -->
-    <div id="cpt-tooltip" class="cpt-tooltip" role="dialog" aria-hidden="true">
-      <div id="cpt-tooltip-title" style="font-weight:900;font-size:13px;margin-bottom:6px"></div>
-      <div id="cpt-tooltip-desc" style="font-weight:700;color:var(--muted);font-size:13px"></div>
+    <!-- Tooltip -->
+    <div id="cpt-tooltip" class="cpt-tooltip" role="dialog" aria-hidden="true" aria-live="polite">
+      <div id="cpt-tooltip-title" class="title"></div>
+      <div id="cpt-tooltip-desc" class="desc"></div>
     </div>
 
-    <!-- small stacked cards shown on very small screens (fallback) -->
-    <div class="cpt-vertical" aria-hidden="true" style="display:none;margin-top:12px;gap:12px">
-      <article style="display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(10,20,30,0.04);box-shadow:0 12px 40px rgba(6,10,26,0.06)">
-        <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,var(--c1),#9ce06b);display:grid;place-items:center;color:#fff;font-weight:900">💡</div>
-        <div><strong style="display:block;font-weight:900">SURVEY</strong><div style="color:var(--muted);font-weight:700">Short surveys & micro-interviews to surface top pain points.</div></div>
+    <!-- Mobile stacked cards -->
+    <div class="cpt-vertical" aria-hidden="true">
+      <article class="cpt-card" data-title="IDEA" data-desc="Seed concept">
+        <div class="ico" style="background:linear-gradient(90deg,#16a34a,#06b6d4)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M11 4a4 4 0 1 0-6 3c0 1.9 1.3 3 2 3 .7 0 2-1.1 2-3a4 4 0 0 0 2-3z" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12v2" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M8 16h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <div><h4>IDEA</h4><p>Seed concept</p></div>
+      </article>
+
+      <article class="cpt-card" data-title="RESEARCH" data-desc="User insights">
+        <div class="ico" style="background:linear-gradient(90deg,#06b6d4,#7c3aed)"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="9" cy="9" r="5.2" stroke="white" stroke-width="1.4" fill="none"/><path d="M13.5 13.5L18 18" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <div><h4>RESEARCH</h4><p>User insights</p></div>
+      </article>
+
+      <article class="cpt-card" data-title="PROTO" data-desc="Clickable MVP">
+        <div class="ico" style="background:linear-gradient(90deg,#fb923c,#ef4444)"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="2" y="2" width="12" height="6" rx="1" stroke="white" stroke-width="1.2" fill="none"/><rect x="2" y="10" width="18" height="6" rx="1" stroke="white" stroke-width="1.2" fill="none"/></svg></div>
+        <div><h4>PROTO</h4><p>Clickable MVP</p></div>
+      </article>
+
+      <article class="cpt-card" data-title="LAUNCH" data-desc="Pilot live">
+        <div class="ico" style="background:linear-gradient(90deg,#16a34a,#06b6d4)"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 10l3 3 8-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><h4>LAUNCH</h4><p>Pilot live</p></div>
+      </article>
+
+      <article class="cpt-card" data-title="SCALE" data-desc="Growth">
+        <div class="ico" style="background:linear-gradient(90deg,#06b6d4,#7c3aed)"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M9 3l2.3 4.7L16 9.2l-3.8 2.8L13 17 9 14.4 5 17l1.8-4.9L3 9.2l4.7-1.5L9 3z" stroke="white" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg></div>
+        <div><h4>SCALE</h4><p>Growth</p></div>
       </article>
     </div>
+
   </div>
 
   <script>
-    (function () {
-      const stage = document.getElementById('cpt-stage');
+    (function(){
       const tooltip = document.getElementById('cpt-tooltip');
       const tipTitle = document.getElementById('cpt-tooltip-title');
       const tipDesc = document.getElementById('cpt-tooltip-desc');
-      const nodes = stage.querySelectorAll('.node-group');
+      const nodes = Array.from(document.querySelectorAll('.cpt-node'));
+      const vCards = Array.from(document.querySelectorAll('.cpt-card'));
 
-      // Position tooltip with clamping inside viewport
-      function placeTooltip(x, y) {
-        const pad = 12;
-        const tt = tooltip.getBoundingClientRect();
+      function positionTooltip(rect){
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
-        // prefer above the node unless near top small screens
-        let left = x - tt.width / 2;
-        left = Math.max(pad, Math.min(left, vw - tt.width - pad));
-
-        let top = y - tt.height - 18;
-        if (top < 8) top = y + 18; // drop below if not enough room
-
+        const margin = 12;
+        if(window.innerWidth <= 820){
+          tooltip.style.left = '50%';
+          tooltip.style.top = 'auto';
+          tooltip.style.bottom = margin + 'px';
+          tooltip.style.transform = 'translateX(-50%)';
+          return;
+        }
+        let left = rect.left + rect.width/2;
+        let top = rect.top - tooltip.offsetHeight - 10;
+        left = Math.max(margin + tooltip.offsetWidth/2, Math.min(vw - margin - tooltip.offsetWidth/2, left));
+        top = Math.max(margin, top);
         tooltip.style.left = left + 'px';
         tooltip.style.top = top + 'px';
+        tooltip.style.bottom = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
       }
 
-      function showTipFromEl(el) {
-        const title = el.getAttribute('data-title');
-        const desc = el.getAttribute('data-desc');
-
-        tipTitle.textContent = title;
-        tipDesc.textContent = desc;
-        tooltip.setAttribute('aria-hidden', 'false');
+      function showTipFor(el){
+        tipTitle.textContent = el.getAttribute('data-title') || '';
+        tipDesc.textContent = el.getAttribute('data-desc') || '';
+        tooltip.setAttribute('aria-hidden','false');
         tooltip.classList.add('show');
-
-        // compute approximate position based on node's bounding box center
-        const nodeRect = el.getBoundingClientRect();
-        const centerX = nodeRect.left + nodeRect.width / 2;
-        const centerY = nodeRect.top + nodeRect.height / 2;
-        placeTooltip(centerX, centerY);
+        const rect = el.getBoundingClientRect();
+        requestAnimationFrame(()=> positionTooltip(rect));
       }
+      function hideTip(){ tooltip.setAttribute('aria-hidden','true'); tooltip.classList.remove('show'); }
 
-      function hideTip() {
-        tooltip.setAttribute('aria-hidden', 'true');
-        tooltip.classList.remove('show');
-      }
-
-      // attach events
-      nodes.forEach(node => {
-        node.addEventListener('mouseenter', (e) => showTipFromEl(node));
-        node.addEventListener('mouseleave', hideTip);
-        node.addEventListener('focus', () => showTipFromEl(node));
+      nodes.forEach(node=>{
+        node.addEventListener('pointerenter', ()=> showTipFor(node));
+        node.addEventListener('pointerleave', hideTip);
+        node.addEventListener('focus', ()=> showTipFor(node));
         node.addEventListener('blur', hideTip);
 
-        // touch friendly: tap toggles tooltip
-        let tapped = false;
-        node.addEventListener('touchstart', (ev) => {
-          ev.stopPropagation();
-          if (tapped) {
-            hideTip();
-            tapped = false;
-          } else {
-            showTipFromEl(node);
-            tapped = true;
-            setTimeout(() => tapped = false, 900);
-          }
+        node.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); if(tooltip.classList.contains('show')) hideTip(); else { showTipFor(node); setTimeout(hideTip, 3000); } }
+        });
+
+        // touch: show briefly
+        let tTimer = null;
+        node.addEventListener('touchstart', ()=>{
+          if(tTimer) clearTimeout(tTimer);
+          showTipFor(node);
+          tTimer = setTimeout(()=> hideTip(), 3000);
+        }, {passive:true});
+      });
+
+      vCards.forEach(card=>{
+        card.addEventListener('click', ()=>{
+          showTipFor(card);
+          setTimeout(hideTip, 3200);
         });
       });
 
-      // dismiss on outside tap / scroll
-      document.addEventListener('click', (e) => {
-        if (!stage.contains(e.target) && !tooltip.contains(e.target)) hideTip();
-      }, {passive:true});
+      document.addEventListener('click', (e)=>{
+        if(!tooltip.contains(e.target)) hideTip();
+      });
+      document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') hideTip(); });
 
-      window.addEventListener('resize', () => {
-        if (tooltip.classList.contains('show')) {
-          // reposition
+      // On resize, reposition tooltip if open
+      window.addEventListener('resize', ()=> {
+        if(tooltip.classList.contains('show')){
           const focused = document.activeElement;
-          if (focused && focused.classList && focused.classList.contains('node-group')) {
-            showTipFromEl(focused);
-          } else {
-            hideTip();
-          }
+          if(focused && focused.classList.contains('cpt-node')) positionTooltip(focused.getBoundingClientRect());
         }
       });
     })();
   </script>
 </section>
+<!-- CAMPUS IMPACT TRACK — Professional version END -->
 
 
 
