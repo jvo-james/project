@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q5GR0GCN9"></script>
-<script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -3725,310 +3726,141 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
+<style>
+:root{
+  --bg:#f7f9fb;
+  --card-bg:linear-gradient(135deg,#ffffff 0%, #f8fbff 100%);
+  --accent-1:linear-gradient(135deg,#00bfa6,#00e0a8);
+  --accent-2:linear-gradient(135deg,#ff7a59,#ff6a8a);
+  --accent-3:linear-gradient(135deg,#6a5cff,#9b6bff);
+  --accent-4:linear-gradient(135deg,#1fb17f,#3ad4a6);
+  --accent-5:linear-gradient(135deg,#7b5bff,#4ad0ff);
+  --muted:#9aa6b2;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:var(--bg); color:#0f1724}
+.container{max-width:1200px;margin:48px auto;padding:36px;background:var(--card-bg);border-radius:18px;box-shadow:0 10px 40px rgba(16,24,40,0.06);}
+.header{display:flex;flex-direction:column;gap:8px;padding:8px 12px 24px}
+.title{font-size:28px;font-weight:800;color:#0b1220}
+.lead{color:var(--muted);font-weight:600}
+.journey{position:relative;padding:48px 20px 28px}
+.road-wrap{position:relative;height:320px;display:block}
+svg.road{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);width:100%;height:100%;overflow:visible}
+.road-bg{stroke:#dfe7ee;stroke-width:40;stroke-linecap:round;fill:none;filter:drop-shadow(0 8px 18px rgba(16,24,40,0.06))}
+.road-center{stroke:#ffffff;stroke-width:4;stroke-dasharray:0 24;stroke-linecap:round}
+.node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:10px;transform:translate(-50%,-50%);transition:transform .35s cubic-bezier(.2,.9,.3,1),box-shadow .35s;border-radius:14px}
+.node .badge{width:96px;height:96px;border-radius:18px;display:grid;place-items:center;box-shadow:0 18px 40px rgba(11,18,32,0.06);}
+.node .label{font-weight:700;font-size:14px;color:#0b1220}
+.node .sub{font-size:13px;color:var(--muted);margin-top:-4px}
+.node:hover{transform:translate(-50%,-50%) scale(1.05);z-index:6}
+.icon{width:44px;height:44px;opacity:0.98}
+.node.pulse .badge{animation:float 4s ease-in-out infinite}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+.node .badge svg{filter:drop-shadow(0 6px 20px rgba(11,18,32,0.08))}
+.node .label-wrap{text-align:center}
+.node .label{letter-spacing:0.2px}
+.node .sub{font-weight:500}
+.node.survey{left:12%;top:62%}
+.node.pilot{left:32%;top:36%}
+.node.shuttle{left:52%;top:64%}
+.node.market{left:72%;top:38%}
+.node.community{left:88%;top:62%}
+.cta{display:flex;justify-content:flex-end;margin-top:18px}
+.button{background:linear-gradient(90deg,#6b5bff,#27d0ff);padding:12px 20px;border-radius:12px;color:white;font-weight:700;border:none;cursor:pointer;box-shadow:0 8px 30px rgba(39,208,255,0.18)}
+@media (max-width:1000px){
+  .container{padding:26px;border-radius:14px}
+  .road-wrap{height:360px}
+  .node .badge{width:84px;height:84px;border-radius:14px}
+  .node .icon{width:36px;height:36px}
+}
+@media (max-width:700px){
+  .container{padding:20px;margin:20px}
+  .header{align-items:flex-start}
+  .title{font-size:22px}
+  .road-wrap{height:auto}
+  svg.road{display:none}
+  .vertical-road{display:block;width:4px;background:linear-gradient(#e6edf7,#e6edf7);height:100%;position:absolute;left:50%;top:60px;transform:translateX(-50%);border-radius:4px}
+  .vertical-road::after{content:"";position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:4px;background:linear-gradient(#e6edf7,#e6edf7)}
+  .center-dots{position:absolute;left:50%;transform:translateX(-50%);top:60px;height:100%;width:4px}
+  .center-dots::before{content:"";position:absolute;left:50%;transform:translateX(-50%);top:0;width:4px;height:8px;background:#ffffff;border-radius:2px;box-shadow:0 0 0 0 rgba(0,0,0,0);background-repeat:repeat-y;background-size:4px 24px}
+  .node{position:relative;transform:none;left:50%;margin:34px 0;padding-left:36px}
+  .node .badge{position:absolute;left:50%;transform:translateX(-50%);top:-28px}
+  .node .label-wrap{margin-top:46px}
+  .node .label{font-size:15px}
+  .node .sub{font-size:13px}
+  .cta{justify-content:center}
+}
+</style>
 
-<section id="premium-journey" aria-labelledby="pj-title" role="region">
-  <style>
-    :root{
-      --bg: linear-gradient(180deg,#fbfdff,#f7f9ff);
-      --muted:#6b7280;
-      --text:#07133a;
-      --accent-a:#7c3aed;
-      --accent-b:#06b6d4;
-      --glass:rgba(255,255,255,0.72);
-      --card-shadow:0 20px 50px rgba(9,14,28,0.08);
-      --radius:16px;
-      --maxW:1200px;
-    }
-    #premium-journey{max-width:var(--maxW);margin:34px auto;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);padding:28px}
-    .pj-outer{background:var(--bg);border-radius:20px;padding:28px;border:1px solid rgba(7,19,40,0.04);box-shadow:var(--card-shadow)}
-    #pj-title{font-weight:900;margin:0;font-size:26px;letter-spacing:-0.02em}
-    .pj-sub{margin-top:8px;color:var(--muted);font-weight:700;font-size:14px}
-    .pj-stage{position:relative;margin-top:28px;height:420px}
-    .pj-svg{width:100%;height:100%;display:block;overflow:visible}
-    .road{fill:none;stroke-width:10;stroke-linecap:round;filter:url(#roadBlur)}
-    .road-shadow{fill:none;stroke-width:28;stroke-linecap:round;opacity:0.06}
-    .pj-node{cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .2s;transform-origin:center;outline:none}
-    .pj-node:focus{transform:translateY(-8px) scale(1.03);box-shadow:0 20px 46px rgba(12,42,120,0.08);border-radius:14px}
-    .node-bg{rx:14;ry:14;filter:drop-shadow(0 18px 46px rgba(6,10,26,0.07))}
-    .icon-wrap{fill:#fff}
-    .label{font-weight:900;font-size:13px;fill:var(--text);text-anchor:middle}
-    .subtext{font-size:12px;fill:rgba(7,19,40,0.56);text-anchor:middle}
-    .float{animation:float 5.8s ease-in-out infinite}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-    .pj-tooltip{position:fixed;min-width:240px;max-width:360px;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 26px 64px rgba(9,14,28,0.12);border:1px solid rgba(7,19,40,0.05);opacity:0;transform:translateY(8px) scale(.98);transition:opacity .14s ease,transform .14s ease;pointer-events:none;z-index:80;font-weight:800;color:var(--text)}
-    .pj-tooltip.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-    .pj-vertical{display:none;margin-top:18px;gap:12px}
-    .card{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:14px;background:#fff;border:1px solid rgba(7,19,40,0.03);box-shadow:0 18px 48px rgba(6,10,26,0.06)}
-    .card .ico{width:56px;height:56px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;font-weight:900}
-    .card h4{margin:0;font-size:15px;font-weight:900}
-    .card p{margin:6px 0 0;color:var(--muted);font-weight:700;font-size:13px}
-    .pj-meta{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
-    .pj-cta{padding:12px 16px;border-radius:14px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;border:none;font-weight:900;cursor:pointer;box-shadow:0 16px 40px rgba(124,58,237,0.08)}
-  
-  </style>
-
-  <div class="pj-outer" role="application">
-    <h3 id="pj-title">Campus Impact Track</h3>
-    <p class="pj-sub">Five focused steps to validate, launch and grow student-first products.</p>
-
-    <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 520" role="img" aria-label="Campus Impact five step timeline">
-        <defs>
-          <linearGradient id="gRoad" x1="0" x2="1"><stop offset="0" stop-color="#e6e9ff"/><stop offset="1" stop-color="#f6fbff"/></linearGradient>
-          <linearGradient id="gRoadAccent" x1="0" x2="1"><stop offset="0" stop-color="#dfe7ff"/><stop offset="1" stop-color="#eef8ff"/></linearGradient>
-          <filter id="roadBlur" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="6" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <linearGradient id="ga" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
-          <linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
-          <linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="ge" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#34d399"/></linearGradient>
-        </defs>
-
-        <path class="road-shadow" d="M80 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1160 260" stroke="url(#gRoad)" />
-
-        <path class="road" d="M80 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1160 260" stroke="url(#gRoadAccent)" stroke-dasharray="0" />
-
-        <g transform="translate(140,290)">
-          <g class="pj-node" tabindex="0" role="button" aria-label="Survey — Student needs" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities.">
-            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gd)"></rect>
-            <g transform="translate(0,-20)" class="float">
-              <rect x="-30" y="-10" width="60" height="60" rx="14" fill="#fff" opacity="0.02"></rect>
-              <g transform="translate(-10,-8) scale(0.9)">
-                <rect x="0" y="8" width="20" height="26" rx="3" fill="#fff" stroke="#0b1726" stroke-width="1" opacity="0.95"></rect>
-                <path d="M3 14h14" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
-                <path d="M3 20h10" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
-                <circle cx="14" cy="26" r="1.8" fill="#0b1726"/>
-              </g>
-            </g>
-            <circle cx="0" cy="-20" r="44" fill="url(#gd)" opacity="0.06"></circle>
-          </g>
-          <text class="label" y="70">SURVEY</text>
-          <text class="subtext" y="88">Student needs</text>
-        </g>
-
-        <g transform="translate(360,170)">
-          <g class="pj-node" tabindex="0" role="button" aria-label="Pilot — Focused testing" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics.">
-            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gc)"></rect>
-            <g transform="translate(0,-20)" class="float">
-              <rect x="-28" y="-8" width="56" height="44" rx="8" fill="#fff" opacity="0.02"></rect>
-              <g transform="translate(-8,-10) scale(0.95)">
-                <path d="M6 6c2-4 6-6 10-6s8 2 10 6" stroke="#0b1726" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-                <rect x="4" y="12" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.2" fill="none"></rect>
-                <circle cx="8" cy="24" r="2" fill="#0b1726"/>
-                <circle cx="18" cy="24" r="2" fill="#0b1726"/>
-              </g>
-            </g>
-            <circle cx="0" cy="-20" r="46" fill="url(#gc)" opacity="0.06"></circle>
-          </g>
-          <text class="label" y="74">PILOT</text>
-          <text class="subtext" y="92">Small-scale validation</text>
-        </g>
-
-        <g transform="translate(560,300)">
-          <g class="pj-node" tabindex="0" role="button" aria-label="Shuttle — Live tracking" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts.">
-            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gb)"></rect>
-            <g transform="translate(0,-18)" class="float">
-              <rect x="-26" y="-4" width="52" height="26" rx="6" fill="#fff" opacity="0.03"></rect>
-              <g transform="translate(-12,-6)">
-                <rect x="6" y="6" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.2" fill="none"></rect>
-                <circle cx="8" cy="22" r="2" fill="#0b1726"/>
-                <circle cx="22" cy="22" r="2" fill="#0b1726"/>
-              </g>
-            </g>
-            <circle cx="0" cy="-20" r="46" fill="url(#gb)" opacity="0.06"></circle>
-          </g>
-          <text class="label" y="72">SHUTTLE</text>
-          <text class="subtext" y="90">Real-time transport</text>
-        </g>
-
-        <g transform="translate(780,200)">
-          <g class="pj-node" tabindex="0" role="button" aria-label="Marketplace — Campus commerce" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students.">
-            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#ge)"></rect>
-            <g transform="translate(0,-18)" class="float">
-              <rect x="-28" y="-8" width="56" height="44" rx="8" fill="#fff" opacity="0.02"></rect>
-              <g transform="translate(-10,-6) scale(0.95)">
-                <path d="M6 16h16v-6a6 6 0 0 0-6-6H12a6 6 0 0 0-6 6v6z" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linejoin="round"></path>
-                <path d="M8 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
-                <path d="M20 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
-              </g>
-            </g>
-            <circle cx="0" cy="-20" r="44" fill="url(#ge)" opacity="0.06"></circle>
-          </g>
-          <text class="label" y="70">MARKETPLACE</text>
-          <text class="subtext" y="88">Campus commerce</text>
-        </g>
-
-        <g transform="translate(1040,240)">
-          <g class="pj-node" tabindex="0" role="button" aria-label="Community — Ongoing adoption" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions.">
-            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#ga)"></rect>
-            <g transform="translate(0,-16)" class="float">
-              <rect x="-30" y="-8" width="60" height="46" rx="10" fill="#fff" opacity="0.02"></rect>
-              <g transform="translate(-12,-4) scale(0.95)">
-                <circle cx="10" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="none"></circle>
-                <circle cx="22" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="none"></circle>
-                <path d="M4 22c3-6 18-6 22 0" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
-              </g>
-            </g>
-            <circle cx="0" cy="-20" r="44" fill="url(#ga)" opacity="0.06"></circle>
-          </g>
-          <text class="label" y="70">COMMUNITY</text>
-          <text class="subtext" y="88">Adoption & growth</text>
-        </g>
-
+<div class="container">
+  <div class="header">
+    <div class="title">Campus Impact Track</div>
+    <div class="lead">Five focused steps to validate, launch and grow student-first products.</div>
+  </div>
+  <div class="journey">
+    <div class="road-wrap">
+      <svg class="road" viewBox="0 0 1200 300" preserveAspectRatio="none">
+        <path class="road-bg" d="M60 210 C200 120 340 310 480 190 C620 70 760 290 900 180 C980 120 1140 170 1180 160" />
+        <path class="road-center" stroke-dasharray="12 20" d="M60 210 C200 120 340 310 480 190 C620 70 760 290 900 180 C980 120 1140 170 1180 160" />
       </svg>
-
-      <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true">
-        <div id="pj-tooltip-title" style="font-size:13px;margin-bottom:6px"></div>
-        <div id="pj-tooltip-desc" style="font-size:13px;color:var(--muted);font-weight:700"></div>
+      <div class="node survey">
+        <div class="badge" style="background:var(--accent-4);">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="14" height="16" rx="2" stroke="#fff" stroke-width="1.5"/>
+            <path d="M8 8h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M8 12h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M8 16h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="17" y="2" width="4" height="6" rx="1.5" fill="#fff" opacity="0.12"/>
+          </svg>
+        </div>
+        <div class="label-wrap"><div class="label">SURVEY</div><div class="sub">Student needs</div></div>
+      </div>
+      <div class="node pilot pulse">
+        <div class="badge" style="background:var(--accent-2);">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2c0 0-4 1.5-7 5 0 0 2 2 5 3 3 1 5 4 8 7 0 0 2-4-1-6-3-2-2-3-4-3-4s-1.5-2 3-7z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 10l6 6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label-wrap"><div class="label">PILOT</div><div class="sub">Small-scale validation</div></div>
+      </div>
+      <div class="node shuttle">
+        <div class="badge" style="background:var(--accent-3);">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="12" rx="2" stroke="#fff" stroke-width="1.4"/>
+            <path d="M7 16v2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M17 16v2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M10 8h4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label-wrap"><div class="label">SHUTTLE</div><div class="sub">Real-time transport</div></div>
+      </div>
+      <div class="node market pulse">
+        <div class="badge" style="background:var(--accent-1);">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 7h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 7l1-3h8l1 3" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 11v4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label-wrap"><div class="label">MARKETPLACE</div><div class="sub">Campus commerce</div></div>
+      </div>
+      <div class="node community">
+        <div class="badge" style="background:var(--accent-5);">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 11a3 3 0 1 1-6 0" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 15v-1a3 3 0 0 1 3-3h6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 17v2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label-wrap"><div class="label">COMMUNITY</div><div class="sub">Adoption &amp; growth</div></div>
       </div>
     </div>
-
-    <div class="pj-vertical" aria-hidden="true">
-      <article class="card" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface pain points.">
-        <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="16" height="20" rx="3" fill="white" opacity="0.06"/><path d="M10 9h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M10 15h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-        </div>
-        <div><h4>SURVEY</h4><p>Short surveys and micro-interviews to surface pain points.</p></div>
-      </article>
-
-      <article class="card" data-title="Pilot — Focused testing" data-desc="Controlled campus pilot to validate value and flows.">
-        <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18c4-6 8-10 12-12" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div><h4>PILOT</h4><p>Controlled campus pilot to validate value and flows.</p></div>
-      </article>
-
-      <article class="card" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts.">
-        <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="20" height="12" rx="2" fill="white" opacity="0.06"/><circle cx="9" cy="20" r="2" fill="white"/><circle cx="19" cy="20" r="2" fill="white"/></svg>
-        </div>
-        <div><h4>SHUTTLE</h4><p>Real-time vehicle locations, ETAs and route alerts.</p></div>
-      </article>
-
-      <article class="card" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling.">
-        <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 10h12v8a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-8z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 10V8a4 4 0 0 1 8 0v2" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
-        </div>
-        <div><h4>MARKETPLACE</h4><p>Listings, secure checkout and simple order handling.</p></div>
-      </article>
-
-      <article class="card" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions.">
-        <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="3" fill="white"/><circle cx="19" cy="9" r="3" fill="white"/><path d="M4 20c2-6 12-6 16 0" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-        </div>
-        <div><h4>COMMUNITY</h4><p>Scale via ambassadors, feedback loops and student contributions.</p></div>
-      </article>
-    </div>
-
-    <div class="pj-meta" role="group" aria-label="timeline actions">
-      <div style="color:var(--muted);font-weight:800">Five focused steps · keyboard accessible</div>
-      <button class="pj-cta" id="pj-learn">Learn how we built this</button>
-    </div>
+    <div class="cta"><button class="button">Learn how we built this</button></div>
   </div>
+</div>
 
-  <script>
-    (function(){
-      const stage = document.getElementById('pj-stage');
-      const svg = stage && stage.querySelector('svg.pj-svg');
-      const path = svg && svg.querySelector('path.road');
-      const nodes = stage ? stage.querySelectorAll('.pj-node') : [];
-      const tooltip = document.getElementById('pj-tooltip');
-      const ttTitle = document.getElementById('pj-tooltip-title');
-      const ttDesc = document.getElementById('pj-tooltip-desc');
-      const cardList = document.querySelectorAll('.card');
-
-      function placeTooltip(node){
-        if(!tooltip || !svg) return;
-        const svgRect = svg.getBoundingClientRect();
-        const bbox = node.getBoundingClientRect();
-        const centerX = bbox.left + bbox.width/2;
-        let top = bbox.top - tooltip.offsetHeight - 12;
-        if(top < 12) top = bbox.bottom + 12;
-        let left = centerX - tooltip.offsetWidth/2;
-        const margin = 12;
-        if(left < margin) left = margin;
-        if(left + tooltip.offsetWidth > window.innerWidth - margin) left = window.innerWidth - tooltip.offsetWidth - margin;
-        tooltip.style.left = left + 'px';
-        tooltip.style.top = top + 'px';
-      }
-
-      function show(node){
-        ttTitle.textContent = node.getAttribute('data-title') || node.getAttribute('aria-label') || '';
-        ttDesc.textContent = node.getAttribute('data-desc') || '';
-        tooltip.classList.add('show');
-        tooltip.setAttribute('aria-hidden','false');
-        placeTooltip(node);
-      }
-
-      function hide(){
-        tooltip.classList.remove('show');
-        tooltip.setAttribute('aria-hidden','true');
-      }
-
-      nodes.forEach(n=>{
-        n.addEventListener('mouseenter',()=>show(n));
-        n.addEventListener('mouseleave',hide);
-        n.addEventListener('focus',()=>show(n));
-        n.addEventListener('blur',hide);
-        n.addEventListener('click',()=>{
-          if(tooltip.classList.contains('show') && ttTitle.textContent===n.getAttribute('data-title')){ hide(); return; }
-          show(n);
-        });
-      });
-
-      cardList.forEach(c=>{
-        c.addEventListener('click',()=>{
-          ttTitle.textContent = c.getAttribute('data-title') || '';
-          ttDesc.textContent = c.getAttribute('data-desc') || '';
-          tooltip.classList.add('show');
-          tooltip.setAttribute('aria-hidden','false');
-          const rect = c.getBoundingClientRect();
-          let left = rect.left + rect.width/2 - tooltip.offsetWidth/2;
-          if(left < 12) left = 12;
-          if(left + tooltip.offsetWidth > window.innerWidth - 12) left = window.innerWidth - tooltip.offsetWidth - 12;
-          let top = rect.top - tooltip.offsetHeight - 8;
-          if(top < 12) top = rect.bottom + 8;
-          tooltip.style.left = left + 'px';
-          tooltip.style.top = top + 'px';
-          setTimeout(hide,4500);
-        });
-      });
-
-      if(path){
-        const L = path.getTotalLength();
-        path.style.strokeDasharray = L + ' ' + L;
-        path.style.strokeDashoffset = L;
-        path.getBoundingClientRect();
-        path.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(.2,.9,.2,1)';
-        path.style.strokeDashoffset = '0';
-      }
-
-      window.addEventListener('resize',()=>{
-        if(tooltip.classList.contains('show')){
-          const title = ttTitle.textContent;
-          const node = Array.from(nodes).find(n=>n.getAttribute('data-title')===title);
-          if(node) placeTooltip(node);
-        }
-      });
-
-      document.addEventListener('click',(e)=>{
-        if(!tooltip.classList.contains('show')) return;
-        if(!tooltip.contains(e.target) && !e.target.closest('.pj-node') && !e.target.closest('.card')) hide();
-      });
-
-      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') hide(); });
-
-      const btn = document.getElementById('pj-learn');
-      btn && btn.addEventListener('click',()=>{ window.location.hash='#projects'; });
-    })();
-  </script>
-</section>
-
-
-  
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
