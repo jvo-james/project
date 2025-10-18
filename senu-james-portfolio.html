@@ -4136,6 +4136,330 @@ button[aria-pressed="true"] {
     </div>
   </div>
 </div>
+<!-- CASE STUDY MODAL (paste once, e.g., after #projects) -->
+<div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Case study modal">
+  <div class="modal-panel" role="document">
+    <div style="display:flex;align-items:center;gap:12px;justify-content:space-between">
+      <div>
+        <div id="case-title" style="font-weight:900">Case title</div>
+        <div id="case-sub" class="muted">Short subtitle / one-line summary</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a id="case-open-external" href="#" target="_blank" rel="noopener" class="link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Open</a>
+        <button id="case-close" aria-label="Close case study" class="link-btn"><i class="fa-solid fa-xmark"></i>&nbsp;Close</button>
+      </div>
+    </div>
+
+    <div id="case-body">
+      <main id="case-main">
+        <div class="case-gallery">
+          <div class="viewer" id="case-viewer">
+            <button class="control prev" aria-hidden="true" title="Prev" id="case-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <img id="case-main-image" src="" alt="" />
+            <button class="control next" aria-hidden="true" title="Next" id="case-next"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div class="thumbs" id="case-thumbs" aria-hidden="false"></div>
+        </div>
+
+        <section id="case-text">
+          <h4 id="case-overview-title">Overview</h4>
+          <p id="case-desc" class="muted">Project description goes here...</p>
+
+          <h4 style="margin-top:12px">Highlights</h4>
+          <ul id="case-highlights" class="muted"></ul>
+
+          <h4 style="margin-top:12px">Notes</h4>
+          <p id="case-notes" class="muted"></p>
+        </section>
+      </main>
+
+      <aside id="case-aside">
+        <strong>Project details</strong>
+        <div id="case-tags" class="badge-list"></div>
+        <div id="case-metrics" style="margin-top:8px" class="muted"></div>
+        <div id="case-links" style="margin-top:12px"></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Case modal content data (edit text/images/links as you prefer) */
+(function () {
+  const CASES = {
+    vitra: {
+      title: 'Vitra AI',
+      subtitle: 'AI-driven health & wellbeing platform',
+      desc: `Vitra AI is an integrated mental health and teletherapy product that blends ML-driven recommendations, herbal med directories, and booking flows. I led systems design, front-end UX and the production React/Netlify deployment.`,
+      highlights: [
+        'Built ML-assisted triage flow and recommendation engine',
+        'Integrated booking + payment microflow for therapists',
+        'Designed accessible forms and mobile-first layouts',
+      ],
+      metrics: 'Pilot: 800+ users • Avg. session 6m • ADIC Winner',
+      tags: ['AI','Healthcare','ML','React'],
+      images: ['vitra1.png','vitra4.png','vitra-ai.jpg'],
+      live: 'https://vitra-ai.netlify.app/',
+      repo: 'https://github.com/jvo-james/vitra-ai',
+      notes: 'Winner — African Digital Innovation Challenge; prototypes used with community health pilots.'
+    },
+
+    shuttle: {
+      title: 'Shuttle Tracker',
+      subtitle: 'Real-time campus transport tracking',
+      desc: `Shuttle Tracker reduces waiting time and improves route awareness on campus with a lightweight map interface, live vehicle positions and ETA calculations. Built with minimal latency to perform on low-bandwidth networks.`,
+      highlights: [
+        'Real-time vehicle feed with WebSocket updates',
+        'Route optimization and ETA estimation',
+        'Lightweight, offline-friendly UI for low-bandwidth use',
+      ],
+      metrics: 'Deployed across 2 campuses • 1.2k daily lookups',
+      tags: ['Maps','Realtime','Firebase'],
+      images: ['shuttle1.png','shuttle.webp'],
+      live: 'https://jvo-james.github.io/knust/buses',
+      repo: 'https://github.com/jvo-james/knust/blob/main/buses.html',
+      notes: 'Used by student transport teams to coordinate routes and reduce idle fuel time.'
+    },
+
+    emart: {
+      title: 'E-Mart',
+      subtitle: 'Campus shopping & checkout platform',
+      desc: `E-Mart is a mobile-first commerce experience targeted at students: discover campus stores, place orders, and use simple checkout flows. Focused on accessibility and quick onboarding for new vendors.`,
+      highlights: [
+        'Mobile-first checkout and vendor onboarding',
+        'Mock payments integration and order flow testing',
+        'Clean inventory UI for small merchants',
+      ],
+      metrics: 'Pilot vendors: 8 • 500 transactions (pilot)',
+      tags: ['Next.js','Payments','E-commerce'],
+      images: ['emart1.png','emart2.png','e-mart.jpeg'],
+      live: 'https://jvo-james.github.io/knust/',
+      repo: 'https://github.com/jvo-james/knust/blob/main/index.html',
+      notes: 'Iterated based on vendor interviews; next step — Stripe/payments integration.'
+    },
+
+    fitness: {
+      title: 'Fitness Tracker',
+      subtitle: 'Leaderboard-driven workout logging',
+      desc: `Fitness Tracker is a competition-ready logging tool optimized for teams. It includes leaderboards, athlete profiles and analytics dashboards that make it easy to run challenges and seasonal competitions.`,
+      highlights: [
+        'Custom leaderboard engine and CSV import',
+        'Coach/admin panels and challenge management',
+        'Exportable reports for competitions',
+      ],
+      metrics: 'Used by 6 clubs • 1200 logged sessions',
+      tags: ['Analytics','Challenge','Dashboards'],
+      images: ['fittrack5.png','fittrack2.png','fit.png'],
+      live: 'https://jvo-james.github.io/fit-track/home',
+      repo: 'https://github.com/jvo-james/fit-track',
+      notes: 'Built with performance in mind for large team leaderboards.'
+    },
+
+    skillforge: {
+      title: 'SkillForge Registry',
+      subtitle: 'Registration system for events',
+      desc: `SkillForge Registry replaced ad-hoc Google Forms for event organizers, providing verification flows, admin dashboards and better data hygiene for student run events.`,
+      highlights: [
+        'OAuth-based sign-in flows and role-based access',
+        'Event dashboards and automated confirmation emails',
+        'Simplified registration UX reduced errors by 30%',
+      ],
+      metrics: 'Events supported: 40+ • Registrants: 8k+',
+      tags: ['Forms','Auth','Admin'],
+      images: ['skillforg2.png','skill.jpg'],
+      live: 'https://jvo-james.github.io/skillforg-website/startup',
+      repo: 'https://github.com/jvo-james/skillforg-website',
+      notes: 'Now used by student societies to centralize registration.'
+    },
+
+    mhc: {
+      title: 'Make Heaven Crowded',
+      subtitle: 'Faith-driven e-commerce & community hub',
+      desc: `A combined shop, devotional content hub and donation flow, Make Heaven Crowded brings community resources together with commerce and content. Built with modular components that support media and donations.`,
+      highlights: [
+        'Integrated content + shop experience',
+        'Donation microflow and social sharing features',
+        'Design generator for shareable devotionals',
+      ],
+      metrics: 'Active users: 2.1k • Donations processed (pilot)',
+      tags: ['E-commerce','Community','Design'],
+      images: ['mhc3.png','jfactor.jpg','mhc1.png'],
+      live: 'https://jvo-james.github.io/project/mhc1',
+      repo: 'https://github.com/jvo-james/project/blob/main/mhc1.html',
+      notes: 'Featured as a community commerce prototype.'
+    }
+  };
+
+  // modal elements
+  const modal = document.getElementById('case-modal');
+  const titleEl = document.getElementById('case-title');
+  const subEl = document.getElementById('case-sub');
+  const imgEl = document.getElementById('case-main-image');
+  const thumbsEl = document.getElementById('case-thumbs');
+  const descEl = document.getElementById('case-desc');
+  const highlightsEl = document.getElementById('case-highlights');
+  const tagsEl = document.getElementById('case-tags');
+  const metricsEl = document.getElementById('case-metrics');
+  const linksEl = document.getElementById('case-links');
+  const notesEl = document.getElementById('case-notes');
+  const openExternal = document.getElementById('case-open-external');
+  const prevBtn = document.getElementById('case-prev');
+  const nextBtn = document.getElementById('case-next');
+  const closeBtn = document.getElementById('case-close');
+
+  let currentCase = null;
+  let currentImageIndex = 0;
+
+  function populate(caseId) {
+    const data = CASES[caseId];
+    if (!data) return;
+    currentCase = data;
+    currentImageIndex = 0;
+    titleEl.textContent = data.title;
+    subEl.textContent = data.subtitle;
+    descEl.textContent = data.desc;
+    notesEl.textContent = data.notes || '';
+    metricsEl.textContent = data.metrics || '';
+    // tags
+    tagsEl.innerHTML = '';
+    (data.tags || []).forEach(t => {
+      const b = document.createElement('span');
+      b.className = 'badge-pill';
+      b.textContent = t;
+      tagsEl.appendChild(b);
+    });
+    // highlights
+    highlightsEl.innerHTML = '';
+    (data.highlights || []).forEach(h => {
+      const li = document.createElement('li');
+      li.textContent = h;
+      highlightsEl.appendChild(li);
+    });
+    // links
+    linksEl.innerHTML = '';
+    if (data.live) {
+      const a = document.createElement('a');
+      a.href = data.live;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'link-btn';
+      a.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Open live';
+      linksEl.appendChild(a);
+      openExternal.href = data.live;
+      openExternal.style.display = 'inline-flex';
+    } else {
+      openExternal.style.display = 'none';
+    }
+    if (data.repo) {
+      const r = document.createElement('a');
+      r.href = data.repo;
+      r.target = '_blank';
+      r.rel = 'noopener';
+      r.className = 'link-btn';
+      r.innerHTML = '<i class="fa-brands fa-github"></i>&nbsp;Repo';
+      linksEl.appendChild(r);
+    }
+    // images & thumbs
+    thumbsEl.innerHTML = '';
+    (data.images || []).forEach((src,i) => {
+      const thumb = document.createElement('button');
+      thumb.className = 'thumb';
+      thumb.type = 'button';
+      thumb.setAttribute('aria-current', i===0 ? 'true' : 'false');
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = data.title + ' screenshot ' + (i+1);
+      thumb.appendChild(img);
+      thumb.addEventListener('click', () => {
+        setImageIndex(i);
+      });
+      thumbsEl.appendChild(thumb);
+    });
+    // set main image
+    setImageIndex(0);
+  }
+
+  function setImageIndex(i) {
+    if (!currentCase) return;
+    const imgs = currentCase.images || [];
+    if (!imgs.length) {
+      imgEl.src = '';
+      imgEl.alt = '';
+      return;
+    }
+    currentImageIndex = (i + imgs.length) % imgs.length;
+    imgEl.src = imgs[currentImageIndex];
+    imgEl.alt = currentCase.title + ' screenshot ' + (currentImageIndex+1);
+    // highlight thumb
+    Array.from(thumbsEl.children).forEach((t,idx) => {
+      t.setAttribute('aria-current', idx === currentImageIndex ? 'true' : 'false');
+    });
+  }
+
+  // open / close functions
+  function openModal(id) {
+    populate(id);
+    modal.setAttribute('aria-hidden','false');
+    modal.style.display = 'flex';
+    document.documentElement.style.overflow = 'hidden';
+    // focus close for keyboard users
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.setAttribute('aria-hidden','true');
+    modal.style.display = 'none';
+    document.documentElement.style.overflow = '';
+    currentCase = null;
+  }
+
+  // nav
+  prevBtn.addEventListener('click', () => {
+    setImageIndex(currentImageIndex - 1);
+  });
+  nextBtn.addEventListener('click', () => {
+    setImageIndex(currentImageIndex + 1);
+  });
+
+  // close handlers
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (ev) => {
+    if (ev.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (modal.getAttribute('aria-hidden') === 'false') {
+      if (ev.key === 'Escape') closeModal();
+      if (ev.key === 'ArrowLeft') setImageIndex(currentImageIndex - 1);
+      if (ev.key === 'ArrowRight') setImageIndex(currentImageIndex + 1);
+    }
+  });
+
+  // wire up buttons with data-case-open
+  document.querySelectorAll('[data-case-open]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.dataset.caseId;
+      if (!id) return;
+      openModal(id);
+    });
+  });
+
+  // optional: click to zoom main image into an overlay
+  let overlay = null;
+  imgEl.addEventListener('click', () => {
+    if (!imgEl.src) return;
+    overlay = document.createElement('div');
+    overlay.className = 'case-zoom-overlay';
+    const big = document.createElement('img');
+    big.src = imgEl.src;
+    overlay.appendChild(big);
+    overlay.addEventListener('click', () => {
+      overlay.remove();
+      overlay = null;
+    });
+    document.body.appendChild(overlay);
+  });
+
+})();
+</script>
 
 <script type="application/json" id="case-vitra">
 {
