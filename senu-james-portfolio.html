@@ -3478,653 +3478,766 @@ button[aria-pressed="true"] {
 </style>
   </head>
 <body>
-  <header class="site-header" role="banner" aria-label="Primary site header">
-    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
-      <div class="brand" style="display:flex;align-items:center;gap:12px">
-        <div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
-        <div>
-          <h1 style="margin:0">Senu James</h1>
-          <p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
-        </div>
+<header class="site-header" role="banner" aria-label="Primary site header">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto">
+    <div class="brand" style="display:flex;align-items:center;gap:12px">
+      <div class="logo" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-weight:800">SJ</div>
+      <div>
+        <h1 style="margin:0">Senu James</h1>
+        <p style="margin:0;color:var(--muted);font-size:12px">Web Developer · AI & Product Builder</p>
       </div>
-
-      <nav class="primary" aria-label="Main navigation">
-        <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open main menu">
-          <span class="hamburger" aria-hidden="true"></span>
-        </button>
-
-        <div id="primary-nav" class="nav-menu" role="navigation">
-          <a href="#home-hero"><i class="fa-solid fa-house" aria-hidden="true"></i>&nbsp;Home</a>
-          <a href="#projects"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>&nbsp;Projects</a>
-          <a href="#about"><i class="fa-solid fa-user" aria-hidden="true"></i>&nbsp;About</a>
-          <a href="#timeline"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>&nbsp;Journey</a>
-          <a href="#contact"><i class="fa-solid fa-envelope" aria-hidden="true"></i>&nbsp;Contact</a>
-          <a class="cta" href="Senu_James_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Resume</a>
-        </div>
-      </nav>
     </div>
-  </header>
+  <nav class="primary" aria-label="Main navigation">
+ <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Open main menu">
+<span class="hamburger" aria-hidden="true"></span>
+</button>
+ <div id="primary-nav" class="nav-menu" role="navigation">
+<a href="#home-hero"><i class="fa-solid fa-house"></i>&nbsp;Home</a>
+<a href="#projects"><i class="fa-solid fa-diagram-project"></i>&nbsp;Projects</a>
+<a href="#about"><i class="fa-solid fa-user"></i>&nbsp;About</a>
+<a href="#timeline"><i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Journey</a>
+<a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
+<a class="cta" href="Senu_James_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
+</div>
+</nav>
+  </div>
+</header>
 
-  <main id="main-content" class="container" role="main" aria-live="polite">
-    <!-- HERO -->
-    <section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
-      <div class="hero-left">
-        <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Fullstack</div>
+<main id="main-content" class="container" role="main" style="padding-top:28px;">
+<section id="home-hero" class="hero" aria-labelledby="hero-heading" role="region">
+  <div class="hero-left">
+    <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Fullstack</div>
+   
 
-        <h2 id="hero-heading" class="hi">
-          Hi 👋 I’m <strong>Senu James</strong>
-          <span class="desc-line">Designing delightful web products & AI experiences that scale.</span>
-        </h2>
+    <h2 id="hero-heading" class="hi">Hi👋 I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
+    <div class="hero-sub">
+      <div class="role-rotator" aria-live="polite">
+        <span class="role-static">I’m a</span>
+        <span id="rotating-role" class="role-dynamic" aria-hidden="false">Web Developer</span>
+        <span class="role-cursor" aria-hidden="true"></span>
+      </div>
+      <p class="lead">I build product-first web apps, from AI health platforms to campus tools, focused on clarity, accessibility and measurable impact.</p>
+    </div>
 
-        <div class="role-rotator" aria-live="polite">
-          <span class="role-static">I’m a</span>
-          <span id="rotating-role" class="role-dynamic">Web Developer</span>
-          <span class="role-cursor" aria-hidden="true"></span>
+    <ul class="hero-metrics" role="list" aria-hidden="false">
+      <li><strong class="metric-number" data-value="1">Winner</strong><span class="metric-label">African Digital Innovation Challenge</span></li>
+      <li><strong class="metric-number" data-value="1000">1k+</strong><span class="metric-label">Beta users engaged</span></li>
+      <li><strong class="metric-number" data-value="3">3</strong><span class="metric-label">Major product launches</span></li>
+    </ul>
+
+    <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
+      <a class="btn btn-primary" href="#projects" id="projects-cta"><i class="fa-solid fa-briefcase"></i>&nbsp;Selected work</a>
+      <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane"></i>&nbsp;Contact</a>
+      <a class="btn btn-outline" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download CV</a>
+    </div>
+
+  </div>
+
+  <aside class="profile-card" aria-label="Profile and contact" role="complementary">
+    <div class="profile-visual-wrap" aria-hidden="false">
+      <svg class="profile-ring" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
+        <defs>
+          <linearGradient id="pg" x1="0" x2="1">
+            <stop offset="0" stop-color="#7c3aed"/>
+            <stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <circle cx="130" cy="130" r="100" fill="none" stroke="url(#pg)" stroke-width="8" stroke-opacity="0.14" />
+      </svg>
+
+      <div class="double-photo">
+        <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
+          <img src="senu-2.PNG" alt="Senu James portrait" width="320" height="320" loading="eager" decoding="sync">
         </div>
 
-        <p class="lead">
-          I build product-first web apps — from AI health platforms to campus transport tools — focusing on clarity, accessibility and measurable impact.
-        </p>
-
-        <ul class="hero-metrics" role="list" aria-hidden="false">
-          <li><strong class="metric-number">Winner</strong><span class="metric-label">African Digital Innovation Challenge</span></li>
-          <li><strong class="metric-number">1k+</strong><span class="metric-label">Beta users engaged</span></li>
-          <li><strong class="metric-number">3</strong><span class="metric-label">Major product launches</span></li>
-        </ul>
-
-        <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
-          <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>&nbsp;Selected work</a>
-          <a class="btn btn-outline" href="#contact"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>&nbsp;Contact</a>
-          <a class="btn btn-outline" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>&nbsp;Download CV</a>
+        <div class="secondary-photo" aria-hidden="false" role="img" aria-label="Senu James candid">
+          <img src="senu.PNG" alt="Senu James candid photo" width="160" height="160" loading="lazy" decoding="async">
         </div>
       </div>
 
-      <aside class="profile-card" aria-label="Profile and contact" role="complementary">
-        <div class="profile-visual-wrap" aria-hidden="false">
-          <svg class="profile-ring" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
-            <defs>
-              <linearGradient id="pg" x1="0" x2="1">
-                <stop offset="0" stop-color="#7c3aed"/>
-                <stop offset="1" stop-color="#06b6d4"/>
-              </linearGradient>
-            </defs>
-            <circle cx="130" cy="130" r="100" fill="none" stroke="url(#pg)" stroke-width="8" stroke-opacity="0.14" />
-          </svg>
 
-          <div class="double-photo">
-            <div class="profile-photo" role="img" aria-label="Portrait of Senu James">
-              <img src="senu-2.PNG" alt="Portrait of Senu James" width="320" height="320" loading="eager" decoding="sync">
-            </div>
+      <div class="sticker s-1" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🏆</div><div class="sticker-text">ADIC</div></div></div>
+      <div class="sticker s-2" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🧠</div><div class="sticker-text">AI</div></div></div>
+      <div class="sticker s-3" aria-hidden="true"><div class="sticker-inner"><div class="sticker-emoji">🌍</div><div class="sticker-text">Community</div></div></div>
 
-            <div class="secondary-photo" aria-hidden="true" role="img" aria-label="Senu candid photo">
-              <img src="senu.PNG" alt="Senu candid photo" width="160" height="160" loading="lazy" decoding="async">
-            </div>
-          </div>
+      <div class="ornament orn-1" aria-hidden="true"></div>
+      <div class="ornament orn-2" aria-hidden="true"></div>
 
-          <div class="float-badge badge-1" aria-hidden="true">
-            <div class="badge-icon"><i class="fa-solid fa-award" aria-hidden="true"></i></div>
-            <div class="badge-text"><strong>ADIC Winner</strong></div>
-          </div>
-        </div>
-
-        <div class="profile-meta" style="flex:1">
-          <div class="meta-title">Senu James</div>
-          <div class="meta-sub">Award-winning creator • Vitra AI • Shuttle Tracker • E-Mart</div>
-          <div class="profile-quick" aria-hidden="true">
-            <div class="skill" title="Accessible UIs"><i class="fa-solid fa-universal-access" aria-hidden="true"></i>&nbsp;Accessible UIs</div>
-            <div class="skill" title="Product thinking"><i class="fa-solid fa-bullseye" aria-hidden="true"></i>&nbsp;Product-led</div>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" aria-labelledby="about-heading" style="margin-top:28px;">
-      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
-        <div>
-          <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
-          <p style="color:var(--muted);max-width:70ch">
-            I build product-first web applications with a focus on clarity, performance, and impact. I am experienced in frontend, backend, AI integration and product design. I led Vitra AI from concept to prototype, integrating ML models, designing UX flows, and shipping production front-ends.
-          </p>
-
-          <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
-            <div class="pill"><i class="fa-solid fa-brain" aria-hidden="true"></i>&nbsp; Product Thinking</div>
-            <div class="pill"><i class="fa-solid fa-cubes" aria-hidden="true"></i>&nbsp; System Design</div>
-            <div class="pill"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>&nbsp; Responsive</div>
-            <div class="pill"><i class="fa-solid fa-lock" aria-hidden="true"></i>&nbsp; Secure by default</div>
-          </div>
-
-          <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
-            <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>&nbsp; View case studies</a>
-            <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i>&nbsp; Let’s talk</a>
-          </div>
-        </div>
-
-        <aside style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <div class="award-icon" style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)">
-              <i class="fa-solid fa-award" aria-hidden="true"></i>
-            </div>
-            <div>
-              <div style="font-weight:900">African Digital Innovation Challenge</div>
-              <div style="font-size:13px;color:var(--muted)">Vitra AI • Winner</div>
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:10px">
-            <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)">
-              <i class="fa-solid fa-people-group" aria-hidden="true"></i>
-            </div>
-            <div>
-              <div style="font-weight:800">Community Impact</div>
-              <div style="font-size:13px;color:var(--muted)">Tools used by student groups and campus teams</div>
-            </div>
-          </div>
-        </aside>
+      <div class="float-badge badge-1" aria-hidden="true">
+        <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="badge-text"><strong>ADIC Winner</strong></div>
       </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="projects" style="margin-top:28px;" aria-labelledby="projects-heading">
-      <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <div>
-          <h3 id="projects-heading" style="margin:0;font-size:20px">Selected Projects</h3>
-          <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos — open a case study to preview more details.</p>
-        </div>
+      <div class="float-badge badge-2" aria-hidden="true">
+        <div class="badge-icon"><i class="fa-solid fa-people-group"></i></div>
+        <div class="badge-text"><strong>Community Tools</strong></div>
       </div>
+    </div>
 
-      <div class="projects-grid" id="projects-grid" style="margin-top:18px">
-        <!-- Vitra AI -->
-        <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra" data-tags="ai,healthcare">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge">AI • Winner</div>
-            <img src="vitra-ai.jpg" alt="Vitra AI screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-vitra" class="card-title">Vitra AI</h4>
-            <p class="card-sub">Intelligent healthcare ecosystem that unifies e-pharmacy, consultations, and AI recommendations to improve access and outcomes.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/vitra-ai" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- E-Mart -->
-        <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart" data-tags="ecommerce,marketplace">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge">E-commerce</div>
-            <img src="e-mart.jpeg" alt="E-Mart screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-emart" class="card-title">E-Mart</h4>
-            <p class="card-sub">Multi-vendor marketplace with vendor dashboards and secure payment flows tailored for campus commerce.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">Next.js</span><span class="tag">Payments</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/index.html" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Shuttle Tracker -->
-        <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle" data-tags="maps,realtime">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge">Maps • Real-time</div>
-            <img src="shuttle.webp" alt="Shuttle Tracker screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
-            <p class="card-sub">Real-time transportation assistant for campuses — track vehicles, check occupancy, and plan trips with live mapping.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/buses.html" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- FitTrack -->
-        <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness" data-tags="fitness,analytics">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge">Health • Data</div>
-            <img src="fit.png" alt="FitTrack screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-fitness" class="card-title">FitTrack</h4>
-            <p class="card-sub">AI-powered fitness dashboard — log workouts, join challenges, and track progress with analytics and leaderboards.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">Analytics</span><span class="tag">Challenge</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/fit-track" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- SkillForg -->
-        <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge" data-tags="education,workshops">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge">Forms • Admin</div>
-            <img src="skill.jpg" alt="SkillForg screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-skillforge" class="card-title">SkillForg</h4>
-            <p class="card-sub">Workshop and registration platform that connects learners with mentors and streamlines event sign-ups and certifications.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">Forms</span><span class="tag">Auth</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/skillforg-website" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Make Heaven Crowded (featured) -->
-        <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc" data-tags="community,ecommerce">
-          <div class="card-visual" style="position:relative;height:220px">
-            <div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div>
-            <img src="jfactor.jpg" alt="Make Heaven Crowded screenshot">
-          </div>
-
-          <div class="card-body">
-            <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
-            <p class="card-sub">Faith-based inspiration hub with curated devotionals, media, and community commerce features.</p>
-
-            <div class="tags" style="margin-top:10px">
-              <span class="tag">E-commerce</span><span class="tag">Community</span>
-            </div>
-
-            <div class="card-foot" style="margin-top:14px">
-              <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>&nbsp;Live</a>
-              <a class="link-btn repo" href="https://github.com/jvo-james/project/blob/main/mhc1.html" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;Repo</a>
-              <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>&nbsp;Case Study</button>
-            </div>
-          </div>
-        </article>
+    <div class="profile-meta" style="flex:1">
+      <div class="meta-title">Senu James</div>
+      <div class="meta-sub">Award-winning creator • Vitra AI • Shuttle Tracker • E-Mart</div>
+      <div class="profile-quick" aria-hidden="true">
+        <div class="skill" title="Accessible UIs"><i class="fa-solid fa-universal-access"></i>&nbsp;Accessible UIs</div>
+        <div class="skill" title="Product thinking"><i class="fa-solid fa-bullseye"></i>&nbsp;Product-led</div>
       </div>
-    </section>
+    </div>
+  </aside>
+</section>
 
-    <!-- TIMELINE -->
-    <section id="timeline" class="timeline" style="margin-top:36px;" aria-labelledby="timeline-heading">
-      <h3 id="timeline-heading" style="margin:0 0 12px">Journey & milestones</h3>
-      <div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
-        <div class="timeline-card" aria-hidden="false">
-          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy" aria-hidden="true"></i><strong>Jun 2025</strong></div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div>
-        </div>
+  
 
-        <div class="timeline-card">
-          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus" aria-hidden="true"></i><strong>May 2024</strong></div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div>
-        </div>
-
-        <div class="timeline-card">
-          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof" aria-hidden="true"></i><strong>Dec 2023</strong></div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div>
-        </div>
-
-        <div class="timeline-card">
-          <div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store" aria-hidden="true"></i><strong>2022</strong></div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div>
-        </div>
+<section id="about" style="margin-top:28px;">
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+    <div>
+      <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+      <p style="color:var(--muted);max-width:70ch">I build product-first web applications with a focus on clarity, performance, and impact. I am experienced in fronted, backend, AI and more. I led Vitra AI from concept to prototype, integrating ML models, designing UX flows, and shipping production front-ends.</p>
+      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+        <div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+        <div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+        <div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+        <div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
       </div>
-    </section>
-
-    <!-- MARQUEE / ARCHIVE -->
-    <section class="marquee-wrap" style="margin-top:36px;" aria-labelledby="archive-heading">
-      <header style="text-align:center;margin-bottom:12px">
-        <h3 id="archive-heading" style="margin:0">Work & Photo Archive</h3>
-        <p style="margin:6px 0 0;color:var(--muted)">Screenshots, behind-the-scenes shots and highlights selected for storytelling and product context.</p>
-      </header>
-
-      <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
-        <div class="marquee-track" role="list" aria-hidden="false">
-          <!-- keep the images as low-overhead thumbnails for the archive -->
-          <div class="marq-item rotate-left" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
-              <div class="overlay">Vitra</div>
-            </a>
-          </div>
-
-          <div class="marq-item rotate-right" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
-              <div class="overlay">Make Heaven Crowded</div>
-            </a>
-          </div>
-
-          <div class="marq-item rotate-left" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="emart2.png" alt="E-Mart screenshot"></div>
-              <div class="overlay">E-Mart</div>
-            </a>
-          </div>
-
-          <div class="marq-item rotate-right" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
-              <div class="overlay">Fitness Tracker</div>
-            </a>
-          </div>
-
-          <div class="marq-item rotate-left" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="shuttle1.png" alt="Shuttle Tracker screenshot"></div>
-              <div class="overlay">Shuttle Tracker</div>
-            </a>
-          </div>
-
-          <div class="marq-item rotate-right" role="listitem" tabindex="0">
-            <a class="marq-link" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener noreferrer">
-              <div class="marq-image"><img src="skillforg2.png" alt="SkillForg screenshot"></div>
-              <div class="overlay">SkillForge</div>
-            </a>
-          </div>
-        </div>
+      <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+        <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+        <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
       </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" style="margin-top:40px;" aria-labelledby="contact-heading">
-      <h3 id="contact-heading" style="margin:0 0 12px">Contact</h3>
-      <div class="contact-wrap">
-        <form class="contact-card" id="contact-form" aria-label="Contact form" novalidate>
-          <h4 style="margin:0 0 10px">Get in touch</h4>
-          <p id="cf-result" style="margin:0 0 12px;color:var(--muted)">Prefer email? <a href="mailto:hello@senu.dev">hello@senu.dev</a></p>
-
-          <label class="field" for="cf-name">
-            <span class="icon-inline"><i class="fa-solid fa-user" aria-hidden="true"></i></span>
-            <input id="cf-name" name="name" placeholder=" " required aria-required="true" type="text">
-            <span class="label">Full name</span>
-          </label>
-
-          <label class="field" for="cf-email">
-            <span class="icon-inline"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
-            <input id="cf-email" name="email" placeholder=" " required aria-required="true" type="email">
-            <span class="label">Email address</span>
-          </label>
-
-          <label class="field" for="cf-message">
-            <span class="icon-inline"><i class="fa-solid fa-comment" aria-hidden="true"></i></span>
-            <textarea id="cf-message" name="message" placeholder=" " required aria-required="true"></textarea>
-            <span class="label">Message</span>
-          </label>
-
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit" aria-label="Send message">Send message</button>
-            <a class="btn" href="mailto:hello@senu.dev">Email me</a>
-          </div>
-          <div id="cf-status" aria-live="polite" style="margin-top:8px;color:var(--muted)"></div>
-        </form>
-
-        <aside class="contact-pro-aside" aria-label="Contact details and links">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div class="icon-circle"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
-            <div>
-              <strong>hello@senu.dev</strong>
-              <div class="muted">Typical reply within 48 hours</div>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-            <a class="link-btn" href="https://github.com/jvo-james" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>&nbsp;GitHub</a>
-            <a class="link-btn" href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>&nbsp;LinkedIn</a>
-            <a class="link-btn" href="mailto:hello@senu.dev"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>&nbsp;Email</a>
-          </div>
-        </aside>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="award-icon" style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-award"></i></div>
+        <div><div style="font-weight:900">African Digital Innovation Challenge</div><div style="font-size:13px;color:var(--muted)">Vitra AI • Winner</div></div>
       </div>
-    </section>
-
-    <footer class="site" role="contentinfo" style="margin-top:36px;">
-      <div style="max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <strong>Senu James — Web Developer</strong>
-        <div class="socials" style="display:flex;gap:12px;align-items:center">
-          <a href="https://github.com/jvo-james" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-          <a href="mailto:hello@senu.dev" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
-        </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-people-group"></i></div>
+        <div><div style="font-weight:800">Community Impact</div><div style="font-size:13px;color:var(--muted)">Tools used by student groups and campus teams</div></div>
       </div>
-    </footer>
-  </main>
+    </aside>
+  </div>
+</section>
 
-  <!-- CASE STUDY MODAL (single modal shell; populate via JS) -->
-  <div id="case-modal" aria-hidden="true" role="dialog" aria-label="Project case study">
-    <div class="modal-panel" role="document">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px">
-        <div>
-          <strong id="case-title">Case study</strong>
-          <div id="case-sub" style="color:var(--muted);font-weight:700">Project details</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <a id="case-open-external" class="link-btn" href="#" target="_blank" rel="noopener">Open live</a>
-          <button id="case-close" class="link-btn" aria-label="Close case study">Close</button>
-        </div>
-      </div>
-
-      <div id="case-body" style="display:grid;grid-template-columns:1fr 360px;gap:22px;padding:22px;max-height:70vh;overflow:auto">
-        <main id="case-main">
-          <!-- populated from templates -->
-        </main>
-
-        <aside id="case-aside" aria-label="Project details">
-          <!-- populated from templates -->
-        </aside>
-      </div>
+<section id="projects" class="projects" style="margin-top:28px;">
+  <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div>
+      <h3 style="margin:0;font-size:20px">Selected Projects</h3>
+      <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos • Open Case Study to preview inside a modal.</p>
+    </div>
+    <div style="display:none;gap:8px;align-items:center">
+      <button class="btn btn-outline" id="filter-all" aria-pressed="true"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+      <button class="btn btn-outline" id="filter-web"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+      <button class="btn btn-outline" id="filter-ai"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
     </div>
   </div>
 
-  <!-- TEMPLATES: case study content (scripts will clone these into the modal) -->
-  <template id="case-vitra">
-    <div>
-      <h4>Vitra AI — Intelligent Healthcare Ecosystem</h4>
-      <p class="muted">Vitra AI integrates e-pharmacy, dietetics, herbal medicine, psychology, and virtual consultations into one web experience — using AI to enhance diagnosis suggestions, nutrition advice and booking flows.</p>
+  <div class="projects-grid" id="projects-grid" style="margin-top:18px">
+    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra" data-categories="ai" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-vitra" class="card-title">Vitra AI</h4>
+        <div class="card-sub">AI-driven health & wellbeing platform • Therapy, Herbal med, B-pharmacy, booking.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="https://github.com/jvo-james/vitra-ai" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
 
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>AI-powered virtual consultations and personalized recommendations</li>
-        <li>E-pharmacy with personalized medicine management and order flows</li>
-        <li>Responsive dashboards for patients and providers</li>
-        <li>Conversational chatbot to guide triage and scheduling</li>
-      </ul>
+    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+        <div class="card-sub">Real-time campus transport tracking to reduce waiting time and improve route awareness.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/buses.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
 
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">HTML, CSS, JavaScript, AI API integrations, Chart.js, responsive UI patterns.</p>
+    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-emart" class="card-title">E-Mart</h4>
+        <div class="card-sub">Campus shopping & checkout platform — mobile-first commerce for students.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Payments</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/index.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
 
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Bridges healthcare gaps by digitizing services and making expert guidance more accessible remotely.</p>
+    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness" data-categories="web" data-categories="ai">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+        <div class="card-sub">Leaderboard-driven workout logging for gymnasts—competition-ready dashboards.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Analytics</span><span class="tag">Challenge</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                    <a class="link-btn repo" href="https://github.com/jvo-james/fit-track" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+        <div class="card-sub">Streamlined registration system replacing Google Forms for event organizers.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="https://github.com/jvo-james/skillforg-website" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+        <div class="card-sub">Faith-driven e-commerce & gospel hub — shop, devotionals, donations, design generator.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                 <a class="link-btn repo" href="https://github.com/jvo-james/project/blob/main/mhc1.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="timeline" class="timeline" style="margin-top:36px;">
+  <h3 style="margin:0 0 12px">Journey & milestones</h3>
+  <div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Jun 2025</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>May 2024</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div></div>
+    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div></div>
+  </div>
+</section>
+
+
+<section class="marquee-wrap" style="margin-top:36px;">
+  <header style="text-align:center;margin-bottom:12px">
+    <h3 style="margin:0">Work & Photo Archive</h3>
+    <p style="margin:6px 0 0;color:var(--muted)">
+      Curated screenshots, behind-the-scenes shots and event highlights selected for storytelling and product context.
+    </p>
+  </header>
+
+  <div class="marquee" id="marquee" role="region" aria-label="Community photos" tabindex="0">
+    <div class="marquee-track" role="list" aria-hidden="false">
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot 1 (opens in new tab)">
+          <div class="marq-image"><img src="vitra1.png" alt="Vitra screenshot 1"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer" aria-label="Open Make Heaven Crowded screenshot (opens in new tab)">
+          <div class="marq-image"><img src="mhc3.png" alt="Make Heaven Crowded screenshot"></div>
+          <div class="overlay">Make Heaven Crowded</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer" aria-label="Open E-Mart screenshot (opens in new tab)">
+          <div class="marq-image"><img src="emart2.png" alt="E-Mart screenshot"></div>
+          <div class="overlay">E-Mart</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack5.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener noreferrer" aria-label="Open Shuttle Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="shuttle1.png" alt="Shuttle Tracker screenshot"></div>
+          <div class="overlay">Shuttle Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener noreferrer" aria-label="Open SkillForge screenshot (opens in new tab)">
+          <div class="marq-image"><img src="skillforg2.png" alt="SkillForge screenshot"></div>
+          <div class="overlay">SkillForge</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer" aria-label="Open E-Mart screenshot (opens in new tab)">
+          <div class="marq-image"><img src="emart1.png" alt="E-Mart screenshot"></div>
+          <div class="overlay">E-Mart</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot (opens in new tab)">
+          <div class="marq-image"><img src="vitra4.png" alt="Vitra screenshot"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack2.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer" aria-label="Open Make Heaven Crowded screenshot (opens in new tab)">
+          <div class="marq-image"><img src="mhc1.png" alt="Make Heaven Crowded screenshot"></div>
+          <div class="overlay">Make Heaven Crowded</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener noreferrer" aria-label="Open SkillForge screenshot (opens in new tab)">
+          <div class="marq-image"><img src="skillforg.png" alt="SkillForge screenshot"></div>
+          <div class="overlay">SkillForge</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer" aria-label="Open E-Mart screenshot (opens in new tab)">
+          <div class="marq-image"><img src="emart5.png" alt="E-Mart screenshot"></div>
+          <div class="overlay">E-Mart</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack7.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot (opens in new tab)">
+          <div class="marq-image"><img src="vitra2.png" alt="Vitra screenshot"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener noreferrer" aria-label="Open Shuttle Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="shuttle2.png" alt="Shuttle Tracker screenshot"></div>
+          <div class="overlay">Shuttle Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer" aria-label="Open Make Heaven Crowded screenshot (opens in new tab)">
+          <div class="marq-image"><img src="mhc4.png" alt="Make Heaven Crowded screenshot"></div>
+          <div class="overlay">Make Heaven Crowded</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack1.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="work/emart3.html" target="_blank" rel="noopener noreferrer" aria-label="Open E-Mart screenshot (opens in new tab)">
+          <div class="marq-image"><img src="emart3.png" alt="E-Mart screenshot"></div>
+          <div class="overlay">E-Mart</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot (opens in new tab)">
+          <div class="marq-image"><img src="vitra3.png" alt="Vitra screenshot"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack3.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener noreferrer" aria-label="Open SkillForge screenshot (opens in new tab)">
+          <div class="marq-image"><img src="skillforg3.png" alt="SkillForge screenshot"></div>
+          <div class="overlay">SkillForge</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer" aria-label="Open Make Heaven Crowded screenshot (opens in new tab)">
+          <div class="marq-image"><img src="mhc2.png" alt="Make Heaven Crowded screenshot"></div>
+          <div class="overlay">Make Heaven Crowded</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener noreferrer" aria-label="Open E-Mart screenshot (opens in new tab)">
+          <div class="marq-image"><img src="emart4.png" alt="E-Mart screenshot"></div>
+          <div class="overlay">E-Mart</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack4.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack6.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot (opens in new tab)">
+          <div class="marq-image"><img src="vitra5.png" alt="Vitra screenshot"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener noreferrer" aria-label="Open Make Heaven Crowded screenshot (opens in new tab)">
+          <div class="marq-image"><img src="mhc5.png" alt="Make Heaven Crowded screenshot"></div>
+          <div class="overlay">Make Heaven Crowded</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-right" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Vitra screenshot (opens in new tab)">
+          <div class="marq-image"><img src="vitra6.png" alt="Vitra screenshot"></div>
+          <div class="overlay">Vitra</div>
+        </a>
+      </div>
+
+      <div class="marq-item rotate-left" role="listitem" tabindex="0">
+        <div class="marq-frame" aria-hidden="true"></div>
+        <a class="marq-link" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener noreferrer" aria-label="Open Fitness Tracker screenshot (opens in new tab)">
+          <div class="marq-image"><img src="fittrack8.png" alt="Fitness Tracker screenshot"></div>
+          <div class="overlay">Fitness Tracker</div>
+        </a>
+      </div>
+
     </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">Redefining healthcare with AI and human insight.</div>
-      <div style="margin-top:12px" class="badge-pill">AI • Healthcare • Product</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://vitra-ai.netlify.app/" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/vitra-ai" target="_blank" rel="noopener">Repo</a>
+  </div>
+</section>
+
+
+
+<section id="contact" class="contact-wrap" style="margin-top:40px;">
+  <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
+    <h3 id="contact-heading" style="margin:0 0 10px">Get in touch</h3>
+    <p class="lead" style="margin:0 0 12px;color:var(--muted)">Interested in collaborating, internships or freelance work? Send a short message. I usually reply within 24 hours.</p>
+<form id="contact-form-pro" class="contact-form" novalidate data-endpoint="https://formspree.io/f/xrbyrqry">
+      <input type="text" name="website" autocomplete="off" style="display:none" tabindex="-1" />
+      <div class="form-row">
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder=" ">
+          <span class="label">Your name</span>
+        </label>
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+          <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder=" ">
+          <span class="label">Email</span>
+        </label>
+      </div>
+      <div class="form-row">
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder=" ">
+          <span class="label">Phone (optional)</span>
+        </label>
+        <label class="field">
+          <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-tag"></i></div>
+          <input id="cf-subject" name="subject" type="text" placeholder=" ">
+          <span class="label">Subject</span>
+        </label>
+      </div>
+      <label class="field textarea-field" style="grid-column:1 / -1; position:relative">
+        <div class="icon-inline" aria-hidden="true"><i class="fa-solid fa-pen-nib"></i></div>
+        <textarea id="cf-message" name="message" rows="6" required placeholder=" "></textarea>
+        <span class="label">Tell me about your project</span>
+      </label>
+      <div class="form-actions">
+        <button id="cf-send" type="submit" class="send btn-primary btn-lg" aria-live="polite">
+          <span class="btn-text"><i class="fa-solid fa-paper-plane"></i>&nbsp;Send message</span>
+          <svg class="btn-spinner" width="18" height="18" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 150"></circle></svg>
+        </button>
+        <button id="cf-copy-email" type="button" class="btn btn-outline" title="Copy email to clipboard"><i class="fa-solid fa-copy"></i>&nbsp;Copy email</button>
+        <div id="cf-status" class="small" aria-live="polite" style="color:var(--muted)"></div>
+      </div>
+      <div id="cf-result" role="status" aria-live="polite" style="margin-top:12px"></div>
+    </form>
+  </div>
+
+  <aside class="contact-aside contact-pro-aside" aria-label="Contact information">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <strong>Email</strong>
+          <div class="muted"><a id="aside-email" href="mailto:senujames23@gmail.com">senujames23@gmail.com</a></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <strong>Phone</strong>
+          <div class="muted"><a href="tel:+233594121246">+233 59 412 1246</a></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="icon-circle" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <strong>Location</strong>
+          <div class="muted">Tema, Ghana. Open to remote & hybrid</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <a class="link-btn resume" href="Senu_James_Resume.pdf" id="download-resume-btn"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;Download resume</a>
+        <a class="social-pill link-btn" href="https://github.com/jvo-james" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;GitHub</a>
+       <a class="social-pill link-btn" href="https://wa.me/233594121246?text=Hi%20Senu%2C%20I%27d%20like%20to%20talk%20about%20a%20project" target="_blank" rel="noopener noreferrer">
+  <i class="fa-brands fa-whatsapp"></i>&nbsp;WhatsApp
+</a>
+<a class="social-pill link-btn" href="https://instagram.com/jvo_james" target="_blank" rel="noopener noreferrer">
+  <i class="fa-brands fa-instagram"></i>&nbsp;Instagram
+</a>
+<a class="social-pill link-btn" href="https://snapchat.com/add/jvo_james" target="_blank" rel="noopener noreferrer">
+  <i class="fa-brands fa-snapchat"></i>&nbsp;Snapchat
+</a>      </div>
+    </div>
+  </aside>
+</section>
+
+<footer class="site" role="contentinfo" style="margin-top:36px;padding:24px 0;border-top:1px solid rgba(10,20,30,0.04)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--maxw);margin:0 auto">
+    <div>
+      <strong style="font-size:16px">Senu James</strong>
+      <div style="color:var(--muted);font-size:13px">Web Developer • AI & Product Builder</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="https://github.com/senu-james"><i class="fa-brands fa-github fa-lg"></i></a>
+<a href="https://wa.me/233594121246?text=Hello%20Senu" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp fa-lg"></i></a>
+<a href="https://instagram.com/jvo_james" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram fa-lg"></i></a>
+<a href="https://snapchat.com/add/jvo_james" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-snapchat fa-lg"></i></a>
+      <a href="mailto:senujames23@gmail.com"><i class="fa-solid fa-envelope fa-lg"></i></a>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px"><strong>Built by Senu James</strong> </div>
+</footer>
+
+<div id="case-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-panel" role="document">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(10,20,30,0.04);position:sticky;top:0;background:linear-gradient(180deg,#fff,#fbfeff);z-index:2">
+      <div>
+        <strong id="case-title">Case study</strong>
+        <div id="case-sub" style="font-size:13px;color:var(--muted)"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a id="case-open-external" class="btn" target="_blank" rel="noopener">Open live</a>
+        <button id="case-close" class="btn" aria-label="Close case study">✕</button>
       </div>
     </div>
-  </template>
-
-  <template id="case-emart">
-    <div>
-      <h4>E-Mart — Multi-vendor E-commerce System</h4>
-      <p class="muted">E-Mart is a marketplace that enables vendors to showcase and sell products, and buyers to shop with secure checkout and easy cart management.</p>
-
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>Vendor dashboard for product upload & management</li>
-        <li>Secure checkout integrated with Paystack</li>
-        <li>Live cart updates and order history</li>
-        <li>Mobile-first responsive UI</li>
-      </ul>
-
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">HTML, CSS, JavaScript (LocalStorage), Paystack API.</p>
-
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Empowers small vendors to sell online while delivering a secure, simple shopping experience for students and communities.</p>
-    </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">Empowering vendors. Simplifying shopping.</div>
-      <div style="margin-top:12px" class="badge-pill">E-commerce • Payments</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://jvo-james.github.io/knust/" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/knust/blob/main/index.html" target="_blank" rel="noopener">Repo</a>
+    <div id="case-body" style="padding:18px;display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <div id="case-main">
+        <section id="case-overview">
+          <h4>Overview</h4>
+          <p id="case-overview-text" style="color:var(--muted)"></p>
+        </section>
+        <section id="case-problem" style="margin-top:14px">
+          <h4>Problem & opportunity</h4>
+          <p id="case-problem-text" style="color:var(--muted)"></p>
+        </section>
+        <section id="case-approach" style="margin-top:14px">
+          <h4>Approach & my role</h4>
+          <p id="case-approach-text" style="color:var(--muted)"></p>
+        </section>
+        <section id="case-highlights" style="margin-top:14px">
+          <h4>Highlights</h4>
+          <ul id="case-highlights-list" style="color:var(--muted)"></ul>
+        </section>
+        <section id="case-screenshots" style="margin-top:14px">
+          <h4>Screenshots</h4>
+          <div id="case-screens-carousel" style="display:flex;gap:8px;overflow:auto;padding:8px 0"></div>
+        </section>
       </div>
+      <aside id="case-aside" style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <strong>Tech stack</strong>
+          <div id="case-tech" style="margin-top:8px;color:var(--muted)"></div>
+        </div>
+        <div>
+          <strong>Impact & metrics</strong>
+          <div id="case-metrics" style="margin-top:8px;color:var(--muted)"></div>
+        </div>
+        <div>
+          <strong>Links</strong>
+          <div id="case-links" style="margin-top:8px;color:var(--muted)"></div>
+        </div>
+        <div>
+          <strong>Notes</strong>
+          <div id="case-notes" style="margin-top:8px;color:var(--muted)"></div>
+        </div>
+      </aside>
     </div>
-  </template>
+  </div>
+</div>
 
-  <template id="case-shuttle">
-    <div>
-      <h4>Shuttle Tracker — Smart Transportation Assistant</h4>
-      <p class="muted">Shuttle Tracker helps users locate shuttles in real time, view routes and occupancy, and plan trips efficiently for campus or city environments.</p>
+<script type="application/json" id="case-vitra">
+{
+  "id": "vitra",
+  "title": "Vitra AI",
+  "subtitle": "AI-first health & wellbeing platform — therapy, herbal med, e-pharmacy, booking",
+  "overview": "Vitra AI is an integrated AI health assistant platform enabling users to ask domain-specific AI assistants (therapist, herbal medicine, dietetics, e-pharmacy), request prescriptions, and book consultations with specialists.",
+  "problem": "Many users lack fast, trustworthy access to health guidance and local pharmacy options. Mental health support and localized herbal guidance were particularly underserved.",
+  "approach": "Led product design and front-end engineering: prototyped multi-agent conversational flows (therapist, dietitian, herbal advisor), built e-pharmacy integration, and implemented consultational booking and payment flows.",
+  "highlights": ["Multi-agent AI assistants (therapist, dietetics, herbal med)","E-pharmacy with prescription flow","Consultation booking & specialist directory","Accessible conversational UI with context-awareness"],
+  "screenshots": ["vitra1.png","vitra2.png","vitra3.png","vitra4.png","vitra5.png","vitra6.png"],
+  "tech": ["React","Node.js","Python (ML)","Firebase","Stripe"],
+  "metrics": "Winner — African Digital Innovation Challenge. Early pilot: 1k+ users engaged in beta.",
+  "links": [{"label":"Live","href":"https://vitra-ai.netlify.app/"},{"label":"Repo","href":"#"}],
+  "notes": "Handle sensitive health data carefully; production systems must include consent & privacy controls."
+}
+</script>
 
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>Real-time tracking and route mapping</li>
-        <li>Passenger registration and live occupancy stats</li>
-        <li>Interactive UI to discover nearest routes</li>
-        <li>Map integrations and responsive design</li>
-      </ul>
+<script type="application/json" id="case-shuttle">
+{
+  "id": "shuttle",
+  "title": "Shuttle Tracker",
+  "subtitle": "Real-time shuttle location & ETA for campus commuters",
+  "overview": "Shuttle Tracker provides students with live bus positions, ETAs, and recommended stops — reducing wait time and improving campus mobility.",
+  "problem": "Students often waited at wrong stops or for shuttles that had already passed. There was low visibility into shuttle movement.",
+  "approach": "Built real-time map visualizations with location sharing and route alerts. Integrated a small admin panel to manage vehicle statuses and schedules.",
+  "highlights": ["Live bus positions on map","ETA notifications","Stop-based guidance for riders","Easy web & mobile access"],
+  "screenshots": ["shuttle1.png","shuttle2.png"],
+  "tech": ["Leaflet","Firebase (realtime)","React","Node.js"],
+  "metrics": "Reduced average student wait time in pilot schools; high user satisfaction in beta.",
+  "links": [{"label":"Live","href":"https://jvo-james.github.io/knust/buses"},{"label":"Repo","href":"#"}],
+  "notes": "Next steps include driver authentication, better telemetry and scheduled routes optimization."
+}
+</script>
 
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">JavaScript, HTML, CSS, Google Maps API (or custom route system).</p>
+<script type="application/json" id="case-emart">
+{
+  "id": "emart",
+  "title": "E-Mart",
+  "subtitle": "Campus-first e-commerce & checkout experience",
+  "overview": "E-Mart is a student-focused marketplace for campus essentials — streamlined mobile-first checkout, inventory sync and pickup workflows.",
+  "problem": "Campus shoppers lacked a reliable, student-focused online shop with convenient pickup and local payment options.",
+  "approach": "Designed product listing flows, cart & checkout, pickup scheduling, and mobile-first UI optimized for low-bandwidth conditions.",
+  "highlights": ["Mobile-first shopping","Pickup scheduling","Stripe integration (prototype)","Inventory admin"],
+  "screenshots": ["emart1.png","emart2.png","emart3.png","emart4.png","emart5.png"],
+  "tech": ["Next.js","Stripe","MongoDB"],
+  "metrics": "Prototype tested with campus pilots; merchant feedback loop validated product-market fit.",
+  "links": [{"label":"Live","href":"https://jvo-james.github.io/knust/"},{"label":"Repo","href":"#"}],
+  "notes": "Payments & compliance improvements planned for production."
+}
+</script>
 
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Reduces wait times and increases transparency for commuters and transit admins.</p>
-    </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">Smarter transport at your fingertips.</div>
-      <div style="margin-top:12px" class="badge-pill">Maps • Realtime</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/knust/blob/main/buses.html" target="_blank" rel="noopener">Repo</a>
-      </div>
-    </div>
-  </template>
+<script type="application/json" id="case-fitness">
+{
+  "id": "fitness",
+  "title": "Fitness Tracker",
+  "subtitle": "Workout logging, challenges & leaderboard",
+  "overview": "A competition-ready fitness logging platform where athletes log workouts, join challenges and view leaderboards.",
+  "problem": "No central place for gymnasts to track progress, compete, and engage in community-driven challenges.",
+  "approach": "Built structured workout entry, challenge creation, and leaderboard algorithms; created shareable challenge pages.",
+  "highlights": ["Challenge system & leaderboards","Workout logging with metrics","Semi-final entry for ADIC"],
+  "screenshots": ["fittrack1.png","fittrack2.png","fittrack3.png","fittrack4.png","fittrack5.png","fittrack6.png","fittrack7.png","fittrack8.png"],
+  "tech": ["React","Express","Postgres"],
+  "metrics": "Used for competition semi-finals; demonstration-ready dashboards.",
+  "links": [{"label":"Live","href":"https://jvo-james.github.io/fit-track/home"}],
+  "notes": "Leaderboard fairness & anti-cheat heuristics are recommended for future versions."
+}
+</script>
 
-  <template id="case-mhc">
-    <div>
-      <h4>Make Heaven Crowded — Faith-Based Inspiration Hub</h4>
-      <p class="muted">A faith-driven site that blends content, devotionals, and community commerce to inspire and connect users.</p>
+<script type="application/json" id="case-skillforge">
+{
+  "id": "skillforge",
+  "title": "SkillForge Registry",
+  "subtitle": "Workshop registration & admin reporting",
+  "overview": "SkillForge replaced ad-hoc Google Forms with a centralized registration, authentication and reporting system for event organizers.",
+  "problem": "Organizers used spreadsheets and forms that lacked reliable reporting and authentication.",
+  "approach": "Built auth, registration flows, CSV export and admin dashboards to manage attendees and workshop logistics.",
+  "highlights": ["Secure registration","Admin reporting","CSV export & attendance tracking"],
+  "screenshots": ["skillforg.png","skillforg2.png","skillforg3.png"],
+  "tech": ["React","Firebase","Node.js"],
+  "metrics": "Enabled more reliable attendance tracking for multiple events.",
+  "links": [{"label":"Live","href":"https://jvo-james.github.io/skillforg-website/startup"}],
+  "notes": "Integrations with email services improved organizer workflows."
+}
+</script>
 
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>Inspirational feed and curated scripture</li>
-        <li>Media integrations and blog support</li>
-        <li>Clean, calming UI and responsive layout</li>
-        <li>E-commerce & community tools</li>
-      </ul>
+<script type="application/json" id="case-mhc">
+{
+  "id": "mhc",
+  "title": "Make Heaven Crowded",
+  "subtitle": "Faith-centered merch & gospel hub",
+  "overview": "A Christian e-commerce platform selling shirts, hoodies and apparel with gospel inscriptions. Includes donation flows and devotional content.",
+  "problem": "Client needed a beautiful storefront aligned with ministry goals plus content space for gospel resources.",
+  "approach": "Designed shop flows, product personalization, donation checkout and a devotional content area. Built a generator for design variants.",
+  "highlights": ["Product personalization","Donation flows","Devotional content hub","Design generator"],
+  "screenshots": ["mhc1.png","mhc2.png","mhc3.png","mhc4.png","mhc5.png"],
+  "tech": ["React","Netlify","Stripe"],
+  "metrics": "Active development — client launching first storefront.",
+  "links": [{"label":"Live (staging)","href":"https://jvo-james.github.io/project/mhc1"}],
+  "notes": "Careful moderation for community content and payment reconciliation required."
+}
+</script>
 
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">HTML, CSS, JavaScript.</p>
-
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Encourages positivity and faith-based engagement through modern web design.</p>
-    </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">Faith meets technology — spreading light online.</div>
-      <div style="margin-top:12px" class="badge-pill">Community • E-commerce</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://jvo-james.github.io/project/mhc1" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/project/blob/main/mhc1.html" target="_blank" rel="noopener">Repo</a>
-      </div>
-    </div>
-  </template>
-
-  <template id="case-fitness">
-    <div>
-      <h4>FitTrack — AI-Powered Fitness Dashboard</h4>
-      <p class="muted">Interactive app for logging workouts, tracking progress, and personalizing training with AI-driven suggestions and leaderboards.</p>
-
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>Secure signup/login and user profiles</li>
-        <li>AI coaching and personalized challenges</li>
-        <li>Live leaderboards and analytics dashboard</li>
-        <li>Responsive UI with smooth animations</li>
-      </ul>
-
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">HTML, CSS, JavaScript (LocalStorage), DOM manipulation, UI animations.</p>
-
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Helps users stay consistent, compete, and visualize progress — combining motivation with data.</p>
-    </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">AI-driven fitness. One rep at a time.</div>
-      <div style="margin-top:12px" class="badge-pill">Fitness • Analytics</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://jvo-james.github.io/fit-track/home" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/fit-track" target="_blank" rel="noopener">Repo</a>
-      </div>
-    </div>
-  </template>
-
-  <template id="case-skillforge">
-    <div>
-      <h4>SkillForg — Hands-On Learning & Workshop Platform</h4>
-      <p class="muted">Educational platform for workshops and skill development, connecting learners with mentors across tech and creative domains.</p>
-
-      <h4 style="margin-top:14px">Key features</h4>
-      <ul class="muted">
-        <li>Video hero and course previews</li>
-        <li>Workshop registration and certification</li>
-        <li>Category-based learning pathways</li>
-        <li>Clean, mobile-first design</li>
-      </ul>
-
-      <h4 style="margin-top:14px">Tech stack</h4>
-      <p class="muted">HTML, CSS, Bootstrap, FontAwesome.</p>
-
-      <h4 style="margin-top:14px">Impact</h4>
-      <p class="muted">Enables practical learning and certifications — helping learners transition from education to employability.</p>
-    </div>
-    <div slot="aside">
-      <strong>Tagline</strong>
-      <div class="muted">Practical learning that transforms careers.</div>
-      <div style="margin-top:12px" class="badge-pill">Education • Workshops</div>
-      <div style="margin-top:12px" id="case-links">
-        <a class="link-btn" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank" rel="noopener">Live</a>
-        <a class="link-btn" href="https://github.com/jvo-james/skillforg-website" target="_blank" rel="noopener">Repo</a>
-      </div>
-    </div>
-  </template>
-</body>
+<div id="toast-area" aria-live="polite" style="position:fixed;right:18px;bottom:18px;z-index:9999;pointer-events:none"></div>
 
 <script>
 (function(){
@@ -5056,284 +5169,6 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   modal.addEventListener('click', (e)=> { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', (e)=> { if (e.key==='Escape') closeModal(); });
 
-})();
-</script>
-<script>
-/* Main interactive behaviour for the portfolio page
-   - Nav toggle (accessible)
-   - Hero role rotator (respects reduced motion)
-   - Case study modal (populate from <template>, focus trap, keyboard)
-   - Contact form (basic client-side validation + UI feedback)
-*/
-
-(function () {
-  // ---------- Helpers ----------
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const isReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function trapFocus(container) {
-    const focusableSelector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
-    const nodes = Array.from(container.querySelectorAll(focusableSelector)).filter(n => n.offsetParent !== null);
-    if (nodes.length === 0) return () => {};
-    const first = nodes[0];
-    const last = nodes[nodes.length - 1];
-
-    function handleKey(e) {
-      if (e.key !== 'Tab') return;
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-    document.addEventListener('keydown', handleKey);
-    // return cleanup
-    return () => document.removeEventListener('keydown', handleKey);
-  }
-
-  // ---------- NAV TOGGLE ----------
-  (function navToggle() {
-    const btn = document.querySelector('.nav-toggle');
-    const nav = document.getElementById('primary-nav');
-    if (!btn || !nav) return;
-
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      nav.classList.toggle('is-open');
-    });
-
-    // close mobile nav when a link is clicked
-    nav.addEventListener('click', e => {
-      const a = e.target.closest('a[href^="#"]');
-      if (a && nav.classList.contains('is-open')) {
-        btn.setAttribute('aria-expanded', 'false');
-        nav.classList.remove('is-open');
-      }
-    });
-  })();
-
-  // ---------- HERO ROLE ROTATOR ----------
-  (function roleRotator() {
-    const el = document.getElementById('rotating-role');
-    if (!el || isReducedMotion) return;
-    const roles = [
-      'Web Developer',
-      'AI & Product Builder',
-      'Fullstack Engineer',
-      'UX-focused Developer',
-      'Product-minded Engineer'
-    ];
-    let i = 0;
-    el.textContent = roles[0];
-    const interval = 2500;
-    let timer = setInterval(() => {
-      i = (i + 1) % roles.length;
-      // smooth text change
-      el.classList.add('fade-out');
-      setTimeout(() => {
-        el.textContent = roles[i];
-        el.classList.remove('fade-out');
-      }, 180);
-    }, interval);
-
-    // Pause rotation when user focuses the element (accessibility)
-    el.addEventListener('focus', () => clearInterval(timer));
-    el.addEventListener('mouseover', () => clearInterval(timer));
-  })();
-
-  // ---------- CASE STUDY MODAL ----------
-  (function caseModal() {
-    const modal = document.getElementById('case-modal');
-    const caseMain = document.getElementById('case-main');
-    const caseAside = document.getElementById('case-aside');
-    const caseTitle = document.getElementById('case-title');
-    const caseSub = document.getElementById('case-sub');
-    const caseOpenExternal = document.getElementById('case-open-external');
-    const caseCloseBtn = document.getElementById('case-close');
-
-    if (!modal || !caseMain || !caseAside) return;
-
-    let cleanupFocusTrap = null;
-    let lastActiveElement = null;
-
-    function openCase(caseId, triggerBtn) {
-      const template = document.getElementById('case-' + caseId);
-      if (!template) return console.warn('Case template not found:', caseId);
-
-      // Clear previous
-      caseMain.innerHTML = '';
-      caseAside.innerHTML = '';
-
-      // Clone content
-      const frag = template.content.cloneNode(true);
-
-      // In the templates we used a structure: <div>main content</div><div slot="aside">aside content</div>
-      const mainNode = frag.querySelector('div:not([slot])') || frag.querySelector('div');
-      const asideNode = frag.querySelector('[slot="aside"]');
-
-      if (mainNode) caseMain.appendChild(mainNode.cloneNode(true));
-      if (asideNode) caseAside.appendChild(asideNode.cloneNode(true));
-
-      // Update modal heading from the first <h4> if present
-      const heading = caseMain.querySelector('h4');
-      if (heading) {
-        caseTitle.textContent = heading.textContent;
-        // set a smaller subtitle if provided in first paragraph
-        const p = caseMain.querySelector('p');
-        if (p) caseSub.textContent = p.textContent.slice(0, 120);
-      } else {
-        caseTitle.textContent = 'Case study';
-      }
-
-      // Wire external open link to the first .link-btn inside case-links (if any)
-      const linkBtn = caseAside.querySelector('#case-links a[href]');
-      if (linkBtn) {
-        caseOpenExternal.style.display = '';
-        caseOpenExternal.href = linkBtn.href;
-        caseOpenExternal.setAttribute('target', '_blank');
-      } else {
-        caseOpenExternal.style.display = 'none';
-        caseOpenExternal.removeAttribute('href');
-      }
-
-      // show modal
-      modal.removeAttribute('aria-hidden');
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-
-      lastActiveElement = triggerBtn || document.activeElement;
-      // focus first interactive element in modal (close button)
-      setTimeout(() => {
-        caseCloseBtn.focus();
-      }, 0);
-
-      // setup focus trap
-      cleanupFocusTrap = trapFocus(modal);
-
-      // handle ESC to close
-      document.addEventListener('keydown', handleEscClose);
-    }
-
-    function closeCase() {
-      modal.setAttribute('aria-hidden', 'true');
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-      caseMain.innerHTML = '';
-      caseAside.innerHTML = '';
-
-      if (cleanupFocusTrap) cleanupFocusTrap();
-      document.removeEventListener('keydown', handleEscClose);
-      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
-        lastActiveElement.focus();
-      }
-    }
-
-    function handleEscClose(e) {
-      if (e.key === 'Escape') closeCase();
-    }
-
-    // open buttons
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-case-open]');
-      if (!btn) return;
-      const id = btn.getAttribute('data-case-open');
-      if (!id) return;
-      openCase(id, btn);
-    });
-
-    // close handlers
-    caseCloseBtn.addEventListener('click', closeCase);
-    modal.addEventListener('click', (e) => {
-      // close when clicking outside panel
-      const panel = modal.querySelector('.modal-panel');
-      if (!panel) return;
-      if (!panel.contains(e.target)) closeCase();
-    });
-
-    // ensure links that open external in modal open in new tab
-    caseOpenExternal.addEventListener('click', (e) => {
-      // if href missing, prevent
-      if (!caseOpenExternal.href || caseOpenExternal.href === '#') {
-        e.preventDefault();
-      }
-    });
-  })();
-
-  // ---------- CONTACT FORM ----------
-  (function contactForm() {
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('cf-status');
-    const result = document.getElementById('cf-result');
-
-    if (!form) return;
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!form.checkValidity()) {
-        status.textContent = 'Please complete required fields and provide a valid email.';
-        status.setAttribute('aria-hidden', 'false');
-        return;
-      }
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.setAttribute('aria-busy', 'true');
-      status.textContent = 'Sending…';
-
-      // Simulate a send operation (client-only). Replace this with your real POST endpoint.
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.removeAttribute('aria-busy');
-        form.reset();
-        status.textContent = 'Message sent — thank you! I will reply to your email soon.';
-      }, 800);
-    });
-  })();
-
-  // ---------- SMALL UX POLISH ----------
-  (function littlePolish() {
-    // Add fade-out class CSS hint if not present (keeps script self-contained)
-    const styleId = 'portfolio-inline-js-style';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.textContent = `
-        /* tiny animations used by the script */
-        #rotating-role.fade-out { opacity: 0; transition: opacity 160ms ease; }
-        #rotating-role { transition: opacity 220ms ease; }
-        #case-modal[aria-hidden="true"] { display: none; }
-        #case-modal.open { display: block; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:9999; padding:24px; box-sizing:border-box; }
-        #case-modal .modal-panel { background:var(--surface,#fff); max-width:1100px; margin:32px auto; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.25); }
-        .nav-menu.is-open { display:block; }
-        @media (min-width:880px) { .nav-menu { display:flex !important; } .nav-toggle { display:none; } }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // keyboard: open first project with Enter on focused card
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Enter') return;
-      const focused = document.activeElement;
-      if (!focused) return;
-      const card = focused.closest('.card[data-case-id]');
-      if (!card) return;
-      const caseId = card.getAttribute('data-case-id');
-      if (caseId) {
-        const btn = card.querySelector('[data-case-open]');
-        if (btn) btn.click();
-      }
-    });
-  })();
-
-  // End IIFE
 })();
 </script>
 
