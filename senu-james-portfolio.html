@@ -3725,15 +3725,306 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-<section id="timeline" class="timeline" style="margin-top:36px;">
-  <h3 style="margin:0 0 12px">Journey & milestones</h3>
-  <div class="timeline-items" style="display:flex;gap:12px;overflow:auto;padding:8px 4px;">
-    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-trophy"></i><strong>Jun 2025</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Winner — African Digital Innovation Challenge (Vitra AI)</div></div>
-    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-bus"></i><strong>May 2024</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">Launched Shuttle Tracker MVP</div></div>
-    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-people-roof"></i><strong>Dec 2023</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">SkillForge Registry rollout</div></div>
-    <div class="timeline-card"><div style="display:flex;gap:10px;align-items:center"><i class="fa-solid fa-store"></i><strong>2022</strong></div><div style="color:var(--muted);font-size:13px;margin-top:6px">E-Mart prototype & pilots</div></div>
+ <section id="journey" aria-labelledby="journey-heading">
+  <style>
+   #journey { position: relative; margin-top:36px; padding:36px 24px; border-radius:18px; background: linear-gradient(180deg,#ffffff,#fbfeff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 30px 90px rgba(16,24,40,0.06); overflow:visible }
+  #journey .jx-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  #journey h3{margin:0;font-family:var(--font-display);font-size:22px;font-weight:900}
+  #journey p.lead{margin:6px 0 0;color:var(--muted);max-width:66ch;font-weight:700}
+
+   #journey .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}
+  #journey .btn-ctrl{padding:8px 12px;border-radius:999px;border:1px solid rgba(10,20,30,0.04);background:linear-gradient(180deg,#fff,#fbfdff);font-weight:800;cursor:pointer}
+  #journey .btn-ctrl[aria-pressed="true"]{background:var(--accent-grad);color:#fff;box-shadow:0 18px 50px rgba(59,130,246,0.08)}
+  #journey .search{margin-left:auto;display:flex;gap:8px;align-items:center}
+  #journey .search input{padding:8px 10px;border-radius:10px;border:1px solid rgba(10,20,30,0.06);min-width:220px}
+
+   #journey .wrap{display:grid;grid-template-columns:1fr 360px;gap:24px;margin-top:22px;align-items:start}
+  #journey .timeline{position:relative;padding:8px 6px}
+  #journey .timeline-line{position:absolute;left:46px;top:10px;bottom:10px;width:3px;background:linear-gradient(180deg,var(--accent-2),var(--accent-3));opacity:.08;border-radius:2px}
+
+   #journey .milestone{position:relative;display:flex;gap:12px;padding:14px 12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);box-shadow:var(--elev-1);margin-bottom:14px;align-items:flex-start;transform-origin:left center;opacity:0;transform:translateX(-18px) scale(.99)}
+  #journey .milestone.inview{opacity:1;transform:translateX(0) scale(1);transition:all 520ms cubic-bezier(.2,.9,.2,1)}
+  #journey .milestone .dot{position:absolute;left:34px;top:20px;width:24px;height:24px;border-radius:8px;background:linear-gradient(90deg,var(--accent-2),var(--accent));display:grid;place-items:center;color:#fff;font-weight:900;border:4px solid #fff;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+  #journey .milestone h4{margin:0;font-size:15px;font-weight:900}
+  #journey .milestone time{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+  #journey .milestone p{margin:8px 0 0;color:var(--muted);font-weight:700}
+
+   #journey .meta{display:flex;gap:8px;align-items:center;margin-top:8px}
+  #journey .meta .tag{padding:6px 8px;border-radius:999px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:900;font-size:12px}
+  #journey .meta .progress{height:8px;border-radius:8px;background:linear-gradient(90deg,rgba(10,20,30,0.03),rgba(10,20,30,0.02));overflow:hidden;width:120px}
+  #journey .meta .progress > i{display:block;height:100%;width:48%;background:linear-gradient(90deg,var(--accent-2),var(--accent-3));border-radius:8px}
+
+   #journey .aside{position:relative;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);box-shadow:var(--elev-1)}
+  #journey .aside h4{margin:0 0 8px;font-weight:900}
+  #journey .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+  #journey .stat{padding:10px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fbfdff);box-shadow:0 12px 36px rgba(16,24,40,0.04);font-weight:900}
+  #journey .stickers{position:absolute;right:-18px;top:-18px;display:grid;gap:12px}
+  #journey .sticker-pill{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);box-shadow:0 14px 40px rgba(6,10,26,0.08);font-weight:900}
+
+   #journey .jx-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,10,26,0.6);z-index:9999}
+  #journey .jx-modal[aria-hidden="false"]{display:flex}
+  #journey .jx-modal .panel{width:92%;max-width:980px;background:#fff;border-radius:12px;padding:18px;box-shadow:0 40px 120px rgba(6,10,26,0.28)}
+
+   @media (max-width:900px){ #journey .wrap{grid-template-columns:1fr} #journey .stickers{position:static;display:flex;gap:8px;margin-top:12px} #journey .search input{min-width:120px} }
+
+   @keyframes floatTiny{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  #journey .sticker-pill{animation:floatTiny 5s ease-in-out infinite}
+
+   @media (prefers-reduced-motion:reduce){#journey .milestone{transition:none;animation:none} #journey .sticker-pill{animation:none}}
+  </style>
+
+  <div class="jx-header">
+    <div>
+      <h3 id="journey-heading">Journey & Milestones — Premium</h3>
+      <p class="lead">A curated timeline of awards, launches, community impact and product milestones. Interactive, keyboard-friendly, and designed to feel premium.</p>
+      <div class="controls" role="toolbar" aria-label="Timeline controls">
+        <button class="btn-ctrl" data-filter="all" aria-pressed="true">All</button>
+        <button class="btn-ctrl" data-filter="product">Product</button>
+        <button class="btn-ctrl" data-filter="award">Awards</button>
+        <button class="btn-ctrl" data-filter="community">Community</button>
+        <button class="btn-ctrl" data-filter="launch">Launch</button>
+       <div class="search" role="search">
+          <input type="search" id="jx-search" placeholder="Search milestones…" aria-label="Search milestones">
+          <button class="btn-ctrl" id="celebrate"><i class="fa-solid fa-gift" aria-hidden="true"></i> Celebrate</button>
+        </div>
+      </div>
+    </div>
+    <div class="search-legend" style="text-align:right;color:var(--muted);font-weight:800">Tip: hover a card to preview, click for details.</div>
   </div>
+
+  <div class="wrap container">
+    <div class="timeline" id="jx-timeline">
+      <div class="timeline-line" aria-hidden="true"></div>
+
+       <article class="milestone" data-type="award" tabindex="0">
+        <div class="dot" aria-hidden="true"><i class="fa-solid fa-trophy" aria-hidden="true"></i></div>
+        <div style="margin-left:56px;flex:1">
+          <h4>Winner — African Digital Innovation Challenge</h4>
+          <time datetime="2025-06">June 2025</time>
+          <p>Vitra AI — led product direction, prototyping, and launch for an AI-driven mental health assistant.</p>
+          <div class="meta">
+            <span class="tag">AI • Health</span>
+            <div class="progress" aria-hidden="true"><i style="width:82%"></i></div>
+            <button class="btn-ctrl" data-open="mil-vitra">Details</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="milestone" data-type="launch" tabindex="0">
+      <div class="dot" aria-hidden="true"><i class="fa-solid fa-bus" aria-hidden="true"></i></div>
+        <div style="margin-left:56px;flex:1">
+          <h4>Shuttle Tracker MVP — Campus transport</h4>
+          <time datetime="2024-05">May 2024</time>
+          <p>Real-time bus tracking to reduce wait times — maps, realtime updates and push alerts.</p>
+          <div class="meta">
+            <span class="tag">Maps</span>
+            <div class="progress" aria-hidden="true"><i style="width:64%"></i></div>
+            <button class="btn-ctrl" data-open="mil-shuttle">Details</button>
+          </div>
+        </div>
+      </article>
+
+       <article class="milestone" data-type="product" tabindex="0">
+     <div class="dot" aria-hidden="true"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></div>
+        <div style="margin-left:56px;flex:1">
+          <h4>E‑Mart — Campus commerce prototype</h4>
+          <time datetime="2022">2022</time>
+          <p>Mobile-first marketplace and checkout flows for student communities and pop-up vendors.</p>
+          <div class="meta">
+            <span class="tag">Payments</span>
+            <div class="progress" aria-hidden="true"><i style="width:52%"></i></div>
+            <button class="btn-ctrl" data-open="mil-emart">Details</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="milestone" data-type="community" tabindex="0">
+        <div class="dot" aria-hidden="true"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i></div>
+        <div style="margin-left:56px;flex:1">
+          <h4>Community Impact — Campus adoption</h4>
+          <time datetime="2023-12">Dec 2023</time>
+          <p>SkillForge registration and tools adopted by student groups to coordinate events, signups and volunteering.</p>
+          <div class="meta">
+            <span class="tag">Open Source</span>
+            <div class="progress" aria-hidden="true"><i style="width:46%"></i></div>
+            <button class="btn-ctrl" data-open="mil-skill">Details</button>
+          </div>
+        </div>
+      </article>
+
+       <article class="milestone" data-type="product" tabindex="0">
+       <div class="dot" aria-hidden="true"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+        <div style="margin-left:56px;flex:1">
+          <h4>Fitness Tracker — Leaderboards & analytics</h4>
+          <time datetime="2023-08">Aug 2023</time>
+          <p>Competition-ready dashboards and challenge flows for teams and events.</p>
+          <div class="meta">
+            <span class="tag">Analytics</span>
+            <div class="progress" aria-hidden="true"><i style="width:35%"></i></div>
+            <button class="btn-ctrl" data-open="mil-fit">Details</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <aside class="aside" aria-hidden="false">
+      <h4>Overview</h4>
+      <p class="muted">Fast facts and micro interactions to highlight traction and awards.</p>
+      <div class="stats">
+        <div class="stat"><div style="font-size:20px">1k+</div><div style="font-size:12px;color:var(--muted)">Beta users engaged</div></div>
+        <div class="stat"><div style="font-size:20px">12</div><div style="font-size:12px;color:var(--muted)">Major product launches</div></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <button class="btn-ctrl" id="jx-export">Export timeline </button>
+        <button class="btn-ctrl" id="jx-snap">Snapshot</button>
+      </div>
+
+    <div class="stickers" aria-hidden="true">
+        <div class="sticker-pill" aria-hidden="true">
+          <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+          <div style="font-size:11px;color:var(--muted);font-weight:800">ADIC</div>
+        </div>
+        <div class="sticker-pill" aria-hidden="true">
+          <i class="fa-solid fa-brain" aria-hidden="true"></i>
+          <div style="font-size:11px;color:var(--muted);font-weight:800">AI</div>
+        </div>
+        <div class="sticker-pill" aria-hidden="true">
+          <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+          <div style="font-size:11px;color:var(--muted);font-weight:800">Campus</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+   <div class="jx-modal" id="jx-modal" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-labelledby="jx-modal-title">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <h4 id="jx-modal-title" style="margin:0">Milestone</h4>
+          <div id="jx-modal-date" style="font-size:13px;color:var(--muted)"></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn-ctrl" id="jx-copy">Copy</button>
+          <button class="btn-ctrl" id="jx-close">Close</button>
+        </div>
+      </div>
+      <div id="jx-modal-body" style="margin-top:12px;color:var(--muted);font-weight:700">...</div>
+    </div>
+  </div>
+
+   <canvas id="jx-confetti" style="position:fixed;pointer-events:none;left:0;top:0;width:100%;height:100%;z-index:99998;display:none"></canvas>
+
+  <script>
+  (function(){
+    const container = document.getElementById('jx-timeline');
+    const cards = Array.from(container.querySelectorAll('.milestone'));
+    const filters = Array.from(document.querySelectorAll('#journey .btn-ctrl[data-filter]'));
+    const search = document.getElementById('jx-search');
+    const modal = document.getElementById('jx-modal');
+    const modalTitle = document.getElementById('jx-modal-title');
+    const modalDate = document.getElementById('jx-modal-date');
+    const modalBody = document.getElementById('jx-modal-body');
+    const closeBtn = document.getElementById('jx-close');
+    const celebrateBtn = document.getElementById('celebrate');
+
+     const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('inview');
+      });
+    },{threshold:0.12});
+    cards.forEach(c=>io.observe(c));
+
+     filters.forEach(btn=>{ btn.addEventListener('click', ()=>{
+      filters.forEach(b=>b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+      const key = btn.getAttribute('data-filter');
+      cards.forEach(card=>{
+        const t = card.getAttribute('data-type');
+        if(key==='all' || t===key) { card.style.display='flex'; } else { card.style.display='none'; }
+      });
+    }); });
+
+     search.addEventListener('input', ()=>{
+      const q = search.value.trim().toLowerCase();
+      cards.forEach(card=>{
+        const txt = card.textContent.toLowerCase();
+        card.style.display = (!q || txt.includes(q)) ? 'flex' : 'none';
+      });
+    });
+
+     document.querySelectorAll('#jx-timeline .btn-ctrl[data-open]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const card = btn.closest('.milestone');
+        openModal(card);
+      });
+    });
+
+     cards.forEach(card=>{
+      card.addEventListener('click', (e)=>{
+        if(e.target.tagName==='BUTTON') return; // buttons already handled
+        openModal(card);
+      });
+      card.addEventListener('keydown', (ev)=>{
+        if(ev.key==='Enter' || ev.key===' ') { ev.preventDefault(); openModal(card); }
+      });
+    });
+
+    function openModal(card){
+      const title = card.querySelector('h4').textContent;
+      const date = card.querySelector('time')?.textContent || '';
+      const html = card.querySelector('p').outerHTML + card.querySelector('.meta').outerHTML;
+      modalTitle.textContent = title;
+      modalDate.textContent = date;
+      modalBody.innerHTML = html;
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      document.getElementById('jx-copy').addEventListener('click', ()=>{
+        navigator.clipboard?.writeText(title + '\n' + date + '\n' + card.querySelector('p').textContent).then(()=>{
+          alert('Copied to clipboard');
+        }).catch(()=>{});
+      }, {once:true});
+    }
+    closeBtn.addEventListener('click', ()=>{ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }});
+
+     celebrateBtn.addEventListener('click', ()=>{
+      runConfetti();
+    });
+
+     function runConfetti(){
+      const canvas = document.getElementById('jx-confetti');
+      const ctx = canvas.getContext('2d');
+      const DPR = window.devicePixelRatio || 1;
+      function resize(){ canvas.width = innerWidth * DPR; canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; ctx.scale(DPR,DPR);} resize();
+      window.addEventListener('resize', resize);
+      canvas.style.display='block';
+      const particles = [];
+      const colors = ['#7c3aed','#06b6d4','#3b82f6','#f59e0b','#10b981'];
+      for(let i=0;i<90;i++){ particles.push({x:Math.random()*innerWidth,y:-20,vy:2+Math.random()*6, vx:(Math.random()-0.5)*6, r:6+Math.random()*8, c:colors[Math.floor(Math.random()*colors.length)], rot:Math.random()*360, vr:Math.random()*6}); }
+      let raf;
+      function loop(){ ctx.clearRect(0,0,innerWidth,innerHeight); particles.forEach(p=>{ p.x += p.vx; p.y += p.vy; p.vy += 0.08; p.rot += p.vr; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.c; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6); ctx.restore(); });
+        particles.forEach((p,i)=>{ if(p.y>innerHeight+40) particles.splice(i,1); });
+        if(particles.length) raf = requestAnimationFrame(loop); else { canvas.style.display='none'; cancelAnimationFrame(raf); }
+      }
+      loop();
+    }
+
+     document.getElementById('jx-export').addEventListener('click', ()=>{
+      const out = cards.map(c=>({title:c.querySelector('h4').textContent,date:c.querySelector('time')?.textContent, type:c.getAttribute('data-type'), excerpt:c.querySelector('p').textContent}));
+      const blob = new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='timeline.json'; a.click(); URL.revokeObjectURL(url);
+    });
+
+     document.getElementById('jx-snap').addEventListener('click', ()=>{ window.print(); });
+
+     document.querySelectorAll('#journey .btn-ctrl[data-filter]').forEach((b)=>{ b.addEventListener('keydown', (e)=>{ if(e.key==='ArrowLeft' || e.key==='ArrowRight'){ e.preventDefault(); const idx = filters.indexOf(b); const n = filters[(idx + (e.key==='ArrowRight'?1:-1) + filters.length) % filters.length]; n.focus(); } }); });
+
+  })();
+  </script>
 </section>
+
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
