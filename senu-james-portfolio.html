@@ -5108,6 +5108,69 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   } catch(e) { console.warn('hero-fix error', e); }
 })();
 </script>
+<script>
+(function(){
+  // ROTATING ROLES
+  const roles = ['Web Developer','AI & Product Builder','Fullstack Engineer','Product Designer'];
+  const roleEl = document.getElementById('rotating-role');
+  let i = 0;
+  setInterval(()=> {
+    i = (i+1) % roles.length;
+    roleEl.textContent = roles[i];
+  }, 3000);
+
+  // SIMPLE COUNT-UP for metric-number elements having data-value
+  document.querySelectorAll('.metric-number').forEach(el=>{
+    const target = Number(el.dataset.value || el.textContent.replace(/[^\d]/g,''));
+    if (!target) return;
+    let t=0;
+    const speed = Math.max(20, Math.round(1000/Math.log2(target+2)));
+    const iv = setInterval(()=> {
+      t += Math.ceil(target/ (30));
+      if (t >= target) { el.textContent = target.toLocaleString(); clearInterval(iv); }
+      else el.textContent = (''+t);
+    }, speed);
+  });
+})();
+</script>
+<!-- Modal (place near end of body) -->
+<div id="image-modal" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.85);align-items:center;justify-content:center">
+  <button id="modal-close" aria-label="Close viewer" style="position:absolute;top:18px;right:18px;padding:10px 12px;border-radius:8px;background:#fff">Close</button>
+  <img id="modal-img" src="" alt="" style="max-width:92vw;max-height:92vh;border-radius:8px;box-shadow:0 30px 120px rgba(0,0,0,.6)" />
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-img');
+  const close = document.getElementById('modal-close');
+
+  document.querySelectorAll('.marq-link').forEach(a=>{
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const img = a.querySelector('img');
+      if (!img) return window.open(a.href, '_blank');
+      modalImg.src = img.src;
+      modalImg.alt = img.alt || '';
+      modal.style.display = 'grid';
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      close.focus();
+    });
+  });
+
+  function closeModal(){
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    modalImg.src = '';
+  }
+  close.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=> { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=> { if (e.key==='Escape') closeModal(); });
+
+})();
+</script>
 
 </body>
 </html>
