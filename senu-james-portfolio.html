@@ -3734,39 +3734,37 @@ button[aria-pressed="true"] {
       --text:#07133a;
       --accent-a:#7c3aed;
       --accent-b:#06b6d4;
-      --glass:rgba(255,255,255,0.7);
-      --card-shadow:0 18px 48px rgba(9,14,28,0.08);
-      --radius:14px;
-      --maxW:1120px;
+      --glass:rgba(255,255,255,0.72);
+      --card-shadow:0 20px 50px rgba(9,14,28,0.08);
+      --radius:16px;
+      --maxW:1200px;
     }
-    #premium-journey{max-width:var(--maxW);margin:28px auto;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);padding:20px}
-    .pj-outer{background:var(--bg);border-radius:18px;padding:20px;border:1px solid rgba(7,19,40,0.04);box-shadow:var(--card-shadow)}
-    #pj-title{font-weight:800;margin:0;font-size:20px;letter-spacing:-0.01em}
-    .pj-sub{margin-top:8px;color:var(--muted);font-weight:700;font-size:13px}
-    .pj-stage{position:relative;margin-top:18px;height:360px}
+    #premium-journey{max-width:var(--maxW);margin:34px auto;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);padding:28px}
+    .pj-outer{background:var(--bg);border-radius:20px;padding:28px;border:1px solid rgba(7,19,40,0.04);box-shadow:var(--card-shadow)}
+    #pj-title{font-weight:900;margin:0;font-size:26px;letter-spacing:-0.02em}
+    .pj-sub{margin-top:8px;color:var(--muted);font-weight:700;font-size:14px}
+    .pj-stage{position:relative;margin-top:28px;height:420px}
     .pj-svg{width:100%;height:100%;display:block;overflow:visible}
-    .pj-path{fill:none;stroke:rgba(7,19,40,0.08);stroke-width:6;stroke-linecap:round;stroke-dasharray:8 12}
-    .pj-node{cursor:pointer;transition:transform .22s ease,filter .22s;transform-origin:center;outline:none}
-    .pj-node:focus{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 30px rgba(12,42,120,0.08);border-radius:12px}
-    .node-bg{rx:14;ry:14;filter:drop-shadow(0 16px 34px rgba(6,10,26,0.06))}
-    .icon-circle{fill:#fff}
-    .label{font-weight:800;font-size:12px;fill:var(--text);text-anchor:middle}
-    .subtext{font-size:11px;fill:rgba(7,19,40,0.54);text-anchor:middle}
-    .pulse{opacity:0.6}
-    .float{animation:float 6s ease-in-out infinite}
+    .road{fill:none;stroke-width:10;stroke-linecap:round;filter:url(#roadBlur)}
+    .road-shadow{fill:none;stroke-width:28;stroke-linecap:round;opacity:0.06}
+    .pj-node{cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .2s;transform-origin:center;outline:none}
+    .pj-node:focus{transform:translateY(-8px) scale(1.03);box-shadow:0 20px 46px rgba(12,42,120,0.08);border-radius:14px}
+    .node-bg{rx:14;ry:14;filter:drop-shadow(0 18px 46px rgba(6,10,26,0.07))}
+    .icon-wrap{fill:#fff}
+    .label{font-weight:900;font-size:13px;fill:var(--text);text-anchor:middle}
+    .subtext{font-size:12px;fill:rgba(7,19,40,0.56);text-anchor:middle}
+    .float{animation:float 5.8s ease-in-out infinite}
     @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-    .pj-tooltip{position:fixed;min-width:220px;max-width:360px;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 22px 56px rgba(9,14,28,0.12);border:1px solid rgba(7,19,40,0.05);opacity:0;transform:translateY(8px) scale(.98);transition:opacity .14s ease,transform .14s ease;pointer-events:none;z-index:80;font-weight:800;color:var(--text)}
+    .pj-tooltip{position:fixed;min-width:240px;max-width:360px;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 26px 64px rgba(9,14,28,0.12);border:1px solid rgba(7,19,40,0.05);opacity:0;transform:translateY(8px) scale(.98);transition:opacity .14s ease,transform .14s ease;pointer-events:none;z-index:80;font-weight:800;color:var(--text)}
     .pj-tooltip.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-    .pj-vertical{display:none;margin-top:14px;gap:12px}
-    .card{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(7,19,40,0.03);box-shadow:0 12px 32px rgba(6,10,26,0.06)}
-    .card .ico{width:54px;height:54px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;font-weight:900}
+    .pj-vertical{display:none;margin-top:18px;gap:12px}
+    .card{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:14px;background:#fff;border:1px solid rgba(7,19,40,0.03);box-shadow:0 18px 48px rgba(6,10,26,0.06)}
+    .card .ico{width:56px;height:56px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;font-weight:900}
     .card h4{margin:0;font-size:15px;font-weight:900}
     .card p{margin:6px 0 0;color:var(--muted);font-weight:700;font-size:13px}
-    .pj-meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px}
-    .pj-cta{padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;border:none;font-weight:900;cursor:pointer;box-shadow:0 14px 40px rgba(124,58,237,0.08)}
-    @media (max-width:920px){.pj-stage{height:420px}.pj-svg{height:420px}.pj-tooltip{max-width:300px}}
-    @media (max-width:760px){.pj-stage{display:none}.pj-vertical{display:flex;flex-direction:column}}
-    @media (prefers-reduced-motion:reduce){.float{animation:none}}
+    .pj-meta{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
+    .pj-cta{padding:12px 16px;border-radius:14px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;border:none;font-weight:900;cursor:pointer;box-shadow:0 16px 40px rgba(124,58,237,0.08)}
+  
   </style>
 
   <div class="pj-outer" role="application">
@@ -3774,8 +3772,14 @@ button[aria-pressed="true"] {
     <p class="pj-sub">Five focused steps to validate, launch and grow student-first products.</p>
 
     <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus Impact five step timeline">
+      <svg class="pj-svg" viewBox="0 0 1200 520" role="img" aria-label="Campus Impact five step timeline">
         <defs>
+          <linearGradient id="gRoad" x1="0" x2="1"><stop offset="0" stop-color="#e6e9ff"/><stop offset="1" stop-color="#f6fbff"/></linearGradient>
+          <linearGradient id="gRoadAccent" x1="0" x2="1"><stop offset="0" stop-color="#dfe7ff"/><stop offset="1" stop-color="#eef8ff"/></linearGradient>
+          <filter id="roadBlur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
           <linearGradient id="ga" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
           <linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
           <linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
@@ -3783,79 +3787,95 @@ button[aria-pressed="true"] {
           <linearGradient id="ge" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#34d399"/></linearGradient>
         </defs>
 
-        <path class="pj-path" d="M80 300 C 200 140, 330 420, 460 300 C 590 180, 710 420, 840 300 C 970 180, 1090 360, 1160 240" />
+        <path class="road-shadow" d="M80 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1160 260" stroke="url(#gRoad)" />
 
-        <g transform="translate(140,240)">
+        <path class="road" d="M80 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1160 260" stroke="url(#gRoadAccent)" stroke-dasharray="0" />
+
+        <g transform="translate(140,290)">
           <g class="pj-node" tabindex="0" role="button" aria-label="Survey — Student needs" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities.">
-            <rect class="node-bg" x="-46" y="-46" width="92" height="92" fill="url(#gd)"></rect>
-            <circle class="icon-circle" cx="0" cy="-6" r="30"></circle>
-            <g class="float" transform="translate(-10,-20)">
-              <rect x="4" y="2" width="18" height="22" rx="2" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4"></rect>
-              <path d="M8 8h8" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round"></path>
-              <path d="M8 14h10" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round"></path>
+            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gd)"></rect>
+            <g transform="translate(0,-20)" class="float">
+              <rect x="-30" y="-10" width="60" height="60" rx="14" fill="#fff" opacity="0.02"></rect>
+              <g transform="translate(-10,-8) scale(0.9)">
+                <rect x="0" y="8" width="20" height="26" rx="3" fill="#fff" stroke="#0b1726" stroke-width="1" opacity="0.95"></rect>
+                <path d="M3 14h14" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M3 20h10" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="14" cy="26" r="1.8" fill="#0b1726"/>
+              </g>
             </g>
-            <circle class="pulse" cx="0" cy="-6" r="36" fill="url(#gd)" opacity="0.06"></circle>
+            <circle cx="0" cy="-20" r="44" fill="url(#gd)" opacity="0.06"></circle>
           </g>
-          <text class="label" y="64">SURVEY</text>
-          <text class="subtext" y="82">Student needs</text>
+          <text class="label" y="70">SURVEY</text>
+          <text class="subtext" y="88">Student needs</text>
         </g>
 
-        <g transform="translate(340,150)">
+        <g transform="translate(360,170)">
           <g class="pj-node" tabindex="0" role="button" aria-label="Pilot — Focused testing" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics.">
-            <rect class="node-bg" x="-50" y="-50" width="100" height="100" fill="url(#gc)"></rect>
-            <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <g class="float" transform="translate(-8,-18)">
-              <path d="M6 18c0-6 6-12 6-12s6 6 6 12a6 6 0 0 1-12 0z" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linejoin="round"></path>
-              <path d="M6 18L2 22" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round"></path>
+            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gc)"></rect>
+            <g transform="translate(0,-20)" class="float">
+              <rect x="-28" y="-8" width="56" height="44" rx="8" fill="#fff" opacity="0.02"></rect>
+              <g transform="translate(-8,-10) scale(0.95)">
+                <path d="M6 6c2-4 6-6 10-6s8 2 10 6" stroke="#0b1726" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                <rect x="4" y="12" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.2" fill="none"></rect>
+                <circle cx="8" cy="24" r="2" fill="#0b1726"/>
+                <circle cx="18" cy="24" r="2" fill="#0b1726"/>
+              </g>
             </g>
-            <circle class="pulse" cx="0" cy="-6" r="34" fill="url(#gc)" opacity="0.06"></circle>
+            <circle cx="0" cy="-20" r="46" fill="url(#gc)" opacity="0.06"></circle>
           </g>
           <text class="label" y="74">PILOT</text>
           <text class="subtext" y="92">Small-scale validation</text>
         </g>
 
-        <g transform="translate(540,260)">
+        <g transform="translate(560,300)">
           <g class="pj-node" tabindex="0" role="button" aria-label="Shuttle — Live tracking" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts.">
-            <rect class="node-bg" x="-46" y="-46" width="92" height="92" fill="url(#gb)"></rect>
-            <circle class="icon-circle" cx="0" cy="-6" r="30"></circle>
-            <g class="float" transform="translate(-12,-16)">
-              <rect x="4" y="4" width="24" height="12" rx="3" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4"></rect>
-              <circle cx="8" cy="20" r="2" fill="rgba(7,19,40,0.9)"></circle>
-              <circle cx="20" cy="20" r="2" fill="rgba(7,19,40,0.9)"></circle>
+            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#gb)"></rect>
+            <g transform="translate(0,-18)" class="float">
+              <rect x="-26" y="-4" width="52" height="26" rx="6" fill="#fff" opacity="0.03"></rect>
+              <g transform="translate(-12,-6)">
+                <rect x="6" y="6" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.2" fill="none"></rect>
+                <circle cx="8" cy="22" r="2" fill="#0b1726"/>
+                <circle cx="22" cy="22" r="2" fill="#0b1726"/>
+              </g>
             </g>
-            <circle class="pulse" cx="0" cy="-6" r="36" fill="url(#gb)" opacity="0.06"></circle>
+            <circle cx="0" cy="-20" r="46" fill="url(#gb)" opacity="0.06"></circle>
           </g>
-          <text class="label" y="68">SHUTTLE</text>
-          <text class="subtext" y="86">Real-time transport</text>
+          <text class="label" y="72">SHUTTLE</text>
+          <text class="subtext" y="90">Real-time transport</text>
         </g>
 
-        <g transform="translate(760,170)">
+        <g transform="translate(780,200)">
           <g class="pj-node" tabindex="0" role="button" aria-label="Marketplace — Campus commerce" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students.">
-            <rect class="node-bg" x="-46" y="-46" width="92" height="92" fill="url(#ge)"></rect>
-            <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <g class="float" transform="translate(-9,-12)">
-              <path d="M4 14h24v8H4z" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
-              <path d="M6 14v-4a6 6 0 0 1 6-6h8a6 6 0 0 1 6 6v4" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round"></path>
+            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#ge)"></rect>
+            <g transform="translate(0,-18)" class="float">
+              <rect x="-28" y="-8" width="56" height="44" rx="8" fill="#fff" opacity="0.02"></rect>
+              <g transform="translate(-10,-6) scale(0.95)">
+                <path d="M6 16h16v-6a6 6 0 0 0-6-6H12a6 6 0 0 0-6 6v6z" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linejoin="round"></path>
+                <path d="M8 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
+                <path d="M20 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
+              </g>
             </g>
-            <circle class="pulse" cx="0" cy="-6" r="34" fill="url(#ge)" opacity="0.06"></circle>
+            <circle cx="0" cy="-20" r="44" fill="url(#ge)" opacity="0.06"></circle>
           </g>
-          <text class="label" y="64">MARKETPLACE</text>
-          <text class="subtext" y="82">Campus commerce</text>
+          <text class="label" y="70">MARKETPLACE</text>
+          <text class="subtext" y="88">Campus commerce</text>
         </g>
 
-        <g transform="translate(1040,220)">
+        <g transform="translate(1040,240)">
           <g class="pj-node" tabindex="0" role="button" aria-label="Community — Ongoing adoption" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions.">
-            <rect class="node-bg" x="-46" y="-46" width="92" height="92" fill="url(#ga)"></rect>
-            <circle class="icon-circle" cx="0" cy="-6" r="28"></circle>
-            <g class="float" transform="translate(-12,-16)">
-              <circle cx="8" cy="6" r="3" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4"></circle>
-              <circle cx="20" cy="6" r="3" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4"></circle>
-              <path d="M4 20c2-6 12-6 16 0" fill="none" stroke="rgba(7,19,40,0.9)" stroke-width="1.4" stroke-linecap="round"></path>
+            <rect class="node-bg" x="-52" y="-52" width="104" height="104" fill="url(#ga)"></rect>
+            <g transform="translate(0,-16)" class="float">
+              <rect x="-30" y="-8" width="60" height="46" rx="10" fill="#fff" opacity="0.02"></rect>
+              <g transform="translate(-12,-4) scale(0.95)">
+                <circle cx="10" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="none"></circle>
+                <circle cx="22" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="none"></circle>
+                <path d="M4 22c3-6 18-6 22 0" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
+              </g>
             </g>
-            <circle class="pulse" cx="0" cy="-6" r="36" fill="url(#ga)" opacity="0.06"></circle>
+            <circle cx="0" cy="-20" r="44" fill="url(#ga)" opacity="0.06"></circle>
           </g>
-          <text class="label" y="64">COMMUNITY</text>
-          <text class="subtext" y="82">Adoption & growth</text>
+          <text class="label" y="70">COMMUNITY</text>
+          <text class="subtext" y="88">Adoption & growth</text>
         </g>
 
       </svg>
@@ -3869,14 +3889,14 @@ button[aria-pressed="true"] {
     <div class="pj-vertical" aria-hidden="true">
       <article class="card" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface pain points.">
         <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="16" height="20" rx="3" fill="white" opacity="0.08"/><path d="M10 8h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M10 14h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="16" height="20" rx="3" fill="white" opacity="0.06"/><path d="M10 9h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/><path d="M10 15h8" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
         <div><h4>SURVEY</h4><p>Short surveys and micro-interviews to surface pain points.</p></div>
       </article>
 
       <article class="card" data-title="Pilot — Focused testing" data-desc="Controlled campus pilot to validate value and flows.">
         <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 20c4-6 8-10 12-12" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18c4-6 8-10 12-12" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
         <div><h4>PILOT</h4><p>Controlled campus pilot to validate value and flows.</p></div>
       </article>
@@ -3890,7 +3910,7 @@ button[aria-pressed="true"] {
 
       <article class="card" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling.">
         <div class="ico" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12h20v8H4z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 10h12v8a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-8z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 10V8a4 4 0 0 1 8 0v2" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
         <div><h4>MARKETPLACE</h4><p>Listings, secure checkout and simple order handling.</p></div>
       </article>
@@ -3913,7 +3933,7 @@ button[aria-pressed="true"] {
     (function(){
       const stage = document.getElementById('pj-stage');
       const svg = stage && stage.querySelector('svg.pj-svg');
-      const path = svg && svg.querySelector('path.pj-path');
+      const path = svg && svg.querySelector('path.road');
       const nodes = stage ? stage.querySelectorAll('.pj-node') : [];
       const tooltip = document.getElementById('pj-tooltip');
       const ttTitle = document.getElementById('pj-tooltip-title');
@@ -3926,7 +3946,7 @@ button[aria-pressed="true"] {
         const bbox = node.getBoundingClientRect();
         const centerX = bbox.left + bbox.width/2;
         let top = bbox.top - tooltip.offsetHeight - 12;
-        if(top < 12) top = bbox.bottom + 8;
+        if(top < 12) top = bbox.bottom + 12;
         let left = centerX - tooltip.offsetWidth/2;
         const margin = 12;
         if(left < margin) left = margin;
@@ -4006,6 +4026,7 @@ button[aria-pressed="true"] {
     })();
   </script>
 </section>
+
 
   
 
