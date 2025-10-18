@@ -3725,47 +3725,96 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-<!-- Improved Campus Impact Track
-   Drop this <section> into your page (replace your old #campus-impact-track).
-   Self-contained: styles + SVG + accessible JS (hover, focus, keyboard, touch).
--->
+  <!-- Campus Impact Track — improved, accessible, responsive -->
 <section id="campus-impact-track" class="campus-impact" aria-labelledby="cpt-title">
   <style>
-  :root{--cpt-maxw:1180px;--cpt-bg:#ffffff;--cpt-accent1:#7c3aed;--cpt-accent2:#06b6d4;--cpt-text:#07133a;--cpt-muted:rgba(7,19,40,0.56);--cpt-card:#fff}
-  .campus-impact{max-width:var(--cpt-maxw);margin:38px auto;padding:22px;border-radius:16px;background:linear-gradient(180deg,var(--cpt-bg),#fbfdff);box-shadow:0 18px 60px rgba(6,10,26,0.06);border:1px solid rgba(10,20,30,0.04)}
-  .campus-impact-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-  .campus-impact h3{margin:0;font-family:Inter,system-ui,-apple-system; font-weight:900;font-size:20px;color:var(--cpt-text)}
-  .campus-impact p.lead{margin:8px 0 0;color:var(--cpt-muted);font-weight:700}
+    /* scoped styles for campus-impact-track (keeps names local-ish) */
+    :root{
+      --cpt-maxw:1200px;
+      --cpt-accent1:#7c3aed;
+      --cpt-accent2:#06b6d4;
+      --cpt-bg: #fff;
+      --cpt-text:#07133a;
+      --cpt-muted:rgba(7,19,40,0.56);
+      --cpt-soft: rgba(11,17,32,0.04);
+      --cpt-card: linear-gradient(180deg,#ffffff,#fbfdff);
+    }
 
-  .cpt-stage{margin-top:18px;position:relative}
-  .cpt-canvas{width:100%;height:auto;display:block}
+    .campus-impact{
+      max-width:var(--cpt-maxw);
+      margin:32px auto;
+      padding:20px;
+      border-radius:16px;
+      background:var(--cpt-card);
+      box-shadow:0 20px 60px rgba(6,10,26,0.06);
+      border:1px solid var(--cpt-soft);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--cpt-text);
+    }
 
-  /* Nodes */
-  .cpt-node{cursor:pointer;transition:transform .18s cubic-bezier(.2,.9,.2,1),box-shadow .18s;outline: none}
-  .cpt-node:focus,.cpt-node:hover{transform:translateY(-6px);filter:drop-shadow(0 18px 60px rgba(6,10,26,0.08))}
-  .cpt-node rect[fill]{rx:12}
+    .campus-impact-header{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+    .campus-impact h3{margin:0;font-weight:900;font-size:20px}
+    .campus-impact p.lead{margin:6px 0 0;color:var(--cpt-muted);font-weight:700}
 
-  /* Tooltip */
-  .cpt-tooltip{position:fixed;left:0;top:0;transform:translate(-50%,8px) scale(.98);opacity:0;pointer-events:none;transition:transform .16s ease,opacity .16s ease;min-width:220px;max-width:360px;padding:12px 14px;border-radius:12px;background:var(--cpt-card);box-shadow:0 20px 60px rgba(6,10,26,0.12);border:1px solid rgba(10,20,30,0.04);font-weight:800;color:var(--cpt-text);z-index:120}
-  .cpt-tooltip.show{opacity:1;transform:translate(-50%,6px) scale(1);pointer-events:auto}
-  .cpt-tooltip .title{font-size:14px;margin-bottom:6px}
-  .cpt-tooltip .desc{font-size:13px;color:var(--cpt-muted);font-weight:700}
-  .cpt-tooltip .cta{margin-top:8px;display:inline-flex;gap:8px}
-  .cpt-tooltip .cta a{font-weight:900;padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,var(--cpt-accent1),var(--cpt-accent2));color:#fff;text-decoration:none}
+    .cpt-stage{margin-top:18px;position:relative}
 
-  /* Vertical stacked cards for small screens */
-  .cpt-vertical{display:none;margin-top:16px;gap:12px}
-  .cpt-card{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--cpt-card);border:1px solid rgba(10,20,30,0.04);box-shadow:0 10px 30px rgba(6,10,26,0.06)}
-  .cpt-card .ico{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(90deg,var(--cpt-accent1),var(--cpt-accent2));color:#fff;font-weight:900}
-  .cpt-card h4{margin:0;font-size:15px;font-weight:900}
-  .cpt-card p{margin:6px 0 0;color:var(--cpt-muted);font-size:13px;font-weight:700}
+    /* Tooltip */
+    .cpt-tooltip{
+      position:fixed;
+      left:0; top:0;
+      transform:translate(-50%,8px) scale(.98);
+      opacity:0;
+      pointer-events:none;
+      transition:transform .14s ease,opacity .14s ease;
+      min-width:220px;
+      max-width:380px;
+      padding:12px 14px;
+      border-radius:12px;
+      background: linear-gradient(180deg,#fff,#fbfdff);
+      box-shadow:0 18px 60px rgba(6,10,26,0.14);
+      border:1px solid rgba(10,20,30,0.04);
+      font-weight:800;
+      color:var(--cpt-text);
+      z-index:1200;
+    }
+    .cpt-tooltip.show{opacity:1;transform:translate(-50%,6px) scale(1);pointer-events:auto}
+    .cpt-tooltip .title{font-size:13px;margin-bottom:6px}
+    .cpt-tooltip .desc{font-size:13px;color:var(--cpt-muted);font-weight:700}
 
-  /* Responsive behavior */
-  @media (max-width:960px){.campus-impact{padding:18px}.campus-impact h3{font-size:18px}}
-  @media (max-width:760px){.cpt-canvas{display:none}.cpt-vertical{display:flex;flex-direction:column}}
+    /* SVG canvas sizes */
+    .cpt-canvas{width:100%;height:auto;display:block}
 
-  /* Small visual polish for SVG nodes when active */
-  .cpt-node[aria-expanded="true"] rect[fill]{stroke:rgba(0,0,0,0.06);stroke-width:1.5}
+    /* Node styles (visual hit targets) */
+    .cpt-node{cursor:pointer;outline:none;}
+    .cpt-node rect.node-bg{filter:drop-shadow(0 8px 20px rgba(6,10,26,0.06));}
+    .cpt-node:focus rect.node-bg,
+    .cpt-node:hover rect.node-bg{transform:translateY(-6px) scale(1.02); transition:transform .24s cubic-bezier(.2,.9,.2,1);}
+
+    /* small-screen stacked cards fallback */
+    .cpt-vertical{display:none;margin-top:16px;gap:12px}
+    .cpt-card{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(10,20,30,0.04);box-shadow:0 12px 40px rgba(6,10,26,0.06)}
+    .cpt-card .ico{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(90deg,var(--cpt-accent1),var(--cpt-accent2));color:#fff;font-weight:900}
+    .cpt-card h4{margin:0;font-size:15px;font-weight:900}
+    .cpt-card p{margin:6px 0 0;color:var(--cpt-muted);font-size:13px;font-weight:700}
+
+    /* responsive breakpoints */
+    @media (max-width: 760px){
+      .cpt-canvas{display:none}
+      .cpt-vertical{display:flex;flex-direction:column}
+      .campus-impact{padding:14px}
+      .cpt-tooltip{position:fixed;left:50%;top:auto;bottom:12px;transform:translateX(-50%);max-width:calc(100% - 36px)}
+    }
+
+    /* reduced motion respect */
+    @media (prefers-reduced-motion: reduce){
+      .cpt-node rect.node-bg,
+      .cpt-node:hover rect.node-bg,
+      .cpt-node:focus rect.node-bg { transition:none !important; transform:none !important; }
+      .cpt-tooltip{transition:none !important}
+    }
+
+    /* small visual tweaks for the center dashed lane so it reads crisply */
+    svg.cpt-canvas path.center-dash { stroke-linecap:round; stroke-dasharray:18 16; opacity:0.96; }
   </style>
 
   <div class="campus-impact-header">
@@ -3776,63 +3825,64 @@ button[aria-pressed="true"] {
   </div>
 
   <div class="cpt-stage" id="cpt-stage">
+    <!-- SVG roadmap (keeps your original path idea) -->
     <svg class="cpt-canvas" viewBox="0 0 1200 520" role="img" aria-label="Campus roadmap with five steps" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <linearGradient id="g-asphalt" x1="0" x2="1"><stop offset="0" stop-color="#2a2f36"/><stop offset="1" stop-color="#1f2328"/></linearGradient>
-        <linearGradient id="g-glow" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed" stop-opacity="0.12"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0.08"/></linearGradient>
+        <linearGradient id="asphalt2" x1="0" x2="1">
+          <stop offset="0" stop-color="#2a2f36" stop-opacity="1" />
+          <stop offset="1" stop-color="#1f2328" stop-opacity="1" />
+        </linearGradient>
+        <linearGradient id="laneGlow2" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed" stop-opacity="0.12"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0.08"/></linearGradient>
       </defs>
 
-      <!-- road base -->
+      <!-- road -->
       <path d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="url(#g-asphalt)" stroke-width="72" stroke-linecap="round" fill="none" opacity="1" />
+            stroke="url(#asphalt2)" stroke-width="72" stroke-linecap="round" fill="none" opacity="1" />
       <path d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="url(#g-glow)" stroke-width="80" stroke-linecap="round" fill="none" opacity="0.08" />
-      <path d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-dasharray="18 16" fill="none" opacity="0.95" />
+            stroke="url(#laneGlow2)" stroke-width="80" stroke-linecap="round" fill="none" opacity="0.08" />
+      <path class="center-dash" d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
+            stroke="#fff" stroke-width="8" fill="none" />
 
-      <!-- nodes (interactive) -->
-      <g class="cpt-node" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities." tabindex="0" transform="translate(140,290)" role="button" aria-label="Survey — Student needs" aria-expanded="false">
-        <rect x="-56" y="-56" width="112" height="112" rx="16" fill="#10b981" opacity="0.12"></rect>
+      <!-- Nodes: survey, pilot, shuttle, marketplace, community -->
+      <g class="cpt-node" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities." tabindex="0" transform="translate(140,290)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Survey — Student needs">
+        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#10b981" opacity="0.14"></rect>
         <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#10b981" />
         <g transform="translate(-12,-8) scale(0.9)" aria-hidden="true">
           <rect x="0" y="4" width="22" height="28" rx="3" fill="#fff"></rect>
-          <path d="M4 12h14" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
-          <path d="M4 18h10" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"/>
-          <circle cx="16" cy="26" r="1.6" fill="#0b1726" />
+          <path d="M4 12h14" stroke="#0b1726" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M4 18h10" stroke="#0b1726" stroke-width="1.2" stroke-linecap="round"/>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics." tabindex="0" transform="translate(360,170)" role="button" aria-label="Pilot — Focused testing" aria-expanded="false">
-        <rect x="-56" y="-56" width="112" height="112" rx="16" fill="#fb923c" opacity="0.12"></rect>
+      <g class="cpt-node" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics." tabindex="0" transform="translate(360,170)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Pilot — Focused testing">
+        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#fb923c" opacity="0.14"></rect>
         <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#fb923c" />
         <g transform="translate(-10,-6) scale(0.95)" aria-hidden="true">
-          <path d="M6 14c1.5-3 4-5 7-5s5.5 2 7 5" stroke="#0b1726" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-          <rect x="4" y="18" width="18" height="8" rx="2" stroke="#0b1726" stroke-width="1.1" fill="#fff" />
+          <path d="M6 14c1.5-3 4-5 7-5s5.5 2 7 5" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <rect x="4" y="18" width="18" height="8" rx="2" stroke="#0b1726" stroke-width="1.0" fill="#fff" />
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts." tabindex="0" transform="translate(560,300)" role="button" aria-label="Shuttle — Live tracking" aria-expanded="false">
-        <rect x="-56" y="-56" width="112" height="112" rx="16" fill="#60a5fa" opacity="0.12"></rect>
+      <g class="cpt-node" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts." tabindex="0" transform="translate(560,300)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Shuttle — Live tracking">
+        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#60a5fa" opacity="0.14"></rect>
         <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#60a5fa" />
         <g transform="translate(-14,-10) scale(0.95)" aria-hidden="true">
-          <rect x="4" y="8" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.2" fill="#fff"></rect>
+          <rect x="4" y="8" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.1" fill="#fff"></rect>
           <circle cx="8" cy="22" r="2" fill="#0b1726"/>
           <circle cx="20" cy="22" r="2" fill="#0b1726"/>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students." tabindex="0" transform="translate(780,200)" role="button" aria-label="Marketplace — Campus commerce" aria-expanded="false">
-        <rect x="-56" y="-56" width="112" height="112" rx="16" fill="#16a34a" opacity="0.12"></rect>
+      <g class="cpt-node" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students." tabindex="0" transform="translate(780,200)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Marketplace — Campus commerce">
+        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#16a34a" opacity="0.14"></rect>
         <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#16a34a" />
         <g transform="translate(-12,-6) scale(0.95)" aria-hidden="true">
-          <path d="M6 16h16v-6a6 6 0 0 0-6-6H12a6 6 0 0 0-6 6v6z" stroke="#0b1726" stroke-width="1.2" fill="#fff" stroke-linejoin="round"></path>
-          <path d="M8 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
-          <path d="M20 16v6" stroke="#0b1726" stroke-width="1.4" stroke-linecap="round"></path>
+          <path d="M6 16h16v-6a6 6 0 0 0-6-6H12a6 6 0 0 0-6 6v6z" stroke="#0b1726" stroke-width="1.1" fill="#fff" stroke-linejoin="round"></path>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions." tabindex="0" transform="translate(1040,240)" role="button" aria-label="Community — Ongoing adoption" aria-expanded="false">
-        <rect x="-56" y="-56" width="112" height="112" rx="16" fill="#7c3aed" opacity="0.12"></rect>
+      <g class="cpt-node" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions." tabindex="0" transform="translate(1040,240)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Community — Ongoing adoption">
+        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#7c3aed" opacity="0.14"></rect>
         <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#7c3aed" />
         <g transform="translate(-12,-6) scale(0.95)" aria-hidden="true">
           <circle cx="10" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="#fff" />
@@ -3840,112 +3890,174 @@ button[aria-pressed="true"] {
           <path d="M4 22c3-6 18-6 22 0" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
         </g>
       </g>
-
     </svg>
 
     <!-- Tooltip element (positioned by JS) -->
     <div id="cpt-tooltip" class="cpt-tooltip" role="dialog" aria-hidden="true" aria-live="polite">
       <div id="cpt-tooltip-title" class="title"></div>
       <div id="cpt-tooltip-desc" class="desc"></div>
-      <div class="cta"><a href="#projects">View related work</a></div>
     </div>
 
     <!-- Vertical stacked cards for small screens -->
     <div class="cpt-vertical" aria-hidden="true">
-      <article class="cpt-card" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points.">
-        <div class="ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="0" y="2" width="18" height="24" rx="3" fill="#fff"/></svg></div>
-        <div><h4>Survey — Student needs</h4><p>Short surveys and micro-interviews to surface top pain points.</p></div>
+      <article class="cpt-card" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities.">
+        <div class="ico" aria-hidden="true">📋</div>
+        <div><h4>Survey — Student needs</h4><p>Short surveys and micro-interviews to surface top pain points and priorities.</p></div>
       </article>
+
       <article class="cpt-card" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics.">
-        <div class="ico" aria-hidden="true">👥</div>
+        <div class="ico" aria-hidden="true">🧪</div>
         <div><h4>Pilot — Focused testing</h4><p>Run a controlled campus pilot to validate value, flows and metrics.</p></div>
       </article>
+
       <article class="cpt-card" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts.">
         <div class="ico" aria-hidden="true">🚌</div>
         <div><h4>Shuttle — Live tracking</h4><p>Real-time vehicle locations, ETAs and route alerts.</p></div>
       </article>
+
       <article class="cpt-card" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students.">
         <div class="ico" aria-hidden="true">🛒</div>
         <div><h4>Marketplace — Campus commerce</h4><p>Listings, secure checkout and simple order handling for students.</p></div>
       </article>
+
       <article class="cpt-card" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions.">
         <div class="ico" aria-hidden="true">🌍</div>
         <div><h4>Community — Ongoing adoption</h4><p>Scale via ambassadors, feedback loops and student contributions.</p></div>
       </article>
     </div>
-
   </div>
 
   <script>
-  (function(){
-    const tooltip = document.getElementById('cpt-tooltip');
-    const tipTitle = document.getElementById('cpt-tooltip-title');
-    const tipDesc = document.getElementById('cpt-tooltip-desc');
-    const nodes = Array.from(document.querySelectorAll('#cpt-stage .cpt-node'));
-    let openNode = null;
+    (function(){
+      const tooltip = document.getElementById('cpt-tooltip');
+      const ttTitle = document.getElementById('cpt-tooltip-title');
+      const ttDesc = document.getElementById('cpt-tooltip-desc');
+      const nodes = Array.from(document.querySelectorAll('#campus-impact-track .cpt-node'));
+      let activeNode = null;
+      const pad = 12;
 
-    function show(node){
-      const title = node.dataset.title || '';
-      const desc = node.dataset.desc || '';
-      tipTitle.textContent = title;
-      tipDesc.textContent = desc;
-      // position
-      const bbox = node.getBoundingClientRect();
-      const left = bbox.left + bbox.width/2;
-      const top = bbox.top - 12; // prefer above
-      // mobile bottom sheet fallback
-      if(window.matchMedia('(max-width:760px)').matches){
-        tooltip.style.left = '50%';
-        tooltip.style.top = 'auto';
-        tooltip.style.bottom = '12px';
-      } else {
+      function showTooltipFor(node){
+        if(!node) return hideTooltip();
+        const title = node.dataset.title || '';
+        const desc = node.dataset.desc || '';
+        ttTitle.textContent = title;
+        ttDesc.textContent = desc;
+        tooltip.setAttribute('aria-hidden', 'false');
+        tooltip.classList.add('show');
+        activeNode = node;
+        // Position tooltip: prefer above node; fallback below if not enough space
+        // get node center in viewport
+        const bbox = node.getBoundingClientRect();
+        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+        const centerX = bbox.left + bbox.width/2;
+        const aboveY = bbox.top - 10;
+        const belowY = bbox.bottom + 10;
+        // measure tooltip size (temporarily show off-screen to measure)
+        tooltip.style.left = '-9999px';
+        tooltip.style.top = '-9999px';
+        // force a reflow then measure
+        const ttRect = tooltip.getBoundingClientRect();
+        const ttW = ttRect.width || 300;
+        const ttH = ttRect.height || 90;
+
+        // choose vertical placement
+        let top = (aboveY - ttH);
+        let placement = 'above';
+        if (top < 8) { top = belowY; placement = 'below'; }
+        // clamp horizontally
+        let left = Math.min(Math.max(centerX, pad + ttW/2), vw - pad - ttW/2);
+        // convert centerX to left coordinate (tooltip uses translate(-50%,...) so left is center)
         tooltip.style.left = left + 'px';
-        tooltip.style.top = (top) + 'px';
-        tooltip.style.bottom = 'auto';
+        if (placement === 'above') {
+          tooltip.style.top = (top) + 'px';
+        } else {
+          tooltip.style.top = (top) + 'px';
+        }
+        // ensure tooltip is visible for screen readers
+        tooltip.focus?.();
       }
-      tooltip.classList.add('show');
-      tooltip.setAttribute('aria-hidden','false');
-      node.setAttribute('aria-expanded','true');
-      openNode = node;
-    }
-    function hide(node){
-      tooltip.classList.remove('show');
-      tooltip.setAttribute('aria-hidden','true');
-      nodes.forEach(n=>n.setAttribute('aria-expanded','false'));
-      openNode = null;
-    }
 
-    nodes.forEach(node=>{
-      node.addEventListener('mouseenter', ()=> show(node));
-      node.addEventListener('mouseleave', ()=> hide(node));
-      node.addEventListener('focus', ()=> show(node));
-      node.addEventListener('blur', ()=> hide(node));
-      node.addEventListener('click', (e)=>{
-        // toggle on click/tap
-        if(openNode === node){ hide(node); }
-        else { show(node); }
+      function hideTooltip(){
+        tooltip.setAttribute('aria-hidden','true');
+        tooltip.classList.remove('show');
+        activeNode = null;
+      }
+
+      // Toggle on click (useful for touch)
+      function toggleTooltip(node){
+        if(activeNode === node){
+          hideTooltip();
+        } else {
+          showTooltipFor(node);
+        }
+      }
+
+      // Attach event listeners
+      nodes.forEach(node => {
+        node.addEventListener('mouseenter', () => showTooltipFor(node));
+        node.addEventListener('mouseleave', () => {
+          // small delay to avoid flicker when moving to tooltip
+          setTimeout(()=> { if(document.activeElement !== node) hideTooltip(); }, 120);
+        });
+
+        node.addEventListener('focus', () => showTooltipFor(node));
+        node.addEventListener('blur', () => hideTooltip());
+
+        node.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleTooltip(node);
+        });
+
+        node.addEventListener('keydown', (ev) => {
+          if(ev.key === 'Enter' || ev.key === ' '){
+            ev.preventDefault();
+            toggleTooltip(node);
+          } else if (ev.key === 'Escape'){
+            hideTooltip();
+            node.blur();
+          }
+        });
       });
-      node.addEventListener('keydown', (e)=>{
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); if(openNode===node) hide(node); else show(node); }
-        if(e.key === 'Escape'){ hide(node); node.blur(); }
+
+      // Close tooltip on Escape anywhere
+      window.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') hideTooltip();
       });
-    });
 
-    // close on outside click
-    document.addEventListener('click', (e)=>{
-      if(!tooltip.contains(e.target) && !nodes.some(n=>n.contains(e.target))){ hide(); }
-    });
+      // If user taps outside, close tooltip
+      window.addEventListener('pointerdown', (e) => {
+        if(!tooltip.contains(e.target) && !nodes.some(n => n.contains(e.target))) {
+          hideTooltip();
+        }
+      });
 
-    // reposition tooltip on resize/scroll
-    window.addEventListener('resize', ()=>{ if(openNode) show(openNode); });
-    window.addEventListener('scroll', ()=>{ if(openNode) show(openNode); }, {passive:true});
+      // Reposition on resize/scroll for correctness
+      let resizeTimeout = null;
+      ['resize','scroll'].forEach(ev => {
+        window.addEventListener(ev, () => {
+          if(resizeTimeout) clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(()=> {
+            if(activeNode) showTooltipFor(activeNode);
+          }, 120);
+        }, {passive:true});
+      });
 
-    // expose for debugging
-    window._cpt = { nodes };
-  })();
+      // For small screens, make vertical cards visible to screen readers
+      function updateVerticalVisibility(){
+        const v = document.querySelector('#campus-impact-track .cpt-vertical');
+        if(!v) return;
+        if(window.matchMedia('(max-width:760px)').matches){
+          v.setAttribute('aria-hidden','false');
+        } else {
+          v.setAttribute('aria-hidden','true');
+        }
+      }
+      updateVerticalVisibility();
+      window.matchMedia('(max-width:760px)').addEventListener?.('change', updateVerticalVisibility);
+    })();
   </script>
 </section>
-
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
