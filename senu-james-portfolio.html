@@ -3725,339 +3725,317 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-  <!-- Campus Impact Track — improved, accessible, responsive -->
-<section id="campus-impact-track" class="campus-impact" aria-labelledby="cpt-title">
+<section id="campus-impact-track" class="campus-impact" aria-labelledby="cpt-title" style="margin-top:32px;">
   <style>
-    /* scoped styles for campus-impact-track (keeps names local-ish) */
-    :root{
-      --cpt-maxw:1200px;
-      --cpt-accent1:#7c3aed;
-      --cpt-accent2:#06b6d4;
-      --cpt-bg: #fff;
-      --cpt-text:#07133a;
-      --cpt-muted:rgba(7,19,40,0.56);
-      --cpt-soft: rgba(11,17,32,0.04);
-      --cpt-card: linear-gradient(180deg,#ffffff,#fbfdff);
+    /* Scoped styles for Campus Impact Track (paste-only section) */
+    :root {
+      --c1: #8ad34a; /* step 1 green */
+      --c2: #00c1a7; /* teal */
+      --c3: #15c7e6; /* cyan */
+      --c4: #2b95f2; /* blue */
+      --c5: #8b46e6; /* purple */
+      --muted: rgba(20,28,38,0.56);
+      --bg: #fff;
+      --card-bg: linear-gradient(180deg,#fff,#fbfdff);
+      --shadow: 0 20px 60px rgba(6,10,26,0.06);
     }
 
-    .campus-impact{
-      max-width:var(--cpt-maxw);
-      margin:32px auto;
-      padding:20px;
-      border-radius:16px;
-      background:var(--cpt-card);
-      box-shadow:0 20px 60px rgba(6,10,26,0.06);
-      border:1px solid var(--cpt-soft);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      color:var(--cpt-text);
+    .campus-impact {
+      max-width: 1200px;
+      margin: 18px auto;
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(10,20,30,0.04);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #07133a;
     }
 
-    .campus-impact-header{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
-    .campus-impact h3{margin:0;font-weight:900;font-size:20px}
-    .campus-impact p.lead{margin:6px 0 0;color:var(--cpt-muted);font-weight:700}
+    .campus-impact .header {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .campus-impact h3 { margin:0; font-weight:900; font-family: "Lexend", Inter, sans-serif; font-size:20px; }
+    .campus-impact p.lead { margin:6px 0 0; color:var(--muted); font-weight:700; font-size:13px; max-width:70ch; }
 
-    .cpt-stage{margin-top:18px;position:relative}
+    /* svg container */
+    .cpt-stage { position:relative; margin-top:14px; }
+    .cpt-svg { width:100%; height:auto; display:block; }
 
-    /* Tooltip */
-    .cpt-tooltip{
-      position:fixed;
-      left:0; top:0;
-      transform:translate(-50%,8px) scale(.98);
-      opacity:0;
-      pointer-events:none;
-      transition:transform .14s ease,opacity .14s ease;
+    /* dotted flight path */
+    .cpt-path { fill:none; stroke:#111827; stroke-width:2.2; stroke-dasharray:8 10; opacity:0.82; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* faint lane glow to mimic original */
+    .cpt-glow { fill:none; stroke: url(#laneGlow); stroke-width:80; opacity:0.06; stroke-linecap:round; }
+
+    /* node styles */
+    .node-group { cursor:pointer; outline:none; }
+    .node-outer { fill:none; stroke-width:10; stroke-linecap:round; stroke-linejoin:round; filter: drop-shadow(0 8px 20px rgba(6,10,26,0.08)); }
+    .node-core { fill:#fff; stroke: rgba(10,20,30,0.06); stroke-width:1.6; }
+    .node-small { fill:#fff; stroke: rgba(10,20,30,0.06); stroke-width:1.6; }
+
+    /* labels beside each node */
+    .cpt-label { font-size:13px; font-weight:900; fill:#07133a; text-transform:uppercase; letter-spacing:0.02em; }
+    .cpt-sub { font-size:12px; fill:var(--muted); font-weight:700; }
+
+    /* tooltip */
+    .cpt-tooltip {
+      position: absolute;
       min-width:220px;
-      max-width:380px;
-      padding:12px 14px;
-      border-radius:12px;
-      background: linear-gradient(180deg,#fff,#fbfdff);
-      box-shadow:0 18px 60px rgba(6,10,26,0.14);
+      max-width:340px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:var(--card-bg);
+      box-shadow: 0 20px 60px rgba(6,10,26,0.12);
       border:1px solid rgba(10,20,30,0.04);
       font-weight:800;
-      color:var(--cpt-text);
-      z-index:1200;
+      color:#07133a;
+      font-size:13px;
+      transform-origin: left top;
+      pointer-events: none;
+      opacity:0;
+      transform: translateY(8px) scale(.98);
+      transition: transform .12s ease, opacity .12s ease;
+      z-index:120;
     }
-    .cpt-tooltip.show{opacity:1;transform:translate(-50%,6px) scale(1);pointer-events:auto}
-    .cpt-tooltip .title{font-size:13px;margin-bottom:6px}
-    .cpt-tooltip .desc{font-size:13px;color:var(--cpt-muted);font-weight:700}
+    .cpt-tooltip.show { pointer-events:auto; opacity:1; transform: translateY(6px) scale(1); }
 
-    /* SVG canvas sizes */
-    .cpt-canvas{width:100%;height:auto;display:block}
+    /* small arrow (paper plane) at end */
+    .plane-stroke { fill:none; stroke:#111827; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
 
-    /* Node styles (visual hit targets) */
-    .cpt-node{cursor:pointer;outline:none;}
-    .cpt-node rect.node-bg{filter:drop-shadow(0 8px 20px rgba(6,10,26,0.06));}
-    .cpt-node:focus rect.node-bg,
-    .cpt-node:hover rect.node-bg{transform:translateY(-6px) scale(1.02); transition:transform .24s cubic-bezier(.2,.9,.2,1);}
-
-    /* small-screen stacked cards fallback */
-    .cpt-vertical{display:none;margin-top:16px;gap:12px}
-    .cpt-card{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(10,20,30,0.04);box-shadow:0 12px 40px rgba(6,10,26,0.06)}
-    .cpt-card .ico{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(90deg,var(--cpt-accent1),var(--cpt-accent2));color:#fff;font-weight:900}
-    .cpt-card h4{margin:0;font-size:15px;font-weight:900}
-    .cpt-card p{margin:6px 0 0;color:var(--cpt-muted);font-size:13px;font-weight:700}
-
-    /* responsive breakpoints */
-    @media (max-width: 760px){
-      .cpt-canvas{display:none}
-      .cpt-vertical{display:flex;flex-direction:column}
-      .campus-impact{padding:14px}
-      .cpt-tooltip{position:fixed;left:50%;top:auto;bottom:12px;transform:translateX(-50%);max-width:calc(100% - 36px)}
+    /* responsive: stack labels on small screens */
+    @media (max-width:760px) {
+      .campus-impact { padding:14px; }
+      .cpt-svg { height: 420px; }
+      .cpt-tooltip { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); width: calc(100% - 36px); max-width: none; }
     }
-
-    /* reduced motion respect */
-    @media (prefers-reduced-motion: reduce){
-      .cpt-node rect.node-bg,
-      .cpt-node:hover rect.node-bg,
-      .cpt-node:focus rect.node-bg { transition:none !important; transform:none !important; }
-      .cpt-tooltip{transition:none !important}
-    }
-
-    /* small visual tweaks for the center dashed lane so it reads crisply */
-    svg.cpt-canvas path.center-dash { stroke-linecap:round; stroke-dasharray:18 16; opacity:0.96; }
   </style>
 
-  <div class="campus-impact-header">
+  <div class="header">
     <div>
       <h3 id="cpt-title">Campus Impact Track</h3>
       <p class="lead">Five focused steps to validate, launch and grow student-first products.</p>
     </div>
   </div>
 
-  <div class="cpt-stage" id="cpt-stage">
-    <!-- SVG roadmap (keeps your original path idea) -->
-    <svg class="cpt-canvas" viewBox="0 0 1200 520" role="img" aria-label="Campus roadmap with five steps" preserveAspectRatio="xMidYMid meet">
+  <div class="cpt-stage" id="cpt-stage" aria-hidden="false">
+    <!-- Responsive SVG roadmap -->
+    <svg class="cpt-svg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Campus roadmap with five steps">
       <defs>
-        <linearGradient id="asphalt2" x1="0" x2="1">
-          <stop offset="0" stop-color="#2a2f36" stop-opacity="1" />
-          <stop offset="1" stop-color="#1f2328" stop-opacity="1" />
+        <linearGradient id="laneGlow" x1="0" x2="1">
+          <stop offset="0" stop-color="#7c3aed"/>
+          <stop offset="1" stop-color="#06b6d4"/>
         </linearGradient>
-        <linearGradient id="laneGlow2" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed" stop-opacity="0.12"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0.08"/></linearGradient>
       </defs>
 
-      <!-- road -->
-      <path d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="url(#asphalt2)" stroke-width="72" stroke-linecap="round" fill="none" opacity="1" />
-      <path d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="url(#laneGlow2)" stroke-width="80" stroke-linecap="round" fill="none" opacity="0.08" />
-      <path class="center-dash" d="M60 360 C 210 180, 350 520, 480 360 C 610 200, 740 520, 870 360 C 1000 200, 1120 440, 1140 260"
-            stroke="#fff" stroke-width="8" fill="none" />
+      <!-- Road base (subtle wide stroke) -->
+      <path d="M60 320 C 200 160, 360 420, 500 320 C 640 220, 780 420, 900 320 C 1020 220, 1140 420, 1160 240"
+            class="cpt-glow" />
 
-      <!-- Nodes: survey, pilot, shuttle, marketplace, community -->
-      <g class="cpt-node" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities." tabindex="0" transform="translate(140,290)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Survey — Student needs">
-        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#10b981" opacity="0.14"></rect>
-        <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#10b981" />
-        <g transform="translate(-12,-8) scale(0.9)" aria-hidden="true">
-          <rect x="0" y="4" width="22" height="28" rx="3" fill="#fff"></rect>
-          <path d="M4 12h14" stroke="#0b1726" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M4 18h10" stroke="#0b1726" stroke-width="1.2" stroke-linecap="round"/>
+      <!-- dashed centerline -->
+      <path id="cpt-mainpath" d="M60 320 C 200 160, 360 420, 500 320 C 640 220, 780 420, 900 320 C 1020 220, 1140 420, 1160 240"
+            class="cpt-path" />
+
+      <!-- STEP NODES (positions chosen along the path) -->
+      <!-- Node 1: Survey (left low) -->
+      <g class="node-group" tabindex="0" data-title="Survey — Student needs" data-desc="Short surveys & micro-interviews to surface top pain points and priorities." transform="translate(140,280)" role="button" aria-label="Survey — Student needs">
+        <!-- colored partial arc -->
+        <path d="M -42 0 A 42 42 0 1 1  42 0" class="node-outer" stroke="var(--c1)" stroke-dasharray="120" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="28" class="node-core"></circle>
+
+        <!-- LIGHTBULB icon -->
+        <g transform="translate(-8,-6) scale(0.85)" aria-hidden="true">
+          <path class="icon" d="M8 8c0-2.8 2-4 4-4s4 1.2 4 4c0 1.6-0.3 2.3-1 3.2-0.7 0.8-0.9 1.8-0.9 2.8h-5c0-1-0.2-2-0.9-2.8C8.3 10.3 8 9.6 8 8z"></path>
+          <path class="icon" d="M11 18h6"></path>
+          <rect x="10" y="19" width="6" height="2" rx="1" fill="none" class="icon"></rect>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics." tabindex="0" transform="translate(360,170)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Pilot — Focused testing">
-        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#fb923c" opacity="0.14"></rect>
-        <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#fb923c" />
+      <!-- Node 2: Pilot (upper) -->
+      <g class="node-group" tabindex="0" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics." transform="translate(360,170)" role="button" aria-label="Pilot — Focused testing">
+        <path d="M -42 0 A 42 42 0 0 0 42 0" class="node-outer" stroke="var(--c2)" stroke-dasharray="120" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="28" class="node-core"></circle>
+
+        <!-- MICROSCOPE icon -->
+        <g transform="translate(-9,-6) scale(0.9)" aria-hidden="true">
+          <path class="icon" d="M6 18c6-4 12-4 16 0"></path>
+          <path class="icon" d="M8 8c6-4 12-4 16 0"></path>
+          <rect x="5" y="19" width="12" height="3" rx="1" class="icon"></rect>
+        </g>
+      </g>
+
+      <!-- Node 3: Shuttle (lower center) -->
+      <g class="node-group" tabindex="0" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts." transform="translate(560,300)" role="button" aria-label="Shuttle — Live tracking">
+        <path d="M -42 0 A 42 42 0 1 1 -10 -40" class="node-outer" stroke="var(--c3)" stroke-dasharray="120" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="28" class="node-core"></circle>
+
+        <!-- VEHICLE icon -->
+        <g transform="translate(-10,-6) scale(0.92)" aria-hidden="true">
+          <rect x="0" y="5" width="20" height="10" rx="2" class="icon"></rect>
+          <circle cx="5" cy="18" r="2" class="icon" fill="#111827"></circle>
+          <circle cx="15" cy="18" r="2" class="icon" fill="#111827"></circle>
+        </g>
+      </g>
+
+      <!-- Node 4: Marketplace (upper right) -->
+      <g class="node-group" tabindex="0" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students." transform="translate(780,200)" role="button" aria-label="Marketplace — Campus commerce">
+        <path d="M 42 0 A 42 42 0 1 1 -10 40" class="node-outer" stroke="var(--c4)" stroke-dasharray="120" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="28" class="node-core"></circle>
+
+        <!-- STOREFRONT icon -->
         <g transform="translate(-10,-6) scale(0.95)" aria-hidden="true">
-          <path d="M6 14c1.5-3 4-5 7-5s5.5 2 7 5" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <rect x="4" y="18" width="18" height="8" rx="2" stroke="#0b1726" stroke-width="1.0" fill="#fff" />
+          <path class="icon" d="M2 12h24v-6a8 8 0 0 0-8-8H10a8 8 0 0 0-8 8v6z"></path>
+          <path class="icon" d="M6 12v8"></path>
+          <path class="icon" d="M22 12v8"></path>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts." tabindex="0" transform="translate(560,300)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Shuttle — Live tracking">
-        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#60a5fa" opacity="0.14"></rect>
-        <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#60a5fa" />
-        <g transform="translate(-14,-10) scale(0.95)" aria-hidden="true">
-          <rect x="4" y="8" width="18" height="10" rx="2" stroke="#0b1726" stroke-width="1.1" fill="#fff"></rect>
-          <circle cx="8" cy="22" r="2" fill="#0b1726"/>
-          <circle cx="20" cy="22" r="2" fill="#0b1726"/>
+      <!-- Node 5: Community (end) -->
+      <g class="node-group" tabindex="0" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions." transform="translate(1040,240)" role="button" aria-label="Community — Ongoing adoption">
+        <path d="M -42 0 A 42 42 0 1 1 42 0" class="node-outer" stroke="var(--c5)" stroke-dasharray="120" stroke-dashoffset="28"/>
+        <circle cx="0" cy="0" r="28" class="node-core"></circle>
+
+        <!-- COMMUNITY heads -->
+        <g transform="translate(-12,-8) scale(0.95)" aria-hidden="true">
+          <circle cx="12" cy="8" r="3" class="icon" fill="#111827"></circle>
+          <circle cx="24" cy="8" r="3" class="icon" fill="#111827"></circle>
+          <path class="icon" d="M4 24c6-8 26-8 40 0"></path>
         </g>
       </g>
 
-      <g class="cpt-node" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students." tabindex="0" transform="translate(780,200)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Marketplace — Campus commerce">
-        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#16a34a" opacity="0.14"></rect>
-        <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#16a34a" />
-        <g transform="translate(-12,-6) scale(0.95)" aria-hidden="true">
-          <path d="M6 16h16v-6a6 6 0 0 0-6-6H12a6 6 0 0 0-6 6v6z" stroke="#0b1726" stroke-width="1.1" fill="#fff" stroke-linejoin="round"></path>
-        </g>
+      <!-- Paper plane finishing the route -->
+      <g transform="translate(1168,232) rotate(-12)">
+        <path class="plane-stroke" d="M2 0 L18 6 L6 8 L2 0 Z" fill="#111827" />
+        <path class="plane-stroke" d="M6 8 L7 18" stroke-opacity="0.5" />
       </g>
 
-      <g class="cpt-node" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions." tabindex="0" transform="translate(1040,240)" role="button" aria-haspopup="dialog" aria-controls="cpt-tooltip" aria-label="Community — Ongoing adoption">
-        <rect class="node-bg" x="-56" y="-56" width="112" height="112" rx="16" fill="#7c3aed" opacity="0.14"></rect>
-        <rect x="-44" y="-44" width="88" height="88" rx="12" fill="#7c3aed" />
-        <g transform="translate(-12,-6) scale(0.95)" aria-hidden="true">
-          <circle cx="10" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="#fff" />
-          <circle cx="22" cy="8" r="3" stroke="#0b1726" stroke-width="1.2" fill="#fff" />
-          <path d="M4 22c3-6 18-6 22 0" stroke="#0b1726" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
-        </g>
+      <!-- textual step labels (positioned close to nodes) -->
+      <g aria-hidden="true" font-family="Inter,system-ui,sans-serif">
+        <text x="52" y="240" class="cpt-label">STEP 01</text>
+        <text x="52" y="258" class="cpt-sub">Survey — Student needs</text>
+
+        <text x="260" y="130" class="cpt-label">STEP 02</text>
+        <text x="260" y="148" class="cpt-sub">Pilot — Focused testing</text>
+
+        <text x="470" y="340" class="cpt-label">STEP 03</text>
+        <text x="470" y="358" class="cpt-sub">Shuttle — Live tracking</text>
+
+        <text x="700" y="160" class="cpt-label">STEP 04</text>
+        <text x="700" y="178" class="cpt-sub">Marketplace — Campus commerce</text>
+
+        <text x="980" y="200" class="cpt-label">STEP 05</text>
+        <text x="980" y="218" class="cpt-sub">Community — Ongoing adoption</text>
       </g>
     </svg>
 
-    <!-- Tooltip element (positioned by JS) -->
-    <div id="cpt-tooltip" class="cpt-tooltip" role="dialog" aria-hidden="true" aria-live="polite">
-      <div id="cpt-tooltip-title" class="title"></div>
-      <div id="cpt-tooltip-desc" class="desc"></div>
+    <!-- tooltip (positioned in JS) -->
+    <div id="cpt-tooltip" class="cpt-tooltip" role="dialog" aria-hidden="true">
+      <div id="cpt-tooltip-title" style="font-weight:900;font-size:13px;margin-bottom:6px"></div>
+      <div id="cpt-tooltip-desc" style="font-weight:700;color:var(--muted);font-size:13px"></div>
     </div>
 
-    <!-- Vertical stacked cards for small screens -->
-    <div class="cpt-vertical" aria-hidden="true">
-      <article class="cpt-card" data-title="Survey — Student needs" data-desc="Short surveys and micro-interviews to surface top pain points and priorities.">
-        <div class="ico" aria-hidden="true">📋</div>
-        <div><h4>Survey — Student needs</h4><p>Short surveys and micro-interviews to surface top pain points and priorities.</p></div>
-      </article>
-
-      <article class="cpt-card" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and metrics.">
-        <div class="ico" aria-hidden="true">🧪</div>
-        <div><h4>Pilot — Focused testing</h4><p>Run a controlled campus pilot to validate value, flows and metrics.</p></div>
-      </article>
-
-      <article class="cpt-card" data-title="Shuttle — Live tracking" data-desc="Real-time vehicle locations, ETAs and route alerts.">
-        <div class="ico" aria-hidden="true">🚌</div>
-        <div><h4>Shuttle — Live tracking</h4><p>Real-time vehicle locations, ETAs and route alerts.</p></div>
-      </article>
-
-      <article class="cpt-card" data-title="Marketplace — Campus commerce" data-desc="Listings, secure checkout and simple order handling for students.">
-        <div class="ico" aria-hidden="true">🛒</div>
-        <div><h4>Marketplace — Campus commerce</h4><p>Listings, secure checkout and simple order handling for students.</p></div>
-      </article>
-
-      <article class="cpt-card" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops and student contributions.">
-        <div class="ico" aria-hidden="true">🌍</div>
-        <div><h4>Community — Ongoing adoption</h4><p>Scale via ambassadors, feedback loops and student contributions.</p></div>
+    <!-- small stacked cards shown on very small screens (fallback) -->
+    <div class="cpt-vertical" aria-hidden="true" style="display:none;margin-top:12px;gap:12px">
+      <article style="display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:#fff;border:1px solid rgba(10,20,30,0.04);box-shadow:0 12px 40px rgba(6,10,26,0.06)">
+        <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,var(--c1),#9ce06b);display:grid;place-items:center;color:#fff;font-weight:900">💡</div>
+        <div><strong style="display:block;font-weight:900">SURVEY</strong><div style="color:var(--muted);font-weight:700">Short surveys & micro-interviews to surface top pain points.</div></div>
       </article>
     </div>
   </div>
 
   <script>
-    (function(){
+    (function () {
+      const stage = document.getElementById('cpt-stage');
       const tooltip = document.getElementById('cpt-tooltip');
-      const ttTitle = document.getElementById('cpt-tooltip-title');
-      const ttDesc = document.getElementById('cpt-tooltip-desc');
-      const nodes = Array.from(document.querySelectorAll('#campus-impact-track .cpt-node'));
-      let activeNode = null;
-      const pad = 12;
+      const tipTitle = document.getElementById('cpt-tooltip-title');
+      const tipDesc = document.getElementById('cpt-tooltip-desc');
+      const nodes = stage.querySelectorAll('.node-group');
 
-      function showTooltipFor(node){
-        if(!node) return hideTooltip();
-        const title = node.dataset.title || '';
-        const desc = node.dataset.desc || '';
-        ttTitle.textContent = title;
-        ttDesc.textContent = desc;
-        tooltip.setAttribute('aria-hidden', 'false');
-        tooltip.classList.add('show');
-        activeNode = node;
-        // Position tooltip: prefer above node; fallback below if not enough space
-        // get node center in viewport
-        const bbox = node.getBoundingClientRect();
+      // Position tooltip with clamping inside viewport
+      function placeTooltip(x, y) {
+        const pad = 12;
+        const tt = tooltip.getBoundingClientRect();
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        const centerX = bbox.left + bbox.width/2;
-        const aboveY = bbox.top - 10;
-        const belowY = bbox.bottom + 10;
-        // measure tooltip size (temporarily show off-screen to measure)
-        tooltip.style.left = '-9999px';
-        tooltip.style.top = '-9999px';
-        // force a reflow then measure
-        const ttRect = tooltip.getBoundingClientRect();
-        const ttW = ttRect.width || 300;
-        const ttH = ttRect.height || 90;
 
-        // choose vertical placement
-        let top = (aboveY - ttH);
-        let placement = 'above';
-        if (top < 8) { top = belowY; placement = 'below'; }
-        // clamp horizontally
-        let left = Math.min(Math.max(centerX, pad + ttW/2), vw - pad - ttW/2);
-        // convert centerX to left coordinate (tooltip uses translate(-50%,...) so left is center)
+        // prefer above the node unless near top small screens
+        let left = x - tt.width / 2;
+        left = Math.max(pad, Math.min(left, vw - tt.width - pad));
+
+        let top = y - tt.height - 18;
+        if (top < 8) top = y + 18; // drop below if not enough room
+
         tooltip.style.left = left + 'px';
-        if (placement === 'above') {
-          tooltip.style.top = (top) + 'px';
-        } else {
-          tooltip.style.top = (top) + 'px';
-        }
-        // ensure tooltip is visible for screen readers
-        tooltip.focus?.();
+        tooltip.style.top = top + 'px';
       }
 
-      function hideTooltip(){
-        tooltip.setAttribute('aria-hidden','true');
+      function showTipFromEl(el) {
+        const title = el.getAttribute('data-title');
+        const desc = el.getAttribute('data-desc');
+
+        tipTitle.textContent = title;
+        tipDesc.textContent = desc;
+        tooltip.setAttribute('aria-hidden', 'false');
+        tooltip.classList.add('show');
+
+        // compute approximate position based on node's bounding box center
+        const nodeRect = el.getBoundingClientRect();
+        const centerX = nodeRect.left + nodeRect.width / 2;
+        const centerY = nodeRect.top + nodeRect.height / 2;
+        placeTooltip(centerX, centerY);
+      }
+
+      function hideTip() {
+        tooltip.setAttribute('aria-hidden', 'true');
         tooltip.classList.remove('show');
-        activeNode = null;
       }
 
-      // Toggle on click (useful for touch)
-      function toggleTooltip(node){
-        if(activeNode === node){
-          hideTooltip();
-        } else {
-          showTooltipFor(node);
-        }
-      }
-
-      // Attach event listeners
+      // attach events
       nodes.forEach(node => {
-        node.addEventListener('mouseenter', () => showTooltipFor(node));
-        node.addEventListener('mouseleave', () => {
-          // small delay to avoid flicker when moving to tooltip
-          setTimeout(()=> { if(document.activeElement !== node) hideTooltip(); }, 120);
-        });
+        node.addEventListener('mouseenter', (e) => showTipFromEl(node));
+        node.addEventListener('mouseleave', hideTip);
+        node.addEventListener('focus', () => showTipFromEl(node));
+        node.addEventListener('blur', hideTip);
 
-        node.addEventListener('focus', () => showTooltipFor(node));
-        node.addEventListener('blur', () => hideTooltip());
-
-        node.addEventListener('click', (e) => {
-          e.preventDefault();
-          toggleTooltip(node);
-        });
-
-        node.addEventListener('keydown', (ev) => {
-          if(ev.key === 'Enter' || ev.key === ' '){
-            ev.preventDefault();
-            toggleTooltip(node);
-          } else if (ev.key === 'Escape'){
-            hideTooltip();
-            node.blur();
+        // touch friendly: tap toggles tooltip
+        let tapped = false;
+        node.addEventListener('touchstart', (ev) => {
+          ev.stopPropagation();
+          if (tapped) {
+            hideTip();
+            tapped = false;
+          } else {
+            showTipFromEl(node);
+            tapped = true;
+            setTimeout(() => tapped = false, 900);
           }
         });
       });
 
-      // Close tooltip on Escape anywhere
-      window.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape') hideTooltip();
-      });
+      // dismiss on outside tap / scroll
+      document.addEventListener('click', (e) => {
+        if (!stage.contains(e.target) && !tooltip.contains(e.target)) hideTip();
+      }, {passive:true});
 
-      // If user taps outside, close tooltip
-      window.addEventListener('pointerdown', (e) => {
-        if(!tooltip.contains(e.target) && !nodes.some(n => n.contains(e.target))) {
-          hideTooltip();
+      window.addEventListener('resize', () => {
+        if (tooltip.classList.contains('show')) {
+          // reposition
+          const focused = document.activeElement;
+          if (focused && focused.classList && focused.classList.contains('node-group')) {
+            showTipFromEl(focused);
+          } else {
+            hideTip();
+          }
         }
       });
-
-      // Reposition on resize/scroll for correctness
-      let resizeTimeout = null;
-      ['resize','scroll'].forEach(ev => {
-        window.addEventListener(ev, () => {
-          if(resizeTimeout) clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(()=> {
-            if(activeNode) showTooltipFor(activeNode);
-          }, 120);
-        }, {passive:true});
-      });
-
-      // For small screens, make vertical cards visible to screen readers
-      function updateVerticalVisibility(){
-        const v = document.querySelector('#campus-impact-track .cpt-vertical');
-        if(!v) return;
-        if(window.matchMedia('(max-width:760px)').matches){
-          v.setAttribute('aria-hidden','false');
-        } else {
-          v.setAttribute('aria-hidden','true');
-        }
-      }
-      updateVerticalVisibility();
-      window.matchMedia('(max-width:760px)').addEventListener?.('change', updateVerticalVisibility);
     })();
   </script>
 </section>
+
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
