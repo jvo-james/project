@@ -3726,316 +3726,483 @@ button[aria-pressed="true"] {
 </section>
 
 
-<!-- Premium Timeline — drop-in -->
-<section id="premium-journey" aria-labelledby="pj-title" role="region">
+<!-- ===== Campus Impact Track — premium timeline (replace existing #premium-journey) ===== -->
+<section id="premium-journey" aria-labelledby="pj-title" role="region" style="padding:28px 18px;">
   <style>
-    /* Minimal reset for the section */
-    #premium-journey { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:28px; }
-    /* Card shell (glass, premium) */
-    .pj-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,250,255,0.94));
-      border-radius:18px;
-      padding:28px;
-      position:relative;
-      box-shadow: 0 30px 60px rgba(15,20,30,0.06), inset 0 1px 0 rgba(255,255,255,0.5);
-      border: 1px solid rgba(11,18,30,0.03);
-      overflow:visible;
+    :root{
+      --pj-bg: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,255,0.98));
+      --glass: rgba(255,255,255,0.6);
+      --muted: rgba(11,18,30,0.56);
+      --accent-1: #7c3aed;
+      --accent-2: #06b6d4;
+      --accent-3: #60a5fa;
+      --card-elev: 0 30px 80px rgba(6,10,26,0.08);
+      --radius: 16px;
+      --focus: rgba(96,165,250,0.18);
+      --width-max: 1180px;
     }
 
-    /* decorative header text */
-    #pj-title { margin:0 0 6px 6px; font-weight:800; color:#0b1220; font-size:18px; letter-spacing: -0.02em; }
-    .pj-sub { margin:0 0 20px 6px; color:rgba(11,18,32,0.55); font-size:13px; }
+    /* Section shell */
+    #premium-journey { max-width:var(--width-max); margin: 22px auto; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color: #081029; }
+    .pj-wrap { background: var(--pj-bg); border-radius:22px; padding:22px; border:1px solid rgba(10,20,30,0.04); box-shadow: var(--card-elev); overflow:visible; position:relative; }
 
-    /* SVG wrapper */
-    .pj-stage { width:100%; height:360px; display:block; position:relative; }
+    /* Header */
+    #pj-title { margin:0; font-family: "Lexend", Inter, system-ui; font-weight:900; font-size:20px; letter-spacing:-0.01em; }
+    .pj-sub { margin:8px 0 18px; color:var(--muted); font-size:13px; font-weight:700; }
+
+    /* Stage area */
+    .pj-stage { width:100%; height:360px; position:relative; display:block; }
     svg.pj-svg { width:100%; height:100%; display:block; overflow:visible; }
 
-    /* dotted path style and underglow */
-    .pj-path { stroke:rgba(11,18,32,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; }
-    .pj-path-glow { stroke-linecap:round; stroke-width:24; stroke:rgba(99,102,241,0.06); fill:none; }
+    /* Path styling and draw animation */
+    .pj-path { fill:none; stroke:rgba(11,18,30,0.10); stroke-width:6; stroke-linecap:round; stroke-dasharray:10 14; }
+    .pj-path-glow { fill:none; stroke-width:28; stroke:linear-gradient(90deg,var(--accent-1),var(--accent-2)); opacity:0.06; stroke-linecap:round; filter: blur(12px); }
 
-    /* node base */
-    .pj-node { cursor:pointer; transform-origin:center; transition:transform .22s cubic-bezier(.2,.9,.3,1); outline:none; }
-    .pj-node:focus-visible, .pj-node:hover { transform:translateY(-8px) scale(1.02); }
+    /* Node base styling */
+    .pj-node { cursor:pointer; transform-origin:center; transition:transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s; outline:none; }
+    .pj-node:focus-visible { box-shadow: 0 12px 36px rgba(59,130,246,0.12); transform: translateY(-8px) scale(1.02); border-radius:12px; }
+    .pj-square { rx:16; ry:16; filter: drop-shadow(0 10px 24px rgba(6,10,26,0.08)); }
 
-    /* square gradient container */
-    .pj-square { rx:16; ry:16; filter: drop-shadow(0 12px 24px rgba(9,14,24,0.08)); }
+    /* small white icon circle */
+    .pj-icon-circle { fill:#fff; }
 
-    /* white inner circle for icon */
-    .pj-icon-circle { fill:#fff; opacity:1; }
-
-    /* icon stroke color (use currentColor for easy gradient tinting) */
-    .pj-icon path, .pj-icon circle, .pj-icon line { stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; fill:none; stroke:rgba(10,12,22,0.9); }
-
-    /* tiny labels under nodes */
-    .pj-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
+    /* label text under each node */
+    .pj-label { font-weight:900; font-size:12px; fill:#081029; text-anchor:middle; }
     .pj-subtext { font-size:11px; fill:rgba(11,18,32,0.52); text-anchor:middle; }
 
-    /* single floating info panel (shared) */
+    /* Tooltip */
     .pj-tooltip {
       position:absolute;
-      min-width:260px;
-      max-width:340px;
-      padding:14px 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,255,0.98));
+      min-width:240px;
+      max-width:360px;
+      padding:12px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.995));
       border-radius:12px;
-      box-shadow: 0 24px 48px rgba(9,14,24,0.12);
+      box-shadow: 0 20px 50px rgba(9,14,24,0.12);
       border:1px solid rgba(11,18,30,0.06);
-      transform:translateY(12px) scale(.98);
       opacity:0;
+      transform: translateY(8px) scale(.98);
+      transition: opacity .16s ease, transform .16s cubic-bezier(.2,.9,.2,1);
       pointer-events:none;
-      transition:opacity .18s ease, transform .18s cubic-bezier(.2,.9,.3,1);
-      z-index:40;
+      z-index:60;
       backdrop-filter: blur(6px) saturate(120%);
+      font-weight:700;
+      font-size:13px;
+      color:#081029;
     }
-    .pj-tooltip.show { opacity:1; transform:translateY(6px) scale(1); pointer-events:auto; }
+    .pj-tooltip.show { opacity:1; transform: translateY(2px) scale(1); pointer-events:auto; }
 
-    .pj-tooltip h4 { margin:0 0 6px 0; font-size:13px; color:#081029; font-weight:800; }
-    .pj-tooltip p { margin:0; font-size:12px; color:rgba(11,18,32,0.68); line-height:1.3; }
+    /* caret */
+    .pj-tooltip::after { content:""; position:absolute; left:18px; top:-6px; width:12px; height:12px; transform:rotate(45deg); background:inherit; border-left:1px solid rgba(11,18,30,0.03); border-top:1px solid rgba(11,18,30,0.03); z-index:-1; }
 
-    /* arrow caret for tooltip */
-    .pj-tooltip:after {
-      content:"";
-      position:absolute;
-      left:22px;
-      top:-8px;
-      width:12px;
-      height:12px;
-      background:inherit;
-      transform:rotate(45deg);
-      border-left:1px solid rgba(11,18,30,0.03);
-      border-top:1px solid rgba(11,18,30,0.03);
-      z-index:-1;
-    }
+    /* Node hover/pulse */
+    .pj-node .pulse { animation: pulse 2400ms ease-in-out infinite; transform-origin:center; opacity:0.6; }
+    @keyframes pulse { 0%{ transform: scale(.98); opacity:.6 } 50%{ transform: scale(1.06); opacity:.85 } 100%{ transform: scale(.98); opacity:.6 } }
 
-    /* end plane decoration */
-    .pj-plane { transition:transform .6s cubic-bezier(.2,.9,.3,1); filter:drop-shadow(0 10px 18px rgba(9,14,24,0.06)); }
-    .pj-node:hover ~ .pj-plane, .pj-node:focus ~ .pj-plane { transform:translateX(10px) rotate(-10deg) scale(1.02); }
+    /* subtle float for nodes */
+    .pj-node .float { animation: floaty 6.2s cubic-bezier(.2,.9,.2,1) infinite; transform-origin:center; }
+    @keyframes floaty { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
 
-    /* responsive */
+    /* icon stroke color using currentColor for gradient tints */
+    .pj-icon path, .pj-icon circle, .pj-icon rect, .pj-icon line { stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; fill:none; stroke:rgba(8,16,36,0.9); }
+
+    /* plane / accent */
+    .pj-plane { transition: transform .9s cubic-bezier(.2,.9,.2,1); transform-origin:center; filter: drop-shadow(0 10px 24px rgba(6,10,26,0.08)); opacity:0.95; }
+
+    /* responsive: vertical stacked cards for small screens */
+    .pj-vertical { display:none; gap:12px; margin-top:10px; }
+    .pj-card-vert { display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:12px; background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04); box-shadow: 0 14px 40px rgba(6,10,26,0.06); }
+    .pj-card-vert .icon { width:52px; height:52px; display:grid; place-items:center; border-radius:10px; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#fff; font-weight:900; }
+    .pj-card-vert h4 { margin:0; font-size:15px; font-weight:900; }
+    .pj-card-vert p { margin:6px 0 0; color:var(--muted); font-weight:700; font-size:13px; }
+
+    /* focus styles */
+    .pj-node:focus { outline: 3px solid var(--focus); outline-offset:6px; border-radius:12px; }
+
+    /* Small helpers */
+    .pj-meta { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-top:14px; }
+    .pj-cta { padding:10px 12px; border-radius:12px; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:white; font-weight:900; border:none; box-shadow: 0 18px 50px rgba(124,58,237,0.08); cursor:pointer; }
+
+    /* Mobile responsiveness */
     @media (max-width:920px){
-      .pj-stage{height:420px}
-      svg.pj-svg{height:420px}
-      .pj-tooltip { min-width:220px; max-width:260px; }
+      .pj-stage { height:420px; }
+      svg.pj-svg{ height:420px; }
+      .pj-tooltip { min-width:200px; max-width:320px; }
     }
+    @media (max-width:760px){
+      /* hide svg timeline & show stacked cards on mobile */
+      .pj-stage { display:none; }
+      .pj-vertical { display:flex; flex-direction:column; }
+    }
+
     @media (prefers-reduced-motion:reduce){
-      * { transition:none !important; animation:none !important; }
+      .pj-node .pulse, .pj-node .float, svg.pj-svg { animation: none !important; transition: none !important; }
     }
   </style>
 
-  <div class="pj-card">
-    <h3 id="pj-title">Journey — concise & premium</h3>
-    <p class="pj-sub">A refined timeline with visible icons and lightweight details on hover or focus.</p>
+  <div class="pj-wrap" role="application">
+    <h3 id="pj-title">Campus Impact Track</h3>
+    <p class="pj-sub">Tools that help students navigate campus life — validated, practical, community-led.</p>
 
-    <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Premium five step timeline">
+    <!-- SVG timeline for wide screens -->
+    <div class="pj-stage" id="pj-stage" aria-hidden="false">
+      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus Impact five step timeline">
         <defs>
-          <linearGradient id="grad1" x1="0" x2="1">
-            <stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/>
-          </linearGradient>
-          <linearGradient id="grad2" x1="0" x2="1">
-            <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/>
-          </linearGradient>
-          <linearGradient id="grad3" x1="0" x2="1">
-            <stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/>
-          </linearGradient>
-          <linearGradient id="grad4" x1="0" x2="1">
-            <stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/>
-          </linearGradient>
-          <linearGradient id="grad5" x1="0" x2="1">
-            <stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/>
-          </linearGradient>
+          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+          <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+          <linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
+          <linearGradient id="g4" x1="0" x2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+          <linearGradient id="g5" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/></linearGradient>
         </defs>
 
-        <!-- decorative faint underlayer -->
-        <path class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240" />
+        <!-- glow (behind) -->
+        <path class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240" stroke="url(#g2)"/>
 
-        <!-- dotted path -->
-        <path class="pj-path" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
+        <!-- dotted path (draw animation with dashoffset) -->
+        <path id="main-path" class="pj-path" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
 
-        <!-- Node Groups -->
-        <!-- Step 1: IDEA -->
+        <!-- Node 1: SURVEY -->
         <g transform="translate(140,240)">
-          <g class="pj-node" role="button" tabindex="0"
-             data-title="Idea — Seed concept" data-desc="Quick framing: hypotheses, constraints and a one-page plan."
-             aria-label="Step 1 idea">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad1)"/>
+          <g class="pj-node" role="button" tabindex="0" aria-label="Survey — Student needs"
+             data-title="Survey — Student needs"
+             data-desc="Short surveys + micro-interviews to surface top pain points and priorities.">
+            <!-- square with gradient -->
+            <rect class="pj-square" x="-48" y="-48" width="96" height="96" fill="url(#g4)"/>
             <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <!-- lightbulb icon -->
-            <g class="pj-icon" transform="translate(-10,-16) scale(1.2)">
-              <path d="M9 3a5 5 0 1 1 0 10c-.8 0-1.6-.1-2.3-.4L6 14H12l-.7-1.4c-.7.3-1.5.4-2.3.4a5 5 0 0 1 0-10z"/>
-              <line x1="9" y1="1" x2="9" y2="0"/>
-              <line x1="9" y1="13" x2="9" y2="15"/>
+            <g class="pj-icon float" transform="translate(-10,-20) scale(1)">
+              <!-- clipboard icon -->
+              <rect x="6" y="6" width="16" height="20" rx="2"></rect>
+              <path d="M6 12h16"></path>
+              <path d="M10 18h8"></path>
             </g>
+            <circle class="pulse" cx="0" cy="-6" r="38" fill="url(#g4)" opacity="0.06"></circle>
           </g>
-          <text class="pj-label" y="64">IDEA</text>
-          <text class="pj-subtext" y="82">Seed concept</text>
+          <text class="pj-label" y="64">SURVEY</text>
+          <text class="pj-subtext" y="82">Student needs</text>
         </g>
 
-        <!-- Step 2: RESEARCH -->
+        <!-- Node 2: PILOT -->
         <g transform="translate(340,150)">
-          <g class="pj-node" role="button" tabindex="0"
-             data-title="Research — User insights" data-desc="Micro interviews, analytics spot checks, and competitive notes."
-             aria-label="Step 2 research">
-            <rect class="pj-square" x="-52" y="-52" width="104" height="104" rx="20" fill="url(#grad2)"/>
+          <g class="pj-node" role="button" tabindex="0" aria-label="Pilot — Focused testing"
+             data-title="Pilot — Focused testing"
+             data-desc="Run a controlled campus pilot to validate value, flows and basic metrics.">
+            <rect class="pj-square" x="-52" y="-52" width="104" height="104" fill="url(#g3)"/>
             <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <!-- magnifier -->
-            <g class="pj-icon" transform="translate(-6,-12) scale(1.05)">
-              <circle cx="8" cy="8" r="5" />
-              <line x1="13" y1="13" x2="18" y2="18" />
+            <g class="pj-icon float" transform="translate(-8,-14) scale(1)">
+              <!-- rocket icon -->
+              <path d="M6 16c0-6 6-12 6-12s6 6 6 12a6 6 0 0 1-12 0z"></path>
+              <path d="M6 16L2 20"></path>
             </g>
+            <circle class="pulse" cx="0" cy="-6" r="34" fill="url(#g3)" opacity="0.06"></circle>
           </g>
-          <text class="pj-label" y="74">RESEARCH</text>
-          <text class="pj-subtext" y="92">User insights</text>
+          <text class="pj-label" y="74">PILOT</text>
+          <text class="pj-subtext" y="92">Small-scale validation</text>
         </g>
 
-        <!-- Step 3: PROTO -->
+        <!-- Node 3: SHUTTLE -->
         <g transform="translate(540,260)">
-          <g class="pj-node" role="button" tabindex="0"
-             data-title="Proto — Clickable MVP" data-desc="High-impact flows built quickly for validation."
-             aria-label="Step 3 prototype">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad3)"/>
+          <g class="pj-node" role="button" tabindex="0" aria-label="Shuttle — Live tracking"
+             data-title="Shuttle — Live tracking"
+             data-desc="Deploy Shuttle Tracker: real-time vehicle locations, ETAs and route alerts.">
+            <rect class="pj-square" x="-48" y="-48" width="96" height="96" fill="url(#g2)"/>
             <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <!-- proto icon: simplified screen -->
-            <g class="pj-icon" transform="translate(-12,-16)">
-              <rect x="2" y="2" width="20" height="12" rx="2"/>
-              <line x1="6" y1="9" x2="16" y2="9"/>
+            <g class="pj-icon float" transform="translate(-12,-14) scale(1)">
+              <!-- bus icon -->
+              <rect x="4" y="6" width="24" height="14" rx="3"></rect>
+              <circle cx="8" cy="22" r="2"></circle>
+              <circle cx="20" cy="22" r="2"></circle>
             </g>
+            <circle class="pulse" cx="0" cy="-6" r="38" fill="url(#g2)" opacity="0.06"></circle>
           </g>
-          <text class="pj-label" y="68">PROTO</text>
-          <text class="pj-subtext" y="86">Clickable MVP</text>
+          <text class="pj-label" y="68">SHUTTLE</text>
+          <text class="pj-subtext" y="86">Real-time transport</text>
         </g>
 
-        <!-- Step 4: LAUNCH -->
+        <!-- Node 4: MARKETPLACE -->
         <g transform="translate(760,170)">
-          <g class="pj-node" role="button" tabindex="0"
-             data-title="Launch — Pilot live" data-desc="Controlled rollout with monitoring and fast bug triage."
-             aria-label="Step 4 launch">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad4)"/>
+          <g class="pj-node" role="button" tabindex="0" aria-label="Marketplace — Campus commerce"
+             data-title="Marketplace — Campus commerce"
+             data-desc="Launch student marketplace: listings, secure checkout and simplified order fulfilment.">
+            <rect class="pj-square" x="-48" y="-48" width="96" height="96" fill="url(#g5)"/>
             <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <!-- check icon -->
-            <g class="pj-icon" transform="translate(-6,-14) scale(1.1)">
-              <path d="M3 10l4 4L17 4"/>
+            <g class="pj-icon float" transform="translate(-8,-12) scale(1)">
+              <!-- store icon -->
+              <rect x="4" y="10" width="24" height="12" rx="2"></rect>
+              <path d="M4 10v-4a6 6 0 0 1 6-6h8a6 6 0 0 1 6 6v4"></path>
             </g>
+            <circle class="pulse" cx="0" cy="-6" r="34" fill="url(#g5)" opacity="0.06"></circle>
           </g>
-          <text class="pj-label" y="64">LAUNCH</text>
-          <text class="pj-subtext" y="82">Pilot live</text>
+          <text class="pj-label" y="64">MARKETPLACE</text>
+          <text class="pj-subtext" y="82">Campus commerce</text>
         </g>
 
-        <!-- Step 5: SCALE -->
+        <!-- Node 5: COMMUNITY -->
         <g transform="translate(1040,220)">
-          <g class="pj-node" role="button" tabindex="0"
-             data-title="Scale — Growth" data-desc="Optimize funnels, expand audiences, and build retention."
-             aria-label="Step 5 scale">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad5)"/>
+          <g class="pj-node" role="button" tabindex="0" aria-label="Community — Ongoing adoption"
+             data-title="Community — Ongoing adoption"
+             data-desc="Scale via ambassadors, feedback loops, docs and student-led contributions.">
+            <rect class="pj-square" x="-48" y="-48" width="96" height="96" fill="url(#g1)"/>
             <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <!-- star icon -->
-            <g class="pj-icon" transform="translate(-8,-16) scale(1.05)">
-              <path d="M12 3l2.6 5.3L20 9.6l-4 3.8L16.8 20 12 16.8 7.2 20 8 13.4 4 9.6l5.4-.3z"/>
+            <g class="pj-icon float" transform="translate(-12,-16) scale(1)">
+              <!-- users icon -->
+              <circle cx="8" cy="6" r="3"></circle>
+              <circle cx="20" cy="6" r="3"></circle>
+              <path d="M4 20c2-6 12-6 16 0"></path>
             </g>
+            <circle class="pulse" cx="0" cy="-6" r="36" fill="url(#g1)" opacity="0.06"></circle>
           </g>
-          <text class="pj-label" y="64">SCALE</text>
-          <text class="pj-subtext" y="82">Growth</text>
+          <text class="pj-label" y="64">COMMUNITY</text>
+          <text class="pj-subtext" y="82">Adoption & growth</text>
         </g>
 
         <!-- decorative plane -->
         <g transform="translate(1180,260)">
-          <g class="pj-plane">
-            <path d="M0 0 L22 10 L0 20 L6 10 z" fill="#0b1220" opacity="0.9"/>
+          <g class="pj-plane" transform="rotate(-12) translate(-10,-4)">
+            <path d="M0 0 L22 10 L0 20 L6 10 z" fill="#081029" opacity="0.9"/>
           </g>
         </g>
       </svg>
 
-      <!-- Shared floating tooltip (absolute inside pj-stage) -->
+      <!-- Tooltip (shared) -->
       <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true" aria-live="polite">
-        <h4 id="pj-tooltip-title">Title</h4>
-        <p id="pj-tooltip-desc">Description</p>
+        <div id="pj-tooltip-title" style="font-weight:900;margin-bottom:6px;font-size:13px">Title</div>
+        <div id="pj-tooltip-desc" style="font-weight:700;color:var(--muted);font-size:13px">Description</div>
       </div>
+    </div>
+
+    <!-- Mobile: stacked cards fallback -->
+    <div class="pj-vertical" aria-hidden="true">
+      <article class="pj-card-vert" data-title="Survey — Student needs" data-desc="Short surveys + micro-interviews to surface top pain points and priorities.">
+        <div class="icon" aria-hidden="true">
+          <!-- clipboard icon -->
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="20" height="20" rx="4" fill="white" opacity="0.12"/><rect x="6" y="6" width="16" height="18" rx="2" fill="none" stroke="white" stroke-width="1.4"/></svg>
+        </div>
+        <div>
+          <h4>SURVEY</h4>
+          <p>Short surveys + micro-interviews to surface top pain points and priorities.</p>
+        </div>
+      </article>
+
+      <article class="pj-card-vert" data-title="Pilot — Focused testing" data-desc="Run a controlled campus pilot to validate value, flows and basic metrics.">
+        <div class="icon" aria-hidden="true">
+          <!-- rocket -->
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 20c4-6 8-10 12-12" stroke="white" stroke-width="1.6"/></svg>
+        </div>
+        <div>
+          <h4>PILOT</h4>
+          <p>Run a controlled campus pilot to validate value, flows and basic metrics.</p>
+        </div>
+      </article>
+
+      <article class="pj-card-vert" data-title="Shuttle — Live tracking" data-desc="Deploy Shuttle Tracker: real-time vehicle locations, ETAs and route alerts.">
+        <div class="icon" aria-hidden="true">
+          <!-- bus -->
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="20" height="12" rx="2" fill="none" stroke="white" stroke-width="1.4"/></svg>
+        </div>
+        <div>
+          <h4>SHUTTLE</h4>
+          <p>Deploy Shuttle Tracker: real-time vehicle locations, ETAs and route alerts.</p>
+        </div>
+      </article>
+
+      <article class="pj-card-vert" data-title="Marketplace — Campus commerce" data-desc="Launch student marketplace: listings, secure checkout and simplified order fulfilment.">
+        <div class="icon" aria-hidden="true">
+          <!-- store -->
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 10h20v10H4z" stroke="white" stroke-width="1.4"/></svg>
+        </div>
+        <div>
+          <h4>MARKETPLACE</h4>
+          <p>Launch student marketplace: listings, secure checkout and simplified order fulfilment.</p>
+        </div>
+      </article>
+
+      <article class="pj-card-vert" data-title="Community — Ongoing adoption" data-desc="Scale via ambassadors, feedback loops, docs and student-led contributions.">
+        <div class="icon" aria-hidden="true">
+          <!-- users -->
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="3" fill="white"/><circle cx="19" cy="9" r="3" fill="white"/></svg>
+        </div>
+        <div>
+          <h4>COMMUNITY</h4>
+          <p>Scale via ambassadors, feedback loops, docs and student-led contributions.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- meta / CTA row -->
+    <div class="pj-meta" role="group" aria-label="Timeline actions">
+      <div style="color:var(--muted);font-weight:800">Five focused steps · accessible · keyboard friendly</div>
+      <button class="pj-cta" id="pj-learn">Learn how we built this</button>
     </div>
   </div>
 
   <script>
     (function(){
+      // Elements
       const stage = document.getElementById('pj-stage');
       const tooltip = document.getElementById('pj-tooltip');
-      const titleEl = document.getElementById('pj-tooltip-title');
-      const descEl = document.getElementById('pj-tooltip-desc');
-      const nodes = Array.from(stage.querySelectorAll('.pj-node'));
+      const ttTitle = document.getElementById('pj-tooltip-title');
+      const ttDesc = document.getElementById('pj-tooltip-desc');
+      const svg = stage && stage.querySelector('svg.pj-svg');
+      const path = svg && svg.getElementById ? svg.getElementById('main-path') : null;
+      const nodes = stage ? stage.querySelectorAll('.pj-node') : [];
+      const mobileList = document.querySelectorAll('.pj-card-vert');
 
-      // helper to show tooltip near the node
-      function showTooltip(node){
-        const rect = stage.getBoundingClientRect();
-        const nrect = node.getBoundingClientRect();
-
-        // set content from data attributes
-        titleEl.textContent = node.dataset.title || '';
-        descEl.textContent = node.dataset.desc || '';
-
-        // calculate desired left so tooltip centers above node; constrain to stage padding
-        const left = Math.min(
-          Math.max(nrect.left - rect.left + nrect.width/2 - tooltip.offsetWidth/2, 12),
-          stage.clientWidth - tooltip.offsetWidth - 12
-        );
-
-        // place tooltip slightly above node (or below if not enough space)
-        let top = nrect.top - rect.top - tooltip.offsetHeight - 16;
-        if(top < 8) top = nrect.bottom - rect.top + 12;
-
-        tooltip.style.left = left + 'px';
-        tooltip.style.top = top + 'px';
-        tooltip.classList.add('show');
-        tooltip.setAttribute('aria-hidden','false');
-
-        // mark node visually for accessibility
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
-        node.setAttribute('aria-expanded','true');
+      // Utility: position tooltip near node bounding box (SVG -> page coordinates)
+      function placeTooltipFor(node){
+        if(!tooltip || !svg) return;
+        const svgRect = svg.getBoundingClientRect();
+        const bbox = node.getBoundingClientRect();
+        // try to position above the node; if too close to top, place below
+        const top = bbox.top - svgRect.top;
+        const left = bbox.left - svgRect.left;
+        const tooltipEl = tooltip;
+        // default offsets
+        let x = left + bbox.width/2;
+        let y = top - 10;
+        // convert to page coords
+        const pageX = x + svgRect.left;
+        const pageY = y + svgRect.top;
+        // set absolute position within stage
+        // clamp to viewport
+        const ttRect = tooltipEl.getBoundingClientRect();
+        let posLeft = pageX - (ttRect.width/2);
+        let posTop = pageY - ttRect.height - 12;
+        // if it goes off top, put below node
+        if(posTop < 12) posTop = bbox.bottom + 10;
+        // clamp horizontally
+        const margin = 12;
+        if(posLeft < margin) posLeft = margin;
+        if(posLeft + ttRect.width > window.innerWidth - margin) posLeft = window.innerWidth - ttRect.width - margin;
+        tooltipEl.style.left = posLeft + 'px';
+        tooltipEl.style.top = posTop + 'px';
       }
 
+      // Show tooltip with content
+      function showTooltipFor(node){
+        const title = node.getAttribute('data-title') || node.dataset.title || node.getAttribute('aria-label') || 'Info';
+        const desc = node.getAttribute('data-desc') || node.dataset.desc || '';
+        ttTitle.textContent = title;
+        ttDesc.textContent = desc;
+        tooltip.classList.add('show');
+        tooltip.setAttribute('aria-hidden','false');
+        placeTooltipFor(node);
+      }
+
+      // Hide tooltip
       function hideTooltip(){
         tooltip.classList.remove('show');
         tooltip.setAttribute('aria-hidden','true');
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
       }
 
-      // hover/focus handlers
+      // Attach events to SVG nodes
       nodes.forEach(node => {
-        // show on pointer enter
-        node.addEventListener('pointerenter', () => showTooltip(node));
-        node.addEventListener('pointerleave', () => hideTooltip());
-        // focus for keyboard
-        node.addEventListener('focus', () => showTooltip(node));
-        node.addEventListener('blur', () => hideTooltip());
-
-        // toggle on click/keyboard (Enter/Space)
+        node.addEventListener('mouseenter', () => {
+          node.classList.add('hover');
+          showTooltipFor(node);
+        });
+        node.addEventListener('mouseleave', () => {
+          node.classList.remove('hover');
+          hideTooltip();
+        });
+        node.addEventListener('focus', (e) => {
+          showTooltipFor(node);
+        });
+        node.addEventListener('blur', (e) => {
+          hideTooltip();
+        });
+        // also allow click to toggle tooltip for touch users
         node.addEventListener('click', (e) => {
-          if(node.getAttribute('aria-expanded') === 'true') hideTooltip();
-          else showTooltip(node);
-        });
-        node.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            node.click();
-          } else if (e.key === 'Escape') {
-            hideTooltip();
-            node.blur();
+          // small toggle: if tooltip visible for this node, hide; else show
+          if(tooltip.classList.contains('show')) {
+            const current = ttTitle.textContent || '';
+            if(current === node.getAttribute('data-title')) {
+              hideTooltip();
+              return;
+            }
           }
+          showTooltipFor(node);
         });
       });
 
-      // clicking outside closes
-      document.addEventListener('pointerdown', (e) => {
-        if(!stage.contains(e.target)) hideTooltip();
+      // Mobile cards: show a simple overlay tooltip via click
+      mobileList.forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.getAttribute('data-title');
+          const desc = card.getAttribute('data-desc');
+          // simple modal-ish tooltip using browser alert fallback if not visible area
+          // We'll reuse the same tooltip element and position it near the card
+          ttTitle.textContent = title;
+          ttDesc.textContent = desc;
+          tooltip.classList.add('show');
+          tooltip.setAttribute('aria-hidden','false');
+          // position tooltip near the top of the clicked card
+          const rect = card.getBoundingClientRect();
+          const left = Math.min(Math.max(rect.left + rect.width/2 - 160, 12), window.innerWidth - 320);
+          const top = rect.top - 12 - tooltip.getBoundingClientRect().height;
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = (top > 12 ? top : rect.bottom + 8) + 'px';
+          // hide after 4.5s automatically
+          setTimeout(hideTooltip, 4500);
+        });
       });
 
-      // reposition tooltip on resize
+      // Path draw animation (stroke-dashoffset)
+      if(path){
+        const total = path.getTotalLength();
+        path.style.strokeDasharray = total + ' ' + total;
+        path.style.strokeDashoffset = total;
+        path.getBoundingClientRect(); // force reflow
+        // animate
+        path.style.transition = 'stroke-dashoffset 1200ms cubic-bezier(.2,.9,.2,1) 180ms';
+        path.style.strokeDashoffset = '0';
+      }
+
+      // reposition tooltip on scroll/resize
+      let currentNode = null;
       window.addEventListener('resize', () => {
-        // if tooltip visible, force recalculation by finding expanded node
-        const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
-        if(opened) showTooltip(opened);
+        if(tooltip.classList.contains('show')){
+          // try to reposition relative to currently displayed title
+          const title = ttTitle.textContent;
+          const node = Array.from(nodes).find(n=>n.getAttribute('data-title')===title);
+          if(node) placeTooltipFor(node);
+        }
       });
+      window.addEventListener('scroll', () => {
+        if(tooltip.classList.contains('show')){
+          const title = ttTitle.textContent;
+          const node = Array.from(nodes).find(n=>n.getAttribute('data-title')===title);
+          if(node) placeTooltipFor(node);
+        }
+      });
+
+      // Close tooltip when clicking outside
+      document.addEventListener('click', (ev) => {
+        if(!tooltip.classList.contains('show')) return;
+        if(!tooltip.contains(ev.target) && !ev.target.closest('.pj-node') && !ev.target.closest('.pj-card-vert')) {
+          hideTooltip();
+        }
+      });
+
+      // small keyboard accessibility: pressing Escape hides tooltip
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') hideTooltip();
+      });
+
+      // CTA hook: open modal or console message (placeholder)
+      const learnBtn = document.getElementById('pj-learn');
+      if(learnBtn){
+        learnBtn.addEventListener('click', () => {
+          // if you have a modal on the page, you can trigger it here.
+          // For now, we'll just open a new tab to projects anchor
+          window.location.hash = '#projects';
+        });
+      }
+
     })();
   </script>
 </section>
+ 
+  
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
