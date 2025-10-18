@@ -3726,11 +3726,11 @@ button[aria-pressed="true"] {
 </section>
 
 
-<!-- Premium Timeline — drop-in -->
-<section id="premium-journey" aria-labelledby="pj-title" role="region">
+<!-- Campus Impact Track — drop-in (nodes positioned to touch the road) -->
+<section id="campus-impact-track" aria-labelledby="campus-title" role="region">
   <style>
     /* Minimal reset for the section */
-    #premium-journey { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:28px; }
+    #campus-impact-track { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:28px; }
     /* Card shell (glass, premium) */
     .pj-card {
       background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,250,255,0.94));
@@ -3743,7 +3743,7 @@ button[aria-pressed="true"] {
     }
 
     /* decorative header text */
-    #pj-title { margin:0 0 6px 6px; font-weight:800; color:#0b1220; font-size:18px; letter-spacing: -0.02em; }
+    #campus-title { margin:0 0 6px 6px; font-weight:800; color:#0b1220; font-size:18px; letter-spacing: -0.02em; }
     .pj-sub { margin:0 0 20px 6px; color:rgba(11,18,32,0.55); font-size:13px; }
 
     /* SVG wrapper */
@@ -3824,11 +3824,11 @@ button[aria-pressed="true"] {
   </style>
 
   <div class="pj-card">
-    <h3 id="pj-title">Journey — concise & premium</h3>
+    <h3 id="campus-title">Campus Impact Track</h3>
     <p class="pj-sub">A refined timeline with visible icons and lightweight details on hover or focus.</p>
 
     <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Premium five step timeline">
+      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus five step timeline">
         <defs>
           <linearGradient id="grad1" x1="0" x2="1">
             <stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/>
@@ -3853,9 +3853,11 @@ button[aria-pressed="true"] {
         <!-- dotted path -->
         <path class="pj-path" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
 
-        <!-- Node Groups -->
-        <!-- Step 1: IDEA -->
-        <g transform="translate(140,240)">
+        <!-- Node Groups (Y values adjusted so the white icon circle bottom touches the path) -->
+        <!-- math used: node_group_y = path_y_at_x - (circle_center_y + circle_radius)
+             circle_center_y = -6, circle_radius = 30  => subtract 24 from path y -->
+        <!-- Step 1: IDEA (x=140) -->
+        <g transform="translate(140,228)">
           <g class="pj-node" role="button" tabindex="0"
              data-title="Idea — Seed concept" data-desc="Quick framing: hypotheses, constraints and a one-page plan."
              aria-label="Step 1 idea">
@@ -3872,8 +3874,8 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="82">Seed concept</text>
         </g>
 
-        <!-- Step 2: RESEARCH -->
-        <g transform="translate(340,150)">
+        <!-- Step 2: RESEARCH (x=340) -->
+        <g transform="translate(340,302)">
           <g class="pj-node" role="button" tabindex="0"
              data-title="Research — User insights" data-desc="Micro interviews, analytics spot checks, and competitive notes."
              aria-label="Step 2 research">
@@ -3889,8 +3891,8 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="92">User insights</text>
         </g>
 
-        <!-- Step 3: PROTO -->
-        <g transform="translate(540,260)">
+        <!-- Step 3: PROTO (x=540) -->
+        <g transform="translate(540,244)">
           <g class="pj-node" role="button" tabindex="0"
              data-title="Proto — Clickable MVP" data-desc="High-impact flows built quickly for validation."
              aria-label="Step 3 prototype">
@@ -3906,8 +3908,8 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="86">Clickable MVP</text>
         </g>
 
-        <!-- Step 4: LAUNCH -->
-        <g transform="translate(760,170)">
+        <!-- Step 4: LAUNCH (x=760) -->
+        <g transform="translate(760,304)">
           <g class="pj-node" role="button" tabindex="0"
              data-title="Launch — Pilot live" data-desc="Controlled rollout with monitoring and fast bug triage."
              aria-label="Step 4 launch">
@@ -3922,8 +3924,8 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="82">Pilot live</text>
         </g>
 
-        <!-- Step 5: SCALE -->
-        <g transform="translate(1040,220)">
+        <!-- Step 5: SCALE (x=1040) -->
+        <g transform="translate(1040,258)">
           <g class="pj-node" role="button" tabindex="0"
              data-title="Scale — Growth" data-desc="Optimize funnels, expand audiences, and build retention."
              aria-label="Step 5 scale">
@@ -4029,13 +4031,13 @@ button[aria-pressed="true"] {
 
       // reposition tooltip on resize
       window.addEventListener('resize', () => {
-        // if tooltip visible, force recalculation by finding expanded node
         const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
         if(opened) showTooltip(opened);
       });
     })();
   </script>
 </section>
+
 
 
 <section class="marquee-wrap" style="margin-top:36px;">
