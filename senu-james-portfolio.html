@@ -3594,146 +3594,13 @@ button[aria-pressed="true"] {
   </aside>
 </section>
 
-  
-
-<section id="about" style="margin-top:28px;">
-  <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
-    <div>
-      <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
-      <p style="color:var(--muted);max-width:70ch">I build product-first web applications with a focus on clarity, performance, and impact. I am experienced in fronted, backend, AI and more. I led Vitra AI from concept to prototype, integrating ML models, designing UX flows, and shipping production front-ends.</p>
-      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
-        <div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
-        <div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
-        <div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
-        <div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
-      </div>
-      <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
-        <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
-        <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
-      </div>
-    </div>
-    <aside style="display:flex;flex-direction:column;gap:10px">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="award-icon" style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-award"></i></div>
-        <div><div style="font-weight:900">African Digital Innovation Challenge</div><div style="font-size:13px;color:var(--muted)">Vitra AI • Winner</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-people-group"></i></div>
-        <div><div style="font-weight:800">Community Impact</div><div style="font-size:13px;color:var(--muted)">Tools used by student groups and campus teams</div></div>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<section id="projects" class="projects" style="margin-top:28px;">
-  <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <div>
-      <h3 style="margin:0;font-size:20px">Selected Projects</h3>
-      <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos • Open Case Study to preview inside a modal.</p>
-    </div>
-    <div style="display:none;gap:8px;align-items:center">
-      <button class="btn btn-outline" id="filter-all" aria-pressed="true"><i class="fa-solid fa-list"></i>&nbsp;All</button>
-      <button class="btn btn-outline" id="filter-web"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
-      <button class="btn btn-outline" id="filter-ai"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
-    </div>
-  </div>
-
-  <div class="projects-grid" id="projects-grid" style="margin-top:18px">
-    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra" data-categories="ai" data-categories="web">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-vitra" class="card-title">Vitra AI</h4>
-        <div class="card-sub">AI-driven health & wellbeing platform • Therapy, Herbal med, B-pharmacy, booking.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-          <a class="link-btn repo" href="https://github.com/jvo-james/vitra-ai" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-
-    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle" data-categories="web">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
-        <div class="card-sub">Real-time campus transport tracking to reduce waiting time and improve route awareness.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-          <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/buses.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-
-    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart" data-categories="web">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-emart" class="card-title">E-Mart</h4>
-        <div class="card-sub">Campus shopping & checkout platform — mobile-first commerce for students.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Payments</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-                   <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/index.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-
-    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness" data-categories="web" data-categories="ai">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
-        <div class="card-sub">Leaderboard-driven workout logging for gymnasts—competition-ready dashboards.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">Analytics</span><span class="tag">Challenge</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-                    <a class="link-btn repo" href="https://github.com/jvo-james/fit-track" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-
-    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge" data-categories="web">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
-        <div class="card-sub">Streamlined registration system replacing Google Forms for event organizers.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-                   <a class="link-btn repo" href="https://github.com/jvo-james/skillforg-website" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-
-    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc" data-categories="web">
-      <div class="card-visual" style="position:relative;height:220px"><div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
-      <div class="card-body">
-        <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
-        <div class="card-sub">Faith-driven e-commerce & gospel hub — shop, devotionals, donations, design generator.</div>
-        <div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
-        <div class="card-foot" style="margin-top:14px">
-          <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
-                 <a class="link-btn repo" href="https://github.com/jvo-james/project/blob/main/mhc1.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
-          <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- Campus Impact Track — updated to match your page text, icons, spacing and 50% viewport height -->
-<section id="campus-impact-track" aria-labelledby="campus-title" role="region">
+   <section id="campus-impact-track" aria-labelledby="campus-title" role="region">
   <style>
-    /* Section sizing: use half the viewport height so it doesn't cover entire screen */
-    #campus-impact-track {
+     #campus-impact-track {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       padding:18px;
       box-sizing:border-box;
-      min-height:50vh;        /* occupies half the screen vertically */
+      min-height:50vh;        
       display:flex;
       align-items:flex-start;
       justify-content:center;
@@ -3742,7 +3609,7 @@ button[aria-pressed="true"] {
     /* Card shell */
     .pj-card {
       width:100%;
-      max-width:1120px;      /* keeps the card a manageable width */
+      max-width:1120px;      
       background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,250,255,0.94));
       border-radius:16px;
       padding:18px 20px 22px 20px;
@@ -4069,6 +3936,110 @@ button[aria-pressed="true"] {
   </script>
 </section>
 
+
+
+<section id="projects" class="projects" style="margin-top:28px;">
+  <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div>
+      <h3 style="margin:0;font-size:20px">Selected Projects</h3>
+      <p style="margin:6px 0 0;color:var(--muted)">Detailed case studies and live demos • Open Case Study to preview inside a modal.</p>
+    </div>
+    <div style="display:none;gap:8px;align-items:center">
+      <button class="btn btn-outline" id="filter-all" aria-pressed="true"><i class="fa-solid fa-list"></i>&nbsp;All</button>
+      <button class="btn btn-outline" id="filter-web"><i class="fa-solid fa-globe"></i>&nbsp;Web</button>
+      <button class="btn btn-outline" id="filter-ai"><i class="fa-solid fa-robot"></i>&nbsp;AI</button>
+    </div>
+  </div>
+
+  <div class="projects-grid" id="projects-grid" style="margin-top:18px">
+    <article class="card tilt" role="article" aria-labelledby="p-vitra" data-case-id="vitra" data-categories="ai" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">AI • Winner</div><img src="vitra-ai.jpg" alt="Vitra AI screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-vitra" class="card-title">Vitra AI</h4>
+        <div class="card-sub">AI-driven health & wellbeing platform • Therapy, Herbal med, B-pharmacy, booking.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">AI</span><span class="tag">Healthcare</span><span class="tag">ML</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://vitra-ai.netlify.app/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="https://github.com/jvo-james/vitra-ai" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="vitra"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt" role="article" aria-labelledby="p-shuttle" data-case-id="shuttle" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Maps • Real-time</div><img src="shuttle.webp" alt="Shuttle Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-shuttle" class="card-title">Shuttle Tracker</h4>
+        <div class="card-sub">Real-time campus transport tracking to reduce waiting time and improve route awareness.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Maps</span><span class="tag">Realtime</span><span class="tag">Firebase</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/buses" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+          <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/buses.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="shuttle"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt" role="article" aria-labelledby="p-emart" data-case-id="emart" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">E-commerce</div><img src="e-mart.jpeg" alt="E-Mart screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-emart" class="card-title">E-Mart</h4>
+        <div class="card-sub">Campus shopping & checkout platform — mobile-first commerce for students.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Next.js</span><span class="tag">Payments</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/knust/" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="https://github.com/jvo-james/knust/blob/main/index.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="emart"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt" role="article" aria-labelledby="p-fitness" data-case-id="fitness" data-categories="web" data-categories="ai">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Health • Data</div><img src="fit.png" alt="Fitness Tracker screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-fitness" class="card-title">Fitness Tracker</h4>
+        <div class="card-sub">Leaderboard-driven workout logging for gymnasts—competition-ready dashboards.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Analytics</span><span class="tag">Challenge</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/fit-track/home" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                    <a class="link-btn repo" href="https://github.com/jvo-james/fit-track" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="fitness"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt" role="article" aria-labelledby="p-skillforge" data-case-id="skillforge" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge">Forms • Admin</div><img src="skill.jpg" alt="SkillForge screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-skillforge" class="card-title">SkillForge Registry</h4>
+        <div class="card-sub">Streamlined registration system replacing Google Forms for event organizers.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">Forms</span><span class="tag">Auth</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/skillforg-website/startup" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                   <a class="link-btn repo" href="https://github.com/jvo-james/skillforg-website" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="skillforge"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card tilt featured" role="article" aria-labelledby="p-mhc" data-case-id="mhc" data-categories="web">
+      <div class="card-visual" style="position:relative;height:220px"><div class="badge" style="background:linear-gradient(90deg,#d4ab4e,#b8862f);">Featured</div><img src="jfactor.jpg" alt="Make Heaven Crowded screenshot"></div>
+      <div class="card-body">
+        <h4 id="p-mhc" class="card-title">Make Heaven Crowded</h4>
+        <div class="card-sub">Faith-driven e-commerce & gospel hub — shop, devotionals, donations, design generator.</div>
+        <div class="tags" style="margin-top:10px"><span class="tag">E-commerce</span><span class="tag">Community</span></div>
+        <div class="card-foot" style="margin-top:14px">
+          <a class="link-btn live" href="https://jvo-james.github.io/project/mhc1" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live</a>
+                 <a class="link-btn repo" href="https://github.com/jvo-james/project/blob/main/mhc1.html" target="_blank"><i class="fa-brands fa-github"></i>&nbsp;Repo</a>
+          <button class="link-btn" data-case-open="mhc"><i class="fa-solid fa-file-lines"></i>&nbsp;Case Study</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
 <section class="marquee-wrap" style="margin-top:36px;">
   <header style="text-align:center;margin-bottom:12px">
     <h3 style="margin:0">Work & Photo Archive</h3>
@@ -4316,7 +4287,34 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-
+<section id="about" style="margin-top:28px;">
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+    <div>
+      <h3 id="about-heading" style="margin:0 0 8px">About me</h3>
+      <p style="color:var(--muted);max-width:70ch">I build product-first web applications with a focus on clarity, performance, and impact. I am experienced in fronted, backend, AI and more. I led Vitra AI from concept to prototype, integrating ML models, designing UX flows, and shipping production front-ends.</p>
+      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+        <div class="pill"><i class="fa-solid fa-brain"></i>&nbsp; Product Thinking</div>
+        <div class="pill"><i class="fa-solid fa-cubes"></i>&nbsp; System Design</div>
+        <div class="pill"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp; Responsive</div>
+        <div class="pill"><i class="fa-solid fa-lock"></i>&nbsp; Secure by default</div>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+        <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-briefcase"></i>&nbsp; View case studies</a>
+        <a class="btn" href="#contact"><i class="fa-solid fa-comment-dots"></i>&nbsp; Let’s talk</a>
+      </div>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="award-icon" style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-award"></i></div>
+        <div><div style="font-weight:900">African Digital Innovation Challenge</div><div style="font-size:13px;color:var(--muted)">Vitra AI • Winner</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:48px;height:48px;border-radius:10px;background:#eef6ff;display:grid;place-items:center;color:var(--accent)"><i class="fa-solid fa-people-group"></i></div>
+        <div><div style="font-weight:800">Community Impact</div><div style="font-size:13px;color:var(--muted)">Tools used by student groups and campus teams</div></div>
+      </div>
+    </aside>
+  </div>
+</section>
 
 <section id="contact" class="contact-wrap" style="margin-top:40px;">
   <div class="contact-card contact-pro" role="region" aria-labelledby="contact-heading">
