@@ -4306,5 +4306,188 @@ document.getElementById('download-resume-btn').addEventListener('click', async f
   }
 });
 </script>
+  <script>
+/* Small helper */
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+/* NAV TOGGLE */
+(function navToggle(){
+  const btn = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('primary-nav');
+  if(!btn || !menu) return;
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu.classList.toggle('open');
+    if(!expanded){
+      menu.classList.add('open');
+      document.body.classList.add('nav-open');
+    } else {
+      menu.classList.remove('open');
+      document.body.classList.remove('nav-open');
+    }
+  });
+})();
+
+/* ROLE ROTATOR (simple) */
+(function roleRotator(){
+  const roles = ['Web Developer','AI Engineer','Product-builder','Community Tools'];
+  const el = document.getElementById('rotating-role');
+  if(!el) return;
+  let i = 0;
+  setInterval(()=>{
+    i = (i + 1) % roles.length;
+    el.textContent = roles[i];
+  }, 2800);
+})();
+
+/* TILT EFFECT (basic fallback if GSAP tilt block broken) */
+(function tiltFallback(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced) return;
+  const cards = $$('.tilt');
+  cards.forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      const rx = (py - 0.5) * 8; // rotateX
+      const ry = (px - 0.5) * -8; // rotateY
+      card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+    });
+    card.addEventListener('mouseleave', ()=> card.style.transform = '');
+  });
+})();
+
+/* CASE MODAL: open/close, populate from JSON blocks */
+(function caseModal(){
+  const modal = document.getElementById('case-modal');
+  const openButtons = $$('[data-case-open]');
+  const closeBtn = document.getElementById('case-close');
+  const openExternal = document.getElementById('case-open-external');
+
+  function populateAndOpen(caseId, opener){
+    const jsonScript = document.getElementById('case-' + caseId);
+    if(!jsonScript) return;
+    const data = JSON.parse(jsonScript.textContent);
+    // populate fields
+    $('#case-title').textContent = data.title || 'Case study';
+    $('#case-sub').textContent = data.subtitle || '';
+    $('#case-overview-text').textContent = data.overview || '';
+    $('#case-problem-text').textContent = data.problem || '';
+    $('#case-approach-text').textContent = data.approach || '';
+    const hl = $('#case-highlights-list'); hl.innerHTML='';
+    (data.highlights||[]).forEach(h=>{ const li=document.createElement('li'); li.textContent=h; hl.appendChild(li); });
+    const carousel = $('#case-screens-carousel'); carousel.innerHTML='';
+    (data.screenshots||[]).forEach(s=>{
+      const img = document.createElement('img'); img.src = s; img.alt = `${data.title} screenshot`; img.style.maxWidth='140px'; img.style.borderRadius='8px'; img.style.marginRight='8px';
+      carousel.appendChild(img);
+    });
+    $('#case-tech').textContent = (data.tech || []).join(', ');
+    $('#case-metrics').textContent = data.metrics || '';
+    const links = $('#case-links'); links.innerHTML = '';
+    (data.links||[]).forEach(l=>{
+      const a = document.createElement('a'); a.href = l.href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = l.label || 'Open'; a.style.display='inline-block'; a.style.marginRight='8px';
+      links.appendChild(a);
+    });
+    $('#case-notes').textContent = data.notes || '';
+    // set external link href
+    if(openExternal) openExternal.href = (data.links && data.links[0] && data.links[0].href) || '#';
+    // open modal
+    modal.setAttribute('aria-hidden','false');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // focus trap: focus first focusable element inside modal
+    const focusable = modal.querySelectorAll('a,button,input,textarea,[tabindex]:not([tabindex="-1"])');
+    if(focusable.length) focusable[0].focus();
+    // remember opener to restore focus later
+    modal._opener = opener || document.activeElement;
+  }
+
+  openButtons.forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.getAttribute('data-case-id');
+      if(!id) return;
+      populateAndOpen(id, btn);
+    });
+  });
+
+  if(closeBtn) closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
+
+  function closeModal(){
+    modal.setAttribute('aria-hidden','true');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    try{ if(modal._opener) modal._opener.focus(); }catch(e){}
+  }
+
+  document.addEventListener('keydown', (ev)=>{
+    if(ev.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
+  });
+})();
+
+/* CONTACT FORM: submit to Formspree via fetch */
+(function contactForm(){
+  const form = document.getElementById('contact-form-pro');
+  if(!form) return;
+  const endpoint = form.getAttribute('data-endpoint') || form.action;
+  const status = document.getElementById('cf-status');
+  form.addEventListener('submit', async (ev)=>{
+    ev.preventDefault();
+    const btn = document.getElementById('cf-send');
+    try {
+      btn.disabled = true;
+      btn.classList.add('sending');
+      status.textContent = 'Sending…';
+      const formData = new FormData(form);
+      // basic honeypot check
+      if(formData.get('website')) { status.textContent = 'Spam detected.'; btn.disabled=false; btn.classList.remove('sending'); return; }
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      });
+      if(res.ok){
+        status.textContent = 'Message sent — thank you!';
+        createToast('Message sent — thanks!', { type: 'success' });
+        form.reset();
+      } else {
+        const data = await res.json().catch(()=>null);
+        status.textContent = (data && data.error) ? data.error : 'Sending failed. Try again later.';
+        createToast('Sending failed', { type: 'error' });
+      }
+    } catch(err){
+      status.textContent = 'Network error. Please try again.';
+      createToast('Network error', { type: 'error' });
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('sending');
+    }
+  });
+})();
+
+/* COPY EMAIL BUTTON */
+(function copyEmail(){
+  const copyBtn = document.getElementById('cf-copy-email');
+  const emailEl = document.getElementById('aside-email');
+  if(!copyBtn || !emailEl) return;
+  copyBtn.addEventListener('click', async ()=>{
+    const email = emailEl.textContent.trim();
+    try {
+      await navigator.clipboard.writeText(email);
+      createToast('Email copied to clipboard', { type: 'success' });
+    } catch(e) {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = email; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); createToast('Email copied to clipboard', { type: 'success' }); } catch(_) { createToast('Press Ctrl+C to copy', { type: 'warn' }); }
+      ta.remove();
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
