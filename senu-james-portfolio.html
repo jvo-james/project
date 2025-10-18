@@ -3512,17 +3512,18 @@ button[aria-pressed="true"] {
     <h2 id="hero-heading" class="hi">Hi👋 I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
-        <span class="role-static">I’m a</span>
-        <span id="rotating-role" class="role-dynamic" aria-hidden="false">Web Developer</span>
-        <span class="role-cursor" aria-hidden="true"></span>
-      </div>
+  <span class="role-static">I’m a</span>
+  <span id="rotating-role" class="role-dynamic" aria-hidden="false">Web Developer</span>
+  <span class="role-cursor" aria-hidden="true"></span>
+</div>
+
       <p class="lead">I build product-first web apps, from AI health platforms to campus tools, focused on clarity, accessibility and measurable impact.</p>
     </div>
 
     <ul class="hero-metrics" role="list" aria-hidden="false">
       <li><strong class="metric-number" data-value="1">Winner</strong><span class="metric-label">African Digital Innovation Challenge</span></li>
       <li><strong class="metric-number" data-value="1000">1k+</strong><span class="metric-label">Beta users engaged</span></li>
-      <li><strong class="metric-number" data-value="3">3</strong><span class="metric-label">Major product launches</span></li>
+      <li><strong class="metric-number" data-value="12">12</strong><span class="metric-label">Major product launches</span></li>
     </ul>
 
     <div class="cta-row" role="toolbar" aria-label="Primary calls to action">
@@ -3567,10 +3568,11 @@ button[aria-pressed="true"] {
         <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
         <div class="badge-text"><strong>ADIC Winner</strong></div>
       </div>
-      <div class="float-badge badge-2" aria-hidden="true">
-        <div class="badge-icon"><i class="fa-solid fa-people-group"></i></div>
-        <div class="badge-text"><strong>Community Tools</strong></div>
-      </div>
+     <div class="float-badge badge-2" aria-hidden="true">
+  <div class="badge-icon"><i class="fa-solid fa-people-group"></i></div>
+  <div class="badge-text"><strong>Campus tools</strong></div>
+</div>
+
     </div>
 
     <div class="profile-meta" style="flex:1">
@@ -5169,6 +5171,65 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   modal.addEventListener('click', (e)=> { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', (e)=> { if (e.key==='Escape') closeModal(); });
 
+})();
+</script>
+<script>
+ (function () {
+  const roles = [
+    'Web Developer',
+    'Frontend Engineer',
+    'Backend Engineer',
+    'Product Designer',
+    'AI Engineer',
+    'Full-stack Builder',
+    'Product-first Maker'
+  ];
+  let idx = 0;
+  const el = document.getElementById('rotating-role');
+  const container = el ? el.parentElement : null;
+  const showDelay = 3800;  
+  const fadeMs = 360;
+
+  if (!el) return;
+
+  function showRole(i) {
+    el.classList.remove('role-fade');
+     el.style.transition = `opacity ${fadeMs}ms ease, transform ${fadeMs}ms ease`;
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(6px)';
+    setTimeout(() => {
+      el.textContent = roles[i];
+      el.style.opacity = 1;
+      el.style.transform = 'translateY(0)';
+    }, fadeMs);
+  }
+
+  let interval = null;
+  function start() {
+    if (interval) return;
+    interval = setInterval(() => {
+      idx = (idx + 1) % roles.length;
+      showRole(idx);
+    }, showDelay);
+  }
+  function stop() {
+    clearInterval(interval);
+    interval = null;
+  }
+
+   setTimeout(() => {
+    showRole(idx);
+    start();
+  }, 220);
+
+   ['mouseenter','focusin'].forEach(ev => {
+    container && container.addEventListener(ev, stop);
+  });
+  ['mouseleave','focusout'].forEach(ev => {
+    container && container.addEventListener(ev, start);
+  });
+
+   window._sj_roleRotator = {start, stop, roles};
 })();
 </script>
 
