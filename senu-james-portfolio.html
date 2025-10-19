@@ -3723,86 +3723,8 @@ button[aria-pressed="true"] {
    .product-flow .card h2 { margin-bottom: 0.5rem; }
   .product-flow .card p { margin-bottom: 0.75rem; }
 }
- 
- @media (max-width: 640px) {
-   .product-flow {
-    height: var(--quarter-vh, 25vh);   
-    min-height: 0;
-    max-height: var(--quarter-vh, 25vh);
-    padding: 0.5rem 1rem calc(env(safe-area-inset-bottom, 0.5rem) + 0.25rem);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;     
-    align-items: stretch;
-    overflow: hidden;                 
-  }
-
-   .product-flow .card,
-  .product-flow .card .inner,
-  .product-flow .card-body {
-    padding: 0;
-    margin: 0;
-    min-height: 0 !important;
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-   .product-flow h2,
-  .product-flow .subtitle,
-  .product-flow p {
-    margin: 0;
-    padding: 0;
-    line-height: 1.05;
-    font-size: 1rem;  
-  }
-
-   .product-flow .diagram {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: flex-start;   
-    justify-content: center;
-    overflow: hidden;
-    margin: 0;
-  }
-
-   .product-flow .diagram img,
-  .product-flow .diagram svg {
-    display: block;
-    margin: 0;
-    width: auto;
-    max-width: 100%;
-     max-height: calc(var(--quarter-vh, 25vh) - 48px - 0.5rem);
-    height: auto;
-    object-fit: contain;
-  }
-
-   .product-flow .case-button,
-  .product-flow .open-case-btn {
-    margin: 0;
-    padding: 0.45rem 0.85rem;
-    line-height: 1;
-    align-self: center;
-    height: 40px;
-    box-sizing: border-box;
-  }
-
-   .product-flow .gap,
-  .product-flow .spacer { display: none !important; }
-}
 
 </style>
-<script>
-(function() {
-  function setQuarterVh() {
-     var q = window.innerHeight * 0.25;
-    document.documentElement.style.setProperty('--quarter-vh', q + 'px');
-  }
-  setQuarterVh();
-  window.addEventListener('resize', setQuarterVh);
-  window.addEventListener('orientationchange', setQuarterVh);
-})();
-</script>
 
   </head>
 <body>
@@ -4142,6 +4064,69 @@ button[aria-pressed="true"] {
       .pj-card{ padding:12px; }
       .pj-label{ font-size:13px; }
     }
+    @media (prefers-reduced-motion:reduce){
+      .pj-path.is-animated{ animation: none !important; }
+      .pj-node.pulse{ animation: none !important; }
+    }
+
+     @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
+    @media (max-width:700px){
+      .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on medium phones */
+      .pj-card{ padding:12px; }
+      .pj-label{ font-size:13px; }
+    }
+
+    /* ---------- MOBILE: enforce 1/4 viewport + tight diagram/button spacing ---------- */
+    @media (max-width:640px) {
+      /* the section itself becomes exactly 25% of the visible viewport (JS sets --quarter-vh) */
+      #campus-impact-track {
+        height: var(--quarter-vh, 25vh);
+        padding: 10px;
+      }
+
+      /* card fills the section and is column-based so stage + actions are stacked with no unexpected gaps */
+      .pj-card {
+        height: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 6px;
+      }
+
+      /* header stays natural size; it will be measured by JS to compute diagram height */
+      #campus-title { margin:4px 0 2px; font-size:16px; }
+      .pj-sub { margin:0 0 4px; font-size:12px; }
+
+      /* stage MUST not expand beyond the available space; JS will set --diagram-height */
+      .pj-stage {
+        height: var(--diagram-height, calc(var(--quarter-vh, 25vh) - 76px));
+        margin-top: 4px;
+        min-height: 0;
+        overflow: hidden; /* avoid content pushing card taller */
+      }
+
+      /* SVG should anchor to top so empty space doesn't appear beneath it */
+      svg.pj-svg { height: 100%; display:block; overflow:hidden; }
+
+      /* tooltip remains absolute inside stage */
+      .pj-tooltip { max-width: calc(100% - 16px); }
+
+      /* actions should sit immediately below the stage — remove top margin that created the gap */
+      .pj-actions { margin-top: 0; padding-top: 4px; }
+
+      /* make the button slightly smaller on phone so it fits the small area */
+      .pj-btn, .pj-btn.secondary {
+        padding: 8px 12px;
+        font-size: 13px;
+        height: 36px;
+        align-self: center;
+      }
+
+      /* hide any spacer elements the template might have */
+      .pj-card .spacer, .pj-card .gap { display:none !important; }
+    }
+
     @media (prefers-reduced-motion:reduce){
       .pj-path.is-animated{ animation: none !important; }
       .pj-node.pulse{ animation: none !important; }
@@ -4787,8 +4772,8 @@ button[aria-pressed="true"] {
     </div>
   </div>
 </div>
-<!-- CASE STUDY MODAL (paste once, e.g., after #projects) -->
-<div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Case study modal">
+ 
+  <div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Case study modal">
   <div class="modal-panel" role="document">
     <div style="display:flex;align-items:center;gap:12px;justify-content:space-between">
       <div>
