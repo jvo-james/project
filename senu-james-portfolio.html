@@ -6151,14 +6151,11 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
  })();
  </script>
 
-<!-- Enhanced role rotator: slide directions + decorative styles -->
-<style>
-  /* container & hidden cursor */
-  .role-rotator { position: relative; display: inline-flex; align-items: baseline; gap: .6rem; z-index: 2; }
-  .role-rotator .role-cursor { display: none !important; } /* hide blinking cursor */
+ <style>
+   .role-rotator { position: relative; display: inline-flex; align-items: baseline; gap: .6rem; z-index: 2; }
+  .role-rotator .role-cursor { display: none !important; } 
 
-  /* rotating word base */
-  #rotating-role {
+   #rotating-role {
     display: inline-block;
     position: relative;
     padding: 6px 10px;
@@ -6172,8 +6169,7 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
     pointer-events: auto;
   }
 
-  /* decorative pill behind the dynamic word */
-  .role-rotator::before{
+   .role-rotator::before{
     content: "";
     position: absolute;
     left: 0; right: 0;
@@ -6188,11 +6184,9 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
     transition: opacity .45s cubic-bezier(.2,.9,.2,1), transform .45s cubic-bezier(.2,.9,.2,1);
     pointer-events: none;
   }
-  /* pill becomes visible briefly when text changes */
-  .role-rotator.pulse::before { opacity: 1; transform: translateY(-50%) scaleX(1.02); }
+   .role-rotator.pulse::before { opacity: 1; transform: translateY(-50%) scaleX(1.02); }
 
-  /* small sparkle element (appears when sliding in) */
-  .role-rotator .role-spark{
+   .role-rotator .role-spark{
     position: absolute;
     width: 8px; height: 8px;
     border-radius: 50%;
@@ -6206,35 +6200,29 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   }
   .role-rotator.spark-show .role-spark { opacity: 1; transform: translateY(0) scale(1.05); }
 
-  /* slide out / in transforms (we use paired classes) 
-     out classes are applied to the current word, then replaced by in- classes on swap */
+  
   :root { --trans: 480ms; }
 
-  /* OUT */
-  #rotating-role.slide-out-left  { transform: translateX(-18px) translateZ(0); opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
+   #rotating-role.slide-out-left  { transform: translateX(-18px) translateZ(0); opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
   #rotating-role.slide-out-right { transform: translateX(18px) translateZ(0);  opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
   #rotating-role.slide-out-up    { transform: translateY(-12px) translateZ(0); opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
   #rotating-role.slide-out-down  { transform: translateY(12px) translateZ(0);  opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
 
-  /* IN */
-  #rotating-role.slide-in-left  { transform: translateX(-8px) translateZ(0); opacity: 0; transition: none; }
+   #rotating-role.slide-in-left  { transform: translateX(-8px) translateZ(0); opacity: 0; transition: none; }
   #rotating-role.slide-in-right { transform: translateX(8px) translateZ(0); opacity: 0; transition: none; }
   #rotating-role.slide-in-up    { transform: translateY(-8px) translateZ(0); opacity: 0; transition: none; }
   #rotating-role.slide-in-down  { transform: translateY(8px) translateZ(0);  opacity: 0; transition: none; }
 
-  /* when we add the "enter" state, it transitions to neutral */
-  #rotating-role.enter {
+   #rotating-role.enter {
     transform: translateX(0) translateY(0) translateZ(0);
     opacity: 1;
     transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.05) ease;
   }
 
-  /* small accessibility / hover cues */
-  .role-rotator:focus-within::before,
+   .role-rotator:focus-within::before,
   .role-rotator:hover::before { opacity: 1; transform: translateY(-50%) scaleX(1.03); }
 
-  /* reduced motion fallback */
-  @media (prefers-reduced-motion: reduce) {
+   @media (prefers-reduced-motion: reduce) {
     #rotating-role, #rotating-role.slide-out-left, #rotating-role.slide-out-right, #rotating-role.slide-out-up, #rotating-role.slide-out-down {
       transition: none !important;
       transform: none !important;
@@ -6260,24 +6248,20 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   const wrapper = roleEl ? roleEl.closest('.role-rotator') : null;
   if (!roleEl || !wrapper) return;
 
-  // append a tiny sparkle element that the CSS will animate
-  if (!wrapper.querySelector('.role-spark')){
+   if (!wrapper.querySelector('.role-spark')){
     const spark = document.createElement('span');
     spark.className = 'role-spark';
-    // position near the right end of the rotating text (adjust if needed)
-    spark.style.right = '-8px';
+     spark.style.right = '-8px';
     spark.style.top = '6px';
     wrapper.appendChild(spark);
   }
 
-  // Build roles array:
-  let roles = [];
+   let roles = [];
   if (roleEl.dataset && roleEl.dataset.roles) {
     roles = roleEl.dataset.roles.split(',').map(s => s.trim()).filter(Boolean);
   }
   if (!roles.length) {
-    // also allow data-role-item nodes inside the wrapper
-    const items = wrapper.querySelectorAll('[data-role-item]');
+     const items = wrapper.querySelectorAll('[data-role-item]');
     if (items.length) roles = Array.from(items).map(i => i.textContent.trim());
   }
   if (!roles.length) {
@@ -6286,76 +6270,58 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
       .filter((v,i,a) => v && a.indexOf(v) === i);
   }
 
-  // timings (tweakable)
-  const visibleMs = 3200;      // how long each role remains visible
-  const transitionMs = 480;    // should match --trans in CSS
-  const prePulse = 120;        // small delay to show decorative pill/spark
+   const visibleMs = 3200;      
+  const transitionMs = 480;     
+  const prePulse = 120;       
 
-  // hide any role-cursor if present (extra safety)
-  const cursor = wrapper.querySelector('.role-cursor');
+   const cursor = wrapper.querySelector('.role-cursor');
   if (cursor) cursor.style.display = 'none';
 
-  // direction logic: we will cycle directions (R, L, U, D) to create variety
-  const directions = ['right','left','up','down'];
+   const directions = ['right','left','up','down'];
   let dirIdx = 0;
   let idx = 0;
   roleEl.textContent = roles[idx];
   roleEl.classList.add('enter');
 
-  // small helper to clear slide classes
-  function clearSlideClasses(el){
+   function clearSlideClasses(el){
     el.classList.remove('slide-out-left','slide-out-right','slide-out-up','slide-out-down');
     el.classList.remove('slide-in-left','slide-in-right','slide-in-up','slide-in-down','enter');
   }
 
-  // show next role with animated out->swap->in sequence
-  function showNext() {
-    // set wrapper pulse & spark briefly
-    wrapper.classList.add('pulse');
+   function showNext() {
+     wrapper.classList.add('pulse');
     setTimeout(()=> wrapper.classList.remove('pulse'), transitionMs + 160);
 
-    // choose direction cycle
-    const dir = directions[dirIdx % directions.length];
+     const dir = directions[dirIdx % directions.length];
     dirIdx++;
 
-    // map to class names
-    const outClass = 'slide-out-' + (dir === 'right' ? 'right' : dir === 'left' ? 'left' : dir === 'up' ? 'up' : 'down');
+     const outClass = 'slide-out-' + (dir === 'right' ? 'right' : dir === 'left' ? 'left' : dir === 'up' ? 'up' : 'down');
     const inOpp = (dir === 'right' ? 'slide-in-left' : dir === 'left' ? 'slide-in-right' : dir === 'up' ? 'slide-in-down' : 'slide-in-up');
 
-    // start sparkle slightly before swap so it's visible as incoming text animates
-    setTimeout(()=> wrapper.classList.add('spark-show'), prePulse);
+     setTimeout(()=> wrapper.classList.add('spark-show'), prePulse);
     setTimeout(()=> wrapper.classList.remove('spark-show'), prePulse + transitionMs + 200);
 
-    // animate out
-    clearSlideClasses(roleEl);
+     clearSlideClasses(roleEl);
     roleEl.classList.add(outClass);
 
-    // after out animation, swap text and animate in
-    setTimeout(()=>{
-      // prepare incoming position class first (no transition)
-      clearSlideClasses(roleEl);
+     setTimeout(()=>{
+       clearSlideClasses(roleEl);
       roleEl.classList.add(inOpp);
-      // swap the text
-      idx = (idx + 1) % roles.length;
+       idx = (idx + 1) % roles.length;
       roleEl.textContent = roles[idx];
-      // allow next tick for layout, then trigger enter transition
-      requestAnimationFrame(() => {
-        // small timeout to ensure the browser registers the start state
-        setTimeout(() => {
+       requestAnimationFrame(() => {
+         setTimeout(() => {
           roleEl.classList.remove(inOpp);
           roleEl.classList.add('enter');
-          // tidy classes after transition
-          setTimeout(()=> clearSlideClasses(roleEl), transitionMs + 30);
+           setTimeout(()=> clearSlideClasses(roleEl), transitionMs + 30);
         }, 18);
       });
     }, transitionMs + 8);
   }
 
-  // interval runner
-  let interval = setInterval(showNext, visibleMs + transitionMs + 120);
+   let interval = setInterval(showNext, visibleMs + transitionMs + 120);
 
-  // pause/resume on hover/focus
-  function pause(){ if (interval){ clearInterval(interval); interval = null; } }
+   function pause(){ if (interval){ clearInterval(interval); interval = null; } }
   function resume(){ if (!interval) interval = setInterval(showNext, visibleMs + transitionMs + 120); }
 
   wrapper.addEventListener('mouseenter', pause, { passive: true });
@@ -6363,8 +6329,7 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   wrapper.addEventListener('focusin', pause, { passive: true });
   wrapper.addEventListener('focusout', resume, { passive: true });
 
-  // If other scripts change text quickly, reassert our current role (best-effort)
-  const obs = new MutationObserver(muts => {
+   const obs = new MutationObserver(muts => {
     for (const m of muts) {
       if ((m.type === 'childList' || m.type === 'characterData') && roleEl.textContent.trim() !== roles[idx]) {
         roleEl.textContent = roles[idx];
@@ -6373,11 +6338,163 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   });
   obs.observe(roleEl, { childList: true, characterData: true, subtree: true });
 
-  // cleanup on unload
-  window.addEventListener('pagehide', ()=>{ pause(); obs.disconnect(); });
+   window.addEventListener('pagehide', ()=>{ pause(); obs.disconnect(); });
 })();
 </script>
 
+ <style>
+   #product-flow,
+  .product-delivery-flow,
+  .delivery-flow { box-sizing: border-box; width:100%; margin:18px 0; padding:12px; }
+
+   .flow-track,
+  #product-flow .flow-track,
+  .product-delivery-flow .flow-track { display:flex; gap:20px; align-items:flex-start; width:100%; }
+
+   .flow-node,
+  .flow-stage,
+  .flow-card {
+    background: linear-gradient(180deg,#fff,#fbfdff);
+    border: 1px solid rgba(10,20,30,0.04);
+    box-shadow: 0 10px 30px rgba(16,24,40,0.04);
+    border-radius: 14px;
+    padding: 14px;
+    min-width: 260px;
+    flex: 0 0 auto;
+    transition: transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+    will-change: transform, opacity;
+  }
+  .flow-node h4 { margin:0 0 8px; font-size:16px; font-weight:900; }
+  .flow-node p { margin:0; color:rgba(20,28,38,0.56); font-weight:700; font-size:13px; line-height:1.4; }
+
+   .flow-svg, svg.flow-svg { width:100%; height:auto; display:block; overflow:visible; }
+  .flow-svg path, .flow-svg line, .flow-svg polyline, .flow-svg circle {
+    vector-effect: non-scaling-stroke;  
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+   .flow-carousel .flow-track {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+  .flow-carousel .flow-node { scroll-snap-align: center; min-width: clamp(220px, 76%, 420px); }
+
+   .flow-stack { display:block; }
+  .flow-stack .flow-track { display:block; gap:12px; }
+  .flow-stack .flow-node { width:100%; min-width: unset; margin-bottom:12px; }
+
+   @media (max-width: 760px) {
+    .flow-node { padding: 16px; border-radius: 12px; min-width: 90%; }
+    .flow-node .node-header { display:flex; gap:10px; align-items:center; }
+    .flow-node .node-icon { width:44px; height:44px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(180deg,#fff,#f7fbff); box-shadow:0 8px 26px rgba(16,24,40,0.04); flex:0 0 44px; }
+    .flow-node .node-body { flex:1; }
+  }
+
+   @media (prefers-reduced-motion: no-preference) {
+    .flow-node:hover, .flow-node:focus-within { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(6,10,26,0.08); }
+  }
+
+   .flow-node { opacity:0; transform: translateY(6px); }
+  .flow-node.in-view { opacity:1; transform: translateY(0); transition: transform .52s cubic-bezier(.2,.9,.2,1), opacity .48s ease; }
+
+   .flow-controls { display:flex; gap:8px; align-items:center; margin-top:10px; }
+  .flow-controls button { padding:8px 10px; border-radius:10px; border:1px solid rgba(10,20,30,0.04); background:#fff; box-shadow:0 12px 36px rgba(16,24,40,0.04); cursor:pointer; }
+
+   .flow-connector-wrap { position:relative; width:100%; overflow:visible; }
+  .flow-connector-wrap svg { width:100%; height:auto; display:block; }
+
+   @media (max-width:420px) {
+    .flow-node { padding:12px; font-size:14px; }
+    .flow-node h4 { font-size:15px; }
+  }
+</style>
+
+<script>
+ 
+(function(){
+  const mq = window.matchMedia('(max-width:760px)');
+  const containers = Array.from(document.querySelectorAll('#product-flow, .product-delivery-flow, .delivery-flow'));
+
+  if (!containers.length) return;  
+
+   function applyMode() {
+    containers.forEach(container => {
+       const track = container.querySelector('.flow-track') || container;
+      container.classList.remove('flow-stack','flow-carousel');
+       if (mq.matches) {
+         const nodes = container.querySelectorAll('.flow-node, .flow-stage, .flow-card');
+         if (nodes.length <= 3) {
+          container.classList.add('flow-carousel');
+        } else {
+          container.classList.add('flow-stack');
+        }
+      } else {
+         container.classList.add('flow-carousel');
+      }
+       if (container.classList.contains('flow-carousel')) {
+        if (track) track.style.overflowX = 'auto';
+      } else {
+        if (track) track.style.overflowX = '';
+      }
+    });
+  }
+
+   applyMode();
+  mq.addEventListener ? mq.addEventListener('change', applyMode) : mq.addListener(applyMode);
+
+   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced && ('IntersectionObserver' in window)) {
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+           o.unobserve(e.target);
+        }
+      });
+    }, { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    document.querySelectorAll('.flow-node, .flow-stage, .flow-card').forEach(n => obs.observe(n));
+  } else {
+     document.querySelectorAll('.flow-node, .flow-stage, .flow-card').forEach(n => n.classList.add('in-view'));
+  }
+
+   document.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    // find active carousel container in viewport
+    containers.forEach(container => {
+      if (!container.classList.contains('flow-carousel')) return;
+      const track = container.querySelector('.flow-track') || container;
+      const rect = container.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        // visible: scroll
+        const amount = Math.min(420, Math.floor(track.clientWidth * 0.6));
+        if (ev.key === 'ArrowLeft') {
+          track.scrollBy({ left: -amount, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  
+  containers.forEach(container => {
+    const controls = container.querySelector('.flow-controls');
+    const track = container.querySelector('.flow-track') || container;
+    if (!controls || !track) return;
+    const prev = controls.querySelector('[data-flow-prev]') || controls.querySelector('button.prev');
+    const next = controls.querySelector('[data-flow-next]') || controls.querySelector('button.next');
+     if (prev) prev.addEventListener('click', ()=> track.scrollBy({ left: -Math.round(track.clientWidth*0.6), behavior:'smooth' }));
+    if (next) next.addEventListener('click', ()=> track.scrollBy({ left: Math.round(track.clientWidth*0.6), behavior:'smooth' }));
+  });
+
+   window.addEventListener('resize', () => requestAnimationFrame(applyMode));
+})();
+</script>
 
 </body>
 </html>
