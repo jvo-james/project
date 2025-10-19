@@ -4450,912 +4450,8 @@ button[aria-pressed="true"] {
   </div>
 </div>
 
-<script>
-(function(){
-  const qs = (s, root=document) => root.querySelector(s);
-  const qsa = (s, root=document) => Array.from(root.querySelectorAll(s));
-  const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
-  const body = document.body;
 
-  function ready(fn){
-    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn();
-  }
 
-  ready(function(){
-    const navToggle = qs('.nav-toggle');
-    const navMenu = qs('#primary-nav');
-    let navBackdrop = null;
-
-    function setNav(open){
-      if(!navMenu) return;
-      const expanded = Boolean(open);
-      if(navToggle) navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      if(expanded){
-        navMenu.classList.add('open');
-        navMenu.setAttribute('aria-hidden', 'false');
-        if(!navBackdrop){
-          navBackdrop = document.createElement('div');
-          navBackdrop.className = 'nav-backdrop';
-          document.body.appendChild(navBackdrop);
-          navBackdrop.addEventListener('click', () => setNav(false));
-        }
-        navBackdrop.classList.add('visible');
-        body.style.overflow = 'hidden';
-      } else {
-        navMenu.classList.remove('open');
-        navMenu.setAttribute('aria-hidden', 'true');
-        if(navBackdrop) navBackdrop.classList.remove('visible');
-        body.style.overflow = '';
-      }
-    }
-
-    if(navToggle){
-      navToggle.addEventListener('click', function(){
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        setNav(!expanded);
-      });
-    }
-
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape'){
-        setNav(false);
-        closeCaseModal();
-      }
-    });
-
-    const roles = ['Web Developer','AI & Product Builder','UI Engineer','Product-led Designer'];
-    const rotEl = qs('#rotating-role');
-    let roleIdx = 0;
-    function rotateRole(){
-      if(!rotEl) return;
-      roleIdx = (roleIdx + 1) % roles.length;
-      rotEl.classList.remove('role-fade');
-      void rotEl.offsetWidth;
-      rotEl.textContent = roles[roleIdx];
-      rotEl.classList.add('role-fade','show');
-      setTimeout(()=> rotEl.classList.remove('show'), 900);
-    }
-    setInterval(rotateRole, 3600);
-
-    const ctaProjects = qs('#projects-cta');
-    if(ctaProjects){
-      ctaProjects.addEventListener('click', function(){
-        document.querySelector('#projects')?.scrollIntoView({behavior:'smooth'});
-        if(window.gtag) window.gtag('event','click',{event_category:'cta',event_label:'selected_work'});
-      });
-    }
-
-    const downloadBtn = qs('#download-resume-btn');
-    if(downloadBtn){
-      downloadBtn.addEventListener('click', function(e){
-        showToast('info','Downloading resume');
-        if(window.gtag) window.gtag('event','download',{event_category:'resume',event_label:'download_cv'});
-      });
-    }
-
-    function createToastArea(){
-      let ta = qs('#toast-area');
-      if(!ta){
-        ta = document.createElement('div');
-        ta.id = 'toast-area';
-        document.body.appendChild(ta);
-      }
-      return ta;
-    }
-
-    function showToast(type, text, timeout=3500){
-      const ta = createToastArea();
-      const t = document.createElement('div');
-      t.className = 'sj-toast ' + (type||'info');
-      t.setAttribute('role','status');
-      t.innerHTML = '<div style="flex:1">' + (text||'') + '</div>';
-      ta.appendChild(t);
-      requestAnimationFrame(()=> t.classList.add('show'));
-      setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=> t.remove(),420); }, timeout);
-    }
-
-    const tiltEls = qsa('.tilt');
-    tiltEls.forEach(el => {
-      let rect = null;
-      let raf = null;
-      function updateTransform(e){
-        if(!rect) rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        const tx = x * 12;
-        const ty = y * -10;
-        const rz = x * 2;
-        el.style.transform = 'perspective(1200px) rotateX(' + ty + 'deg) rotateY(' + tx + 'deg) translateZ(6px)';
-      }
-      function clear(){ el.style.transform = ''; }
-      el.addEventListener('mousemove', function(e){ if(raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(()=> updateTransform(e)); });
-      el.addEventListener('mouseleave', function(){ if(raf) cancelAnimationFrame(raf); requestAnimationFrame(clear); rect = null; });
-      el.addEventListener('touchmove', function(e){ if(e.touches && e.touches[0]) updateTransform(e.touches[0]); },{passive:true});
-      el.addEventListener('touchend', function(){ clear(); });
-    });
-
-    const marquees = qsa('.marquee');
-    marquees.forEach(m => {
-      const track = m.querySelector('.marquee-track');
-      if(!track) return;
-      function init(){
-        const items = Array.from(track.children);
-        const totalW = items.reduce((s,n)=> s + (n.getBoundingClientRect().width || 0),0);
-        if(totalW > m.clientWidth){
-          const clone = track.innerHTML;
-          track.innerHTML += clone;
-          track.classList.add('is-animated');
-          const duration = Math.max(14, Math.round(totalW / 60));
-          track.style.animationDuration = duration + 's';
-        }
-      }
-      init();
-      m.addEventListener('mouseenter', ()=> track.style.animationPlayState = 'paused');
-      m.addEventListener('mouseleave', ()=> track.style.animationPlayState = 'running');
-      m.addEventListener('focusin', ()=> track.style.animationPlayState = 'paused');
-      m.addEventListener('focusout', ()=> track.style.animationPlayState = 'running');
-      window.addEventListener('resize', ()=> { if(track.classList.contains('is-animated')) track.style.animationPlayState = 'running'; });
-    });
-
-    const pjStage = qs('#pj-stage');
-    const pjTooltip = qs('#pj-tooltip');
-    if(pjStage && pjTooltip){
-      const nodes = Array.from(pjStage.querySelectorAll('.pj-node'));
-      nodes.forEach(node => {
-        function show(e){
-          const rect = pjStage.getBoundingClientRect();
-          const nrect = node.getBoundingClientRect();
-          const title = node.getAttribute('data-title') || '';
-          const desc = node.getAttribute('data-desc') || '';
-          pjTooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
-          pjTooltip.setAttribute('aria-hidden','false');
-          pjTooltip.classList.add('show');
-          const tooltipW = Math.min(pjTooltip.offsetWidth || 280, pjStage.clientWidth - 16);
-          let left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipW/2, 8), pjStage.clientWidth - tooltipW - 8);
-          let top = nrect.top - rect.top - pjTooltip.offsetHeight - 12;
-          if(top < 8) top = nrect.bottom - rect.top + 12;
-          pjTooltip.style.left = left + 'px';
-          pjTooltip.style.top = top + 'px';
-        }
-        function hide(){ pjTooltip.setAttribute('aria-hidden','true'); pjTooltip.classList.remove('show'); }
-        node.addEventListener('mouseenter', show); node.addEventListener('focus', show); node.addEventListener('mouseleave', hide); node.addEventListener('blur', hide);
-        node.addEventListener('click', function(e){ if(window.matchMedia('(hover: none)').matches){ if(pjTooltip.classList.contains('show')) hide(); else show(); } });
-      });
-    }
-
-    let caseModal = null;
-    function buildCaseModal(){
-      if(caseModal) return caseModal;
-      caseModal = document.createElement('div');
-      caseModal.id = 'case-modal';
-      caseModal.setAttribute('aria-hidden','true');
-      caseModal.innerHTML = '\n        <div class="modal-panel" role="dialog" aria-modal="true">\n          <div style="display:flex;align-items:center;gap:12px">\n            <div>\n              <strong id="case-title"></strong>\n              <div id="case-sub" class="muted"></div>\n            </div>\n            <div style="margin-left:auto;display:flex;gap:8px">\n              <a id="case-open-external" class="link-btn" target="_blank" rel="noopener">Open</a>\n              <button id="case-close" class="btn">Close</button>\n            </div>\n          </div>\n          <div id="case-body">\n            <div id="case-main">\n              <div class="case-gallery">\n                <div class="viewer" aria-live="polite">\n                  <img id="case-main-img" src="" alt="" loading="eager" style="max-width:100%;height:auto;display:block">\n                </div>\n                <div class="thumbs" id="case-thumbs" tabindex="0"></div>\n              </div>\n            </div>\n            <aside id="case-aside">\n              <strong id="case-aside-title"></strong>\n              <div id="case-links"></div>\n              <div id="case-notes" class="muted" style="margin-top:10px"></div>\n            </aside>\n          </div>\n        </div>\n      ';
-      document.body.appendChild(caseModal);
-
-      const closeBtn = caseModal.querySelector('#case-close');
-      const openExternal = caseModal.querySelector('#case-open-external');
-      closeBtn.addEventListener('click', closeCaseModal);
-      caseModal.addEventListener('click', function(e){ if(e.target === caseModal) closeCaseModal(); });
-      return caseModal;
-    }
-
-    function openCaseModal(caseId, opener){
-      const modal = buildCaseModal();
-      const titleEl = modal.querySelector('#case-title');
-      const subEl = modal.querySelector('#case-sub');
-      const mainImg = modal.querySelector('#case-main-img');
-      const thumbs = modal.querySelector('#case-thumbs');
-      const links = modal.querySelector('#case-links');
-      const asideTitle = modal.querySelector('#case-aside-title');
-      const notes = modal.querySelector('#case-notes');
-      const openExternal = modal.querySelector('#case-open-external');
-
-      const sourceCard = document.querySelector('[data-case-id="' + caseId + '"]');
-      let imgs = [];
-      if(sourceCard){
-        const imgsInCard = Array.from(sourceCard.querySelectorAll('img')).map(i=> ({src:i.src, alt:i.alt||''}));
-        if(imgsInCard.length) imgs = imgsInCard;
-      }
-      if(!imgs.length){
-        imgs = [{src:'',alt:''}];
-      }
-
-      titleEl.textContent = sourceCard?.querySelector('.card-title')?.textContent || caseId;
-      subEl.textContent = sourceCard?.querySelector('.card-sub')?.textContent || '';
-      asideTitle.textContent = titleEl.textContent;
-      links.innerHTML = '';
-      const live = sourceCard?.querySelector('.link-btn.live')?.getAttribute('href');
-      const repo = sourceCard?.querySelector('.link-btn.repo')?.getAttribute('href');
-      if(live) links.appendChild(createLink('Live', live));
-      if(repo) links.appendChild(createLink('Repo', repo));
-      notes.textContent = '';
-
-      function createLink(text, href){
-        const a = document.createElement('a');
-        a.className = 'link-btn';
-        a.href = href;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i> ' + text;
-        return a;
-      }
-
-      thumbs.innerHTML = '';
-      imgs.forEach((obj, idx) => {
-        const t = document.createElement('button');
-        t.className = 'thumb';
-        t.setAttribute('aria-current', idx===0 ? 'true' : 'false');
-        const im = document.createElement('img');
-        im.src = obj.src;
-        im.alt = obj.alt || titleEl.textContent + ' screenshot ' + (idx+1);
-        t.appendChild(im);
-        t.addEventListener('click', function(){ setMain(idx); });
-        thumbs.appendChild(t);
-      });
-
-      let current = 0;
-      function setMain(i){ current = i; const obj = imgs[i] || imgs[0]; mainImg.src = obj.src; mainImg.alt = obj.alt || titleEl.textContent; Array.from(thumbs.children).forEach((b,bi)=> b.setAttribute('aria-current', bi===i ? 'true' : 'false')); }
-      setMain(0);
-
-      const externalHref = live || repo || '';
-      if(externalHref){ openExternal.href = externalHref; openExternal.style.display = 'inline-flex'; } else { openExternal.style.display = 'none'; }
-
-      modal.setAttribute('aria-hidden','false');
-      modal.style.display = 'flex';
-      trapFocus(modal);
-      modal.__opener = opener || document.activeElement;
-      body.classList.add('case-open');
-      if(window.gtag) window.gtag('event','open_case',{event_label:caseId});
-    }
-
-    function closeCaseModal(){
-      const modal = qs('#case-modal');
-      if(!modal) return;
-      modal.setAttribute('aria-hidden','true');
-      modal.style.display = 'none';
-      releaseFocus(modal);
-      body.classList.remove('case-open');
-      if(modal.__opener && typeof modal.__opener.focus === 'function') modal.__opener.focus();
-    }
-
-    qsa('[data-case-open]').forEach(btn => {
-      btn.addEventListener('click', function(e){ const id = this.closest('[data-case-id]')?.getAttribute('data-case-id') || this.getAttribute('data-case-open'); openCaseModal(id, this); });
-    });
-
-    function trapFocus(container){
-      const focusable = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-      const nodes = Array.from(container.querySelectorAll(focusable));
-      const first = nodes[0];
-      const last = nodes[nodes.length-1];
-      function keyHandler(e){ if(e.key === 'Tab'){ if(e.shiftKey){ if(document.activeElement === first){ e.preventDefault(); last.focus(); } } else { if(document.activeElement === last){ e.preventDefault(); first.focus(); } } } }
-      container.__focusHandler = keyHandler;
-      document.addEventListener('keydown', keyHandler);
-      first?.focus();
-    }
-
-    function releaseFocus(container){ if(!container || !container.__focusHandler) return; document.removeEventListener('keydown', container.__focusHandler); container.__focusHandler = null; }
-
-    document.addEventListener('click', function(e){
-      if(e.target.matches('.case-gallery .viewer img')){
-        const src = e.target.src;
-        const overlay = document.createElement('div');
-        overlay.className = 'case-zoom-overlay';
-        overlay.innerHTML = '<img src="' + src + '">';
-        overlay.addEventListener('click', function(){ overlay.remove(); });
-        document.body.appendChild(overlay);
-      }
-    });
-
-    const cards = qsa('.card');
-    cards.forEach(c=> c.setAttribute('tabindex','0'));
-
-    const tiltObserver = new IntersectionObserver(entries => { entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in-view'); } }); }, {threshold:0.12});
-    qsa('#home-hero, .card, .profile-card, .marquee-wrap').forEach(n=> tiltObserver.observe(n));
-
-    const contactForms = qsa('form');
-    contactForms.forEach(form => {
-      if(!form.closest('.contact-card')) return;
-      form.addEventListener('submit', function(e){ e.preventDefault(); const btn = form.querySelector('button[type="submit"]'); if(btn){ btn.classList.add('sending'); btn.setAttribute('aria-disabled','true'); } showToast('success','Message sent (demo)'); setTimeout(()=>{ if(btn){ btn.classList.remove('sending'); btn.removeAttribute('aria-disabled'); } form.reset(); }, 900); });
-    });
-
-    function safeSendGtag(){ if(window.gtag) window.gtag('event','page_interaction'); }
-    setTimeout(safeSendGtag, 2000);
-
-  });
-})();
-</script>
-<script>
-(function(){
-const caseData={
-  vitra:{
-    id:'vitra',
-    title:'Vitra AI',
-    subtitle:'AI-driven health & wellbeing platform',
-    summary:'A patient-first platform combining AI triage, herbal med catalog and appointment booking. Led design, prototyping and ML-driven symptom matching.',
-    highlights:['AI triage engine','Booking & calendar','Herbal medicines DB','Patient analytics'],
-    images:['vitra-ai.jpg','vitra-2.jpg','vitra-3.jpg'],
-    live:'https://vitra-ai.netlify.app/',
-    repo:'https://github.com/jvo-james/vitra-ai'
-  },
-  shuttle:{
-    id:'shuttle',
-    title:'Shuttle Tracker',
-    subtitle:'Real-time campus transport tracking',
-    summary:'Live vehicle locations and ETA pipeline that reduced average wait times. Built using a lightweight realtime feed and progressive web app patterns.',
-    highlights:['Live locations','Route alerts','Offline-first PWA','Low-latency updates'],
-    images:['shuttle.webp','shuttle-2.jpg'],
-    live:'https://jvo-james.github.io/knust/buses',
-    repo:'https://github.com/jvo-james/knust'
-  },
-  emart:{
-    id:'emart',
-    title:'E‑Mart',
-    subtitle:'Campus shopping & checkout',
-    summary:'Mobile-first marketplace for students with simple checkout flows, order tracking and quick reorders.',
-    highlights:['Mobile checkout','Inventory sync','Student wallets','Order tracking'],
-    images:['e-mart.jpeg','emart-2.jpg'],
-    live:'https://jvo-james.github.io/knust/',
-    repo:'https://github.com/jvo-james/knust'
-  },
-  fitness:{
-    id:'fitness',
-    title:'Fitness Tracker',
-    subtitle:'Leaderboard-driven workout logging',
-    summary:'Competition-ready dashboards and social leaderboards that encourage consistent progress and healthy competition among athletes.',
-    highlights:['Leaderboards','Workout logging','Performance charts'],
-    images:['fit.png','fit-2.jpg'],
-    live:'https://jvo-james.github.io/fit-track/home',
-    repo:'https://github.com/jvo-james/fit-track'
-  },
-  skillforge:{
-    id:'skillforge',
-    title:'SkillForge Registry',
-    subtitle:'Streamlined registration system',
-    summary:'A focused replacement for generic forms with better validation, attendee tracking and admin tools for organisers.',
-    highlights:['Custom flows','Auth & RSVPs','Exportable CSVs'],
-    images:['skill.jpg','skill-2.jpg'],
-    live:'https://jvo-james.github.io/skillforg-website/startup',
-    repo:'https://github.com/jvo-james/skillforg-website'
-  },
-  mhc:{
-    id:'mhc',
-    title:'Make Heaven Crowded',
-    subtitle:'Faith-driven e‑commerce & community hub',
-    summary:'An integrated platform for devotionals, shop and donations. Focused on accessibility and simple UX for broad audiences.',
-    highlights:['Shop & donations','Devotional engine','Design generator'],
-    images:['jfactor.jpg','mhc-2.jpg'],
-    live:'https://jvo-james.github.io/project/mhc1',
-    repo:'https://github.com/jvo-james/project'
-  }
-};
-function buildModal(){
-  if(document.getElementById('case-modal'))return;
-  const modal=document.createElement('div');
-  modal.id='case-modal';
-  modal.setAttribute('role','dialog');
-  modal.setAttribute('aria-hidden','true');
-  modal.setAttribute('aria-modal','true');
-  modal.innerHTML=String.raw`<div class="modal-panel" role="document">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <div>
-        <div id="case-title" style="font-weight:900;font-size:20px"></div>
-        <div id="case-sub" style="color:rgba(20,28,38,0.56);font-weight:700;margin-top:6px"></div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <a id="case-open-external" class="btn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:900">Open live</a>
-        <a id="case-open-repo" class="btn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:900">View repo</a>
-        <button id="case-close" class="btn" aria-label="Close case" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;font-weight:900">Close</button>
-      </div>
-    </div>
-    <div id="case-body" style="display:grid;grid-template-columns:1fr 360px;gap:22px;padding:20px;max-height:70vh;overflow:auto">
-      <main id="case-main">
-        <h4 id="case-heading" style="margin:0;font-weight:900"></h4>
-        <p id="case-summary" style="color:rgba(20,28,38,0.56);margin-top:8px;font-weight:700"></p>
-        <div class="case-gallery" style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
-          <div class="viewer" id="case-viewer" style="min-height:220px;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid rgba(10,20,30,0.04)"></div>
-          <div class="thumbs" id="case-thumbs" style="display:flex;gap:10px;overflow:auto;padding:6px"></div>
-        </div>
-      </main>
-      <aside id="case-aside" style="display:flex;flex-direction:column;gap:12px;align-self:start">
-        <strong>Project highlights</strong>
-        <div id="case-highlights" style="display:flex;flex-direction:column;gap:8px"></div>
-        <div id="case-metrics" style="color:rgba(20,28,38,0.56);font-weight:700"></div>
-      </aside>
-    </div>
-  </div>`;
-  document.body.appendChild(modal);
-  setupModalInteractions(modal);
-}
-function setupModalInteractions(modal){
-  const close=document.getElementById('case-close');
-  const openExternal=document.getElementById('case-open-external');
-  const openRepo=document.getElementById('case-open-repo');
-  let lastFocus=null;
-  function trap(e){
-    if(e.key==='Tab'){
-      const focusables=modal.querySelectorAll('a,button,[tabindex]:not([tabindex="-1"])');
-      const first=focusables[0];
-      const last=focusables[focusables.length-1];
-      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
-      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
-    }
-    if(e.key==='Escape')closeModal();
-  }
-  function openModal(id){
-    const data=caseData[id];
-    if(!data)return;
-    lastFocus=document.activeElement;
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    populateModal(data);
-    close.focus();
-    document.addEventListener('keydown',trap);
-  }
-  function closeModal(){
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-    if(lastFocus&&lastFocus.focus)lastFocus.focus();
-    document.removeEventListener('keydown',trap);
-  }
-  close.addEventListener('click',closeModal);
-  openExternal.addEventListener('click',function(){
-    const href=this.dataset.href; if(href)window.open(href,'_blank')
-  });
-  openRepo.addEventListener('click',function(){
-    const href=this.dataset.href; if(href)window.open(href,'_blank')
-  });
-  document.addEventListener('click',function(e){
-    const btn=e.target.closest('[data-case-open]');
-    if(btn){const id=btn.closest('[data-case-id]')?btn.closest('[data-case-id]').dataset.caseId:btn.dataset.caseOpen; openModal(id)}
-  });
-  modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
-}
-function populateModal(data){
-  const titleEl=document.getElementById('case-title');
-  const subEl=document.getElementById('case-sub');
-  const heading=document.getElementById('case-heading');
-  const summary=document.getElementById('case-summary');
-  const viewer=document.getElementById('case-viewer');
-  const thumbs=document.getElementById('case-thumbs');
-  const highlights=document.getElementById('case-highlights');
-  const metrics=document.getElementById('case-metrics');
-  const openExternal=document.getElementById('case-open-external');
-  const openRepo=document.getElementById('case-open-repo');
-  titleEl.textContent=data.title;
-  subEl.textContent=data.subtitle;
-  heading.textContent=data.title;
-  summary.textContent=data.summary;
-  viewer.innerHTML='';
-  thumbs.innerHTML='';
-  data.images.slice(0,6).forEach(function(src,i){
-    const img=document.createElement('img');
-    img.src=src; img.alt=data.title+' screenshot '+(i+1); img.style.maxWidth='100%'; img.style.height='auto'; img.loading='lazy';
-    if(i===0){viewer.appendChild(img)}
-    const t=document.createElement('button');
-    t.className='thumb'; t.setAttribute('aria-current',i===0?'true':'false'); t.style.width='96px'; t.style.height='64px'; t.style.border='2px solid transparent'; t.style.borderRadius='10px'; t.style.overflow='hidden'; t.style.background='#fff'; t.appendChild(img.cloneNode()); t.addEventListener('click',function(){viewer.innerHTML=''; const large=document.createElement('img'); large.src=src; large.alt=data.title+' screenshot'; large.style.maxWidth='100%'; large.style.height='auto'; viewer.appendChild(large); thumbs.querySelectorAll('.thumb').forEach(function(b){b.setAttribute('aria-current','false')}); t.setAttribute('aria-current','true')});
-    thumbs.appendChild(t);
-  });
-  highlights.innerHTML='';
-  data.highlights.forEach(function(h){const d=document.createElement('div');d.className='badge-pill';d.textContent=h;highlights.appendChild(d)});
-  metrics.innerHTML='<div style="font-weight:900">Links</div>';
-  openExternal.dataset.href=data.live; openExternal.href=data.live; openRepo.dataset.href=data.repo; openRepo.href=data.repo;
-}
-function initRotator(){
-  const el=document.getElementById('rotating-role');
-  if(!el)return;
-  const roles=['Web Developer','Product Builder','AI Engineer','Design Systems Advocate','Fullstack Creator'];
-  let idx=0; let char=0; let deleting=false; let loop=0;
-  function tick(){
-    const cur=roles[idx];
-    if(!deleting){
-      char++; el.textContent=cur.slice(0,char);
-      if(char===cur.length){deleting=true; setTimeout(tick,900); return}
-    } else {
-      char--; el.textContent=cur.slice(0,char);
-      if(char===0){deleting=false; idx=(idx+1)%roles.length}
-    }
-    setTimeout(tick,deleting?40:80);
-  }
-  tick();
-}
-function initCounters(){
-  const items=Array.from(document.querySelectorAll('.metric-number[data-value]'));
-  if(!items.length)return;
-  const observer=new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        animateAll(); observer.disconnect();
-      }
-    });
-  },{threshold:0.3});
-  observer.observe(items[0]);
-  function animateAll(){
-    items.forEach(function(el){
-      const target=parseInt(el.dataset.value,10)||0; const start=1; const duration=1500; const startTime=performance.now();
-      requestAnimationFrame(function step(now){
-        const t=Math.min(1,(now-startTime)/duration); const eased=1-(1-t)*(1-t);
-        const current=Math.floor(start+(target-start)*eased);
-        el.textContent=current.toLocaleString();
-        if(t<1)requestAnimationFrame(step);
-        else el.textContent=target.toLocaleString();
-      });
-    });
-  }
-}
-function ensureContactForm(){
-  const wrapper=document.querySelector('.contact-card');
-  if(!wrapper)return;
-  let form=wrapper.querySelector('form#contact-form');
-  if(!form){
-    form=document.createElement('form'); form.id='contact-form'; form.innerHTML=String.raw`<div class="field"><input name="name" id="cf-name" required placeholder=" " autocomplete="name" type="text"><label class="label" for="cf-name">Your name</label></div><div class="form-row"><div class="field"><input name="email" id="cf-email" required placeholder=" " type="email" autocomplete="email"><label class="label" for="cf-email">Email</label></div><div class="field"><input name="subject" id="cf-subject" placeholder=" " type="text"><label class="label" for="cf-subject">Subject</label></div></div><div class="field"><textarea name="message" id="cf-message" required placeholder=" "></textarea><label class="label" for="cf-message">Message</label></div><div class="form-actions"><button type="submit" class="btn btn-primary send"><span>Send message</span><span class="btn-spinner" aria-hidden="true"></span></button><div id="cf-status" aria-live="polite"></div></div>`;
-    wrapper.insertBefore(form,wrapper.firstChild);
-  }
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    const name=form.name.value.trim(); const email=form.email.value.trim(); const subject=form.subject.value.trim()||'Message from portfolio'; const message=form.message.value.trim();
-    if(!name||!email||!message){showFieldError(form); return}
-    const btn=form.querySelector('button[type="submit"]'); btn.classList.add('sending'); btn.disabled=true; const status=document.getElementById('cf-status'); status.textContent='Sending';
-    const payload={name:name,email:email,subject:subject,message:message,source:window.location.href};
-    const action=form.action||'';
-    if(action && action.startsWith('http')){
-      fetch(action,{method:form.method||'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){if(r.ok){status.textContent='Message sent'; showToast('success','Sent — thank you'); form.reset()}else{return r.text().then(function(t){throw new Error(t||'Error')})}}).catch(function(){status.textContent='Could not send via server. Opening email client.'; openMailClient(payload)}).finally(function(){btn.classList.remove('sending');btn.disabled=false})
-    } else {
-      openMailClient(payload); btn.classList.remove('sending'); btn.disabled=false; status.textContent='Opened email client'; showToast('info','Opened email client')
-    }
-  });
-  function showFieldError(form){
-    const status=document.getElementById('cf-status'); status.textContent='Please complete all required fields'; showToast('warn','Please complete required fields')
-  }
-  function openMailClient(payload){
-    const body=encodeURIComponent('Name: '+payload.name+'\nEmail: '+payload.email+'\n\n'+payload.message+'\n\nSent from: '+payload.source);
-    const subject=encodeURIComponent(payload.subject);
-    window.location.href='mailto:'+'hello@yourdomain.com'+'?subject='+subject+'&body='+body;
-  }
-}
-function setupToasts(){
-  if(document.getElementById('toast-area'))return;
-  const area=document.createElement('div'); area.id='toast-area'; area.setAttribute('aria-hidden','true'); area.style.position='fixed'; area.style.right='18px'; area.style.bottom='18px'; area.style.zIndex='99999'; document.body.appendChild(area);
-  window.showToast=function(type,text){
-    const t=document.createElement('div'); t.className='sj-toast show'; t.textContent=text; if(type==='success')t.style.background='linear-gradient(90deg, rgba(16,185,129,0.95), rgba(6,182,212,0.9))';
-    if(type==='info')t.style.background='linear-gradient(90deg, rgba(59,130,246,0.95), rgba(6,182,212,0.92))';
-    if(type==='warn')t.style.background='linear-gradient(90deg, rgba(245,158,11,0.95), rgba(220,38,38,0.9))';
-    t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.marginTop='8px'; t.style.boxShadow='0 18px 60px rgba(6,10,26,0.24)'; area.appendChild(t); setTimeout(function(){t.classList.remove('show'); t.style.opacity='0'; t.style.transform='translateY(8px)'; setTimeout(function(){t.remove()},420)},3500);
-  };
-}
-function initCaseButtons(){
-  const buttons=Array.from(document.querySelectorAll('[data-case-open]'));
-  if(!buttons.length)return;
-  buttons.forEach(function(btn){
-    btn.addEventListener('click',function(e){e.preventDefault(); const host=btn.closest('[data-case-id]'); const id=host?host.dataset.caseId:btn.dataset.caseOpen; const el=document.getElementById('case-modal'); if(!el)buildModal(); setTimeout(function(){const openEvent=new Event('click'); const synthetic=document.querySelector('[data-case-open]'); document.dispatchEvent(new MouseEvent('click'))},30);
-  });
-}
-function initAll(){
-  buildModal(); initRotator(); initCounters(); setupToasts(); ensureContactForm(); initCaseButtons();
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initAll);else initAll();
-})();
-</script>
-<script>
-(function(){
-const roles = ["Web Developer","AI & ML Engineer","Product Builder","Full-stack Creator","Accessibility Advocate"];
-let roleIndex = 0;
-const roleEl = document.getElementById("rotating-role");
-const cursor = document.querySelector(".role-cursor");
-function crossfadeRole(){
-  if(!roleEl) return;
-  const next = roles[roleIndex % roles.length];
-  roleEl.setAttribute("aria-hidden","true");
-  roleEl.style.opacity = 0;
-  setTimeout(()=>{ roleEl.textContent = next; roleEl.setAttribute("aria-hidden","false"); roleEl.style.transition = "opacity .42s cubic-bezier(.2,.9,.2,1)"; roleEl.style.opacity = 1; },160);
-  roleIndex++;
-}
-setTimeout(crossfadeRole,600);
-setInterval(crossfadeRole,3000);
-if(cursor) cursor.style.opacity = 1;
-
-function animateNumber(el, end, ms){
-  if(!el) return;
-  const start = 1;
-  const startTime = performance.now();
-  function step(t){
-    const p = Math.min(1,(t - startTime)/ms);
-    const value = Math.floor(start + (end - start) * p);
-    el.textContent = value.toLocaleString();
-    if(p < 1) requestAnimationFrame(step);
-    else el.textContent = end.toLocaleString();
-  }
-  requestAnimationFrame(step);
-}
-document.addEventListener("DOMContentLoaded",()=>{
-  const metricEls = Array.from(document.querySelectorAll(".hero-metrics .metric-number"));
-  metricEls.forEach(m=>{
-    const val = parseInt(m.getAttribute("data-value")||m.textContent.replace(/\D/g,"")||"0",10);
-    if(val>1){
-      animateNumber(m,val,1400 + Math.min(1600,val));
-    }
-  });
-});
-
-const CASES = {
-  vitra:{
-    id:"vitra",
-    title:"Vitra AI",
-    subtitle:"AI-driven health & wellbeing platform",
-    description:"Vitra AI blends conversational AI, therapist booking and herbal pharmacy flows to connect users to care. Built with a product-first focus on accessibility and measurable outcomes.",
-    images:["vitra-ai.jpg"],
-    metrics:[{label:"Users (pilot)",value:"1,200"},{label:"Features",value:"8"}],
-    links:{live:"https://vitra-ai.netlify.app/",repo:"https://github.com/jvo-james/vitra-ai"}
-  },
-  shuttle:{
-    id:"shuttle",
-    title:"Shuttle Tracker",
-    subtitle:"Real-time campus transport tracking",
-    description:"Live vehicle locations, ETAs and route alerts reduce wait time and improve campus convenience. Integrates map tiles, realtime feeds and lightweight mobile UI.",
-    images:["shuttle.webp"],
-    metrics:[{label:"Routes",value:"14"},{label:"Realtime updates",value:"<1s"}],
-    links:{live:"https://jvo-james.github.io/knust/buses",repo:"https://github.com/jvo-james/knust/blob/main/buses.html"}
-  },
-  emart:{
-    id:"emart",
-    title:"E-Mart",
-    subtitle:"Campus-first commerce",
-    description:"Mobile-first shopping and checkout for students. Includes listings, checkout flow and admin order handling optimized for campus UX.",
-    images:["e-mart.jpeg"],
-    metrics:[{label:"Stores",value:"6"},{label:"Orders/mo",value:"3.2k"}],
-    links:{live:"https://jvo-james.github.io/knust/",repo:"https://github.com/jvo-james/knust/blob/main/index.html"}
-  },
-  fitness:{
-    id:"fitness",
-    title:"Fitness Tracker",
-    subtitle:"Leaderboard-driven workout logging",
-    description:"Competition-ready dashboards for athletes with leaderboard mechanics, logging and progress analytics.",
-    images:["fit.png"],
-    metrics:[{label:"Athletes",value:"920"},{label:"Challenges",value:"24"}],
-    links:{live:"https://jvo-james.github.io/fit-track/home",repo:"https://github.com/jvo-james/fit-track"}
-  },
-  skillforge:{
-    id:"skillforge",
-    title:"SkillForge Registry",
-    subtitle:"Streamlined registration system",
-    description:"Replaces clunky forms with a fast registration flow, auth and organizer dashboard for events.",
-    images:["skill.jpg"],
-    metrics:[{label:"Events",value:"38"},{label:"Signups",value:"12k"}],
-    links:{live:"https://jvo-james.github.io/skillforg-website/startup",repo:"https://github.com/jvo-james/skillforg-website"}
-  },
-  mhc:{
-    id:"mhc",
-    title:"Make Heaven Crowded",
-    subtitle:"Faith-driven e-commerce & community hub",
-    description:"Shop, devotional content and donations with community features and a design generator to help creators.",
-    images:["jfactor.jpg"],
-    metrics:[{label:"Products",value:"480"},{label:"Ambassadors",value:"120"}],
-    links:{live:"https://jvo-james.github.io/project/mhc1",repo:"https://github.com/jvo-james/project/blob/main/mhc1.html"}
-  }
-};
-
-function buildModal(){
-  if(document.getElementById("case-modal")) return;
-  const modal = document.createElement("div");
-  modal.id = "case-modal";
-  modal.setAttribute("aria-hidden","true");
-  modal.innerHTML =
-    '<div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="case-title" tabindex="-1">'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">'+
-        '<div style="display:flex;gap:12px;align-items:center">'+
-          '<div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),var(--accent));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px" id="case-icon">SJ</div>'+
-          '<div style="min-width:0">'+
-            '<div id="case-title" style="font-size:18px;font-weight:900"></div>'+
-            '<div id="case-sub" style="font-size:13px;color:var(--muted);font-weight:700"></div>'+
-          '</div>'+
-        '</div>'+
-        '<div style="display:flex;gap:8px;align-items:center">'+
-          '<a id="case-open-external" class="btn" target="_blank" rel="noopener" href="#" style="display:inline-flex;align-items:center;padding:10px 12px;border-radius:10px;font-weight:900;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04)">Open live</a>'+
-          '<button id="case-close" aria-label="Close case study" class="btn" style="display:inline-flex;align-items:center;padding:10px 12px;border-radius:10px;font-weight:900">Close</button>'+
-        '</div>'+
-      '</div>'+
-      '<div id="case-body" style="display:grid;grid-template-columns:1fr 360px;gap:18px;padding:18px;max-height:70vh;overflow:auto">'+
-        '<div id="case-main" style="display:flex;flex-direction:column;gap:12px">'+
-          '<div class="case-gallery">'+
-            '<div class="viewer" id="case-viewer" style="min-height:320px;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid rgba(10,20,30,0.04)"></div>'+
-            '<div class="thumbs" id="case-thumbs" style="display:flex;gap:10px;padding-top:10px;overflow:auto"></div>'+
-          '</div>'+
-          '<div id="case-desc" style="color:var(--muted);font-weight:700"></div>'+
-        '</div>'+
-        '<aside id="case-aside" style="display:flex;flex-direction:column;gap:12px;align-self:start">'+
-          '<div><strong id="case-metrics-title" style="display:block;font-weight:900;margin-bottom:6px">Key metrics</strong><div id="case-metrics" style="color:var(--muted);font-weight:700"></div></div>'+
-          '<div id="case-links" style="display:flex;gap:8px;flex-wrap:wrap"></div>'+
-          '<div id="case-notes" style="color:var(--muted);font-size:14px"></div>'+
-        '</aside>'+
-      '</div>'+
-    '</div>';
-  document.body.appendChild(modal);
-  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-  document.getElementById("case-close").addEventListener("click",closeModal);
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&document.getElementById("case-modal").getAttribute("aria-hidden")==="false") closeModal(); });
-}
-function openModalFor(id){
-  buildModal();
-  const data = CASES[id];
-  if(!data) return;
-  const modal = document.getElementById("case-modal");
-  modal.setAttribute("aria-hidden","false");
-  const title = document.getElementById("case-title");
-  const sub = document.getElementById("case-sub");
-  const viewer = document.getElementById("case-viewer");
-  const thumbs = document.getElementById("case-thumbs");
-  const desc = document.getElementById("case-desc");
-  const metricsWrap = document.getElementById("case-metrics");
-  const openExternal = document.getElementById("case-open-external");
-  const linksWrap = document.getElementById("case-links");
-  title.textContent = data.title;
-  sub.textContent = data.subtitle;
-  desc.innerHTML = "<p style='margin:0 0 6px'>"+data.description+"</p>";
-  metricsWrap.innerHTML = data.metrics.map(m=>"<div style='margin-bottom:6px'><strong style='display:block;font-weight:900'>"+m.value+"</strong><span style='font-size:13px;color:var(--muted)'>"+m.label+"</span></div>").join("");
-  linksWrap.innerHTML = "";
-  if(data.links && data.links.live) linksWrap.insertAdjacentHTML("beforeend","<a class='link-btn live' href='"+data.links.live+"' target='_blank' rel='noopener' style='padding:8px 10px;border-radius:10px'>Live</a>");
-  if(data.links && data.links.repo) linksWrap.insertAdjacentHTML("beforeend","<a class='link-btn' href='"+data.links.repo+"' target='_blank' rel='noopener' style='padding:8px 10px;border-radius:10px'>Repo</a>");
-  openExternal.href = data.links && data.links.live ? data.links.live : "#";
-  viewer.innerHTML = "";
-  thumbs.innerHTML = "";
-  let idx = 0;
-  function renderViewer(i){
-    idx = i;
-    viewer.innerHTML = "<img src='"+(data.images[i]||"")+" ' alt='"+data.title+" screenshot' style='max-width:100%;max-height:56vh;object-fit:contain;display:block;border-radius:10px'>";
-  }
-  data.images.forEach((src,i)=>{
-    const t = document.createElement("button");
-    t.className = "thumb";
-    t.setAttribute("aria-current",i===0?"true":"false");
-    t.style="width:96px;height:66px;border-radius:8px;overflow:hidden;border:2px solid transparent;background:#fff;box-shadow:0 10px 28px rgba(6,10,26,0.06);";
-    t.innerHTML = "<img src='"+src+"' alt='' style='width:100%;height:100%;object-fit:cover;display:block'>";
-    t.addEventListener("click",()=>{ renderViewer(i); Array.from(thumbs.children).forEach((n,ii)=>n.setAttribute("aria-current",ii===i?"true":"false")); });
-    thumbs.appendChild(t);
-  });
-  if(data.images.length>0) renderViewer(0);
-  const close = ()=>{ document.getElementById("case-modal").setAttribute("aria-hidden","true"); lastFocused && lastFocused.focus(); };
-  openModal = ()=>{};
-  lastFocused = document.activeElement;
-  setTimeout(()=>{ document.querySelector("#case-modal .modal-panel").focus(); },80);
-  trapFocus(document.getElementById("case-modal"));
-}
-let lastFocused = null;
-function trapFocus(modal){
-  const panel = modal.querySelector(".modal-panel");
-  if(!panel) return;
-  const focusable = "a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex='-1'])";
-  const nodes = Array.from(panel.querySelectorAll(focusable));
-  if(nodes.length) nodes[0].focus();
-  modal.addEventListener("keydown",e=>{
-    if(e.key!=="Tab") return;
-    const all = Array.from(panel.querySelectorAll(focusable));
-    if(!all.length) return;
-    const first = all[0];
-    const last = all[all.length-1];
-    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
-  });
-}
-document.addEventListener("click",e=>{
-  const openBtn = e.target.closest("[data-case-open]");
-  if(openBtn){
-    const id = openBtn.closest("[data-case-id]") ? openBtn.closest("[data-case-id]").getAttribute("data-case-id") : openBtn.getAttribute("data-case-open");
-    if(id) openModalFor(id);
-  }
-});
-
-function createToastArea(){
-  if(document.getElementById("toast-area")) return;
-  const area = document.createElement("div");
-  area.id = "toast-area";
-  document.body.appendChild(area);
-}
-function showToast(text,theme){
-  createToastArea();
-  const t = document.createElement("div");
-  t.className = "sj-toast "+(theme||"info");
-  t.innerHTML = text;
-  document.getElementById("toast-area").appendChild(t);
-  setTimeout(()=> t.classList.add("show"),20);
-  setTimeout(()=>{ t.classList.remove("show"); setTimeout(()=>t.remove(),400); },4200);
-}
-
-function ensureContactForm(){
-  const contactCard = document.querySelector(".contact-card");
-  if(!contactCard) return;
-  if(contactCard.querySelector("#contact-form")) return;
-  const form = document.createElement("form");
-  form.id = "contact-form";
-  form.setAttribute("autocomplete","on");
-  form.innerHTML =
-    '<div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+
-      '<label class="field"><input name="name" required placeholder=" " type="text"><span class="label">Your name</span></label>'+
-      '<label class="field"><input name="email" required placeholder=" " type="email"><span class="label">Email</span></label>'+
-    '</div>'+
-    '<label class="field" style="display:block;margin-top:8px"><input name="subject" placeholder=" " type="text"><span class="label">Subject</span></label>'+
-    '<label class="field" style="display:block;margin-top:8px"><textarea name="message" required placeholder=" "></textarea><span class="label">Message</span></label>'+
-    '<div class="form-actions" style="margin-top:12px;display:flex;gap:12px">'+
-      '<button type="submit" class="btn btn-primary send"><span>Send message</span><span class="btn-spinner" aria-hidden="true"></span></button>'+
-      '<button type="reset" class="btn">Reset</button>'+
-      '<div id="cf-status" style="align-self:center;margin-left:6px"></div>'+
-    '</div>';
-  contactCard.prepend(form);
-  form.addEventListener("submit",handleContactSubmit);
-}
-function handleContactSubmit(e){
-  e.preventDefault();
-  const f = e.target;
-  const btn = f.querySelector("button[type='submit']");
-  const spinner = btn.querySelector(".btn-spinner");
-  btn.classList.add("sending");
-  btn.setAttribute("aria-disabled","true");
-  btn.disabled = true;
-  spinner.style.opacity = 1;
-  const data = new FormData(f);
-  const payload = Object.fromEntries(data.entries());
-  const endpoint = f.dataset.endpoint || f.getAttribute("data-endpoint") || (document.querySelector(".contact-card") && document.querySelector(".contact-card").dataset.endpoint);
-  const emailjsService = f.dataset.emailjsService;
-  const emailjsTemplate = f.dataset.emailjsTemplate;
-  const emailjsUser = f.dataset.emailjsUser;
-  if(endpoint){
-    fetch(endpoint,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload)
-    }).then(r=>{
-      if(r.ok){ showToast("Message sent — thank you!","success"); f.reset(); }
-      else { showToast("Failed to send. Please try again later.","warn"); }
-    }).catch(()=> showToast("Failed to send. Please try again later.","warn"))
-    .finally(()=>{ btn.classList.remove("sending"); btn.removeAttribute("aria-disabled"); btn.disabled=false; spinner.style.opacity=0; });
-    return;
-  }
-  if(emailjsService && emailjsTemplate && window.emailjs){
-    window.emailjs.send(emailjsService,emailjsTemplate,payload).then(()=>{
-      showToast("Message sent via EmailJS — thanks!","success");
-      f.reset();
-    }).catch(()=> showToast("EmailJS failed to send. Check keys.","warn"))
-    .finally(()=>{ btn.classList.remove("sending"); btn.removeAttribute("aria-disabled"); btn.disabled=false; spinner.style.opacity=0; });
-    return;
-  }
-  const subject = encodeURIComponent(payload.subject || "New message from portfolio");
-  const body = encodeURIComponent("Name: "+(payload.name||"")+"\nEmail: "+(payload.email||"")+"\n\n"+(payload.message||""));
-  const mailto = "mailto:you@yourdomain.com?subject="+subject+"&body="+body;
-  window.open(mailto,"_blank");
-  showToast("No server endpoint configured. Opened your email client as fallback.","info");
-  btn.classList.remove("sending");
-  btn.removeAttribute("aria-disabled");
-  btn.disabled=false;
-  spinner.style.opacity=0;
-  f.reset();
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
-  ensureContactForm();
-  createToastArea();
-  const openBtns = Array.from(document.querySelectorAll("[data-case-open]"));
-  openBtns.forEach(b=>{
-    b.addEventListener("click",e=>{
-      const id = b.closest("[data-case-id]") ? b.closest("[data-case-id]").getAttribute("data-case-id") : b.getAttribute("data-case-open");
-      if(id) openModalFor(id);
-    });
-  });
-  const counters = document.querySelectorAll(".hero-metrics .metric-number");
-  counters.forEach(m=>{
-    const target = parseInt(m.getAttribute("data-value")||m.textContent.replace(/\D/g,"")||"0",10);
-    if(isNaN(target)) return;
-    animateNumber(m,target,1400 + Math.min(1600,target));
-  });
-  const navToggle = document.querySelector(".nav-toggle");
-  const navMenu = document.getElementById("primary-nav");
-  if(navToggle && navMenu){
-    navToggle.addEventListener("click",()=>{
-      const expanded = navToggle.getAttribute("aria-expanded")==="true";
-      navToggle.setAttribute("aria-expanded", String(!expanded));
-      navMenu.classList.toggle("open");
-    });
-  }
-});
-})();
-</script>
 
 <script type="application/json" id="case-vitra">
 {
@@ -5488,6 +4584,479 @@ document.addEventListener("DOMContentLoaded",()=>{
 .role-rotator .role-cursor { width:3px; height:18px; border-radius:2px; background:linear-gradient(180deg,var(--accent),var(--accent-3)); display:inline-block; margin-left:6px; opacity:.8; }
 @media (max-width:520px){ .role-rotator .role-dynamic{min-width:0;font-size:15px;padding:6px 10px} }
 </style>
+<script>
+/*!
+  Consolidated page script — single paste to replace all <script> blocks.
+  Vanilla JS, no external dependencies required.
+*/
+(function () {
+  'use strict';
+
+  // Helpers
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
+  const create = (tag, attrs = {}, children = []) => {
+    const el = document.createElement(tag);
+    for (const k in attrs) {
+      if (k === 'class') el.className = attrs[k];
+      else if (k === 'html') el.innerHTML = attrs[k];
+      else if (k === 'text') el.textContent = attrs[k];
+      else el.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(c => el.appendChild(c));
+    return el;
+  };
+
+  // DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      initNav();
+      initRoleRotator();
+      initMarquee();
+      initProjectCases();
+      initPJTooltip();
+      // optional: init counters (if you add animated counters later)
+    } catch (err) {
+      // in production we'd log; keep silently safe for now
+      // console.error('Main script error', err);
+    }
+  });
+
+  /* ---------- NAV TOGGLE (mobile) ---------- */
+  function initNav() {
+    const toggle = $('.nav-toggle');
+    const nav = $('#primary-nav');
+    const backdrop = document.getElementById('nav-backdrop');
+    if (!toggle || !nav) return;
+
+    function openNav() {
+      toggle.setAttribute('aria-expanded', 'true');
+      nav.classList.add('open');
+      if (backdrop) {
+        backdrop.classList.add('visible');
+        backdrop.setAttribute('aria-hidden', 'false');
+      }
+      document.documentElement.classList.add('nav-open');
+    }
+
+    function closeNav() {
+      toggle.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('open');
+      if (backdrop) {
+        backdrop.classList.remove('visible');
+        backdrop.setAttribute('aria-hidden', 'true');
+      }
+      document.documentElement.classList.remove('nav-open');
+    }
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      (expanded ? closeNav : openNav)();
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener('click', closeNav);
+      backdrop.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeNav();
+      });
+    }
+
+    // close nav on link click (for single-page anchors)
+    $$('#primary-nav a').forEach(a => {
+      a.addEventListener('click', () => closeNav());
+    });
+  }
+
+  /* ---------- ROLE ROTATOR (hero) ---------- */
+  function initRoleRotator() {
+    const rotator = document.getElementById('rotating-role');
+    if (!rotator) return;
+
+    // If you want custom roles, add data-roles attribute (comma separated) to rotator element.
+    // fallback list:
+    const fallback = [
+      'Web Developer',
+      'AI & Product Builder',
+      'Fullstack Engineer',
+      'Creator',
+      'Design-focused Engineer',
+      'Student Mentor'
+    ];
+    const raw = rotator.getAttribute('data-roles') || '';
+    const roles = raw ? raw.split(',').map(s => s.trim()).filter(Boolean) : fallback;
+
+    let idx = 0;
+    let timeoutId = null;
+    const interval = 3000; // ms per role
+    const animateOut = (el, cb) => {
+      el.classList.remove('role-fade','show'); // reset
+      el.classList.add('role-fade');
+      requestAnimationFrame(() => {
+        el.classList.remove('show');
+        setTimeout(cb, 300);
+      });
+    };
+    const animateIn = (el) => {
+      el.classList.add('role-fade','show');
+    };
+
+    function step() {
+      animateOut(rotator, () => {
+        idx = (idx + 1) % roles.length;
+        rotator.textContent = roles[idx];
+        animateIn(rotator);
+        timeoutId = setTimeout(step, interval);
+      });
+    }
+
+    // initialize
+    rotator.textContent = roles[0];
+    animateIn(rotator);
+    timeoutId = setTimeout(step, interval);
+
+    // Pause on hover/focus (accessibility)
+    rotator.addEventListener('pointerenter', () => { if (timeoutId) clearTimeout(timeoutId); });
+    rotator.addEventListener('pointerleave', () => { timeoutId = setTimeout(step, interval); });
+    rotator.addEventListener('focus', () => { if (timeoutId) clearTimeout(timeoutId); }, true);
+    rotator.addEventListener('blur', () => { timeoutId = setTimeout(step, interval); }, true);
+  }
+
+  /* ---------- MARQUEE (auto scroll gallery) ---------- */
+  function initMarquee() {
+    const marquee = document.getElementById('marquee');
+    if (!marquee) return;
+    const track = marquee.querySelector('.marquee-track');
+    if (!track) return;
+
+    // If user already used CSS looping, we still provide a JS fallback for smoothness.
+    // Duplicate children for seamless loop if necessary:
+    const items = Array.from(track.children);
+    if (items.length < 1) return;
+
+    // Prevent duplicating if page already duplicated them.
+    if (track.dataset.dup !== 'true') {
+      // clone children once
+      items.forEach(item => track.appendChild(item.cloneNode(true)));
+      track.dataset.dup = 'true';
+    }
+
+    let running = true;
+    let speed = 0.35; // pixels per frame (adjust for faster/slower)
+    let px = 0;
+
+    function frame() {
+      if (!running) return requestAnimationFrame(frame);
+      px += speed;
+      // when scrolled half (since we duplicated), reset to 0
+      const resetAt = track.scrollWidth / 2;
+      if (px >= resetAt) px = 0;
+      track.style.transform = `translate3d(${-px}px,0,0)`;
+      requestAnimationFrame(frame);
+    }
+
+    // Start the animation
+    requestAnimationFrame(frame);
+
+    // Pause on hover/focus
+    marquee.addEventListener('pointerenter', () => running = false);
+    marquee.addEventListener('pointerleave', () => {
+      running = true;
+      requestAnimationFrame(frame);
+    });
+
+    marquee.addEventListener('focusin', () => running = false);
+    marquee.addEventListener('focusout', () => { running = true; requestAnimationFrame(frame); });
+
+    // Keyboard arrow navigation for accessibility (left/right)
+    marquee.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { px = Math.max(0, px - 220); track.style.transform = `translate3d(${-px}px,0,0)`; }
+      if (e.key === 'ArrowRight') { px += 220; track.style.transform = `translate3d(${-px}px,0,0)`; }
+    });
+
+    // make track focusable for keyboard
+    track.setAttribute('tabindex', '-1');
+  }
+
+  /* ---------- PROJECT CASES + MODAL + GALLERY ---------- */
+  function initProjectCases() {
+    // Build a modal on demand if not already in the DOM.
+    let modal = document.getElementById('case-modal');
+    if (!modal) {
+      modal = create('div', { id: 'case-modal', 'aria-hidden': 'true' });
+      // minimal accessible markup that matches your CSS classes
+      modal.innerHTML = `
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Case study dialog">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <div>
+              <div id="case-title" style="font-weight:900;font-size:18px"></div>
+              <div id="case-sub" style="color:var(--muted);font-weight:700;font-size:13px"></div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <a id="case-open-external" class="btn" target="_blank" rel="noopener" style="display:none">Open</a>
+              <button id="case-close" class="btn" aria-label="Close case study">Close</button>
+            </div>
+          </div>
+          <div id="case-body" style="display:grid;grid-template-columns:1fr 320px;gap:18px;padding:18px">
+            <main id="case-main"></main>
+            <aside id="case-aside"></aside>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    const caseMain = $('#case-main', modal);
+    const caseAside = $('#case-aside', modal);
+    const caseTitle = $('#case-title', modal);
+    const caseSub = $('#case-sub', modal);
+    const caseOpenExternal = $('#case-open-external', modal);
+    const caseClose = $('#case-close', modal);
+
+    // close/open functions with focus trap basics
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      // focus the close button for keyboard users
+      setTimeout(() => caseClose.focus(), 40);
+    }
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // return focus to last active element if any
+      if (initProjectCases._lastActive) initProjectCases._lastActive.focus();
+    }
+
+    on(caseClose, 'click', closeModal);
+    // close with Escape
+    on(document, 'keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
+    });
+
+    // Build a map of case data from the cards on the page
+    const cards = $$('.card[data-case-id]');
+    const caseMap = {};
+    cards.forEach(card => {
+      const id = card.getAttribute('data-case-id');
+      if (!id) return;
+      const titleEl = card.querySelector('.card-title') || card.querySelector('h4');
+      const subEl = card.querySelector('.card-sub');
+      const visualImg = card.querySelector('.card-visual img') || card.querySelector('img');
+      const links = Array.from(card.querySelectorAll('.card-foot a, .card-foot .link-btn')).map(a => {
+        return { href: a.href || a.getAttribute('href') || '#', text: (a.textContent || a.innerText || '').trim(), external: a.target === '_blank' };
+      });
+      const tags = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim());
+      caseMap[id] = {
+        id,
+        title: titleEl ? titleEl.textContent.trim() : (card.getAttribute('aria-label') || id),
+        subtitle: subEl ? subEl.textContent.trim() : '',
+        image: visualImg ? visualImg.src || visualImg.getAttribute('src') : '',
+        description: card.dataset.caseDesc || (subEl ? subEl.textContent.trim() : ''),
+        tags,
+        links
+      };
+    });
+
+    // When project "Case Study" buttons are clicked, open modal and populate
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-case-open]');
+      if (!btn) return;
+      const caseId = btn.getAttribute('data-case-open');
+      const data = caseMap[caseId];
+      // store last focused element so we can restore focus
+      initProjectCases._lastActive = btn;
+      if (!data) {
+        // fallback: scroll to the card if no case data available
+        const card = document.querySelector(`.card[data-case-id="${caseId}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+      // populate modal
+      caseTitle.textContent = data.title;
+      caseSub.textContent = data.subtitle;
+      // main content: image + description + tags
+      caseMain.innerHTML = '';
+      if (data.image) {
+        const gallery = create('div', { class: 'case-gallery' });
+        const viewer = create('div', { class: 'viewer' });
+        const img = create('img', { src: data.image, alt: data.title });
+        viewer.appendChild(img);
+        gallery.appendChild(viewer);
+
+        // thumbs from other images in same card or just the single image
+        const thumbs = create('div', { class: 'thumbs' });
+        const t = create('button', { class: 'thumb', 'aria-current': 'true' });
+        t.appendChild(create('img', { src: data.image, alt: data.title }));
+        thumbs.appendChild(t);
+        gallery.appendChild(thumbs);
+
+        caseMain.appendChild(gallery);
+
+        // attach gallery controls
+        attachGalleryHandlers(gallery);
+      }
+
+      // description
+      const desc = create('div', { class: 'case-desc', html: `<p style="color:var(--muted);font-weight:600;line-height:1.6">${escapeHtml(data.description || '')}</p>` });
+      caseMain.appendChild(desc);
+
+      // aside: tags + links
+      caseAside.innerHTML = '';
+      const tagsWrap = create('div', { class: 'badge-list' });
+      (data.tags || []).forEach(tag => {
+        tagsWrap.appendChild(create('div', { class: 'badge-pill', text: tag }));
+      });
+      caseAside.appendChild(tagsWrap);
+
+      if (data.links && data.links.length) {
+        const linksWrap = create('div', { id: 'case-links', style: 'margin-top:12px;display:flex;flex-direction:column;gap:8px' });
+        data.links.forEach(l => {
+          const a = create('a', { class: 'link-btn', href: l.href, text: l.text || (l.external ? 'Open' : 'Link') });
+          if (l.external) a.setAttribute('target', '_blank');
+          linksWrap.appendChild(a);
+        });
+        caseAside.appendChild(linksWrap);
+      }
+
+      // set external button
+      if (data.links && data.links.length) {
+        caseOpenExternal.style.display = 'inline-flex';
+        caseOpenExternal.href = data.links[0].href;
+        caseOpenExternal.textContent = data.links[0].text || 'Open';
+        if (data.links[0].external) caseOpenExternal.setAttribute('target', '_blank');
+      } else {
+        caseOpenExternal.style.display = 'none';
+      }
+
+      openModal();
+    });
+
+    // gallery handlers (viewer, thumbs, zoom)
+    function attachGalleryHandlers(gallery) {
+      const viewer = gallery.querySelector('.viewer');
+      const thumbs = gallery.querySelectorAll('.thumb');
+      if (!viewer) return;
+
+      // click thumb -> set viewer image
+      thumbs.forEach(t => {
+        t.addEventListener('click', (ev) => {
+          thumbs.forEach(x => x.removeAttribute('aria-current'));
+          t.setAttribute('aria-current', 'true');
+          const img = t.querySelector('img');
+          if (img) {
+            viewer.innerHTML = '';
+            const newImg = create('img', { src: img.src, alt: img.alt || '' });
+            viewer.appendChild(newImg);
+          }
+        });
+      });
+
+      // zoom overlay on click
+      viewer.addEventListener('click', () => {
+        const img = viewer.querySelector('img');
+        if (!img) return;
+        const overlay = create('div', { class: 'case-zoom-overlay', tabindex: '0' });
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.display = 'grid';
+        overlay.style.placeItems = 'center';
+        overlay.style.background = 'rgba(6,10,26,0.86)';
+        overlay.style.zIndex = '99999';
+        const big = create('img', { src: img.src, alt: img.alt || '' });
+        big.style.maxWidth = '92vw';
+        big.style.maxHeight = '92vh';
+        big.style.objectFit = 'contain';
+        big.style.borderRadius = '10px';
+        overlay.appendChild(big);
+        document.body.appendChild(overlay);
+        overlay.focus();
+        overlay.addEventListener('click', () => overlay.remove());
+        overlay.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.remove(); });
+      });
+    }
+
+    // small utility for safe text injection
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+    }
+  }
+
+  /* ---------- CASE GALLERY (standalone helper if you already have gallery markup) ---------- */
+  // (The attachGalleryHandlers function inside initProjectCases covers the common case)
+
+  /* ---------- PJ STAGE TOOLTIP (SVG nodes) ---------- */
+  function initPJTooltip() {
+    const stage = document.getElementById('pj-stage');
+    const tooltip = document.getElementById('pj-tooltip');
+    if (!stage || !tooltip) return;
+    const nodes = Array.from(stage.querySelectorAll('.pj-node'));
+
+    function showTooltip(node) {
+      const rect = stage.getBoundingClientRect();
+      const nrect = node.getBoundingClientRect();
+      const title = node.dataset.title || '';
+      const desc = node.dataset.desc || '';
+      tooltip.innerHTML = `<h4>${escapeHtml(title)}</h4><p>${escapeHtml(desc)}</p>`;
+      tooltip.style.left = '0px';
+      tooltip.style.top = '0px';
+      tooltip.classList.add('show');
+      // compute position relative to stage
+      const tooltipWidth = tooltip.offsetWidth || 260;
+      const left = Math.min(Math.max(nrect.left - rect.left + nrect.width / 2 - tooltipWidth / 2, 8), stage.clientWidth - tooltipWidth - 8);
+      let top = nrect.top - rect.top - tooltip.offsetHeight - 12;
+      if (top < 8) top = nrect.bottom - rect.top + 12;
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = top + 'px';
+      tooltip.setAttribute('aria-hidden', 'false');
+      nodes.forEach(n => n.setAttribute('aria-expanded', 'false'));
+      node.setAttribute('aria-expanded', 'true');
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove('show');
+      tooltip.setAttribute('aria-hidden', 'true');
+      nodes.forEach(n => n.setAttribute('aria-expanded', 'false'));
+    }
+
+    nodes.forEach(node => {
+      node.addEventListener('pointerenter', () => showTooltip(node));
+      node.addEventListener('pointerleave', () => hideTooltip());
+      node.addEventListener('focus', () => showTooltip(node));
+      node.addEventListener('blur', () => hideTooltip());
+      node.addEventListener('click', (e) => {
+        if (node.getAttribute('aria-expanded') === 'true') hideTooltip();
+        else showTooltip(node);
+      });
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
+        if (e.key === 'Escape') { hideTooltip(); node.blur(); }
+      });
+    });
+
+    document.addEventListener('pointerdown', (e) => {
+      if (!stage.contains(e.target)) hideTooltip();
+    });
+
+    // reposition on resize
+    ['resize', 'orientationchange'].forEach(evt => window.addEventListener(evt, () => {
+      const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
+      if (opened) showTooltip(opened);
+    }));
+
+    // small helper
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+    }
+  }
+
+  // Expose nothing to global scope intentionally.
+
+})();
+</script>
 
 <script>
 (() => {
@@ -5581,232 +5150,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     </div>
   </div>
 </div>
-<script>
-(function(){
- const modal = document.getElementById('case-modal');
-  const viewerImg = document.getElementById('case-viewer-img');
-  const thumbs = document.getElementById('case-thumbs');
-  const titleEl = document.getElementById('case-title');
-  const subEl = document.getElementById('case-sub');
-  const openExternal = document.getElementById('case-open-external');
-  const caseLinks = document.getElementById('case-links');
- const caseNotes = document.getElementById('case-notes');
-  let prevFocus = null;
-  const cards = Array.from(document.querySelectorAll('[data-case-id]'));
-  const caseMap = {};
-  cards.forEach(card => {
-    const id = card.dataset.caseId;
-    const title = card.querySelector('.card-title')?.textContent?.trim() || '';
-    const sub = card.querySelector('.card-sub')?.textContent?.trim() || '';
-    const img = card.querySelector('.card-visual img')?.src || '';
-    const live = card.querySelector('.link-btn.live')?.href || '';
-    const repo = card.querySelector('.link-btn.repo')?.href || '';
-    const tags = Array.from(card.querySelectorAll('.tag')).map(t=>t.textContent.trim());
-    caseMap[id] = { title, sub, images: img ? [img] : [], live, repo, tags };
-  });
 
-  function buildThumb(src, idx, data) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'thumb';
-    btn.style.minWidth = '88px';
-    btn.style.height = '56px';
-    btn.style.border = '2px solid transparent';
-    btn.style.borderRadius = '10px';
-    btn.style.overflow = 'hidden';
-    btn.style.background = '#fff';
-    btn.dataset.index = idx;
-    const im = document.createElement('img');
-    im.src = src;
-    im.alt = data.title + ' screenshot ' + (idx+1);
-    im.style.width = '100%';
-    im.style.height = '100%';
-    im.style.objectFit = 'cover';
-    btn.appendChild(im);
-    btn.addEventListener('click', () => {
-      viewerImg.src = src;
-      Array.from(thumbs.children).forEach(c => c.removeAttribute('aria-current'));
-      btn.setAttribute('aria-current','true');
-    });
-    return btn;
-  }
-
-  function openCase(id){
-    const data = caseMap[id];
-    if(!data) return;
-    titleEl.textContent = data.title;
-    subEl.textContent = data.sub;
-    caseNotes.textContent = '';
-    if(data.tags && data.tags.length) caseNotes.textContent = 'Tags: ' + data.tags.join(' · ');
-    thumbs.innerHTML = '';
-    viewerImg.src = data.images[0] || '';
-    viewerImg.alt = data.title || 'Screenshot';
-    data.images.forEach((s,i) => thumbs.appendChild(buildThumb(s,i,data)));
-    if(!data.images.length){ thumbs.innerHTML = ''; viewerImg.removeAttribute('src'); viewerImg.alt = ''; }
-    openExternal.href = data.live || '#';
-    openExternal.target = '_blank';
-    caseLinks.innerHTML = '';
-    if(data.live){
-      const a = document.createElement('a');
-      a.className = 'link-btn live';
-      a.href = data.live;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.innerHTML = '<i class=\"fa-solid fa-arrow-up-right-from-square\"></i>&nbsp;Live';
-      caseLinks.appendChild(a);
-    }
-    if(data.repo){
-      const r = document.createElement('a');
-      r.className = 'link-btn repo';
-      r.href = data.repo;
-      r.target = '_blank';
-      r.rel = 'noopener';
-      r.innerHTML = '<i class=\"fa-brands fa-github\"></i>&nbsp;Repo';
-      caseLinks.appendChild(r);
-    }
-    modal.setAttribute('aria-hidden','false');
-    prevFocus = document.activeElement;
-    const closeBtn = document.getElementById('case-close');
-    closeBtn.focus();
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeCase(){
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    if(prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
-  }
-
-  document.querySelectorAll('[data-case-open]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const hostCard = btn.closest('[data-case-id]');
-      const id = hostCard ? hostCard.dataset.caseId : btn.dataset.caseOpen;
-      openCase(id);
-    });
-  });
-
-  document.getElementById('case-close').addEventListener('click', closeCase);
-  modal.addEventListener('click', (e) => { if(e.target === modal) closeCase(); });
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeCase();
-    if(e.key === 'Tab' && modal.getAttribute('aria-hidden') === 'false'){
-      const focusable = modal.querySelectorAll('a,button, [tabindex]:not([tabindex="-1"])');
-      if(!focusable.length) return;
-      const first = focusable[0], last = focusable[focusable.length-1];
-      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-    }
-  });
-})();
-</script>
-<script>
-;(function(){
-  const toggle = document.querySelector('.nav-toggle');
-  const menu = document.getElementById('primary-nav');
-  let backdrop = document.getElementById('nav-backdrop');
-  if(!backdrop){
-    backdrop = document.createElement('div');
-    backdrop.id = 'nav-backdrop';
-    backdrop.className = 'nav-backdrop';
-    backdrop.tabIndex = -1;
-    document.body.appendChild(backdrop);
-  }
-  if(!menu.hasAttribute('aria-hidden')) menu.setAttribute('aria-hidden','true');
-  function openMenu(){
-    menu.classList.add('open');
-    backdrop.classList.add('visible');
-    toggle.setAttribute('aria-expanded','true');
-    menu.setAttribute('aria-hidden','false');
-    document.body.style.overflow = 'hidden';
-    const focusTarget = menu.querySelector('a, button');
-    if(focusTarget) focusTarget.focus();
-  }
-  function closeMenu(){
-    menu.classList.remove('open');
-    backdrop.classList.remove('visible');
-    toggle.setAttribute('aria-expanded','false');
-    menu.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    toggle.focus();
-  }
-  toggle.addEventListener('click', function(e){
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    if(expanded) closeMenu(); else openMenu();
-  });
-  backdrop.addEventListener('click', closeMenu);
-  menu.addEventListener('click', function(e){
-    const link = e.target.closest('a');
-    if(!link) return;
-    if(window.matchMedia('(max-width: 980px)').matches) closeMenu();
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeMenu();
-  });
-  window.addEventListener('resize', function(){
-    if(window.innerWidth > 980){
-      menu.classList.remove('open');
-      backdrop.classList.remove('visible');
-      toggle.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-hidden','false');
-      document.body.style.overflow = '';
-    }
-  });
-})();
-</script>
-
-  <script>
-;(function(){
-  const toggle = document.querySelector('.nav-toggle');
-  const menu = document.getElementById('primary-nav');
-  let backdrop = document.getElementById('nav-backdrop');
-  if(!backdrop){
-    backdrop = document.createElement('div');
-    backdrop.id = 'nav-backdrop';
-    backdrop.className = 'nav-backdrop';
-    backdrop.tabIndex = -1;
-    document.body.appendChild(backdrop);
-  }
-  if(!menu.hasAttribute('aria-hidden')) menu.setAttribute('aria-hidden','true');
-  function openMenu(){
-    menu.classList.add('open');
-    backdrop.classList.add('visible');
-    toggle.setAttribute('aria-expanded','true');
-    menu.setAttribute('aria-hidden','false');
-    document.body.style.overflow = 'hidden';
-    const focusTarget = menu.querySelector('a, button');
-    if(focusTarget) focusTarget.focus();
-  }
-  function closeMenu(){
-    menu.classList.remove('open');
-    backdrop.classList.remove('visible');
-    toggle.setAttribute('aria-expanded','false');
-    menu.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    toggle.focus();
-  }
-  toggle.addEventListener('click', function(e){
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    if(expanded) closeMenu(); else openMenu();
-  });
-  backdrop.addEventListener('click', closeMenu);
-  menu.addEventListener('click', function(e){
-    const link = e.target.closest('a');
-    if(!link) return;
-    if(window.matchMedia('(max-width: 980px)').matches) closeMenu();
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeMenu();
-  });
-  window.addEventListener('resize', function(){
-    if(window.innerWidth > 980){
-      menu.classList.remove('open');
-      backdrop.classList.remove('visible');
-      toggle.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-hidden','false');
-      document.body.style.overflow = '';
-    }
-  });
-})();
-</script>
 </body>
 </html>
