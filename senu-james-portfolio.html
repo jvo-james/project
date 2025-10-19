@@ -3692,6 +3692,38 @@ button[aria-pressed="true"] {
     }
     .hero-left .desc-line::after { transform: translateX(0) !important; }
   }
+ .product-flow .diagram,
+.product-flow .diagram img,
+.product-flow .diagram svg {
+  width: 100%;
+  max-width: 900px;      
+  height: auto;        
+  display: block;
+  margin: 0 auto;
+}
+
+ .product-flow .card,
+.product-flow .card .inner {
+  min-height: 0 !important;  
+  height: auto !important;
+  padding-bottom: 1rem !important;  
+}
+
+ @media (max-width: 640px) {
+  .product-flow {
+    padding-top: 1.0rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));  
+  }
+
+   .product-flow .diagram {
+    transform-origin: top center;
+    transform: scale(0.95);
+  }
+
+   .product-flow .card h2 { margin-bottom: 0.5rem; }
+  .product-flow .card p { margin-bottom: 0.75rem; }
+}
+
 </style>
 
   </head>
