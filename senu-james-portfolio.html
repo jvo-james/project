@@ -3735,280 +3735,312 @@ button[aria-pressed="true"] {
 </section>
 
 
- <section id="campus-impact-track" aria-labelledby="campus-title" role="region">
+<section id="product-flow" aria-labelledby="product-flow-title" role="region">
   <style>
-     #campus-impact-track { padding:14px; box-sizing:border-box; display:flex; justify-content:center; }
-    .pj-card {
-      width:100%; max-width:1120px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,250,255,0.98));
-      border-radius:16px; padding:14px; border:1px solid rgba(11,18,30,0.04);
-      box-shadow: 0 26px 60px rgba(9,14,24,0.06);
-      overflow:visible; box-sizing:border-box;
-    }
+/* Product Flow: visuals + animations */
+#product-flow { padding:14px; box-sizing:border-box; display:flex; justify-content:center; margin-top:22px; }
+#product-flow .pj-card { width:100%; max-width:1120px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,250,255,0.99)); border-radius:16px; padding:18px; border:1px solid rgba(11,18,30,0.04); box-shadow: 0 28px 80px rgba(9,14,24,0.06); overflow:visible; position:relative; }
 
-     #campus-title { margin:6px 0 4px; font-weight:900; font-size:18px; font-family:var(--font-display); color:var(--text); }
-    .pj-sub { margin:0 0 6px; color:var(--muted-2); font-weight:700; font-size:13px; }
+#product-flow h3 { margin:6px 0 4px; font-weight:900; font-size:20px; font-family:var(--font-display); color:var(--text); }
+#product-flow .pj-sub { margin:0 0 8px; color:var(--muted-2); font-weight:700; font-size:13px; }
 
-     .pj-stage { width:100%; height: min(56vh, 520px); margin-top:6px; position:relative; }
-    svg.pj-svg { width:100%; height:100%; display:block; overflow:visible; }
+/* stage */
+#pj-stage-flow { width:100%; height:420px; position:relative; overflow:visible; margin-top:12px; }
+#pj-stage-flow .pj-svg { width:100%; height:100%; display:block; overflow:visible; }
 
-     .pj-path { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; stroke-dashoffset:0; }
-    .pj-path-glow { stroke-linecap:round; stroke-width:24; stroke: rgba(99,102,241,0.06); fill:none; }
+/* road glow stronger and animated */
+#pj-stage-flow .pj-path-glow { stroke: url(#flowGlow); stroke-width:20; stroke-linecap:round; filter: blur(28px); opacity:0.9; transform-origin:center; will-change:filter,opacity; }
+#pj-stage-flow .pj-path { stroke: rgba(11,18,30,0.10); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; animation: dashShift 3.6s linear infinite; }
 
-     @keyframes dashShift { to { stroke-dashoffset: -40; } }
-    .pj-path.is-animated { animation: dashShift 4s linear infinite; }
+/* animated marker — small dot that follows path (SMIL fallback supported widely) */
+#pj-stage-flow .flow-marker { fill: #ffffff; stroke: var(--accent-2); stroke-width:3; filter: drop-shadow(0 8px 20px rgba(124,58,237,0.12)); }
 
-     .pj-node { cursor:pointer; transform-origin:center; transition:transform .2s cubic-bezier(.2,.9,.2,1); }
-    .pj-node:focus-visible, .pj-node:hover { transform: translateY(-8px) scale(1.02); outline: none; }
-    .pj-square { rx:16; ry:16; filter: drop-shadow(0 12px 26px rgba(9,14,24,0.07)); }
-    .pj-icon-circle { fill:#fff; }
+/* nodes */
+#pj-stage-flow .pj-node { cursor:pointer; transform-origin: center center; transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s; will-change:transform,opacity; }
+#pj-stage-flow .pj-node .pj-square { filter: drop-shadow(0 12px 36px rgba(16,24,40,0.06)); transition: transform .36s cubic-bezier(.2,.85,.2,1); }
+#pj-stage-flow .pj-node .pj-icon-circle { fill:#fff; transition: transform .28s ease; }
 
-     @keyframes nodePulse { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
-    .pj-node.pulse { animation: nodePulse 3.6s ease-in-out infinite; }
+/* hover/focus */
+#pj-stage-flow .pj-node:focus,
+#pj-stage-flow .pj-node:hover { transform: translateY(-8px) scale(1.06) rotate(-1deg); outline: none; }
+#pj-stage-flow .pj-node:active { transform: translateY(-4px) scale(1.02); }
 
-    .pj-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
-    .pj-subtext { font-size:11px; fill:rgba(11,18,32,0.55); text-anchor:middle; }
+/* labels */
+#pj-stage-flow .pj-label { font-weight:900; font-size:13px; fill:var(--text); text-anchor:middle; pointer-events:none; }
+#pj-stage-flow .pj-subtext { font-size:12px; fill:var(--muted); text-anchor:middle; pointer-events:none; }
 
-     .pj-tooltip {
-      position:absolute; min-width:240px; max-width:380px; padding:12px 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,250,255,0.98));
-      border-radius:12px; box-shadow: 0 20px 48px rgba(9,14,24,0.12); border:1px solid rgba(11,18,30,0.06);
-      transform: translateY(12px) scale(.98); opacity:0; pointer-events:none; transition:opacity .16s ease, transform .18s cubic-bezier(.2,.9,.2,1); z-index:60;
-      backdrop-filter: blur(6px) saturate(120%);
-    }
-    .pj-tooltip.show { opacity:1; transform: translateY(6px) scale(1); pointer-events:auto; }
-    .pj-tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:800; color:#081029; }
-    .pj-tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35; }
+/* entrance animations — staggered */
+@keyframes nodeEntrance {
+  0% { transform: translateY(18px) scale(.92); opacity:0; filter: blur(6px); }
+  60% { transform: translateY(-6px) scale(1.02); opacity:1; filter: blur(0); }
+  100% { transform: translateY(0) scale(1); opacity:1; filter: none; }
+}
+#pj-stage-flow .pj-node.node-1 { animation: nodeEntrance .74s cubic-bezier(.2,.9,.2,1) 120ms both; }
+#pj-stage-flow .pj-node.node-2 { animation: nodeEntrance .78s cubic-bezier(.2,.9,.2,1) 240ms both; }
+#pj-stage-flow .pj-node.node-3 { animation: nodeEntrance .82s cubic-bezier(.2,.9,.2,1) 360ms both; }
+#pj-stage-flow .pj-node.node-4 { animation: nodeEntrance .86s cubic-bezier(.2,.9,.2,1) 480ms both; }
+#pj-stage-flow .pj-node.node-5 { animation: nodeEntrance .9s cubic-bezier(.2,.9,.2,1) 600ms both; }
 
-     .pj-plane { filter: drop-shadow(0 8px 18px rgba(9,14,24,0.08)); }
+/* subtle wiggle / float on badges */
+@keyframes floatSubtle { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+#product-flow .pj-card::before {
+  content: ''; position:absolute; right:6%; top:6%; width:360px; height:360px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(124,58,237,0.08), transparent 28%),
+    radial-gradient(circle at 70% 70%, rgba(6,182,212,0.06), transparent 32%);
+  filter: blur(36px); border-radius:40%; opacity:0.9; pointer-events:none; z-index:0;
+  animation: floatSubtle 9s ease-in-out infinite;
+}
 
-     .pj-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
-    .pj-btn {
-      display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:12px;
-      background: linear-gradient(90deg,var(--accent-2),var(--accent)); color:#fff; font-weight:900; border:none;
-      box-shadow: 0 18px 50px rgba(59,130,246,0.12); cursor:pointer;
-    }
-    .pj-btn.secondary { background: linear-gradient(180deg,#fff,#fbfdff); color:var(--text); border:1px solid rgba(10,20,30,0.06); box-shadow: 0 12px 36px rgba(16,24,40,0.04); }
+/* tooltip styles (JS will reuse .pj-tooltip) */
+.pj-tooltip { position: absolute; min-width:240px; max-width:360px; padding:12px 14px; background: linear-gradient(180deg,#fff,#fbfeff); border-radius:12px; box-shadow: 0 26px 80px rgba(6,10,26,0.12); border:1px solid rgba(10,20,30,0.04); transform: translateY(8px); opacity:0; pointer-events:none; transition:opacity .16s cubic-bezier(.2,.9,.2,1), transform .16s; z-index:99999; }
+.pj-tooltip.show { opacity:1; transform: translateY(0); pointer-events:auto; }
+.pj-tooltip h4{ margin:0 0 6px; font-size:13px; font-weight:900; color:var(--text) }
+.pj-tooltip p{ margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35 }
 
-     @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
-    @media (max-width:700px){
-      .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on mobile */
-      .pj-card{ padding:12px; }
-      .pj-label{ font-size:13px; }
-    }
-    @media (prefers-reduced-motion:reduce){
-      .pj-path.is-animated{ animation: none !important; }
-      .pj-node.pulse{ animation: none !important; }
-    }
-  </style>
+/* make sure reduced motion avoids heavy animations */
+@media (prefers-reduced-motion: reduce) {
+  #pj-stage-flow .pj-path { animation: none !important; }
+  #pj-stage-flow .pj-node, #pj-stage-flow .pj-node.node-1, #pj-stage-flow .pj-node.node-2, #pj-stage-flow .pj-node.node-3, #pj-stage-flow .pj-node.node-4, #pj-stage-flow .pj-node.node-5 { animation: none !important; transition: none !important; transform: none !important; }
+  .pj-tooltip { transition: none !important; }
+  #product-flow .pj-card::before { animation: none !important; }
+}
 
-  <div class="pj-card" role="group" aria-label="Campus Impact Track">
-    <h3 id="campus-title">Campus Impact Track</h3>
-    <p class="pj-sub">A five-step route from research to scale. Hover, focus or tap nodes for details. All nodes are positioned to sit directly on the route.</p>
+/* small helper to keep tooltip on-screen */
+.pj-tooltip--left { transform-origin: right center; }
+.pj-tooltip--right { transform-origin: left center; }
+</style>
 
-    <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus five step timeline" preserveAspectRatio="xMidYMid meet">
+
+  <div class="pj-card" role="group" aria-label="Product Delivery Flow">
+    <h3 id="product-flow-title">Product Delivery Flow</h3>
+    <p class="pj-sub">A five-step product route I use to move from idea to measurable outcomes. Hover, focus, or tap a node to learn more.</p>
+
+    <div class="pj-stage" id="pj-stage-flow" aria-hidden="false">
+      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Product delivery five step flow" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <linearGradient id="grad1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="grad2" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
-          <linearGradient id="grad3" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
-          <linearGradient id="grad4" x1="0" x2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="grad5" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+          <linearGradient id="flowGlow" x1="0" x2="1">
+            <stop offset="0" stop-color="#7c3aed"/>
+            <stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+
+          <linearGradient id="flowA" x1="0" x2="1">
+            <stop offset="0" stop-color="#7c3aed"/>
+            <stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+          <linearGradient id="flowB" x1="0" x2="1">
+            <stop offset="0" stop-color="#60a5fa"/>
+            <stop offset="1" stop-color="#34d399"/>
+          </linearGradient>
+
         </defs>
 
-         <path id="mainCurve" class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
-        <path class="pj-path is-animated" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
+        <!-- main road path (id used by moving marker) -->
+        <path id="mainFlowPath" class="pj-path-glow" d="M60 320 C 200 120, 380 420, 540 300 C 680 200, 780 420, 920 300 C 1040 200, 1160 260, 1180 200" fill="none"/>
 
-        
-        <g transform="translate(140,238)">
-          <g class="pj-node pulse" role="button" tabindex="0"
-             data-title="Survey — Student needs"
-             data-desc="Short surveys and micro-interviews to surface top pain points and validate assumptions."
-             aria-label="Step 1: Survey">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad1)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <g class="pj-icon" transform="translate(-12,-18) scale(1.05)">
-              <rect x="6" y="4" width="20" height="24" rx="2" />
-              <rect x="11" y="0" width="10" height="6" rx="1" />
-              <line x1="10" y1="11" x2="26" y2="11" />
-              <line x1="10" y1="15" x2="26" y2="15" />
-              <line x1="10" y1="19" x2="18" y2="19" />
-            </g>
-          </g>
-          <text class="pj-label" y="64">SURVEY</text>
-          <text class="pj-subtext" y="82">Student needs</text>
-        </g>
+        <!-- visible dashed path -->
+        <path class="pj-path" d="M60 320 C 200 120, 380 420, 540 300 C 680 200, 780 420, 920 300 C 1040 200, 1160 260, 1180 200" fill="none"/>
 
-         <g transform="translate(340,170)">
-          <g class="pj-node pulse" role="button" tabindex="0"
-             data-title="Pilot — Focused testing"
-             data-desc="Run a controlled campus pilot to validate value, flows and measure engagement."
-             aria-label="Step 2: Pilot">
-            <rect class="pj-square" x="-52" y="-52" width="104" height="104" rx="20" fill="url(#grad2)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-9,-18) scale(1.05)">
-              <path d="M10 3c-2 2-4 6-4 9 0 4 6 10 7 11s6-3 8-5 3-7 2-10-5-6-9-5z"/>
-              <line x1="6" y1="22" x2="16" y2="22"/>
-              <path d="M4 20c-2 1-3 3-3 4 0 1 2 1 3 0" />
-            </g>
-          </g>
-          <text class="pj-label" y="74">PILOT</text>
-          <text class="pj-subtext" y="92">Focused testing</text>
-        </g>
-
-         <g transform="translate(540,244)">
-          <g class="pj-node pulse" role="button" tabindex="0"
-             data-title="Shuttle — Real-time vehicle locations"
-             data-desc="Real-time vehicle locations, ETAs and route alerts that reduce wait times."
-             aria-label="Step 3: Shuttle">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad3)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <g class="pj-icon" transform="translate(-14,-18) scale(1.05)">
-              <rect x="2" y="6" width="28" height="14" rx="3" />
-              <line x1="6" y1="10" x2="12" y2="10" />
-              <line x1="16" y1="10" x2="24" y2="10" />
-              <circle cx="8" cy="22" r="2.6" />
-              <circle cx="22" cy="22" r="2.6" />
-              <rect x="4" y="2" width="8" height="4" rx="1" />
-            </g>
-          </g>
-          <text class="pj-label" y="68">SHUTTLE</text>
-          <text class="pj-subtext" y="86">Live tracking</text>
-        </g>
-
-         <g transform="translate(760,304)">
-          <g class="pj-node pulse" role="button" tabindex="0"
-             data-title="Marketplace — Listings & checkout"
-             data-desc="Listings, secure checkout and simple order handling built for students."
-             aria-label="Step 4: Marketplace">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad4)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-10,-18) scale(1.05)">
-              <polyline points="2,6 6,6 10,18 24,18 28,8 10,8" />
-              <circle cx="12" cy="22" r="2.6" />
-              <circle cx="22" cy="22" r="2.6" />
-              <line x1="6" y1="6" x2="8" y2="2" />
-            </g>
-          </g>
-          <text class="pj-label" y="64">MARKETPLACE</text>
-          <text class="pj-subtext" y="82">Listings</text>
-        </g>
-
-         <g transform="translate(1040,258)">
-          <g class="pj-node pulse" role="button" tabindex="0"
-             data-title="Community — Ambassadors & feedback"
-             data-desc="Scale through campus ambassadors, feedback loops and student contributions."
-             aria-label="Step 5: Community">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad5)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-12,-18) scale(1.05)">
-              <circle cx="10" cy="10" r="3" />
-              <circle cx="20" cy="10" r="3" />
-              <path d="M4 20c2-3 6-4 10-4s8 1 10 4" />
-              <path d="M2 18c.8-2.5 3-4 6-4" />
-              <path d="M28 18c-.8-2.5-3-4-6-4" />
-            </g>
-          </g>
-          <text class="pj-label" y="64">COMMUNITY</text>
-          <text class="pj-subtext" y="82">Ambassadors</text>
-        </g>
-
-         <g class="pj-plane" transform="translate(0,0)" aria-hidden="true">
-          <path d="M0 0 L18 8 L0 16 L6 8 z" fill="#0b1220" opacity="0.95"/>
-          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto">
-            <mpath xlink:href="#mainCurve" />
+        <!-- animated marker that travels the road -->
+        <g>
+          <circle r="8" class="flow-marker" id="flow-marker" />
+          <animateMotion href="#flow-marker" dur="8s" repeatCount="indefinite" rotate="auto">
+            <mpath xlink:href="#mainFlowPath" />
           </animateMotion>
         </g>
+
+        <!-- NODE 1: Discover -->
+        <g transform="translate(120,260)">
+          <g class="pj-node node-1" role="button" tabindex="0"
+             data-title="Discover"
+             data-desc="User interviews & quick research to find the right problem to solve."
+             aria-label="Discover">
+            <rect class="pj-square" x="-44" y="-44" width="88" height="88" rx="16" fill="url(#flowA)"/>
+            <circle class="pj-icon-circle" cx="0" cy="-8" r="26"/>
+            <g class="pj-icon" transform="translate(-10,-18) scale(1)">
+              <rect x="4" y="6" width="28" height="6" rx="2"/>
+              <rect x="4" y="0" width="18" height="6" rx="2"/>
+            </g>
+          </g>
+          <text class="pj-label" y="60">DISCOVER</text>
+          <text class="pj-subtext" y="78">Research & framing</text>
+        </g>
+
+        <!-- NODE 2: Prototype -->
+        <g transform="translate(330,160)">
+          <g class="pj-node node-2" role="button" tabindex="0"
+             data-title="Prototype"
+             data-desc="Clickable prototypes and flows to test UX before heavy engineering."
+             aria-label="Prototype">
+            <rect class="pj-square" x="-50" y="-50" width="100" height="100" rx="18" fill="url(#flowB)"/>
+            <circle class="pj-icon-circle" cx="0" cy="-8" r="26"/>
+            <g class="pj-icon" transform="translate(-10,-14) scale(1)">
+              <rect x="6" y="6" width="28" height="18" rx="2"/>
+            </g>
+          </g>
+          <text class="pj-label" y="72">PROTOTYPE</text>
+          <text class="pj-subtext" y="90">Clickable demos</text>
+        </g>
+
+        <!-- NODE 3: Validate -->
+        <g transform="translate(520,280)">
+          <g class="pj-node node-3" role="button" tabindex="0"
+             data-title="Validate"
+             data-desc="Targeted pilots & metrics that prove product-market fit."
+             aria-label="Validate">
+            <rect class="pj-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#flowA)"/>
+            <circle class="pj-icon-circle" cx="0" cy="-8" r="26"/>
+            <g class="pj-icon" transform="translate(-10,-16) scale(1)">
+              <path d="M6 12l6-6 4 4 10-10" stroke="#fff" stroke-width="2" fill="none"/>
+            </g>
+          </g>
+          <text class="pj-label" y="64">VALIDATE</text>
+          <text class="pj-subtext" y="82">Pilot & metrics</text>
+        </g>
+
+        <!-- NODE 4: Ship -->
+        <g transform="translate(740,170)">
+          <g class="pj-node node-4" role="button" tabindex="0"
+             data-title="Ship"
+             data-desc="MVP launches with monitoring, observability, and clear success criteria."
+             aria-label="Ship">
+            <rect class="pj-square" x="-52" y="-52" width="104" height="104" rx="18" fill="url(#flowB)"/>
+            <circle class="pj-icon-circle" cx="0" cy="-8" r="28"/>
+            <g class="pj-icon" transform="translate(-10,-18) scale(1)"><rect x="8" y="6" width="24" height="24" rx="2"/></g>
+          </g>
+          <text class="pj-label" y="76">SHIP</text>
+          <text class="pj-subtext" y="94">MVP → production</text>
+        </g>
+
+        <!-- NODE 5: Iterate & Scale -->
+        <g transform="translate(980,240)">
+          <g class="pj-node node-5" role="button" tabindex="0"
+             data-title="Iterate & Scale"
+             data-desc="Analytics-driven iteration and scaling strategies for growth."
+             aria-label="Iterate and Scale">
+            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="16" fill="url(#flowA)"/>
+            <circle class="pj-icon-circle" cx="0" cy="-8" r="26"/>
+            <g class="pj-icon" transform="translate(-10,-16) scale(1)"><path d="M6 6l18 0 0 18" stroke="#fff" stroke-width="2" fill="none"/></g>
+          </g>
+          <text class="pj-label" y="64">ITERATE & SCALE</text>
+          <text class="pj-subtext" y="82">Optimization & growth</text>
+        </g>
+
       </svg>
-
-       <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
-    </div>
-
-     <div class="pj-actions" role="toolbar" aria-label="Campus track actions">
-      <!-- Shuttle Tracker direct link (change href to your live link) -->
-      <a class="pj-btn" href="https://jvo-james.github.io/knust/buses" target="_blank" rel="noopener">
-        <i class="fa-solid fa-bus" aria-hidden="true"></i> View Shuttle Tracker
-      </a>
-
-      <button class="pj-btn secondary" id="pj-open-case" type="button" aria-controls="case-modal" aria-haspopup="dialog">
-        <i class="fa-solid fa-file-lines" aria-hidden="true"></i> Open Campus Case Study
-      </button>
     </div>
   </div>
-
   <script>
-    (function(){
-      const stage = document.getElementById('pj-stage');
-      const tooltip = document.getElementById('pj-tooltip');
-      const nodes = Array.from(stage.querySelectorAll('.pj-node'));
+(function(){
+  // don't run heavy animations if user requested reduced motion
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-       function showTooltip(node){
-        const rect = stage.getBoundingClientRect();
-        const nrect = node.getBoundingClientRect();
-        const title = node.dataset.title || '';
-        const desc = node.dataset.desc || '';
+  // tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'pj-tooltip';
+  document.body.appendChild(tooltip);
 
-        tooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
+  function showTooltip(node){
+    const title = node.getAttribute('data-title') || '';
+    const desc  = node.getAttribute('data-desc')  || '';
+    tooltip.innerHTML = '<h4>' + title + '</h4><p>' + desc + '</p>';
+    tooltip.classList.add('show');
 
-         tooltip.style.left = '0px'; tooltip.style.top = '0px';
-        tooltip.classList.add('show');
+    // position tooltip near the node but keep inside viewport
+    const rect = node.getBoundingClientRect();
+    const docW = document.documentElement.clientWidth;
+    const left = rect.left + window.scrollX + rect.width/2;
+    const top  = rect.top + window.scrollY - 12 - tooltip.offsetHeight;
+    // choose left/right anchor to avoid overflow
+    tooltip.style.left = Math.min(Math.max(12, left), docW - 12 - 320) + 'px';
+    tooltip.style.top  = Math.max(12, top) + 'px';
+    tooltip.classList.toggle('pj-tooltip--left', left > docW * 0.66);
+    tooltip.classList.toggle('pj-tooltip--right', left <= docW * 0.66);
+  }
+  function hideTooltip(){ tooltip.classList.remove('show'); }
 
-        const tooltipWidth = tooltip.offsetWidth || 260;
-         const left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipWidth/2, 8), stage.clientWidth - tooltipWidth - 8);
+  // GSAP nice hover/pulse if available
+  const hasGsap = typeof gsap !== 'undefined';
 
-        let top = nrect.top - rect.top - tooltip.offsetHeight - 12;
-        if (top < 8) top = nrect.bottom - rect.top + 12;
-
-        tooltip.style.left = left + 'px';
-        tooltip.style.top = top + 'px';
-        tooltip.setAttribute('aria-hidden','false');
-
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
-        node.setAttribute('aria-expanded','true');
+  // interactive node behaviour
+  const nodes = document.querySelectorAll('#pj-stage-flow .pj-node');
+  nodes.forEach((n,i) => {
+    // mouse/focus handlers
+    n.addEventListener('mouseenter', ()=> {
+      if(!reduced){
+        if(hasGsap){
+          gsap.to(n, { scale: 1.08, y: -10, rotation: (i%2? -2:2), duration: .34, ease: "power3.out" });
+          gsap.to(n.querySelector('.pj-square'), { rotation: (i%2? -3:3), duration:.6, ease:"elastic.out(1,0.6)" });
+        } else {
+          n.style.transform = 'translateY(-8px) scale(1.06)';
+        }
       }
-
-      function hideTooltip(){
-        tooltip.classList.remove('show');
-        tooltip.setAttribute('aria-hidden','true');
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
+      showTooltip(n);
+    });
+    n.addEventListener('mouseleave', ()=> {
+      if(!reduced){
+        if(hasGsap){ gsap.to(n, { scale: 1, y:0, rotation:0, duration:.36, ease: "power3.out" }); gsap.to(n.querySelector('.pj-square'), { rotation: 0, duration:.5, ease:"power3.out" }); }
+        else { n.style.transform = ''; }
       }
+      hideTooltip();
+    });
 
-       nodes.forEach(node => {
-        node.addEventListener('pointerenter', () => showTooltip(node));
-        node.addEventListener('pointerleave', () => hideTooltip());
-        node.addEventListener('focus', () => showTooltip(node));
-        node.addEventListener('blur', () => hideTooltip());
+    n.addEventListener('focus', ()=> {
+      showTooltip(n);
+      if(!reduced && hasGsap) gsap.to(n, { scale: 1.06, y:-6, duration:.26 });
+    });
+    n.addEventListener('blur', ()=> {
+      if(!reduced && hasGsap) gsap.to(n, { scale:1, y:0, duration:.26 });
+      hideTooltip();
+    });
 
-        node.addEventListener('click', (e) => {
-          if(node.getAttribute('aria-expanded') === 'true') hideTooltip();
-          else showTooltip(node);
-        });
-
-        node.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
-          if (e.key === 'Escape') { hideTooltip(); node.blur(); }
-        });
-      });
-
-       document.addEventListener('pointerdown', (e) => {
-        if(!stage.contains(e.target)) hideTooltip();
-      });
-
-       ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, () => {
-        const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
-        if(opened) showTooltip(opened);
-      }));
-
-       const openBtn = document.getElementById('pj-open-case');
-      if(openBtn){
-        openBtn.addEventListener('click', () => {
-          const external = document.querySelector('[data-case-open="shuttle"]') || null;
-          if (external) external.scrollIntoView({behavior:'smooth', block:'center'});
-         });
+    n.addEventListener('click', (e)=> {
+      // visual feedback + optional hook to open a modal/case study
+      if(!reduced && hasGsap){
+        gsap.fromTo(n, { scale:1.06 }, { scale:1, duration:.5, ease:"elastic.out(1,0.6)" });
       }
-    })();
-  </script>
+      // If you'd like to open a modal or link each node to a case study, add code here.
+      e.stopPropagation();
+    });
+  });
+
+  // subtle parallax on mousemove over stage
+  const stage = document.getElementById('pj-stage-flow');
+  if(stage && !reduced){
+    stage.addEventListener('mousemove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const cx = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
+      const cy = (e.clientY - r.top) / r.height - 0.5;
+      // move bg blob slightly
+      const card = stage.closest('.pj-card');
+      if(card){
+        card.style.transform = `translate3d(${cx*6}px, ${cy*6}px, 0)`;
+      }
+    });
+    stage.addEventListener('mouseleave', ()=> {
+      const card = stage.closest('.pj-card'); if(card) card.style.transform = '';
+    });
+  }
+
+  // clean up on resize to keep tooltip visible
+  window.addEventListener('resize', () => { tooltip.classList.remove('show'); });
+
+  // Accessibility: keyboard activation on Enter/Space triggers click
+  nodes.forEach(n => n.addEventListener('keydown', (ev) => {
+    if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); n.click(); }
+  }));
+
+  // small bounce loop for the animated marker when GSAP is available
+  if(hasGsap && !reduced){
+    // pulse the marker's stroke color subtly
+    const marker = document.getElementById('flow-marker');
+    if(marker) gsap.to(marker, { attr: { r: 10 }, repeat: -1, yoyo: true, duration: 1.6, ease: "sine.inOut" });
+  }
+
+})();
+</script>
+
 </section>
+
   
 <section class="marquee-wrap" style="margin-top:36px;">
   <header style="text-align:center;margin-bottom:12px">
