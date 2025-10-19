@@ -3528,6 +3528,91 @@ button[aria-pressed="true"] {
  }
 
 </style>
+  <style>
+ :root { --wave-size: 88px; }  
+
+.wave-hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 800;
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 1;
+  --accent-2: #7c3aed;
+}
+
+.wave-emoji {
+  width: var(--wave-size);
+  height: var(--wave-size);
+  display: inline-block;
+  vertical-align: middle;
+  transform-origin: center;
+  will-change: transform;
+  user-select: none;
+  border-radius: 12px;
+}
+
+.wave-emoji { opacity: 0; transform: translateY(6px) scale(.98); animation: emojiIntro .6s cubic-bezier(.2,.9,.2,1) .08s both; }
+@keyframes emojiIntro { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.wave-emoji .head {
+  transform-origin: 60px 48px;
+  animation: headBob 6.2s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes headBob {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(-0.45deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.wave-emoji .arm {
+  transform-box: fill-box;
+  transform-origin: 28% 35%;
+  animation: armWave 1s ease-in-out infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+ .wave-emoji .spark { opacity: 0; transform-origin: center; transform: scale(.8); transition: opacity .18s, transform .22s; }
+
+ .wave-emoji .shadow { opacity: 0.12; transition: transform .22s; }
+
+ .wave-emoji.wave-active .arm { animation-play-state: running; }
+.wave-emoji.wave-active .spark { opacity: 1; transform: scale(1.05); }
+
+ .wave-emoji:focus,
+.wave-emoji:hover,
+.wave-emoji:active { outline: none; transform: translateY(-2px) scale(1.02); }
+.wave-emoji:focus .arm,
+.wave-emoji:hover .arm { animation-play-state: running; animation-duration: .9s; }
+
+ @keyframes armWave {
+  0% { transform: rotate(0deg); }
+  12% { transform: rotate(-24deg); }
+  24% { transform: rotate(20deg); }
+  36% { transform: rotate(-20deg); }
+  48% { transform: rotate(18deg); }
+  60% { transform: rotate(-12deg); }
+  72% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wave-hero .greeting-text { display:inline-block; vertical-align: middle; }
+
+ .wave-emoji.wave-active .shadow { transform: scale(1.06); opacity: 0.18; transition: transform .2s; }
+
+ .wave-emoji:focus-visible { box-shadow: 0 0 0 6px rgba(124,58,237,0.12); border-radius: 12px; }
+
+ @media (prefers-reduced-motion: reduce) {
+  .wave-emoji,
+  .wave-emoji .head,
+  .wave-emoji .arm,
+  .wave-emoji .spark { animation: none !important; transition: none !important; transform: none !important; }
+  .wave-emoji { opacity: 1; transform: none; }
+}
+</style>
+
   </head>
 <body>
 <header class="site-header" role="banner" aria-label="Primary site header">
@@ -3561,7 +3646,38 @@ button[aria-pressed="true"] {
     <div class="kicker" aria-hidden="true"><i class="fa-solid fa-award" aria-hidden="true"></i> Fullstack</div>
    
 
-    <h2 id="hero-heading" class="hi">Hi👋 I’m <strong>Senu James</strong><span class="desc-line">Designing delightful web products & AI experiences that scale.</span></h2>
+<h1 id="hero-heading" class="wave-hero">
+  <span tabindex="0" class="wave-emoji" role="img" aria-label="Waving hand smiling face" title="Waves hello">
+    <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+      <ellipse class="shadow" cx="60" cy="104" rx="26" ry="6" fill="#0b1220" opacity="0.12" />
+      <g class="arm" transform="translate(-2,2)">
+        <rect x="6" y="56" rx="8" ry="8" width="24" height="20" fill="#7c3aed"/>
+        <path d="M30 62 C 18 48, 12 36, 36 28" stroke="#f6c36d" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <circle cx="36" cy="28" r="7.6" fill="#f6c36d" stroke="#dba84f" stroke-width="0.6"/>
+      </g>
+      <g class="head" transform="translate(8,6)">
+        <circle cx="60" cy="50" r="28" fill="#FFDD67" stroke="#f0c66b" stroke-width="1"/>
+        <circle cx="50" cy="46" r="3.2" fill="#111"/>
+        <circle cx="70" cy="46" r="3.2" fill="#111"/>
+        <path d="M50 58 C 56 66, 74 66, 80 58" stroke="#111" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="48" cy="56" r="2.6" fill="#ffb199" opacity="0.9"/>
+        <circle cx="72" cy="56" r="2.6" fill="#ffb199" opacity="0.9"/>
+      </g>
+      <g class="spark" transform="translate(40,12)" opacity="0">
+        <circle cx="0" cy="0" r="2.6" fill="#fff" />
+        <path d="M0 -6 L0 6 M -6 0 L6 0" stroke="#fff" stroke-width="1.2" opacity="0.85"/>
+      </g>
+    </svg>
+  </span>
+
+  <span class="greeting-text">
+    Hi — I’m <strong style="color:var(--accent-2, #7c3aed);">Senu James</strong>
+    <span class="desc-line" style="display:block;font-size:15px;color:var(--muted-2);font-weight:600;margin-top:6px;">
+      Designing delightful web products & AI experiences that scale.
+    </span>
+  </span>
+</h1>
+
     <div class="hero-sub">
       <div class="role-rotator" aria-live="polite">
   <span class="role-static">I’m a</span>
@@ -3631,6 +3747,45 @@ button[aria-pressed="true"] {
   </aside>
 </section>
 
+<script>
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const emoji = document.querySelector('.wave-emoji');
+  if(!emoji) return;
+
+  function triggerWave(times = 1, energetic = false) {
+    if(reduced) return;
+    emoji.classList.add('wave-active');
+    const durationPerWave = energetic ? 900 : 1000;
+    const total = Math.max(1, times) * durationPerWave + 60;
+    clearTimeout(emoji._waveTimer);
+    emoji._waveTimer = setTimeout(() => { emoji.classList.remove('wave-active'); }, total);
+  }
+
+  if(!reduced){
+    setTimeout(()=> triggerWave(2, false), 800);
+    let periodic;
+    function startPeriodicWaves(){
+      periodic = setInterval(()=>{
+        const energetic = Math.random() > 0.82;
+        triggerWave(energetic ? 3 : 1, energetic);
+      }, 9000 + Math.floor(Math.random()*6000));
+    }
+    startPeriodicWaves();
+
+    emoji.addEventListener('mouseenter', ()=> { clearInterval(periodic); triggerWave(3, true); });
+    emoji.addEventListener('mouseleave', ()=> { startPeriodicWaves(); });
+  }
+
+  emoji.addEventListener('focus', ()=> { triggerWave(3, true); });
+  emoji.addEventListener('click', ()=> { triggerWave(4, true); });
+  emoji.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerWave(3, true); }
+  });
+
+  window.addEventListener('unload', ()=> { clearTimeout(emoji._waveTimer); });
+})();
+</script>
 
 
 
