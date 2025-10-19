@@ -6151,200 +6151,232 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
  })();
  </script>
 
-<!-- Paste this before </body> (after other scripts). Animated sliding role rotator. -->
+<!-- Enhanced role rotator: slide directions + decorative styles -->
 <style>
-  /* core */
+  /* container & hidden cursor */
+  .role-rotator { position: relative; display: inline-flex; align-items: baseline; gap: .6rem; z-index: 2; }
+  .role-rotator .role-cursor { display: none !important; } /* hide blinking cursor */
+
+  /* rotating word base */
   #rotating-role {
     display: inline-block;
-    transition: transform .48s cubic-bezier(.2,.9,.2,1), opacity .48s cubic-bezier(.2,.9,.2,1);
+    position: relative;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-weight: 900;
     will-change: transform, opacity;
-    opacity: 1;
-    transform: translateZ(0);
-    white-space: nowrap;
+    backface-visibility: hidden;
+    -webkit-font-smoothing:antialiased;
+    color: var(--text);
+    z-index: 4;
+    pointer-events: auto;
   }
 
-  /* hide the old blinking cursor if it exists */
-  .role-cursor { display: none !important; }
+  /* decorative pill behind the dynamic word */
+  .role-rotator::before{
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleX(.98);
+    height: 42%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(124,58,237,0.08), rgba(6,182,212,0.06));
+    filter: blur(6px);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity .45s cubic-bezier(.2,.9,.2,1), transform .45s cubic-bezier(.2,.9,.2,1);
+    pointer-events: none;
+  }
+  /* pill becomes visible briefly when text changes */
+  .role-rotator.pulse::before { opacity: 1; transform: translateY(-50%) scaleX(1.02); }
 
-  /* outgoing positions (element transitions from normal -> these) */
-  #rotating-role._out-left  { transform: translateX(12px);  opacity: 0; }
-  #rotating-role._out-right { transform: translateX(-12px); opacity: 0; }
-  #rotating-role._out-up    { transform: translateY(10px);  opacity: 0; }
-  #rotating-role._out-down  { transform: translateY(-10px); opacity: 0; }
+  /* small sparkle element (appears when sliding in) */
+  .role-rotator .role-spark{
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(90deg,#fff,rgba(255,255,255,0.9));
+    box-shadow: 0 6px 14px rgba(124,58,237,0.12), 0 4px 8px rgba(6,182,212,0.06);
+    opacity: 0;
+    transform: translateY(-6px) scale(.9);
+    transition: opacity .28s ease, transform .42s cubic-bezier(.2,.9,.2,1);
+    z-index: 6;
+    pointer-events: none;
+  }
+  .role-rotator.spark-show .role-spark { opacity: 1; transform: translateY(0) scale(1.05); }
 
-  /* incoming start positions (element is put in one of these,
-     then the class is removed so it animates to the neutral state) */
-  #rotating-role._in-left  { transform: translateX(-12px); opacity: 0; }
-  #rotating-role._in-right { transform: translateX(12px);  opacity: 0; }
-  #rotating-role._in-up    { transform: translateY(-10px); opacity: 0; }
-  #rotating-role._in-down  { transform: translateY(10px);  opacity: 0; }
+  /* slide out / in transforms (we use paired classes) 
+     out classes are applied to the current word, then replaced by in- classes on swap */
+  :root { --trans: 480ms; }
 
-  /* prefer reduced motion -> keep text stable, accessible */
+  /* OUT */
+  #rotating-role.slide-out-left  { transform: translateX(-18px) translateZ(0); opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
+  #rotating-role.slide-out-right { transform: translateX(18px) translateZ(0);  opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
+  #rotating-role.slide-out-up    { transform: translateY(-12px) translateZ(0); opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
+  #rotating-role.slide-out-down  { transform: translateY(12px) translateZ(0);  opacity: 0; transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.2) ease; }
+
+  /* IN */
+  #rotating-role.slide-in-left  { transform: translateX(-8px) translateZ(0); opacity: 0; transition: none; }
+  #rotating-role.slide-in-right { transform: translateX(8px) translateZ(0); opacity: 0; transition: none; }
+  #rotating-role.slide-in-up    { transform: translateY(-8px) translateZ(0); opacity: 0; transition: none; }
+  #rotating-role.slide-in-down  { transform: translateY(8px) translateZ(0);  opacity: 0; transition: none; }
+
+  /* when we add the "enter" state, it transitions to neutral */
+  #rotating-role.enter {
+    transform: translateX(0) translateY(0) translateZ(0);
+    opacity: 1;
+    transition: transform var(--trans) cubic-bezier(.2,.9,.2,1), opacity calc(var(--trans)/1.05) ease;
+  }
+
+  /* small accessibility / hover cues */
+  .role-rotator:focus-within::before,
+  .role-rotator:hover::before { opacity: 1; transform: translateY(-50%) scaleX(1.03); }
+
+  /* reduced motion fallback */
   @media (prefers-reduced-motion: reduce) {
-    #rotating-role,
-    #rotating-role._out-left, #rotating-role._out-right, #rotating-role._out-up, #rotating-role._out-down,
-    #rotating-role._in-left,  #rotating-role._in-right,  #rotating-role._in-up,  #rotating-role._in-down {
+    #rotating-role, #rotating-role.slide-out-left, #rotating-role.slide-out-right, #rotating-role.slide-out-up, #rotating-role.slide-out-down {
       transition: none !important;
       transform: none !important;
       opacity: 1 !important;
     }
-    .role-cursor { display: none !important; }
+    .role-rotator::before { transition: none !important; filter: none !important; opacity: .6 !important; }
+    .role-rotator .role-spark { display: none !important; }
+  }
+
+  /* responsive sizing */
+  @media (max-width: 520px) {
+    .role-rotator::before { height: 36%; filter: blur(4px); }
+    #rotating-role { padding: 4px 8px; }
   }
 </style>
 
 <script>
 (function(){
   // Respect reduced motion
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) {
-    // Hide cursor if present but do nothing else.
-    const rc = document.querySelector('.role-cursor'); if (rc) rc.style.display = 'none';
-    return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const roleEl = document.getElementById('rotating-role');
+  const wrapper = roleEl ? roleEl.closest('.role-rotator') : null;
+  if (!roleEl || !wrapper) return;
+
+  // append a tiny sparkle element that the CSS will animate
+  if (!wrapper.querySelector('.role-spark')){
+    const spark = document.createElement('span');
+    spark.className = 'role-spark';
+    // position near the right end of the rotating text (adjust if needed)
+    spark.style.right = '-8px';
+    spark.style.top = '6px';
+    wrapper.appendChild(spark);
   }
 
-  const el = document.getElementById('rotating-role');
-  if (!el) return;
-
-  // Remove any external listeners by swapping with a clone (minimizes conflicts)
-  const clone = el.cloneNode(true);
-  el.parentNode.replaceChild(clone, el);
-  const roleEl = document.getElementById('rotating-role');
-
-  // Hide any blinking cursor element in DOM (non-destructive)
-  const cursors = document.querySelectorAll('.role-cursor');
-  cursors.forEach(c => c.style.display = 'none');
-
-  // Build roles list:
-  // 1) data-roles attribute (comma separated)
-  // 2) [data-role-item] children inside .role-rotator
-  // 3) fallback: current + sensible defaults
+  // Build roles array:
   let roles = [];
   if (roleEl.dataset && roleEl.dataset.roles) {
     roles = roleEl.dataset.roles.split(',').map(s => s.trim()).filter(Boolean);
   }
   if (!roles.length) {
-    const parent = roleEl.closest('.role-rotator');
-    if (parent) {
-      const items = parent.querySelectorAll('[data-role-item]');
-      if (items.length) roles = Array.from(items).map(i => i.textContent.trim()).filter(Boolean);
-    }
+    // also allow data-role-item nodes inside the wrapper
+    const items = wrapper.querySelectorAll('[data-role-item]');
+    if (items.length) roles = Array.from(items).map(i => i.textContent.trim());
   }
   if (!roles.length) {
     const current = roleEl.textContent.trim();
-    roles = [current || 'Web Developer', 'Product Engineer', 'AI Builder', 'Frontend Engineer', 'Full-stack Developer']
-             .filter((v,i,a) => v && a.indexOf(v) === i);
+    roles = [current || 'Web Developer','Product Engineer','AI Builder','Frontend Engineer','Full-stack Developer']
+      .filter((v,i,a) => v && a.indexOf(v) === i);
   }
 
-  // Timing - tune these to taste
-  const transitionMs = 480;   // must match CSS transition duration (.48s)
-  const visibleMs = 3200;     // how long each role stays visible
-  const cycleInterval = visibleMs + (transitionMs * 1.25); // small buffer
+  // timings (tweakable)
+  const visibleMs = 3200;      // how long each role remains visible
+  const transitionMs = 480;    // should match --trans in CSS
+  const prePulse = 120;        // small delay to show decorative pill/spark
 
-  // state
+  // hide any role-cursor if present (extra safety)
+  const cursor = wrapper.querySelector('.role-cursor');
+  if (cursor) cursor.style.display = 'none';
+
+  // direction logic: we will cycle directions (R, L, U, D) to create variety
+  const directions = ['right','left','up','down'];
+  let dirIdx = 0;
   let idx = 0;
   roleEl.textContent = roles[idx];
+  roleEl.classList.add('enter');
 
-  // utility: choose a random direction for variety
-  const DIRS = ['left','right','up','down'];
-  function randDir(){ return DIRS[Math.floor(Math.random()*DIRS.length)]; }
-
-  // helper to remove any directional classes we control
-  function clearDirClasses(node){
-    node.classList.remove(
-      '_out-left','_out-right','_out-up','_out-down',
-      '_in-left','_in-right','_in-up','_in-down'
-    );
+  // small helper to clear slide classes
+  function clearSlideClasses(el){
+    el.classList.remove('slide-out-left','slide-out-right','slide-out-up','slide-out-down');
+    el.classList.remove('slide-in-left','slide-in-right','slide-in-up','slide-in-down','enter');
   }
 
-  // show next - orchestrates outgoing animation -> swap text -> incoming animation
-  function showNext(){
-    const dir = randDir();
+  // show next role with animated out->swap->in sequence
+  function showNext() {
+    // set wrapper pulse & spark briefly
+    wrapper.classList.add('pulse');
+    setTimeout(()=> wrapper.classList.remove('pulse'), transitionMs + 160);
 
-    // start outgoing
-    clearDirClasses(roleEl);
-    roleEl.classList.add(`_out-${dir}`);
+    // choose direction cycle
+    const dir = directions[dirIdx % directions.length];
+    dirIdx++;
 
-    // after the outgoing transition completes, swap text and animate incoming
-    setTimeout(() => {
-      // prepare incoming: remove outgoing
-      roleEl.classList.remove(`_out-${dir}`);
+    // map to class names
+    const outClass = 'slide-out-' + (dir === 'right' ? 'right' : dir === 'left' ? 'left' : dir === 'up' ? 'up' : 'down');
+    const inOpp = (dir === 'right' ? 'slide-in-left' : dir === 'left' ? 'slide-in-right' : dir === 'up' ? 'slide-in-down' : 'slide-in-up');
 
-      // advance index and update text
+    // start sparkle slightly before swap so it's visible as incoming text animates
+    setTimeout(()=> wrapper.classList.add('spark-show'), prePulse);
+    setTimeout(()=> wrapper.classList.remove('spark-show'), prePulse + transitionMs + 200);
+
+    // animate out
+    clearSlideClasses(roleEl);
+    roleEl.classList.add(outClass);
+
+    // after out animation, swap text and animate in
+    setTimeout(()=>{
+      // prepare incoming position class first (no transition)
+      clearSlideClasses(roleEl);
+      roleEl.classList.add(inOpp);
+      // swap the text
       idx = (idx + 1) % roles.length;
-      // set incoming start position class so it's off-screen/transparent
-      roleEl.classList.add(`_in-${dir}`);
-      // force reflow so browser registers the starting transform (read layout)
-      void roleEl.offsetWidth;
-
-      // swap text (while in starting offset)
       roleEl.textContent = roles[idx];
-
-      // then remove the _in-* class so CSS transition animates it to neutral (0,1)
+      // allow next tick for layout, then trigger enter transition
       requestAnimationFrame(() => {
-        roleEl.classList.remove(`_in-${dir}`);
+        // small timeout to ensure the browser registers the start state
+        setTimeout(() => {
+          roleEl.classList.remove(inOpp);
+          roleEl.classList.add('enter');
+          // tidy classes after transition
+          setTimeout(()=> clearSlideClasses(roleEl), transitionMs + 30);
+        }, 18);
       });
-
-      // cleanup any residual classes after transition
-      setTimeout(() => clearDirClasses(roleEl), transitionMs + 30);
-    }, transitionMs);
+    }, transitionMs + 8);
   }
 
-  // Start cycling
-  let interval = setInterval(showNext, cycleInterval);
+  // interval runner
+  let interval = setInterval(showNext, visibleMs + transitionMs + 120);
 
-  // Pause/resume on hover/focus
-  const wrapper = roleEl.closest('.role-rotator') || roleEl;
+  // pause/resume on hover/focus
   function pause(){ if (interval){ clearInterval(interval); interval = null; } }
-  function resume(){ if (!interval) interval = setInterval(showNext, cycleInterval); }
+  function resume(){ if (!interval) interval = setInterval(showNext, visibleMs + transitionMs + 120); }
 
   wrapper.addEventListener('mouseenter', pause, { passive: true });
   wrapper.addEventListener('mouseleave', resume, { passive: true });
   wrapper.addEventListener('focusin', pause, { passive: true });
   wrapper.addEventListener('focusout', resume, { passive: true });
 
-  // If an external script tries to overwrite text too quickly, observe and re-assert our current role.
-  const observer = new MutationObserver(mutations => {
-    for (const m of mutations) {
-      if (m.type === 'characterData' || m.type === 'childList') {
-        const current = roleEl.textContent.trim();
-        if (current && current !== roles[idx]) {
-          // revert to our currently scheduled role
-          roleEl.textContent = roles[idx];
-        }
+  // If other scripts change text quickly, reassert our current role (best-effort)
+  const obs = new MutationObserver(muts => {
+    for (const m of muts) {
+      if ((m.type === 'childList' || m.type === 'characterData') && roleEl.textContent.trim() !== roles[idx]) {
+        roleEl.textContent = roles[idx];
       }
     }
   });
-  observer.observe(roleEl, { characterData: true, subtree: true, childList: true });
+  obs.observe(roleEl, { childList: true, characterData: true, subtree: true });
 
-  // if user prefers reduced motion after load, stop animations
-  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const mqHandler = () => {
-    if (mq.matches) {
-      pause();
-      clearDirClasses(roleEl);
-      roleEl.style.transition = 'none';
-      roleEl.style.opacity = '1';
-      roleEl.style.transform = 'none';
-    } else {
-      // restore default and resume
-      roleEl.style.transition = '';
-      resume();
-    }
-  };
-  if (mq.addEventListener) mq.addEventListener('change', mqHandler);
-  else if (mq.addListener) mq.addListener(mqHandler);
-
-  // cleanup
-  window.addEventListener('unload', () => {
-    clearInterval(interval);
-    observer.disconnect();
-    if (mq.removeEventListener) mq.removeEventListener('change', mqHandler);
-    else if (mq.removeListener) mq.removeListener(mqHandler);
-  });
-
+  // cleanup on unload
+  window.addEventListener('pagehide', ()=>{ pause(); obs.disconnect(); });
 })();
 </script>
-
 
 
 </body>
