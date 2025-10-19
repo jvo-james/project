@@ -3686,6 +3686,59 @@ button[aria-pressed="true"] {
   .wave-hero .desc-line::after { transform: scaleX(1); opacity: 1; }
 }
 </style>
+<style>
+ .wave-emoji {
+  display: inline-block;
+  font-size: 1.55em;             
+  line-height: 1;
+  transform-origin: 60% 20%;        
+  will-change: transform;
+   text-shadow: 0 6px 18px rgba(6,10,26,0.06);
+   transform: translateY(-2px);
+}
+
+ .wave-emoji.wave {
+  animation: waveLarge 2200ms cubic-bezier(.2,.9,.2,1) infinite;
+}
+
+ .wave-emoji.hit {
+  animation: waveHit 1100ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+ @keyframes waveLarge {
+  0%   { transform: translateY(-2px) rotate(0deg); }
+  12%  { transform: translateY(-6px) rotate(-30deg); } 
+  25%  { transform: translateY(-2px) rotate(22deg); }    
+  38%  { transform: translateY(-6px) rotate(-24deg); }
+  50%  { transform: translateY(-2px) rotate(12deg); }
+  62%  { transform: translateY(-6px) rotate(-20deg); }
+  75%  { transform: translateY(-2px) rotate(10deg); }
+  88%  { transform: translateY(-6px) rotate(-12deg); }
+  100% { transform: translateY(-2px) rotate(0deg); }     
+}
+
+ @keyframes waveHit {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  12%  { transform: translateY(-10px) rotate(-40deg) scale(1.12); }
+  35%  { transform: translateY(-2px) rotate(30deg) scale(1.06); }
+  60%  { transform: translateY(-8px) rotate(-28deg) scale(1.08); }
+  100% { transform: translateY(-2px) rotate(0deg) scale(1); }
+}
+
+ .wave-hero.big-hit .greeting-text {
+  animation: greetingPop 900ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes greetingPop {
+  0%   { transform: translateY(6px) scale(.99); opacity: 0; }
+  60%  { transform: translateY(-8px) scale(1.03); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-emoji, .greeting-text, .wave-hero { animation: none !important; transition: none !important; transform: none !important; }
+  .wave-emoji { font-size: 1.4em; } /* still slightly bigger but motionless */
+}
+</style>
 
   </head>
 <body>
@@ -3890,6 +3943,39 @@ button[aria-pressed="true"] {
 })();
 </script>
 
+<script>
+(function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+     return;
+  }
+
+  const emoji = document.querySelector('.wave-emoji');
+  const hero = document.querySelector('.wave-hero');
+
+  if (!emoji) return;
+
+   emoji.classList.add('hit');
+   if (hero) hero.classList.add('big-hit');
+
+   const hitDuration = 1100; 
+  setTimeout(() => {
+    emoji.classList.remove('hit');
+    // start continuous subtle wave
+    emoji.classList.add('wave');
+    if (hero) hero.classList.remove('big-hit');
+  }, hitDuration + 80);
+
+   emoji.addEventListener('mouseenter', () => {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    emoji.classList.remove('wave');
+    emoji.classList.add('hit');
+    setTimeout(() => {
+      emoji.classList.remove('hit');
+      emoji.classList.add('wave');
+    }, hitDuration);
+  });
+})();
+</script>
 
 <section id="projects" class="projects" style="margin-top:28px;">
   <div class="projects-header" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
