@@ -3508,6 +3508,7 @@ button[aria-pressed="true"] {
 <a href="#contact"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
 <a class="cta" href="Senu_James_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines"></i>&nbsp;Resume</a>
 </div>
+    <div id="nav-backdrop" class="nav-backdrop" tabindex="-1" aria-hidden="true"></div>
 </nav>
   </div>
 </header>
@@ -5457,6 +5458,355 @@ document.addEventListener("DOMContentLoaded",()=>{
   "notes": "Careful moderation for community content and payment reconciliation required."
 }
 </script>
+<style>
+.role-rotator { gap:12px; align-items:baseline; }
+.role-rotator .role-static { font-weight:800; color:rgba(11,18,32,0.6); letter-spacing:0.02em; }
+.role-rotator .role-dynamic {
+  display:inline-block;
+  font-weight:900;
+  font-size:16px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:linear-gradient(90deg, rgba(124,58,237,0.06), rgba(6,182,212,0.04));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  min-width:160px;
+  text-align:center;
+  box-shadow:0 18px 50px rgba(59,130,246,0.04);
+  transform-origin:center;
+}
+.role-rotator .role-dynamic.premium {
+  background:linear-gradient(90deg,#7c3aed,#06b6d4);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  border-radius:14px;
+  padding:10px 14px;
+  min-width:180px;
+}
+.role-rotator .role-cursor { width:3px; height:18px; border-radius:2px; background:linear-gradient(180deg,var(--accent),var(--accent-3)); display:inline-block; margin-left:6px; opacity:.8; }
+@media (max-width:520px){ .role-rotator .role-dynamic{min-width:0;font-size:15px;padding:6px 10px} }
+</style>
 
+<script>
+(() => {
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = document.getElementById('rotating-role');
+  const container = el && el.closest('.role-rotator');
+  if (!el) return;
+  const roles = [
+    { text: 'Web Developer', from: { x: -140, y: 0 }, class: 'premium' },
+    { text: 'Full-stack Creator', from: { x: 0, y: 36 }, class: 'premium' },
+    { text: 'Product-led Designer', from: { x: 0, y: -36 }, class: 'premium' },
+    { text: 'AI & Systems Builder', from: { x: 140, y: 0 }, class: 'premium' }
+  ];
+  if (prefersReduced) {
+    el.textContent = roles[0].text;
+    el.classList.add('premium');
+    return;
+  }
+  let idx = 0;
+  let running = true;
+  const showDuration = 0.7;
+  const hold = 2.2;
+
+  function setText(item) {
+    el.textContent = item.text;
+    el.className = 'role-dynamic';
+    if (item.class) el.classList.add(item.class);
+  }
+
+  function animateIn(item) {
+    gsap.killTweensOf(el);
+    gsap.set(el, { opacity: 0, x: item.from.x || 0, y: item.from.y || 0 });
+    setText(item);
+    return gsap.to(el, { duration: showDuration, opacity: 1, x: 0, y: 0, ease: 'power3.out' });
+  }
+
+  function animateOut(item) {
+    const exitX = (item.from.x || 0) * -0.6;
+    const exitY = (item.from.y || 0) * -0.6;
+    return gsap.to(el, { duration: 0.5, opacity: 0, x: exitX, y: exitY, ease: 'power3.in' });
+  }
+
+  async function cycle() {
+    while (running) {
+      const item = roles[idx];
+      await animateIn(item).then();
+      await new Promise(r => setTimeout(r, hold * 1000));
+      await animateOut(item).then();
+      idx = (idx + 1) % roles.length;
+    }
+  }
+
+  cycle();
+
+  const togglePause = (state) => { running = !state; if (!running) return; };
+  if (container) {
+    container.addEventListener('mouseenter', () => { running = false; });
+    container.addEventListener('mouseleave', () => { if (!running) { running = true; cycle(); } });
+    container.addEventListener('focusin', () => { running = false; });
+    container.addEventListener('focusout', () => { if (!running) { running = true; cycle(); } });
+  }
+})();
+</script>
+<div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-panel" role="document">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div id="case-title" style="font-size:18px;font-weight:900"></div>
+        <div id="case-sub" class="muted" style="margin-top:4px;font-weight:700"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a id="case-open-external" class="btn btn-outline" href="#" target="_blank" rel="noopener">Open</a>
+        <button id="case-close" class="btn btn-outline" aria-label="Close case study">Close</button>
+      </div>
+    </div>
+    <div id="case-body" style="display:grid;grid-template-columns:1fr 320px;gap:18px;padding:18px;box-sizing:border-box">
+     <div id="case-main">
+       <div class="case-gallery">
+         <div class="viewer" style="min-height:280px;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid rgba(10,20,30,0.04);overflow:hidden">
+            <img id="case-viewer-img" src="" alt="" style="max-width:100%;height:auto;display:block" />
+          </div>
+          <div class="thumbs" id="case-thumbs" style="display:flex;gap:8px;margin-top:12px;overflow:auto;padding-bottom:6px"></div>
+        </div>
+        <div id="case-notes" style="margin-top:12px;color:var(--muted)"></div>
+      </div>
+      <aside id="case-aside" style="display:flex;flex-direction:column;gap:12px">
+        <strong style="font-weight:900">Project links</strong>
+        <div id="case-links" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        <div id="case-metrics" style="color:var(--muted);font-weight:700"></div>
+      </aside>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+ const modal = document.getElementById('case-modal');
+  const viewerImg = document.getElementById('case-viewer-img');
+  const thumbs = document.getElementById('case-thumbs');
+  const titleEl = document.getElementById('case-title');
+  const subEl = document.getElementById('case-sub');
+  const openExternal = document.getElementById('case-open-external');
+  const caseLinks = document.getElementById('case-links');
+ const caseNotes = document.getElementById('case-notes');
+  let prevFocus = null;
+  const cards = Array.from(document.querySelectorAll('[data-case-id]'));
+  const caseMap = {};
+  cards.forEach(card => {
+    const id = card.dataset.caseId;
+    const title = card.querySelector('.card-title')?.textContent?.trim() || '';
+    const sub = card.querySelector('.card-sub')?.textContent?.trim() || '';
+    const img = card.querySelector('.card-visual img')?.src || '';
+    const live = card.querySelector('.link-btn.live')?.href || '';
+    const repo = card.querySelector('.link-btn.repo')?.href || '';
+    const tags = Array.from(card.querySelectorAll('.tag')).map(t=>t.textContent.trim());
+    caseMap[id] = { title, sub, images: img ? [img] : [], live, repo, tags };
+  });
+
+  function buildThumb(src, idx, data) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'thumb';
+    btn.style.minWidth = '88px';
+    btn.style.height = '56px';
+    btn.style.border = '2px solid transparent';
+    btn.style.borderRadius = '10px';
+    btn.style.overflow = 'hidden';
+    btn.style.background = '#fff';
+    btn.dataset.index = idx;
+    const im = document.createElement('img');
+    im.src = src;
+    im.alt = data.title + ' screenshot ' + (idx+1);
+    im.style.width = '100%';
+    im.style.height = '100%';
+    im.style.objectFit = 'cover';
+    btn.appendChild(im);
+    btn.addEventListener('click', () => {
+      viewerImg.src = src;
+      Array.from(thumbs.children).forEach(c => c.removeAttribute('aria-current'));
+      btn.setAttribute('aria-current','true');
+    });
+    return btn;
+  }
+
+  function openCase(id){
+    const data = caseMap[id];
+    if(!data) return;
+    titleEl.textContent = data.title;
+    subEl.textContent = data.sub;
+    caseNotes.textContent = '';
+    if(data.tags && data.tags.length) caseNotes.textContent = 'Tags: ' + data.tags.join(' · ');
+    thumbs.innerHTML = '';
+    viewerImg.src = data.images[0] || '';
+    viewerImg.alt = data.title || 'Screenshot';
+    data.images.forEach((s,i) => thumbs.appendChild(buildThumb(s,i,data)));
+    if(!data.images.length){ thumbs.innerHTML = ''; viewerImg.removeAttribute('src'); viewerImg.alt = ''; }
+    openExternal.href = data.live || '#';
+    openExternal.target = '_blank';
+    caseLinks.innerHTML = '';
+    if(data.live){
+      const a = document.createElement('a');
+      a.className = 'link-btn live';
+      a.href = data.live;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = '<i class=\"fa-solid fa-arrow-up-right-from-square\"></i>&nbsp;Live';
+      caseLinks.appendChild(a);
+    }
+    if(data.repo){
+      const r = document.createElement('a');
+      r.className = 'link-btn repo';
+      r.href = data.repo;
+      r.target = '_blank';
+      r.rel = 'noopener';
+      r.innerHTML = '<i class=\"fa-brands fa-github\"></i>&nbsp;Repo';
+      caseLinks.appendChild(r);
+    }
+    modal.setAttribute('aria-hidden','false');
+    prevFocus = document.activeElement;
+    const closeBtn = document.getElementById('case-close');
+    closeBtn.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCase(){
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if(prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+  }
+
+  document.querySelectorAll('[data-case-open]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const hostCard = btn.closest('[data-case-id]');
+      const id = hostCard ? hostCard.dataset.caseId : btn.dataset.caseOpen;
+      openCase(id);
+    });
+  });
+
+  document.getElementById('case-close').addEventListener('click', closeCase);
+  modal.addEventListener('click', (e) => { if(e.target === modal) closeCase(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeCase();
+    if(e.key === 'Tab' && modal.getAttribute('aria-hidden') === 'false'){
+      const focusable = modal.querySelectorAll('a,button, [tabindex]:not([tabindex="-1"])');
+      if(!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length-1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+</script>
+<script>
+;(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('primary-nav');
+  let backdrop = document.getElementById('nav-backdrop');
+  if(!backdrop){
+    backdrop = document.createElement('div');
+    backdrop.id = 'nav-backdrop';
+    backdrop.className = 'nav-backdrop';
+    backdrop.tabIndex = -1;
+    document.body.appendChild(backdrop);
+  }
+  if(!menu.hasAttribute('aria-hidden')) menu.setAttribute('aria-hidden','true');
+  function openMenu(){
+    menu.classList.add('open');
+    backdrop.classList.add('visible');
+    toggle.setAttribute('aria-expanded','true');
+    menu.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    const focusTarget = menu.querySelector('a, button');
+    if(focusTarget) focusTarget.focus();
+  }
+  function closeMenu(){
+    menu.classList.remove('open');
+    backdrop.classList.remove('visible');
+    toggle.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    toggle.focus();
+  }
+  toggle.addEventListener('click', function(e){
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if(expanded) closeMenu(); else openMenu();
+  });
+  backdrop.addEventListener('click', closeMenu);
+  menu.addEventListener('click', function(e){
+    const link = e.target.closest('a');
+    if(!link) return;
+    if(window.matchMedia('(max-width: 980px)').matches) closeMenu();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 980){
+      menu.classList.remove('open');
+      backdrop.classList.remove('visible');
+      toggle.setAttribute('aria-expanded','false');
+      menu.setAttribute('aria-hidden','false');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+
+  <script>
+;(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('primary-nav');
+  let backdrop = document.getElementById('nav-backdrop');
+  if(!backdrop){
+    backdrop = document.createElement('div');
+    backdrop.id = 'nav-backdrop';
+    backdrop.className = 'nav-backdrop';
+    backdrop.tabIndex = -1;
+    document.body.appendChild(backdrop);
+  }
+  if(!menu.hasAttribute('aria-hidden')) menu.setAttribute('aria-hidden','true');
+  function openMenu(){
+    menu.classList.add('open');
+    backdrop.classList.add('visible');
+    toggle.setAttribute('aria-expanded','true');
+    menu.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    const focusTarget = menu.querySelector('a, button');
+    if(focusTarget) focusTarget.focus();
+  }
+  function closeMenu(){
+    menu.classList.remove('open');
+    backdrop.classList.remove('visible');
+    toggle.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    toggle.focus();
+  }
+  toggle.addEventListener('click', function(e){
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if(expanded) closeMenu(); else openMenu();
+  });
+  backdrop.addEventListener('click', closeMenu);
+  menu.addEventListener('click', function(e){
+    const link = e.target.closest('a');
+    if(!link) return;
+    if(window.matchMedia('(max-width: 980px)').matches) closeMenu();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 980){
+      menu.classList.remove('open');
+      backdrop.classList.remove('visible');
+      toggle.setAttribute('aria-expanded','false');
+      menu.setAttribute('aria-hidden','false');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
 </body>
 </html>
