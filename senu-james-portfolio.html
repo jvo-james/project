@@ -6150,23 +6150,42 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
  })();
  </script>
+
  <style>
+  :root { --role-tr: 420ms; --role-ease: cubic-bezier(.2,.9,.2,1); --role-visible: 3200ms; }
+
+   .role-cursor { display: none !important; }
+
   #rotating-role {
     display: inline-block;
-    transition: opacity .45s cubic-bezier(.2,.9,.2,1), transform .45s cubic-bezier(.2,.9,.2,1);
-    opacity: 1;
-    transform: translateY(0);
-    will-change: opacity, transform;
+    will-change: transform, opacity;
+    font-weight: 900;
+    white-space: nowrap;
+    position: relative;
   }
-   #rotating-role._fade-out { opacity: 0; transform: translateY(-6px); }
-  #rotating-role._fade-in  { opacity: 1; transform: translateY(0); }
 
-   .role-rotator, .role-rotator * { cursor: default; }
+   .role-enter  { opacity: 0; }
+  .role-enter-active { opacity: 1; transform: translate(0,0); transition: opacity var(--role-tr) var(--role-ease), transform var(--role-tr) var(--role-ease); }
+  .role-exit   { opacity: 1; }
+  .role-exit-active  { opacity: 0; transition: opacity var(--role-tr) var(--role-ease), transform var(--role-tr) var(--role-ease); }
+
+   .enter-from-left    { transform: translateX(-14px); }
+  .enter-from-right   { transform: translateX(14px); }
+  .enter-from-up      { transform: translateY(-10px); }
+  .enter-from-down    { transform: translateY(10px); }
+
+   .exit-to-left       { transform: translateX(-14px); }
+  .exit-to-right      { transform: translateX(14px); }
+  .exit-to-up         { transform: translateY(-10px); }
+  .exit-to-down       { transform: translateY(10px); }
+
+   #rotating-role, #rotating-role * { transform-origin: center center; }
 
    @media (prefers-reduced-motion: reduce) {
     #rotating-role,
-    #rotating-role._fade-out,
-    #rotating-role._fade-in {
+    .role-enter-active, .role-exit-active,
+    .enter-from-left, .enter-from-right, .enter-from-up, .enter-from-down,
+    .exit-to-left, .exit-to-right, .exit-to-up, .exit-to-down {
       transition: none !important;
       transform: none !important;
       opacity: 1 !important;
@@ -6176,19 +6195,15 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 <script>
 (function(){
-   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    return;
-  }
-
+   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const el = document.getElementById('rotating-role');
   if (!el) return;
 
-   const clone = el.cloneNode(true);
-  el.parentNode.replaceChild(clone, el);
+   const clean = el.cloneNode(true);
+  el.parentNode.replaceChild(clean, el);
   const roleEl = document.getElementById('rotating-role');
 
- 
-  let roles = [];
+   let roles = [];
   if (roleEl.dataset && roleEl.dataset.roles) {
     roles = roleEl.dataset.roles.split(',').map(s => s.trim()).filter(Boolean);
   }
@@ -6196,65 +6211,113 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
     const parent = roleEl.closest('.role-rotator');
     if (parent) {
       const items = parent.querySelectorAll('[data-role-item]');
-      if (items.length) roles = Array.from(items).map(i => i.textContent.trim());
+      if (items.length) roles = Array.from(items).map(i => i.textContent.trim()).filter(Boolean);
     }
   }
   if (!roles.length) {
     const current = roleEl.textContent.trim();
     roles = [current || 'Web Developer', 'Product Engineer', 'AI Builder', 'Frontend Engineer', 'Full-stack Developer']
-             .filter((v,i,a) => v && a.indexOf(v) === i);
+            .filter((v,i,a) => v && a.indexOf(v) === i);
   }
 
-   const visibleMs = 3200;     
-  const transitionMs = 450;   
-  const cycleInterval = visibleMs + (transitionMs * 2);
+   const transitionMs = 420;                       
+  const visibleMs = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--role-visible')) || 3200;
+  const cycleMs = visibleMs + (transitionMs * 2);
+
+   const DIRS = ['left','right','up','down'];
+  function randDir(){ return DIRS[Math.floor(Math.random()*DIRS.length)]; }
+
+   function clearClasses(node){
+    node.classList.remove(
+      'role-enter','role-enter-active','role-exit','role-exit-active',
+      'enter-from-left','enter-from-right','enter-from-up','enter-from-down',
+      'exit-to-left','exit-to-right','exit-to-up','exit-to-down'
+    );
+  }
 
    let idx = 0;
   roleEl.textContent = roles[idx];
 
-   function showNext() {
-    roleEl.classList.remove('_fade-in');
-    roleEl.classList.add('_fade-out');
-
-     setTimeout(() => {
-      idx = (idx + 1) % roles.length;
-      roleEl.textContent = roles[idx];
-      roleEl.classList.remove('_fade-out');
-      roleEl.classList.add('_fade-in');
-       setTimeout(() => roleEl.classList.remove('_fade-in'), transitionMs + 10);
-    }, transitionMs);
+   if (prefersReduced) {
+    if (roles.length > 1) {
+      let int = setInterval(() => { idx = (idx+1) % roles.length; roleEl.textContent = roles[idx]; }, Math.max(4500, visibleMs + 1000));
+      const wrapper = roleEl.closest('.role-rotator') || roleEl;
+      wrapper.addEventListener('mouseenter', ()=> clearInterval(int), {passive:true});
+      wrapper.addEventListener('mouseleave', ()=> { int = setInterval(()=>{ idx=(idx+1)%roles.length; roleEl.textContent = roles[idx]; }, Math.max(4500, visibleMs + 1000)); }, {passive:true});
+    }
+    return;
   }
 
-   let interval = setInterval(showNext, cycleInterval);
+   let running = false;
+  function animateToNext() {
+    if (running) return;
+    running = true;
+
+     const outDir = randDir();    
+    const inDir  = randDir();    
+
+    clearClasses(roleEl);
+    roleEl.classList.add('role-exit');              
+     void roleEl.offsetWidth;
+
+    roleEl.classList.add('role-exit-active', `exit-to-${outDir}`); 
+
+     setTimeout(() => {
+      clearClasses(roleEl);
+      idx = (idx + 1) % roles.length;
+      roleEl.textContent = roles[idx];
+
+       roleEl.classList.add('role-enter', `enter-from-${inDir}`);
+       void roleEl.offsetWidth;
+      roleEl.classList.add('role-enter-active');
+
+       setTimeout(() => {
+        clearClasses(roleEl);
+        running = false;
+      }, transitionMs + 10);
+
+    }, transitionMs + 10);
+  }
+
+   (function initialIntro(){
+    const inDir = randDir();
+    clearClasses(roleEl);
+    roleEl.classList.add('role-enter', `enter-from-${inDir}`);
+    // small timeout so the browser can paint initial state
+    setTimeout(()=> roleEl.classList.add('role-enter-active'), 30);
+    // remove enter classes after animation is done
+    setTimeout(()=> clearClasses(roleEl), transitionMs + 60);
+  })();
+
+   let interval = null;
+  if (roles.length > 1) interval = setInterval(animateToNext, cycleMs);
 
    const wrapper = roleEl.closest('.role-rotator') || roleEl;
-  function pause() { clearInterval(interval); interval = null; }
-  function resume() { if (!interval) interval = setInterval(showNext, cycleInterval); }
+  function pause(){ if (interval) { clearInterval(interval); interval = null; } }
+  function resume(){ if (!interval && roles.length > 1) interval = setInterval(animateToNext, cycleMs); }
 
-  wrapper.addEventListener('mouseenter', pause, { passive: true });
-  wrapper.addEventListener('mouseleave', resume, { passive: true });
-  wrapper.addEventListener('focusin', pause, { passive: true });
-  wrapper.addEventListener('focusout', resume, { passive: true });
+  wrapper.addEventListener('mouseenter', pause, {passive:true});
+  wrapper.addEventListener('mouseleave', resume, {passive:true});
+  wrapper.addEventListener('focusin', pause, {passive:true});
+  wrapper.addEventListener('focusout', resume, {passive:true});
 
-  
-  const observer = new MutationObserver(mutations => {
-     for (const m of mutations) {
-      if (m.type === 'characterData' || m.type === 'childList') {
-        const current = roleEl.textContent.trim();
-        if (current !== roles[idx]) {
-           roleEl.textContent = roles[idx];
-        }
+   const observer = new MutationObserver(muts => {
+    for (const m of muts) {
+      if (m.type === 'childList' || m.type === 'characterData') {
+        const cur = roleEl.textContent.trim();
+        if (cur !== roles[idx]) roleEl.textContent = roles[idx];
       }
     }
   });
   observer.observe(roleEl, { characterData: true, subtree: true, childList: true });
 
    window.addEventListener('unload', () => {
-    clearInterval(interval);
+    if (interval) clearInterval(interval);
     observer.disconnect();
   });
 })();
 </script>
+
 
 </body>
 </html>
