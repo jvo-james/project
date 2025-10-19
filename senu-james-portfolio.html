@@ -3612,6 +3612,80 @@ button[aria-pressed="true"] {
   .wave-emoji { opacity: 1; transform: none; }
 }
 </style>
+<style>
+ :root { --hero-hi-min: 32px; --hero-hi-viewport: 6vw; --hero-hi-max: 56px; }
+
+ .wave-hero {
+  font-size: clamp(var(--hero-hi-min), var(--hero-hi-viewport), var(--hero-hi-max));
+  gap: 20px;
+   animation: waveHeroEntrance 680ms cubic-bezier(.2,.9,.2,1) .06s both;
+}
+@keyframes waveHeroEntrance {
+  0% { transform: translateY(6px) scale(.98); opacity: 0; }
+  60% { transform: translateY(-6px) scale(1.03); opacity: 1; }
+  100% { transform: translateY(0) scale(1); }
+}
+
+ .wave-hero .greeting-text {
+  display:inline-block;
+  transform-origin: left center;
+  will-change: transform;
+  animation: greetingMicroPulse 6.4s ease-in-out infinite;
+}
+@keyframes greetingMicroPulse {
+  0% { transform: none; }
+  50% { transform: translateY(-1px) scale(1.01); }
+  100% { transform: none; }
+}
+
+ 
+ .wave-hero .desc-line {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;  
+  z-index: 10;
+}
+
+ .wave-hero .desc-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 6px;                 
+  height: 8px;               
+  width: 64%;                   
+  border-radius: 999px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(124,58,237,0.96), rgba(59,130,246,0.95), rgba(6,182,212,0.92));
+  box-shadow: 0 10px 28px rgba(124,58,237,0.08), 0 4px 14px rgba(6,182,212,0.06);
+  transform-origin: left center;
+  transform: scaleX(0) translateZ(0);  
+  transition: transform 950ms cubic-bezier(.17,.84,.44,1);
+  will-change: transform;
+  z-index: 0;
+  filter: blur(0.2px);
+}
+
+ .wave-hero.underline-in .desc-line::after {
+  transform: scaleX(1);
+}
+
+ .wave-hero.underline-in .desc-line::after {
+  animation: underlinePop 900ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes underlinePop {
+  0% { transform: scaleX(0) translateY(6px); opacity: 0; }
+  60% { transform: scaleX(1.06) translateY(0); opacity: 1; }
+  100% { transform: scaleX(1) translateY(0); opacity: 1; }
+}
+
+ @media (prefers-reduced-motion: reduce) {
+  .wave-hero,
+  .wave-hero .greeting-text,
+  .wave-hero .desc-line::after,
+  .wave-hero .greeting-text { animation: none !important; transition: none !important; transform: none !important; }
+  .wave-hero .desc-line::after { transform: scaleX(1); opacity: 1; }
+}
+</style>
 
   </head>
 <body>
@@ -3787,6 +3861,34 @@ button[aria-pressed="true"] {
 })();
 </script>
 
+<script>
+
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+     document.querySelectorAll('.wave-hero').forEach(el => el.classList.add('underline-in'));
+    return;
+  }
+
+   function revealHero() {
+    const hero = document.querySelector('.wave-hero') || document.querySelector('#home-hero .hi') || document.querySelector('#hero-heading');
+    if (!hero) return;
+
+     hero.classList.remove('underline-in');  
+     setTimeout(() => hero.classList.add('underline-in'), 140);
+
+     setTimeout(() => {
+      hero.classList.add('big-hi-pulse');
+       setTimeout(() => hero.classList.remove('big-hi-pulse'), 900);
+    }, 1200);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', revealHero, { once: true });
+  } else {
+    revealHero();
+  }
+})();
+</script>
 
 
 <section id="projects" class="projects" style="margin-top:28px;">
