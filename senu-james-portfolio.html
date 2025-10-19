@@ -6151,59 +6151,74 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
  })();
  </script>
 
- <style>
-  :root { --role-tr: 420ms; --role-ease: cubic-bezier(.2,.9,.2,1); --role-visible: 3200ms; }
-
-   .role-cursor { display: none !important; }
-
+<!-- Paste this before </body> (after other scripts). Animated sliding role rotator. -->
+<style>
+  /* core */
   #rotating-role {
     display: inline-block;
+    transition: transform .48s cubic-bezier(.2,.9,.2,1), opacity .48s cubic-bezier(.2,.9,.2,1);
     will-change: transform, opacity;
-    font-weight: 900;
+    opacity: 1;
+    transform: translateZ(0);
     white-space: nowrap;
-    position: relative;
   }
 
-   .role-enter  { opacity: 0; }
-  .role-enter-active { opacity: 1; transform: translate(0,0); transition: opacity var(--role-tr) var(--role-ease), transform var(--role-tr) var(--role-ease); }
-  .role-exit   { opacity: 1; }
-  .role-exit-active  { opacity: 0; transition: opacity var(--role-tr) var(--role-ease), transform var(--role-tr) var(--role-ease); }
+  /* hide the old blinking cursor if it exists */
+  .role-cursor { display: none !important; }
 
-   .enter-from-left    { transform: translateX(-14px); }
-  .enter-from-right   { transform: translateX(14px); }
-  .enter-from-up      { transform: translateY(-10px); }
-  .enter-from-down    { transform: translateY(10px); }
+  /* outgoing positions (element transitions from normal -> these) */
+  #rotating-role._out-left  { transform: translateX(12px);  opacity: 0; }
+  #rotating-role._out-right { transform: translateX(-12px); opacity: 0; }
+  #rotating-role._out-up    { transform: translateY(10px);  opacity: 0; }
+  #rotating-role._out-down  { transform: translateY(-10px); opacity: 0; }
 
-   .exit-to-left       { transform: translateX(-14px); }
-  .exit-to-right      { transform: translateX(14px); }
-  .exit-to-up         { transform: translateY(-10px); }
-  .exit-to-down       { transform: translateY(10px); }
+  /* incoming start positions (element is put in one of these,
+     then the class is removed so it animates to the neutral state) */
+  #rotating-role._in-left  { transform: translateX(-12px); opacity: 0; }
+  #rotating-role._in-right { transform: translateX(12px);  opacity: 0; }
+  #rotating-role._in-up    { transform: translateY(-10px); opacity: 0; }
+  #rotating-role._in-down  { transform: translateY(10px);  opacity: 0; }
 
-   #rotating-role, #rotating-role * { transform-origin: center center; }
-
-   @media (prefers-reduced-motion: reduce) {
+  /* prefer reduced motion -> keep text stable, accessible */
+  @media (prefers-reduced-motion: reduce) {
     #rotating-role,
-    .role-enter-active, .role-exit-active,
-    .enter-from-left, .enter-from-right, .enter-from-up, .enter-from-down,
-    .exit-to-left, .exit-to-right, .exit-to-up, .exit-to-down {
+    #rotating-role._out-left, #rotating-role._out-right, #rotating-role._out-up, #rotating-role._out-down,
+    #rotating-role._in-left,  #rotating-role._in-right,  #rotating-role._in-up,  #rotating-role._in-down {
       transition: none !important;
       transform: none !important;
       opacity: 1 !important;
     }
+    .role-cursor { display: none !important; }
   }
 </style>
 
 <script>
 (function(){
-   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Respect reduced motion
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    // Hide cursor if present but do nothing else.
+    const rc = document.querySelector('.role-cursor'); if (rc) rc.style.display = 'none';
+    return;
+  }
+
   const el = document.getElementById('rotating-role');
   if (!el) return;
 
-   const clean = el.cloneNode(true);
-  el.parentNode.replaceChild(clean, el);
+  // Remove any external listeners by swapping with a clone (minimizes conflicts)
+  const clone = el.cloneNode(true);
+  el.parentNode.replaceChild(clone, el);
   const roleEl = document.getElementById('rotating-role');
 
-   let roles = [];
+  // Hide any blinking cursor element in DOM (non-destructive)
+  const cursors = document.querySelectorAll('.role-cursor');
+  cursors.forEach(c => c.style.display = 'none');
+
+  // Build roles list:
+  // 1) data-roles attribute (comma separated)
+  // 2) [data-role-item] children inside .role-rotator
+  // 3) fallback: current + sensible defaults
+  let roles = [];
   if (roleEl.dataset && roleEl.dataset.roles) {
     roles = roleEl.dataset.roles.split(',').map(s => s.trim()).filter(Boolean);
   }
@@ -6217,106 +6232,119 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   if (!roles.length) {
     const current = roleEl.textContent.trim();
     roles = [current || 'Web Developer', 'Product Engineer', 'AI Builder', 'Frontend Engineer', 'Full-stack Developer']
-            .filter((v,i,a) => v && a.indexOf(v) === i);
+             .filter((v,i,a) => v && a.indexOf(v) === i);
   }
 
-   const transitionMs = 420;                       
-  const visibleMs = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--role-visible')) || 3200;
-  const cycleMs = visibleMs + (transitionMs * 2);
+  // Timing - tune these to taste
+  const transitionMs = 480;   // must match CSS transition duration (.48s)
+  const visibleMs = 3200;     // how long each role stays visible
+  const cycleInterval = visibleMs + (transitionMs * 1.25); // small buffer
 
-   const DIRS = ['left','right','up','down'];
+  // state
+  let idx = 0;
+  roleEl.textContent = roles[idx];
+
+  // utility: choose a random direction for variety
+  const DIRS = ['left','right','up','down'];
   function randDir(){ return DIRS[Math.floor(Math.random()*DIRS.length)]; }
 
-   function clearClasses(node){
+  // helper to remove any directional classes we control
+  function clearDirClasses(node){
     node.classList.remove(
-      'role-enter','role-enter-active','role-exit','role-exit-active',
-      'enter-from-left','enter-from-right','enter-from-up','enter-from-down',
-      'exit-to-left','exit-to-right','exit-to-up','exit-to-down'
+      '_out-left','_out-right','_out-up','_out-down',
+      '_in-left','_in-right','_in-up','_in-down'
     );
   }
 
-   let idx = 0;
-  roleEl.textContent = roles[idx];
+  // show next - orchestrates outgoing animation -> swap text -> incoming animation
+  function showNext(){
+    const dir = randDir();
 
-   if (prefersReduced) {
-    if (roles.length > 1) {
-      let int = setInterval(() => { idx = (idx+1) % roles.length; roleEl.textContent = roles[idx]; }, Math.max(4500, visibleMs + 1000));
-      const wrapper = roleEl.closest('.role-rotator') || roleEl;
-      wrapper.addEventListener('mouseenter', ()=> clearInterval(int), {passive:true});
-      wrapper.addEventListener('mouseleave', ()=> { int = setInterval(()=>{ idx=(idx+1)%roles.length; roleEl.textContent = roles[idx]; }, Math.max(4500, visibleMs + 1000)); }, {passive:true});
-    }
-    return;
-  }
+    // start outgoing
+    clearDirClasses(roleEl);
+    roleEl.classList.add(`_out-${dir}`);
 
-   let running = false;
-  function animateToNext() {
-    if (running) return;
-    running = true;
+    // after the outgoing transition completes, swap text and animate incoming
+    setTimeout(() => {
+      // prepare incoming: remove outgoing
+      roleEl.classList.remove(`_out-${dir}`);
 
-     const outDir = randDir();    
-    const inDir  = randDir();    
-
-    clearClasses(roleEl);
-    roleEl.classList.add('role-exit');              
-     void roleEl.offsetWidth;
-
-    roleEl.classList.add('role-exit-active', `exit-to-${outDir}`); 
-
-     setTimeout(() => {
-      clearClasses(roleEl);
+      // advance index and update text
       idx = (idx + 1) % roles.length;
+      // set incoming start position class so it's off-screen/transparent
+      roleEl.classList.add(`_in-${dir}`);
+      // force reflow so browser registers the starting transform (read layout)
+      void roleEl.offsetWidth;
+
+      // swap text (while in starting offset)
       roleEl.textContent = roles[idx];
 
-       roleEl.classList.add('role-enter', `enter-from-${inDir}`);
-       void roleEl.offsetWidth;
-      roleEl.classList.add('role-enter-active');
+      // then remove the _in-* class so CSS transition animates it to neutral (0,1)
+      requestAnimationFrame(() => {
+        roleEl.classList.remove(`_in-${dir}`);
+      });
 
-       setTimeout(() => {
-        clearClasses(roleEl);
-        running = false;
-      }, transitionMs + 10);
-
-    }, transitionMs + 10);
+      // cleanup any residual classes after transition
+      setTimeout(() => clearDirClasses(roleEl), transitionMs + 30);
+    }, transitionMs);
   }
 
-   (function initialIntro(){
-    const inDir = randDir();
-    clearClasses(roleEl);
-    roleEl.classList.add('role-enter', `enter-from-${inDir}`);
-    // small timeout so the browser can paint initial state
-    setTimeout(()=> roleEl.classList.add('role-enter-active'), 30);
-    // remove enter classes after animation is done
-    setTimeout(()=> clearClasses(roleEl), transitionMs + 60);
-  })();
+  // Start cycling
+  let interval = setInterval(showNext, cycleInterval);
 
-   let interval = null;
-  if (roles.length > 1) interval = setInterval(animateToNext, cycleMs);
+  // Pause/resume on hover/focus
+  const wrapper = roleEl.closest('.role-rotator') || roleEl;
+  function pause(){ if (interval){ clearInterval(interval); interval = null; } }
+  function resume(){ if (!interval) interval = setInterval(showNext, cycleInterval); }
 
-   const wrapper = roleEl.closest('.role-rotator') || roleEl;
-  function pause(){ if (interval) { clearInterval(interval); interval = null; } }
-  function resume(){ if (!interval && roles.length > 1) interval = setInterval(animateToNext, cycleMs); }
+  wrapper.addEventListener('mouseenter', pause, { passive: true });
+  wrapper.addEventListener('mouseleave', resume, { passive: true });
+  wrapper.addEventListener('focusin', pause, { passive: true });
+  wrapper.addEventListener('focusout', resume, { passive: true });
 
-  wrapper.addEventListener('mouseenter', pause, {passive:true});
-  wrapper.addEventListener('mouseleave', resume, {passive:true});
-  wrapper.addEventListener('focusin', pause, {passive:true});
-  wrapper.addEventListener('focusout', resume, {passive:true});
-
-   const observer = new MutationObserver(muts => {
-    for (const m of muts) {
-      if (m.type === 'childList' || m.type === 'characterData') {
-        const cur = roleEl.textContent.trim();
-        if (cur !== roles[idx]) roleEl.textContent = roles[idx];
+  // If an external script tries to overwrite text too quickly, observe and re-assert our current role.
+  const observer = new MutationObserver(mutations => {
+    for (const m of mutations) {
+      if (m.type === 'characterData' || m.type === 'childList') {
+        const current = roleEl.textContent.trim();
+        if (current && current !== roles[idx]) {
+          // revert to our currently scheduled role
+          roleEl.textContent = roles[idx];
+        }
       }
     }
   });
   observer.observe(roleEl, { characterData: true, subtree: true, childList: true });
 
-   window.addEventListener('unload', () => {
-    if (interval) clearInterval(interval);
+  // if user prefers reduced motion after load, stop animations
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mqHandler = () => {
+    if (mq.matches) {
+      pause();
+      clearDirClasses(roleEl);
+      roleEl.style.transition = 'none';
+      roleEl.style.opacity = '1';
+      roleEl.style.transform = 'none';
+    } else {
+      // restore default and resume
+      roleEl.style.transition = '';
+      resume();
+    }
+  };
+  if (mq.addEventListener) mq.addEventListener('change', mqHandler);
+  else if (mq.addListener) mq.addListener(mqHandler);
+
+  // cleanup
+  window.addEventListener('unload', () => {
+    clearInterval(interval);
     observer.disconnect();
+    if (mq.removeEventListener) mq.removeEventListener('change', mqHandler);
+    else if (mq.removeListener) mq.removeListener(mqHandler);
   });
+
 })();
 </script>
+
 
 
 </body>
