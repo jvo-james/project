@@ -3749,7 +3749,7 @@ button[aria-pressed="true"] {
 
      @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
     @media (max-width:700px){
-      .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on mobile */
+      .pj-stage{ height: min(78vh, 740px); }  
       .pj-card{ padding:12px; }
       .pj-label{ font-size:13px; }
     }
@@ -4450,1376 +4450,317 @@ button[aria-pressed="true"] {
 </div>
 
 <script>
-/* Case modal content data (edit text/images/links as you prefer) */
-(function () {
-  const CASES = {
-    vitra: {
-      title: 'Vitra AI',
-      subtitle: 'AI-driven health & wellbeing platform',
-      desc: `Vitra AI is an integrated mental health and teletherapy product that blends ML-driven recommendations, herbal med directories, and booking flows. I led systems design, front-end UX and the production React/Netlify deployment.`,
-      highlights: [
-        'Built ML-assisted triage flow and recommendation engine',
-        'Integrated booking + payment microflow for therapists',
-        'Designed accessible forms and mobile-first layouts',
-      ],
-      metrics: 'Pilot: 800+ users • Avg. session 6m • ADIC Winner',
-      tags: ['AI','Healthcare','ML','React'],
-      images: ['vitra1.png','vitra4.png','vitra-ai.jpg'],
-      live: 'https://vitra-ai.netlify.app/',
-      repo: 'https://github.com/jvo-james/vitra-ai',
-      notes: 'Winner — African Digital Innovation Challenge; prototypes used with community health pilots.'
-    },
-
-    shuttle: {
-      title: 'Shuttle Tracker',
-      subtitle: 'Real-time campus transport tracking',
-      desc: `Shuttle Tracker reduces waiting time and improves route awareness on campus with a lightweight map interface, live vehicle positions and ETA calculations. Built with minimal latency to perform on low-bandwidth networks.`,
-      highlights: [
-        'Real-time vehicle feed with WebSocket updates',
-        'Route optimization and ETA estimation',
-        'Lightweight, offline-friendly UI for low-bandwidth use',
-      ],
-      metrics: 'Deployed across 2 campuses • 1.2k daily lookups',
-      tags: ['Maps','Realtime','Firebase'],
-      images: ['shuttle1.png','shuttle.webp'],
-      live: 'https://jvo-james.github.io/knust/buses',
-      repo: 'https://github.com/jvo-james/knust/blob/main/buses.html',
-      notes: 'Used by student transport teams to coordinate routes and reduce idle fuel time.'
-    },
-
-    emart: {
-      title: 'E-Mart',
-      subtitle: 'Campus shopping & checkout platform',
-      desc: `E-Mart is a mobile-first commerce experience targeted at students: discover campus stores, place orders, and use simple checkout flows. Focused on accessibility and quick onboarding for new vendors.`,
-      highlights: [
-        'Mobile-first checkout and vendor onboarding',
-        'Mock payments integration and order flow testing',
-        'Clean inventory UI for small merchants',
-      ],
-      metrics: 'Pilot vendors: 8 • 500 transactions (pilot)',
-      tags: ['Next.js','Payments','E-commerce'],
-      images: ['emart1.png','emart2.png','e-mart.jpeg'],
-      live: 'https://jvo-james.github.io/knust/',
-      repo: 'https://github.com/jvo-james/knust/blob/main/index.html',
-      notes: 'Iterated based on vendor interviews; next step — Stripe/payments integration.'
-    },
-
-    fitness: {
-      title: 'Fitness Tracker',
-      subtitle: 'Leaderboard-driven workout logging',
-      desc: `Fitness Tracker is a competition-ready logging tool optimized for teams. It includes leaderboards, athlete profiles and analytics dashboards that make it easy to run challenges and seasonal competitions.`,
-      highlights: [
-        'Custom leaderboard engine and CSV import',
-        'Coach/admin panels and challenge management',
-        'Exportable reports for competitions',
-      ],
-      metrics: 'Used by 6 clubs • 1200 logged sessions',
-      tags: ['Analytics','Challenge','Dashboards'],
-      images: ['fittrack5.png','fittrack2.png','fit.png'],
-      live: 'https://jvo-james.github.io/fit-track/home',
-      repo: 'https://github.com/jvo-james/fit-track',
-      notes: 'Built with performance in mind for large team leaderboards.'
-    },
-
-    skillforge: {
-      title: 'SkillForge Registry',
-      subtitle: 'Registration system for events',
-      desc: `SkillForge Registry replaced ad-hoc Google Forms for event organizers, providing verification flows, admin dashboards and better data hygiene for student run events.`,
-      highlights: [
-        'OAuth-based sign-in flows and role-based access',
-        'Event dashboards and automated confirmation emails',
-        'Simplified registration UX reduced errors by 30%',
-      ],
-      metrics: 'Events supported: 40+ • Registrants: 8k+',
-      tags: ['Forms','Auth','Admin'],
-      images: ['skillforg2.png','skill.jpg'],
-      live: 'https://jvo-james.github.io/skillforg-website/startup',
-      repo: 'https://github.com/jvo-james/skillforg-website',
-      notes: 'Now used by student societies to centralize registration.'
-    },
-
-    mhc: {
-      title: 'Make Heaven Crowded',
-      subtitle: 'Faith-driven e-commerce & community hub',
-      desc: `A combined shop, devotional content hub and donation flow, Make Heaven Crowded brings community resources together with commerce and content. Built with modular components that support media and donations.`,
-      highlights: [
-        'Integrated content + shop experience',
-        'Donation microflow and social sharing features',
-        'Design generator for shareable devotionals',
-      ],
-      metrics: 'Active users: 2.1k • Donations processed (pilot)',
-      tags: ['E-commerce','Community','Design'],
-      images: ['mhc3.png','jfactor.jpg','mhc1.png'],
-      live: 'https://jvo-james.github.io/project/mhc1',
-      repo: 'https://github.com/jvo-james/project/blob/main/mhc1.html',
-      notes: 'Featured as a community commerce prototype.'
-    }
-  };
-
-  // modal elements
-  const modal = document.getElementById('case-modal');
-  const titleEl = document.getElementById('case-title');
-  const subEl = document.getElementById('case-sub');
-  const imgEl = document.getElementById('case-main-image');
-  const thumbsEl = document.getElementById('case-thumbs');
-  const descEl = document.getElementById('case-desc');
-  const highlightsEl = document.getElementById('case-highlights');
-  const tagsEl = document.getElementById('case-tags');
-  const metricsEl = document.getElementById('case-metrics');
-  const linksEl = document.getElementById('case-links');
-  const notesEl = document.getElementById('case-notes');
-  const openExternal = document.getElementById('case-open-external');
-  const prevBtn = document.getElementById('case-prev');
-  const nextBtn = document.getElementById('case-next');
-  const closeBtn = document.getElementById('case-close');
-
-  let currentCase = null;
-  let currentImageIndex = 0;
-
-  function populate(caseId) {
-    const data = CASES[caseId];
-    if (!data) return;
-    currentCase = data;
-    currentImageIndex = 0;
-    titleEl.textContent = data.title;
-    subEl.textContent = data.subtitle;
-    descEl.textContent = data.desc;
-    notesEl.textContent = data.notes || '';
-    metricsEl.textContent = data.metrics || '';
-    // tags
-    tagsEl.innerHTML = '';
-    (data.tags || []).forEach(t => {
-      const b = document.createElement('span');
-      b.className = 'badge-pill';
-      b.textContent = t;
-      tagsEl.appendChild(b);
-    });
-    // highlights
-    highlightsEl.innerHTML = '';
-    (data.highlights || []).forEach(h => {
-      const li = document.createElement('li');
-      li.textContent = h;
-      highlightsEl.appendChild(li);
-    });
-    // links
-    linksEl.innerHTML = '';
-    if (data.live) {
-      const a = document.createElement('a');
-      a.href = data.live;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.className = 'link-btn';
-      a.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Open live';
-      linksEl.appendChild(a);
-      openExternal.href = data.live;
-      openExternal.style.display = 'inline-flex';
-    } else {
-      openExternal.style.display = 'none';
-    }
-    if (data.repo) {
-      const r = document.createElement('a');
-      r.href = data.repo;
-      r.target = '_blank';
-      r.rel = 'noopener';
-      r.className = 'link-btn';
-      r.innerHTML = '<i class="fa-brands fa-github"></i>&nbsp;Repo';
-      linksEl.appendChild(r);
-    }
-    // images & thumbs
-    thumbsEl.innerHTML = '';
-    (data.images || []).forEach((src,i) => {
-      const thumb = document.createElement('button');
-      thumb.className = 'thumb';
-      thumb.type = 'button';
-      thumb.setAttribute('aria-current', i===0 ? 'true' : 'false');
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = data.title + ' screenshot ' + (i+1);
-      thumb.appendChild(img);
-      thumb.addEventListener('click', () => {
-        setImageIndex(i);
-      });
-      thumbsEl.appendChild(thumb);
-    });
-    // set main image
-    setImageIndex(0);
-  }
-
-  function setImageIndex(i) {
-    if (!currentCase) return;
-    const imgs = currentCase.images || [];
-    if (!imgs.length) {
-      imgEl.src = '';
-      imgEl.alt = '';
-      return;
-    }
-    currentImageIndex = (i + imgs.length) % imgs.length;
-    imgEl.src = imgs[currentImageIndex];
-    imgEl.alt = currentCase.title + ' screenshot ' + (currentImageIndex+1);
-    // highlight thumb
-    Array.from(thumbsEl.children).forEach((t,idx) => {
-      t.setAttribute('aria-current', idx === currentImageIndex ? 'true' : 'false');
-    });
-  }
-
-  // open / close functions
-  function openModal(id) {
-    populate(id);
-    modal.setAttribute('aria-hidden','false');
-    modal.style.display = 'flex';
-    document.documentElement.style.overflow = 'hidden';
-    // focus close for keyboard users
-    closeBtn.focus();
-  }
-  function closeModal() {
-    modal.setAttribute('aria-hidden','true');
-    modal.style.display = 'none';
-    document.documentElement.style.overflow = '';
-    currentCase = null;
-  }
-
-  // nav
-  prevBtn.addEventListener('click', () => {
-    setImageIndex(currentImageIndex - 1);
-  });
-  nextBtn.addEventListener('click', () => {
-    setImageIndex(currentImageIndex + 1);
-  });
-
-  // close handlers
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (ev) => {
-    if (ev.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', (ev) => {
-    if (modal.getAttribute('aria-hidden') === 'false') {
-      if (ev.key === 'Escape') closeModal();
-      if (ev.key === 'ArrowLeft') setImageIndex(currentImageIndex - 1);
-      if (ev.key === 'ArrowRight') setImageIndex(currentImageIndex + 1);
-    }
-  });
-
-  // wire up buttons with data-case-open
-  document.querySelectorAll('[data-case-open]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.dataset.caseId;
-      if (!id) return;
-      openModal(id);
-    });
-  });
-
-  // optional: click to zoom main image into an overlay
-  let overlay = null;
-  imgEl.addEventListener('click', () => {
-    if (!imgEl.src) return;
-    overlay = document.createElement('div');
-    overlay.className = 'case-zoom-overlay';
-    const big = document.createElement('img');
-    big.src = imgEl.src;
-    overlay.appendChild(big);
-    overlay.addEventListener('click', () => {
-      overlay.remove();
-      overlay = null;
-    });
-    document.body.appendChild(overlay);
-  });
-
-})();
-</script>
-
-<script type="application/json" id="case-vitra">
-{
-  "id": "vitra",
-  "title": "Vitra AI",
-  "subtitle": "AI-first health & wellbeing platform — therapy, herbal med, e-pharmacy, booking",
-  "overview": "Vitra AI is an integrated AI health assistant platform enabling users to ask domain-specific AI assistants (therapist, herbal medicine, dietetics, e-pharmacy), request prescriptions, and book consultations with specialists.",
-  "problem": "Many users lack fast, trustworthy access to health guidance and local pharmacy options. Mental health support and localized herbal guidance were particularly underserved.",
-  "approach": "Led product design and front-end engineering: prototyped multi-agent conversational flows (therapist, dietitian, herbal advisor), built e-pharmacy integration, and implemented consultational booking and payment flows.",
-  "highlights": ["Multi-agent AI assistants (therapist, dietetics, herbal med)","E-pharmacy with prescription flow","Consultation booking & specialist directory","Accessible conversational UI with context-awareness"],
-  "screenshots": ["vitra1.png","vitra2.png","vitra3.png","vitra4.png","vitra5.png","vitra6.png"],
-  "tech": ["React","Node.js","Python (ML)","Firebase","Stripe"],
-  "metrics": "Winner — African Digital Innovation Challenge. Early pilot: 1k+ users engaged in beta.",
-  "links": [{"label":"Live","href":"https://vitra-ai.netlify.app/"},{"label":"Repo","href":"#"}],
-  "notes": "Handle sensitive health data carefully; production systems must include consent & privacy controls."
-}
-</script>
-
-<script type="application/json" id="case-shuttle">
-{
-  "id": "shuttle",
-  "title": "Shuttle Tracker",
-  "subtitle": "Real-time shuttle location & ETA for campus commuters",
-  "overview": "Shuttle Tracker provides students with live bus positions, ETAs, and recommended stops — reducing wait time and improving campus mobility.",
-  "problem": "Students often waited at wrong stops or for shuttles that had already passed. There was low visibility into shuttle movement.",
-  "approach": "Built real-time map visualizations with location sharing and route alerts. Integrated a small admin panel to manage vehicle statuses and schedules.",
-  "highlights": ["Live bus positions on map","ETA notifications","Stop-based guidance for riders","Easy web & mobile access"],
-  "screenshots": ["shuttle1.png","shuttle2.png"],
-  "tech": ["Leaflet","Firebase (realtime)","React","Node.js"],
-  "metrics": "Reduced average student wait time in pilot schools; high user satisfaction in beta.",
-  "links": [{"label":"Live","href":"https://jvo-james.github.io/knust/buses"},{"label":"Repo","href":"#"}],
-  "notes": "Next steps include driver authentication, better telemetry and scheduled routes optimization."
-}
-</script>
-
-<script type="application/json" id="case-emart">
-{
-  "id": "emart",
-  "title": "E-Mart",
-  "subtitle": "Campus-first e-commerce & checkout experience",
-  "overview": "E-Mart is a student-focused marketplace for campus essentials — streamlined mobile-first checkout, inventory sync and pickup workflows.",
-  "problem": "Campus shoppers lacked a reliable, student-focused online shop with convenient pickup and local payment options.",
-  "approach": "Designed product listing flows, cart & checkout, pickup scheduling, and mobile-first UI optimized for low-bandwidth conditions.",
-  "highlights": ["Mobile-first shopping","Pickup scheduling","Stripe integration (prototype)","Inventory admin"],
-  "screenshots": ["emart1.png","emart2.png","emart3.png","emart4.png","emart5.png"],
-  "tech": ["Next.js","Stripe","MongoDB"],
-  "metrics": "Prototype tested with campus pilots; merchant feedback loop validated product-market fit.",
-  "links": [{"label":"Live","href":"https://jvo-james.github.io/knust/"},{"label":"Repo","href":"#"}],
-  "notes": "Payments & compliance improvements planned for production."
-}
-</script>
-
-<script type="application/json" id="case-fitness">
-{
-  "id": "fitness",
-  "title": "Fitness Tracker",
-  "subtitle": "Workout logging, challenges & leaderboard",
-  "overview": "A competition-ready fitness logging platform where athletes log workouts, join challenges and view leaderboards.",
-  "problem": "No central place for gymnasts to track progress, compete, and engage in community-driven challenges.",
-  "approach": "Built structured workout entry, challenge creation, and leaderboard algorithms; created shareable challenge pages.",
-  "highlights": ["Challenge system & leaderboards","Workout logging with metrics","Semi-final entry for ADIC"],
-  "screenshots": ["fittrack1.png","fittrack2.png","fittrack3.png","fittrack4.png","fittrack5.png","fittrack6.png","fittrack7.png","fittrack8.png"],
-  "tech": ["React","Express","Postgres"],
-  "metrics": "Used for competition semi-finals; demonstration-ready dashboards.",
-  "links": [{"label":"Live","href":"https://jvo-james.github.io/fit-track/home"}],
-  "notes": "Leaderboard fairness & anti-cheat heuristics are recommended for future versions."
-}
-</script>
-
-<script type="application/json" id="case-skillforge">
-{
-  "id": "skillforge",
-  "title": "SkillForge Registry",
-  "subtitle": "Workshop registration & admin reporting",
-  "overview": "SkillForge replaced ad-hoc Google Forms with a centralized registration, authentication and reporting system for event organizers.",
-  "problem": "Organizers used spreadsheets and forms that lacked reliable reporting and authentication.",
-  "approach": "Built auth, registration flows, CSV export and admin dashboards to manage attendees and workshop logistics.",
-  "highlights": ["Secure registration","Admin reporting","CSV export & attendance tracking"],
-  "screenshots": ["skillforg.png","skillforg2.png","skillforg3.png"],
-  "tech": ["React","Firebase","Node.js"],
-  "metrics": "Enabled more reliable attendance tracking for multiple events.",
-  "links": [{"label":"Live","href":"https://jvo-james.github.io/skillforg-website/startup"}],
-  "notes": "Integrations with email services improved organizer workflows."
-}
-</script>
-
-<script type="application/json" id="case-mhc">
-{
-  "id": "mhc",
-  "title": "Make Heaven Crowded",
-  "subtitle": "Faith-centered merch & gospel hub",
-  "overview": "A Christian e-commerce platform selling shirts, hoodies and apparel with gospel inscriptions. Includes donation flows and devotional content.",
-  "problem": "Client needed a beautiful storefront aligned with ministry goals plus content space for gospel resources.",
-  "approach": "Designed shop flows, product personalization, donation checkout and a devotional content area. Built a generator for design variants.",
-  "highlights": ["Product personalization","Donation flows","Devotional content hub","Design generator"],
-  "screenshots": ["mhc1.png","mhc2.png","mhc3.png","mhc4.png","mhc5.png"],
-  "tech": ["React","Netlify","Stripe"],
-  "metrics": "Active development — client launching first storefront.",
-  "links": [{"label":"Live (staging)","href":"https://jvo-james.github.io/project/mhc1"}],
-  "notes": "Careful moderation for community content and payment reconciliation required."
-}
-</script>
-
-<div id="toast-area" aria-live="polite" style="position:fixed;right:18px;bottom:18px;z-index:9999;pointer-events:none"></div>
-
-<script>
 (function(){
-  const $ = (s, ctx=document) => (ctx||document).querySelector(s);
-  const $$ = (s, ctx=document) => Array.from((ctx||document).querySelectorAll(s));
-  const toastArea = document.getElementById('toast-area') || (function(){ const el=document.createElement('div'); el.id='toast-area'; el.style.position='fixed'; el.style.right='18px'; el.style.bottom='18px'; el.style.zIndex='99999'; el.style.pointerEvents='none'; document.body.appendChild(el); return el; })();
-  function createToast(text, opts){
-    opts = opts || {};
-    const timeout = typeof opts.timeout === 'number' ? opts.timeout : 3200;
-    const type = opts.type || 'default';
-    const t = document.createElement('div');
-    t.className = 'sj-toast';
-    t.setAttribute('role','status');
-    t.style.pointerEvents = 'auto';
-    t.style.marginTop = '10px';
-    t.style.padding = '12px 16px';
-    t.style.borderRadius = '12px';
-    t.style.fontWeight = '800';
-    t.style.color = '#fff';
-    t.style.boxShadow = '0 18px 50px rgba(6,10,26,0.24)';
-    t.style.border = '1px solid rgba(255,255,255,0.04)';
-    t.style.transition = 'transform .32s ease, opacity .32s ease';
-    t.style.opacity = '0';
-    t.style.transform = 'translateY(6px)';
-    if(type === 'success') t.style.background = 'linear-gradient(90deg,#10B981,#059669)';
-    else if(type === 'error') t.style.background = 'linear-gradient(90deg,#EF4444,#DC2626)';
-    else if(type === 'warn') t.style.background = 'linear-gradient(90deg,#F59E0B,#D97706)';
-    else t.style.background = 'linear-gradient(90deg,#3B82F6,#06B6D4)';
-    t.textContent = text;
-    toastArea.appendChild(t);
-    requestAnimationFrame(()=>{ t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
-    const hide = setTimeout(()=>{ t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; setTimeout(()=>{ try{ t.remove(); }catch(e){} }, 400); }, timeout);
-    t.addEventListener('click', ()=>{ clearTimeout(hide); t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; setTimeout(()=>{ try{ t.remove(); }catch(e){} }, 220); });
-    return t;
+  const qs = (s, root=document) => root.querySelector(s);
+  const qsa = (s, root=document) => Array.from(root.querySelectorAll(s));
+  const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
+  const body = document.body;
+
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn();
   }
-  function initSmoothScroll(){
-    document.addEventListener('click', (ev)=>{
-      const a = ev.target.closest('a[href^="#"]');
-      if(!a) return;
-      const href = a.getAttribute('href');
-      if(!href || href === '#') return;
-      const target = document.querySelector(href);
-      if(!target) return;
-      ev.preventDefault();
-      target.scrollIntoView({ behavior:'smooth', block:'start' });
-      setTimeout(()=>{ try{ target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); }catch(e){} }, 520);
-      const menu = document.getElementById('primary-nav');
-      if(menu && menu.classList.contains('open')){ const btn = document.querySelector('.nav-toggle'); try{ btn && btn.click(); }catch(e){} }
-    }, {passive:true});
-  }
-  function initTiltCards(){
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(prefersReduced) return;
-    const cards = $$('.tilt');
-    if(!cards.length) return;
-    cards.forEach(card=>{
+
+  ready(function(){
+    const navToggle = qs('.nav-toggle');
+    const navMenu = qs('#primary-nav');
+    let navBackdrop = null;
+
+    function setNav(open){
+      if(!navMenu) return;
+      const expanded = Boolean(open);
+      if(navToggle) navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      if(expanded){
+        navMenu.classList.add('open');
+        navMenu.setAttribute('aria-hidden', 'false');
+        if(!navBackdrop){
+          navBackdrop = document.createElement('div');
+          navBackdrop.className = 'nav-backdrop';
+          document.body.appendChild(navBackdrop);
+          navBackdrop.addEventListener('click', () => setNav(false));
+        }
+        navBackdrop.classList.add('visible');
+        body.style.overflow = 'hidden';
+      } else {
+        navMenu.classList.remove('open');
+        navMenu.setAttribute('aria-hidden', 'true');
+        if(navBackdrop) navBackdrop.classList.remove('visible');
+        body.style.overflow = '';
+      }
+    }
+
+    if(navToggle){
+      navToggle.addEventListener('click', function(){
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        setNav(!expanded);
+      });
+    }
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        setNav(false);
+        closeCaseModal();
+      }
+    });
+
+    const roles = ['Web Developer','AI & Product Builder','UI Engineer','Product-led Designer'];
+    const rotEl = qs('#rotating-role');
+    let roleIdx = 0;
+    function rotateRole(){
+      if(!rotEl) return;
+      roleIdx = (roleIdx + 1) % roles.length;
+      rotEl.classList.remove('role-fade');
+      void rotEl.offsetWidth;
+      rotEl.textContent = roles[roleIdx];
+      rotEl.classList.add('role-fade','show');
+      setTimeout(()=> rotEl.classList.remove('show'), 900);
+    }
+    setInterval(rotateRole, 3600);
+
+    const ctaProjects = qs('#projects-cta');
+    if(ctaProjects){
+      ctaProjects.addEventListener('click', function(){
+        document.querySelector('#projects')?.scrollIntoView({behavior:'smooth'});
+        if(window.gtag) window.gtag('event','click',{event_category:'cta',event_label:'selected_work'});
+      });
+    }
+
+    const downloadBtn = qs('#download-resume-btn');
+    if(downloadBtn){
+      downloadBtn.addEventListener('click', function(e){
+        showToast('info','Downloading resume');
+        if(window.gtag) window.gtag('event','download',{event_category:'resume',event_label:'download_cv'});
+      });
+    }
+
+    function createToastArea(){
+      let ta = qs('#toast-area');
+      if(!ta){
+        ta = document.createElement('div');
+        ta.id = 'toast-area';
+        document.body.appendChild(ta);
+      }
+      return ta;
+    }
+
+    function showToast(type, text, timeout=3500){
+      const ta = createToastArea();
+      const t = document.createElement('div');
+      t.className = 'sj-toast ' + (type||'info');
+      t.setAttribute('role','status');
+      t.innerHTML = '<div style="flex:1">' + (text||'') + '</div>';
+      ta.appendChild(t);
+      requestAnimationFrame(()=> t.classList.add('show'));
+      setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=> t.remove(),420); }, timeout);
+    }
+
+    const tiltEls = qsa('.tilt');
+    tiltEls.forEach(el => {
       let rect = null;
-      const strength = parseFloat(card.dataset.tiltStrength) || 6;
-      function onMove(e){
-        if(!rect) rect = card.getBoundingClientRect();
-        const px = ((e.clientX - rect.left) / rect.width) - 0.5;
-        const py = ((e.clientY - rect.top) / rect.height) - 0.5;
-        const ry = (px * strength).toFixed(2);
-        const rx = (-py * strength).toFixed(2);
-        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-        card.style.transition = 'transform 60ms linear';
+      let raf = null;
+      function updateTransform(e){
+        if(!rect) rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const tx = x * 12;
+        const ty = y * -10;
+        const rz = x * 2;
+        el.style.transform = 'perspective(1200px) rotateX(' + ty + 'deg) rotateY(' + tx + 'deg) translateZ(6px)';
       }
-      function onLeave(){
-        card.style.transform = '';
-        card.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
-        rect = null;
-      }
-      card.addEventListener('pointermove', onMove, {passive:true});
-      card.addEventListener('pointerleave', onLeave);
-      card.addEventListener('pointercancel', onLeave);
-      window.addEventListener('resize', ()=>{ rect = null; });
+      function clear(){ el.style.transform = ''; }
+      el.addEventListener('mousemove', function(e){ if(raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(()=> updateTransform(e)); });
+      el.addEventListener('mouseleave', function(){ if(raf) cancelAnimationFrame(raf); requestAnimationFrame(clear); rect = null; });
+      el.addEventListener('touchmove', function(e){ if(e.touches && e.touches[0]) updateTransform(e.touches[0]); },{passive:true});
+      el.addEventListener('touchend', function(){ clear(); });
     });
-  }
-  function initProjectFilters(){
-    const btnAll = $('#filter-all');
-    const btnWeb = $('#filter-web');
-    const btnAi = $('#filter-ai');
-    const grid = $('#projects-grid');
-    if(!grid) return;
-    const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
-    function normalize(s){ return String(s||'').trim().toLowerCase(); }
-    function cardMatches(card, filter){
-      if(!filter || filter === 'all') return true;
-      const badge = card.querySelector('.badge');
-      if(badge && normalize(badge.textContent).includes(filter)) return true;
-      const tags = Array.from(card.querySelectorAll('.tag')).map(t=>normalize(t.textContent));
-      if(tags.some(t=>t.includes(filter))) return true;
-      const meta = normalize((card.querySelector('.card-sub')?.textContent||'')+' '+(card.querySelector('.card-title')?.textContent||''));
-      if(meta.includes(filter)) return true;
-      return false;
-    }
-    function applyFilter(filter){
-      Array.from(grid.children).forEach(card=>{
-        if(!card.matches || !card.matches('.card')) return;
-        if(cardMatches(card, filter)){ card.style.display = ''; card.setAttribute('aria-hidden','false'); }
-        else { card.style.display = 'none'; card.setAttribute('aria-hidden','true'); }
+
+    const marquees = qsa('.marquee');
+    marquees.forEach(m => {
+      const track = m.querySelector('.marquee-track');
+      if(!track) return;
+      function init(){
+        const items = Array.from(track.children);
+        const totalW = items.reduce((s,n)=> s + (n.getBoundingClientRect().width || 0),0);
+        if(totalW > m.clientWidth){
+          const clone = track.innerHTML;
+          track.innerHTML += clone;
+          track.classList.add('is-animated');
+          const duration = Math.max(14, Math.round(totalW / 60));
+          track.style.animationDuration = duration + 's';
+        }
+      }
+      init();
+      m.addEventListener('mouseenter', ()=> track.style.animationPlayState = 'paused');
+      m.addEventListener('mouseleave', ()=> track.style.animationPlayState = 'running');
+      m.addEventListener('focusin', ()=> track.style.animationPlayState = 'paused');
+      m.addEventListener('focusout', ()=> track.style.animationPlayState = 'running');
+      window.addEventListener('resize', ()=> { if(track.classList.contains('is-animated')) track.style.animationPlayState = 'running'; });
+    });
+
+    const pjStage = qs('#pj-stage');
+    const pjTooltip = qs('#pj-tooltip');
+    if(pjStage && pjTooltip){
+      const nodes = Array.from(pjStage.querySelectorAll('.pj-node'));
+      nodes.forEach(node => {
+        function show(e){
+          const rect = pjStage.getBoundingClientRect();
+          const nrect = node.getBoundingClientRect();
+          const title = node.getAttribute('data-title') || '';
+          const desc = node.getAttribute('data-desc') || '';
+          pjTooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
+          pjTooltip.setAttribute('aria-hidden','false');
+          pjTooltip.classList.add('show');
+          const tooltipW = Math.min(pjTooltip.offsetWidth || 280, pjStage.clientWidth - 16);
+          let left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipW/2, 8), pjStage.clientWidth - tooltipW - 8);
+          let top = nrect.top - rect.top - pjTooltip.offsetHeight - 12;
+          if(top < 8) top = nrect.bottom - rect.top + 12;
+          pjTooltip.style.left = left + 'px';
+          pjTooltip.style.top = top + 'px';
+        }
+        function hide(){ pjTooltip.setAttribute('aria-hidden','true'); pjTooltip.classList.remove('show'); }
+        node.addEventListener('mouseenter', show); node.addEventListener('focus', show); node.addEventListener('mouseleave', hide); node.addEventListener('blur', hide);
+        node.addEventListener('click', function(e){ if(window.matchMedia('(hover: none)').matches){ if(pjTooltip.classList.contains('show')) hide(); else show(); } });
       });
     }
-    buttons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        buttons.forEach(b=>b.setAttribute('aria-pressed','false'));
-        btn.setAttribute('aria-pressed','true');
-        const filter = (btn.id||'').replace('filter-','') || 'all';
-        applyFilter(filter);
-      });
-    });
-  }
-function initMarquee(){
-  const marquee = document.getElementById('marquee');
-  if(!marquee) return;
-  const track = marquee.querySelector('.marquee-track');
-  if(!track) return;
 
-   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){
-    marquee.style.overflowX = 'auto';
-    track.classList.remove('is-animated');
-    return;
-  }
+    let caseModal = null;
+    function buildCaseModal(){
+      if(caseModal) return caseModal;
+      caseModal = document.createElement('div');
+      caseModal.id = 'case-modal';
+      caseModal.setAttribute('aria-hidden','true');
+      caseModal.innerHTML = '\n        <div class="modal-panel" role="dialog" aria-modal="true">\n          <div style="display:flex;align-items:center;gap:12px">\n            <div>\n              <strong id="case-title"></strong>\n              <div id="case-sub" class="muted"></div>\n            </div>\n            <div style="margin-left:auto;display:flex;gap:8px">\n              <a id="case-open-external" class="link-btn" target="_blank" rel="noopener">Open</a>\n              <button id="case-close" class="btn">Close</button>\n            </div>\n          </div>\n          <div id="case-body">\n            <div id="case-main">\n              <div class="case-gallery">\n                <div class="viewer" aria-live="polite">\n                  <img id="case-main-img" src="" alt="" loading="eager" style="max-width:100%;height:auto;display:block">\n                </div>\n                <div class="thumbs" id="case-thumbs" tabindex="0"></div>\n              </div>\n            </div>\n            <aside id="case-aside">\n              <strong id="case-aside-title"></strong>\n              <div id="case-links"></div>\n              <div id="case-notes" class="muted" style="margin-top:10px"></div>\n            </aside>\n          </div>\n        </div>\n      ';
+      document.body.appendChild(caseModal);
 
-   const originals = Array.from(track.children);
-  if(originals.length === 0) return;
-
-   const baseHTML = originals.map(el => el.outerHTML).join('');
-
-  
-  function buildRepeatedBlock(){
-    let repeats = 1;
-    track.innerHTML = baseHTML.repeat(repeats);
-     let tries = 0;
-    while(track.scrollWidth < marquee.clientWidth * 1.1 && tries < 12){
-      repeats++;
-      track.innerHTML = baseHTML.repeat(repeats);
-      tries++;
+      const closeBtn = caseModal.querySelector('#case-close');
+      const openExternal = caseModal.querySelector('#case-open-external');
+      closeBtn.addEventListener('click', closeCaseModal);
+      caseModal.addEventListener('click', function(e){ if(e.target === caseModal) closeCaseModal(); });
+      return caseModal;
     }
-     const currentBlockHTML = track.innerHTML;
-    track.innerHTML = currentBlockHTML + currentBlockHTML;
-  }
 
-  buildRepeatedBlock();
+    function openCaseModal(caseId, opener){
+      const modal = buildCaseModal();
+      const titleEl = modal.querySelector('#case-title');
+      const subEl = modal.querySelector('#case-sub');
+      const mainImg = modal.querySelector('#case-main-img');
+      const thumbs = modal.querySelector('#case-thumbs');
+      const links = modal.querySelector('#case-links');
+      const asideTitle = modal.querySelector('#case-aside-title');
+      const notes = modal.querySelector('#case-notes');
+      const openExternal = modal.querySelector('#case-open-external');
 
- 
-  const marqueeWidth = marquee.clientWidth || window.innerWidth;
-  const contentWidth = track.scrollWidth || (marqueeWidth * 2);
-   const secondsPerViewport = 12;
-   const duration = Math.max(8, Math.round((contentWidth / marqueeWidth) * secondsPerViewport));
+      const sourceCard = document.querySelector('[data-case-id="' + caseId + '"]');
+      let imgs = [];
+      if(sourceCard){
+        const imgsInCard = Array.from(sourceCard.querySelectorAll('img')).map(i=> ({src:i.src, alt:i.alt||''}));
+        if(imgsInCard.length) imgs = imgsInCard;
+      }
+      if(!imgs.length){
+        imgs = [{src:'',alt:''}];
+      }
 
-   track.style.animationDuration = `${duration}s`;
-  track.classList.add('is-animated');
+      titleEl.textContent = sourceCard?.querySelector('.card-title')?.textContent || caseId;
+      subEl.textContent = sourceCard?.querySelector('.card-sub')?.textContent || '';
+      asideTitle.textContent = titleEl.textContent;
+      links.innerHTML = '';
+      const live = sourceCard?.querySelector('.link-btn.live')?.getAttribute('href');
+      const repo = sourceCard?.querySelector('.link-btn.repo')?.getAttribute('href');
+      if(live) links.appendChild(createLink('Live', live));
+      if(repo) links.appendChild(createLink('Repo', repo));
+      notes.textContent = '';
 
-   let running = true;
-  function pause(){ track.style.animationPlayState = 'paused'; running = false; }
-  function resume(){ track.style.animationPlayState = 'running'; running = true; }
+      function createLink(text, href){
+        const a = document.createElement('a');
+        a.className = 'link-btn';
+        a.href = href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = '<i class="fa-solid fa-arrow-up-right-from-square"></i> ' + text;
+        return a;
+      }
 
-  marquee.addEventListener('mouseenter', pause, {passive:true});
-  marquee.addEventListener('mouseleave', ()=>{ if(!document.activeElement || !marquee.contains(document.activeElement)) resume(); }, {passive:true});
-  marquee.addEventListener('focusin', pause);
-  marquee.addEventListener('focusout', ()=>{ if(!marquee.matches(':hover')) resume(); });
-
-   let to = null;
-  window.addEventListener('resize', ()=>{
-    clearTimeout(to);
-    to = setTimeout(()=>{
-       track.classList.remove('is-animated');
-      track.style.animationDuration = '';
-      buildRepeatedBlock();
-      const newContentWidth = track.scrollWidth || marquee.clientWidth*2;
-      const newDuration = Math.max(8, Math.round((newContentWidth / marquee.clientWidth) * secondsPerViewport));
-      track.style.animationDuration = `${newDuration}s`;
-      track.classList.add('is-animated');
-    }, 180);
-  }, {passive:true});
-}
-
-  function initCaseModal(){
-    const modal = document.getElementById('case-modal');
-    if(!modal) return;
-    const panel = modal.querySelector('.modal-panel');
-    const titleEl = $('#case-title', modal) || $('#case-title');
-    const subEl = $('#case-sub', modal) || $('#case-sub');
-    const openExternal = $('#case-open-external');
-    const closeBtn = $('#case-close');
-    const overview = $('#case-overview-text');
-    const problem = $('#case-problem-text');
-    const approach = $('#case-approach-text');
-    const highlightsList = $('#case-highlights-list');
-    const screenshotsHolder = $('#case-screens-carousel');
-    const techEl = $('#case-tech');
-    const metricsEl = $('#case-metrics');
-    const linksEl = $('#case-links');
-    const notesEl = $('#case-notes');
-    let lastFocused = null;
-    let keyHandler = null;
-    function readCaseJson(id){
-      try{ const script = document.getElementById('case-'+id); if(!script) return null; return JSON.parse(script.textContent); }catch(e){ return null; }
-    }
-    function clearModal(){
-      titleEl.textContent = '';
-      subEl.textContent = '';
-      overview.textContent = '';
-      problem.textContent = '';
-      approach.textContent = '';
-      highlightsList.innerHTML = '';
-      screenshotsHolder.innerHTML = '';
-      techEl.innerHTML = '';
-      metricsEl.textContent = '';
-      linksEl.innerHTML = '';
-      notesEl.textContent = '';
-      if(openExternal) openExternal.removeAttribute('href');
-    }
-    function buildGallery(images){
-      const gallery = document.createElement('div');
-      gallery.className = 'case-gallery';
-      const viewer = document.createElement('div');
-      viewer.className = 'viewer';
-      const mainImg = document.createElement('img');
-      mainImg.alt = '';
-      mainImg.decoding = 'async';
-      mainImg.style.maxWidth = '100%';
-      mainImg.style.maxHeight = '100%';
-      mainImg.style.objectFit = 'contain';
-      viewer.appendChild(mainImg);
-      const prev = document.createElement('button');
-      prev.className = 'control prev';
-      prev.setAttribute('aria-label','Previous image');
-      prev.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      const next = document.createElement('button');
-      next.className = 'control next';
-      next.setAttribute('aria-label','Next image');
-      next.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      viewer.appendChild(prev);
-      viewer.appendChild(next);
-      const thumbs = document.createElement('div');
-      thumbs.className = 'thumbs';
-      images.forEach((src, i)=>{
+      thumbs.innerHTML = '';
+      imgs.forEach((obj, idx) => {
         const t = document.createElement('button');
         t.className = 'thumb';
-        t.type = 'button';
-        const ti = document.createElement('img');
-        ti.src = src;
-        ti.alt = `Screenshot ${i+1}`;
-        ti.decoding = 'async';
-        t.appendChild(ti);
-        t.addEventListener('click', ()=> setIndex(i));
+        t.setAttribute('aria-current', idx===0 ? 'true' : 'false');
+        const im = document.createElement('img');
+        im.src = obj.src;
+        im.alt = obj.alt || titleEl.textContent + ' screenshot ' + (idx+1);
+        t.appendChild(im);
+        t.addEventListener('click', function(){ setMain(idx); });
         thumbs.appendChild(t);
       });
-      gallery.appendChild(viewer);
-      gallery.appendChild(thumbs);
-      let idx = 0;
-      function setIndex(n){
-        idx = (n + images.length) % images.length;
-        mainImg.src = images[idx];
-        Array.from(thumbs.children).forEach((c,j)=> c.setAttribute('aria-current', j === idx ? 'true' : 'false'));
-        const active = thumbs.children[idx];
-        if(active) active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-      }
-      prev.addEventListener('click', ()=> setIndex(idx-1));
-      next.addEventListener('click', ()=> setIndex(idx+1));
-      function onKey(e){
-        if(modal.getAttribute('aria-hidden') === 'true') return;
-        if(e.key === 'ArrowLeft') prev.click();
-        if(e.key === 'ArrowRight') next.click();
-      }
-      window.addEventListener('keydown', onKey);
-      let startX = null, startY = null;
-      viewer.addEventListener('pointerdown', (ev)=>{ startX = ev.clientX; startY = ev.clientY; viewer.setPointerCapture && viewer.setPointerCapture(ev.pointerId); });
-      viewer.addEventListener('pointerup', (ev)=>{ if(startX === null) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; if(Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)){ if(dx < 0) next.click(); else prev.click(); } startX = null; startY = null; });
-      viewer.addEventListener('click', (ev)=>{ if(ev.target && ev.target.tagName && ev.target.tagName.toLowerCase() === 'img'){ const overlay = document.createElement('div'); overlay.className = 'case-zoom-overlay'; overlay.tabIndex = -1; const big = document.createElement('img'); big.src = images[idx]; big.alt = ''; overlay.appendChild(big); overlay.addEventListener('click', ()=> overlay.remove()); document.body.appendChild(overlay); overlay.focus(); } });
-      setIndex(0);
-      return { gallery, cleanup: ()=>{ window.removeEventListener('keydown', onKey); } };
-    }
-    function openModalWithCase(c){
-      if(!c){ createToast('Case data missing', {type:'error'}); return; }
-      lastFocused = document.activeElement;
-      titleEl.textContent = c.title || 'Case study';
-      subEl.textContent = c.subtitle || '';
-      overview.textContent = c.overview || '';
-      problem.textContent = c.problem || '';
-      approach.textContent = c.approach || '';
-      highlightsList.innerHTML = '';
-      (c.highlights||[]).forEach(h=>{ const li = document.createElement('li'); li.textContent = h; highlightsList.appendChild(li); });
-      screenshotsHolder.innerHTML = '';
-      const images = (c.screenshots||[]).slice();
-      const built = images.length ? buildGallery(images) : null;
-      if(built) screenshotsHolder.appendChild(built.gallery);
-      techEl.innerHTML = (c.tech||[]).map(t=>`<span class="badge-pill" style="margin-right:6px">${t}</span>`).join(' ');
-      metricsEl.textContent = c.metrics || '';
-      notesEl.textContent = c.notes || '';
-      linksEl.innerHTML = '';
-      (c.links||[]).forEach(l=>{ const a = document.createElement('a'); a.href = l.href||'#'; a.target = '_blank'; a.rel = 'noopener'; a.className = 'link-btn'; a.style.marginRight = '8px'; a.textContent = l.label || 'Open'; linksEl.appendChild(a); });
-      const live = (c.links||[]).find(x=>/live|staging|demo/i.test((x.label||''))) || (c.links||[])[0];
-      if(openExternal && live) openExternal.href = live.href;
-      else if(openExternal) openExternal.removeAttribute('href');
+
+      let current = 0;
+      function setMain(i){ current = i; const obj = imgs[i] || imgs[0]; mainImg.src = obj.src; mainImg.alt = obj.alt || titleEl.textContent; Array.from(thumbs.children).forEach((b,bi)=> b.setAttribute('aria-current', bi===i ? 'true' : 'false')); }
+      setMain(0);
+
+      const externalHref = live || repo || '';
+      if(externalHref){ openExternal.href = externalHref; openExternal.style.display = 'inline-flex'; } else { openExternal.style.display = 'none'; }
+
+      modal.setAttribute('aria-hidden','false');
       modal.style.display = 'flex';
-      modal.setAttribute('aria-hidden','false');
-      document.documentElement.style.overflow = 'hidden';
-      try{ closeBtn.focus(); }catch(e){}
-      function trapFocus(e){ if(!panel.contains(e.target)){ e.stopPropagation(); panel.querySelector('button, a, [href], input, textarea')?.focus(); } }
-      keyHandler = function(e){ if(e.key === 'Escape'){ closeModal(); } };
-      document.addEventListener('focus', trapFocus, true);
-      document.addEventListener('keydown', keyHandler);
-      modal._trapFocus = trapFocus;
-      modal._built = built;
+      trapFocus(modal);
+      modal.__opener = opener || document.activeElement;
+      body.classList.add('case-open');
+      if(window.gtag) window.gtag('event','open_case',{event_label:caseId});
     }
-    function closeModal(){
-      modal.style.display = 'none';
+
+    function closeCaseModal(){
+      const modal = qs('#case-modal');
+      if(!modal) return;
       modal.setAttribute('aria-hidden','true');
-      clearModal();
-      document.documentElement.style.overflow = '';
-      if(modal._trapFocus) document.removeEventListener('focus', modal._trapFocus, true);
-      if(keyHandler) document.removeEventListener('keydown', keyHandler);
-      if(modal._built && modal._built.cleanup) modal._built.cleanup();
-      if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-      modal._trapFocus = null;
-      modal._built = null;
-      keyHandler = null;
-    }
-    modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
-    closeBtn.addEventListener('click', closeModal);
-    document.addEventListener('click', (ev)=>{
-      const btn = ev.target.closest('[data-case-open]');
-      if(!btn) return;
-      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.getAttribute('data-case-id');
-      if(!id) return;
-      ev.preventDefault();
-      const c = readCaseJson(id);
-      openModalWithCase(c);
-    });
-  }
-  function initContactEnhanced(){
-    const form = document.getElementById('contact-form-pro');
-    if(!form) return;
-    const sendBtn = form.querySelector('#cf-send');
-    const copyBtn = form.querySelector('#cf-copy-email');
-    const statusEl = document.getElementById('cf-status');
-    const resultEl = document.getElementById('cf-result');
-    function setSending(v){ if(!sendBtn) return; if(v){ sendBtn.classList.add('sending'); sendBtn.disabled = true; sendBtn.setAttribute('aria-disabled','true'); } else { sendBtn.classList.remove('sending'); sendBtn.disabled = false; sendBtn.removeAttribute('aria-disabled'); } }
-    function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((e||'').trim()); }
-    form.addEventListener('submit', async function(e){
-      e.preventDefault();
-      statusEl.textContent = '';
-      resultEl.textContent = '';
-      const name = (form.querySelector('#cf-name')?.value || '').trim();
-      const email = (form.querySelector('#cf-email')?.value || '').trim();
-      const phone = (form.querySelector('#cf-phone')?.value || '').trim();
-      const subject = (form.querySelector('#cf-subject')?.value || 'Portfolio message').trim();
-      const message = (form.querySelector('#cf-message')?.value || '').trim();
-      const honeypot = (form.querySelector('[name="website"]')?.value || '').trim();
-      if(honeypot) return;
-      if(!name){ statusEl.textContent = 'Please enter your name'; createToast('Please enter your name', {type:'warn'}); return; }
-      if(!email && !phone){ statusEl.textContent = 'Provide an email or phone'; createToast('Provide email or phone', {type:'warn'}); return; }
-      if(email && !isValidEmail(email)){ statusEl.textContent = 'Enter a valid email'; createToast('Enter a valid email', {type:'warn'}); return; }
-      if(!message || message.length < 8){ statusEl.textContent = 'Write a short message (8+ chars)'; createToast('Write a short message (8+ chars)', {type:'warn'}); return; }
-      const payload = { name, email, phone, subject, message, ts: new Date().toISOString() };
-      const endpoint = form.dataset.endpoint && form.dataset.endpoint.trim() ? form.dataset.endpoint.trim() : null;
-      setSending(true);
-      statusEl.textContent = 'Sending…';
-      try{
-        if(endpoint){
-          const res = await fetch(endpoint, { method:'POST', headers:{ 'Content-Type':'application/json', 'Accept':'application/json' }, body: JSON.stringify(payload) });
-          if(res.ok){ statusEl.textContent = 'Message sent — thank you!'; resultEl.textContent = 'I received your message — I’ll reply shortly.'; createToast('Message sent', {type:'success'}); form.reset(); }
-          else { const txt = await res.text().catch(()=>res.statusText||'Error'); statusEl.textContent = 'Server error: message not sent'; createToast('Server error — try again later', {type:'error'}); }
-        } else {
-          try{ await navigator.clipboard.writeText(JSON.stringify(payload, null, 2)); createToast('No endpoint configured — message copied to clipboard', {type:'warn'}); resultEl.textContent = 'No endpoint configured — message copied to clipboard'; form.reset(); }
-          catch(e){ createToast('No endpoint and unable to copy — please configure an endpoint', {type:'error'}); statusEl.textContent = 'No endpoint configured'; }
-        }
-      }catch(err){
-        statusEl.textContent = 'Network error — message not sent';
-        createToast('Network error', {type:'error'});
-      }finally{ setTimeout(()=> setSending(false), 320); }
-    });
-    if(copyBtn){
-      copyBtn.addEventListener('click', async ()=>{
-        try{ await navigator.clipboard.writeText(document.getElementById('aside-email')?.textContent || 'senujames23@gmail.com'); createToast('Email copied to clipboard', {type:'success'}); }
-        catch(e){ createToast('Unable to copy — please copy manually', {type:'error'}); }
-      });
-    }
-  }
-  function initMisc(){
-    $$('a[target="_blank"]').forEach(a=>{ if(!a.getAttribute('rel')) a.setAttribute('rel','noopener noreferrer'); });
-    $$('a.repo, a.link-btn.repo').forEach(a=>{ if(!a.hasAttribute('aria-label')){ const label = `Open repository for ${ (a.closest('.card')?.querySelector('.card-title')?.textContent || 'project') }`; a.setAttribute('aria-label', label); }});
-  }
-  function boot(){
-    initSmoothScroll();
-    initTiltCards();
-    initProjectFilters();
-    initCaseModal();
-    initMarquee();
-    initContactEnhanced();
-    initMisc();
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-})();
-</script>
-
- <script>
-(function(){
-  const el = document.getElementById('rotating-role');
-  if(!el) return;
-  const roles = [
-    'Web Developer',
-    'Frontend Engineer',
-    'AI Specialist',
-    'Design Systems Lead',
-    'Backend Engineer'
-  ];
-  let idx = roles.indexOf(el.textContent) >= 0 ? roles.indexOf(el.textContent) : 0;
-
-   el.classList.add('role-fade','show'); 
-  el.textContent = roles[idx];
-
-   const interval = 2400;
-  setInterval(()=>{
-     el.classList.remove('show');
-    setTimeout(()=>{
-      idx = (idx + 1) % roles.length;
-      el.textContent = roles[idx];
-       requestAnimationFrame(()=> el.classList.add('show'));
-    }, 380);  
-  }, interval);
-})();
-</script>
- <script>
-(function(){
-  const grid = document.getElementById('projects-grid');
-  const btnAll = document.getElementById('filter-all');
-  const btnWeb = document.getElementById('filter-web');
-  const btnAi = document.getElementById('filter-ai');
-  const buttons = [btnAll, btnWeb, btnAi].filter(Boolean);
-  if(!grid) return;
-
-  function setPressed(activeBtn){
-    buttons.forEach(b => b && b.setAttribute('aria-pressed', 'false'));
-    if(activeBtn) activeBtn.setAttribute('aria-pressed','true');
-  }
-
-  function applyFilter(name){  
-    const cards = Array.from(grid.querySelectorAll('.card'));
-    cards.forEach(c=>{
-      const cats = (c.dataset.categories || '').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
-      let match = (name === 'all') || (cats.includes(name));
-      c.style.display = match ? '' : 'none';
-      c.setAttribute('aria-hidden', match ? 'false' : 'true');
-    });
-  }
-
-  btnAll && btnAll.addEventListener('click', ()=>{ setPressed(btnAll); applyFilter('all'); });
-  btnWeb && btnWeb.addEventListener('click', ()=>{ setPressed(btnWeb); applyFilter('web'); });
-  btnAi && btnAi.addEventListener('click', ()=>{ setPressed(btnAi); applyFilter('ai'); });
-
-   setPressed(btnAll);
-  applyFilter('all');
-})();
-</script>
-<script>
-(function(){
-   function createModalGallery(images, holder){
-     holder.innerHTML = '';
-     const viewer = document.createElement('div');
-    viewer.className = 'case-gallery';
-    const big = document.createElement('div');
-    big.className = 'viewer';
-    const img = document.createElement('img');
-    img.alt = '';
-    img.decoding = 'async';
-    big.appendChild(img);
-    viewer.appendChild(big);
-
-     const prev = document.createElement('button');
-    prev.className = 'control prev';
-    prev.type = 'button';
-    prev.setAttribute('aria-label','Previous image');
-    prev.innerHTML = '&#8592;';  
-    const next = document.createElement('button');
-    next.className = 'control next';
-    next.type = 'button';
-    next.setAttribute('aria-label','Next image');
-    next.innerHTML = '&#8594;';
-     [prev,next].forEach(b=>{
-      b.style.zIndex = 1200;
-      b.style.pointerEvents = 'auto';
-    });
-    big.appendChild(prev);
-    big.appendChild(next);
-
-     const thumbs = document.createElement('div');
-    thumbs.className = 'thumbs';
-    viewer.appendChild(thumbs);
-
-    holder.appendChild(viewer);
-
-    let i = 0;
-    function renderIndex(){
-      img.src = images[i];
-       Array.from(thumbs.children).forEach((t, idx)=>{
-        t.setAttribute('aria-current', idx === i ? 'true' : 'false');
-      });
+      modal.style.display = 'none';
+      releaseFocus(modal);
+      body.classList.remove('case-open');
+      if(modal.__opener && typeof modal.__opener.focus === 'function') modal.__opener.focus();
     }
 
-     images.forEach((src, idx)=>{
-      const b = document.createElement('button');
-      b.className = 'thumb';
-      b.type = 'button';
-      const ti = document.createElement('img');
-      ti.src = src;
-      ti.alt = `Screenshot ${idx+1}`;
-      b.appendChild(ti);
-      b.addEventListener('click', ()=>{ i = idx; renderIndex(); });
-      thumbs.appendChild(b);
+    qsa('[data-case-open]').forEach(btn => {
+      btn.addEventListener('click', function(e){ const id = this.closest('[data-case-id]')?.getAttribute('data-case-id') || this.getAttribute('data-case-open'); openCaseModal(id, this); });
     });
 
-     prev.addEventListener('click', ()=>{
-      i = (i - 1 + images.length) % images.length;
-      renderIndex();
-    });
-    next.addEventListener('click', ()=>{
-      i = (i + 1) % images.length;
-      renderIndex();
-    });
+    function trapFocus(container){
+      const focusable = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      const nodes = Array.from(container.querySelectorAll(focusable));
+      const first = nodes[0];
+      const last = nodes[nodes.length-1];
+      function keyHandler(e){ if(e.key === 'Tab'){ if(e.shiftKey){ if(document.activeElement === first){ e.preventDefault(); last.focus(); } } else { if(document.activeElement === last){ e.preventDefault(); first.focus(); } } } }
+      container.__focusHandler = keyHandler;
+      document.addEventListener('keydown', keyHandler);
+      first?.focus();
+    }
 
-     window.addEventListener('keydown', function onKey(e){
-      if(document.getElementById('case-modal')?.getAttribute('aria-hidden') === 'false'){
-        if(e.key === 'ArrowLeft'){ prev.click(); }
-        if(e.key === 'ArrowRight'){ next.click(); }
-        if(e.key === 'Escape'){ document.getElementById('case-close')?.click(); }
+    function releaseFocus(container){ if(!container || !container.__focusHandler) return; document.removeEventListener('keydown', container.__focusHandler); container.__focusHandler = null; }
+
+    document.addEventListener('click', function(e){
+      if(e.target.matches('.case-gallery .viewer img')){
+        const src = e.target.src;
+        const overlay = document.createElement('div');
+        overlay.className = 'case-zoom-overlay';
+        overlay.innerHTML = '<img src="' + src + '">';
+        overlay.addEventListener('click', function(){ overlay.remove(); });
+        document.body.appendChild(overlay);
       }
-    }, {passive:true});
-
-    renderIndex();
-    return { viewer, prev, next, thumbs, setIndex: idx => { i = idx; renderIndex(); } };
-  }
-
-   
-  window.createModalGallery = createModalGallery;  
-})();
-</script>
-<script>
-(function(){
-  if(typeof gsap === 'undefined') return;
-
-   gsap.utils.toArray('.sticker, .float-badge').forEach((el, i)=>{
-    gsap.fromTo(el, {y:0, rotation: (i%2? -4:4)}, {
-      y: (i%2? -6:6),
-      rotation: (i%2? 6:-6),
-      duration: 4 + (i*0.4),
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      delay: i*0.12
-    });
-  });
-
-   gsap.to('.profile-ring', {scale:1.03, duration: 6, yoyo:true, repeat:-1, ease:'sine.inOut'});
-
-   const hero = document.getElementById('home-hero');
-  const blob = document.querySelector('#home-hero .hero-accent-blob') || document.createElement('div');
-  if(!document.querySelector('#home-hero .hero-accent-blob')) {
-    blob.className = 'hero-accent-blob';
-    hero.appendChild(blob);
-  }
-  hero.addEventListener('pointermove', (e)=>{
-    const r = hero.getBoundingClientRect();
-    const px = (e.clientX - r.left)/r.width - 0.5;
-    const py = (e.clientY - r.top)/r.height - 0.5;
-    gsap.to(blob, {x: px * 40, y: py * 24, duration: 0.9, ease: 'power3.out'});
-  }, {passive:true});
-
-   gsap.from('.hero-left .kicker, .hero-left .hi, .role-rotator, .lead, .cta-row .btn', {
-    stagger: 0.08, y: 12, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.16
-  });
-})();
-</script>
-<script>
-(function(){
-  const track = document.querySelector('.marquee-track');
-  if(!track) return;
-   Array.from(track.children).forEach((card, i) => {
-    card.classList.add(i % 2 === 0 ? 'rotate-left' : 'rotate-right');
-     card.setAttribute('tabindex', '0');
-  });
-
-   const marquee = document.querySelector('.marquee--framed');
-  let isDown=false, startX=0, scrollLeft=0;
-  marquee.addEventListener('pointerdown', (e)=>{
-    isDown = true;
-    marquee.setPointerCapture(e.pointerId);
-    startX = e.clientX;
-    scrollLeft = marquee.scrollLeft;
-    marquee.style.cursor = 'grabbing';
-  }, {passive:false});
-  marquee.addEventListener('pointermove', (e)=>{
-    if(!isDown) return;
-    const dx = e.clientX - startX;
-    marquee.scrollLeft = scrollLeft - dx;
-  }, {passive:false});
-  ['pointerup','pointercancel','pointerleave'].forEach(ev => {
-    marquee.addEventListener(ev, (e)=>{
-      isDown=false;
-      marquee.style.cursor = 'auto';
-      try{ marquee.releasePointerCapture && marquee.releasePointerCapture(e.pointerId); }catch(e){}
-    });
-  });
-})();
-</script>
-<script>
-document.getElementById('download-resume-btn').addEventListener('click', async function (e) {
-  e.preventDefault();
-  const url = this.href;
-
-   const newTab = window.open('', '_blank', 'noopener,noreferrer');
-
-  try {
-     const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
-    if (!res.ok) throw new Error('Network error: ' + res.status);
-
-    const blob = await res.blob();
-    const blobUrl = URL.createObjectURL(blob);
-
-     const a = document.createElement('a');
-    a.href = blobUrl;
-     a.download = 'Senu_James_Resume.pdf';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-     if (newTab) {
-      newTab.location = blobUrl;
-    } else {
-       window.open(blobUrl, '_blank', 'noopener,noreferrer');
-    }
-
-     setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
-  } catch (err) {
-    console.error('Resume download/open failed', err);
-     if (newTab) {
-      newTab.location = url;
-    } else {
-      window.location.href = url;
-    }
-  }
-});
-</script>
-  <script>
-/* Small helper */
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
-/* NAV TOGGLE */
-(function navToggle(){
-  const btn = document.querySelector('.nav-toggle');
-  const menu = document.getElementById('primary-nav');
-  if(!btn || !menu) return;
-  btn.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    menu.classList.toggle('open');
-    if(!expanded){
-      menu.classList.add('open');
-      document.body.classList.add('nav-open');
-    } else {
-      menu.classList.remove('open');
-      document.body.classList.remove('nav-open');
-    }
-  });
-})();
-
-/* ROLE ROTATOR (simple) */
-(function roleRotator(){
-  const roles = ['Web Developer','AI Engineer','Product-builder','Community Tools'];
-  const el = document.getElementById('rotating-role');
-  if(!el) return;
-  let i = 0;
-  setInterval(()=>{
-    i = (i + 1) % roles.length;
-    el.textContent = roles[i];
-  }, 2800);
-})();
-
-/* TILT EFFECT (basic fallback if GSAP tilt block broken) */
-(function tiltFallback(){
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(prefersReduced) return;
-  const cards = $$('.tilt');
-  cards.forEach(card=>{
-    card.addEventListener('mousemove', e=>{
-      const rect = card.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width;
-      const py = (e.clientY - rect.top) / rect.height;
-      const rx = (py - 0.5) * 8; // rotateX
-      const ry = (px - 0.5) * -8; // rotateY
-      card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-    });
-    card.addEventListener('mouseleave', ()=> card.style.transform = '');
-  });
-})();
-
-/* CASE MODAL: open/close, populate from JSON blocks */
-(function caseModal(){
-  const modal = document.getElementById('case-modal');
-  const openButtons = $$('[data-case-open]');
-  const closeBtn = document.getElementById('case-close');
-  const openExternal = document.getElementById('case-open-external');
-
-  function populateAndOpen(caseId, opener){
-    const jsonScript = document.getElementById('case-' + caseId);
-    if(!jsonScript) return;
-    const data = JSON.parse(jsonScript.textContent);
-    // populate fields
-    $('#case-title').textContent = data.title || 'Case study';
-    $('#case-sub').textContent = data.subtitle || '';
-    $('#case-overview-text').textContent = data.overview || '';
-    $('#case-problem-text').textContent = data.problem || '';
-    $('#case-approach-text').textContent = data.approach || '';
-    const hl = $('#case-highlights-list'); hl.innerHTML='';
-    (data.highlights||[]).forEach(h=>{ const li=document.createElement('li'); li.textContent=h; hl.appendChild(li); });
-    const carousel = $('#case-screens-carousel'); carousel.innerHTML='';
-    (data.screenshots||[]).forEach(s=>{
-      const img = document.createElement('img'); img.src = s; img.alt = `${data.title} screenshot`; img.style.maxWidth='140px'; img.style.borderRadius='8px'; img.style.marginRight='8px';
-      carousel.appendChild(img);
-    });
-    $('#case-tech').textContent = (data.tech || []).join(', ');
-    $('#case-metrics').textContent = data.metrics || '';
-    const links = $('#case-links'); links.innerHTML = '';
-    (data.links||[]).forEach(l=>{
-      const a = document.createElement('a'); a.href = l.href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = l.label || 'Open'; a.style.display='inline-block'; a.style.marginRight='8px';
-      links.appendChild(a);
-    });
-    $('#case-notes').textContent = data.notes || '';
-    // set external link href
-    if(openExternal) openExternal.href = (data.links && data.links[0] && data.links[0].href) || '#';
-    // open modal
-    modal.setAttribute('aria-hidden','false');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    // focus trap: focus first focusable element inside modal
-    const focusable = modal.querySelectorAll('a,button,input,textarea,[tabindex]:not([tabindex="-1"])');
-    if(focusable.length) focusable[0].focus();
-    // remember opener to restore focus later
-    modal._opener = opener || document.activeElement;
-  }
-
-  openButtons.forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      const id = btn.getAttribute('data-case-open') || btn.closest('[data-case-id]')?.getAttribute('data-case-id');
-      if(!id) return;
-      populateAndOpen(id, btn);
-    });
-  });
-
-  if(closeBtn) closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
-
-  function closeModal(){
-    modal.setAttribute('aria-hidden','true');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-    try{ if(modal._opener) modal._opener.focus(); }catch(e){}
-  }
-
-  document.addEventListener('keydown', (ev)=>{
-    if(ev.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
-  });
-})();
-
-/* CONTACT FORM: submit to Formspree via fetch */
-(function contactForm(){
-  const form = document.getElementById('contact-form-pro');
-  if(!form) return;
-  const endpoint = form.getAttribute('data-endpoint') || form.action;
-  const status = document.getElementById('cf-status');
-  form.addEventListener('submit', async (ev)=>{
-    ev.preventDefault();
-    const btn = document.getElementById('cf-send');
-    try {
-      btn.disabled = true;
-      btn.classList.add('sending');
-      status.textContent = 'Sending…';
-      const formData = new FormData(form);
-      // basic honeypot check
-      if(formData.get('website')) { status.textContent = 'Spam detected.'; btn.disabled=false; btn.classList.remove('sending'); return; }
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: formData
-      });
-      if(res.ok){
-        status.textContent = 'Message sent — thank you!';
-        createToast('Message sent — thanks!', { type: 'success' });
-        form.reset();
-      } else {
-        const data = await res.json().catch(()=>null);
-        status.textContent = (data && data.error) ? data.error : 'Sending failed. Try again later.';
-        createToast('Sending failed', { type: 'error' });
-      }
-    } catch(err){
-      status.textContent = 'Network error. Please try again.';
-      createToast('Network error', { type: 'error' });
-    } finally {
-      btn.disabled = false;
-      btn.classList.remove('sending');
-    }
-  });
-})();
-
-/* COPY EMAIL BUTTON */
-(function copyEmail(){
-  const copyBtn = document.getElementById('cf-copy-email');
-  const emailEl = document.getElementById('aside-email');
-  if(!copyBtn || !emailEl) return;
-  copyBtn.addEventListener('click', async ()=>{
-    const email = emailEl.textContent.trim();
-    try {
-      await navigator.clipboard.writeText(email);
-      createToast('Email copied to clipboard', { type: 'success' });
-    } catch(e) {
-      // fallback
-      const ta = document.createElement('textarea');
-      ta.value = email; document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); createToast('Email copied to clipboard', { type: 'success' }); } catch(_) { createToast('Press Ctrl+C to copy', { type: 'warn' }); }
-      ta.remove();
-    }
-  });
-})();
-</script>
-<script>
-(function(){
-  try {
-     var gallery = document.querySelector('.hero .gallery, .hero-gallery, .gallery-inline');
-    if (gallery) {
-       Array.from(gallery.children).forEach(function(c){
-        if (c.tagName && c.tagName.toLowerCase() === 'img') {
-          var wrap = document.createElement('div'); wrap.className = 'gallery-item';
-          c.parentNode.replaceChild(wrap, c); wrap.appendChild(c);
-        } else if (!c.classList.contains('gallery-item')) {
-          c.classList.add('gallery-item');
-        }
-      });
-       gallery.setAttribute('tabindex','0');
-      gallery.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') gallery.scrollBy({left:160, behavior:'smooth'}); if (e.key==='ArrowLeft') gallery.scrollBy({left:-160, behavior:'smooth'}); });
-    }
-
-     var ctas = document.querySelector('.hero .cta-row, .hero .ctas, .hero-actions');
-    if (ctas) {
-      var buttons = ctas.querySelectorAll('.btn, button, a');
-      if (buttons.length >= 3) {
-        // mark third button as full-row (CSS will pick it up)
-        buttons[2].classList.add('full-row');
-      }
-    }
-
-     Array.from(document.querySelectorAll('.hero img, .gallery-item img')).forEach(function(img){
-      img.style.transform = 'translateZ(0)';
-      img.style.imageRendering = '-webkit-optimize-contrast';
     });
 
-     var hero = document.querySelector('.hero, #home-hero, .hero-section');
-    if (hero) {
-      var header = document.querySelector('.site-header, header');
-      if (header && getComputedStyle(header).position === 'fixed') {
-        hero.style.marginTop = (header.offsetHeight + 10) + 'px';
-      }
-    }
-  } catch(e) { console.warn('hero-fix error', e); }
-})();
-</script>
-<script>
-(function(){
-  // ROTATING ROLES
-  const roles = ['Web Developer','AI & Product Builder','Fullstack Engineer','Product Designer'];
-  const roleEl = document.getElementById('rotating-role');
-  let i = 0;
-  setInterval(()=> {
-    i = (i+1) % roles.length;
-    roleEl.textContent = roles[i];
-  }, 3000);
+    const cards = qsa('.card');
+    cards.forEach(c=> c.setAttribute('tabindex','0'));
 
-  // SIMPLE COUNT-UP for metric-number elements having data-value
-  document.querySelectorAll('.metric-number').forEach(el=>{
-    const target = Number(el.dataset.value || el.textContent.replace(/[^\d]/g,''));
-    if (!target) return;
-    let t=0;
-    const speed = Math.max(20, Math.round(1000/Math.log2(target+2)));
-    const iv = setInterval(()=> {
-      t += Math.ceil(target/ (30));
-      if (t >= target) { el.textContent = target.toLocaleString(); clearInterval(iv); }
-      else el.textContent = (''+t);
-    }, speed);
-  });
-})();
-</script>
-<!-- Modal (place near end of body) -->
-<div id="image-modal" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.85);align-items:center;justify-content:center">
-  <button id="modal-close" aria-label="Close viewer" style="position:absolute;top:18px;right:18px;padding:10px 12px;border-radius:8px;background:#fff">Close</button>
-  <img id="modal-img" src="" alt="" style="max-width:92vw;max-height:92vh;border-radius:8px;box-shadow:0 30px 120px rgba(0,0,0,.6)" />
-</div>
+    const tiltObserver = new IntersectionObserver(entries => { entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in-view'); } }); }, {threshold:0.12});
+    qsa('#home-hero, .card, .profile-card, .marquee-wrap').forEach(n=> tiltObserver.observe(n));
 
-<script>
-(function(){
-  const modal = document.getElementById('image-modal');
-  const modalImg = document.getElementById('modal-img');
-  const close = document.getElementById('modal-close');
-
-  document.querySelectorAll('.marq-link').forEach(a=>{
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const img = a.querySelector('img');
-      if (!img) return window.open(a.href, '_blank');
-      modalImg.src = img.src;
-      modalImg.alt = img.alt || '';
-      modal.style.display = 'grid';
-      modal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      close.focus();
+    const contactForms = qsa('form');
+    contactForms.forEach(form => {
+      if(!form.closest('.contact-card')) return;
+      form.addEventListener('submit', function(e){ e.preventDefault(); const btn = form.querySelector('button[type="submit"]'); if(btn){ btn.classList.add('sending'); btn.setAttribute('aria-disabled','true'); } showToast('success','Message sent (demo)'); setTimeout(()=>{ if(btn){ btn.classList.remove('sending'); btn.removeAttribute('aria-disabled'); } form.reset(); }, 900); });
     });
+
+    function safeSendGtag(){ if(window.gtag) window.gtag('event','page_interaction'); }
+    setTimeout(safeSendGtag, 2000);
+
   });
-
-  function closeModal(){
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    modalImg.src = '';
-  }
-  close.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e)=> { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e)=> { if (e.key==='Escape') closeModal(); });
-
-})();
-</script>
-<script>
- (function () {
-  const roles = [
-    'Web Developer',
-    'Frontend Engineer',
-    'Backend Engineer',
-    'Product Designer',
-    'AI Engineer',
-    'Full-stack Builder',
-    'Product-first Maker'
-  ];
-  let idx = 0;
-  const el = document.getElementById('rotating-role');
-  const container = el ? el.parentElement : null;
-  const showDelay = 3800;  
-  const fadeMs = 360;
-
-  if (!el) return;
-
-  function showRole(i) {
-    el.classList.remove('role-fade');
-     el.style.transition = `opacity ${fadeMs}ms ease, transform ${fadeMs}ms ease`;
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(6px)';
-    setTimeout(() => {
-      el.textContent = roles[i];
-      el.style.opacity = 1;
-      el.style.transform = 'translateY(0)';
-    }, fadeMs);
-  }
-
-  let interval = null;
-  function start() {
-    if (interval) return;
-    interval = setInterval(() => {
-      idx = (idx + 1) % roles.length;
-      showRole(idx);
-    }, showDelay);
-  }
-  function stop() {
-    clearInterval(interval);
-    interval = null;
-  }
-
-   setTimeout(() => {
-    showRole(idx);
-    start();
-  }, 220);
-
-   ['mouseenter','focusin'].forEach(ev => {
-    container && container.addEventListener(ev, stop);
-  });
-  ['mouseleave','focusout'].forEach(ev => {
-    container && container.addEventListener(ev, start);
-  });
-
-   window._sj_roleRotator = {start, stop, roles};
 })();
 </script>
 
