@@ -3612,6 +3612,87 @@ button[aria-pressed="true"] {
   .wave-emoji { opacity: 1; transform: none; }
 }
 </style>
+ <style>
+   :root { --wave-size: 110px; }  
+
+   .wave-emoji {
+    width: var(--wave-size);
+    height: var(--wave-size);
+    display:inline-block;
+    transform-origin:center;
+    will-change:transform;
+    transition: transform .18s cubic-bezier(.2,.9,.2,1);
+  }
+
+   .wave-emoji.wave-active {
+    transform: translateY(-4px) scale(1.08);
+  }
+   .wave-emoji:focus,
+  .wave-emoji:hover {
+    transform: translateY(-4px) scale(1.06);
+  }
+
+  
+  @keyframes armWave {
+    0% { transform: rotate(0deg); }
+    12% { transform: rotate(-28deg); }   
+    24% { transform: rotate(24deg); }
+    36% { transform: rotate(-22deg); }
+    48% { transform: rotate(20deg); }
+    60% { transform: rotate(-14deg); }
+    72% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+   
+  .hero-left .desc-line {
+    position: relative;
+    z-index: 10;
+   }
+
+  .hero-left .desc-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;             
+    width: 66%;               
+    height: 6px;              
+    border-radius: 6px;
+    background: linear-gradient(90deg, #7c3aed 0%, #06b6d4 100%);  
+    box-shadow: 0 10px 28px rgba(124,58,237,0.08), 0 6px 18px rgba(6,182,212,0.06);
+    transform: translateX(-110%);  /* start off-screen to the left */
+    will-change: transform, opacity;
+    opacity: 1;
+    animation: descUnderlineSlide .95s cubic-bezier(.2,.9,.2,1) .38s forwards;
+  }
+
+  @keyframes descUnderlineSlide {
+    0% { transform: translateX(-110%); opacity: 0.0; }
+    60% { opacity: 1; }
+    100% { transform: translateX(0%); opacity: 1; }
+  }
+
+   @media (max-width:760px) {
+    .hero-left .desc-line::after {
+      width: 86%;
+      bottom: -8px;
+      height: 5px;
+      animation-duration: .8s;
+    }
+  }
+
+   @media (prefers-reduced-motion: reduce) {
+    .wave-emoji,
+    .wave-emoji.wave-active,
+    .hero-left .desc-line::after {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+    .hero-left .desc-line::after { transform: translateX(0) !important; }
+  }
+</style>
 
   </head>
 <body>
