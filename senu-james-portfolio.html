@@ -4763,6 +4763,277 @@ button[aria-pressed="true"] {
   });
 })();
 </script>
+<script>
+(function(){
+const caseData={
+  vitra:{
+    id:'vitra',
+    title:'Vitra AI',
+    subtitle:'AI-driven health & wellbeing platform',
+    summary:'A patient-first platform combining AI triage, herbal med catalog and appointment booking. Led design, prototyping and ML-driven symptom matching.',
+    highlights:['AI triage engine','Booking & calendar','Herbal medicines DB','Patient analytics'],
+    images:['vitra-ai.jpg','vitra-2.jpg','vitra-3.jpg'],
+    live:'https://vitra-ai.netlify.app/',
+    repo:'https://github.com/jvo-james/vitra-ai'
+  },
+  shuttle:{
+    id:'shuttle',
+    title:'Shuttle Tracker',
+    subtitle:'Real-time campus transport tracking',
+    summary:'Live vehicle locations and ETA pipeline that reduced average wait times. Built using a lightweight realtime feed and progressive web app patterns.',
+    highlights:['Live locations','Route alerts','Offline-first PWA','Low-latency updates'],
+    images:['shuttle.webp','shuttle-2.jpg'],
+    live:'https://jvo-james.github.io/knust/buses',
+    repo:'https://github.com/jvo-james/knust'
+  },
+  emart:{
+    id:'emart',
+    title:'E‑Mart',
+    subtitle:'Campus shopping & checkout',
+    summary:'Mobile-first marketplace for students with simple checkout flows, order tracking and quick reorders.',
+    highlights:['Mobile checkout','Inventory sync','Student wallets','Order tracking'],
+    images:['e-mart.jpeg','emart-2.jpg'],
+    live:'https://jvo-james.github.io/knust/',
+    repo:'https://github.com/jvo-james/knust'
+  },
+  fitness:{
+    id:'fitness',
+    title:'Fitness Tracker',
+    subtitle:'Leaderboard-driven workout logging',
+    summary:'Competition-ready dashboards and social leaderboards that encourage consistent progress and healthy competition among athletes.',
+    highlights:['Leaderboards','Workout logging','Performance charts'],
+    images:['fit.png','fit-2.jpg'],
+    live:'https://jvo-james.github.io/fit-track/home',
+    repo:'https://github.com/jvo-james/fit-track'
+  },
+  skillforge:{
+    id:'skillforge',
+    title:'SkillForge Registry',
+    subtitle:'Streamlined registration system',
+    summary:'A focused replacement for generic forms with better validation, attendee tracking and admin tools for organisers.',
+    highlights:['Custom flows','Auth & RSVPs','Exportable CSVs'],
+    images:['skill.jpg','skill-2.jpg'],
+    live:'https://jvo-james.github.io/skillforg-website/startup',
+    repo:'https://github.com/jvo-james/skillforg-website'
+  },
+  mhc:{
+    id:'mhc',
+    title:'Make Heaven Crowded',
+    subtitle:'Faith-driven e‑commerce & community hub',
+    summary:'An integrated platform for devotionals, shop and donations. Focused on accessibility and simple UX for broad audiences.',
+    highlights:['Shop & donations','Devotional engine','Design generator'],
+    images:['jfactor.jpg','mhc-2.jpg'],
+    live:'https://jvo-james.github.io/project/mhc1',
+    repo:'https://github.com/jvo-james/project'
+  }
+};
+function buildModal(){
+  if(document.getElementById('case-modal'))return;
+  const modal=document.createElement('div');
+  modal.id='case-modal';
+  modal.setAttribute('role','dialog');
+  modal.setAttribute('aria-hidden','true');
+  modal.setAttribute('aria-modal','true');
+  modal.innerHTML=String.raw`<div class="modal-panel" role="document">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div id="case-title" style="font-weight:900;font-size:20px"></div>
+        <div id="case-sub" style="color:rgba(20,28,38,0.56);font-weight:700;margin-top:6px"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a id="case-open-external" class="btn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:900">Open live</a>
+        <a id="case-open-repo" class="btn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(10,20,30,0.04);font-weight:900">View repo</a>
+        <button id="case-close" class="btn" aria-label="Close case" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:10px;font-weight:900">Close</button>
+      </div>
+    </div>
+    <div id="case-body" style="display:grid;grid-template-columns:1fr 360px;gap:22px;padding:20px;max-height:70vh;overflow:auto">
+      <main id="case-main">
+        <h4 id="case-heading" style="margin:0;font-weight:900"></h4>
+        <p id="case-summary" style="color:rgba(20,28,38,0.56);margin-top:8px;font-weight:700"></p>
+        <div class="case-gallery" style="margin-top:12px;display:flex;flex-direction:column;gap:12px">
+          <div class="viewer" id="case-viewer" style="min-height:220px;display:grid;place-items:center;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid rgba(10,20,30,0.04)"></div>
+          <div class="thumbs" id="case-thumbs" style="display:flex;gap:10px;overflow:auto;padding:6px"></div>
+        </div>
+      </main>
+      <aside id="case-aside" style="display:flex;flex-direction:column;gap:12px;align-self:start">
+        <strong>Project highlights</strong>
+        <div id="case-highlights" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="case-metrics" style="color:rgba(20,28,38,0.56);font-weight:700"></div>
+      </aside>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  setupModalInteractions(modal);
+}
+function setupModalInteractions(modal){
+  const close=document.getElementById('case-close');
+  const openExternal=document.getElementById('case-open-external');
+  const openRepo=document.getElementById('case-open-repo');
+  let lastFocus=null;
+  function trap(e){
+    if(e.key==='Tab'){
+      const focusables=modal.querySelectorAll('a,button,[tabindex]:not([tabindex="-1"])');
+      const first=focusables[0];
+      const last=focusables[focusables.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+    }
+    if(e.key==='Escape')closeModal();
+  }
+  function openModal(id){
+    const data=caseData[id];
+    if(!data)return;
+    lastFocus=document.activeElement;
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    populateModal(data);
+    close.focus();
+    document.addEventListener('keydown',trap);
+  }
+  function closeModal(){
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+    document.removeEventListener('keydown',trap);
+  }
+  close.addEventListener('click',closeModal);
+  openExternal.addEventListener('click',function(){
+    const href=this.dataset.href; if(href)window.open(href,'_blank')
+  });
+  openRepo.addEventListener('click',function(){
+    const href=this.dataset.href; if(href)window.open(href,'_blank')
+  });
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest('[data-case-open]');
+    if(btn){const id=btn.closest('[data-case-id]')?btn.closest('[data-case-id]').dataset.caseId:btn.dataset.caseOpen; openModal(id)}
+  });
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
+}
+function populateModal(data){
+  const titleEl=document.getElementById('case-title');
+  const subEl=document.getElementById('case-sub');
+  const heading=document.getElementById('case-heading');
+  const summary=document.getElementById('case-summary');
+  const viewer=document.getElementById('case-viewer');
+  const thumbs=document.getElementById('case-thumbs');
+  const highlights=document.getElementById('case-highlights');
+  const metrics=document.getElementById('case-metrics');
+  const openExternal=document.getElementById('case-open-external');
+  const openRepo=document.getElementById('case-open-repo');
+  titleEl.textContent=data.title;
+  subEl.textContent=data.subtitle;
+  heading.textContent=data.title;
+  summary.textContent=data.summary;
+  viewer.innerHTML='';
+  thumbs.innerHTML='';
+  data.images.slice(0,6).forEach(function(src,i){
+    const img=document.createElement('img');
+    img.src=src; img.alt=data.title+' screenshot '+(i+1); img.style.maxWidth='100%'; img.style.height='auto'; img.loading='lazy';
+    if(i===0){viewer.appendChild(img)}
+    const t=document.createElement('button');
+    t.className='thumb'; t.setAttribute('aria-current',i===0?'true':'false'); t.style.width='96px'; t.style.height='64px'; t.style.border='2px solid transparent'; t.style.borderRadius='10px'; t.style.overflow='hidden'; t.style.background='#fff'; t.appendChild(img.cloneNode()); t.addEventListener('click',function(){viewer.innerHTML=''; const large=document.createElement('img'); large.src=src; large.alt=data.title+' screenshot'; large.style.maxWidth='100%'; large.style.height='auto'; viewer.appendChild(large); thumbs.querySelectorAll('.thumb').forEach(function(b){b.setAttribute('aria-current','false')}); t.setAttribute('aria-current','true')});
+    thumbs.appendChild(t);
+  });
+  highlights.innerHTML='';
+  data.highlights.forEach(function(h){const d=document.createElement('div');d.className='badge-pill';d.textContent=h;highlights.appendChild(d)});
+  metrics.innerHTML='<div style="font-weight:900">Links</div>';
+  openExternal.dataset.href=data.live; openExternal.href=data.live; openRepo.dataset.href=data.repo; openRepo.href=data.repo;
+}
+function initRotator(){
+  const el=document.getElementById('rotating-role');
+  if(!el)return;
+  const roles=['Web Developer','Product Builder','AI Engineer','Design Systems Advocate','Fullstack Creator'];
+  let idx=0; let char=0; let deleting=false; let loop=0;
+  function tick(){
+    const cur=roles[idx];
+    if(!deleting){
+      char++; el.textContent=cur.slice(0,char);
+      if(char===cur.length){deleting=true; setTimeout(tick,900); return}
+    } else {
+      char--; el.textContent=cur.slice(0,char);
+      if(char===0){deleting=false; idx=(idx+1)%roles.length}
+    }
+    setTimeout(tick,deleting?40:80);
+  }
+  tick();
+}
+function initCounters(){
+  const items=Array.from(document.querySelectorAll('.metric-number[data-value]'));
+  if(!items.length)return;
+  const observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        animateAll(); observer.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  observer.observe(items[0]);
+  function animateAll(){
+    items.forEach(function(el){
+      const target=parseInt(el.dataset.value,10)||0; const start=1; const duration=1500; const startTime=performance.now();
+      requestAnimationFrame(function step(now){
+        const t=Math.min(1,(now-startTime)/duration); const eased=1-(1-t)*(1-t);
+        const current=Math.floor(start+(target-start)*eased);
+        el.textContent=current.toLocaleString();
+        if(t<1)requestAnimationFrame(step);
+        else el.textContent=target.toLocaleString();
+      });
+    });
+  }
+}
+function ensureContactForm(){
+  const wrapper=document.querySelector('.contact-card');
+  if(!wrapper)return;
+  let form=wrapper.querySelector('form#contact-form');
+  if(!form){
+    form=document.createElement('form'); form.id='contact-form'; form.innerHTML=String.raw`<div class="field"><input name="name" id="cf-name" required placeholder=" " autocomplete="name" type="text"><label class="label" for="cf-name">Your name</label></div><div class="form-row"><div class="field"><input name="email" id="cf-email" required placeholder=" " type="email" autocomplete="email"><label class="label" for="cf-email">Email</label></div><div class="field"><input name="subject" id="cf-subject" placeholder=" " type="text"><label class="label" for="cf-subject">Subject</label></div></div><div class="field"><textarea name="message" id="cf-message" required placeholder=" "></textarea><label class="label" for="cf-message">Message</label></div><div class="form-actions"><button type="submit" class="btn btn-primary send"><span>Send message</span><span class="btn-spinner" aria-hidden="true"></span></button><div id="cf-status" aria-live="polite"></div></div>`;
+    wrapper.insertBefore(form,wrapper.firstChild);
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    const name=form.name.value.trim(); const email=form.email.value.trim(); const subject=form.subject.value.trim()||'Message from portfolio'; const message=form.message.value.trim();
+    if(!name||!email||!message){showFieldError(form); return}
+    const btn=form.querySelector('button[type="submit"]'); btn.classList.add('sending'); btn.disabled=true; const status=document.getElementById('cf-status'); status.textContent='Sending';
+    const payload={name:name,email:email,subject:subject,message:message,source:window.location.href};
+    const action=form.action||'';
+    if(action && action.startsWith('http')){
+      fetch(action,{method:form.method||'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(function(r){if(r.ok){status.textContent='Message sent'; showToast('success','Sent — thank you'); form.reset()}else{return r.text().then(function(t){throw new Error(t||'Error')})}}).catch(function(){status.textContent='Could not send via server. Opening email client.'; openMailClient(payload)}).finally(function(){btn.classList.remove('sending');btn.disabled=false})
+    } else {
+      openMailClient(payload); btn.classList.remove('sending'); btn.disabled=false; status.textContent='Opened email client'; showToast('info','Opened email client')
+    }
+  });
+  function showFieldError(form){
+    const status=document.getElementById('cf-status'); status.textContent='Please complete all required fields'; showToast('warn','Please complete required fields')
+  }
+  function openMailClient(payload){
+    const body=encodeURIComponent('Name: '+payload.name+'\nEmail: '+payload.email+'\n\n'+payload.message+'\n\nSent from: '+payload.source);
+    const subject=encodeURIComponent(payload.subject);
+    window.location.href='mailto:'+'hello@yourdomain.com'+'?subject='+subject+'&body='+body;
+  }
+}
+function setupToasts(){
+  if(document.getElementById('toast-area'))return;
+  const area=document.createElement('div'); area.id='toast-area'; area.setAttribute('aria-hidden','true'); area.style.position='fixed'; area.style.right='18px'; area.style.bottom='18px'; area.style.zIndex='99999'; document.body.appendChild(area);
+  window.showToast=function(type,text){
+    const t=document.createElement('div'); t.className='sj-toast show'; t.textContent=text; if(type==='success')t.style.background='linear-gradient(90deg, rgba(16,185,129,0.95), rgba(6,182,212,0.9))';
+    if(type==='info')t.style.background='linear-gradient(90deg, rgba(59,130,246,0.95), rgba(6,182,212,0.92))';
+    if(type==='warn')t.style.background='linear-gradient(90deg, rgba(245,158,11,0.95), rgba(220,38,38,0.9))';
+    t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.marginTop='8px'; t.style.boxShadow='0 18px 60px rgba(6,10,26,0.24)'; area.appendChild(t); setTimeout(function(){t.classList.remove('show'); t.style.opacity='0'; t.style.transform='translateY(8px)'; setTimeout(function(){t.remove()},420)},3500);
+  };
+}
+function initCaseButtons(){
+  const buttons=Array.from(document.querySelectorAll('[data-case-open]'));
+  if(!buttons.length)return;
+  buttons.forEach(function(btn){
+    btn.addEventListener('click',function(e){e.preventDefault(); const host=btn.closest('[data-case-id]'); const id=host?host.dataset.caseId:btn.dataset.caseOpen; const el=document.getElementById('case-modal'); if(!el)buildModal(); setTimeout(function(){const openEvent=new Event('click'); const synthetic=document.querySelector('[data-case-open]'); document.dispatchEvent(new MouseEvent('click'))},30);
+  });
+}
+function initAll(){
+  buildModal(); initRotator(); initCounters(); setupToasts(); ensureContactForm(); initCaseButtons();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initAll);else initAll();
+})();
+</script>
 
 
 </body>
