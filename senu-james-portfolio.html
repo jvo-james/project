@@ -6150,6 +6150,111 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
  })();
  </script>
+ <style>
+  #rotating-role {
+    display: inline-block;
+    transition: opacity .45s cubic-bezier(.2,.9,.2,1), transform .45s cubic-bezier(.2,.9,.2,1);
+    opacity: 1;
+    transform: translateY(0);
+    will-change: opacity, transform;
+  }
+   #rotating-role._fade-out { opacity: 0; transform: translateY(-6px); }
+  #rotating-role._fade-in  { opacity: 1; transform: translateY(0); }
+
+   .role-rotator, .role-rotator * { cursor: default; }
+
+   @media (prefers-reduced-motion: reduce) {
+    #rotating-role,
+    #rotating-role._fade-out,
+    #rotating-role._fade-in {
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const el = document.getElementById('rotating-role');
+  if (!el) return;
+
+   const clone = el.cloneNode(true);
+  el.parentNode.replaceChild(clone, el);
+  const roleEl = document.getElementById('rotating-role');
+
+ 
+  let roles = [];
+  if (roleEl.dataset && roleEl.dataset.roles) {
+    roles = roleEl.dataset.roles.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  if (!roles.length) {
+    const parent = roleEl.closest('.role-rotator');
+    if (parent) {
+      const items = parent.querySelectorAll('[data-role-item]');
+      if (items.length) roles = Array.from(items).map(i => i.textContent.trim());
+    }
+  }
+  if (!roles.length) {
+    const current = roleEl.textContent.trim();
+    roles = [current || 'Web Developer', 'Product Engineer', 'AI Builder', 'Frontend Engineer', 'Full-stack Developer']
+             .filter((v,i,a) => v && a.indexOf(v) === i);
+  }
+
+   const visibleMs = 3200;     
+  const transitionMs = 450;   
+  const cycleInterval = visibleMs + (transitionMs * 2);
+
+   let idx = 0;
+  roleEl.textContent = roles[idx];
+
+   function showNext() {
+    roleEl.classList.remove('_fade-in');
+    roleEl.classList.add('_fade-out');
+
+     setTimeout(() => {
+      idx = (idx + 1) % roles.length;
+      roleEl.textContent = roles[idx];
+      roleEl.classList.remove('_fade-out');
+      roleEl.classList.add('_fade-in');
+       setTimeout(() => roleEl.classList.remove('_fade-in'), transitionMs + 10);
+    }, transitionMs);
+  }
+
+   let interval = setInterval(showNext, cycleInterval);
+
+   const wrapper = roleEl.closest('.role-rotator') || roleEl;
+  function pause() { clearInterval(interval); interval = null; }
+  function resume() { if (!interval) interval = setInterval(showNext, cycleInterval); }
+
+  wrapper.addEventListener('mouseenter', pause, { passive: true });
+  wrapper.addEventListener('mouseleave', resume, { passive: true });
+  wrapper.addEventListener('focusin', pause, { passive: true });
+  wrapper.addEventListener('focusout', resume, { passive: true });
+
+  
+  const observer = new MutationObserver(mutations => {
+     for (const m of mutations) {
+      if (m.type === 'characterData' || m.type === 'childList') {
+        const current = roleEl.textContent.trim();
+        if (current !== roles[idx]) {
+           roleEl.textContent = roles[idx];
+        }
+      }
+    }
+  });
+  observer.observe(roleEl, { characterData: true, subtree: true, childList: true });
+
+   window.addEventListener('unload', () => {
+    clearInterval(interval);
+    observer.disconnect();
+  });
+})();
+</script>
 
 </body>
 </html>
