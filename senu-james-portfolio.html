@@ -4002,10 +4002,10 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-
- <section id="campus-impact-track" aria-labelledby="campus-title" role="region">
+<section id="campus-impact-track" aria-labelledby="campus-title" role="region">
   <style>
-     #campus-impact-track { padding:14px; box-sizing:border-box; display:flex; justify-content:center; }
+    /* base */
+    #campus-impact-track { padding:14px; box-sizing:border-box; display:flex; justify-content:center; }
     .pj-card {
       width:100%; max-width:1120px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,250,255,0.98));
@@ -4014,30 +4014,30 @@ button[aria-pressed="true"] {
       overflow:visible; box-sizing:border-box;
     }
 
-     #campus-title { margin:6px 0 4px; font-weight:900; font-size:18px; font-family:var(--font-display); color:var(--text); }
+    #campus-title { margin:6px 0 4px; font-weight:900; font-size:18px; font-family:var(--font-display); color:var(--text); }
     .pj-sub { margin:0 0 6px; color:var(--muted-2); font-weight:700; font-size:13px; }
 
-     .pj-stage { width:100%; height: min(56vh, 520px); margin-top:6px; position:relative; }
+    .pj-stage { width:100%; height: min(56vh, 520px); margin-top:6px; position:relative; overflow:visible; }
     svg.pj-svg { width:100%; height:100%; display:block; overflow:visible; }
 
-     .pj-path { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; stroke-dashoffset:0; }
+    .pj-path { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; stroke-dashoffset:0; }
     .pj-path-glow { stroke-linecap:round; stroke-width:24; stroke: rgba(99,102,241,0.06); fill:none; }
 
-     @keyframes dashShift { to { stroke-dashoffset: -40; } }
+    @keyframes dashShift { to { stroke-dashoffset: -40; } }
     .pj-path.is-animated { animation: dashShift 4s linear infinite; }
 
-     .pj-node { cursor:pointer; transform-origin:center; transition:transform .2s cubic-bezier(.2,.9,.2,1); }
+    .pj-node { cursor:pointer; transform-origin:center; transition:transform .2s cubic-bezier(.2,.9,.2,1); }
     .pj-node:focus-visible, .pj-node:hover { transform: translateY(-8px) scale(1.02); outline: none; }
     .pj-square { rx:16; ry:16; filter: drop-shadow(0 12px 26px rgba(9,14,24,0.07)); }
     .pj-icon-circle { fill:#fff; }
 
-     @keyframes nodePulse { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
+    @keyframes nodePulse { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
     .pj-node.pulse { animation: nodePulse 3.6s ease-in-out infinite; }
 
     .pj-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
     .pj-subtext { font-size:11px; fill:rgba(11,18,32,0.55); text-anchor:middle; }
 
-     .pj-tooltip {
+    .pj-tooltip {
       position:absolute; min-width:240px; max-width:380px; padding:12px 14px;
       background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,250,255,0.98));
       border-radius:12px; box-shadow: 0 20px 48px rgba(9,14,24,0.12); border:1px solid rgba(11,18,30,0.06);
@@ -4048,9 +4048,9 @@ button[aria-pressed="true"] {
     .pj-tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:800; color:#081029; }
     .pj-tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35; }
 
-     .pj-plane { filter: drop-shadow(0 8px 18px rgba(9,14,24,0.08)); }
+    .pj-plane { filter: drop-shadow(0 8px 18px rgba(9,14,24,0.08)); }
 
-     .pj-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
+    .pj-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
     .pj-btn {
       display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:12px;
       background: linear-gradient(90deg,var(--accent-2),var(--accent)); color:#fff; font-weight:900; border:none;
@@ -4058,18 +4058,7 @@ button[aria-pressed="true"] {
     }
     .pj-btn.secondary { background: linear-gradient(180deg,#fff,#fbfdff); color:var(--text); border:1px solid rgba(10,20,30,0.06); box-shadow: 0 12px 36px rgba(16,24,40,0.04); }
 
-     @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
-    @media (max-width:700px){
-      .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on mobile */
-      .pj-card{ padding:12px; }
-      .pj-label{ font-size:13px; }
-    }
-    @media (prefers-reduced-motion:reduce){
-      .pj-path.is-animated{ animation: none !important; }
-      .pj-node.pulse{ animation: none !important; }
-    }
-
-     @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
+    @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
     @media (max-width:700px){
       .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on medium phones */
       .pj-card{ padding:12px; }
@@ -4138,7 +4127,8 @@ button[aria-pressed="true"] {
     <p class="pj-sub">A five-step product route I use to move from idea to measurable outcomes. Hover, focus, or tap a node to learn more.</p>
 
     <div class="pj-stage" id="pj-stage">
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus five step timeline" preserveAspectRatio="xMidYMid meet">
+      <!-- note: preserveAspectRatio changed to anchor to top on small screens -->
+      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus five step timeline" preserveAspectRatio="xMidYMin meet">
         <defs>
           <linearGradient id="grad1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
           <linearGradient id="grad2" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
@@ -4147,10 +4137,9 @@ button[aria-pressed="true"] {
           <linearGradient id="grad5" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/></linearGradient>
         </defs>
 
-         <path id="mainCurve" class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
+        <path id="mainCurve" class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
         <path class="pj-path is-animated" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
 
-        
         <g transform="translate(140,238)">
           <g class="pj-node pulse" role="button" tabindex="0"
              data-title="Discover"
@@ -4170,7 +4159,7 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="82">Research & framing</text>
         </g>
 
-         <g transform="translate(340,170)">
+        <g transform="translate(340,170)">
           <g class="pj-node pulse" role="button" tabindex="0"
              data-title="Prototype"
              data-desc="Clickable prototypes and flows to test UX before heavy engineering."
@@ -4187,7 +4176,7 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="92">Clickable demos</text>
         </g>
 
-         <g transform="translate(540,244)">
+        <g transform="translate(540,244)">
           <g class="pj-node pulse" role="button" tabindex="0"
              data-title="Validate"
              data-desc="Targeted pilots & metrics that prove product-market fit."
@@ -4207,7 +4196,7 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="86">Pilot & metrics</text>
         </g>
 
-         <g transform="translate(760,304)">
+        <g transform="translate(760,304)">
           <g class="pj-node pulse" role="button" tabindex="0"
              data-title="Ship"
              data-desc="MVP launches with monitoring, observability, and clear success criteria."
@@ -4225,7 +4214,7 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="82">MVP → production</text>
         </g>
 
-         <g transform="translate(1040,258)">
+        <g transform="translate(1040,258)">
           <g class="pj-node pulse" role="button" tabindex="0"
              data-title="Iterate & Scale"
              data-desc="Analytics-driven iteration and scaling strategies for growth."
@@ -4244,7 +4233,7 @@ button[aria-pressed="true"] {
           <text class="pj-subtext" y="82">Optimization & growth</text>
         </g>
 
-         <g class="pj-plane" transform="translate(0,0)" aria-hidden="true">
+        <g class="pj-plane" transform="translate(0,0)" aria-hidden="true">
           <path d="M0 0 L18 8 L0 16 L6 8 z" fill="#0b1220" opacity="0.95"/>
           <animateMotion dur="9s" repeatCount="indefinite" rotate="auto">
             <mpath xlink:href="#mainCurve" />
@@ -4252,11 +4241,10 @@ button[aria-pressed="true"] {
         </g>
       </svg>
 
-       <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
+      <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
     </div>
 
-     <div class="pj-actions" role="toolbar">
-
+    <div class="pj-actions" role="toolbar">
       <button class="pj-btn secondary" id="pj-open-case" type="button" aria-controls="case-modal" aria-haspopup="dialog">
         <i class="fa-solid fa-file-lines" aria-hidden="true"></i> Open Campus Case Study
       </button>
@@ -4269,7 +4257,7 @@ button[aria-pressed="true"] {
       const tooltip = document.getElementById('pj-tooltip');
       const nodes = Array.from(stage.querySelectorAll('.pj-node'));
 
-       function showTooltip(node){
+      function showTooltip(node){
         const rect = stage.getBoundingClientRect();
         const nrect = node.getBoundingClientRect();
         const title = node.dataset.title || '';
@@ -4277,11 +4265,11 @@ button[aria-pressed="true"] {
 
         tooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
 
-         tooltip.style.left = '0px'; tooltip.style.top = '0px';
+        tooltip.style.left = '0px'; tooltip.style.top = '0px';
         tooltip.classList.add('show');
 
         const tooltipWidth = tooltip.offsetWidth || 260;
-         const left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipWidth/2, 8), stage.clientWidth - tooltipWidth - 8);
+        const left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipWidth/2, 8), stage.clientWidth - tooltipWidth - 8);
 
         let top = nrect.top - rect.top - tooltip.offsetHeight - 12;
         if (top < 8) top = nrect.bottom - rect.top + 12;
@@ -4300,7 +4288,7 @@ button[aria-pressed="true"] {
         nodes.forEach(n => n.setAttribute('aria-expanded','false'));
       }
 
-       nodes.forEach(node => {
+      nodes.forEach(node => {
         node.addEventListener('pointerenter', () => showTooltip(node));
         node.addEventListener('pointerleave', () => hideTooltip());
         node.addEventListener('focus', () => showTooltip(node));
@@ -4317,25 +4305,80 @@ button[aria-pressed="true"] {
         });
       });
 
-       document.addEventListener('pointerdown', (e) => {
+      document.addEventListener('pointerdown', (e) => {
         if(!stage.contains(e.target)) hideTooltip();
       });
 
-       ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, () => {
+      /* re-open tooltip on resize/orientation if something is expanded */
+      ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, () => {
         const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
         if(opened) showTooltip(opened);
+        // also re-run mobile layout recalculation (below)
+        setMobileLayout();
       }));
 
-       const openBtn = document.getElementById('pj-open-case');
+      const openBtn = document.getElementById('pj-open-case');
       if(openBtn){
         openBtn.addEventListener('click', () => {
           const external = document.querySelector('[data-case-open="shuttle"]') || null;
           if (external) external.scrollIntoView({behavior:'smooth', block:'center'});
-         });
+        });
       }
+
+      /* -------------------- Mobile layout helper --------------------
+         This measures viewport innerHeight (so it ignores/honors browser chrome)
+         and then sets CSS variables:
+           --quarter-vh  -> 25% of current innerHeight (in px)
+           --diagram-height -> remaining px for the diagram after header + button + padding
+      ----------------------------------------------------------------*/
+      function setMobileLayout(){
+        const q = window.innerHeight * 0.25; // quarter of *visible* viewport
+        document.documentElement.style.setProperty('--quarter-vh', q + 'px');
+
+        // only apply diagram sizing adjustments on small screens
+        if(window.matchMedia && window.matchMedia('(max-width:640px)').matches){
+          const section = document.getElementById('campus-impact-track');
+          const card = section.querySelector('.pj-card');
+          const title = section.querySelector('#campus-title');
+          const sub = section.querySelector('.pj-sub');
+          const actions = section.querySelector('.pj-actions');
+          // fallback heights if elements missing
+          const titleH = title ? title.offsetHeight : 0;
+          const subH = sub ? sub.offsetHeight : 0;
+          const actionsH = actions ? actions.offsetHeight : 44;
+          // card padding vertical
+          const cs = card ? getComputedStyle(card) : null;
+          const padTop = cs ? parseFloat(cs.paddingTop || 0) : 10;
+          const padBottom = cs ? parseFloat(cs.paddingBottom || 0) : 10;
+          // small safety spacing
+          const safety = 8;
+
+          // calculate available height for the stage/diagram
+          let available = q - titleH - subH - actionsH - padTop - padBottom - safety;
+          if (available < 40) available = 40; // minimum sensible diagram area
+          document.documentElement.style.setProperty('--diagram-height', Math.round(available) + 'px');
+
+          // ensure the section actually gets the quarter height (helps when parent containers don't stretch)
+          section.style.height = q + 'px';
+        } else {
+          // cleanup for larger screens
+          document.documentElement.style.removeProperty('--diagram-height');
+          // remove inline height if previously set
+          const section = document.getElementById('campus-impact-track');
+          if(section) section.style.removeProperty('height');
+        }
+      }
+
+      // initial run
+      setMobileLayout();
+      // keep it up-to-date
+      window.addEventListener('resize', setMobileLayout);
+      window.addEventListener('orientationchange', setMobileLayout);
     })();
   </script>
 </section>
+
+
   
 <section class="marquee-wrap" style="margin-top:36px;" id="archive">
   <header style="text-align:center;margin-bottom:12px">
