@@ -4081,7 +4081,6 @@ button[aria-pressed="true"] {
 </section>
 
 
-<!-- Replace your old section with this -->
 <section id="product-delivery-flow" aria-labelledby="pdf-title" role="region">
   <style>
     /* Container */
@@ -4109,6 +4108,9 @@ button[aria-pressed="true"] {
     .pdf-node:focus-visible, .pdf-node:hover { transform: translateY(-6px) scale(1.02); outline:none; }
     .pdf-square { rx:16; ry:16; filter: drop-shadow(0 12px 26px rgba(9,14,24,0.07)); }
     .pdf-icon-circle { fill:#fff; }
+
+    /* icon group inside node (desktop only) */
+    .pdf-icon { display:block; fill:#0b1220; opacity:0.95; }
 
     .pdf-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
     .pdf-subtext { font-size:11px; fill:rgba(11,18,32,0.55); text-anchor:middle; }
@@ -4171,6 +4173,9 @@ button[aria-pressed="true"] {
       #product-delivery-flow { padding:12px; }
       .pdf-sub { margin-bottom:10px; }
 
+      /* hide icons in nodes on mobile to save space */
+      .pdf-icon { display:none !important; }
+
       /* reduce title spacing */
       #pdf-title { font-size:16px; margin-bottom:4px; }
       .pdf-tooltip { display:none !important; } /* don't show floating tooltip on mobile */
@@ -4209,8 +4214,7 @@ button[aria-pressed="true"] {
         <path id="curveGlow" class="pdf-path-glow" d="M60 260 C 180 120, 320 300, 440 220 C 560 140, 680 300, 800 220 C 920 140, 1040 280, 1140 200"/>
         <path class="pdf-path" d="M60 260 C 180 120, 320 300, 440 220 C 560 140, 680 300, 800 220 C 920 140, 1040 280, 1140 200"/>
 
-        <!-- nodes: transform positions match curve -->
-        <!-- Node 1 -->
+        <!-- Node 1: Discover (magnifier/clipboard) -->
         <g transform="translate(140,200)">
           <g class="pdf-node" role="button" tabindex="0"
              data-title="Discover"
@@ -4218,16 +4222,19 @@ button[aria-pressed="true"] {
              aria-label="Discover">
             <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g1)"/>
             <circle class="pdf-icon-circle" cx="0" cy="-6" r="28"/>
-            <g transform="translate(-8,-18) scale(1.02)" fill="#0b1220" opacity="0.9">
-              <rect x="6" y="4" width="20" height="24" rx="2" />
-              <rect x="11" y="0" width="10" height="6" rx="1" />
+            <g class="pdf-icon" transform="translate(-8,-22) scale(0.9)">
+              <!-- clipboard + magnifier combined icon -->
+              <rect x="4" y="2" width="16" height="22" rx="2"></rect>
+              <rect x="9" y="-2" width="6" height="4" rx="1"></rect>
+              <circle cx="22" cy="20" r="5" stroke-width="2" fill="none" stroke="#0b1220"></circle>
+              <line x1="26" y1="24" x2="30" y2="28" stroke="#0b1220" stroke-width="2" stroke-linecap="round"></line>
             </g>
           </g>
           <text class="pdf-label" y="64">DISCOVER</text>
           <text class="pdf-subtext" y="82">Research & framing</text>
         </g>
 
-        <!-- Node 2 -->
+        <!-- Node 2: Prototype (mockup / cursor) -->
         <g transform="translate(340,140)">
           <g class="pdf-node" role="button" tabindex="0"
              data-title="Prototype"
@@ -4235,12 +4242,17 @@ button[aria-pressed="true"] {
              aria-label="Prototype">
             <rect class="pdf-square" x="-50" y="-50" width="100" height="100" rx="18" fill="url(#g2)"/>
             <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
+            <g class="pdf-icon" transform="translate(-8,-20) scale(0.9)">
+              <rect x="-2" y="0" width="26" height="18" rx="3"></rect>
+              <circle cx="18" cy="8" r="1.5"></circle>
+              <path d="M4 6 L10 12 L6 14" stroke="#0b1220" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
           </g>
           <text class="pdf-label" y="74">PROTOTYPE</text>
           <text class="pdf-subtext" y="92">Clickable demos</text>
         </g>
 
-        <!-- Node 3 -->
+        <!-- Node 3: Validate (checklist) -->
         <g transform="translate(540,200)">
           <g class="pdf-node" role="button" tabindex="0"
              data-title="Validate"
@@ -4248,12 +4260,18 @@ button[aria-pressed="true"] {
              aria-label="Validate">
             <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g3)"/>
             <circle class="pdf-icon-circle" cx="0" cy="-6" r="28"/>
+            <g class="pdf-icon" transform="translate(-16,-22) scale(0.95)">
+              <rect x="2" y="2" width="28" height="20" rx="2"></rect>
+              <line x1="8" y1="8" x2="12" y2="12" stroke="#0b1220" stroke-width="1.6" stroke-linecap="round"></line>
+              <line x1="6" y1="16" x2="18" y2="16" stroke="#0b1220" stroke-width="1.6" stroke-linecap="round"></line>
+              <circle cx="7" cy="8" r="1.6" fill="#0b1220"></circle>
+            </g>
           </g>
           <text class="pdf-label" y="68">VALIDATE</text>
           <text class="pdf-subtext" y="86">Pilot & metrics</text>
         </g>
 
-        <!-- Node 4 -->
+        <!-- Node 4: Ship (truck/rocket) -->
         <g transform="translate(760,240)">
           <g class="pdf-node" role="button" tabindex="0"
              data-title="Ship"
@@ -4261,12 +4279,18 @@ button[aria-pressed="true"] {
              aria-label="Ship">
             <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g4)"/>
             <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
+            <g class="pdf-icon" transform="translate(-10,-20) scale(0.95)">
+              <rect x="-2" y="6" width="20" height="8" rx="1.5"></rect>
+              <circle cx="6" cy="18" r="2"></circle>
+              <circle cx="18" cy="18" r="2"></circle>
+              <path d="M18 6 L24 4 L28 2" stroke="#0b1220" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+            </g>
           </g>
           <text class="pdf-label" y="64">SHIP</text>
           <text class="pdf-subtext" y="82">MVP → production</text>
         </g>
 
-        <!-- Node 5 -->
+        <!-- Node 5: Iterate & Scale (chart arrow) -->
         <g transform="translate(1040,208)">
           <g class="pdf-node" role="button" tabindex="0"
              data-title="Iterate & Scale"
@@ -4274,6 +4298,13 @@ button[aria-pressed="true"] {
              aria-label="Iterate and Scale">
             <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g5)"/>
             <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
+            <g class="pdf-icon" transform="translate(-14,-22) scale(0.95)">
+              <rect x="2" y="14" width="4" height="6" rx="1"></rect>
+              <rect x="10" y="10" width="4" height="10" rx="1"></rect>
+              <rect x="18" y="6" width="4" height="14" rx="1"></rect>
+              <path d="M6 18 L12 12 L20 8 L26 8" stroke="#0b1220" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+              <polyline points="26,8 26,2 20,6" stroke="#0b1220" stroke-width="1.6" fill="none" stroke-linecap="round"></polyline>
+            </g>
           </g>
           <text class="pdf-label" y="64">ITERATE & SCALE</text>
           <text class="pdf-subtext" y="82">Optimization & growth</text>
@@ -4349,8 +4380,13 @@ button[aria-pressed="true"] {
     </div>
 
     <div class="pdf-actions" role="toolbar">
+      <!-- replaced emoji with inline document svg icon -->
       <button class="pdf-btn secondary" id="pdf-open-case" type="button" aria-controls="case-modal" aria-haspopup="dialog">
-        <span aria-hidden="true">📄</span> Open Campus Case Study
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="flex:0 0 18px;">
+          <path d="M6 2h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill="#0b1220" opacity="0.9"></path>
+          <path d="M13 2v6h6" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.15"></path>
+        </svg>
+        <span>Open Campus Case Study</span>
       </button>
     </div>
   </div>
@@ -4422,7 +4458,6 @@ button[aria-pressed="true"] {
           const btn = step.querySelector('.toggle');
           const detail = step.querySelector('.detail');
 
-          // initialize hidden detail but keep content accessible
           if (detail) {
             detail.setAttribute('aria-hidden', 'true');
             detail.style.display = 'none';
@@ -4431,7 +4466,7 @@ button[aria-pressed="true"] {
           if (btn && detail) {
             btn.addEventListener('click', () => {
               const expanded = btn.getAttribute('aria-expanded') === 'true';
-              // close all others (optional: keep independent, change if you want)
+              // close all others
               mobile.querySelectorAll('.pdf-step .detail').forEach(d => { d.style.display = 'none'; d.setAttribute('aria-hidden', 'true'); });
               mobile.querySelectorAll('.pdf-step .toggle').forEach(t => t.setAttribute('aria-expanded', 'false'));
 
@@ -4446,7 +4481,6 @@ button[aria-pressed="true"] {
               }
             });
 
-            // keyboard support
             btn.addEventListener('keydown', (e) => {
               if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
             });
@@ -4454,11 +4488,10 @@ button[aria-pressed="true"] {
         });
       }
 
-      // Optional: example action for "Open Campus Case Study"
+      // Optional: action for "Open Campus Case Study"
       const openBtn = document.getElementById('pdf-open-case');
       if (openBtn) {
         openBtn.addEventListener('click', () => {
-          // fallback behavior: scroll to a section or open modal - you can replace this with your own logic
           const target = document.querySelector('[data-case-open="shuttle"]') || null;
           if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
@@ -4466,6 +4499,7 @@ button[aria-pressed="true"] {
     })();
   </script>
 </section>
+
 
   
 <section class="marquee-wrap" style="margin-top:36px;" id="archive">
