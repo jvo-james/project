@@ -3723,8 +3723,86 @@ button[aria-pressed="true"] {
    .product-flow .card h2 { margin-bottom: 0.5rem; }
   .product-flow .card p { margin-bottom: 0.75rem; }
 }
+ 
+ @media (max-width: 640px) {
+   .product-flow {
+    height: var(--quarter-vh, 25vh);   
+    min-height: 0;
+    max-height: var(--quarter-vh, 25vh);
+    padding: 0.5rem 1rem calc(env(safe-area-inset-bottom, 0.5rem) + 0.25rem);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;     
+    align-items: stretch;
+    overflow: hidden;                 
+  }
+
+   .product-flow .card,
+  .product-flow .card .inner,
+  .product-flow .card-body {
+    padding: 0;
+    margin: 0;
+    min-height: 0 !important;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+   .product-flow h2,
+  .product-flow .subtitle,
+  .product-flow p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.05;
+    font-size: 1rem;  
+  }
+
+   .product-flow .diagram {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-start;   
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+  }
+
+   .product-flow .diagram img,
+  .product-flow .diagram svg {
+    display: block;
+    margin: 0;
+    width: auto;
+    max-width: 100%;
+     max-height: calc(var(--quarter-vh, 25vh) - 48px - 0.5rem);
+    height: auto;
+    object-fit: contain;
+  }
+
+   .product-flow .case-button,
+  .product-flow .open-case-btn {
+    margin: 0;
+    padding: 0.45rem 0.85rem;
+    line-height: 1;
+    align-self: center;
+    height: 40px;
+    box-sizing: border-box;
+  }
+
+   .product-flow .gap,
+  .product-flow .spacer { display: none !important; }
+}
 
 </style>
+<script>
+(function() {
+  function setQuarterVh() {
+     var q = window.innerHeight * 0.25;
+    document.documentElement.style.setProperty('--quarter-vh', q + 'px');
+  }
+  setQuarterVh();
+  window.addEventListener('resize', setQuarterVh);
+  window.addEventListener('orientationchange', setQuarterVh);
+})();
+</script>
 
   </head>
 <body>
@@ -4002,11 +4080,13 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-<section id="campus-impact-track" aria-labelledby="campus-title" role="region">
+
+<!-- Replace your old section with this -->
+<section id="product-delivery-flow" aria-labelledby="pdf-title" role="region">
   <style>
-    /* base */
-    #campus-impact-track { padding:14px; box-sizing:border-box; display:flex; justify-content:center; }
-    .pj-card {
+    /* Container */
+    #product-delivery-flow { padding:14px; box-sizing:border-box; display:flex; justify-content:center; }
+    .pdf-card {
       width:100%; max-width:1120px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,250,255,0.98));
       border-radius:16px; padding:14px; border:1px solid rgba(11,18,30,0.04);
@@ -4014,370 +4094,378 @@ button[aria-pressed="true"] {
       overflow:visible; box-sizing:border-box;
     }
 
-    #campus-title { margin:6px 0 4px; font-weight:900; font-size:18px; font-family:var(--font-display); color:var(--text); }
-    .pj-sub { margin:0 0 6px; color:var(--muted-2); font-weight:700; font-size:13px; }
+    /* Heading */
+    #pdf-title { margin:6px 0 4px; font-weight:900; font-size:18px; font-family:var(--font-display, system-ui, -apple-system, "Segoe UI"); color:var(--text,#081029); }
+    .pdf-sub { margin:0 0 8px; color:var(--muted-2,#6b7280); font-weight:700; font-size:13px; }
 
-    .pj-stage { width:100%; height: min(56vh, 520px); margin-top:6px; position:relative; overflow:visible; }
-    svg.pj-svg { width:100%; height:100%; display:block; overflow:visible; }
+    /* DESKTOP: timeline area (SVG) */
+    .pdf-stage { width:100%; height:auto; margin-top:6px; position:relative; }
+    svg.pdf-svg { width:100%; height:auto; display:block; overflow:visible; }
 
-    .pj-path { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; stroke-dashoffset:0; }
-    .pj-path-glow { stroke-linecap:round; stroke-width:24; stroke: rgba(99,102,241,0.06); fill:none; }
+    .pdf-path { stroke: rgba(11,18,30,0.12); stroke-width:6; stroke-linecap:round; fill:none; stroke-dasharray:8 12; }
+    .pdf-path-glow { stroke-linecap:round; stroke-width:24; stroke: rgba(99,102,241,0.06); fill:none; }
 
-    @keyframes dashShift { to { stroke-dashoffset: -40; } }
-    .pj-path.is-animated { animation: dashShift 4s linear infinite; }
+    .pdf-node { cursor:pointer; transform-origin:center; transition:transform .18s cubic-bezier(.2,.9,.2,1); }
+    .pdf-node:focus-visible, .pdf-node:hover { transform: translateY(-6px) scale(1.02); outline:none; }
+    .pdf-square { rx:16; ry:16; filter: drop-shadow(0 12px 26px rgba(9,14,24,0.07)); }
+    .pdf-icon-circle { fill:#fff; }
 
-    .pj-node { cursor:pointer; transform-origin:center; transition:transform .2s cubic-bezier(.2,.9,.2,1); }
-    .pj-node:focus-visible, .pj-node:hover { transform: translateY(-8px) scale(1.02); outline: none; }
-    .pj-square { rx:16; ry:16; filter: drop-shadow(0 12px 26px rgba(9,14,24,0.07)); }
-    .pj-icon-circle { fill:#fff; }
+    .pdf-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
+    .pdf-subtext { font-size:11px; fill:rgba(11,18,32,0.55); text-anchor:middle; }
 
-    @keyframes nodePulse { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
-    .pj-node.pulse { animation: nodePulse 3.6s ease-in-out infinite; }
-
-    .pj-label { font-weight:800; font-size:12px; fill:#0b1220; text-anchor:middle; }
-    .pj-subtext { font-size:11px; fill:rgba(11,18,32,0.55); text-anchor:middle; }
-
-    .pj-tooltip {
-      position:absolute; min-width:240px; max-width:380px; padding:12px 14px;
+    /* Tooltip (desktop) */
+    .pdf-tooltip {
+      position:absolute; min-width:220px; max-width:360px; padding:12px 14px;
       background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,250,255,0.98));
       border-radius:12px; box-shadow: 0 20px 48px rgba(9,14,24,0.12); border:1px solid rgba(11,18,30,0.06);
-      transform: translateY(12px) scale(.98); opacity:0; pointer-events:none; transition:opacity .16s ease, transform .18s cubic-bezier(.2,.9,.2,1); z-index:60;
+      transform: translateY(8px) scale(.98); opacity:0; pointer-events:none; transition:opacity .14s ease, transform .15s cubic-bezier(.2,.9,.2,1); z-index:60;
       backdrop-filter: blur(6px) saturate(120%);
     }
-    .pj-tooltip.show { opacity:1; transform: translateY(6px) scale(1); pointer-events:auto; }
-    .pj-tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:800; color:#081029; }
-    .pj-tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35; }
+    .pdf-tooltip.show { opacity:1; transform: translateY(4px) scale(1); pointer-events:auto; }
+    .pdf-tooltip h4 { margin:0 0 6px; font-size:13px; font-weight:800; color:#081029; }
+    .pdf-tooltip p { margin:0; font-size:13px; color:rgba(11,18,32,0.72); line-height:1.35; }
 
-    .pj-plane { filter: drop-shadow(0 8px 18px rgba(9,14,24,0.08)); }
-
-    .pj-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
-    .pj-btn {
+    /* Actions */
+    .pdf-actions { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; }
+    .pdf-btn {
       display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:12px;
-      background: linear-gradient(90deg,var(--accent-2),var(--accent)); color:#fff; font-weight:900; border:none;
+      background: linear-gradient(90deg,var(--accent-2,#60a5fa),var(--accent,#7c3aed)); color:#fff; font-weight:900; border:none;
       box-shadow: 0 18px 50px rgba(59,130,246,0.12); cursor:pointer;
     }
-    .pj-btn.secondary { background: linear-gradient(180deg,#fff,#fbfdff); color:var(--text); border:1px solid rgba(10,20,30,0.06); box-shadow: 0 12px 36px rgba(16,24,40,0.04); }
+    .pdf-btn.secondary { background: linear-gradient(180deg,#fff,#fbfdff); color:var(--text); border:1px solid rgba(10,20,30,0.06); box-shadow: 0 12px 36px rgba(16,24,40,0.04); }
 
-    @media (max-width:1100px){ .pj-stage{ height: min(70vh, 680px); } }
-    @media (max-width:700px){
-      .pj-stage{ height: min(78vh, 740px); } /* gives breathing room on medium phones */
-      .pj-card{ padding:12px; }
-      .pj-label{ font-size:13px; }
+    /* ---------- MOBILE: stacked alternative ---------- */
+    .pdf-mobile { display:none; margin-top:6px; }
+    .pdf-step {
+      display:flex; gap:12px; align-items:flex-start; padding:12px; border-radius:12px;
+      background:linear-gradient(180deg,#fff,#fbfdff); border:1px solid rgba(10,20,30,0.04);
+      box-shadow: 0 10px 30px rgba(9,14,24,0.04); margin-bottom:12px;
+    }
+    .pdf-step .badge {
+      min-width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff;
+      flex-shrink:0;
+    }
+    .badge-1 { background: linear-gradient(90deg,#16a34a,#06b6d4); }
+    .badge-2 { background: linear-gradient(90deg,#60a5fa,#7c3aed); }
+    .badge-3 { background: linear-gradient(90deg,#fb923c,#ef4444); }
+    .badge-4 { background: linear-gradient(90deg,#10b981,#06b6d4); }
+    .badge-5 { background: linear-gradient(90deg,#8b5cf6,#34d399); }
+
+    .pdf-step h4 { margin:0; font-size:14px; font-weight:900; color:#081029; }
+    .pdf-step p { margin:6px 0 0; color:rgba(11,18,32,0.78); font-size:13px; line-height:1.35; }
+
+    /* Simple accordion toggle caret */
+    .pdf-step .toggle {
+      margin-left:auto; background:transparent; border:none; width:34px; height:34px; border-radius:8px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; color:var(--muted-2,#6b7280);
+    }
+    .pdf-step .detail { display:none; margin-top:10px; }
+
+    /* responsive switching */
+    @media (max-width:700px) {
+      /* hide desktop SVG, show stacked mobile view */
+      .pdf-stage { display:none; }
+      .pdf-mobile { display:block; }
+
+      .pdf-card { padding:12px; }
+      #product-delivery-flow { padding:12px; }
+      .pdf-sub { margin-bottom:10px; }
+
+      /* reduce title spacing */
+      #pdf-title { font-size:16px; margin-bottom:4px; }
+      .pdf-tooltip { display:none !important; } /* don't show floating tooltip on mobile */
     }
 
-    /* ---------- MOBILE: enforce 1/4 viewport + tight diagram/button spacing ---------- */
-    @media (max-width:640px) {
-      /* the section itself becomes exactly 25% of the visible viewport (JS sets --quarter-vh) */
-      #campus-impact-track {
-        height: var(--quarter-vh, 25vh);
-        padding: 10px;
-      }
+    /* accessible focus styles */
+    .pdf-node:focus-visible, .pdf-btn:focus-visible, .pdf-step .toggle:focus-visible { outline: 3px solid rgba(99,102,241,0.18); outline-offset:3px; border-radius:10px; }
 
-      /* card fills the section and is column-based so stage + actions are stacked with no unexpected gaps */
-      .pj-card {
-        height: 100%;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 6px;
-      }
-
-      /* header stays natural size; it will be measured by JS to compute diagram height */
-      #campus-title { margin:4px 0 2px; font-size:16px; }
-      .pj-sub { margin:0 0 4px; font-size:12px; }
-
-      /* stage MUST not expand beyond the available space; JS will set --diagram-height */
-      .pj-stage {
-        height: var(--diagram-height, calc(var(--quarter-vh, 25vh) - 76px));
-        margin-top: 4px;
-        min-height: 0;
-        overflow: hidden; /* avoid content pushing card taller */
-      }
-
-      /* SVG should anchor to top so empty space doesn't appear beneath it */
-      svg.pj-svg { height: 100%; display:block; overflow:hidden; }
-
-      /* tooltip remains absolute inside stage */
-      .pj-tooltip { max-width: calc(100% - 16px); }
-
-      /* actions should sit immediately below the stage — remove top margin that created the gap */
-      .pj-actions { margin-top: 0; padding-top: 4px; }
-
-      /* make the button slightly smaller on phone so it fits the small area */
-      .pj-btn, .pj-btn.secondary {
-        padding: 8px 12px;
-        font-size: 13px;
-        height: 36px;
-        align-self: center;
-      }
-
-      /* hide any spacer elements the template might have */
-      .pj-card .spacer, .pj-card .gap { display:none !important; }
+    /* reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .pdf-node { transition: none; }
     }
 
-    @media (prefers-reduced-motion:reduce){
-      .pj-path.is-animated{ animation: none !important; }
-      .pj-node.pulse{ animation: none !important; }
+    /* Make sure mobile safe area is respected */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .pdf-card { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
     }
   </style>
 
-  <div class="pj-card" role="group" aria-label="Campus Impact Track">
-    <h3 id="campus-title">Product Delivery Flow</h3>
-    <p class="pj-sub">A five-step product route I use to move from idea to measurable outcomes. Hover, focus, or tap a node to learn more.</p>
+  <div class="pdf-card" role="group" aria-label="Product Delivery Flow">
+    <h3 id="pdf-title">Product Delivery Flow</h3>
+    <p class="pdf-sub">A five-step product route I use to move from idea to measurable outcomes. Hover, focus, or tap a step to learn more.</p>
 
-    <div class="pj-stage" id="pj-stage">
-      <!-- note: preserveAspectRatio changed to anchor to top on small screens -->
-      <svg class="pj-svg" viewBox="0 0 1200 420" role="img" aria-label="Campus five step timeline" preserveAspectRatio="xMidYMin meet">
+    <!-- DESKTOP TIMELINE (hidden on mobile) -->
+    <div class="pdf-stage" id="pdf-stage">
+      <svg class="pdf-svg" viewBox="0 0 1200 360" role="img" aria-label="Five-step timeline" preserveAspectRatio="xMidYMin meet">
         <defs>
-          <linearGradient id="grad1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="grad2" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
-          <linearGradient id="grad3" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
-          <linearGradient id="grad4" x1="0" x2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-          <linearGradient id="grad5" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+          <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+          <linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ef4444"/></linearGradient>
+          <linearGradient id="g4" x1="0" x2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+          <linearGradient id="g5" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#34d399"/></linearGradient>
         </defs>
 
-        <path id="mainCurve" class="pj-path-glow" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
-        <path class="pj-path is-animated" d="M80 300 C 190 140, 320 420, 440 300 C 560 180, 680 420, 800 300 C 920 180, 1040 360, 1160 240"/>
+        <!-- curved path anchored to top with preserveAspectRatio above -->
+        <path id="curveGlow" class="pdf-path-glow" d="M60 260 C 180 120, 320 300, 440 220 C 560 140, 680 300, 800 220 C 920 140, 1040 280, 1140 200"/>
+        <path class="pdf-path" d="M60 260 C 180 120, 320 300, 440 220 C 560 140, 680 300, 800 220 C 920 140, 1040 280, 1140 200"/>
 
-        <g transform="translate(140,238)">
-          <g class="pj-node pulse" role="button" tabindex="0"
+        <!-- nodes: transform positions match curve -->
+        <!-- Node 1 -->
+        <g transform="translate(140,200)">
+          <g class="pdf-node" role="button" tabindex="0"
              data-title="Discover"
              data-desc="User interviews & quick research to find the right problem to solve."
              aria-label="Discover">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad1)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <g class="pj-icon" transform="translate(-12,-18) scale(1.05)">
+            <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g1)"/>
+            <circle class="pdf-icon-circle" cx="0" cy="-6" r="28"/>
+            <g transform="translate(-8,-18) scale(1.02)" fill="#0b1220" opacity="0.9">
               <rect x="6" y="4" width="20" height="24" rx="2" />
               <rect x="11" y="0" width="10" height="6" rx="1" />
-              <line x1="10" y1="11" x2="26" y2="11" />
-              <line x1="10" y1="15" x2="26" y2="15" />
-              <line x1="10" y1="19" x2="18" y2="19" />
             </g>
           </g>
-          <text class="pj-label" y="64">DISCOVER</text>
-          <text class="pj-subtext" y="82">Research & framing</text>
+          <text class="pdf-label" y="64">DISCOVER</text>
+          <text class="pdf-subtext" y="82">Research & framing</text>
         </g>
 
-        <g transform="translate(340,170)">
-          <g class="pj-node pulse" role="button" tabindex="0"
+        <!-- Node 2 -->
+        <g transform="translate(340,140)">
+          <g class="pdf-node" role="button" tabindex="0"
              data-title="Prototype"
              data-desc="Clickable prototypes and flows to test UX before heavy engineering."
              aria-label="Prototype">
-            <rect class="pj-square" x="-52" y="-52" width="104" height="104" rx="20" fill="url(#grad2)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-9,-18) scale(1.05)">
-              <path d="M10 3c-2 2-4 6-4 9 0 4 6 10 7 11s6-3 8-5 3-7 2-10-5-6-9-5z"/>
-              <line x1="6" y1="22" x2="16" y2="22"/>
-              <path d="M4 20c-2 1-3 3-3 4 0 1 2 1 3 0" />
-            </g>
+            <rect class="pdf-square" x="-50" y="-50" width="100" height="100" rx="18" fill="url(#g2)"/>
+            <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
           </g>
-          <text class="pj-label" y="74">PROTOTYPE</text>
-          <text class="pj-subtext" y="92">Clickable demos</text>
+          <text class="pdf-label" y="74">PROTOTYPE</text>
+          <text class="pdf-subtext" y="92">Clickable demos</text>
         </g>
 
-        <g transform="translate(540,244)">
-          <g class="pj-node pulse" role="button" tabindex="0"
+        <!-- Node 3 -->
+        <g transform="translate(540,200)">
+          <g class="pdf-node" role="button" tabindex="0"
              data-title="Validate"
              data-desc="Targeted pilots & metrics that prove product-market fit."
              aria-label="Validate">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad3)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="30"/>
-            <g class="pj-icon" transform="translate(-14,-18) scale(1.05)">
-              <rect x="2" y="6" width="28" height="14" rx="3" />
-              <line x1="6" y1="10" x2="12" y2="10" />
-              <line x1="16" y1="10" x2="24" y2="10" />
-              <circle cx="8" cy="22" r="2.6" />
-              <circle cx="22" cy="22" r="2.6" />
-              <rect x="4" y="2" width="8" height="4" rx="1" />
-            </g>
+            <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g3)"/>
+            <circle class="pdf-icon-circle" cx="0" cy="-6" r="28"/>
           </g>
-          <text class="pj-label" y="68">VALIDATE</text>
-          <text class="pj-subtext" y="86">Pilot & metrics</text>
+          <text class="pdf-label" y="68">VALIDATE</text>
+          <text class="pdf-subtext" y="86">Pilot & metrics</text>
         </g>
 
-        <g transform="translate(760,304)">
-          <g class="pj-node pulse" role="button" tabindex="0"
+        <!-- Node 4 -->
+        <g transform="translate(760,240)">
+          <g class="pdf-node" role="button" tabindex="0"
              data-title="Ship"
              data-desc="MVP launches with monitoring, observability, and clear success criteria."
              aria-label="Ship">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad4)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-10,-18) scale(1.05)">
-              <polyline points="2,6 6,6 10,18 24,18 28,8 10,8" />
-              <circle cx="12" cy="22" r="2.6" />
-              <circle cx="22" cy="22" r="2.6" />
-              <line x1="6" y1="6" x2="8" y2="2" />
-            </g>
+            <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g4)"/>
+            <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
           </g>
-          <text class="pj-label" y="64">SHIP</text>
-          <text class="pj-subtext" y="82">MVP → production</text>
+          <text class="pdf-label" y="64">SHIP</text>
+          <text class="pdf-subtext" y="82">MVP → production</text>
         </g>
 
-        <g transform="translate(1040,258)">
-          <g class="pj-node pulse" role="button" tabindex="0"
+        <!-- Node 5 -->
+        <g transform="translate(1040,208)">
+          <g class="pdf-node" role="button" tabindex="0"
              data-title="Iterate & Scale"
              data-desc="Analytics-driven iteration and scaling strategies for growth."
              aria-label="Iterate and Scale">
-            <rect class="pj-square" x="-48" y="-48" width="96" height="96" rx="18" fill="url(#grad5)"/>
-            <circle class="pj-icon-circle" cx="0" cy="-6" r="28"/>
-            <g class="pj-icon" transform="translate(-12,-18) scale(1.05)">
-              <circle cx="10" cy="10" r="3" />
-              <circle cx="20" cy="10" r="3" />
-              <path d="M4 20c2-3 6-4 10-4s8 1 10 4" />
-              <path d="M2 18c.8-2.5 3-4 6-4" />
-              <path d="M28 18c-.8-2.5-3-4-6-4" />
-            </g>
+            <rect class="pdf-square" x="-46" y="-46" width="92" height="92" rx="16" fill="url(#g5)"/>
+            <circle class="pdf-icon-circle" cx="0" cy="-6" r="26"/>
           </g>
-          <text class="pj-label" y="64">ITERATE & SCALE</text>
-          <text class="pj-subtext" y="82">Optimization & growth</text>
+          <text class="pdf-label" y="64">ITERATE & SCALE</text>
+          <text class="pdf-subtext" y="82">Optimization & growth</text>
         </g>
 
-        <g class="pj-plane" transform="translate(0,0)" aria-hidden="true">
-          <path d="M0 0 L18 8 L0 16 L6 8 z" fill="#0b1220" opacity="0.95"/>
-          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto">
-            <mpath xlink:href="#mainCurve" />
-          </animateMotion>
-        </g>
       </svg>
 
-      <div id="pj-tooltip" class="pj-tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
+      <!-- floating tooltip used on desktop only -->
+      <div id="pdf-tooltip" class="pdf-tooltip" role="dialog" aria-hidden="true" aria-live="polite"></div>
     </div>
 
-    <div class="pj-actions" role="toolbar">
-      <button class="pj-btn secondary" id="pj-open-case" type="button" aria-controls="case-modal" aria-haspopup="dialog">
-        <i class="fa-solid fa-file-lines" aria-hidden="true"></i> Open Campus Case Study
+    <!-- MOBILE stacked steps (shown only under 700px) -->
+    <div class="pdf-mobile" id="pdf-mobile">
+      <div class="pdf-step" data-step="1">
+        <div class="badge badge-1">1</div>
+        <div class="body">
+          <h4>Discover</h4>
+          <p class="muted">Research & framing</p>
+          <div class="detail"><p>User interviews & quick research to find the right problem to solve.</p></div>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="step-1-detail" title="Toggle details">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="pdf-step" data-step="2">
+        <div class="badge badge-2">2</div>
+        <div class="body">
+          <h4>Prototype</h4>
+          <p class="muted">Clickable demos</p>
+          <div class="detail"><p>Clickable prototypes and flows to test UX before heavy engineering.</p></div>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="step-2-detail" title="Toggle details">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="pdf-step" data-step="3">
+        <div class="badge badge-3">3</div>
+        <div class="body">
+          <h4>Validate</h4>
+          <p class="muted">Pilot & metrics</p>
+          <div class="detail"><p>Targeted pilots & metrics that prove product-market fit.</p></div>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="step-3-detail" title="Toggle details">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="pdf-step" data-step="4">
+        <div class="badge badge-4">4</div>
+        <div class="body">
+          <h4>Ship</h4>
+          <p class="muted">MVP → production</p>
+          <div class="detail"><p>MVP launches with monitoring, observability, and clear success criteria.</p></div>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="step-4-detail" title="Toggle details">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="pdf-step" data-step="5">
+        <div class="badge badge-5">5</div>
+        <div class="body">
+          <h4>Iterate & Scale</h4>
+          <p class="muted">Optimization & growth</p>
+          <div class="detail"><p>Analytics-driven iteration and scaling strategies for growth.</p></div>
+        </div>
+        <button class="toggle" aria-expanded="false" aria-controls="step-5-detail" title="Toggle details">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pdf-actions" role="toolbar">
+      <button class="pdf-btn secondary" id="pdf-open-case" type="button" aria-controls="case-modal" aria-haspopup="dialog">
+        <span aria-hidden="true">📄</span> Open Campus Case Study
       </button>
     </div>
   </div>
 
   <script>
-    (function(){
-      const stage = document.getElementById('pj-stage');
-      const tooltip = document.getElementById('pj-tooltip');
-      const nodes = Array.from(stage.querySelectorAll('.pj-node'));
+    (function () {
+      // ---------- Desktop tooltip behavior ----------
+      const stage = document.getElementById('pdf-stage');
+      const tooltip = document.getElementById('pdf-tooltip');
+      if (stage && tooltip) {
+        const nodes = Array.from(stage.querySelectorAll('.pdf-node'));
+        function showTooltip(node) {
+          const rect = stage.getBoundingClientRect();
+          const nrect = node.getBoundingClientRect();
+          const title = node.dataset.title || node.getAttribute('aria-label') || '';
+          const desc = node.dataset.desc || '';
 
-      function showTooltip(node){
-        const rect = stage.getBoundingClientRect();
-        const nrect = node.getBoundingClientRect();
-        const title = node.dataset.title || '';
-        const desc = node.dataset.desc || '';
+          tooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
+          tooltip.style.left = '0px'; tooltip.style.top = '0px';
+          tooltip.classList.add('show');
 
-        tooltip.innerHTML = '<div><h4>' + title + '</h4><p>' + desc + '</p></div>';
+          const tooltipWidth = tooltip.offsetWidth || 260;
+          const left = Math.min(Math.max(nrect.left - rect.left + nrect.width / 2 - tooltipWidth / 2, 8), stage.clientWidth - tooltipWidth - 8);
+          let top = nrect.top - rect.top - tooltip.offsetHeight - 12;
+          if (top < 8) top = nrect.bottom - rect.top + 12;
 
-        tooltip.style.left = '0px'; tooltip.style.top = '0px';
-        tooltip.classList.add('show');
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+          tooltip.setAttribute('aria-hidden', 'false');
 
-        const tooltipWidth = tooltip.offsetWidth || 260;
-        const left = Math.min(Math.max(nrect.left - rect.left + nrect.width/2 - tooltipWidth/2, 8), stage.clientWidth - tooltipWidth - 8);
-
-        let top = nrect.top - rect.top - tooltip.offsetHeight - 12;
-        if (top < 8) top = nrect.bottom - rect.top + 12;
-
-        tooltip.style.left = left + 'px';
-        tooltip.style.top = top + 'px';
-        tooltip.setAttribute('aria-hidden','false');
-
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
-        node.setAttribute('aria-expanded','true');
-      }
-
-      function hideTooltip(){
-        tooltip.classList.remove('show');
-        tooltip.setAttribute('aria-hidden','true');
-        nodes.forEach(n => n.setAttribute('aria-expanded','false'));
-      }
-
-      nodes.forEach(node => {
-        node.addEventListener('pointerenter', () => showTooltip(node));
-        node.addEventListener('pointerleave', () => hideTooltip());
-        node.addEventListener('focus', () => showTooltip(node));
-        node.addEventListener('blur', () => hideTooltip());
-
-        node.addEventListener('click', (e) => {
-          if(node.getAttribute('aria-expanded') === 'true') hideTooltip();
-          else showTooltip(node);
-        });
-
-        node.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
-          if (e.key === 'Escape') { hideTooltip(); node.blur(); }
-        });
-      });
-
-      document.addEventListener('pointerdown', (e) => {
-        if(!stage.contains(e.target)) hideTooltip();
-      });
-
-      /* re-open tooltip on resize/orientation if something is expanded */
-      ['resize','orientationchange'].forEach(evt => window.addEventListener(evt, () => {
-        const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
-        if(opened) showTooltip(opened);
-        // also re-run mobile layout recalculation (below)
-        setMobileLayout();
-      }));
-
-      const openBtn = document.getElementById('pj-open-case');
-      if(openBtn){
-        openBtn.addEventListener('click', () => {
-          const external = document.querySelector('[data-case-open="shuttle"]') || null;
-          if (external) external.scrollIntoView({behavior:'smooth', block:'center'});
-        });
-      }
-
-      /* -------------------- Mobile layout helper --------------------
-         This measures viewport innerHeight (so it ignores/honors browser chrome)
-         and then sets CSS variables:
-           --quarter-vh  -> 25% of current innerHeight (in px)
-           --diagram-height -> remaining px for the diagram after header + button + padding
-      ----------------------------------------------------------------*/
-      function setMobileLayout(){
-        const q = window.innerHeight * 0.25; // quarter of *visible* viewport
-        document.documentElement.style.setProperty('--quarter-vh', q + 'px');
-
-        // only apply diagram sizing adjustments on small screens
-        if(window.matchMedia && window.matchMedia('(max-width:640px)').matches){
-          const section = document.getElementById('campus-impact-track');
-          const card = section.querySelector('.pj-card');
-          const title = section.querySelector('#campus-title');
-          const sub = section.querySelector('.pj-sub');
-          const actions = section.querySelector('.pj-actions');
-          // fallback heights if elements missing
-          const titleH = title ? title.offsetHeight : 0;
-          const subH = sub ? sub.offsetHeight : 0;
-          const actionsH = actions ? actions.offsetHeight : 44;
-          // card padding vertical
-          const cs = card ? getComputedStyle(card) : null;
-          const padTop = cs ? parseFloat(cs.paddingTop || 0) : 10;
-          const padBottom = cs ? parseFloat(cs.paddingBottom || 0) : 10;
-          // small safety spacing
-          const safety = 8;
-
-          // calculate available height for the stage/diagram
-          let available = q - titleH - subH - actionsH - padTop - padBottom - safety;
-          if (available < 40) available = 40; // minimum sensible diagram area
-          document.documentElement.style.setProperty('--diagram-height', Math.round(available) + 'px');
-
-          // ensure the section actually gets the quarter height (helps when parent containers don't stretch)
-          section.style.height = q + 'px';
-        } else {
-          // cleanup for larger screens
-          document.documentElement.style.removeProperty('--diagram-height');
-          // remove inline height if previously set
-          const section = document.getElementById('campus-impact-track');
-          if(section) section.style.removeProperty('height');
+          nodes.forEach(n => n.setAttribute('aria-expanded', 'false'));
+          node.setAttribute('aria-expanded', 'true');
         }
+        function hideTooltip() {
+          tooltip.classList.remove('show');
+          tooltip.setAttribute('aria-hidden', 'true');
+          nodes.forEach(n => n.setAttribute('aria-expanded', 'false'));
+        }
+
+        nodes.forEach(node => {
+          node.addEventListener('pointerenter', () => showTooltip(node));
+          node.addEventListener('pointerleave', () => hideTooltip());
+          node.addEventListener('focus', () => showTooltip(node));
+          node.addEventListener('blur', () => hideTooltip());
+          node.addEventListener('click', (e) => {
+            if (node.getAttribute('aria-expanded') === 'true') hideTooltip();
+            else showTooltip(node);
+          });
+          node.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); }
+            if (e.key === 'Escape') { hideTooltip(); node.blur(); }
+          });
+        });
+
+        document.addEventListener('pointerdown', (e) => {
+          if (!stage.contains(e.target)) hideTooltip();
+        });
+
+        ['resize', 'orientationchange'].forEach(evt => window.addEventListener(evt, () => {
+          const opened = nodes.find(n => n.getAttribute('aria-expanded') === 'true');
+          if (opened) showTooltip(opened);
+        }));
       }
 
-      // initial run
-      setMobileLayout();
-      // keep it up-to-date
-      window.addEventListener('resize', setMobileLayout);
-      window.addEventListener('orientationchange', setMobileLayout);
+      // ---------- Mobile accordion toggles ----------
+      const mobile = document.getElementById('pdf-mobile');
+      if (mobile) {
+        mobile.querySelectorAll('.pdf-step').forEach(step => {
+          const btn = step.querySelector('.toggle');
+          const detail = step.querySelector('.detail');
+
+          // initialize hidden detail but keep content accessible
+          if (detail) {
+            detail.setAttribute('aria-hidden', 'true');
+            detail.style.display = 'none';
+          }
+
+          if (btn && detail) {
+            btn.addEventListener('click', () => {
+              const expanded = btn.getAttribute('aria-expanded') === 'true';
+              // close all others (optional: keep independent, change if you want)
+              mobile.querySelectorAll('.pdf-step .detail').forEach(d => { d.style.display = 'none'; d.setAttribute('aria-hidden', 'true'); });
+              mobile.querySelectorAll('.pdf-step .toggle').forEach(t => t.setAttribute('aria-expanded', 'false'));
+
+              if (!expanded) {
+                detail.style.display = 'block';
+                detail.setAttribute('aria-hidden', 'false');
+                btn.setAttribute('aria-expanded', 'true');
+              } else {
+                detail.style.display = 'none';
+                detail.setAttribute('aria-hidden', 'true');
+                btn.setAttribute('aria-expanded', 'false');
+              }
+            });
+
+            // keyboard support
+            btn.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+            });
+          }
+        });
+      }
+
+      // Optional: example action for "Open Campus Case Study"
+      const openBtn = document.getElementById('pdf-open-case');
+      if (openBtn) {
+        openBtn.addEventListener('click', () => {
+          // fallback behavior: scroll to a section or open modal - you can replace this with your own logic
+          const target = document.querySelector('[data-case-open="shuttle"]') || null;
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
     })();
   </script>
 </section>
-
 
   
 <section class="marquee-wrap" style="margin-top:36px;" id="archive">
@@ -4815,8 +4903,8 @@ button[aria-pressed="true"] {
     </div>
   </div>
 </div>
- 
-  <div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Case study modal">
+<!-- CASE STUDY MODAL (paste once, e.g., after #projects) -->
+<div id="case-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Case study modal">
   <div class="modal-panel" role="document">
     <div style="display:flex;align-items:center;gap:12px;justify-content:space-between">
       <div>
