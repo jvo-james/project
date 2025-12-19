@@ -4080,131 +4080,117 @@ button[aria-pressed="true"] {
   </div>
 </section>
 
-<!-- MEDIA / VIDEO SECTION -->
-<section id="media-videos" class="media-section" aria-labelledby="media-videos-heading">
-  <h3 id="media-videos-heading">Media & Videos</h3>
-  <p class="muted">Official broadcasts and competition footage featuring me — NSMQ rounds and Edify Ghana (first runner-up).</p>
+<!-- ===== BIG HORIZONTAL MEDIA / VIDEO GALLERY (4-in-line, large thumbnails) ===== -->
+<section id="media-videos" class="media-section media-gallery-large" aria-labelledby="media-videos-heading">
+  <div class="media-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+    <div>
+      <h3 id="media-videos-heading" style="margin:0 0 6px">Media & Videos</h3>
+      <p class="muted" style="margin:0">Selected official broadcasts and competition footage (NSMQ, Edify). Click a thumbnail to open a lightweight player at the exact timestamp.</p>
+    </div>
+    <div style="align-self:center">
+      <a class="link-btn" href="#archive" style="font-weight:800">See archive</a>
+    </div>
+  </div>
 
-  <div class="video-grid" role="list">
+  <div class="video-row" role="list" aria-label="Video gallery — scroll horizontally">
 
-    <!-- 1) NSMQ — Regional Semi-finals (one video, two key timestamps) -->
-    <article class="video-card" role="listitem" data-youtube-id="b6G7jbPoz1I" tabindex="0" aria-label="NSMQ Regional Semi-finals — opens video modal">
+    <!-- CARD 1: NSMQ regional semi-finals -->
+    <article class="video-card large" role="listitem" data-youtube-id="b6G7jbPoz1I" tabindex="0" aria-label="NSMQ Regional Semi-finals — opens video modal">
       <div class="thumb" aria-hidden="true">
         <img src="https://img.youtube.com/vi/b6G7jbPoz1I/maxresdefault.jpg" alt="NSMQ Regional Semi-finals — thumbnail">
         <button class="play-btn" aria-label="Play NSMQ Regional Semi-finals">▶</button>
       </div>
       <div class="meta">
-        <strong class="v-title">NSMQ — Regional Semi-finals</strong>
-        <div class="v-role">Team Captain / Contestant — Aggrey Memorial</div>
-        <div class="v-source">NSMQ Channel</div>
-        <p class="v-takeaway"><strong>Takeaway:</strong> Live televised round demonstrating buzzer speed, recall and team leadership.</p>
+        <div class="meta-top">
+          <strong class="v-title">NSMQ — Regional Semi-finals</strong>
+          <div class="v-role">Team Captain — Aggrey Memorial</div>
+          <div class="v-source">NSMQ Channel</div>
+        </div>
+
+        <p class="v-takeaway"><strong>Takeaway:</strong> Fast recall & buzzer accuracy; speed-race highlight below.</p>
 
         <div class="time-links">
-          <button class="btn btn-sm open-video" data-id="b6G7jbPoz1I" data-start="181">Appearance — 0:03:01</button>
-          <button class="btn btn-sm open-video" data-id="b6G7jbPoz1I" data-start="2129">Speed-race highlight — 0:35:29</button>
+          <button class="btn-sm open-video" data-id="b6G7jbPoz1I" data-start="181">Appearance — 0:03:01</button>
+          <button class="btn-sm open-video" data-id="b6G7jbPoz1I" data-start="2129">Speed-race — 0:35:29</button>
           <a class="link-external" href="https://youtu.be/b6G7jbPoz1I?t=181" target="_blank" rel="noopener">Open on YouTube</a>
         </div>
-
-        <details class="transcript">
-          <summary>Suggested highlights (edit to match exact wording)</summary>
-          <ul>
-            <li><strong>0:03:01 (t=181)</strong> — Opening segment/answer appearance (your first show-up; good for "contestant intro").</li>
-            <li><strong>0:35:29 (t=2129)</strong> — Speed-race round: rapid recall, buzzer accuracy and clear, confident answers (crowd/host reaction visible).</li>
-          </ul>
-        </details>
       </div>
     </article>
 
-    <!-- 2) NSMQ — Finals (first-ever finals for your school) -->
-    <article class="video-card" role="listitem" data-youtube-id="mzMKZe_Jf2o" tabindex="0" aria-label="NSMQ Finals — opens video modal">
+    <!-- CARD 2: NSMQ finals -->
+    <article class="video-card large" role="listitem" data-youtube-id="mzMKZe_Jf2o" tabindex="0" aria-label="NSMQ Regional Finals — opens video modal">
       <div class="thumb" aria-hidden="true">
-        <img src="https://img.youtube.com/vi/mzMKZe_Jf2o/maxresdefault.jpg" alt="NSMQ Finals — thumbnail">
-        <button class="play-btn" aria-label="Play NSMQ Finals">▶</button>
+        <img src="https://img.youtube.com/vi/mzMKZe_Jf2o/maxresdefault.jpg" alt="NSMQ Regional Finals — thumbnail">
+        <button class="play-btn" aria-label="Play NSMQ Regional Finals">▶</button>
       </div>
       <div class="meta">
-        <strong class="v-title">NSMQ — Regional Finals</strong>
-        <div class="v-role">Team Captain / Contestant — Aggrey Memorial</div>
-        <div class="v-source">NSMQ Channel</div>
-        <p class="v-takeaway"><strong>Takeaway:</strong> Televised finals — pivotal answer demonstrating depth and composure under pressure.</p>
-
-        <div class="time-links">
-          <button class="btn btn-sm open-video" data-id="mzMKZe_Jf2o" data-start="552">Team finals segment — 0:09:12</button>
-          <button class="btn btn-sm open-video" data-id="mzMKZe_Jf2o" data-start="1908">Impressive answer — 0:31:48</button>
-          <a class="link-external" href="https://youtu.be/mzMKZe_Jf2o?t=552" target="_blank" rel="noopener">Open on YouTube</a>
+        <div class="meta-top">
+          <strong class="v-title">NSMQ — Regional Finals</strong>
+          <div class="v-role">Team Captain — Aggrey Memorial</div>
+          <div class="v-source">NSMQ Channel</div>
         </div>
 
-        <details class="transcript">
-          <summary>Suggested highlights (edit as needed)</summary>
-          <ul>
-            <li><strong>0:09:12 (t=552)</strong> — Finals segment where your team appears onstage.</li>
-            <li><strong>0:31:48 (t=1908)</strong> — Notable, high-quality answer (clear delivery and subject mastery).</li>
-          </ul>
-        </details>
+        <p class="v-takeaway"><strong>Takeaway:</strong> Televised finals — a high-quality answer that stood out.</p>
+
+        <div class="time-links">
+          <button class="btn-sm open-video" data-id="mzMKZe_Jf2o" data-start="552">Finals segment — 0:09:12</button>
+          <button class="btn-sm open-video" data-id="mzMKZe_Jf2o" data-start="1908">Impressive answer — 0:31:48</button>
+          <a class="link-external" href="https://youtu.be/mzMKZe_Jf2o?t=552" target="_blank" rel="noopener">Open on YouTube</a>
+        </div>
       </div>
     </article>
 
-    <!-- 3) NSMQ — Preliminary stage (multiple timestamps where your answers sealed wins) -->
-    <article class="video-card" role="listitem" data-youtube-id="2WFkgDxdkqc" tabindex="0" aria-label="NSMQ Preliminary stage — opens video modal">
+    <!-- CARD 3: NSMQ prelims -->
+    <article class="video-card large" role="listitem" data-youtube-id="2WFkgDxdkqc" tabindex="0" aria-label="NSMQ Preliminary stage — opens video modal">
       <div class="thumb" aria-hidden="true">
         <img src="https://img.youtube.com/vi/2WFkgDxdkqc/maxresdefault.jpg" alt="NSMQ Preliminaries — thumbnail">
         <button class="play-btn" aria-label="Play NSMQ Preliminaries">▶</button>
       </div>
       <div class="meta">
-        <strong class="v-title">NSMQ — Preliminary Stage</strong>
-        <div class="v-role">Contestant — Aggrey Memorial</div>
-        <div class="v-source">NSMQ Channel</div>
-        <p class="v-takeaway"><strong>Takeaway:</strong> Critical rounds where your rapid answers helped the team win key matches.</p>
-
-        <div class="time-links">
-          <button class="btn btn-sm open-video" data-id="2WFkgDxdkqc" data-start="802">Appearance — 0:13:22</button>
-          <button class="btn btn-sm open-video" data-id="2WFkgDxdkqc" data-start="5602">Three-answer winning round — 1:33:22</button>
-          <button class="btn btn-sm open-video" data-id="2WFkgDxdkqc" data-start="5909">Last question you answered — 1:38:29</button>
-          <a class="link-external" href="https://youtu.be/2WFkgDxdkqc?t=5602" target="_blank" rel="noopener">Open on YouTube</a>
+        <div class="meta-top">
+          <strong class="v-title">NSMQ — Preliminary Stage</strong>
+          <div class="v-role">Contestant — Aggrey Memorial</div>
+          <div class="v-source">NSMQ Channel</div>
         </div>
 
-        <details class="transcript">
-          <summary>Suggested highlights (edit to reflect exact text)</summary>
-          <ul>
-            <li><strong>0:13:22 (t=802)</strong> — Early appearance; solid recall in prelims.</li>
-            <li><strong>1:33:22 (t=5602)</strong> — Round where you answered three key questions that swung the match.</li>
-            <li><strong>1:38:29 (t=5909)</strong> — The final question you answered in that match (crowd/host reaction).</li>
-          </ul>
-        </details>
+        <p class="v-takeaway"><strong>Takeaway:</strong> Key round: three decisive answers that secured the win.</p>
+
+        <div class="time-links">
+          <button class="btn-sm open-video" data-id="2WFkgDxdkqc" data-start="802">Appearance — 0:13:22</button>
+          <button class="btn-sm open-video" data-id="2WFkgDxdkqc" data-start="5602">Three-answer round — 1:33:22</button>
+          <button class="btn-sm open-video" data-id="2WFkgDxdkqc" data-start="5909">Final answer — 1:38:29</button>
+          <a class="link-external" href="https://youtu.be/2WFkgDxdkqc?t=5602" target="_blank" rel="noopener">Open on YouTube</a>
+        </div>
       </div>
     </article>
 
-    <!-- 4) Edify Ghana 2019 — National typing competition (first runner-up) -->
-    <article class="video-card" role="listitem" data-youtube-id="4Ft-4n-CJWE" tabindex="0" aria-label="Edify Ghana 2019 — opens video modal">
+    <!-- CARD 4: Edify Ghana typing competition -->
+    <article class="video-card large" role="listitem" data-youtube-id="4Ft-4n-CJWE" tabindex="0" aria-label="Edify Ghana 2019 typing competition — opens video modal">
       <div class="thumb" aria-hidden="true">
         <img src="https://img.youtube.com/vi/4Ft-4n-CJWE/maxresdefault.jpg" alt="Edify Ghana 2019 typing competition — thumbnail">
         <button class="play-btn" aria-label="Play Edify Ghana 2019">▶</button>
       </div>
       <div class="meta">
-        <strong class="v-title">Edify Ghana 2019 — National Typing Competition</strong>
-        <div class="v-role">Competitor — First runner-up</div>
-        <div class="v-source">Edify Ghana</div>
-        <p class="v-takeaway"><strong>Takeaway:</strong> National stage — top finish for speed & accuracy (1st runner-up).</p>
-
-        <div class="time-links">
-          <button class="btn btn-sm open-video" data-id="4Ft-4n-CJWE" data-start="0">Competition footage — start</button>
-          <button class="btn btn-sm open-video" data-id="4Ft-4n-CJWE" data-start="431">Announcement — 0:07:11</button>
-          <a class="link-external" href="https://youtu.be/4Ft-4n-CJWE?t=431" target="_blank" rel="noopener">Open on YouTube</a>
+        <div class="meta-top">
+          <strong class="v-title">Edify Ghana 2019 — Typing Competition</strong>
+          <div class="v-role">Competitor — First runner-up</div>
+          <div class="v-source">Edify Ghana</div>
         </div>
 
-        <details class="transcript">
-          <summary>Suggested highlights</summary>
-          <ul>
-            <li><strong>0:00</strong> — Event footage and competition context.</li>
-            <li><strong>0:07:11 (t=431)</strong> — Name announcement: first runner-up (award recognition moment).</li>
-          </ul>
-        </details>
+        <p class="v-takeaway"><strong>Takeaway:</strong> National podium finish — accuracy & speed under pressure.</p>
+
+        <div class="time-links">
+          <button class="btn-sm open-video" data-id="4Ft-4n-CJWE" data-start="0">Full event — start</button>
+          <button class="btn-sm open-video" data-id="4Ft-4n-CJWE" data-start="431">Name announcement — 0:07:11</button>
+          <a class="link-external" href="https://youtu.be/4Ft-4n-CJWE?t=431" target="_blank" rel="noopener">Open on YouTube</a>
+        </div>
       </div>
     </article>
 
   </div>
 </section>
 
-<!-- VIDEO MODAL (unique IDs used to avoid collisions) -->
+<!-- ===== Modal (keeps same accessible behavior) ===== -->
 <div id="media-video-modal" role="dialog" aria-modal="true" aria-hidden="true" class="video-modal" style="display:none">
   <div class="video-modal-panel" role="document">
     <button id="media-video-close" aria-label="Close video" class="video-close">✕</button>
@@ -4213,31 +4199,100 @@ button[aria-pressed="true"] {
   </div>
 </div>
 
-<!-- Minimal CSS (put in your stylesheet) -->
+<!-- ===== Styles (copy to your stylesheet or inside <style>) ===== -->
 <style>
-.media-section { padding:28px 0; }
-.video-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
-.video-card { background:#fff;border:1px solid rgba(0,0,0,.04);border-radius:12px;overflow:hidden;display:flex;gap:12px;padding:12px; align-items:flex-start; }
-.thumb { position:relative; width:180px; flex:0 0 180px; border-radius:8px; overflow:hidden; }
-.thumb img { display:block; width:100%; height:100%; object-fit:cover; }
-.play-btn { position:absolute; right:8px; bottom:8px; padding:8px 10px; border-radius:8px; background:rgba(0,0,0,.6); color:#fff; border:none; font-weight:900; cursor:pointer; }
-.meta { flex:1; min-width:0; }
-.v-title{ display:block; font-weight:900; margin-bottom:6px; }
-.v-role{ color:var(--muted); font-size:13px; margin-bottom:6px; }
-.time-links { display:flex; gap:8px; align-items:center; margin-top:8px; flex-wrap:wrap; }
-.btn-sm { padding:6px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); background:#fff; cursor:pointer; }
-.link-external { font-size:13px; color:var(--accent); margin-left:6px; }
-.details { margin-top:6px; }
+/* Container & header */
+.media-gallery-large .media-head { margin-bottom:12px; }
 
-.video-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.7); z-index:99999; }
-.video-modal-panel { width:clamp(320px,90%,1100px); background:#fff; padding:12px; border-radius:12px; position:relative; }
-.video-player-wrap iframe { width:100%; height:56vw; max-height:640px; border:0; border-radius:8px; }
+/* Horizontal row: 4 cards in a single line */
+.video-row {
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  white-space:nowrap;
+  overflow-x:auto;
+  padding:18px 6px;
+  scrollbar-width: thin;
+}
+
+/* Large card sizing */
+.video-card.large {
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  background:linear-gradient(180deg,#fff,#fbfdff);
+  border:1px solid rgba(10,20,30,0.05);
+  padding:14px;
+  border-radius:14px;
+  min-width:880px;        /* ensures large footprint so four will sit in a single row on wide screens (and overflow on small screens) */
+  box-shadow: 0 18px 50px rgba(9,14,24,0.06);
+  flex: 0 0 auto;         /* prevent wrapping / shrinking */
+}
+
+/* Bigger thumbnail — 16:9 */
+.thumb {
+  width:420px;
+  height:236px;           /* 16:9 */
+  flex: 0 0 420px;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  background:#000;
+}
+.thumb img { width:100%; height:100%; object-fit:cover; display:block; transform: translateZ(0); }
+
+/* Play button — larger */
+.play-btn {
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  padding:10px 14px;
+  border-radius:10px;
+  background: linear-gradient(90deg,#7c3aed,#06b6d4);
+  color:#fff;
+  font-weight:900;
+  font-size:16px;
+  border: none;
+  cursor:pointer;
+  box-shadow: 0 10px 30px rgba(12,18,40,0.12);
+}
+
+/* Meta column */
+.meta { flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; }
+.meta-top { display:flex; flex-direction:column; gap:4px; }
+.v-title { font-size:18px; font-weight:900; }
+.v-role { color:var(--muted); font-size:13px; }
+.v-source { color:var(--muted); font-size:12px; font-weight:700; }
+
+.v-takeaway { margin:6px 0 0; color: rgba(11,18,32,0.8); font-size:14px; }
+
+/* Buttons */
+.time-links { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+.btn-sm { padding:8px 12px; border-radius:10px; background:#fff; border:1px solid rgba(10,20,30,0.06); cursor:pointer; font-weight:800; }
+.link-external { color:var(--accent); font-size:13px; margin-left:6px; }
+
+/* Modal styles */
+.video-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.72); z-index:99999; }
+.video-modal-panel { width:clamp(360px,90%,1100px); background:#fff; padding:14px; border-radius:12px; position:relative; }
+.video-player-wrap iframe { width:100%; height:56vw; max-height:680px; border:0; border-radius:8px; }
 .video-close { position:absolute; top:10px; right:10px; background:#fff; border:1px solid rgba(0,0,0,.06); padding:8px 10px; border-radius:8px; cursor:pointer; }
-.video-meta { margin-top:8px; color:var(--muted); font-size:13px; }
-@media (max-width:520px){ .thumb{ display:none } .video-player-wrap iframe { height:48vw; } }
+
+/* Small screens: hide thumbs to save space and allow vertical layout */
+@media (max-width:980px) {
+  .video-row { padding:12px 6px; }
+  .video-card.large { min-width:760px; }
+  .thumb { display:block; width:320px; height:180px; flex:0 0 320px; }
+  .play-btn { padding:8px 10px; font-size:14px; }
+}
+@media (max-width:620px) {
+  /* keep row scrollable on very small viewports */
+  .video-card.large { min-width:680px; padding:12px; }
+  .thumb { width:280px; height:158px; flex:0 0 280px; }
+  .v-title { font-size:16px; }
+}
 </style>
 
-<!-- Minimal JS (put before </body>) -->
+<!-- ===== JS (paste before </body>, replaces older modal script if any) ===== -->
 <script>
 (function(){
   const modal = document.getElementById('media-video-modal');
@@ -4249,7 +4304,6 @@ button[aria-pressed="true"] {
   function openVideo(id, start, title, metaText){
     if(!id) return;
     wrap.innerHTML = '';
-    // use nocookie domain
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube-nocookie.com/embed/${id}?rel=0&autoplay=1&modestbranding=1&start=${start||0}`;
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
@@ -4279,18 +4333,18 @@ button[aria-pressed="true"] {
     if(e.key === 'Escape') closeVideo();
   }
 
-  // click handlers for play buttons and open-video buttons
+  // bind play and open buttons
   document.querySelectorAll('.open-video, .video-card .play-btn').forEach(btn=>{
     btn.addEventListener('click', (ev)=>{
       const id = btn.dataset.id || btn.closest('.video-card')?.dataset.youtubeId;
       const start = btn.dataset.start || btn.closest('.video-card')?.dataset.start || 0;
       const title = btn.closest('.video-card')?.querySelector('.v-title')?.textContent || 'Video';
-      const metaText = btn.closest('.video-card')?.querySelector('.v-source')?.textContent || '';
-      openVideo(id, start, title, metaText + (start ? ` — starts ${formatTime(start)}` : ''));
+      const source = btn.closest('.video-card')?.querySelector('.v-source')?.textContent || '';
+      openVideo(id, start, title, source + (start ? ` — starts ${formatTime(start)}` : ''));
     });
   });
 
-  // make entire card keyboard-activatable: Enter/Space opens main appearance start (first timestamp)
+  // allow Enter/Space on card to open main/first timestamp
   document.querySelectorAll('.video-card').forEach(card=>{
     card.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') {
@@ -4313,6 +4367,7 @@ button[aria-pressed="true"] {
   }
 })();
 </script>
+
 
 <section id="product-delivery-flow" aria-labelledby="pdf-title" role="region">
   <style>
