@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kids Wear — One-off Dresses</title>
+
+  <!-- Paystack inline -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <!-- Firebase compat SDKs (required) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+  <style>
+    :root{
+      --bg:#f7f8fb; --card:#ffffff; --muted:#6b7280; --accent:#ff6b81; --glass:rgba(255,255,255,0.6);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#111;background:var(--bg);-webkit-font-smoothing:antialiased}
+    /* Header */
+    header.site-header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ffa07a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 6px 18px rgba(255,107,129,0.18)}
+    .brand h1{font-size:1rem;margin:0}
+    nav{display:flex;gap:.5rem;align-items:center}
+    .link{font-weight:600;color:var(--muted);text-decoration:none;padding:.35rem .55rem;border-radius:8px}
+    .link.admin{background:#0f172a;color:#fff;padding:.4rem .6rem;font-size:.9rem}
+    /* Hero */
+    .hero{padding:1.25rem;display:flex;gap:1rem;align-items:center}
+    .hero-left{flex:1}
+    .tag{font-size:.8rem;color:var(--accent);font-weight:700;background:rgba(255,107,129,0.08);display:inline-block;padding:.25rem .5rem;border-radius:999px}
+    .hero h2{margin:.45rem 0;font-size:1.35rem;line-height:1.05}
+    .hero p{margin:0;color:var(--muted)}
+    .searchbar{margin-top:.85rem;display:flex;gap:.5rem}
+    .searchbar input{flex:1;padding:.7rem .9rem;border-radius:12px;border:none;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,0.05)}
+    .searchbar select{padding:.6rem .8rem;border-radius:12px;border:none;background:#fff}
+    .hero-cta{display:flex;gap:.5rem;margin-top:.75rem}
+    .btn{background:var(--accent);color:#fff;padding:.6rem .9rem;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(255,107,129,0.12)}
+    .secondary{background:#fff;color:#111;border:1px solid #eee}
+    /* Category chips */
+    .chips{display:flex;gap:.5rem;overflow-x:auto;padding:0 1rem 1rem;margin-bottom:.25rem}
+    .chip{flex:0 0 auto;padding:.45rem .7rem;border-radius:999px;background:#fff;border:1px solid #eee;color:var(--muted);cursor:pointer;white-space:nowrap}
+    .chip.active{background:linear-gradient(90deg,var(--accent),#ff946f);color:#fff;border:0;box-shadow:0 8px 30px rgba(255,107,129,0.12)}
+    /* Products grid */
+    .container{padding:0 1rem 4rem}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .card{background:var(--card);border-radius:12px;padding:.6rem;display:flex;gap:.6rem;align-items:flex-start;box-shadow:0 8px 24px rgba(12,18,31,0.04);transition:transform .18s,box-shadow .18s}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(12,18,31,0.06)}
+    .card img{width:110px;height:110px;border-radius:10px;object-fit:cover;flex-shrink:0}
+    .info{flex:1}
+    .info h3{margin:0;font-size:1rem}
+    .meta{color:var(--muted);font-size:.85rem;margin-top:.25rem}
+    .price{font-weight:800;margin-top:.5rem}
+    .buyBtn{margin-left:auto;align-self:flex-end;background:linear-gradient(90deg,var(--accent),#ff946f);border:none;color:#fff;padding:.5rem .7rem;border-radius:10px;cursor:pointer;font-weight:700}
+    /* Small badge for sold out */
+    .sold-badge{padding:.25rem .45rem;background:#111;color:#fff;border-radius:999px;font-size:.75rem;font-weight:700}
+    /* Modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,10,15,0.5);z-index:80;padding:1rem}
+    .modal-card{background:var(--card);width:100%;max-width:760px;border-radius:12px;padding:1rem;box-shadow:0 30px 80px rgba(12,18,31,0.3)}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .large-img{width:100%;height:320px;object-fit:cover;border-radius:10px}
+    .close{position:absolute;right:1.25rem;top:1.25rem;background:#fff;border-radius:999px;padding:.3rem;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+    /* Responsive */
+    @media(min-width:860px){ .grid{grid-template-columns:repeat(3,1fr)} .modal-grid{grid-template-columns:1fr 1fr} }
+    @media(min-width:1200px){ .grid{grid-template-columns:repeat(4,1fr)} .hero h2{font-size:1.6rem} }
+    @media(max-width:520px){ .card img{width:90px;height:90px} .hero{flex-direction:column;align-items:flex-start} .modal-grid{grid-template-columns:1fr} .large-img{height:260px} .grid{grid-template-columns:repeat(2,1fr)} }
+    /* small utilities */
+    .center{display:flex;align-items:center;justify-content:center}
+    .muted{color:var(--muted)}
+    .count-pill{background:#fff;padding:.35rem .6rem;border-radius:999px;border:1px solid #eee;font-weight:700}
+    /* subtle image loading fade-in */
+    img.fade{opacity:0;transition:opacity .45s}
+    img.fade.loaded{opacity:1}
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">KD</div>
+      <div>
+        <h1 style="font-size:1rem">KidsWear • One-off Dresses</h1>
+        <div style="font-size:.78rem;color:var(--muted)">Unique dresses — once sold, gone</div>
+      </div>
+    </div>
+
+    <nav>
+      <a class="link" href="#collections">Collections</a>
+      <a class="link" href="#how" style="display:none">How it works</a>
+      <a class="link admin" href="login.html">Admin</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="tag">Limited • One of one</div>
+      <h2>Handmade kids dresses — every piece unique.</h2>
+      <p>Sizes from newborn to adult. Real-time availability — buy before it's gone.</p>
+
+      <div class="searchbar" style="margin-top:12px">
+        <input id="searchInput" type="search" placeholder="Search by name (e.g. 'floral', 'pink')">
+        <select id="sortSelect" title="Sort">
+          <option value="new">Newest</option>
+          <option value="price_asc">Price ↑</option>
+          <option value="price_desc">Price ↓</option>
+        </select>
+      </div>
+
+      <div class="hero-cta">
+        <button class="btn" id="viewAllBtn">Browse all</button>
+        <button class="btn secondary" id="contactBtn">Contact (WhatsApp)</button>
+        <div style="margin-left:auto" class="count-pill" id="productCount">0 items</div>
+      </div>
+    </div>
+
+    <div style="flex:0 0 260px" class="center">
+      <img src="https://images.unsplash.com/photo-1520975682783-9e5b8b1d6f0b?q=80&w=900&auto=format&fit=crop" alt="hero" style="width:260px;height:260px;border-radius:20px;object-fit:cover;box-shadow:0 30px 60px rgba(12,18,31,0.08)">
+    </div>
+  </section>
+
+  <!-- category chips -->
+  <div class="chips" id="chipsContainer" aria-hidden="false" style="padding-left:1rem">
+    <!-- generated -->
+  </div>
+
+  <main class="container" id="collections">
+    <div id="loading" class="center" style="padding:1.5rem 0"><div class="muted">Loading products…</div></div>
+    <div id="grid" class="grid" aria-live="polite"></div>
+  </main>
+
+  <!-- Product modal -->
+  <div id="productModal" class="modal" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="close" id="closeModal">✕</button>
+      <div class="modal-grid">
+        <div>
+          <img id="modalImage" class="large-img" src="" alt="">
+        </div>
+        <div>
+          <h2 id="modalName"></h2>
+          <div id="modalCategory" class="muted"></div>
+          <div id="modalPrice" style="font-weight:800;margin-top:10px;font-size:1.25rem"></div>
+          <p id="modalDesc" class="muted" style="margin-top:12px">Beautiful one-off dress. Contact owner for bespoke requests.</p>
+
+          <div style="margin-top:18px;display:flex;gap:.5rem;align-items:center;">
+            <div id="modalAvailability"></div>
+            <button class="buyBtn" id="openBuy">Buy</button>
+          </div>
+
+          <div style="margin-top:14px;color:var(--muted);font-size:.9rem">
+            <strong>Remember:</strong> Each dress is unique. Once sold it will be removed from the store.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment modal (email+phone) -->
+  <div id="payModal" class="modal" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="close" id="closePayModal">✕</button>
+      <h3 style="margin-top:0">Enter contact details</h3>
+      <div style="display:grid;gap:.6rem">
+        <label class="muted">Email</label>
+        <input id="custEmail" type="email" placeholder="you@example.com" />
+        <label class="muted">Phone (WhatsApp preferred)</label>
+        <input id="custPhone" type="tel" placeholder="+233 24 000 0000" />
+        <div style="display:flex;gap:.5rem;margin-top:.25rem;justify-content:flex-end">
+          <button class="btn secondary" id="cancelPay2">Cancel</button>
+          <button class="btn" id="payNowBtn">Pay with Paystack</button>
+        </div>
+        <div id="payHint" class="muted" style="font-size:.85rem;margin-top:.5rem">You will be asked to complete payment in Paystack. After success the item is marked sold.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*************************************************************
+     *  Replace the firebaseConfig object below with your config
+     *  (from Firebase Console → Project settings → SDK setup)
+     *************************************************************/
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    // Replace with your Paystack public key
+    const PAYSTACK_PUBLIC_KEY = "YOUR_PAYSTACK_PUBLIC_KEY";
+
+    // --- Initialize Firebase ---
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+    const auth = firebase.auth();
+
+    // UI elements
+    const gridEl = document.getElementById('grid');
+    const loadingEl = document.getElementById('loading');
+    const productCountEl = document.getElementById('productCount');
+    const chipsContainer = document.getElementById('chipsContainer');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const viewAllBtn = document.getElementById('viewAllBtn');
+    const contactBtn = document.getElementById('contactBtn');
+
+    const productModal = document.getElementById('productModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalName = document.getElementById('modalName');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalAvailability = document.getElementById('modalAvailability');
+    const openBuy = document.getElementById('openBuy');
+
+    const payModal = document.getElementById('payModal');
+    const closePayModal = document.getElementById('closePayModal');
+    const cancelPay2 = document.getElementById('cancelPay2');
+    const payNowBtn = document.getElementById('payNowBtn');
+    const custEmail = document.getElementById('custEmail');
+    const custPhone = document.getElementById('custPhone');
+
+    // categories order
+    const categoriesOrder = ["0-3 years","4-5","5-6","6-7","7-8","8-9","9-10","10-12","Adult"];
+
+    // state
+    let allProducts = [];    // {id, data}
+    let filteredProducts = [];
+    let selectedCategory = null;
+    let selectedProduct = null;
+
+    /* ---------- utils ---------- */
+    function formatGHS(n){ return `GHS ${Number(n).toLocaleString()}`; }
+    function el(tag, cls){ const e=document.createElement(tag); if(cls)e.className=cls; return e; }
+
+    /* ---------- render chips ---------- */
+    function renderChips(uniqueCats){
+      chipsContainer.innerHTML = '';
+      const allChip = el('div','chip' + (selectedCategory===null?' active':''));
+      allChip.textContent = `All (${allProducts.length})`;
+      allChip.onclick = ()=>{ selectedCategory=null; applyFilters(); };
+      chipsContainer.appendChild(allChip);
+
+      categoriesOrder.forEach(cat => {
+        if (!uniqueCats.includes(cat)) return;
+        const c = el('div','chip' + (selectedCategory===cat?' active':''));
+        c.textContent = cat;
+        c.onclick = ()=>{ selectedCategory = cat; applyFilters(); };
+        chipsContainer.appendChild(c);
+      });
+    }
+
+    /* ---------- render product grid ---------- */
+    function renderGrid(list){
+      gridEl.innerHTML = '';
+      if (!list.length){
+        loadingEl.innerHTML = '<div class="muted">No products found.</div>';
+        return;
+      }
+      loadingEl.style.display = 'none';
+      list.forEach(p => {
+        const card = el('div','card');
+        // image
+        const img = el('img');
+        img.className = 'fade';
+        img.loading = 'lazy';
+        img.alt = p.name || 'dress';
+        img.src = p.imageUrl || '';
+        img.onerror = ()=>img.src='https://via.placeholder.com/300?text=image';
+        img.onload = ()=>img.classList.add('loaded');
+
+        // info
+        const info = el('div','info');
+        info.innerHTML = `<h3>${p.name}</h3><div class="meta">${p.category}</div><div class="price">${formatGHS(p.price)}</div>`;
+
+        // right column: buttons
+        const right = el('div');
+        right.style.display = 'flex';
+        right.style.flexDirection = 'column';
+        right.style.justifyContent = 'space-between';
+        right.style.alignItems = 'flex-end';
+
+        const buy = el('button','buyBtn');
+        buy.textContent = p.available ? 'Buy' : 'Sold';
+        buy.disabled = !p.available;
+        buy.dataset.id = p.id;
+
+        // sold badge for unavailable
+        if (!p.available){
+          const badge = el('div','sold-badge');
+          badge.textContent = 'SOLD';
+          badge.style.marginBottom = '8px';
+          right.appendChild(badge);
+        }
+
+        right.appendChild(buy);
+        card.appendChild(img);
+        card.appendChild(info);
+        card.appendChild(right);
+
+        // click card opens detail modal (but not if clicking buy)
+        card.addEventListener('click', (e)=> {
+          if (e.target === buy) return;
+          openProductModal(p);
+        });
+
+        // buy button handler
+        buy.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (!p.available) return alert('Sorry, this item is already sold.');
+          selectedProduct = p;
+          openPayModal();
+        });
+
+        gridEl.appendChild(card);
+      });
+    }
+
+    /* ---------- modal logic ---------- */
+    function openProductModal(p){
+      selectedProduct = p;
+      modalImage.src = p.imageUrl || '';
+      modalName.textContent = p.name;
+      modalCategory.textContent = p.category;
+      modalPrice.textContent = formatGHS(p.price);
+      modalAvailability.innerHTML = p.available ? '<div class="small" style="color:green">Available</div>' : '<div class="small" style="color:#b00020">Sold</div>';
+      openBuy.disabled = !p.available;
+      productModal.style.display = 'flex';
+    }
+    closeModal.onclick = ()=> productModal.style.display = 'none';
+    productModal.addEventListener('click', (e)=> { if (e.target === productModal) productModal.style.display='none'; });
+
+    /* ---------- payment modal ---------- */
+    function openPayModal(){ 
+      custEmail.value=''; custPhone.value='';
+      payModal.style.display='flex';
+    }
+    closePayModal.onclick = ()=> payModal.style.display = 'none';
+    cancelPay2.onclick = ()=> payModal.style.display = 'none';
+    payModal.addEventListener('click', (e)=> { if (e.target === payModal) payModal.style.display='none'; });
+
+    /* ---------- search / filter / sort ---------- */
+    searchInput.addEventListener('input', applyFilters);
+    sortSelect.addEventListener('change', applyFilters);
+    viewAllBtn.addEventListener('click', ()=> { selectedCategory=null; searchInput.value=''; applyFilters(); });
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      let list = allProducts.slice();
+      if (selectedCategory) list = list.filter(p => p.category === selectedCategory);
+      if (q) list = list.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
+      // sort
+      const sort = sortSelect.value;
+      if (sort === 'price_asc') list.sort((a,b)=> a.price - b.price);
+      else if (sort === 'price_desc') list.sort((a,b)=> b.price - a.price);
+      else list.sort((a,b)=> (b.createdAt || 0) - (a.createdAt || 0)); // newest first
+      filteredProducts = list;
+      renderGrid(list);
+    }
+
+    /* ---------- real-time products listener ---------- */
+    function listenProducts(){
+      loadingEl.style.display = 'flex';
+      db.collection('products').orderBy('createdAt','desc')
+        .onSnapshot(snapshot => {
+          allProducts = snapshot.docs.map(d => {
+            const data = d.data();
+            return {
+              id: d.id,
+              name: data.name || 'Untitled',
+              price: data.price || 0,
+              category: data.category || 'Uncategorized',
+              imageUrl: data.imageUrl || '',
+              available: data.available === undefined ? true : data.available,
+              createdAt: data.createdAt ? data.createdAt.seconds || data.createdAt._seconds || 0 : 0
+            };
+          });
+          productCountEl.textContent = `${allProducts.length} items`;
+          const uniqueCats = [...new Set(allProducts.map(p=>p.category).filter(Boolean))];
+          renderChips(uniqueCats);
+          applyFilters();
+        }, err => {
+          loadingEl.innerHTML = `<div class="muted">Failed to load products: ${err.message}</div>`;
+        });
+    }
+
+    /* ---------- Paystack & marking sold (client-only quick flow) ---------- */
+    payNowBtn.addEventListener('click', ()=> {
+      const email = (custEmail.value || '').trim();
+      const phone = (custPhone.value || '').trim();
+      if (!email || !phone) return alert('Please enter both email and phone.');
+      if (!selectedProduct) return alert('No product selected.');
+      // Launch Paystack
+      const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: Math.round(Number(selectedProduct.price) * 100),
+        currency: "GHS",
+        metadata: {
+          custom_fields: [
+            {display_name: "Phone", variable_name: "phone", value: phone}
+          ]
+        },
+        callback: function(response){
+          // Quick client-side verification: mark product sold in a transaction
+          markProductAsSoldQuick(response.reference, email, phone);
+        },
+        onClose: function(){
+          // user closed popup
+        }
+      });
+      handler.openIframe();
+    });
+
+    async function markProductAsSoldQuick(reference, email, phone){
+      if (!selectedProduct) return alert('Product not selected.');
+      const prodRef = db.collection('products').doc(selectedProduct.id);
+      try {
+        await db.runTransaction(async tx => {
+          const doc = await tx.get(prodRef);
+          if (!doc.exists) throw "Product not found";
+          const d = doc.data();
+          if (!d.available) throw "Product already sold";
+          tx.update(prodRef, { available: false });
+          tx.set(db.collection('orders').doc(), {
+            productId: selectedProduct.id,
+            productName: selectedProduct.name,
+            email: email,
+            phone: phone,
+            amount: selectedProduct.price,
+            paystackRef: reference,
+            paid: true,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        });
+        payModal.style.display = 'none';
+        productModal.style.display = 'none';
+        alert('Payment successful — order recorded. You will receive a confirmation email from Paystack.');
+      } catch (err) {
+        alert('Could not complete order: ' + (err.message || err));
+      }
+    }
+
+    /* ---------- contact (WhatsApp) ---------- */
+    contactBtn.addEventListener('click', ()=> {
+      // change the phone number below to the business owner's WhatsApp number
+      const ownerPhone = '+233XXXXXYYY';
+      const url = `https://wa.me/${ownerPhone.replace(/\D/g,'')}?text=${encodeURIComponent('Hi, I have a question about your dresses.')}`;
+      window.open(url, '_blank');
+    });
+
+    /* ---------- initial load ---------- */
+    listenProducts();
+
+    // small UX: close modals with ESC
+    document.addEventListener('keydown', (e)=> {
+      if (e.key === 'Escape'){ productModal.style.display='none'; payModal.style.display='none'; }
+    });
+
+  </script>
+
+</body>
+</html>
