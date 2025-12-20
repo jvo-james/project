@@ -7,463 +7,1357 @@
 
   <!-- Paystack inline -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
 
-  <!-- Firebase compat SDKs (required) -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
-  <style>
-    :root{
-      --bg:#f7f8fb; --card:#ffffff; --muted:#6b7280; --accent:#ff6b81; --glass:rgba(255,255,255,0.6);
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#111;background:var(--bg);-webkit-font-smoothing:antialiased}
-    /* Header */
-    header.site-header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;box-shadow:0 6px 18px rgba(16,24,40,0.04)}
-    .brand{display:flex;align-items:center;gap:.75rem}
-    .logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ffa07a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 6px 18px rgba(255,107,129,0.18)}
-    .brand h1{font-size:1rem;margin:0}
-    nav{display:flex;gap:.5rem;align-items:center}
-    .link{font-weight:600;color:var(--muted);text-decoration:none;padding:.35rem .55rem;border-radius:8px}
-    .link.admin{background:#0f172a;color:#fff;padding:.4rem .6rem;font-size:.9rem}
-    /* Hero */
-    .hero{padding:1.25rem;display:flex;gap:1rem;align-items:center}
-    .hero-left{flex:1}
-    .tag{font-size:.8rem;color:var(--accent);font-weight:700;background:rgba(255,107,129,0.08);display:inline-block;padding:.25rem .5rem;border-radius:999px}
-    .hero h2{margin:.45rem 0;font-size:1.35rem;line-height:1.05}
-    .hero p{margin:0;color:var(--muted)}
-    .searchbar{margin-top:.85rem;display:flex;gap:.5rem}
-    .searchbar input{flex:1;padding:.7rem .9rem;border-radius:12px;border:none;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,0.05)}
-    .searchbar select{padding:.6rem .8rem;border-radius:12px;border:none;background:#fff}
-    .hero-cta{display:flex;gap:.5rem;margin-top:.75rem}
-    .btn{background:var(--accent);color:#fff;padding:.6rem .9rem;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(255,107,129,0.12)}
-    .secondary{background:#fff;color:#111;border:1px solid #eee}
-    /* Category chips */
-    .chips{display:flex;gap:.5rem;overflow-x:auto;padding:0 1rem 1rem;margin-bottom:.25rem}
-    .chip{flex:0 0 auto;padding:.45rem .7rem;border-radius:999px;background:#fff;border:1px solid #eee;color:var(--muted);cursor:pointer;white-space:nowrap}
-    .chip.active{background:linear-gradient(90deg,var(--accent),#ff946f);color:#fff;border:0;box-shadow:0 8px 30px rgba(255,107,129,0.12)}
-    /* Products grid */
-    .container{padding:0 1rem 4rem}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .card{background:var(--card);border-radius:12px;padding:.6rem;display:flex;gap:.6rem;align-items:flex-start;box-shadow:0 8px 24px rgba(12,18,31,0.04);transition:transform .18s,box-shadow .18s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(12,18,31,0.06)}
-    .card img{width:110px;height:110px;border-radius:10px;object-fit:cover;flex-shrink:0}
-    .info{flex:1}
-    .info h3{margin:0;font-size:1rem}
-    .meta{color:var(--muted);font-size:.85rem;margin-top:.25rem}
-    .price{font-weight:800;margin-top:.5rem}
-    .buyBtn{margin-left:auto;align-self:flex-end;background:linear-gradient(90deg,var(--accent),#ff946f);border:none;color:#fff;padding:.5rem .7rem;border-radius:10px;cursor:pointer;font-weight:700}
-    /* Small badge for sold out */
-    .sold-badge{padding:.25rem .45rem;background:#111;color:#fff;border-radius:999px;font-size:.75rem;font-weight:700}
-    /* Modal */
-    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,10,15,0.5);z-index:80;padding:1rem}
-    .modal-card{background:var(--card);width:100%;max-width:760px;border-radius:12px;padding:1rem;box-shadow:0 30px 80px rgba(12,18,31,0.3)}
-    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .large-img{width:100%;height:320px;object-fit:cover;border-radius:10px}
-    .close{position:absolute;right:1.25rem;top:1.25rem;background:#fff;border-radius:999px;padding:.3rem;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.08)}
-    /* Responsive */
-    @media(min-width:860px){ .grid{grid-template-columns:repeat(3,1fr)} .modal-grid{grid-template-columns:1fr 1fr} }
-    @media(min-width:1200px){ .grid{grid-template-columns:repeat(4,1fr)} .hero h2{font-size:1.6rem} }
-    @media(max-width:520px){ .card img{width:90px;height:90px} .hero{flex-direction:column;align-items:flex-start} .modal-grid{grid-template-columns:1fr} .large-img{height:260px} .grid{grid-template-columns:repeat(2,1fr)} }
-    /* small utilities */
-    .center{display:flex;align-items:center;justify-content:center}
-    .muted{color:var(--muted)}
-    .count-pill{background:#fff;padding:.35rem .6rem;border-radius:999px;border:1px solid #eee;font-weight:700}
-    /* subtle image loading fade-in */
-    img.fade{opacity:0;transition:opacity .45s}
-    img.fade.loaded{opacity:1}
-  </style>
-</head>
-<body>
+/* ============== Theme variables ============== */
+:root{
+  --bg: #0f1724;               /* deep midnight background */
+  --card: #0b1220;             /* card background */
+  --muted: #98a0ad;
+  --accent: #ff7aa2;           /* warm pink accent */
+  --accent-2: #7dd3fc;         /* cool blue */
+  --glass: rgba(255,255,255,0.04);
+  --glass-2: rgba(255,255,255,0.03);
+  --text: #e6eef8;
+  --success: #22c55e;
+  --danger: #ff6b6b;
+  --shadow: 0 8px 24px rgba(2,6,23,0.6);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 8px;
+  --max-width: 1150px;
+  --container-padding: 16px;
+  --card-padding: 12px;
+  --glass-border: rgba(255,255,255,0.04);
+  --glass-border-2: rgba(255,255,255,0.025);
+  --focus-ring: 4px solid rgba(125, 58, 140, 0.18);
+  --easing: cubic-bezier(.2,.9,.27,1);
+}
 
-  <header class="site-header">
-    <div class="brand">
-      <div class="logo">KD</div>
-      <div>
-        <h1 style="font-size:1rem">KidsWear • One-off Dresses</h1>
-        <div style="font-size:.78rem;color:var(--muted)">Unique dresses — once sold, gone</div>
+/* ============== Global reset & base ============== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #071224 0%, var(--bg) 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
+  padding-bottom:48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Container utility */
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:12px var(--container-padding);
+}
+
+/* Accessibility helpers */
+.visually-hidden{position:absolute !important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
+
+/* ============== Header ============== */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:60;
+  backdrop-filter: blur(6px) saturate(120%);
+  background: linear-gradient(180deg, rgba(7,10,20,0.65), rgba(7,10,20,0.45));
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.55);
+}
+
+.header-inner{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px var(--container-padding);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:0.2px;
+  padding:6px 8px;
+  border-radius:10px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 6px 14px rgba(3,9,23,0.45);
+}
+
+/* Search */
+.search-wrap{
+  flex:1;
+  max-width:540px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 12px;
+  background:var(--glass);
+  padding:6px;
+  border-radius:999px;
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.01);
+}
+
+.search-wrap input[type="search"]{
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  width:100%;
+  padding:10px 6px;
+  font-size:14px;
+}
+
+.search-wrap button{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:14px;
+  padding:8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* Top actions */
+.top-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+#cart-toggle{
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border:1px solid var(--glass-border);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+  cursor:pointer;
+  position:relative;
+}
+#cart-toggle:focus{outline:var(--focus-ring);}
+
+/* small counter badge */
+#cart-count{
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color:#071224;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:12px;
+  box-shadow: 0 6px 18px rgba(125,58,140,0.18);
+}
+
+/* Admin link (subtle) */
+.admin-link{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:13px;
+  padding:6px 8px;
+  border-radius:8px;
+  border:1px dashed rgba(255,255,255,0.02);
+}
+
+/* ============== Hero ============== */
+.hero{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  padding:18px var(--container-padding);
+}
+
+.hero-left h1{
+  margin:0 0 6px 0;
+  font-size:20px;
+  line-height:1.05;
+  letter-spacing: -0.2px;
+  color:linear-gradient(90deg, var(--text), #dfecff);
+  background: linear-gradient(90deg, #fff 0%, #e6f0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight:800;
+}
+
+.hero-left p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  max-width:44ch;
+}
+
+/* quick stats */
+.quick-stats{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:flex-end;
+}
+.quick-stats .stat{
+  text-align:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.quick-stats .stat strong{display:block; font-size:16px; color:var(--text)}
+.quick-stats .stat small{display:block; color:var(--muted); font-size:12px}
+
+/* ============== Categories (filters) ============== */
+.categories{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px var(--container-padding);
+  margin-top:6px;
+}
+
+.categories-inner{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.cat-btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--muted);
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+  transition:all 200ms var(--easing);
+}
+.cat-btn:hover{transform:translateY(-2px); box-shadow:0 8px 18px rgba(2,6,23,0.6)}
+.cat-btn.active{
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#071224;
+  font-weight:700;
+  border:0;
+  box-shadow: 0 10px 30px rgba(125,58,140,0.14);
+}
+
+/* controls select */
+.controls{display:flex;align-items:center;gap:8px}
+#sort-select{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  padding:8px 10px;
+  border-radius:10px;
+  color:var(--text);
+  font-size:14px;
+}
+
+/* ============== Main product grid ============== */
+#product-listing{ padding:10px var(--container-padding) 80px; }
+
+.product-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+}
+
+/* Product card */
+.product-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: var(--radius-md);
+  overflow:hidden;
+  border:1px solid var(--glass-border-2);
+  box-shadow: var(--shadow);
+  display:flex;
+  flex-direction:column;
+  transition: transform 220ms var(--easing), box-shadow 220ms var(--easing);
+  will-change:transform;
+}
+.product-card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(3,9,20,0.6) }
+
+/* product image container */
+.product-media{
+  position:relative;
+  margin:0;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  min-height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.product-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition: transform 350ms var(--easing);
+}
+.product-card:hover .product-media img{ transform: scale(1.03) }
+
+.product-flag{
+  position:absolute;
+  left:10px;
+  top:10px;
+  font-size:12px;
+  padding:6px 8px;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.03);
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+}
+
+/* product body */
+.product-body{
+  padding: var(--card-padding);
+  display:flex;
+  gap:8px;
+  flex-direction:column;
+  align-items:stretch;
+}
+.product-title{ font-size:15px; margin:0; font-weight:700; color:var(--text) }
+.product-meta{ display:flex; gap:8px; align-items:center; color:var(--muted); font-size:13px }
+.product-price{ margin-left:auto; font-weight:800; color:var(--accent-2) }
+.product-short{ margin:8px 0 12px; color:var(--muted); font-size:13px; min-height:36px }
+
+.product-actions{ display:flex; gap:8px; align-items:center }
+.btn{
+  border:0;
+  cursor:pointer;
+  font-weight:700;
+  padding:10px 12px;
+  border-radius:10px;
+  font-size:14px;
+  transition: transform 160ms var(--easing);
+}
+.btn:active{ transform:scale(.99) }
+.btn:focus{ outline:var(--focus-ring) }
+
+.btn-primary{
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#071224;
+  box-shadow: 0 8px 24px rgba(125,58,140,0.12);
+}
+.btn-outline{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.04);
+  color:var(--text);
+}
+
+/* sold state */
+.product-card.sold{ opacity:0.55; filter:grayscale(0.05) }
+.product-card.sold .product-flag{ background:linear-gradient(90deg,#2b2b2b,#1a1a1a); color:var(--danger); font-weight:800 }
+
+/* ============== Empty state ============== */
+.empty-state{
+  text-align:center;
+  padding:36px 12px;
+  color:var(--muted);
+  border-radius:12px;
+  border:1px dashed rgba(255,255,255,0.02);
+  margin-top:8px;
+}
+
+/* ============== Modal (product details) ============== */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.82));
+}
+.modal[aria-hidden="false"]{ display:flex; animation:pop-in 260ms var(--easing) both }
+
+@keyframes pop-in{
+  from{ opacity:0; transform: translateY(8px) scale(.995) }
+  to{ opacity:1; transform: translateY(0) scale(1) }
+}
+
+.modal-content{
+  width:100%;
+  max-width:920px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,0.03);
+  overflow:hidden;
+  box-shadow: 0 24px 60px rgba(2,6,23,0.7);
+  padding:18px;
+}
+
+/* modal grid */
+.modal-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:18px;
+}
+.modal-media img{ width:100%; height:420px; object-fit:cover; border-radius:8px }
+.modal-info h2{ margin:0 0 6px 0; font-size:20px; font-weight:800 }
+.modal-info p{ margin:6px 0; color:var(--muted) }
+.meta-list{ display:grid; gap:8px; margin:12px 0; color:var(--muted) }
+.modal-actions{ display:flex; gap:8px; margin-top:8px }
+
+/* modal close */
+.modal-close{
+  position:absolute;
+  right:24px;
+  top:20px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* ============== Cart Drawer ============== */
+.cart-drawer{
+  position:fixed;
+  right:0;
+  top:0;
+  height:100%;
+  width:96%;
+  max-width:420px;
+  z-index:130;
+  background: linear-gradient(180deg, rgba(4,6,12,0.95), rgba(4,6,12,0.98));
+  border-left:1px solid rgba(255,255,255,0.03);
+  transform:translateX(100%);
+  transition: transform 260ms var(--easing);
+  display:none;
+  flex-direction:column;
+  box-shadow: -24px 0 60px rgba(2,6,23,0.7);
+  padding:14px;
+}
+.cart-drawer[aria-hidden="false"]{
+  display:flex;
+  transform:translateX(0);
+}
+
+.cart-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px }
+.cart-header h2{ margin:0; font-size:18px }
+.cart-items{ flex:1; overflow:auto; padding:6px 0 }
+.cart-item{ display:flex; gap:10px; align-items:center; padding:8px; border-radius:10px; background:var(--glass-2); margin-bottom:8px; border:1px solid rgba(255,255,255,0.02) }
+.cart-item img{ width:64px; height:80px; object-fit:cover; border-radius:8px }
+.cart-item-title{ font-weight:700; font-size:14px }
+.cart-item-price{ font-weight:800; color:var(--accent-2) }
+.cart-item .cart-remove{ background:transparent; border:0; color:var(--muted); cursor:pointer; font-size:13px; padding:6px }
+
+/* footer summary */
+.cart-footer{ border-top:1px solid rgba(255,255,255,0.03); padding-top:10px; margin-top:8px }
+.cart-summary{ display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:16px; margin-bottom:10px }
+.cart-actions{ display:flex; gap:8px; }
+
+/* ============== Notifications ============== */
+.notifications{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:18px;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:clamp(280px, 66%, 720px);
+  pointer-events:none;
+}
+.notice{
+  pointer-events:auto;
+  padding:10px 14px;
+  border-radius:12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.03);
+  transform:translateY(8px);
+  opacity:0;
+  transition: all 280ms var(--easing);
+  box-shadow: 0 12px 40px rgba(3,9,20,0.6);
+}
+.notice.visible{ transform:translateY(0); opacity:1 }
+.notice-success{ border-left:4px solid var(--success) }
+.notice-error{ border-left:4px solid var(--danger) }
+
+/* ============== Footer ============== */
+.site-footer{
+  margin-top:20px;
+  padding:18px var(--container-padding);
+  border-top:1px solid rgba(255,255,255,0.03);
+  color:var(--muted);
+  font-size:13px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+}
+.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap }
+
+/* ============== Responsive (tablet & desktop) ============== */
+@media(min-width:600px){
+  .product-grid{ grid-template-columns: repeat(3, 1fr); gap:14px }
+  .hero-left h1{ font-size:28px }
+  .modal-grid{ grid-template-columns: 1fr 1fr; align-items:start }
+  .modal-media img{ height:420px; }
+  .cart-drawer{ width:420px; max-width:35%; }
+}
+
+@media(min-width:900px){
+  .product-grid{ grid-template-columns: repeat(4, 1fr); gap:18px }
+  .header-inner{ padding:14px var(--container-padding) }
+  .search-wrap input[type="search"]{ font-size:15px; }
+  .hero{ padding:30px var(--container-padding) }
+  .hero-left h1{ font-size:36px }
+  .hero-left p{ font-size:15px }
+  .product-media{ min-height:260px }
+  .product-media img{ transition: transform 420ms var(--easing) }
+  .modal-content{ padding:24px; }
+}
+
+/* ============== Fine UI details ============== */
+/* small helpers for touch targets */
+.btn, .cat-btn, #cart-toggle{ min-height:44px; display:inline-flex; align-items:center; justify-content:center }
+
+/* focus visible styles */
+:focus{ outline: none }
+:focus-visible{ outline: var(--focus-ring) }
+
+/* disable text selection for tappable UI */
+button, .cat-btn, .btn{ user-select:none }
+
+/* tiny responsive tweaks for very small screens */
+@media(max-width:360px){
+  .search-wrap{ display:flex; gap:6px }
+  .container{ padding:10px }
+  .product-meta{ font-size:12px }
+  .product-short{ font-size:12px }
+}
+
+/* End of stylesheet */
+</style>
+
+  <body>
+  <!-- SITE HEADER -->
+  <header id="site-header" class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="Brand homepage">
+        <strong>KidsDresses</strong>
+      </a>
+
+      <div class="search-wrap" role="search" aria-label="Search dresses">
+        <input id="search-input" type="search" placeholder="Search by name, color or price..." aria-label="Search products">
+        <button id="search-clear" type="button" aria-label="Clear search">✕</button>
       </div>
-    </div>
 
-    <nav>
-      <a class="link" href="#collections">Collections</a>
-      <a class="link" href="#how" style="display:none">How it works</a>
-      <a class="link admin" href="login.html">Admin</a>
-    </nav>
+      <nav class="top-actions" aria-label="Top actions">
+        <button id="cart-toggle" aria-haspopup="dialog" aria-controls="cart-drawer">
+          Cart <span id="cart-count" aria-live="polite">0</span>
+        </button>
+        <!-- Admin link (admin.html) — owner-only access handled by not sharing the link publicly -->
+        <a id="admin-link" href="admin.html" class="admin-link" title="Admin dashboard (owner)">Owner Dashboard</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero">
+  <!-- HERO / FILTERS -->
+  <section class="hero container" aria-label="Shop hero">
     <div class="hero-left">
-      <div class="tag">Limited • One of one</div>
-      <h2>Handmade kids dresses — every piece unique.</h2>
-      <p>Sizes from newborn to adult. Real-time availability — buy before it's gone.</p>
-
-      <div class="searchbar" style="margin-top:12px">
-        <input id="searchInput" type="search" placeholder="Search by name (e.g. 'floral', 'pink')">
-        <select id="sortSelect" title="Sort">
-          <option value="new">Newest</option>
-          <option value="price_asc">Price ↑</option>
-          <option value="price_desc">Price ↓</option>
-        </select>
-      </div>
-
-      <div class="hero-cta">
-        <button class="btn" id="viewAllBtn">Browse all</button>
-        <button class="btn secondary" id="contactBtn">Contact (WhatsApp)</button>
-        <div style="margin-left:auto" class="count-pill" id="productCount">0 items</div>
-      </div>
+      <h1>One-of-a-kind kids dresses</h1>
+      <p>Every dress is a single piece — when it’s sold, it’s gone. Browse by age group or search to find the perfect match.</p>
     </div>
 
-    <div style="flex:0 0 260px" class="center">
-      <img src="https://images.unsplash.com/photo-1520975682783-9e5b8b1d6f0b?q=80&w=900&auto=format&fit=crop" alt="hero" style="width:260px;height:260px;border-radius:20px;object-fit:cover;box-shadow:0 30px 60px rgba(12,18,31,0.08)">
+    <div class="hero-right">
+      <div class="quick-stats" aria-hidden="true">
+        <div class="stat"><strong id="total-products">50</strong><small> Available</small></div>
+        <div class="stat"><strong id="sold-count">0</strong><small> Sold</small></div>
+      </div>
     </div>
   </section>
 
-  <!-- category chips -->
-  <div class="chips" id="chipsContainer" aria-hidden="false" style="padding-left:1rem">
-    <!-- generated -->
-  </div>
+  <!-- CATEGORIES (filter buttons) -->
+  <section class="categories container" aria-label="Filter by age group">
+    <div class="categories-inner" role="toolbar" aria-label="Age categories">
+      <button class="cat-btn active" data-category="all" aria-pressed="true">All</button>
+      <button class="cat-btn" data-category="0-3years">0-3years</button>
+      <button class="cat-btn" data-category="4.5">4.5</button>
+      <button class="cat-btn" data-category="5-6">5-6</button>
+      <button class="cat-btn" data-category="6-7">6-7</button>
+      <button class="cat-btn" data-category="7-8">7-8</button>
+      <button class="cat-btn" data-category="8-9">8-9</button>
+      <button class="cat-btn" data-category="9-10">9-10</button>
+      <button class="cat-btn" data-category="10-12">10-12</button>
+      <button class="cat-btn" data-category="adult">Adult sizes</button>
+    </div>
 
-  <main class="container" id="collections">
-    <div id="loading" class="center" style="padding:1.5rem 0"><div class="muted">Loading products…</div></div>
-    <div id="grid" class="grid" aria-live="polite"></div>
+    <div class="controls">
+      <label for="sort-select" class="visually-hidden">Sort products</label>
+      <select id="sort-select" aria-label="Sort products">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="newest">Newest</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- PRODUCTS GRID (populated by JS) -->
+  <main id="main-content" class="container" role="main">
+    <section id="product-listing" aria-label="Product listing">
+      <div id="product-grid" class="product-grid" aria-live="polite">
+        <!-- Products will be injected here by your JS from the products array (50 items) -->
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="empty-state" hidden>
+        <h2>No dresses found</h2>
+        <p>Try another category or search term.</p>
+      </div>
+    </section>
   </main>
 
-  <!-- Product modal -->
-  <div id="productModal" class="modal" style="display:none">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <button class="close" id="closeModal">✕</button>
+  <!-- PRODUCT TEMPLATE (for JS cloning) -->
+  <template id="product-card-template">
+    <article class="product-card" role="article" tabindex="0"
+             data-id="" data-category="" data-price="">
+      <figure class="product-media">
+        <img src="" alt="" class="product-image" width="500" height="600" loading="lazy">
+        <figcaption class="product-flag" aria-hidden="true">1 available</figcaption>
+      </figure>
+
+      <div class="product-body">
+        <h3 class="product-title"></h3>
+        <div class="product-meta">
+          <span class="product-category" aria-hidden="true"></span>
+          <span class="product-price" aria-label="Price"></span>
+        </div>
+
+        <p class="product-short" aria-hidden="true"></p>
+
+        <div class="product-actions">
+          <button class="btn btn-primary buy-now" type="button" aria-label="Buy now">Buy now</button>
+          <button class="btn btn-outline view-details" type="button" aria-label="View details">Details</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- PRODUCT DETAILS MODAL (populated by JS) -->
+  <div id="product-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <button class="modal-close" aria-label="Close">✕</button>
+
       <div class="modal-grid">
-        <div>
-          <img id="modalImage" class="large-img" src="" alt="">
+        <div class="modal-media">
+          <img id="modal-image" src="" alt="">
         </div>
-        <div>
-          <h2 id="modalName"></h2>
-          <div id="modalCategory" class="muted"></div>
-          <div id="modalPrice" style="font-weight:800;margin-top:10px;font-size:1.25rem"></div>
-          <p id="modalDesc" class="muted" style="margin-top:12px">Beautiful one-off dress. Contact owner for bespoke requests.</p>
 
-          <div style="margin-top:18px;display:flex;gap:.5rem;align-items:center;">
-            <div id="modalAvailability"></div>
-            <button class="buyBtn" id="openBuy">Buy</button>
-          </div>
+        <div class="modal-info">
+          <h2 id="modal-title"></h2>
+          <p id="modal-category" class="muted"></p>
+          <p id="modal-price" class="price" aria-label="Price"></p>
+          <p id="modal-description"></p>
 
-          <div style="margin-top:14px;color:var(--muted);font-size:.9rem">
-            <strong>Remember:</strong> Each dress is unique. Once sold it will be removed from the store.
+          <dl class="meta-list" aria-hidden="true">
+            <div><dt>Availability</dt><dd id="modal-availability">1 available</dd></div>
+            <div><dt>SKU</dt><dd id="modal-sku">---</dd></div>
+          </dl>
+
+          <div class="modal-actions">
+            <button id="modal-buy" class="btn btn-primary">Buy with Paystack</button>
+            <button id="modal-add-to-cart" class="btn btn-outline">Add to cart</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Payment modal (email+phone) -->
-  <div id="payModal" class="modal" style="display:none">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <button class="close" id="closePayModal">✕</button>
-      <h3 style="margin-top:0">Enter contact details</h3>
-      <div style="display:grid;gap:.6rem">
-        <label class="muted">Email</label>
-        <input id="custEmail" type="email" placeholder="you@example.com" />
-        <label class="muted">Phone (WhatsApp preferred)</label>
-        <input id="custPhone" type="tel" placeholder="+233 24 000 0000" />
-        <div style="display:flex;gap:.5rem;margin-top:.25rem;justify-content:flex-end">
-          <button class="btn secondary" id="cancelPay2">Cancel</button>
-          <button class="btn" id="payNowBtn">Pay with Paystack</button>
-        </div>
-        <div id="payHint" class="muted" style="font-size:.85rem;margin-top:.5rem">You will be asked to complete payment in Paystack. After success the item is marked sold.</div>
-      </div>
+  <!-- CART DRAWER -->
+  <aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="false" aria-hidden="true">
+    <header class="cart-header">
+      <h2>Your cart</h2>
+      <button id="cart-close" aria-label="Close cart">✕</button>
+    </header>
+
+    <div id="cart-items" class="cart-items" aria-live="polite">
+      <p class="empty">Your cart is empty</p>
+      <!-- Items added by JS -->
     </div>
-  </div>
 
-  <script>
-    /*************************************************************
-     *  Replace the firebaseConfig object below with your config
-     *  (from Firebase Console → Project settings → SDK setup)
-     *************************************************************/
-     const firebaseConfig = {
-    apiKey: "AIzaSyBhaYOcLMXuobCT-vaXr-zXTZnBfaheAIY",
-    authDomain: "vitra-ai-712ea.firebaseapp.com",
-    projectId: "vitra-ai-712ea",
-    storageBucket: "vitra-ai-712ea.appspot.com",
-    messagingSenderId: "306868103753",
-    appId: "1:306868103753:web:e2d7700f8ad34c1e17ed98"
-  };
-    // Replace with your Paystack public key
-    const PAYSTACK_PUBLIC_KEY = "YOUR_PAYSTACK_PUBLIC_KEY";
+    <footer class="cart-footer">
+      <div class="cart-summary">
+        <div>Total</div>
+        <div id="cart-total" aria-live="polite">₵0.00</div>
+      </div>
 
-    // --- Initialize Firebase ---
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-    const auth = firebase.auth();
+      <div class="cart-actions">
+        <button id="checkout-button" class="btn btn-primary" disabled>Checkout — Paystack</button>
+        <button id="clear-cart" class="btn btn-outline" disabled>Clear</button>
+      </div>
+      <small class="legal">Payments handled by Paystack. One-of-a-kind items — stock updates live in the owner dashboard.</small>
+    </footer>
+  </aside>
 
-    // UI elements
-    const gridEl = document.getElementById('grid');
-    const loadingEl = document.getElementById('loading');
-    const productCountEl = document.getElementById('productCount');
-    const chipsContainer = document.getElementById('chipsContainer');
-    const searchInput = document.getElementById('searchInput');
-    const sortSelect = document.getElementById('sortSelect');
-    const viewAllBtn = document.getElementById('viewAllBtn');
-    const contactBtn = document.getElementById('contactBtn');
+  <!-- NOTIFICATIONS -->
+  <div id="notifications" aria-live="polite" class="notifications" aria-atomic="true"></div>
 
-    const productModal = document.getElementById('productModal');
-    const closeModal = document.getElementById('closeModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalName = document.getElementById('modalName');
-    const modalCategory = document.getElementById('modalCategory');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalAvailability = document.getElementById('modalAvailability');
-    const openBuy = document.getElementById('openBuy');
+  <!-- FOOTER -->
+  <footer class="site-footer container" role="contentinfo">
+    <div class="footer-inner">
+      <p>&copy; <span id="year"></span> KidsDresses — One-of-a-kind children & adult dresses</p>
+      <nav aria-label="Footer links">
+        <a href="#" id="terms-link">Terms</a>
+        <a href="#" id="privacy-link">Privacy</a>
+      </nav>
+    </div>
+  </footer>
 
-    const payModal = document.getElementById('payModal');
-    const closePayModal = document.getElementById('closePayModal');
-    const cancelPay2 = document.getElementById('cancelPay2');
-    const payNowBtn = document.getElementById('payNowBtn');
-    const custEmail = document.getElementById('custEmail');
-    const custPhone = document.getElementById('custPhone');
+  <!-- HIDDEN DATA / HELPERS (JS will read this) -->
+  <div id="app-config" hidden
+       data-paystack-public-key=""
+       data-currency="GHS"
+       data-site-name="KidsDresses"></div>
 
-    // categories order
-    const categoriesOrder = ["0-3 years","4-5","5-6","6-7","7-8","8-9","9-10","10-12","Adult"];
-
-    // state
-    let allProducts = [];    // {id, data}
-    let filteredProducts = [];
-    let selectedCategory = null;
-    let selectedProduct = null;
-
-    /* ---------- utils ---------- */
-    function formatGHS(n){ return `GHS ${Number(n).toLocaleString()}`; }
-    function el(tag, cls){ const e=document.createElement(tag); if(cls)e.className=cls; return e; }
-
-    /* ---------- render chips ---------- */
-    function renderChips(uniqueCats){
-      chipsContainer.innerHTML = '';
-      const allChip = el('div','chip' + (selectedCategory===null?' active':''));
-      allChip.textContent = `All (${allProducts.length})`;
-      allChip.onclick = ()=>{ selectedCategory=null; applyFilters(); };
-      chipsContainer.appendChild(allChip);
-
-      categoriesOrder.forEach(cat => {
-        if (!uniqueCats.includes(cat)) return;
-        const c = el('div','chip' + (selectedCategory===cat?' active':''));
-        c.textContent = cat;
-        c.onclick = ()=>{ selectedCategory = cat; applyFilters(); };
-        chipsContainer.appendChild(c);
-      });
-    }
-
-    /* ---------- render product grid ---------- */
-    function renderGrid(list){
-      gridEl.innerHTML = '';
-      if (!list.length){
-        loadingEl.innerHTML = '<div class="muted">No products found.</div>';
-        return;
-      }
-      loadingEl.style.display = 'none';
-      list.forEach(p => {
-        const card = el('div','card');
-        // image
-        const img = el('img');
-        img.className = 'fade';
-        img.loading = 'lazy';
-        img.alt = p.name || 'dress';
-        img.src = p.imageUrl || '';
-        img.onerror = ()=>img.src='https://via.placeholder.com/300?text=image';
-        img.onload = ()=>img.classList.add('loaded');
-
-        // info
-        const info = el('div','info');
-        info.innerHTML = `<h3>${p.name}</h3><div class="meta">${p.category}</div><div class="price">${formatGHS(p.price)}</div>`;
-
-        // right column: buttons
-        const right = el('div');
-        right.style.display = 'flex';
-        right.style.flexDirection = 'column';
-        right.style.justifyContent = 'space-between';
-        right.style.alignItems = 'flex-end';
-
-        const buy = el('button','buyBtn');
-        buy.textContent = p.available ? 'Buy' : 'Sold';
-        buy.disabled = !p.available;
-        buy.dataset.id = p.id;
-
-        // sold badge for unavailable
-        if (!p.available){
-          const badge = el('div','sold-badge');
-          badge.textContent = 'SOLD';
-          badge.style.marginBottom = '8px';
-          right.appendChild(badge);
-        }
-
-        right.appendChild(buy);
-        card.appendChild(img);
-        card.appendChild(info);
-        card.appendChild(right);
-
-        // click card opens detail modal (but not if clicking buy)
-        card.addEventListener('click', (e)=> {
-          if (e.target === buy) return;
-          openProductModal(p);
-        });
-
-        // buy button handler
-        buy.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (!p.available) return alert('Sorry, this item is already sold.');
-          selectedProduct = p;
-          openPayModal();
-        });
-
-        gridEl.appendChild(card);
-      });
-    }
-
-    /* ---------- modal logic ---------- */
-    function openProductModal(p){
-      selectedProduct = p;
-      modalImage.src = p.imageUrl || '';
-      modalName.textContent = p.name;
-      modalCategory.textContent = p.category;
-      modalPrice.textContent = formatGHS(p.price);
-      modalAvailability.innerHTML = p.available ? '<div class="small" style="color:green">Available</div>' : '<div class="small" style="color:#b00020">Sold</div>';
-      openBuy.disabled = !p.available;
-      productModal.style.display = 'flex';
-    }
-    closeModal.onclick = ()=> productModal.style.display = 'none';
-    productModal.addEventListener('click', (e)=> { if (e.target === productModal) productModal.style.display='none'; });
-
-    /* ---------- payment modal ---------- */
-    function openPayModal(){ 
-      custEmail.value=''; custPhone.value='';
-      payModal.style.display='flex';
-    }
-    closePayModal.onclick = ()=> payModal.style.display = 'none';
-    cancelPay2.onclick = ()=> payModal.style.display = 'none';
-    payModal.addEventListener('click', (e)=> { if (e.target === payModal) payModal.style.display='none'; });
-
-    /* ---------- search / filter / sort ---------- */
-    searchInput.addEventListener('input', applyFilters);
-    sortSelect.addEventListener('change', applyFilters);
-    viewAllBtn.addEventListener('click', ()=> { selectedCategory=null; searchInput.value=''; applyFilters(); });
-
-    function applyFilters(){
-      const q = searchInput.value.trim().toLowerCase();
-      let list = allProducts.slice();
-      if (selectedCategory) list = list.filter(p => p.category === selectedCategory);
-      if (q) list = list.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
-      // sort
-      const sort = sortSelect.value;
-      if (sort === 'price_asc') list.sort((a,b)=> a.price - b.price);
-      else if (sort === 'price_desc') list.sort((a,b)=> b.price - a.price);
-      else list.sort((a,b)=> (b.createdAt || 0) - (a.createdAt || 0)); // newest first
-      filteredProducts = list;
-      renderGrid(list);
-    }
-
-    /* ---------- real-time products listener ---------- */
-    function listenProducts(){
-      loadingEl.style.display = 'flex';
-      db.collection('products').orderBy('createdAt','desc')
-        .onSnapshot(snapshot => {
-          allProducts = snapshot.docs.map(d => {
-            const data = d.data();
-            return {
-              id: d.id,
-              name: data.name || 'Untitled',
-              price: data.price || 0,
-              category: data.category || 'Uncategorized',
-              imageUrl: data.imageUrl || '',
-              available: data.available === undefined ? true : data.available,
-              createdAt: data.createdAt ? data.createdAt.seconds || data.createdAt._seconds || 0 : 0
-            };
-          });
-          productCountEl.textContent = `${allProducts.length} items`;
-          const uniqueCats = [...new Set(allProducts.map(p=>p.category).filter(Boolean))];
-          renderChips(uniqueCats);
-          applyFilters();
-        }, err => {
-          loadingEl.innerHTML = `<div class="muted">Failed to load products: ${err.message}</div>`;
-        });
-    }
-
-    /* ---------- Paystack & marking sold (client-only quick flow) ---------- */
-    payNowBtn.addEventListener('click', ()=> {
-      const email = (custEmail.value || '').trim();
-      const phone = (custPhone.value || '').trim();
-      if (!email || !phone) return alert('Please enter both email and phone.');
-      if (!selectedProduct) return alert('No product selected.');
-      // Launch Paystack
-      const handler = PaystackPop.setup({
-        key: pk_test_297586e51710e83d3c159bfe71ff45c7e23411fa,
-        email: email,
-        amount: Math.round(Number(selectedProduct.price) * 100),
-        currency: "GHS",
-        metadata: {
-          custom_fields: [
-            {display_name: "Phone", variable_name: "phone", value: phone}
-          ]
-        },
-        callback: function(response){
-          // Quick client-side verification: mark product sold in a transaction
-          markProductAsSoldQuick(response.reference, email, phone);
-        },
-        onClose: function(){
-          // user closed popup
-        }
-      });
-      handler.openIframe();
-    });
-
-    async function markProductAsSoldQuick(reference, email, phone){
-      if (!selectedProduct) return alert('Product not selected.');
-      const prodRef = db.collection('products').doc(selectedProduct.id);
-      try {
-        await db.runTransaction(async tx => {
-          const doc = await tx.get(prodRef);
-          if (!doc.exists) throw "Product not found";
-          const d = doc.data();
-          if (!d.available) throw "Product already sold";
-          tx.update(prodRef, { available: false });
-          tx.set(db.collection('orders').doc(), {
-            productId: selectedProduct.id,
-            productName: selectedProduct.name,
-            email: email,
-            phone: phone,
-            amount: selectedProduct.price,
-            paystackRef: reference,
-            paid: true,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        });
-        payModal.style.display = 'none';
-        productModal.style.display = 'none';
-        alert('Payment successful — order recorded. You will receive a confirmation email from Paystack.');
-      } catch (err) {
-        alert('Could not complete order: ' + (err.message || err));
-      }
-    }
-
-    /* ---------- contact (WhatsApp) ---------- */
-    contactBtn.addEventListener('click', ()=> {
-      // change the phone number below to the business owner's WhatsApp number
-      const ownerPhone = '+233XXXXXYYY';
-      const url = `https://wa.me/${ownerPhone.replace(/\D/g,'')}?text=${encodeURIComponent('Hi, I have a question about your dresses.')}`;
-      window.open(url, '_blank');
-    });
-
-    /* ---------- initial load ---------- */
-    listenProducts();
-
-    // small UX: close modals with ESC
-    document.addEventListener('keydown', (e)=> {
-      if (e.key === 'Escape'){ productModal.style.display='none'; payModal.style.display='none'; }
-    });
-
-  </script>
-
+ 
 </body>
+<script>
+
+const STORAGE_KEYS = {
+  PRODUCTS: 'kd_products_v1',
+  CART: 'kd_cart_v1',
+  PURCHASES: 'kd_purchases_v1'
+};
+
+const CATEGORIES = [
+  '0-3years','4.5','5-6','6-7','7-8','8-9','9-10','10-12','adult'
+];
+
+const appConfigEl = document.getElementById('app-config') || document.createElement('div');
+const PAYSTACK_PUBLIC_KEY = appConfigEl.dataset.paystackPublicKey || ''; // set this in HTML
+const CURRENCY = appConfigEl.dataset.currency || 'GHS';
+const SITE_NAME = appConfigEl.dataset.siteName || 'KidsDresses';
+
+
+const initialProducts = [
+  // p001 - p010
+  { id: 'p001', title: 'Blossom Pink Dress', price: 120, category: '0-3years', image: 'images/p001.jpg', description: 'Soft cotton, floral print.', available: true, sku: 'KD-001', createdAt: '2025-01-02' },
+  { id: 'p002', title: 'Sunshine Yellow', price: 95, category: '4.5', image: 'images/p002.jpg', description: 'Bright & cheerful for play.', available: true, sku: 'KD-002', createdAt: '2025-01-03' },
+  { id: 'p003', title: 'Ocean Blue Ruffle', price: 140, category: '5-6', image: 'images/p003.jpg', description: 'Delicate ruffles and soft lining.', available: true, sku: 'KD-003', createdAt: '2025-01-05' },
+  { id: 'p004', title: 'Lilac Party Dress', price: 210, category: '6-7', image: 'images/p004.jpg', description: 'Perfect for special days.', available: true, sku: 'KD-004', createdAt: '2025-01-09' },
+  { id: 'p005', title: 'Mint Green Skater', price: 110, category: '7-8', image: 'images/p005.jpg', description: 'Comfortable and stretchy.', available: true, sku: 'KD-005', createdAt: '2025-01-10' },
+  { id: 'p006', title: 'Berry Polka Dot', price: 100, category: '8-9', image: 'images/p006.jpg', description: 'Cute polka dots, breathable.', available: true, sku: 'KD-006', createdAt: '2025-01-11' },
+  { id: 'p007', title: 'Sunset Ombre', price: 180, category: '9-10', image: 'images/p007.jpg', description: 'Lovely ombre shades.', available: true, sku: 'KD-007', createdAt: '2025-01-12' },
+  { id: 'p008', title: 'Classic White', price: 250, category: '10-12', image: 'images/p008.jpg', description: 'Elegant cotton-linen blend.', available: true, sku: 'KD-008', createdAt: '2025-01-13' },
+  { id: 'p009', title: 'Adult Wrap Dress', price: 450, category: 'adult', image: 'images/p009.jpg', description: 'One-size flattering wrap.', available: true, sku: 'KD-009', createdAt: '2025-01-15' },
+  { id: 'p010', title: 'Garden Tea Dress', price: 130, category: '5-6', image: 'images/p010.jpg', description: 'Lightweight and flowy.', available: true, sku: 'KD-010', createdAt: '2025-01-16' },
+
+  // p011 - p020
+  { id: 'p011', title: 'Coral Sundress', price: 105, category: '0-3years', image: 'images/p011.jpg', description: 'Simple tie-shoulder.', available: true, sku: 'KD-011', createdAt: '2025-01-17' },
+  { id: 'p012', title: 'Sky Dots', price: 115, category: '4.5', image: 'images/p012.jpg', description: 'Playful dots pattern.', available: true, sku: 'KD-012', createdAt: '2025-01-18' },
+  { id: 'p013', title: 'Fairy Tulle', price: 320, category: '6-7', image: 'images/p013.jpg', description: 'Tulle layers for twirlers.', available: true, sku: 'KD-013', createdAt: '2025-01-19' },
+  { id: 'p014', title: 'Denim Pinafore', price: 160, category: '7-8', image: 'images/p014.jpg', description: 'Casual, hard-wearing.', available: true, sku: 'KD-014', createdAt: '2025-01-20' },
+  { id: 'p015', title: 'Rosebud Mini', price: 125, category: '8-9', image: 'images/p015.jpg', description: 'Sweet rose print.', available: true, sku: 'KD-015', createdAt: '2025-01-21' },
+  { id: 'p016', title: 'Lemon Twist', price: 90, category: '9-10', image: 'images/p016.jpg', description: 'Fresh citrus print.', available: true, sku: 'KD-016', createdAt: '2025-01-22' },
+  { id: 'p017', title: 'Velvet Plum', price: 420, category: '10-12', image: 'images/p017.jpg', description: 'Lux velvet for events.', available: true, sku: 'KD-017', createdAt: '2025-01-23' },
+  { id: 'p018', title: 'Mother & Me', price: 600, category: 'adult', image: 'images/p018.jpg', description: 'Matching set for adult.', available: true, sku: 'KD-018', createdAt: '2025-01-24' },
+  { id: 'p019', title: 'Stripe Picnic', price: 135, category: '5-6', image: 'images/p019.jpg', description: 'Classic stripes.', available: true, sku: 'KD-019', createdAt: '2025-01-25' },
+  { id: 'p020', title: 'Autumn Leaves', price: 155, category: '6-7', image: 'images/p020.jpg', description: 'Warm-toned print.', available: true, sku: 'KD-020', createdAt: '2025-01-26' },
+
+  // p021 - p030
+  { id: 'p021', title: 'Polished Plum', price: 145, category: '7-8', image: 'images/p021.jpg', description: 'Smart & easy-care.', available: true, sku: 'KD-021', createdAt: '2025-01-27' },
+  { id: 'p022', title: 'Cobalt Bow', price: 175, category: '8-9', image: 'images/p022.jpg', description: 'Hand-tied bow detail.', available: true, sku: 'KD-022', createdAt: '2025-01-28' },
+  { id: 'p023', title: 'Peach Sorbet', price: 98, category: '9-10', image: 'images/p023.jpg', description: 'Soft, playful.', available: true, sku: 'KD-023', createdAt: '2025-01-29' },
+  { id: 'p024', title: 'Willow Green', price: 135, category: '10-12', image: 'images/p024.jpg', description: 'Comfortable fit.', available: true, sku: 'KD-024', createdAt: '2025-01-30' },
+  { id: 'p025', title: 'Ivory Lace', price: 480, category: 'adult', image: 'images/p025.jpg', description: 'Fine lacework.', available: true, sku: 'KD-025', createdAt: '2025-02-01' },
+  { id: 'p026', title: 'Rainbow Twirl', price: 230, category: '5-6', image: 'images/p026.jpg', description: 'Bold color panels.', available: true, sku: 'KD-026', createdAt: '2025-02-02' },
+  { id: 'p027', title: 'Sage Harmony', price: 128, category: '0-3years', image: 'images/p027.jpg', description: 'Soothing palette.', available: true, sku: 'KD-027', createdAt: '2025-02-03' },
+  { id: 'p028', title: 'Candy Stripe', price: 88, category: '4.5', image: 'images/p028.jpg', description: 'Cheerful stripes.', available: true, sku: 'KD-028', createdAt: '2025-02-04' },
+  { id: 'p029', title: 'Marigold Midi', price: 205, category: '6-7', image: 'images/p029.jpg', description: 'Flowy midi style.', available: true, sku: 'KD-029', createdAt: '2025-02-05' },
+  { id: 'p030', title: 'Royal Velvet', price: 390, category: '7-8', image: 'images/p030.jpg', description: 'Regal party design.', available: true, sku: 'KD-030', createdAt: '2025-02-06' },
+
+  // p031 - p040
+  { id: 'p031', title: 'Pebble Knit', price: 99, category: '8-9', image: 'images/p031.jpg', description: 'Cozy knit.', available: true, sku: 'KD-031', createdAt: '2025-02-07' },
+  { id: 'p032', title: 'Fuchsia Flare', price: 178, category: '9-10', image: 'images/p032.jpg', description: 'Eye-catching color.', available: true, sku: 'KD-032', createdAt: '2025-02-08' },
+  { id: 'p033', title: 'Denim Sundress', price: 150, category: '10-12', image: 'images/p033.jpg', description: 'Casual favorite.', available: true, sku: 'KD-033', createdAt: '2025-02-09' },
+  { id: 'p034', title: 'Olive Patch', price: 142, category: '5-6', image: 'images/p034.jpg', description: 'Utility-inspired.', available: true, sku: 'KD-034', createdAt: '2025-02-10' },
+  { id: 'p035', title: 'Twilight Taffeta', price: 410, category: '6-7', image: 'images/p035.jpg', description: 'Shiny celebration dress.', available: true, sku: 'KD-035', createdAt: '2025-02-11' },
+  { id: 'p036', title: 'Poppy Print', price: 115, category: '7-8', image: 'images/p036.jpg', description: 'Poppy pattern.', available: true, sku: 'KD-036', createdAt: '2025-02-12' },
+  { id: 'p037', title: 'Cloud Linen', price: 165, category: '8-9', image: 'images/p037.jpg', description: 'Light linen blend.', available: true, sku: 'KD-037', createdAt: '2025-02-13' },
+  { id: 'p038', title: 'Midnight Sparkle', price: 360, category: '9-10', image: 'images/p038.jpg', description: 'Subtle sparkle threads.', available: true, sku: 'KD-038', createdAt: '2025-02-14' },
+  { id: 'p039', title: 'Cotton Candy', price: 85, category: '10-12', image: 'images/p039.jpg', description: 'Soft cotton fun.', available: true, sku: 'KD-039', createdAt: '2025-02-15' },
+  { id: 'p040', title: 'Embroidered Joy', price: 220, category: 'adult', image: 'images/p040.jpg', description: 'Detailed embroidery.', available: true, sku: 'KD-040', createdAt: '2025-02-16' },
+
+  // p041 - p050
+  { id: 'p041', title: 'Meadow Bloom', price: 130, category: '5-6', image: 'images/p041.jpg', description: 'Botanical print.', available: true, sku: 'KD-041', createdAt: '2025-02-17' },
+  { id: 'p042', title: 'Honeycomb Dress', price: 108, category: '0-3years', image: 'images/p042.jpg', description: 'Soft & comfy.', available: true, sku: 'KD-042', createdAt: '2025-02-18' },
+  { id: 'p043', title: 'Starlight Tutu', price: 340, category: '4.5', image: 'images/p043.jpg', description: 'Tulle and shine.', available: true, sku: 'KD-043', createdAt: '2025-02-19' },
+  { id: 'p044', title: 'Mint Julep', price: 119, category: '5-6', image: 'images/p044.jpg', description: 'Refreshing green.', available: true, sku: 'KD-044', createdAt: '2025-02-20' },
+  { id: 'p045', title: 'Gingham Classic', price: 92, category: '6-7', image: 'images/p045.jpg', description: 'Gingham check.', available: true, sku: 'KD-045', createdAt: '2025-02-21' },
+  { id: 'p046', title: 'Almond Silk', price: 520, category: '7-8', image: 'images/p046.jpg', description: 'Soft silk finish.', available: true, sku: 'KD-046', createdAt: '2025-02-22' },
+  { id: 'p047', title: 'Graphite Shift', price: 210, category: '8-9', image: 'images/p047.jpg', description: 'Minimal & modern.', available: true, sku: 'KD-047', createdAt: '2025-02-23' },
+  { id: 'p048', title: 'Bubblegum Frill', price: 99, category: '9-10', image: 'images/p048.jpg', description: 'Fun frilled hem.', available: true, sku: 'KD-048', createdAt: '2025-02-24' },
+  { id: 'p049', title: 'Cedar Plaid', price: 150, category: '10-12', image: 'images/p049.jpg', description: 'Plaid for cooler days.', available: true, sku: 'KD-049', createdAt: '2025-02-25' },
+  { id: 'p050', title: 'Midday Breeze', price: 135, category: 'adult', image: 'images/p050.jpg', description: 'Everyday relaxed fit.', available: true, sku: 'KD-050', createdAt: '2025-02-26' }
+];
+
+/* ---------------------------
+   App State (will be loaded from localStorage if present)
+   --------------------------- */
+let products = [];
+let cart = [];
+let purchases = [];
+
+/* ---------------------------
+   Helper: Storage helpers
+   --------------------------- */
+function saveState() {
+  localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+  localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
+  localStorage.setItem(STORAGE_KEYS.PURCHASES, JSON.stringify(purchases));
+}
+
+function loadState() {
+  const p = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
+  const c = localStorage.getItem(STORAGE_KEYS.CART);
+  const pur = localStorage.getItem(STORAGE_KEYS.PURCHASES);
+
+  products = p ? JSON.parse(p) : initialProducts.slice();
+  cart = c ? JSON.parse(c) : [];
+  purchases = pur ? JSON.parse(pur) : [];
+}
+
+/* ---------------------------
+   UI Selectors
+   --------------------------- */
+const selectors = {
+  productGrid: document.getElementById('product-grid'),
+  template: document.getElementById('product-card-template'),
+  totalProductsEl: document.getElementById('total-products'),
+  soldCountEl: document.getElementById('sold-count'),
+  searchInput: document.getElementById('search-input'),
+  categoryButtons: document.querySelectorAll('.cat-btn'),
+  sortSelect: document.getElementById('sort-select'),
+  emptyState: document.getElementById('empty-state'),
+  productModal: document.getElementById('product-modal'),
+  modalImage: document.getElementById('modal-image'),
+  modalTitle: document.getElementById('modal-title'),
+  modalCategory: document.getElementById('modal-category'),
+  modalPrice: document.getElementById('modal-price'),
+  modalDescription: document.getElementById('modal-description'),
+  modalAvailability: document.getElementById('modal-availability'),
+  modalSku: document.getElementById('modal-sku'),
+  modalBuy: document.getElementById('modal-buy'),
+  modalAddToCart: document.getElementById('modal-add-to-cart'),
+  cartToggle: document.getElementById('cart-toggle'),
+  cartDrawer: document.getElementById('cart-drawer'),
+  cartItemsEl: document.getElementById('cart-items'),
+  cartCountEl: document.getElementById('cart-count'),
+  cartTotalEl: document.getElementById('cart-total'),
+  checkoutButton: document.getElementById('checkout-button'),
+  clearCartButton: document.getElementById('clear-cart'),
+  notifications: document.getElementById('notifications'),
+  yearEl: document.getElementById('year'),
+  adminLink: document.getElementById('admin-link')
+};
+
+/* ---------------------------
+   Utility functions
+   --------------------------- */
+function formatPrice(n) {
+  // no assumptions about locale; show 2 decimals and currency
+  return `${CURRENCY} ${Number(n).toFixed(2)}`;
+}
+
+function notify(message, type = 'info', timeout = 3500) {
+  const id = 'n-' + Date.now();
+  const el = document.createElement('div');
+  el.className = `notice notice-${type}`;
+  el.id = id;
+  el.textContent = message;
+  selectors.notifications.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('visible');
+  }, 20);
+  setTimeout(() => {
+    el.classList.remove('visible');
+    setTimeout(() => el.remove(), 300);
+  }, timeout);
+}
+
+/* ---------------------------
+   Rendering: products
+   --------------------------- */
+function renderProducts(filter = {}) {
+  // filter: { category, q, sort }
+  selectors.productGrid.innerHTML = '';
+  let out = products.slice();
+
+  // only show available products by default
+  out = out.filter(p => p.available === true);
+
+  // search
+  if (filter.q) {
+    const q = filter.q.toLowerCase();
+    out = out.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      (p.description && p.description.toLowerCase().includes(q)) ||
+      (p.sku && p.sku.toLowerCase().includes(q))
+    );
+  }
+
+  // category
+  if (filter.category && filter.category !== 'all') {
+    out = out.filter(p => p.category === filter.category);
+  }
+
+  // sort
+  if (filter.sort) {
+    if (filter.sort === 'price-asc') out.sort((a,b) => a.price - b.price);
+    else if (filter.sort === 'price-desc') out.sort((a,b) => b.price - a.price);
+    else if (filter.sort === 'newest') out.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+    // featured = default order
+  }
+
+  if (out.length === 0) {
+    selectors.emptyState.hidden = false;
+  } else {
+    selectors.emptyState.hidden = true;
+  }
+
+  out.forEach(p => {
+    const tpl = selectors.template.content.cloneNode(true);
+    const article = tpl.querySelector('.product-card');
+    const img = tpl.querySelector('.product-image');
+    const flag = tpl.querySelector('.product-flag');
+    const title = tpl.querySelector('.product-title');
+    const cat = tpl.querySelector('.product-category');
+    const price = tpl.querySelector('.product-price');
+    const short = tpl.querySelector('.product-short');
+    const buyBtn = tpl.querySelector('.buy-now');
+    const detailsBtn = tpl.querySelector('.view-details');
+
+    article.dataset.id = p.id;
+    article.dataset.price = p.price;
+    article.dataset.category = p.category;
+
+    img.src = p.image;
+    img.alt = p.title;
+    flag.textContent = p.available ? '1 available' : 'Sold';
+    title.textContent = p.title;
+    cat.textContent = p.category === 'adult' ? 'Adult sizes' : p.category;
+    price.textContent = formatPrice(p.price);
+    short.textContent = p.description || '';
+
+    if (!p.available) {
+      buyBtn.disabled = true;
+      buyBtn.textContent = 'Sold';
+      article.classList.add('sold');
+    }
+
+    buyBtn.addEventListener('click', () => openModalWithProduct(p.id, true));
+    detailsBtn.addEventListener('click', () => openModalWithProduct(p.id, false));
+
+    selectors.productGrid.appendChild(tpl);
+  });
+
+  updateCounts();
+}
+
+/* ---------------------------
+   Update counts
+   --------------------------- */
+function updateCounts() {
+  const totalAvailable = products.filter(p => p.available === true).length;
+  const soldCount = products.length - totalAvailable;
+  selectors.totalProductsEl.textContent = totalAvailable;
+  selectors.soldCountEl.textContent = soldCount;
+}
+
+/* ---------------------------
+   Modal (product details)
+   --------------------------- */
+let currentModalProduct = null;
+
+function openModalWithProduct(id, openBuy = false) {
+  const p = products.find(x => x.id === id);
+  if (!p) return notify('Product not found', 'error');
+  currentModalProduct = p;
+
+  selectors.modalImage.src = p.image;
+  selectors.modalImage.alt = p.title;
+  selectors.modalTitle.textContent = p.title;
+  selectors.modalCategory.textContent = p.category === 'adult' ? 'Adult sizes' : p.category;
+  selectors.modalPrice.textContent = formatPrice(p.price);
+  selectors.modalDescription.textContent = p.description || '';
+  selectors.modalAvailability.textContent = p.available ? '1 available' : 'Sold';
+  selectors.modalSku.textContent = p.sku || '—';
+
+  selectors.modalBuy.disabled = !p.available;
+  selectors.modalAddToCart.disabled = !p.available;
+
+  // show modal
+  selectors.productModal.setAttribute('aria-hidden', 'false');
+  selectors.productModal.style.display = 'block';
+
+  if (openBuy) {
+    // focus modal buy button after a tick
+    setTimeout(() => selectors.modalBuy.focus(), 200);
+  }
+}
+
+function closeModal() {
+  selectors.productModal.setAttribute('aria-hidden', 'true');
+  selectors.productModal.style.display = 'none';
+  currentModalProduct = null;
+}
+
+/* ---------------------------
+   Cart logic
+   --------------------------- */
+function addToCart(productId, qty = 1) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return notify('Product not found', 'error');
+  if (!product.available) return notify('Product has been sold', 'error');
+  if (cart.find(i => i.id === productId)) {
+    return notify('Item already in cart — the shop sells single items.', 'info');
+  }
+  cart.push({ id: productId, qty, price: product.price, title: product.title });
+  saveState();
+  updateCartUI();
+  notify('Added to cart', 'success');
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(i => i.id !== productId);
+  saveState();
+  updateCartUI();
+}
+
+function clearCart() {
+  cart = [];
+  saveState();
+  updateCartUI();
+}
+
+function cartTotal() {
+  return cart.reduce((sum, it) => sum + (it.price * it.qty), 0);
+}
+
+function updateCartUI() {
+  // update count and items
+  selectors.cartCountEl.textContent = cart.length;
+  selectors.cartItemsEl.innerHTML = '';
+
+  if (cart.length === 0) {
+    selectors.cartItemsEl.innerHTML = '<p class="empty">Your cart is empty</p>';
+    selectors.checkoutButton.disabled = true;
+    selectors.clearCartButton.disabled = true;
+    selectors.cartTotalEl.textContent = formatPrice(0);
+    return;
+  }
+
+  cart.forEach(item => {
+    const p = products.find(pr => pr.id === item.id);
+    const node = document.createElement('div');
+    node.className = 'cart-item';
+    node.innerHTML = `
+      <div class="cart-item-left">
+        <img src="${p ? p.image : ''}" alt="${item.title}" width="64" height="80">
+      </div>
+      <div class="cart-item-body">
+        <div class="cart-item-title">${item.title}</div>
+        <div class="cart-item-meta">${p ? (p.category === 'adult' ? 'Adult' : p.category) : ''}</div>
+      </div>
+      <div class="cart-item-right">
+        <div class="cart-item-price">${formatPrice(item.price)}</div>
+        <button class="cart-remove" data-id="${item.id}" aria-label="Remove">Remove</button>
+      </div>
+    `;
+    const removeBtn = node.querySelector('.cart-remove');
+    removeBtn.addEventListener('click', () => removeFromCart(item.id));
+    selectors.cartItemsEl.appendChild(node);
+  });
+
+  selectors.cartTotalEl.textContent = formatPrice(cartTotal());
+  selectors.checkoutButton.disabled = false;
+  selectors.clearCartButton.disabled = false;
+}
+
+/* ---------------------------
+   Checkout with Paystack (frontend-only)
+   - Loads Paystack inline SDK if missing
+   - Uses public key from #app-config
+   - Marks product sold locally on payment success callback
+   --------------------------- */
+function loadPaystackSDK() {
+  return new Promise((resolve, reject) => {
+    if (window.PaystackPop) return resolve(window.PaystackPop);
+    const src = 'https://js.paystack.co/v1/inline.js';
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => {
+      if (window.PaystackPop) resolve(window.PaystackPop);
+      else reject(new Error('Paystack SDK failed to load'));
+    };
+    s.onerror = () => reject(new Error('Failed to load Paystack SDK'));
+    document.head.appendChild(s);
+  });
+}
+
+async function checkoutCartWithPaystack() {
+  if (!PAYSTACK_PUBLIC_KEY) {
+    notify('Paystack public key not configured. Set data-paystack-public-key on #app-config', 'error', 5000);
+    return;
+  }
+  if (cart.length === 0) {
+    notify('Your cart is empty', 'info');
+    return;
+  }
+
+  // compute amount in "smallest currency unit" — Paystack expects e.g. Kobo for NGN.
+  // For GHS we'll similarly multiply by 100 (pesewas). Adjust if Paystack expects something else for your currency.
+  const amountGHS = cartTotal();
+  const amountSmallestUnit = Math.round(amountGHS * 100);
+
+  // Create a lightweight metadata and reference
+  const reference = `${SITE_NAME}-${Date.now()}-${Math.floor(Math.random()*1000)}`;
+
+  try {
+    await loadPaystackSDK();
+
+    const handler = window.PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY,
+      email: prompt('Please enter your email for the payment receipt') || 'no-email@example.com',
+      amount: amountSmallestUnit,
+      currency: CURRENCY,
+      ref: reference,
+      metadata: {
+        custom_fields: [
+          {
+            display_name: "Cart items",
+            variable_name: "cart_items",
+            value: cart.map(i => `${i.title} x${i.qty}`).join('; ')
+          }
+        ]
+      },
+      onClose: function() {
+        notify('Payment window closed', 'info');
+      },
+      callback: function(response) {
+        // Note: This is frontend-only. For production, verify transaction server-side.
+        const txRef = response.reference;
+        const txObj = {
+          reference: txRef,
+          amount: amountGHS,
+          amount_smallest_unit: amountSmallestUnit,
+          currency: CURRENCY,
+          email: this.email || 'unknown',
+          items: cart.slice(),
+          date: new Date().toISOString()
+        };
+
+        // persist purchase and mark items sold
+        finalizePurchase(txObj);
+
+        // success message
+        notify('Payment successful — thank you!', 'success', 6000);
+      }
+    });
+
+    handler.openIframe();
+  } catch (err) {
+    notify('Payment failed to start: ' + (err.message || err), 'error', 5000);
+    console.error(err);
+  }
+}
+
+/* ---------------------------
+   Finalize purchase (local)
+   - marks product(s) as sold
+   - stores purchase record to localStorage for admin.html
+   - clears cart
+   --------------------------- */
+function finalizePurchase(tx) {
+  // mark products sold
+  tx.items.forEach(it => {
+    const pr = products.find(p => p.id === it.id);
+    if (pr) pr.available = false;
+  });
+
+  // save purchase
+  purchases.unshift({
+    id: 'PUR-' + Date.now(),
+    reference: tx.reference || null,
+    items: tx.items,
+    total: tx.amount,
+    currency: tx.currency,
+    email: tx.email,
+    date: tx.date
+  });
+
+  // persist
+  saveState();
+
+  // remove those items from cart
+  clearCart();
+
+  // refresh UI
+  renderProducts(getCurrentFilters());
+}
+
+/* ---------------------------
+   Filters & Search helpers
+   --------------------------- */
+function getCurrentFilters() {
+  const activeCat = Array.from(selectors.categoryButtons).find(b => b.classList.contains('active'));
+  return {
+    category: activeCat ? activeCat.dataset.category : 'all',
+    q: (selectors.searchInput && selectors.searchInput.value) ? selectors.searchInput.value.trim() : '',
+    sort: (selectors.sortSelect && selectors.sortSelect.value) ? selectors.sortSelect.value : 'featured'
+  };
+}
+
+/* ---------------------------
+   Events wiring
+   --------------------------- */
+function wireUIEvents() {
+  // search
+  if (selectors.searchInput) {
+    let t;
+    selectors.searchInput.addEventListener('input', (e) => {
+      clearTimeout(t);
+      t = setTimeout(() => renderProducts(getCurrentFilters()), 220);
+    });
+
+    const clearBtn = document.getElementById('search-clear');
+    if (clearBtn) clearBtn.addEventListener('click', () => {
+      selectors.searchInput.value = '';
+      renderProducts(getCurrentFilters());
+    });
+  }
+
+  // categories
+  selectors.categoryButtons.forEach(btn => {
+    btn.addEventListener('click', (ev) => {
+      selectors.categoryButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // ensure aria pressed
+      selectors.categoryButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      renderProducts(getCurrentFilters());
+    });
+  });
+
+  // sort
+  if (selectors.sortSelect) {
+    selectors.sortSelect.addEventListener('change', () => renderProducts(getCurrentFilters()));
+  }
+
+  // modal close
+  const modalClose = selectors.productModal.querySelector('.modal-close');
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+
+  // modal buy & add to cart
+  if (selectors.modalBuy) selectors.modalBuy.addEventListener('click', () => {
+    if (!currentModalProduct) return;
+    // add product to cart and checkout immediately
+    addToCart(currentModalProduct.id, 1);
+    closeModal();
+    checkoutCartWithPaystack();
+  });
+
+  if (selectors.modalAddToCart) selectors.modalAddToCart.addEventListener('click', () => {
+    if (!currentModalProduct) return;
+    addToCart(currentModalProduct.id, 1);
+    closeModal();
+  });
+
+  // cart toggle
+  if (selectors.cartToggle) selectors.cartToggle.addEventListener('click', () => {
+    const open = selectors.cartDrawer.getAttribute('aria-hidden') === 'false';
+    selectors.cartDrawer.setAttribute('aria-hidden', String(open ? 'true' : 'false'));
+    selectors.cartDrawer.style.display = open ? 'none' : 'block';
+  });
+
+  const cartClose = document.getElementById('cart-close');
+  if (cartClose) cartClose.addEventListener('click', () => {
+    selectors.cartDrawer.setAttribute('aria-hidden', 'true');
+    selectors.cartDrawer.style.display = 'none';
+  });
+
+  // checkout & clear
+  if (selectors.checkoutButton) selectors.checkoutButton.addEventListener('click', () => checkoutCartWithPaystack());
+  if (selectors.clearCartButton) selectors.clearCartButton.addEventListener('click', () => clearCart());
+
+  // close modal with ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (selectors.productModal && selectors.productModal.style.display === 'block') closeModal();
+      if (selectors.cartDrawer && selectors.cartDrawer.style.display === 'block') {
+        selectors.cartDrawer.setAttribute('aria-hidden', 'true');
+        selectors.cartDrawer.style.display = 'none';
+      }
+    }
+  });
+
+  // Listen to storage events (to sync when admin updates product list or when user has multiple tabs)
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORAGE_KEYS.PRODUCTS || e.key === STORAGE_KEYS.PURCHASES) {
+      loadState();
+      renderProducts(getCurrentFilters());
+      updateCartUI();
+    }
+  });
+}
+
+/* ---------------------------
+   Startup
+   --------------------------- */
+function boot() {
+  // set year in footer
+  if (selectors.yearEl) selectors.yearEl.textContent = new Date().getFullYear();
+
+  loadState();              // load from localStorage or initial
+  renderProducts(getCurrentFilters());
+  updateCartUI();
+  wireUIEvents();
+
+  // quick hint for admin link privacy
+  if (selectors.adminLink) selectors.adminLink.title = 'Owner dashboard — keep this link private';
+
+  // friendly console note
+  console.log(`KidsDresses front-end loaded — ${products.length} products available (including sold).`);
+}
+
+/* ---------------------------
+   Expose a few functions for debugging / admin page to use (optional)
+   Admin page (admin.html) can call window.KD.getPurchases() etc.
+   --------------------------- */
+window.KD = {
+  boot,
+  getProducts: () => products,
+  getCart: () => cart,
+  getPurchases: () => purchases,
+  saveState,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  renderProducts
+};
+
+/* ---------------------------
+   Run boot
+   --------------------------- */
+document.addEventListener('DOMContentLoaded', boot);
+</script>
+
+  
 </html>
