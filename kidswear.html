@@ -183,15 +183,14 @@
      *  Replace the firebaseConfig object below with your config
      *  (from Firebase Console → Project settings → SDK setup)
      *************************************************************/
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
-    };
-
+     const firebaseConfig = {
+    apiKey: "AIzaSyBhaYOcLMXuobCT-vaXr-zXTZnBfaheAIY",
+    authDomain: "vitra-ai-712ea.firebaseapp.com",
+    projectId: "vitra-ai-712ea",
+    storageBucket: "vitra-ai-712ea.appspot.com",
+    messagingSenderId: "306868103753",
+    appId: "1:306868103753:web:e2d7700f8ad34c1e17ed98"
+  };
     // Replace with your Paystack public key
     const PAYSTACK_PUBLIC_KEY = "YOUR_PAYSTACK_PUBLIC_KEY";
 
@@ -399,7 +398,7 @@
       if (!selectedProduct) return alert('No product selected.');
       // Launch Paystack
       const handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
+        key: pk_test_297586e51710e83d3c159bfe71ff45c7e23411fa,
         email: email,
         amount: Math.round(Number(selectedProduct.price) * 100),
         currency: "GHS",
